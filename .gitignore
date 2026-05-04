@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.swp
+*~
+
+# 個人情報を含む可能性のあるバイナリ
+# ※ PDF・DOCX・PNG は git-lfs またはローカル管理推奨
+*.pdf
+*.docx
+*.xlsx
+*.xls
+*.png
+*.jpg
+*.jpeg
+
+# 生成されたHTMLファイル（請求書・領収書）
+06_経理財務/00_PDF印刷用HTML/
+
+# 生の音声文字起こしファイル（個人情報リスク）
+Knowledge/まる様、訪問、ヒアリング.txt
+05_クライアント案件/**/Knowledge/*.txt
