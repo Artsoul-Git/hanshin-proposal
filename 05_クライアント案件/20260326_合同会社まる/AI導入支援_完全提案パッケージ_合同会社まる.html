@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI導入支援 完全提案パッケージ｜合同会社まる様</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height:1.8; color:#2D3748; background:#FAFBFC; padding:40px 20px; }
+.container { max-width:960px; margin:0 auto; background:white; padding:60px 70px; box-shadow:0 2px 30px rgba(0,0,0,0.08); border-radius:12px; }
+.cover { text-align:center; padding:80px 0 60px; border-bottom:4px solid #1A365D; margin-bottom:50px; }
+.cover .label { font-size:13px; color:#ED8936; font-weight:bold; letter-spacing:3px; margin-bottom:20px; }
+.cover h1 { font-size:32px; color:#1A365D; margin-bottom:16px; line-height:1.4; }
+.cover .sub { font-size:17px; color:#718096; margin-bottom:40px; }
+.cover .meta { display:inline-block; background:#F7FAFC; padding:20px 40px; border-radius:8px; font-size:14px; color:#4A5568; line-height:2.2; }
+h2 { font-size:24px; color:#1A365D; padding:50px 0 15px; margin-top:40px; border-bottom:3px solid #ED8936; line-height:1.4; }
+h2:first-of-type { margin-top:0; }
+h2 .sec-num { display:inline-block; background:#1A365D; color:white; padding:5px 14px; border-radius:6px; font-size:14px; margin-right:12px; }
+h3 { font-size:18px; color:#2D3748; margin:28px 0 10px; padding-left:14px; border-left:5px solid #ED8936; }
+h4 { font-size:15px; color:#1A365D; margin:18px 0 6px; font-weight:bold; }
+p { margin:10px 0; }
+.lead { font-size:16px; color:#1A365D; background:#EDF2F7; padding:18px 22px; border-radius:8px; margin:18px 0; border-left:5px solid #1A365D; }
+.tip { background:#FFFAF0; padding:16px 20px; border-radius:8px; margin:16px 0; border-left:5px solid #ED8936; }
+.tip .label { font-weight:bold; color:#C05621; display:block; margin-bottom:4px; font-size:13px; }
+.ok { background:#F0FFF4; padding:16px 20px; border-radius:8px; margin:16px 0; border-left:5px solid #38A169; }
+.ok .label { font-weight:bold; color:#2F855A; display:block; margin-bottom:4px; font-size:13px; }
+.warn { background:#FFF5F5; padding:16px 20px; border-radius:8px; margin:16px 0; border-left:5px solid #E53E3E; }
+.warn .label { font-weight:bold; color:#C53030; display:block; margin-bottom:4px; font-size:13px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+th { background:#1A365D; color:white; padding:10px 12px; text-align:left; }
+td { padding:10px 12px; border-bottom:1px solid #E2E8F0; vertical-align:top; }
+tr:nth-child(even) { background:#F7FAFC; }
+.cost-table th { background:#C53030; }
+.cost-table .total-row td { background:#FFF5F5; font-weight:bold; color:#C53030; font-size:15px; }
+.plan-table th { background:#276749; }
+.plan-table .rec td { background:#F0FFF4; font-weight:bold; }
+.roi-table th { background:#2C7A7B; }
+.flow-box { background:#FAFBFC; padding:20px; border-radius:8px; margin:20px 0; border:2px solid #E2E8F0; overflow-x:auto; text-align:center; }
+.phase-box { border:2px solid #E2E8F0; border-radius:10px; padding:20px 24px; margin:16px 0; }
+.phase-box.p1 { border-color:#553C9A; border-top:5px solid #553C9A; }
+.phase-box.p2 { border-color:#2F855A; border-top:5px solid #2F855A; }
+.phase-box.p3 { border-color:#ED8936; border-top:5px solid #ED8936; }
+.phase-label { font-size:13px; font-weight:bold; letter-spacing:1px; margin-bottom:8px; }
+.p1 .phase-label { color:#553C9A; }
+.p2 .phase-label { color:#2F855A; }
+.p3 .phase-label { color:#C05621; }
+.month-card { background:#EDF2F7; padding:16px 20px; border-radius:8px; margin:12px 0; border-left:5px solid #1A365D; }
+.month-card h4 { color:#1A365D; margin-bottom:8px; font-size:16px; }
+.week-row { display:grid; grid-template-columns:80px 1fr; gap:8px; margin:6px 0; font-size:14px; }
+.week-label { background:#1A365D; color:white; padding:3px 8px; border-radius:4px; text-align:center; font-size:12px; font-weight:bold; align-self:start; margin-top:2px; }
+.price-tag { display:inline-block; background:#1A365D; color:white; padding:6px 18px; border-radius:20px; font-size:14px; font-weight:bold; margin:4px 2px; }
+.price-tag.orange { background:#ED8936; }
+.price-tag.green { background:#276749; }
+.big-price { font-size:28px; font-weight:bold; color:#1A365D; }
+.badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:bold; margin:2px; }
+.badge-red { background:#FFF5F5; color:#C53030; }
+.badge-green { background:#F0FFF4; color:#276749; }
+.badge-blue { background:#EBF8FF; color:#2B6CB0; }
+.badge-orange { background:#FFFAF0; color:#C05621; }
+.toc { background:#F7FAFC; padding:24px 32px; border-radius:8px; margin:24px 0; }
+.toc ul { list-style:none; padding:0; }
+.toc li { padding:5px 0; border-bottom:1px dashed #E2E8F0; }
+.toc li:last-child { border:none; }
+.toc a { color:#1A365D; text-decoration:none; font-weight:500; font-size:15px; }
+.rec-badge { background:#ED8936; color:white; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:bold; margin-left:8px; }
+ul, ol { padding-left:24px; margin:10px 0; }
+li { margin:6px 0; }
+hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
+.summary-box { background:#1A365D; color:white; padding:28px 32px; border-radius:10px; margin:24px 0; }
+.summary-box h3 { color:#F6AD55; border-left:none; padding-left:0; margin-bottom:16px; }
+.summary-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-top:16px; }
+.summary-item { background:rgba(255,255,255,0.1); padding:16px; border-radius:8px; text-align:center; }
+.summary-item .num { font-size:28px; font-weight:bold; color:#F6AD55; }
+.summary-item .unit { font-size:13px; color:#CBD5E0; }
+.app-card { border:2px solid #E2E8F0; border-radius:10px; padding:20px 24px; margin:16px 0; border-left:6px solid #553C9A; }
+.app-card.b { border-left-color:#2F855A; }
+.app-name { font-size:18px; font-weight:bold; color:#1A365D; margin-bottom:6px; }
+.app-priority { font-size:12px; background:#553C9A; color:white; padding:2px 10px; border-radius:20px; margin-left:8px; }
+.app-priority.b { background:#2F855A; }
+.timeline { border-left:3px solid #1A365D; padding-left:24px; margin:16px 0; }
+.timeline-item { position:relative; margin-bottom:20px; }
+.timeline-item::before { content:''; position:absolute; left:-30px; top:6px; width:12px; height:12px; background:#ED8936; border-radius:50%; border:2px solid white; box-shadow:0 0 0 2px #ED8936; }
+.timeline-item .tl-date { font-size:12px; color:#718096; font-weight:bold; margin-bottom:4px; }
+.timeline-item .tl-title { font-size:15px; font-weight:bold; color:#1A365D; margin-bottom:4px; }
+@media print { body { padding:0; } .container { box-shadow:none; padding:30px 40px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 表紙 -->
+<div class="cover">
+  <div class="label">CONFIDENTIAL — AI IMPLEMENTATION PROPOSAL</div>
+  <h1>AI導入支援<br>完全提案パッケージ</h1>
+  <div class="sub">業務効率化 × Google Workspace × AI伴走支援</div>
+  <div class="meta">
+    <strong>提案先：合同会社まる 様</strong><br>
+    提案日：2026年3月28日<br>
+    提案者：AS株式会社 代表 植村ケイ<br>
+    本書有効期限：2026年4月末
+  </div>
+</div>
+
+<!-- 目次 -->
+<div class="toc">
+  <h3 style="border:none;padding:0;margin-bottom:12px;color:#1A365D;font-size:16px">もくじ</h3>
+  <ul>
+    <li><a href="#s1">Section 1　現状課題の可視化（コスト計算 + 現状フロー図）</a></li>
+    <li><a href="#s2">Section 2　改善後の姿（改善フロー図 + 期待効果）</a></li>
+    <li><a href="#s3">Section 3　Google Workspace Business Standard 導入完全ガイド</a></li>
+    <li><a href="#s4">Section 4　ライモBiz ミニアプリ設計書</a></li>
+    <li><a href="#s5">Section 5　6ヶ月自走ロードマップ（プランS用）</a></li>
+    <li><a href="#s6">Section 6　AI活用研修計画</a></li>
+    <li><a href="#s7">Section 7　伴走プラン選択肢（S / A / B / C）<span class="rec-badge">推奨プランB掲載</span></a></li>
+    <li><a href="#s8">Section 8　推奨プランB — 6ヶ月 ACT詳細ロードマップ</a></li>
+    <li><a href="#s9">Section 9　ROI試算・投資回収シミュレーション</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- エグゼクティブサマリー -->
+<div class="summary-box">
+  <h3>エグゼクティブサマリー</h3>
+  <p>合同会社まる様の業務実態を分析した結果、<strong>月116時間・¥153,600相当の損失</strong>が繰り返し発生していることが判明しました。Google Workspace Business Standard とライモBizミニアプリの導入により、この損失の大部分を解消できます。</p>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <div class="num">116時間</div>
+      <div class="unit">月間削減可能時間</div>
+    </div>
+    <div class="summary-item">
+      <div class="num">¥153,600</div>
+      <div class="unit">月間削減可能コスト</div>
+    </div>
+    <div class="summary-item">
+      <div class="num">約14ヶ月</div>
+      <div class="unit">推奨プランB 投資回収期間</div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- Section 1 -->
+<h2 id="s1"><span class="sec-num">1</span>現状課題の可視化</h2>
+
+<h3>業務別コスト計算表（月間損失）</h3>
+
+<table class="cost-table">
+<tr><th>業務</th><th>問題の内容</th><th>月間所要時間</th><th>単価</th><th>月間損失</th></tr>
+<tr>
+  <td><strong>出退勤管理</strong></td>
+  <td>紙の出勤簿 → 手集計 → 国保連システムへ転記（3重作業）</td>
+  <td>35時間</td>
+  <td>¥1,500/h</td>
+  <td>¥52,500</td>
+</tr>
+<tr>
+  <td><strong>サービス提供記録</strong></td>
+  <td>手書きメモ → PCへ転記（2重作業）× 55名分 × 稼働日</td>
+  <td>68時間</td>
+  <td>¥1,200/h</td>
+  <td>¥81,600</td>
+</tr>
+<tr>
+  <td><strong>個別支援計画書作成</strong></td>
+  <td>白紙から手書き → 60〜90分/件（年2回更新 × 55名）</td>
+  <td>13時間</td>
+  <td>¥1,500/h</td>
+  <td>¥19,500</td>
+</tr>
+<tr class="total-row">
+  <td colspan="2"><strong>合計（月間）</strong></td>
+  <td><strong>116時間</strong></td>
+  <td>—</td>
+  <td><strong>¥153,600</strong></td>
+</tr>
+<tr class="total-row">
+  <td colspan="4"><strong>年間換算</strong></td>
+  <td><strong>¥1,843,200</strong></td>
+</tr>
+</table>
+
+<div class="warn">
+<span class="label">見えていないコスト</span>
+上記は純粋な人件費ベースの試算です。「ミスによる記録の手直し」「スタッフのモチベーション低下による離職リスク」「行政への提出遅延リスク」は含まれていません。実質的な損失はさらに大きい可能性があります。
+</div>
+
+<h3>現状業務フロー図（図解①）</h3>
+<p>現在の業務は「手書き → 転記 → 再集計」という3段階の二度手間が構造的に発生しています。</p>
+
+<div class="flow-box">
+<svg viewBox="0 0 820 560" width="100%" style="max-width:780px">
+  <defs>
+    <marker id="arr-gray" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0,0 9,3 0,6" fill="#4A5568"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0,0 9,3 0,6" fill="#E53E3E"/>
+    </marker>
+  </defs>
+
+  <!-- 凡例 -->
+  <rect x="560" y="10" width="240" height="80" fill="#F7FAFC" rx="6" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="570" y="30" font-size="11" fill="#718096" font-weight="bold">凡例</text>
+  <rect x="570" y="38" width="14" height="14" fill="#FED7D7" stroke="#E53E3E" stroke-width="1.5" rx="2"/>
+  <text x="590" y="50" font-size="11" fill="#4A5568">問題のある工程</text>
+  <line x1="570" y1="60" x2="584" y2="60" stroke="#E53E3E" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arr-red)"/>
+  <text x="590" y="64" font-size="11" fill="#4A5568">二度手間（転記）</text>
+  <rect x="570" y="72" width="14" height="14" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="2"/>
+  <text x="590" y="84" font-size="11" fill="#4A5568">通常の工程</text>
+
+  <!-- 上段：朝の流れ -->
+  <text x="30" y="30" font-size="12" fill="#1A365D" font-weight="bold">【朝・来所時】</text>
+  <rect x="10" y="40" width="120" height="50" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="6"/>
+  <text x="70" y="62" text-anchor="middle" font-size="12" fill="#2D3748" font-weight="bold">利用者来所</text>
+  <text x="70" y="78" text-anchor="middle" font-size="11" fill="#718096">55名・4拠点</text>
+  <line x1="130" y1="65" x2="155" y2="65" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <rect x="158" y="40" width="130" height="50" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="223" y="62" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">紙の出勤簿</text>
+  <text x="223" y="78" text-anchor="middle" font-size="11" fill="#E53E3E">手書き記入</text>
+  <line x1="288" y1="65" x2="313" y2="65" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <rect x="316" y="40" width="130" height="50" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="6"/>
+  <text x="381" y="62" text-anchor="middle" font-size="12" fill="#2D3748">支援員が</text>
+  <text x="381" y="78" text-anchor="middle" font-size="12" fill="#2D3748">確認・押印</text>
+
+  <!-- 中段：日中の流れ -->
+  <text x="30" y="130" font-size="12" fill="#1A365D" font-weight="bold">【日中・作業中】</text>
+  <rect x="10" y="140" width="120" height="50" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="6"/>
+  <text x="70" y="162" text-anchor="middle" font-size="12" fill="#2D3748">作業中に</text>
+  <text x="70" y="178" text-anchor="middle" font-size="12" fill="#2D3748">観察・支援</text>
+  <line x1="130" y1="165" x2="155" y2="165" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr-gray)"/>
+
+  <rect x="158" y="140" width="130" height="50" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="223" y="162" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">手書きメモ</text>
+  <text x="223" y="178" text-anchor="middle" font-size="11" fill="#E53E3E">エピソード記録</text>
+
+  <!-- 夕方 -->
+  <text x="30" y="230" font-size="12" fill="#1A365D" font-weight="bold">【夕方・退所時】</text>
+  <rect x="10" y="240" width="120" height="50" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="70" y="262" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">紙の退所簿</text>
+  <text x="70" y="278" text-anchor="middle" font-size="11" fill="#E53E3E">手書き記入</text>
+
+  <!-- 下段：転記・集計 -->
+  <text x="30" y="330" font-size="12" fill="#1A365D" font-weight="bold">【夜〜翌日：転記作業】</text>
+
+  <rect x="10" y="340" width="130" height="60" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="75" y="364" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">手書きメモ</text>
+  <text x="75" y="382" text-anchor="middle" font-size="11" fill="#E53E3E">→ PC入力（転記）</text>
+  <line x1="140" y1="370" x2="165" y2="370" stroke="#E53E3E" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+
+  <rect x="168" y="340" width="130" height="60" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="233" y="362" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">出勤記録を</text>
+  <text x="233" y="380" text-anchor="middle" font-size="11" fill="#E53E3E">手作業で集計</text>
+  <line x1="298" y1="370" x2="323" y2="370" stroke="#E53E3E" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+
+  <rect x="326" y="340" width="130" height="60" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="391" y="362" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">国保連システム</text>
+  <text x="391" y="380" text-anchor="middle" font-size="11" fill="#E53E3E">へ再入力</text>
+
+  <!-- 月次 -->
+  <text x="30" y="440" font-size="12" fill="#1A365D" font-weight="bold">【月次：計画書作成】</text>
+  <rect x="10" y="450" width="160" height="60" fill="#FED7D7" stroke="#E53E3E" stroke-width="2" rx="6"/>
+  <text x="90" y="474" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">個別支援計画書</text>
+  <text x="90" y="492" text-anchor="middle" font-size="11" fill="#E53E3E">白紙から作成（60〜90分/件）</text>
+
+  <!-- 時間コスト注釈 -->
+  <rect x="470" y="340" width="160" height="70" fill="#FFF5F5" stroke="#E53E3E" stroke-width="1.5" rx="8"/>
+  <text x="550" y="362" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">⏱ 月間損失</text>
+  <text x="550" y="380" text-anchor="middle" font-size="13" fill="#C53030" font-weight="bold">転記・集計 35時間</text>
+  <text x="550" y="397" text-anchor="middle" font-size="11" fill="#718096">（¥52,500/月相当）</text>
+
+  <rect x="470" y="450" width="160" height="70" fill="#FFF5F5" stroke="#E53E3E" stroke-width="1.5" rx="8"/>
+  <text x="550" y="472" text-anchor="middle" font-size="12" fill="#C53030" font-weight="bold">⏱ 月間損失</text>
+  <text x="550" y="490" text-anchor="middle" font-size="13" fill="#C53030" font-weight="bold">記録転記 68時間</text>
+  <text x="550" y="507" text-anchor="middle" font-size="11" fill="#718096">（¥81,600/月相当）</text>
+
+  <!-- 合計 -->
+  <rect x="640" y="390" width="160" height="80" fill="#C53030" rx="8"/>
+  <text x="720" y="420" text-anchor="middle" font-size="13" fill="white" font-weight="bold">月間合計損失</text>
+  <text x="720" y="444" text-anchor="middle" font-size="20" fill="#FED7D7" font-weight="bold">116時間</text>
+  <text x="720" y="462" text-anchor="middle" font-size="14" fill="white">¥153,600/月</text>
+</svg>
+</div>
+
+<div class="warn">
+<span class="label">ボトルネック3点</span>
+①手書き→PC転記（サービス記録・出勤管理）②月次手動集計（国保連用データ）③個別支援計画書の白紙作成。この3点を解消するだけで月116時間が生まれます。
+</div>
+
+<hr>
+
+<!-- Section 2 -->
+<h2 id="s2"><span class="sec-num">2</span>改善後の姿</h2>
+
+<h3>改善後業務フロー図（図解②）</h3>
+<p>Google Workspace + ライモBizミニアプリの導入後は、「記録→自動集計→AIドラフト生成」がシームレスに繋がります。</p>
+
+<div class="flow-box">
+<svg viewBox="0 0 820 560" width="100%" style="max-width:780px">
+  <defs>
+    <marker id="arr-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0,0 9,3 0,6" fill="#2F855A"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0,0 9,3 0,6" fill="#2B6CB0"/>
+    </marker>
+  </defs>
+
+  <!-- 凡例 -->
+  <rect x="580" y="10" width="220" height="100" fill="#F7FAFC" rx="6" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="590" y="30" font-size="11" fill="#718096" font-weight="bold">凡例</text>
+  <rect x="590" y="38" width="14" height="14" fill="#C6F6D5" stroke="#2F855A" stroke-width="1.5" rx="2"/>
+  <text x="610" y="50" font-size="11" fill="#4A5568">自動化された工程</text>
+  <rect x="590" y="58" width="14" height="14" fill="#BEE3F8" stroke="#2B6CB0" stroke-width="1.5" rx="2"/>
+  <text x="610" y="70" font-size="11" fill="#4A5568">AIが支援する工程</text>
+  <rect x="590" y="78" width="14" height="14" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="2"/>
+  <text x="610" y="90" font-size="11" fill="#4A5568">スタッフが行う工程</text>
+  <rect x="590" y="98" width="14" height="14" fill="#FAF5FF" stroke="#805AD5" stroke-width="1.5" rx="2"/>
+  <text x="610" y="110" font-size="11" fill="#4A5568">ライモBizアプリ</text>
+
+  <!-- 朝 -->
+  <text x="30" y="30" font-size="12" fill="#1A365D" font-weight="bold">【朝・来所時】</text>
+  <rect x="10" y="40" width="120" height="50" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="6"/>
+  <text x="70" y="60" text-anchor="middle" font-size="12" fill="#2D3748">利用者来所</text>
+  <text x="70" y="78" text-anchor="middle" font-size="11" fill="#718096">55名・4拠点</text>
+  <line x1="130" y1="65" x2="155" y2="65" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <rect x="158" y="40" width="140" height="50" fill="#C6F6D5" stroke="#2F855A" stroke-width="2" rx="6"/>
+  <text x="228" y="60" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">📱 QRコードスキャン</text>
+  <text x="228" y="78" text-anchor="middle" font-size="11" fill="#2F855A">Google Forms（スマホ）</text>
+  <line x1="298" y1="65" x2="323" y2="65" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <rect x="326" y="40" width="140" height="50" fill="#C6F6D5" stroke="#2F855A" stroke-width="2" rx="6"/>
+  <text x="396" y="60" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">📊 Sheets自動記録</text>
+  <text x="396" y="78" text-anchor="middle" font-size="11" fill="#2F855A">集計まで自動</text>
+
+  <!-- 日中 -->
+  <text x="30" y="130" font-size="12" fill="#1A365D" font-weight="bold">【日中・記録業務】</text>
+  <rect x="10" y="140" width="130" height="50" fill="#EDF2F7" stroke="#A0AEC0" stroke-width="1.5" rx="6"/>
+  <text x="75" y="162" text-anchor="middle" font-size="12" fill="#2D3748">観察・支援</text>
+  <text x="75" y="178" text-anchor="middle" font-size="11" fill="#718096">（変わらず）</text>
+  <line x1="140" y1="165" x2="165" y2="165" stroke="#805AD5" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <rect x="168" y="140" width="145" height="50" fill="#FAF5FF" stroke="#805AD5" stroke-width="2" rx="6"/>
+  <text x="240" y="160" text-anchor="middle" font-size="12" fill="#553C9A" font-weight="bold">🎤 音声入力</text>
+  <text x="240" y="178" text-anchor="middle" font-size="11" fill="#805AD5">ライモBizアプリ</text>
+  <line x1="313" y1="165" x2="338" y2="165" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <rect x="341" y="140" width="150" height="50" fill="#C6F6D5" stroke="#2F855A" stroke-width="2" rx="6"/>
+  <text x="416" y="160" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">📝 記録自動生成</text>
+  <text x="416" y="178" text-anchor="middle" font-size="11" fill="#2F855A">フォーマット整形済</text>
+
+  <!-- 月次集計 -->
+  <text x="30" y="240" font-size="12" fill="#1A365D" font-weight="bold">【月次・集計業務】</text>
+  <rect x="10" y="250" width="145" height="60" fill="#C6F6D5" stroke="#2F855A" stroke-width="2" rx="6"/>
+  <text x="82" y="274" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">📊 自動月次集計</text>
+  <text x="82" y="292" text-anchor="middle" font-size="11" fill="#2F855A">Sheets → 実績記録票</text>
+  <line x1="155" y1="280" x2="180" y2="280" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-green)"/>
+
+  <rect x="183" y="250" width="145" height="60" fill="#C6F6D5" stroke="#2F855A" stroke-width="2" rx="6"/>
+  <text x="255" y="274" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">📤 国保連用データ</text>
+  <text x="255" y="292" text-anchor="middle" font-size="11" fill="#2F855A">ワンクリック出力</text>
+
+  <!-- 個別支援計画書 -->
+  <text x="30" y="360" font-size="12" fill="#1A365D" font-weight="bold">【計画書作成】</text>
+  <rect x="10" y="370" width="145" height="60" fill="#BEE3F8" stroke="#2B6CB0" stroke-width="2" rx="6"/>
+  <text x="82" y="392" text-anchor="middle" font-size="12" fill="#2B6CB0" font-weight="bold">✨ Gemini AI</text>
+  <text x="82" y="410" text-anchor="middle" font-size="11" fill="#2B6CB0">過去記録からドラフト</text>
+  <line x1="155" y1="400" x2="180" y2="400" stroke="#2B6CB0" stroke-width="2" marker-end="url(#arr-blue)"/>
+
+  <rect x="183" y="370" width="145" height="60" fill="#BEE3F8" stroke="#2B6CB0" stroke-width="2" rx="6"/>
+  <text x="255" y="392" text-anchor="middle" font-size="12" fill="#2B6CB0" font-weight="bold">📄 10〜15分で完成</text>
+  <text x="255" y="410" text-anchor="middle" font-size="11" fill="#2B6CB0">スタッフが確認・修正のみ</text>
+
+  <!-- 効果注釈 -->
+  <rect x="480" y="250" width="180" height="90" fill="#F0FFF4" stroke="#2F855A" stroke-width="2" rx="8"/>
+  <text x="570" y="272" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">✅ 削減効果</text>
+  <text x="570" y="292" text-anchor="middle" font-size="13" fill="#276749" font-weight="bold">転記ゼロ化</text>
+  <text x="570" y="312" text-anchor="middle" font-size="12" fill="#276749">月35時間 → ほぼ0時間</text>
+  <text x="570" y="330" text-anchor="middle" font-size="11" fill="#718096">（¥52,500/月削減）</text>
+
+  <rect x="480" y="370" width="180" height="90" fill="#F0FFF4" stroke="#2F855A" stroke-width="2" rx="8"/>
+  <text x="570" y="392" text-anchor="middle" font-size="12" fill="#276749" font-weight="bold">✅ 削減効果</text>
+  <text x="570" y="412" text-anchor="middle" font-size="13" fill="#276749" font-weight="bold">計画書 80% 削減</text>
+  <text x="570" y="432" text-anchor="middle" font-size="12" fill="#276749">90分 → 15分</text>
+  <text x="570" y="450" text-anchor="middle" font-size="11" fill="#718096">（¥19,500+α/月削減）</text>
+
+  <!-- 合計 -->
+  <rect x="660" y="300" width="150" height="90" fill="#276749" rx="8"/>
+  <text x="735" y="328" text-anchor="middle" font-size="13" fill="white" font-weight="bold">月間削減合計</text>
+  <text x="735" y="352" text-anchor="middle" font-size="20" fill="#C6F6D5" font-weight="bold">116時間</text>
+  <text x="735" y="374" text-anchor="middle" font-size="14" fill="white">¥153,600/月</text>
+</svg>
+</div>
+
+<div class="ok">
+<span class="label">拠点間共有も同時解決</span>
+Google Drive + Google Chat の導入により、4拠点間の情報共有が「メール/FAX/電話」からリアルタイムのクラウド共有に変わります。会議の議事録・マニュアル・書式もDriveで一元管理。
+</div>
+
+<hr>
+
+<!-- Section 3 -->
+<h2 id="s3"><span class="sec-num">3</span>Google Workspace Business Standard 導入完全ガイド</h2>
+
+<h3>プラン概要と費用</h3>
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>プラン名</td><td>Google Workspace Business Standard</td></tr>
+<tr><td>月額</td><td>¥1,872/ユーザー/月（12ユーザー = ¥22,464/月）</td></tr>
+<tr><td>主な機能</td><td>Gmail・Google Drive（2TB/人）・Meet・Chat・Forms・Sheets・Docs・Gemini AI</td></tr>
+<tr><td>セキュリティ</td><td>管理コンソール・2段階認証・外部共有制限・監査ログ</td></tr>
+<tr><td>サポート</td><td>24時間電話/チャット（英語・日本語）</td></tr>
+</table>
+
+<h3>業務別 GWSツール マッピング</h3>
+<table>
+<tr><th>業務</th><th>現状</th><th>GWSツール</th><th>効果</th></tr>
+<tr><td><strong>出退勤記録</strong></td><td>紙の出勤簿（手書き）</td><td>Google Forms + QRコード</td><td>転記ゼロ・自動記録</td></tr>
+<tr><td><strong>月次集計</strong></td><td>手動Excel集計</td><td>Google Sheets（自動集計）</td><td>月35時間削減</td></tr>
+<tr><td><strong>日々の記録</strong></td><td>手書きメモ→PC転記</td><td>ライモBizアプリ（音声入力）</td><td>転記ゼロ・即時記録</td></tr>
+<tr><td><strong>個別支援計画書</strong></td><td>白紙から手書き作成</td><td>Google Docs + Gemini AI</td><td>作成時間80%削減</td></tr>
+<tr><td><strong>拠点間情報共有</strong></td><td>メール/FAX/電話</td><td>Google Drive + Chat</td><td>リアルタイム共有</td></tr>
+<tr><td><strong>会議・連絡</strong></td><td>現地集合 or 電話</td><td>Google Meet</td><td>移動時間ゼロ・録画可</td></tr>
+</table>
+
+<h3>Step-by-Step 設定手順</h3>
+
+<h4>Step 1：アカウント設定（Week 1）</h4>
+<ol>
+  <li>GWS Business Standard 契約（Google 管理コンソールからオンライン手続き）</li>
+  <li>ドメイン設定（既存ドメインがない場合：Google Domainsで新規取得 ¥1,400/年〜）</li>
+  <li>スタッフ全員分のアカウント作成（10名 + 管理者1名 + 予備1名 = 12アカウント）</li>
+  <li>管理者権限の設定（サービス管理責任者：管理者権限、支援員：一般ユーザー）</li>
+</ol>
+
+<h4>Step 2：Google Drive フォルダ構造構築（Week 2）</h4>
+<div style="background:#1A202C;color:#E2E8F0;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:13px;margin:12px 0;line-height:1.7">
+📁 合同会社まる（共有ドライブ）<br>
+　├── 📁 01_利用者記録<br>
+　│　　├── 📁 YYYY年MM月<br>
+　│　　│　　├── 📄 出退勤記録（自動）<br>
+　│　　│　　└── 📄 サービス提供記録<br>
+　├── 📁 02_個別支援計画書<br>
+　│　　└── 📁 利用者名<br>
+　│　　　　　├── 📄 計画書_2026年度.docx<br>
+　│　　　　　└── 📄 アセスメント.docx<br>
+　├── 📁 03_請求・国保連<br>
+　├── 📁 04_マニュアル・書式<br>
+　└── 📁 05_会議・連絡
+</div>
+
+<h4>Step 3：Google Forms 出退勤システム設定（Week 3）</h4>
+<ol>
+  <li>フォーム作成：利用者名（リスト選択）・来所/退所・時刻（自動）</li>
+  <li>QRコード生成：入所用・退所用の2種類をA4印刷して入口に掲示</li>
+  <li>スプレッドシート連携：回答が自動でSheetsに記録される設定</li>
+  <li>自動集計数式：<code>=COUNTIFS(B:B,A2,C:C,">="&DATE(YEAR(TODAY()),MONTH(TODAY()),1))</code></li>
+</ol>
+
+<h4>Step 4：Gemini 個別支援計画書プロンプト設定（Week 10）</h4>
+<div style="background:#1A202C;color:#E2E8F0;padding:16px 20px;border-radius:8px;font-family:monospace;font-size:13px;margin:12px 0;line-height:1.7">
+【プロンプト v1 テンプレート】<br>
+あなたは就労継続支援B型の経験豊富なサービス管理責任者です。<br>
+以下の情報をもとに、個別支援計画書の「長期目標・短期目標・支援内容」を<br>
+作業通所の観点から作成してください。<br>
+<br>
+【利用者情報】<br>
+・氏名：{氏名}<br>
+・年齢：{年齢}<br>
+・主な作業：{作業内容}<br>
+・直近3ヶ月のエピソード：{エピソード記録から抜粋}<br>
+・本人の希望：{面談記録から}<br>
+<br>
+出力形式：長期目標1つ・短期目標2〜3つ・具体的支援内容（箇条書き）
+</div>
+
+<hr>
+
+<!-- Section 4 -->
+<h2 id="s4"><span class="sec-num">4</span>ライモBiz ミニアプリ設計書</h2>
+
+<div class="app-card">
+  <div class="app-name">📱 アプリ①：サービス提供記録 AI生成アプリ<span class="app-priority">優先度 A</span></div>
+  <h4>概要</h4>
+  <p>支援員がスマホで利用者の様子を30秒〜1分で音声入力 → AIが規定フォーマットのサービス提供記録を自動生成。</p>
+  <table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>ユーザー</td><td>支援員全員（10名・4拠点）</td></tr>
+  <tr><td>入力方法</td><td>スマホからの音声入力 or テキスト入力</td></tr>
+  <tr><td>入力例</td><td>「田中さんは午前中の作業に意欲的に取り組んだ。昼食は完食。少し疲れた様子で午後は休憩多め」</td></tr>
+  <tr><td>出力形式</td><td>サービス提供記録標準フォーマット（エピソード・支援内容・本人の状態・特記事項）</td></tr>
+  <tr><td>処理時間</td><td>入力から出力まで30秒以内</td></tr>
+  <tr><td>必須条件</td><td>スマホ対応・個人情報を社外サーバーに送信しない・日本語特化</td></tr>
+  <tr><td>開発目安</td><td>約2週間（Week 7〜8）</td></tr>
+  </table>
+</div>
+
+<div class="app-card b">
+  <div class="app-name">📄 アプリ②：個別支援計画書 AIドラフト生成アプリ<span class="app-priority b">優先度 A</span></div>
+  <h4>概要</h4>
+  <p>サービス管理責任者がGeminiプロンプトを呼び出すだけで、過去の記録から個別支援計画書の下書きを自動生成。90分の作業が15分に短縮。</p>
+  <table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>ユーザー</td><td>サービス管理責任者（管理者1名）</td></tr>
+  <tr><td>入力方法</td><td>利用者名を選択 + 面談メモをテキスト入力（3〜5行）</td></tr>
+  <tr><td>出力内容</td><td>長期目標・短期目標・支援内容・評価基準のドラフト</td></tr>
+  <tr><td>必須条件</td><td>厚生労働省の計画書標準様式に準拠・修正しやすい形式</td></tr>
+  <tr><td>開発目安</td><td>約2週間（Week 11〜12）</td></tr>
+  </table>
+</div>
+
+<hr>
+
+<!-- Section 5 -->
+<h2 id="s5"><span class="sec-num">5</span>6ヶ月 自走ロードマップ（プランS — 自力実施の場合）</h2>
+
+<div class="lead">このロードマップは「このパッケージだけでご自身で実施する場合」の月次計画です。伴走支援ありの場合はSection 8をご参照ください。</div>
+
+<div class="month-card">
+  <h4>Month 1：GWS基盤構築</h4>
+  <div class="week-row"><div class="week-label">Week 1</div><div>GWS Business Standard 契約・アカウント12名分作成・管理者設定</div></div>
+  <div class="week-row"><div class="week-label">Week 2</div><div>Drive 共有フォルダ構造構築・Chat グループ設定（拠点別・全体）</div></div>
+  <div class="week-row"><div class="week-label">Week 3</div><div>Google Forms 出退勤記録フォーム作成・QRコード印刷・設置</div></div>
+  <div class="week-row"><div class="week-label">Week 4</div><div>Sheets 自動集計テスト・スタッフへの操作説明会（30分 × 2回）</div></div>
+</div>
+
+<div class="month-card">
+  <h4>Month 2：記録デジタル化</h4>
+  <div class="week-row"><div class="week-label">Week 5</div><div>ライモBiz アカウント取得・基本操作学習（管理者が自習）</div></div>
+  <div class="week-row"><div class="week-label">Week 6</div><div>アプリ①（サービス提供記録）のプロンプト設計・テスト版完成</div></div>
+  <div class="week-row"><div class="week-label">Week 7</div><div>アプリ①を2名のスタッフでパイロット利用・フィードバック収集</div></div>
+  <div class="week-row"><div class="week-label">Week 8</div><div>フィードバックをもとにプロンプト修正（v2）・出退勤記録の本格稼働</div></div>
+</div>
+
+<div class="month-card">
+  <h4>Month 3：アプリ展開 + Gemini導入</h4>
+  <div class="week-row"><div class="week-label">Week 9</div><div>アプリ①を全スタッフ展開・操作マニュアル配布</div></div>
+  <div class="week-row"><div class="week-label">Week 10</div><div>Gemini 個別支援計画書プロンプト（Section 3の雛形）でテスト生成</div></div>
+  <div class="week-row"><div class="week-label">Week 11</div><div>アプリ②（個別支援計画書）のライモBizアプリ化・テスト</div></div>
+  <div class="week-row"><div class="week-label">Week 12</div><div>3ヶ月効果測定（時間削減・コスト削減）・課題リストアップ</div></div>
+</div>
+
+<div class="month-card">
+  <h4>Month 4：横展開 + 定着</h4>
+  <div class="week-row"><div class="week-label">Week 13-14</div><div>3サテライトへGWSシステム展開・拠点担当者への引き継ぎ</div></div>
+  <div class="week-row"><div class="week-label">Week 15-16</div><div>月次集計業務をSheetsで完全自動化・国保連データ出力フロー確認</div></div>
+</div>
+
+<div class="month-card">
+  <h4>Month 5：プロンプト改善 + AI文化醸成</h4>
+  <div class="week-row"><div class="week-label">Week 17-18</div><div>プロンプトv3（現場フィードバック反映）完成・SOP（手順書）作成</div></div>
+  <div class="week-row"><div class="week-label">Week 19-20</div><div>社内AI活用共有会 第1回（成功事例・困りごとを共有）</div></div>
+</div>
+
+<div class="month-card">
+  <h4>Month 6：効果測定 + 次期計画</h4>
+  <div class="week-row"><div class="week-label">Week 21-22</div><div>6ヶ月Before/After比較レポート作成（時間・コスト・品質）</div></div>
+  <div class="week-row"><div class="week-label">Week 23-24</div><div>次の6ヶ月に取り組む改善テーマ TOP3の検討・次期計画策定</div></div>
+</div>
+
+<hr>
+
+<!-- Section 6 -->
+<h2 id="s6"><span class="sec-num">6</span>AI活用研修計画</h2>
+
+<h3>13時間 ライモBiz研修カリキュラム（まる様カスタマイズ版）</h3>
+
+<table>
+<tr><th>回</th><th>テーマ</th><th>時間</th><th>内容</th></tr>
+<tr><td>第1回</td><td>AI活用の基礎</td><td>3時間</td><td>AIとは何か・ライモBizの基本操作・実際に使ってみる体験（サービス記録を音声入力してみる）</td></tr>
+<tr><td>第2回</td><td>ミニアプリ活用</td><td>3時間</td><td>アプリ①の使い方マスター・音声入力の精度を上げるコツ・現場でのリアル練習</td></tr>
+<tr><td>第3回</td><td>Gemini × 計画書</td><td>3.5時間</td><td>Geminiの使い方・個別支援計画書プロンプトの体験・修正・フィードバック</td></tr>
+<tr><td>第4回</td><td>定着 + 応用</td><td>3.5時間</td><td>1ヶ月の使用振り返り・困りごと解決・「自分でAIに指示できる」マインドセット構築</td></tr>
+</table>
+
+<h3>月次スキル習得スケジュール</h3>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="tl-date">Month 1〜2</div>
+    <div class="tl-title">GWSの日常利用をマスター</div>
+    <p>Gmail・Drive・Chat・Meet を毎日の業務で使いこなす。「PCが苦手」なスタッフでもスマホで完結できる。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="tl-date">Month 3</div>
+    <div class="tl-title">ライモBizミニアプリを業務に組み込む</div>
+    <p>アプリ①（記録）を毎日使う習慣をつける。1ヶ月後に「以前はどうやって記録を書いていたか忘れた」の状態が目標。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="tl-date">Month 4</div>
+    <div class="tl-title">管理者がGeminiを使いこなす</div>
+    <p>サービス管理責任者が個別支援計画書プロンプトを独立して使える。「先生（AS株式会社）なしで動ける」状態。</p>
+  </div>
+  <div class="timeline-item">
+    <div class="tl-date">Month 5〜6</div>
+    <div class="tl-title">AIマネージャーが社内展開を主導</div>
+    <p>スタッフの中からAI活用を推進するリーダーが育ち、新しい改善アイデアを自分で提案できるようになる。</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- Section 7 -->
+<h2 id="s7"><span class="sec-num">7</span>伴走プラン 選択肢</h2>
+
+<div class="lead">ロードマップ策定（本パッケージ）の次のステップとして、4つの伴走プランをご用意しています。</div>
+
+<table class="plan-table">
+<tr>
+  <th>プラン</th>
+  <th>月額</th>
+  <th>サービス内容</th>
+  <th>こんな方に</th>
+</tr>
+<tr>
+  <td><strong>プランS</strong><br><small>自走プラン</small></td>
+  <td>¥0<br><small>（スポット相談¥15,000/回）</small></td>
+  <td>・本パッケージのみで自社実施<br>・困ったときスポット相談可</td>
+  <td>IT担当者がいる・時間がある・コストを最小化したい</td>
+</tr>
+<tr>
+  <td><strong>プランA</strong><br><small>顧問プラン</small></td>
+  <td>¥50,000/月</td>
+  <td>・月次成果レポート<br>・月1回戦略ミーティング（60分）<br>・チャットサポート（平日）<br>・業界AIトレンドレポート</td>
+  <td>ある程度自走できるが、相談相手が欲しい</td>
+</tr>
+<tr class="rec">
+  <td><strong>プランB ★推奨</strong><br><small>ACTモデル</small></td>
+  <td>Phase 1：¥300,000/月<br>Phase 2：¥150,000/月<br>Phase 3：¥50,000/月</td>
+  <td>・GWS完全設定（AS代行）<br>・ミニアプリ開発2本込み<br>・13時間ライモBiz研修<br>・週次コーチング（Phase 1）<br>・隔週コーチング（Phase 2）<br>・社内定着・AIマネージャー育成</td>
+  <td>確実に成果を出したい・最短で定着させたい</td>
+</tr>
+<tr>
+  <td><strong>プランC</strong><br><small>フルサポート</small></td>
+  <td>¥300,000/月（6ヶ月）</td>
+  <td>・プランB全て<br>・ミニアプリ毎月1本追加開発<br>・週次コーチング（全期間）<br>・月次訪問（現地）</td>
+  <td>全て任せたい・スピードを最優先したい</td>
+</tr>
+</table>
+
+<div class="tip">
+<span class="label">プランBを推奨する理由</span>
+Phase 1（¥300K × 3ヶ月）でシステム構築と研修を集中投下し、「動く状態」を確実に作ります。Phase 2（¥150K × 3ヶ月）はミニアプリ開発なしで定着支援に集中するため単価が下がります。ROIが月¥153,600なのでPhase 3以降は月¥103,600の純益が継続します。
+</div>
+
+<h3>プランBの費用構成（詳細）</h3>
+
+<table>
+<tr><th>フェーズ</th><th>期間</th><th>月額</th><th>含まれるサービス</th><th>小計</th></tr>
+<tr>
+  <td class="p1" style="font-weight:bold;color:#553C9A">Phase 1<br>導入フェーズ</td>
+  <td>Month 1〜3<br>（3ヶ月）</td>
+  <td>¥300,000</td>
+  <td>GWS全設定・ミニアプリ2本・13h研修・週1コーチング（月4回）・全手順書作成</td>
+  <td><strong>¥900,000</strong></td>
+</tr>
+<tr>
+  <td style="font-weight:bold;color:#2F855A">Phase 2<br>定着フェーズ</td>
+  <td>Month 4〜6<br>（3ヶ月）</td>
+  <td>¥150,000</td>
+  <td>隔週コーチング（月2回）・プロンプト改善・AIマネージャー育成・KPIレポート</td>
+  <td><strong>¥450,000</strong></td>
+</tr>
+<tr>
+  <td style="font-weight:bold;color:#C05621">Phase 3<br>顧問フェーズ</td>
+  <td>Month 7〜<br>（月次契約）</td>
+  <td>¥50,000</td>
+  <td>月次レポート・月1戦略MTG・チャットサポート・業界AIトレンド情報</td>
+  <td><strong>¥50,000/月</strong></td>
+</tr>
+<tr style="background:#F7FAFC;font-weight:bold">
+  <td colspan="4"><strong>Phase 1〜2 合計（6ヶ月）</strong></td>
+  <td><strong>¥1,350,000</strong></td>
+</tr>
+</table>
+
+<hr>
+
+<!-- Section 8 -->
+<h2 id="s8"><span class="sec-num">8</span>推奨プランB — 6ヶ月 ACTモデル 詳細ロードマップ</h2>
+
+<div class="phase-box p1">
+  <div class="phase-label">PHASE 1：導入フェーズ（Month 1〜3）¥300,000/月</div>
+  <h4 style="color:#553C9A">目標：「AIが動いている」状態を3ヶ月で作る</h4>
+  <p>GWSセットアップ・2本のミニアプリ・研修を3ヶ月で完結。Month 3末には月50時間以上の削減が実証できる状態を目指します。</p>
+
+  <div class="month-card" style="border-color:#553C9A">
+    <h4>Month 1：基盤構築フェーズ</h4>
+    <div class="week-row"><div class="week-label">Week 1</div><div>【AS代行】GWS Business Standard 契約代行・12アカウント作成・セキュリティ設定 / 【まる様】スタッフへのキックオフ説明会（30分）</div></div>
+    <div class="week-row"><div class="week-label">Week 2</div><div>【AS代行】Drive共有フォルダ設計・構築 / Google Chat グループ設定（全体・本部・各サテライト） / 【週次MTG①】初回コーチング（業務ヒアリング深掘り）</div></div>
+    <div class="week-row"><div class="week-label">Week 3</div><div>【AS代行】Google Forms 出退勤フォーム作成・QRコード生成・拠点設置 / Sheets 自動集計設定 / 【まる様】スタッフへの操作説明会</div></div>
+    <div class="week-row"><div class="week-label">Week 4</div><div>【まる様】Forms 出退勤の本格稼働 / 【週次MTG②】1週間の使用感フィードバック / 【AS】問題点の即修正</div></div>
+    <p style="margin-top:12px"><span class="badge badge-green">Month 1 完了基準</span> 全スタッフがGWSにログインして日常業務で使えている状態</p>
+  </div>
+
+  <div class="month-card" style="border-color:#553C9A">
+    <h4>Month 2：ライモBiz研修 + ミニアプリ開発</h4>
+    <div class="week-row"><div class="week-label">Week 5</div><div>【ライモBiz研修①】AI活用基礎・ライモBizアカウント設定・基本操作体験（3時間）/ 【週次MTG③】研修後の気づき共有</div></div>
+    <div class="week-row"><div class="week-label">Week 6</div><div>【ライモBiz研修②】ミニアプリ活用実践（3時間）/ 【AS開発】アプリ①（サービス提供記録AI）設計・開発開始</div></div>
+    <div class="week-row"><div class="week-label">Week 7</div><div>【AS開発】アプリ①テスト版完成・まる様2名でパイロット利用開始 / 【週次MTG④】使用感・改善点ヒアリング</div></div>
+    <div class="week-row"><div class="week-label">Week 8</div><div>【AS開発】アプリ①フィードバック反映（v2）/ 月次集計Sheets確認・国保連データ出力テスト</div></div>
+    <p style="margin-top:12px"><span class="badge badge-green">Month 2 完了基準</span> アプリ①がパイロット利用者に定着・月次集計が自動化</p>
+  </div>
+
+  <div class="month-card" style="border-color:#553C9A">
+    <h4>Month 3：全員展開 + Gemini + 中間報告</h4>
+    <div class="week-row"><div class="week-label">Week 9</div><div>【ライモBiz研修③】Gemini × 個別支援計画書 実践（3.5時間）/ アプリ①を全スタッフ展開・マニュアル配布</div></div>
+    <div class="week-row"><div class="week-label">Week 10</div><div>【AS開発】アプリ②（個別支援計画書AI）設計・開発開始 / 【週次MTG⑤】中間課題の整理</div></div>
+    <div class="week-row"><div class="week-label">Week 11</div><div>【ライモBiz研修④】定着・応用・まとめ（3.5時間）/ アプリ②テスト版完成・管理者でテスト</div></div>
+    <div class="week-row"><div class="week-label">Week 12</div><div>【3ヶ月中間報告会】削減時間・コスト削減額の計測発表 / Phase 2 計画確認 / アプリ②本番導入</div></div>
+    <p style="margin-top:12px"><span class="badge badge-green">Month 3 完了基準</span> 月50時間以上削減を数値で確認・全2本のアプリ稼働中</p>
+  </div>
+</div>
+
+<div class="phase-box p2">
+  <div class="phase-label">PHASE 2：定着フェーズ（Month 4〜6）¥150,000/月</div>
+  <h4 style="color:#2F855A">目標：「AS株式会社がいなくても回せる」状態を作る</h4>
+  <p>新規ミニアプリ開発なし。コーチングを隔週に変え、内部でAIを推進できる「AIマネージャー」の育成に集中します。</p>
+
+  <div class="month-card" style="border-color:#2F855A">
+    <h4>Month 4：横展開 + AIマネージャー育成</h4>
+    <div class="week-row"><div class="week-label">Week 13</div><div>3サテライトへGWSシステム展開・現地スタッフへの操作説明 / 【隔週MTG①】課題整理・プロンプト改善ポイント確認</div></div>
+    <div class="week-row"><div class="week-label">Week 14</div><div>AIマネージャー候補（スタッフ1名）との個別セッション開始 / プロンプト v2 → v3 へ改善</div></div>
+    <div class="week-row"><div class="week-label">Week 15</div><div>全拠点の出退勤記録稼働確認・集計フロー統合 / 【隔週MTG②】定着状況確認</div></div>
+    <div class="week-row"><div class="week-label">Week 16</div><div>AIマネージャーが社内AI共有会を主催（第1回・45分）/ SOP（標準操作手順書）ドラフト作成</div></div>
+  </div>
+
+  <div class="month-card" style="border-color:#2F855A">
+    <h4>Month 5：自走化加速</h4>
+    <div class="week-row"><div class="week-label">Week 17</div><div>AIマネージャーがKPIレポートを自分で作成する練習 / 【隔週MTG③】フォードバック・修正</div></div>
+    <div class="week-row"><div class="week-label">Week 18</div><div>プロンプト v3 完成・SOP最終版作成・Drive に格納</div></div>
+    <div class="week-row"><div class="week-label">Week 19</div><div>社内AI共有会 第2回（AIマネージャーが単独進行）/ 【隔週MTG④】課題対処</div></div>
+    <div class="week-row"><div class="week-label">Week 20</div><div>「次に改善したい業務 TOP3」をAIマネージャーが提案 → Phase 3 アクション候補化</div></div>
+  </div>
+
+  <div class="month-card" style="border-color:#2F855A">
+    <h4>Month 6：最終報告 + 顧問移行</h4>
+    <div class="week-row"><div class="week-label">Week 21</div><div>6ヶ月B/A比較レポート作成 / 【隔週MTG⑤】最終成果整理</div></div>
+    <div class="week-row"><div class="week-label">Week 22</div><div>最終報告会資料作成（AIマネージャーが発表パートを担当）</div></div>
+    <div class="week-row"><div class="week-label">Week 23</div><div>最終報告会（90分）: 成果報告 → AIマネージャー発表 → Phase 3（顧問）提案</div></div>
+    <div class="week-row"><div class="week-label">Week 24</div><div>Phase 3 契約・最初の月次ミーティング日程設定・引き継ぎ完了</div></div>
+    <p style="margin-top:12px"><span class="badge badge-green">Month 6 完了基準</span> AIマネージャーが月次KPIレポートを自主提出・社内共有会が自走で運営</p>
+  </div>
+</div>
+
+<div class="phase-box p3">
+  <div class="phase-label">PHASE 3：顧問フェーズ（Month 7〜）¥50,000/月</div>
+  <h4 style="color:#C05621">目標：「継続的に改善し続けるパートナー関係」</h4>
+  <p>月次で新しいAI活用アイデアを提供し、四半期に1回の戦略ミーティングで「次の6ヶ月でできること」を提案し続けます。</p>
+  <ul>
+    <li><strong>月次AIビジネスアップデートレポート（1枚）</strong>：福祉業界に直結するAIトレンドを毎月届け、「うちでも使えそう」を刺激</li>
+    <li><strong>チャットサポート（平日 9〜18時）</strong>：プロンプト微調整・新業務へのAI適用・ライモBiz設定変更など即相談</li>
+    <li><strong>四半期戦略ミーティング（60分 Web）</strong>：浮いた時間の活用確認 + 次の改善テーマ TOP3 提案</li>
+    <li><strong>顧問先限定コミュニティ参加</strong>：他社事例（匿名）の共有・半期1回オンライン事例共有会</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Section 9 -->
+<h2 id="s9"><span class="sec-num">9</span>ROI試算・投資回収シミュレーション</h2>
+
+<h3>月次収支シミュレーション（プランB選択時）</h3>
+
+<table class="roi-table">
+<tr>
+  <th>時期</th>
+  <th>削減効果（月）</th>
+  <th>投資額（月）</th>
+  <th>GWS費用</th>
+  <th>月次収支</th>
+  <th>累計収支</th>
+</tr>
+<tr>
+  <td>Month 1</td><td>¥46,000（30%）</td><td>¥300,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥276,464</td><td style="color:#C53030">▲ ¥276,464</td>
+</tr>
+<tr>
+  <td>Month 2</td><td>¥92,000（60%）</td><td>¥300,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥230,464</td><td style="color:#C53030">▲ ¥506,928</td>
+</tr>
+<tr>
+  <td>Month 3</td><td>¥153,600</td><td>¥300,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥168,864</td><td style="color:#C53030">▲ ¥675,792</td>
+</tr>
+<tr>
+  <td>Month 4</td><td>¥153,600</td><td>¥150,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥18,864</td><td style="color:#C53030">▲ ¥694,656</td>
+</tr>
+<tr>
+  <td>Month 5</td><td>¥153,600</td><td>¥150,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥18,864</td><td style="color:#C53030">▲ ¥713,520</td>
+</tr>
+<tr>
+  <td>Month 6</td><td>¥153,600</td><td>¥150,000</td><td>¥22,464</td><td style="color:#C53030">▲ ¥18,864</td><td style="color:#C53030">▲ ¥732,384</td>
+</tr>
+<tr>
+  <td>Month 7〜（Phase 3）</td><td>¥153,600</td><td>¥50,000</td><td>¥22,464</td><td style="color:#276749;font-weight:bold">+ ¥81,136</td><td>回収進行中</td>
+</tr>
+<tr style="background:#F0FFF4;font-weight:bold">
+  <td colspan="4"><strong>投資回収完了（目安）</strong></td>
+  <td colspan="2" style="color:#276749"><strong>Phase 3 開始から約9ヶ月後（契約開始から約15ヶ月後）</strong></td>
+</tr>
+</table>
+
+<div class="ok">
+<span class="label">投資回収後の純利益</span>
+Phase 3以降（Month 7〜）は毎月¥153,600の削減効果から¥50,000の顧問料と¥22,464のGWS費用を差し引いた<strong>¥81,136の純利益</strong>が毎月継続します。年換算で¥973,632の純利益。
+</div>
+
+<h3>3パターン ROI試算</h3>
+<table>
+<tr><th>シナリオ</th><th>月次削減効果</th><th>投資回収完了</th><th>1年後の純利益（年間）</th></tr>
+<tr><td>保守的（削減50%達成）</td><td>¥76,800</td><td>契約から20ヶ月</td><td>¥54,336 × 12 = ¥652,032</td></tr>
+<tr><td>標準（削減75%達成）</td><td>¥115,200</td><td>契約から17ヶ月</td><td>¥42,736 × 12 = ¥512,832</td></tr>
+<tr><td>楽観（削減100%達成）</td><td>¥153,600</td><td>契約から15ヶ月</td><td>¥81,136 × 12 = ¥973,632</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">数字には含まれていない価値</span>
+①スタッフの残業・持ち帰り業務の削減（離職防止）②記録品質の向上（加算取得・行政評価）③「現場が明るくなった」という空気感（採用力向上）— これらの定量化が難しい価値も実際には発生しています。
+</div>
+
+<hr>
+
+<!-- フッター -->
+<div class="ok" style="text-align:center;margin-top:40px">
+  <span class="label">ご不明点・ご確認事項</span>
+  本提案書の内容・数値・プランについてご質問があればいつでもお気軽にご連絡ください。<br>
+  <strong>AS株式会社 代表 植村ケイ｜uemura@artsoul.jp</strong>
+</div>
+
+<p style="text-align:center;color:#A0AEC0;font-size:12px;margin-top:30px">
+  本書は合同会社まる様専用の提案書です。第三者への転送・公開はご遠慮ください。<br>
+  © 2026 AS株式会社 All Rights Reserved.
+</p>
+
+</div>
+</body>
+</html>
