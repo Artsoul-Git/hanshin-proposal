@@ -1,0 +1,72 @@
+name: rough_chic_ink
+display_name: "ラフ・シック・インク"
+description: "ラフな手描きの美学・余白の美学・モダン水墨画風"
+mode: light
+recommended_for:
+  - クリエイティブ業界
+  - ファッション・ライフスタイル
+  - 文化・芸術
+  - こだわりブランド
+
+colors:
+  primary: "#1A1A1A"          # チャコールブラック
+  accent: "#D4A017"           # マスタードイエロー
+  accent2: "#1F6D5A"          # エメラルドグリーン
+  accent3: "#A02828"          # クリムゾンレッド
+  text_main: "#1A1A1A"
+  text_sub: "#666666"
+  background_default: "#FAF6EE" # オフホワイト（紙質感）
+  background_sub: "#F0EBE0"
+  divider: "#D4D0C8"
+
+typography:
+  ja_heading: "Noto Serif JP"      # 明朝系で高級感
+  ja_body: "Noto Sans JP"
+  en_heading: "Playfair Display"
+  en_body: "Inter"
+  fallback_ja: "游明朝"
+  fallback_en: "Georgia"
+
+font_sizes:
+  slide_title: 54
+  section_header: 42
+  body: 26
+  body_minimum: 22
+  emphasis_number: 120
+  caption: 18
+  source: 12
+
+layout:
+  aspect_ratio: "16:9"
+  width_inches: 13.33
+  height_inches: 7.5
+  whitespace_ratio: 0.55      # 余白を非常に多く
+  margin_top: 0.8
+  margin_bottom: 0.8
+  margin_left: 1.0
+  margin_right: 1.0
+
+visual_rules:
+  border_radius: 0            # シャープに
+  border_width: 2
+  shadow: false
+  brush_strokes: true         # 装飾用のラフな線
+  composition: "asymmetric_offset" # 中心からずらす
+  emphasis: "monochrome_with_color_point"
+
+decorations:
+  left_top_nav: false
+  corner_dots: false
+  side_bars: false
+  brush_underline: true       # タイトル下に手描き風アンダーライン
+  scattered_marks: true       # 散らばった装飾マーク
+
+page_types:
+  title:
+    title_position: "off_center" # 中心からずらす
+    title_align: "left"
+    background: "#FAF6EE"
+  section:
+    background: "#1A1A1A"     # 章扉は黒背景
+    text_color: "#FAF6EE"
+    accent_color: "#D4A017"

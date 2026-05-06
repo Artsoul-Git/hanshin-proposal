@@ -1,0 +1,73 @@
+pattern_name: product_launch
+display_name: "製品紹介型（新商品ローンチ）"
+description: "新商品やサービスを認知・興味喚起させる。ローンチイベントに最適"
+recommended_for:
+  - 新商品発表会
+  - サービスローンチ
+  - 機能アップデート発表
+  - パートナー向け説明会
+target_outcome: "認知・興味喚起・体験申込"
+sales_pressure: medium_high
+
+structure:
+  opening:
+    duration_minutes: 5
+    slides:
+      - type: タイトル
+        purpose: ティーザー風の表紙
+      - type: 決め台詞
+        purpose: コンセプト宣言
+      - type: コンテンツ
+        purpose: 開始挨拶＋本日の流れ
+
+  hook:
+    duration_minutes: 5
+    slides:
+      - type: 問いかけ
+        purpose: 課題への共感
+      - type: 強調数字
+        purpose: 市場の現状
+      - type: コンテンツ
+        purpose: 既存ソリューションの限界
+
+  body:
+    duration_minutes: 30
+    structure:
+      - chapter:
+          name: "製品コンセプト"
+          slides_count_range: [8, 10]
+          flow: "理念 → 開発背景 → 何を解決するか"
+      - chapter:
+          name: "機能・特徴"
+          slides_count_range: [10, 15]
+          flow: "3つの主要機能 → デモ → 競合比較"
+      - chapter:
+          name: "事例・成果"
+          slides_count_range: [8, 10]
+          flow: "Before/After × 3社"
+
+  pricing:
+    duration_minutes: 5
+    slides:
+      - type: 強調数字
+        purpose: 価格・プラン
+      - type: 3カラム
+        purpose: プラン比較
+
+  closing:
+    duration_minutes: 5
+    slides:
+      - type: キーメッセージ
+        purpose: 製品の本質を再強調
+      - type: CTA
+        purpose: 体験申込・問い合わせ
+      - type: 強調数字
+        purpose: ローンチ特典・期間
+
+  qa:
+    duration_minutes: 5
+    slides:
+      - type: コンテンツ
+        purpose: Q&A
+
+  total_slides_target: 80  # 60分換算

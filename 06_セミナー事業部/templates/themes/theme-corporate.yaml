@@ -1,0 +1,32 @@
+name: corporate
+display_name: "Corporate"
+description: "B2B、コンサル、SaaS向け汎用ビジネスデザイン"
+colors:
+  primary: "#1A365D"
+  accent: "#ED8936"
+  positive: "#38A169"
+  negative: "#E53E3E"
+  text_main: "#2D3748"
+  text_sub: "#718096"
+  background_default: "#FFFFFF"
+  background_sub: "#F7FAFC"
+  divider: "#E2E8F0"
+typography:
+  ja_heading: "Yu Gothic UI"
+  ja_body: "Yu Gothic UI"
+font_sizes:
+  slide_title: 44
+  body: 28
+  body_minimum: 24
+layout:
+  width_inches: 13.33
+  height_inches: 7.5
+chart:
+  bar_color: "#3182CE"
+  line_width: 3
+  show_grid: true
+  grid_color: "#E2E8F0"
+  grid_style: "dotted"
+page_types:
+  title: {background: "#FFFFFF"}
+  content: {}

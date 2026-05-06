@@ -1,0 +1,78 @@
+pattern_name: information
+display_name: "情報提供型（教育・啓蒙）"
+description: "新しい情報・知識を体系的に伝える。教育系・無料セミナー・啓蒙活動に最適"
+recommended_for:
+  - 業界トレンドセミナー
+  - 規制・法令解説
+  - 新技術紹介
+  - 公共サービス啓蒙
+target_outcome: "理解と気づき"
+sales_pressure: low
+
+structure:
+  opening:
+    duration_minutes: 5
+    slides:
+      - type: タイトル
+        purpose: 表紙
+      - type: コンテンツ
+        purpose: 開始挨拶（無記名）
+        content_template: "本日はお越しいただきありがとうございます。まず簡単にご挨拶させてください。"
+      - type: 自己紹介
+        purpose: スピーカー紹介
+        content_template: "本日お話しさせていただく◯◯です（or 名乗りなし版「私から」のみ）"
+      - type: コンテンツ
+        purpose: 本日のアジェンダ提示
+      - type: コンテンツ
+        purpose: 本日のゴール宣言（持ち帰っていただきたいこと）
+
+  icebreak:
+    duration_minutes: 2
+    slides:
+      - type: 問いかけ
+        purpose: 軽いアイスブレイク
+        examples:
+          - "皆さま、今朝何時に起きられましたか"
+          - "皆さまの業界、最近どんな話題が多いですか"
+
+  body:
+    duration_minutes: 40
+    structure:
+      - chapter:
+          name: "現状認識"
+          slides_count_range: [10, 15]
+          flow: "データ提示 → 共感 → 問題明示"
+      - chapter:
+          name: "課題分析"
+          slides_count_range: [10, 15]
+          flow: "原因深掘り → 構造理解"
+      - chapter:
+          name: "解決の方向性"
+          slides_count_range: [10, 15]
+          flow: "アプローチ提示 → 事例 → 実践方法"
+
+  closing:
+    duration_minutes: 8
+    slides:
+      - type: コンテンツ
+        purpose: 本日のまとめ
+      - type: キーメッセージ
+        purpose: 持ち帰ってほしい1メッセージ
+      - type: コンテンツ
+        purpose: 質疑応答へのご案内
+      - type: 引用
+        purpose: 締めくくりの言葉
+
+  qa:
+    duration_minutes: 10
+    slides:
+      - type: コンテンツ
+        purpose: Q&A 開始
+      - type: コンテンツ
+        purpose: 質問待ち（チャット案内）
+
+  next_step: # オプション
+    duration_minutes: 0
+    slides: []  # 営業色なし
+
+  total_slides_target: 70  # 60分換算

@@ -1,0 +1,76 @@
+name: luminous_dark_modern
+display_name: "ルミナス・ダーク・モダン"
+description: "ダーク背景＋ネオンアクセント・グロウ効果・先進性"
+mode: dark
+recommended_for:
+  - テック企業
+  - AI・データ
+  - スタートアップ
+  - Web3・ブロックチェーン
+  - クリエイティブ・テクノロジー
+
+colors:
+  primary: "#0F172A"          # 深いスレートネイビー（カード背景）
+  accent: "#00D2FF"           # ルミナスシアン
+  accent2: "#FF00FF"          # マゼンタ（補助強調）
+  text_main: "#F8FAFC"        # オフホワイト
+  text_sub: "#94A3B8"         # クールグレー
+  background_default: "#050A15" # 最暗部の黒
+  background_sub: "#1E293B"   # サブ背景
+  divider: "#334155"
+
+typography:
+  ja_heading: "Noto Sans JP"
+  ja_body: "Noto Sans JP"
+  en_heading: "Inter"
+  en_body: "Inter"
+  fallback_ja: "Hiragino Sans"
+  fallback_en: "SF Pro Display"
+
+font_sizes:
+  slide_title: 50
+  section_header: 40
+  body: 26
+  body_minimum: 22
+  emphasis_number: 140
+  caption: 18
+  source: 12
+
+layout:
+  aspect_ratio: "16:9"
+  width_inches: 13.33
+  height_inches: 7.5
+  whitespace_ratio: 0.35
+  margin_top: 0.6
+  margin_bottom: 0.6
+  margin_left: 0.7
+  margin_right: 0.7
+
+visual_rules:
+  border_radius: 2            # 極小角丸
+  border_width: 1
+  shadow: true                # 微かなシャドウ
+  glow_effect: true           # ネオン光彩
+  composition: "centered_with_accents"
+  emphasis: "neon_lines"
+
+decorations:
+  left_top_nav: true          # ナビあり
+  nav_format: "// 01_INTRO"   # コード風
+  corner_dots: false
+  side_bars: false
+  neon_strokes: true          # ネオン縦線
+  hex_pattern: true           # 六角形パターン
+  card_shadows: true          # カード型UI
+
+page_types:
+  title:
+    title_position: "left"
+    title_align: "left"
+    background: "#050A15"
+    text_color: "#F8FAFC"
+    has_neon_accent: true     # ネオンライン
+  section:
+    background: "#0F172A"
+    text_color: "#00D2FF"     # アクセント色で章番号
+    accent_color: "#00D2FF"

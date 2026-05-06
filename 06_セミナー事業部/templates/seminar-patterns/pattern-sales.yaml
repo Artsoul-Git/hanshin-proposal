@@ -1,0 +1,89 @@
+pattern_name: sales
+display_name: "営業型（リード獲得・受注）"
+description: "受講者を顧客化することがゴール。商談獲得・受注を目指す"
+recommended_for:
+  - リード獲得セミナー
+  - サービス紹介ウェビナー
+  - 個別相談誘導型
+  - ホワイトペーパー連動
+target_outcome: "個別相談申込・受注"
+sales_pressure: high
+
+structure:
+  opening:
+    duration_minutes: 3
+    slides:
+      - type: タイトル
+        purpose: キャッチーなタイトル
+      - type: コンテンツ
+        purpose: 簡潔な開始挨拶
+      - type: コンテンツ
+        purpose: 本日得られる3つの価値
+
+  empathy:
+    duration_minutes: 7
+    slides:
+      - type: 問いかけ
+        purpose: 課題への共感（観察→気づき→安心）
+      - type: コンテンツ
+        purpose: あるある共感ストーリー
+      - type: 強調数字
+        purpose: 市場データで課題を裏付け
+
+  problem:
+    duration_minutes: 8
+    structure:
+      - chapter:
+          name: "問題の深掘り"
+          slides_count_range: [8, 12]
+          flow: "症状 → 根本原因 → 放置のリスク"
+
+  solution:
+    duration_minutes: 15
+    structure:
+      - chapter:
+          name: "解決アプローチ"
+          slides_count_range: [10, 15]
+          flow: "アプローチ全体像 → 具体的方法 → 自社サービスの位置付け"
+
+  evidence:
+    duration_minutes: 12
+    slides:
+      - type: 事例
+        purpose: 事例1（同業種・大）
+      - type: 事例
+        purpose: 事例2（同業種・中）
+      - type: 事例
+        purpose: 事例3（同業種・小）
+      - type: Before/After
+        purpose: 数値で見る変化
+
+  offer:
+    duration_minutes: 8
+    slides:
+      - type: コンテンツ
+        purpose: 自社サービスの強み
+      - type: 3カラム
+        purpose: プラン提示
+      - type: 強調数字
+        purpose: 特別オファー（期間限定 等）
+
+  cta:
+    duration_minutes: 5
+    slides:
+      - type: キーメッセージ
+        purpose: 行動喚起の決め台詞
+      - type: CTA
+        purpose: 個別相談申込（QRコード）
+      - type: コンテンツ
+        purpose: 申込特典の説明
+
+  qa:
+    duration_minutes: 7
+    slides:
+      - type: コンテンツ
+        purpose: Q&A
+      - type: CTA
+        purpose: Q&A後の再案内（控えめに）
+
+  total_slides_target: 100  # 60分換算（リッチに）

@@ -1,0 +1,76 @@
+name: refined_minimal_portfolio
+display_name: "洗練ミニマル・ポートフォリオ"
+description: "左上ナビ・余白の美学・グリッドレイアウト・ダーク混在"
+mode: light_with_dark_accent
+recommended_for:
+  - クリエイティブエージェンシー
+  - 建築・デザイン事務所
+  - 高級ブランド
+  - アートギャラリー
+
+colors:
+  primary: "#000000"          # 漆黒
+  accent: "#000000"           # 黒のみ（モノクロ）
+  text_main: "#000000"
+  text_sub: "#333333"
+  background_default: "#E9E9E9" # ライトグレー
+  background_sub: "#FFFFFF"
+  background_dark: "#000000"  # ダークモード用
+  text_on_dark: "#FFFFFF"
+  divider: "#999999"
+
+typography:
+  ja_heading: "Noto Sans JP"
+  ja_body: "Noto Sans JP"
+  en_heading: "Inter"           # Helvetica系
+  en_body: "Inter"
+  fallback_ja: "Hiragino Sans"
+  fallback_en: "Helvetica"
+
+font_sizes:
+  slide_title: 48
+  section_header: 36
+  body: 22                    # 字間広く取るので小さめ
+  body_minimum: 18
+  emphasis_number: 200        # 巨大数字
+  caption: 14
+  source: 11
+  navigation: 11              # 左上ナビ用
+
+layout:
+  aspect_ratio: "16:9"
+  width_inches: 13.33
+  height_inches: 7.5
+  whitespace_ratio: 0.60      # 余白を最大化
+  margin_top: 0.7
+  margin_bottom: 0.7
+  margin_left: 0.9
+  margin_right: 0.9
+  letter_spacing_wide: true   # 字間広め
+
+visual_rules:
+  border_radius: 0
+  border_width: 1             # 細い線
+  shadow: false
+  grid_strict: true           # 厳格なグリッド
+  composition: "grid_aligned"
+  emphasis: "white_space"
+
+decorations:
+  left_top_nav: true          # ★これが特徴
+  nav_format: "01. INTRODUCTION"
+  corner_dots: false
+  side_bars: false
+  thin_dividers: true         # 細い区切り線
+
+page_types:
+  title:
+    title_position: "scattered"  # 散布レイアウト
+    title_align: "center"
+    title_size: 64
+    background: "#E9E9E9"
+    has_stamps: true             # キーワードをスタンプ風に
+  section:
+    background: "#000000"
+    text_color: "#FFFFFF"
+    accent_color: "#FFFFFF"

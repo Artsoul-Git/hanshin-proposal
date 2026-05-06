@@ -1,0 +1,57 @@
+pattern_name: educational
+display_name: "教育型（スキル習得）"
+description: "受講者がスキルや知識を身につけるためのセミナー。研修・ワークショップ"
+recommended_for:
+  - 社員研修
+  - 公開講座
+  - 資格対策
+  - スキルアップ講座
+target_outcome: "スキル習得・実践可能"
+sales_pressure: none
+
+structure:
+  opening:
+    duration_minutes: 5
+    slides:
+      - type: タイトル
+        purpose: 講座タイトル
+      - type: 自己紹介
+        purpose: 講師紹介＋経歴
+      - type: コンテンツ
+        purpose: 学習目標の明示
+      - type: コンテンツ
+        purpose: 本講座の進め方
+
+  body:
+    duration_minutes: 40
+    structure:
+      - chapter:
+          name: "基礎理解"
+          slides_count_range: [15, 20]
+          flow: "概念説明 → 図解 → 例題"
+      - chapter:
+          name: "応用方法"
+          slides_count_range: [15, 20]
+          flow: "テクニック → デモ → 演習"
+      - chapter:
+          name: "実践演習"
+          slides_count_range: [10, 15]
+          flow: "ワーク → 解説 → ポイント整理"
+
+  closing:
+    duration_minutes: 10
+    slides:
+      - type: コンテンツ
+        purpose: 学習内容の総まとめ
+      - type: 3カラム
+        purpose: 持ち帰ってほしい3点
+      - type: コンテンツ
+        purpose: 次回への接続（連続講座の場合）
+
+  qa:
+    duration_minutes: 5
+    slides:
+      - type: コンテンツ
+        purpose: Q&A
+
+  total_slides_target: 90

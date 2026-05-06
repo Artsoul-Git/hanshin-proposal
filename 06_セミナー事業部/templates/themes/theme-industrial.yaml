@@ -1,0 +1,35 @@
+name: industrial
+display_name: "Industrial"
+description: "製造業・建設・物流向け、現場感のある力強いデザイン"
+colors:
+  primary: "#1A202C"
+  accent: "#ED8936"
+  positive: "#38A169"
+  negative: "#E53E3E"
+  text_main: "#1A202C"
+  text_sub: "#4A5568"
+  background_default: "#F7FAFC"
+  background_sub: "#FFFFFF"
+  divider: "#CBD5E0"
+typography:
+  ja_heading: "BIZ UDPGothic"
+  ja_body: "BIZ UDPGothic"
+font_sizes:
+  slide_title: 48
+  body: 30
+  body_minimum: 26
+layout:
+  width_inches: 13.33
+  height_inches: 7.5
+chart:
+  bar_color: "#ED8936"
+  line_width: 4
+  show_grid: true
+  grid_color: "#CBD5E0"
+  grid_style: "solid"
+page_types:
+  title:
+    background: "#1A202C"
+    title_color: "#FFFFFF"
+    subtitle_color: "#F6AD55"
+  content: {}

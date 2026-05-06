@@ -1,0 +1,32 @@
+name: warm
+display_name: "Warm"
+description: "医療・教育・小売向け、親しみやすく柔らかいデザイン"
+colors:
+  primary: "#2F855A"
+  accent: "#F6AD55"
+  positive: "#38A169"
+  negative: "#C53030"
+  text_main: "#2D3748"
+  text_sub: "#718096"
+  background_default: "#FFFAF0"
+  background_sub: "#FFFFFF"
+  divider: "#FED7AA"
+typography:
+  ja_heading: "Hiragino Maru Gothic ProN"
+  ja_body: "Hiragino Maru Gothic ProN"
+font_sizes:
+  slide_title: 44
+  body: 28
+  body_minimum: 24
+layout:
+  width_inches: 13.33
+  height_inches: 7.5
+chart:
+  bar_color: "#F6AD55"
+  line_width: 3
+  show_grid: false
+  grid_color: "#FED7AA"
+  grid_style: "dotted"
+page_types:
+  title: {background: "#FFFAF0"}
+  content: {}

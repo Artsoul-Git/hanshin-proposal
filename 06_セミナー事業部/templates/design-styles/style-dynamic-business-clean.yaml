@@ -1,0 +1,72 @@
+name: dynamic_business_clean
+display_name: "ダイナミック・ビジネス・クリーン"
+description: "高コントラスト・極太角ゴシック・グラデーション帯"
+mode: light
+recommended_for:
+  - 投資家ピッチ
+  - 経営層向け説明
+  - DXコンサル
+  - SaaS製品紹介
+
+colors:
+  primary: "#1A1A2E"          # ダークバーガンディ
+  accent: "#E91E63"           # マゼンタ
+  accent_grad_to: "#FF6F00"   # オレンジ（グラデーション終点）
+  text_main: "#1A1A2E"
+  text_sub: "#5C5C7A"
+  background_default: "#FFFFFF"
+  background_sub: "#F5F5F8"   # 淡いグレー幾何学パターン
+  divider: "#E8E8EC"
+
+typography:
+  ja_heading: "Noto Sans JP"
+  ja_body: "Noto Sans JP"
+  en_heading: "Inter"
+  en_body: "Inter"
+  fallback_ja: "Yu Gothic UI"
+  fallback_en: "Helvetica Neue"
+
+font_sizes:
+  slide_title: 60             # 圧倒的な存在感
+  section_header: 48
+  body: 28
+  body_minimum: 24
+  emphasis_number: 160
+  caption: 20
+  source: 13
+
+layout:
+  aspect_ratio: "16:9"
+  width_inches: 13.33
+  height_inches: 7.5
+  whitespace_ratio: 0.30
+  margin_top: 0.5
+  margin_bottom: 0.5
+  margin_left: 0.6
+  margin_right: 0.6
+
+visual_rules:
+  border_radius: 0            # 直線的
+  border_width: 4             # 太い
+  shadow: false
+  golden_ratio: true
+  composition: "asymmetric_grid" # 左右分割
+  emphasis: "bold_gradient_bar"
+
+decorations:
+  left_top_nav: false
+  corner_dots: false
+  side_bars: true             # 太い側面バー
+  gradient_band: true         # グラデーション帯
+  geometric_pattern: true     # 背景に幾何学パターン
+
+page_types:
+  title:
+    title_position: "left"
+    title_align: "left"
+    background: "#FFFFFF"
+    has_gradient_band: true   # 上部にグラデーション帯
+  section:
+    background: "#1A1A2E"
+    text_color: "#FFFFFF"
+    accent_color: "#E91E63"

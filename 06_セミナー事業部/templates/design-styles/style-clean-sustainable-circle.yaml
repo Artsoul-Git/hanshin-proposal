@@ -1,0 +1,73 @@
+name: clean_sustainable_circle
+display_name: "クリーン・サステナブル・サークル"
+description: "巨大円形オブジェクト・ドットパターン・フラットイラスト"
+mode: light
+recommended_for:
+  - 環境・SDGs関連
+  - ヘルスケア
+  - 教育・NPO
+  - 食品・農業
+  - 親しみやすいB2C
+
+colors:
+  primary: "#4BAA87"          # メイングリーン
+  accent: "#F39200"           # アクセントオレンジ
+  accent2: "#C0D72F"          # アクセントライム
+  text_main: "#232323"
+  text_sub: "#5A5A5A"
+  background_default: "#F5F7F6"
+  background_sub: "#FFFFFF"
+  divider: "#D5DDD8"
+
+typography:
+  ja_heading: "Noto Sans JP"
+  ja_body: "Noto Sans JP"
+  en_heading: "Quicksand"     # 丸みのあるフォント
+  en_body: "Quicksand"
+  fallback_ja: "Hiragino Maru Gothic ProN"
+  fallback_en: "Comfortaa"
+
+font_sizes:
+  slide_title: 44
+  section_header: 36
+  body: 26
+  body_minimum: 22
+  emphasis_number: 100
+  caption: 18
+  source: 12
+
+layout:
+  aspect_ratio: "16:9"
+  width_inches: 13.33
+  height_inches: 7.5
+  whitespace_ratio: 0.40
+  margin_top: 0.6
+  margin_bottom: 0.6
+  margin_left: 0.8
+  margin_right: 0.8
+
+visual_rules:
+  border_radius: 999          # 完全な丸
+  border_width: 2
+  shadow: false
+  composition: "circle_dominant" # 円が主役
+  emphasis: "color_blocks"
+
+decorations:
+  left_top_nav: false
+  corner_dots: true           # ドット集合体
+  side_bars: false
+  giant_circle: true          # 画面端に巨大円
+  dot_patterns: true          # ドットパターン背景
+  flat_illustration_zones: true
+
+page_types:
+  title:
+    title_position: "left"
+    title_align: "left"
+    background: "#F5F7F6"
+    has_giant_circle: true    # 右下に巨大円
+  section:
+    background: "#4BAA87"
+    text_color: "#FFFFFF"
+    accent_color: "#F39200"
