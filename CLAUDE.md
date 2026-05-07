@@ -1,4 +1,6 @@
-# Google Antigravity プロジェクト
+# Google Antigravity / AS AI導入支援事業
+
+> **全体像・スキル一覧・ファイルゾーン：`00_AIエージェント活用ガイド.md` を参照**
 
 ## プロジェクト概要
 
