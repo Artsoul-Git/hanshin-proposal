@@ -1219,8 +1219,8 @@ function toggleSection(id) {
 <tr><th>区分</th><th>内容</th><th>金額</th><th>支払先</th></tr>
 <tr>
   <td><strong>初期費用（1か月目一括）</strong></td>
-  <td>ライモBizラーニング受講料（3名分）<br><small>※6か月間視聴可能。人材開発支援助成金で最大75%軽減の可能性あり</small></td>
-  <td><strong>¥600,000</strong><br><small>助成金活用時：実質¥150,000</small></td>
+  <td>ライモBizラーニング受講料（1アカウント・管理者含む3名受講可能・最大6か月間視聴）<br><small>※一度きりの支払い</small></td>
+  <td><strong>¥200,000</strong></td>
   <td>株式会社ライモ</td>
 </tr>
 <tr>
@@ -1249,7 +1249,7 @@ function toggleSection(id) {
 <tr><th>項目</th><th>1か月目<br><small>初期費用含む</small></th><th>2か月目</th><th>3か月目</th><th>4〜6か月目</th><th>7か月目〜</th></tr>
 <tr style="background:#FFF5F5;">
   <td><strong>ライモBizラーニング<br>（初期費用・一括計上）</strong></td>
-  <td style="color:#C53030; font-weight:bold;">-¥600,000</td>
+  <td style="color:#C53030; font-weight:bold;">-¥200,000</td>
   <td>—</td><td>—</td><td>—</td><td>—</td>
 </tr>
 <tr>
@@ -1276,7 +1276,7 @@ function toggleSection(id) {
 </tr>
 <tr style="background:#EDF2F7; font-weight:bold;">
   <td><strong>月次損益</strong></td>
-  <td style="color:#C53030">-¥874,896</td>
+  <td style="color:#C53030">-¥474,896</td>
   <td style="color:#C53030">-¥274,896</td>
   <td style="color:#C53030">-¥276,546</td>
   <td style="color:#C05621">-¥49,746</td>
@@ -1284,47 +1284,31 @@ function toggleSection(id) {
 </tr>
 </table>
 
-<h3>累計投資回収シミュレーション（2シナリオ比較）</h3>
+<h3>累計投資回収シミュレーション</h3>
 
-<div class="two-col" style="margin:12px 0 16px;">
-  <div style="background:#FFF5F5; border:2px solid #FEB2B2; border-radius:10px; padding:16px; text-align:center;">
-    <div style="font-weight:bold; font-size:14px; color:#C53030; margin-bottom:6px;">シナリオA — 助成金なし</div>
-    <div style="font-size:12px; color:#718096; margin-bottom:10px;">ラーニング ¥600,000（フル負担）</div>
-    <div style="font-size:32px; font-weight:bold; color:#C53030;">23か月目</div>
-    <div style="font-size:13px; color:#C53030; margin-top:4px;">で投資完全回収（目安）</div>
-    <div style="font-size:11px; color:#718096; margin-top:8px;">6か月累計最大投資：¥1,575,576</div>
-  </div>
-  <div style="background:#F0FFF4; border:2px solid #9AE6B4; border-radius:10px; padding:16px; text-align:center;">
-    <div style="font-weight:bold; font-size:14px; color:#276749; margin-bottom:6px;">シナリオB — 助成金75%活用</div>
-    <div style="font-size:12px; color:#718096; margin-bottom:10px;">ラーニング 実質負担 ¥150,000</div>
-    <div style="font-size:32px; font-weight:bold; color:#276749;">18か月目</div>
-    <div style="font-size:13px; color:#276749; margin-top:4px;">で投資完全回収（目安）</div>
-    <div style="font-size:11px; color:#718096; margin-top:8px;">6か月累計最大投資：¥1,125,576</div>
-  </div>
+<div style="background:#F0FFF4; border:2px solid #9AE6B4; border-radius:10px; padding:20px; text-align:center; margin:12px 0 16px;">
+  <div style="font-size:14px; color:#276749; font-weight:bold; margin-bottom:8px;">プロジェクト全体 投資回収目安</div>
+  <div style="font-size:40px; font-weight:bold; color:#1A365D;">19か月目</div>
+  <div style="font-size:13px; color:#4A5568; margin-top:6px;">で投資完全回収（目安）</div>
+  <div style="font-size:12px; color:#718096; margin-top:8px;">6か月目が累計最大投資：¥1,175,576 ／ 7か月目から毎月 +¥96,334 ずつ回収</div>
 </div>
 
 <table class="roi-table">
-<tr><th>期間</th><th>月次損益</th><th>累計（A：助成金なし）</th><th>累計（B：助成金75%）</th><th>状態</th></tr>
-<tr><td>1か月目</td><td>A:-¥874,896 / B:-¥424,896</td><td>-¥874,896</td><td>-¥424,896</td><td>—</td></tr>
-<tr><td>2か月目</td><td>-¥274,896</td><td>-¥1,149,792</td><td>-¥699,792</td><td>—</td></tr>
-<tr><td>3か月目</td><td>-¥276,546</td><td>-¥1,426,338</td><td>-¥976,338</td><td>—</td></tr>
-<tr><td>4か月目</td><td>-¥49,746</td><td>-¥1,476,084</td><td>-¥1,026,084</td><td>—</td></tr>
-<tr><td>5か月目</td><td>-¥49,746</td><td>-¥1,525,830</td><td>-¥1,075,830</td><td>—</td></tr>
-<tr style="background:#FFF5F5; font-weight:bold;"><td><strong>6か月目</strong></td><td>-¥49,746</td><td><strong>-¥1,575,576</strong></td><td><strong>-¥1,125,576</strong></td><td><strong>底打ち</strong></td></tr>
-<tr><td>7か月目〜</td><td>+¥96,334/月</td><td colspan="2" style="text-align:center; color:#276749; font-weight:bold;">▶ 毎月 +¥96,334 ずつ回収</td><td>回収開始</td></tr>
-<tr><td>12か月目（1年）</td><td>+¥96,334</td><td>-¥997,572</td><td>-¥547,572</td><td>—</td></tr>
-<tr><td>18か月目</td><td>+¥96,334</td><td>-¥419,568</td><td style="color:#276749; font-weight:bold;">+¥30,432 ✓</td><td>B 完全回収</td></tr>
-<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>23か月目</strong></td><td>+¥96,334</td><td style="color:#276749;"><strong>+¥62,102 ✓</strong></td><td style="color:#276749;"><strong>+¥594,102</strong></td><td>A 完全回収</td></tr>
+<tr><th>期間</th><th>月次損益</th><th>累計損益</th><th>状態</th></tr>
+<tr><td>1か月目</td><td>-¥474,896</td><td>-¥474,896</td><td>—</td></tr>
+<tr><td>2か月目</td><td>-¥274,896</td><td>-¥749,792</td><td>—</td></tr>
+<tr><td>3か月目</td><td>-¥276,546</td><td>-¥1,026,338</td><td>—</td></tr>
+<tr><td>4か月目</td><td>-¥49,746</td><td>-¥1,076,084</td><td>—</td></tr>
+<tr><td>5か月目</td><td>-¥49,746</td><td>-¥1,125,830</td><td>—</td></tr>
+<tr style="background:#FFF5F5; font-weight:bold;"><td><strong>6か月目</strong></td><td>-¥49,746</td><td><strong>-¥1,175,576</strong></td><td><strong>底打ち</strong></td></tr>
+<tr><td>7か月目〜</td><td>+¥96,334/月</td><td style="text-align:center; color:#276749; font-weight:bold;" colspan="2">▶ 毎月 +¥96,334 ずつ回収</td></tr>
+<tr><td>12か月目（1年）</td><td>+¥96,334</td><td>-¥597,572</td><td>—</td></tr>
+<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>19か月目</strong></td><td>+¥96,334</td><td style="color:#276749;"><strong>+¥76,766 ✓</strong></td><td><strong>完全回収</strong></td></tr>
 </table>
 
 <div class="ok" style="margin-top:16px;">
 <span class="label">回収完了後の年間純利益</span>
 第3段階 AS顧問料・Google Workspace・ライモBizツールズ を差し引いた<strong>純利益は ¥96,334/月 → 年間 ¥1,156,008</strong>。さらに「スタッフの離職抑制」「記録業務ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
-</div>
-
-<div class="info" style="margin-top:16px;">
-<span class="label">人材開発支援助成金について</span>
-ライモBizラーニングは<strong>人材開発支援助成金（特別育成訓練コース）</strong>の対象コースです。中小企業の場合、受講費用の最大75%が支給される可能性があります（1名あたり最大¥150,000相当）。適用可否・申請手続きはライモ社担当者または社会保険労務士にご確認ください。助成金を活用することで<strong>回収時期が23か月目 → 18か月目へ約5か月短縮</strong>できます。
 </div>
 
 <h3>KPI目標値（成果の測定指標）</h3>
