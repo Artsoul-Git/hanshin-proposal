@@ -13,6 +13,19 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git add -A && git diff --cached --quiet || git commit -m \"auto: $(date '+%Y%m%d_%H%M%S') 自動保存\"",
+            "shell": "bash",
+            "statusMessage": "自動保存中...",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   }
 }

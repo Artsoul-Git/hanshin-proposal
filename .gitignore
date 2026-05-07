@@ -8,6 +8,11 @@ desktop.ini
 *.swp
 *~
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
 # 個人情報を含む可能性のあるバイナリ
 # ※ PDF・DOCX・PNG は git-lfs またはローカル管理推奨
 *.pdf
