@@ -602,7 +602,7 @@ function toggleSection(id) {
 <h3>全体構成の考え方</h3>
 <div class="info">
 <span class="label">設計原則</span>
-<strong>Googleツールを基盤に、ライモBizは「現場の手書きをゼロにする」ためだけに使う</strong>。音声入力・打刻・スマホ操作など、Google Workspace（Googleが提供するクラウド型業務ツール群。Gmail・Drive・Sheets・Meet・GeminiなどがセットになったプランでBusiness Standardを契約します）単体では補えない現場接点にのみカスタムアプリを開発します。データはすべてGoogle Sheetsに集約し、Gemini（Google WorkspaceのAI機能）が分析・出力します。
+<strong>Googleツールを基盤に、ライモBizは「現場の手書きをゼロにする」を中心に使う</strong>。音声入力・打刻・スマホ操作など、Google Workspace（Googleが提供するクラウド型業務ツール群。Gmail・Drive・Sheets・Meet・GeminiなどがセットになったプランでBusiness Standardを契約します）単体では補えない現場接点にカスタムアプリを開発します。<strong>入力はGoogle FormsまたはライモBizで作成するカスタムアプリを用途別に使い分けます。</strong>データはすべてGoogle Sheetsに集約し、Gemini（Google WorkspaceのAI機能）が分析・出力します。
 </div>
 
 <h3>Google Workspace Business Standard</h3>
@@ -646,7 +646,7 @@ function toggleSection(id) {
 </pre>
 </div>
 
-<h3>ライモBiz カスタムアプリ（2本開発）</h3>
+<h3>ライモBiz カスタムアプリ（3本開発）</h3>
 
 <div class="app-card">
   <div class="app-name">アプリ① 出退勤管理アプリ <span class="app-priority">第1段階 2か月目 開発</span></div>
@@ -674,6 +674,19 @@ function toggleSection(id) {
   </table>
 </div>
 
+<div class="app-card" style="border-left-color:#276749;">
+  <div class="app-name" style="color:#276749;">アプリ③ 利用者受入れフォームアプリ <span class="app-priority" style="background:#276749;">第1段階 1か月目 開発</span></div>
+  <table style="margin-top:10px">
+  <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>目的</strong></td><td>問い合わせ〜受入れ時の初回情報収集をアプリで完結。台帳への手入力・転記ゼロ</td></tr>
+  <tr><td><strong>操作者</strong></td><td>AIマネージャーまたは支援員（スマホ/PC）— Google Workspaceアカウント不要</td></tr>
+  <tr><td><strong>入力項目</strong></td><td>氏名・生年月日・障害種別・担当相談員・問い合わせ経路・見学日・体験日・書類受領状況チェック</td></tr>
+  <tr><td><strong>出力先</strong></td><td>Google Sheets「受入れ進捗DB」に自動保存。台帳マスターと連携し受入れ状況を一覧管理</td></tr>
+  <tr><td><strong>自動連携</strong></td><td>登録完了 → GASで担当者へ通知メール送信 + 個人フォルダ自動生成のトリガーに連携</td></tr>
+  <tr><td><strong>技術基盤</strong></td><td>ライモBizカスタムアプリ + Google Sheets DB + GAS連携</td></tr>
+  </table>
+</div>
+
 <hr>
 
 <!-- Section 4 -->
@@ -695,8 +708,8 @@ function toggleSection(id) {
 <div class="timeline">
   <div class="timeline-item">
     <div class="tl-date">STEP 1　問い合わせ受付</div>
-    <div class="tl-title">Google Forms で初回情報を登録（約5分）</div>
-    <p style="font-size:14px;color:#4A5568">氏名・生年月日・障害種別・担当相談員情報をフォームに入力。送信と同時に台帳に自動追記＋通知メール発送（GAS）。</p>
+    <div class="tl-title">ライモBizカスタムアプリ（受入れフォーム）で初回情報を登録（約5分）</div>
+    <p style="font-size:14px;color:#4A5568">氏名・生年月日・障害種別・担当相談員情報をスマホアプリで入力。送信と同時に台帳に自動追記＋通知メール発送（GAS）。アプリはライモBizで開発・メンテナンスまで自社完結。</p>
   </div>
   <div class="timeline-item">
     <div class="tl-date">STEP 2　見学・体験</div>
@@ -723,45 +736,106 @@ function toggleSection(id) {
 <hr>
 
 <!-- Section 5 -->
-<h2 id="s5"><span class="sec-num">5</span>国保連書類 現実的システム化ガイド</h2>
+<h2 id="s5"><span class="sec-num">5</span>書類業務の効率化設計</h2>
 
-<p>国保連への請求書類（就労継続支援B型）は、SEでなくても段階的にシステム化できます。以下の3レベルで現実的なアプローチを示します。</p>
+<div class="info">
+<span class="label">設計方針</span>
+<strong>今回の最重要課題は「現場の書類1〜7のデジタル化・AI化」です。</strong>これらの書類をまとめて効率化することで、月間数十時間の記録・転記作業を大幅に削減します。国保連への提出書類（請求書・明細書）の自動化は、1〜7の効率化の延長線上にある努力目標と位置づけます。
+</div>
+
+<h3>【最重要課題】まる様 現在の書類1〜7 — 効率化ロードマップ</h3>
+
+<table>
+<tr><th>#</th><th>書類名</th><th>現状の課題</th><th>効率化の手段</th><th>対応段階</th></tr>
+<tr>
+  <td><strong>1</strong></td>
+  <td>サービス等利用計画 案</td>
+  <td>相談支援専門員が手書き・Wordで毎回ゼロから作成。更新時も転記が多い</td>
+  <td>面談録音 → 文字起こし → GeminiがSheetsテンプレートへ自動下書き生成</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+<tr>
+  <td><strong>2</strong></td>
+  <td>サービス提供記録・作業報告確認表</td>
+  <td>支援員が紙に手書き → 事務が転記。二重作業で月末が繁忙</td>
+  <td>ライモBizアプリ②（記録入力アプリ）で音声/タップ入力 → Sheetsに自動保存</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+<tr>
+  <td><strong>3</strong></td>
+  <td>作業日報</td>
+  <td>毎日手書きで記録。特記事項の書き起こしに時間がかかる</td>
+  <td>ライモBizアプリ②で音声入力 → 自動テキスト化。GeminiがAI整形して出力</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+<tr>
+  <td><strong>4</strong></td>
+  <td>就労継続支援 提供実績記録票</td>
+  <td>アプリ①②のデータを手で集計し、国保連様式に転記。月末に数時間かかる</td>
+  <td>アプリ①②のSheetsデータをVLOOKUP/QUERYで自動集計 → 様式に自動流し込み（印刷提出）</td>
+  <td><span class="badge badge-green">第1〜2段階</span></td>
+</tr>
+<tr>
+  <td><strong>5</strong></td>
+  <td>相談支援記録 ABC</td>
+  <td>相談内容を手書きメモ → 後から清書。記録漏れ・情報の抜けが発生</td>
+  <td>Google Meet録音 + 文字起こし → GeminiがABC形式で自動整形。確認・保存のみ</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+<tr>
+  <td><strong>6</strong></td>
+  <td>議事録・個別支援計画案・個別支援計画・モニタリング評価</td>
+  <td>会議のたびに手書き議事録 → 清書 → 個別支援計画に転記。作成に1〜2時間</td>
+  <td>Google Meet録音 + 文字起こし → Geminiが議事録・計画案を自動生成。修正のみで完成</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+<tr>
+  <td><strong>7</strong></td>
+  <td>面接記録・アセスメントシート・フェイスシート</td>
+  <td>面接ごとに手書きメモ → 事務所で整理・入力。面接後の事務作業が重い</td>
+  <td>Google Meet録音 + 文字起こし → GeminiがASシート・フェイスシートの下書きを5分で生成</td>
+  <td><span class="badge badge-blue">第1段階</span></td>
+</tr>
+</table>
+
+<div class="ok" style="margin-top:16px;">
+<span class="label">記録効率化の核心：Google Meet録音 ＋ 文字起こし</span>
+相談・面接・会議はすべてGoogle Meetで録音し、文字起こしを自動取得。その文字起こしデータをGeminiに渡すことで、書類1・5・6・7のAI下書き生成が一気に実現します。<strong>「録音して、後でAIに整理させる」</strong>というたった1つの習慣が、月間記録業務の大幅な時短につながります。
+</div>
+
+<h3>【努力目標・延長線上】国保連への提出書類</h3>
+
+<p style="font-size:14px; color:#718096; margin-bottom:12px;">書類4（提供実績記録票）のSheetsデータが整備された後、以下を段階的に目指します。</p>
 
 <div class="level-card">
-  <span class="lv lv-1">レベル1（AIなし）</span>
-  <h4>Google Sheets で提供実績記録票テンプレートを作成</h4>
+  <span class="lv lv-1">レベル1（AIなし）— 第1〜2段階で実現</span>
+  <h4>Sheetsで提供実績記録票を自動集計・印刷提出</h4>
   <ul>
-    <li>提供実績記録票の様式をSheetsで再現（行列・書式を忠実にコピー）</li>
-    <li>ライモBiz出退勤アプリのDBデータをVLOOKUP/QUERY関数で自動集計</li>
-    <li>月末に数値が入ったシートを印刷して提出（手入力ゼロ）</li>
+    <li>ライモBizアプリ①②のDBデータをVLOOKUP/QUERY関数で自動集計</li>
+    <li>国保連様式を忠実に再現したSheetsテンプレートに自動流し込み</li>
+    <li>月末に印刷して提出（手入力ゼロ）</li>
   </ul>
 </div>
 
 <div class="level-card">
-  <span class="lv lv-2">レベル2 — 1〜2ヶ月で実現（Gemini補助）</span>
+  <span class="lv lv-2">レベル2 — 第2段階以降（Gemini補助）</span>
   <h4>GASスクリプトで Sheets → 書式付きPDF自動変換</h4>
   <ul>
     <li>GAS（Google Apps Script）でSheetsのデータを国保連フォーマットのPDFに自動変換</li>
-    <li><strong>コード生成はGeminiに依頼可能</strong>（「このSheetsを国保連の様式でPDF出力するGASコードを書いて」で8割は動くコードが出る）</li>
-    <li>AIマネージャーがGeminiとやりとりしながら修正→完成させる流れ</li>
+    <li>コード生成はGeminiに依頼可能。AIマネージャーが修正しながら完成させる流れ</li>
     <li>難易度：<span class="badge badge-blue">中（Gemini補助があれば非プログラマーでも可能）</span></li>
   </ul>
 </div>
 
 <div class="level-card">
-  <span class="lv lv-3">レベル3 — 将来課題（外部連携）</span>
-  <h4>国保連システム（インターフェース）との直接連携</h4>
+  <span class="lv lv-3">レベル3 — 将来課題</span>
+  <h4>国保連システムとの直接連携</h4>
   <ul>
-    <li>国保連の「介護給付費請求書等」をネット請求するシステムとのデータ連携</li>
+    <li>国保連のネット請求システムとのデータ直接連携</li>
     <li>これはSEレベルの作業が必要</li>
-    <li>現状の処理を継続。レベル1・2で入力工数を最小化する方針を推奨</li>
+    <li>現状の処理を継続。レベル1・2で入力工数を最小化することが現実的ゴール</li>
     <li>難易度：<span class="badge badge-red">高（外注 or 専門ソフト必要）</span></li>
   </ul>
-</div>
-
-<div class="ok">
-<span class="label">推奨アプローチ</span>
-第1段階でレベル1を構築し、第2段階でレベル2（GAS自動化）を目指します。「印刷して提出する」という最終工程は変わりませんが、入力・集計作業は最小化できます。Sheetsで集計されたデータを専用ソフトに転記する時間を最小化することが現実的なゴールです。
 </div>
 
 <hr>
@@ -1050,9 +1124,17 @@ function toggleSection(id) {
 
 <div class="ok">
 <span class="label">各段階の説明</span>
-<strong>第1段階（基盤づくり）</strong>：システムを作る3ヶ月。Googleの土台を整え、ライモBizアプリを開発し、現場での使い方を研修で習得します。<br>
-<strong>第2段階（定着・活用）</strong>：現場に馴染ませる3ヶ月。アプリ開発はなく、AIマネージャーが「自分でできる」確信を持てるまで伴走します。<br>
+<strong>第1段階（基盤づくり）</strong>：システムを作る3か月。Google Workspaceの土台を整え、Meet録音＋文字起こしで記録業務を即時効率化。ライモBizアプリを3本開発し、現場での使い方を研修で習得します。<br>
+<strong>第2段階（定着・活用）</strong>：現場に馴染ませる3か月。アプリ開発はなく、AIマネージャーが「自分でできる」確信を持てるまで伴走します。<br>
 <strong>第3段階（継続サポート）</strong>：有限会社アートソウルが「見守る存在」になる期間。月1回の相談で新しい改善提案や最新AIトレンドを提供し続けます。
+</div>
+
+<div class="tip" style="margin-top:16px;">
+<span class="label">別途 初期費用（株式会社ライモへのお支払い）</span>
+<strong>ライモBizラーニング受講料：1アカウントあたり 200,000円（税込）</strong><br>
+上記の月額には含まれません。受講人数（アカウント数）に応じて別途ご負担いただきます。<br>
+人材開発支援助成金を活用することで最大75%軽減の可能性があります（中小企業の場合）。<br>
+<small style="color:#718096;">※ライモBizツールズの維持費（月額550円/アカウント）は1〜2か月目は無料、3か月目から発生します。</small>
 </div>
 
 <hr>
@@ -1067,8 +1149,8 @@ function toggleSection(id) {
 
   <div class="month-card">
     <h4>1か月目（1〜30日目）— 設計・環境構築</h4>
-    <div class="week-row"><div class="week-label">1週目</div><div>Google Workspace Business Standard 3アカウント契約・初期設定。Driveフォルダ設計・アクセス権限設定。AIマネージャー3名のGmail/Meet/Sheets研修（基本操作）</div></div>
-    <div class="week-row"><div class="week-label">2週目</div><div>利用者台帳マスター（5シート）設計・既存データ移行。Google Forms受入れフォーム作成。GASによる個人フォルダ自動生成スクリプト開発</div></div>
+    <div class="week-row"><div class="week-label">1週目</div><div>Google Workspace Business Standard 3アカウント契約・初期設定。Driveフォルダ設計・アクセス権限設定。AIマネージャー3名のGmail/Meet/Sheets/Gemini研修（基本操作）。<strong>Google MeetとGoogle カレンダーを使った面談・相談の録音＋文字起こし体制を即日構築。相談支援記録・議事録・面接記録（書類5・6・7）の記録業務効率化を第1週から開始。</strong></div></div>
+    <div class="week-row"><div class="week-label">2週目</div><div>利用者台帳マスター（5シート）設計・既存作業を移行。<strong>ライモBizアプリ③（受入れフォーム）を設計・開発・本番稼働。</strong>GASによる個人フォルダ自動生成スクリプト開発</div></div>
     <div class="week-row"><div class="week-label">3週目</div><div>AI研修 第1回・第2回実施（AI基礎 + プロンプト設計）。国保連Sheetsテンプレート（レベル1）作成開始</div></div>
     <div class="week-row"><div class="week-label">4週目</div><div>ライモBizアプリ①（出退勤管理）設計・開発開始。国保連テンプレート完成・動作確認。週次MTG① 実施</div></div>
   </div>
@@ -1132,18 +1214,26 @@ function toggleSection(id) {
 <!-- Section 10 -->
 <h2 id="s10"><span class="sec-num">10</span>ROI・投資回収シミュレーション</h2>
 
+<div class="tip" style="margin-bottom:16px;">
+<span class="label">費用の前提</span>
+<strong>月次費用：</strong>有限会社アートソウル顧問料 ＋ Google Workspace Business Standard（3アカウント：¥1,872×3＝¥5,616/月）＋ ライモBizツールズ（3アカウント：¥550×3＝¥1,650/月 ※1〜2か月目は無料）<br>
+<strong>別途初期費用：</strong>ライモBizラーニング受講料（¥200,000/アカウント × 受講人数）は月次ROIに含まず別途ご負担
+</div>
+
 <h3>月間損益シミュレーション</h3>
 
 <table class="roi-table">
-<tr><th>項目</th><th>第1段階（1〜3か月目）</th><th>第2段階（4〜6か月目）</th><th>第3段階以降</th></tr>
+<tr><th>項目</th><th>1〜2か月目</th><th>3か月目</th><th>4〜6か月目</th><th>7か月目〜</th></tr>
 <tr>
   <td><strong>業務削減効果（労務費換算）</strong></td>
+  <td>+¥30,720<br><small>（導入途中・約20%）</small></td>
   <td>+¥30,720<br><small>（導入途中・約20%）</small></td>
   <td>+¥107,520<br><small>（定着中・約70%）</small></td>
   <td>+¥153,600<br><small>（フル稼働・100%）</small></td>
 </tr>
 <tr>
   <td><strong>有限会社アートソウルへの支払い</strong></td>
+  <td>-¥300,000</td>
   <td>-¥300,000</td>
   <td>-¥150,000</td>
   <td>-¥50,000</td>
@@ -1153,18 +1243,21 @@ function toggleSection(id) {
   <td>-¥5,616</td>
   <td>-¥5,616</td>
   <td>-¥5,616</td>
+  <td>-¥5,616</td>
 </tr>
 <tr>
-  <td><strong>ライモBiz 利用料（目安）</strong></td>
-  <td>-¥10,000</td>
-  <td>-¥10,000</td>
-  <td>-¥10,000</td>
+  <td><strong>ライモBizツールズ（3アカウント）</strong></td>
+  <td><span style="color:#276749; font-weight:bold;">¥0（無料期間）</span></td>
+  <td>-¥1,650</td>
+  <td>-¥1,650</td>
+  <td>-¥1,650</td>
 </tr>
 <tr style="background:#FFF5F5; font-weight:bold;">
   <td><strong>月次損益</strong></td>
-  <td style="color:#C53030">-¥284,896</td>
-  <td style="color:#C05621">-¥58,096</td>
-  <td style="color:#276749"><strong>+¥87,984</strong></td>
+  <td style="color:#C53030">-¥274,896</td>
+  <td style="color:#C53030">-¥276,546</td>
+  <td style="color:#C05621">-¥49,746</td>
+  <td style="color:#276749"><strong>+¥96,334</strong></td>
 </tr>
 </table>
 
@@ -1172,19 +1265,19 @@ function toggleSection(id) {
 
 <table class="roi-table">
 <tr><th>期間</th><th>月次損益</th><th>累計損益</th><th>状態</th></tr>
-<tr><td>1か月目</td><td>-¥284,896</td><td>-¥284,896</td><td>—</td></tr>
-<tr><td>2か月目</td><td>-¥284,896</td><td>-¥569,792</td><td>—</td></tr>
-<tr><td>3か月目</td><td>-¥284,896</td><td>-¥854,688</td><td>—</td></tr>
-<tr><td>4か月目</td><td>-¥58,096</td><td>-¥912,784</td><td>—</td></tr>
-<tr><td>5か月目</td><td>-¥58,096</td><td>-¥970,880</td><td>—</td></tr>
-<tr><td>6か月目</td><td>-¥58,096</td><td>-¥1,028,976</td><td>底打ち</td></tr>
-<tr><td>7か月目〜</td><td>+¥87,984/月</td><td>回収開始</td><td>—</td></tr>
-<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>18か月目（目安）</strong></td><td>+¥87,984</td><td style="color:#276749"><strong>≒ 損益ゼロ（完全回収）</strong></td><td>投資回収完了</td></tr>
+<tr><td>1か月目</td><td>-¥274,896</td><td>-¥274,896</td><td>—</td></tr>
+<tr><td>2か月目</td><td>-¥274,896</td><td>-¥549,792</td><td>—</td></tr>
+<tr><td>3か月目</td><td>-¥276,546</td><td>-¥826,338</td><td>—</td></tr>
+<tr><td>4か月目</td><td>-¥49,746</td><td>-¥876,084</td><td>—</td></tr>
+<tr><td>5か月目</td><td>-¥49,746</td><td>-¥925,830</td><td>—</td></tr>
+<tr><td>6か月目</td><td>-¥49,746</td><td>-¥975,576</td><td>底打ち</td></tr>
+<tr><td>7か月目〜</td><td>+¥96,334/月</td><td>回収開始</td><td>—</td></tr>
+<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>17か月目（目安）</strong></td><td>+¥96,334</td><td style="color:#276749"><strong>≒ 損益ゼロ（完全回収）</strong></td><td>投資回収完了</td></tr>
 </table>
 
 <div class="ok">
 <span class="label">投資回収後の年間純利益</span>
-第3段階 顧問料・Google Workspace・ライモBiz を差し引いた<strong>純利益は ¥87,984/月 → 年間 ¥1,055,808</strong>。さらに「スタッフの離職抑制」「行政書類の提出ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
+第3段階 顧問料・Google Workspace・ライモBizツールズ を差し引いた<strong>純利益は ¥96,334/月 → 年間 ¥1,156,008</strong>。さらに「スタッフの離職抑制」「記録業務ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
 </div>
 
 <h3>3パターン試算比較</h3>
