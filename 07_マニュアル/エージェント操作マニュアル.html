@@ -120,6 +120,7 @@
     <li><a href="#ch16">第16章　エージェントへの正しい指示の出し方</a></li>
     <li><a href="#ch17">第17章　よくあるトラブルと対処</a></li>
     <li><a href="#ch18">第18章　用語集</a></li>
+    <li><a href="#ch19">第19章　Claude Code 操作（起動・セッション再開・git管理）</a></li>
   </ul>
 </div>
 
@@ -1201,9 +1202,136 @@ PIPELINEは以下を自動でチェックします：<br>
 
 <hr>
 
+<!-- 第19章 -->
+<h2 id="ch19"><span class="num">19</span>Claude Code 操作（起動・セッション再開・git管理）</h2>
+
+<div class="lead">
+このプロジェクト全体は Claude Code（CLI）で動いている。作業ファイルはDドライブ、会話履歴はCドライブ。セッションをまたいだ作業継続・変更の取り消しの手順をここに集約する。
+</div>
+
+<h3>起動方法</h3>
+
+<h4>通常起動</h4>
+<div class="prompt-box"><code>claude</code></div>
+<p>プロジェクトフォルダ（<code>D:\Google Antigravity\AS_AI導入支援事業_cc\</code>）で実行。</p>
+
+<h4>直前のセッションをそのまま続ける</h4>
+<div class="prompt-box"><code>claude --continue</code></div>
+<p>最後のセッションの会話履歴を読み込んで再開。「さっきの話の続き」をそのまま指示できる。</p>
+
+<h4>過去のセッションを選んで再開</h4>
+<div class="prompt-box"><code>claude --resume</code></div>
+<p>セッション一覧が表示される。日時と内容から選択して再開。</p>
+
+<div class="tip">
+<span class="label">「完全な続き」にはならない場合がある</span>
+会話が長いと自動的に要約・圧縮される。ただし以下の3層で文脈は引き継がれる。
+</div>
+
+<h4>文脈の引き継ぎ：3層の仕組み</h4>
+<table>
+<tr><th>層</th><th>何が残るか</th><th>場所</th></tr>
+<tr><td>会話履歴（JSONL）</td><td>全会話テキスト・ツール呼び出し（圧縮あり）</td><td>C:\Users\kei\.claude\projects\*.jsonl</td></tr>
+<tr><td>メモリ（memory\*.md）</td><td>重要な事実・判断・設定（自動ロード）</td><td>C:\Users\kei\.claude\projects\...\memory\</td></tr>
+<tr><td>CLAUDE.md</td><td>プロジェクトルール・構成（常時読込）</td><td>各フォルダの CLAUDE.md</td></tr>
+</table>
+<p>作業の続きなら <code>claude --continue</code>、新テーマなら普通に <code>claude</code>（メモリとCLAUDE.mdが補完）。</p>
+
+<hr>
+
+<h3>自動保存の仕組み</h3>
+<p>Claude が1回の返答を終えるたびに自動で git コミットが走る。</p>
+<div class="prompt-box">自動保存中...</div>
+<p>画面下部に上記が表示されたら保存完了。コミットメッセージの形式：</p>
+<div class="prompt-box">auto: 20260508_143022 [js/slides.js,css/style.css] 自動保存</div>
+<p><code>[ファイル名]</code> 部分で何が変わったか分かる（最大3ファイルまで表示）。変更がなければスキップされる。</p>
+
+<div class="tip">
+<span class="label">設定ファイルの場所</span>
+<code>D:\Google Antigravity\AS_AI導入支援事業_cc\.claude\settings.json</code>
+</div>
+
+<hr>
+
+<h3>作業履歴の確認</h3>
+
+<h4>最近の変更一覧を見る</h4>
+<div class="prompt-box"><code>! git log --oneline -20</code></div>
+
+<h4>特定コミットの変更内容を確認</h4>
+<div class="prompt-box"><code>! git show a1b2c3d</code></div>
+
+<h4>2つのコミット間の差分を確認</h4>
+<div class="prompt-box"><code>! git diff 9e8f7g6..a1b2c3d</code></div>
+
+<div class="tip">
+<span class="label"><code>!</code> を先頭につけると</span>
+Claude を介さず直接コマンドが実行される。
+</div>
+
+<hr>
+
+<h3>一つ前に戻す方法（ロールバック）</h3>
+
+<h4>① 直前のコミットだけ取り消す（最も安全）</h4>
+<div class="prompt-box"><code>! git revert HEAD</code></div>
+<p>「戻す」操作自体が新しいコミットとして記録される。元の履歴は消えない。</p>
+
+<h4>② 特定コミットの時点まで完全に巻き戻す</h4>
+<div class="prompt-box"><code>! git reset --hard a1b2c3d</code></div>
+<div class="warn">
+<span class="label">⚠️ 注意</span>
+そのコミット以降の変更は消える。やり直しが効かないので慎重に。
+</div>
+
+<h4>③ 特定ファイルだけ元に戻す</h4>
+<div class="prompt-box"><code>! git checkout a1b2c3d -- js/slides.js</code></div>
+<p>1ファイルだけ特定時点の内容に戻す。他のファイルは影響なし。</p>
+
+<hr>
+
+<h3>重要な作業前後は手動コミット</h3>
+<p>自動保存のメッセージは「auto: 自動保存」のみ。大きな変更前後は手動コミットで意味のあるメモを残す。</p>
+
+<h4>Claudeに頼む場合</h4>
+<div class="prompt-box">git commit</div>
+
+<h4>自分で実行する場合</h4>
+<div class="prompt-box"><code>! git add -A &amp;&amp; git commit -m "slides.js: ルートAプロンプトを3パターンに増やした"</code></div>
+
+<hr>
+
+<h3>コマンド早見表</h3>
+<table>
+<tr><th>やりたいこと</th><th>コマンド</th></tr>
+<tr><td>前回の続きから再開</td><td><code>claude --continue</code></td></tr>
+<tr><td>過去セッション一覧から再開</td><td><code>claude --resume</code></td></tr>
+<tr><td>現在の変更状況を確認</td><td><code>! git status</code></td></tr>
+<tr><td>変更の中身を確認</td><td><code>! git diff</code></td></tr>
+<tr><td>履歴を20件表示</td><td><code>! git log --oneline -20</code></td></tr>
+<tr><td>直前に戻す（安全）</td><td><code>! git revert HEAD</code></td></tr>
+<tr><td>特定コミットに巻き戻す</td><td><code>! git reset --hard &lt;コミットID&gt;</code></td></tr>
+<tr><td>特定ファイルだけ戻す</td><td><code>! git checkout &lt;コミットID&gt; -- &lt;ファイルパス&gt;</code></td></tr>
+<tr><td>手動コミット（Claudeに依頼）</td><td><code>git commit</code></td></tr>
+</table>
+
+<hr>
+
+<h3>ストレージの仕組み（Cドライブ増加の原因）</h3>
+<table>
+<tr><th>保存先</th><th>内容</th><th>削除可否</th></tr>
+<tr><td>Dドライブ（プロジェクト）</td><td>Claude が編集したファイル・git管理対象</td><td>—</td></tr>
+<tr><td>C:\Users\kei\.claude\projects\*.jsonl</td><td>会話履歴（セッションごとに増加）</td><td>✅ 削除可（動作に影響なし）</td></tr>
+<tr><td>C:\Users\kei\.claude\projects\...\memory\</td><td>メモリファイル（小さい）</td><td>⚠️ 削除すると記憶が消える</td></tr>
+</table>
+<p>Cドライブ容量確認コマンド：</p>
+<div class="prompt-box"><code>! Get-ChildItem "C:\Users\kei\.claude\projects" -Recurse | Measure-Object -Property Length -Sum | Select-Object @{N='MB';E={[math]::Round($_.Sum/1MB,1)}}</code></div>
+
+<hr>
+
 <div class="ok">
 <span class="label">このマニュアルについて</span>
-最終更新：2026年5月7日 / バージョン：v1.0<br>
+最終更新：2026年5月8日 / バージョン：v1.1<br>
 更新・追記が必要な場合は <code>07_マニュアル\エージェント操作マニュアル.html</code> を直接編集してください。<br>
 エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。
 </div>
