@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>契約書AIチェックセミナー｜実演デモ出力（オフライン版）</title>
+<style>
+  :root {
+    --primary: #1a3c6e;
+    --accent:  #e85d26;
+    --bg:      #f8f9fa;
+    --card:    #ffffff;
+    --border:  #d1d9e0;
+    --text:    #1e2735;
+    --muted:   #6b7280;
+    --risk-h:  #c0392b;
+    --risk-m:  #e67e22;
+    --risk-l:  #27ae60;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Yu Gothic', 'Hiragino Sans', 'Meiryo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  header {
+    background: var(--primary);
+    color: white;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header h1 { font-size: 20px; font-weight: 700; }
+  header .sub { font-size: 13px; opacity: .7; margin-top: 4px; }
+  .notice {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 14px 20px;
+    margin: 20px 40px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #856404;
+  }
+  .toc {
+    margin: 0 40px 30px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .toc h2 { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+  .toc a { display: block; color: var(--primary); text-decoration: none; padding: 4px 0; font-size: 14px; }
+  .toc a:hover { text-decoration: underline; }
+  .section {
+    margin: 0 40px 40px;
+  }
+  .section-header {
+    background: var(--primary);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-header .num {
+    background: var(--accent);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .section-header h2 { font-size: 17px; font-weight: 700; }
+  .section-header .step-label { font-size: 12px; opacity: .75; margin-top: 2px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+  .pane {
+    padding: 20px 24px;
+  }
+  .pane + .pane {
+    border-left: 1px solid var(--border);
+  }
+  @media (max-width: 900px) { .pane + .pane { border-left: none; border-top: 1px solid var(--border); } }
+  .pane-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  pre {
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: #334155;
+  }
+  .output-block {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .risk-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f8f9fa;
+    border-bottom: 1px solid var(--border);
+  }
+  .risk-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .risk-badge.high   { background: var(--risk-h); }
+  .risk-badge.medium { background: var(--risk-m); }
+  .risk-badge.low    { background: var(--risk-l); }
+  .risk-item-title { font-weight: 700; font-size: 14px; }
+  .risk-item-body { padding: 12px 14px; }
+  .risk-item-body p { font-size: 14px; margin-bottom: 6px; }
+  .risk-item-body .label { font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; margin-top: 10px; margin-bottom: 4px; }
+  .proposal {
+    background: #eef6ff;
+    border-left: 3px solid var(--primary);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 13px;
+  }
+  .footnote {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 10px 24px 16px;
+    border-top: 1px solid var(--border);
+    background: #fafbfc;
+  }
+  .explain-box {
+    background: #fff8f0;
+    border: 1px solid #ffd6b0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #7a4400;
+  }
+  .explain-box strong { display: block; margin-bottom: 4px; }
+  footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>契約書AIチェックセミナー｜実演デモ出力（オフライン版）</h1>
+    <div class="sub">通信トラブル時・事前準備用。実際のAI出力を模した参考例です。</div>
+  </div>
+</header>
+
+<div class="notice">
+  ⚠ このファイルはセミナー当日の通信トラブル対策として事前に準備した参考出力例です。<br>
+  実際のAI出力はプロンプトや契約書の内容によって異なります。講師はこの内容をベースに解説を行います。
+</div>
+
+<div class="toc">
+  <h2>目次</h2>
+  <a href="#demo1">実演① ルートA ： 業務委託契約書チェック（受け取る側・交渉あり）</a>
+  <a href="#demo2">実演① ルートB ： 業務委託契約書チェック（受け取る側・のむしかない）</a>
+  <a href="#demo3">実演① ルートC ： 業務委託契約書チェック（渡す側）</a>
+  <a href="#demo4">実演② Step 1 ： FC加盟契約書 総合リスクチェック</a>
+  <a href="#demo5">実演② Step 2 ： FC加盟契約書 費用・収支検証</a>
+  <a href="#demo6">実演② Step 3 ： FC本部の信用度確認方法</a>
+</div>
+
+
+<!-- ==================== 実演① ルートA ==================== -->
+<div class="section" id="demo1">
+  <div class="section-header">
+    <div class="num">A</div>
+    <div>
+      <h2>実演① ルートA ： 業務委託契約書チェック</h2>
+      <div class="step-label">受け取る側 × 交渉できる ｜ Claude を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>あなたは経験豊富な日本の企業法務の専門家です。
+添付した契約書について、当社の立場から確認してください。
+
+【当社の立場】
+・受託側（Webシステム開発を請け負う中小企業）
+・相手方から提示された業務委託契約書のチェックが目的
+・条件交渉の余地はある
+
+【出力してほしい内容】
+1. 当社にとって著しく不利、またはトラブルの原因に
+   なりやすい条項をリスクの高い順に挙げてください
+   （該当箇所を明記）
+2. なぜそれがリスクなのかの理由（具体的なシナリオ）
+3. 相手方に提案すべき修正案（そのまま使える文言で）</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高</span>
+              <span class="risk-item-title">第8条 損害賠償条項</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状の文言：「乙は、本契約に関連して甲に生じた一切の損害を賠償するものとする。」</p>
+              <div class="label">リスクの理由・シナリオ</div>
+              <p>上限額の定めがなく、逸失利益を含む「一切の損害」を負担する可能性があります。納品遅延・バグ・仕様変更の解釈次第で、受託金額を大幅に超える賠償請求が来た場合に法的に通る余地があります。</p>
+              <div class="label">修正案（そのまま使える文言）</div>
+              <div class="proposal">乙が甲に対して負う損害賠償の累計額は、本契約に基づき甲が乙に支払った報酬総額を上限とする。ただし、乙に故意または重大な過失がある場合はこの限りでない。</div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高</span>
+              <span class="risk-item-title">第9条 知的財産権の帰属</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状の文言：「本件業務に関連して生じた一切の知的財産権は甲に帰属する。」</p>
+              <div class="label">リスクの理由・シナリオ</div>
+              <p>「関連して」の解釈が広く、開発過程で使用した自社のフレームワーク・汎用ライブラリ・内部ツールまで甲に帰属する余地があります。同種の他案件に転用できない状態になる可能性があります。</p>
+              <div class="label">修正案（そのまま使える文言）</div>
+              <div class="proposal">本契約の履行のために乙が新規に作成した成果物（納品物として特定されたものに限る）の知的財産権は甲に帰属する。ただし、乙が本契約以前から保有していた知的財産権、および本契約の履行に関わらず独立して開発したものは乙に留保される。</div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高</span>
+              <span class="risk-item-title">第7条 解除条件の非対称性</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状の文言：「甲は書面による通知をもって本契約をいつでも解除できる。」（乙からの解除条件の記載なし）</p>
+              <div class="label">リスクの理由・シナリオ</div>
+              <p>甲のみが任意解除権を持ち、乙からの解除は定められていません。プロジェクト途中で甲が解除した場合、既に発生した費用・工数への補償も不明確です。</p>
+              <div class="label">修正案（そのまま使える文言）</div>
+              <div class="proposal">甲は30日前の書面通知により本契約を解除できる。この場合、甲は解除時点までに乙が完了した業務に相当する報酬を支払うものとする。乙は甲の債務不履行が是正されない場合に同様の解除権を有する。</div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">リスク：中</span>
+              <span class="risk-item-title">第6条 検収条件の不明確さ</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状の文言：「甲が検収を行い、合格と判断した場合に検収完了とする。」（期限・基準なし）</p>
+              <div class="label">リスクの理由・シナリオ</div>
+              <p>検収期間・基準が不明確なため、甲が長期間検収を完了させない場合に報酬請求ができなくなります。</p>
+              <div class="label">修正案（そのまま使える文言）</div>
+              <div class="proposal">甲は納品物受領後14日以内に検収を完了し、不合格の場合は具体的な不合格理由を書面で通知する。14日以内に通知がない場合は検収完了とみなす。</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      ※ このAI出力例はサンプル業務委託契約書（sample_業務委託契約書.md）を基に作成した参考例です。実際のAI出力は契約書の内容・プロンプトによって異なります。必ず元の文書の該当箇所を確認してください。
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 実演① ルートB ==================== -->
+<div class="section" id="demo2">
+  <div class="section-header">
+    <div class="num">B</div>
+    <div>
+      <h2>実演① ルートB ： 業務委託契約書チェック</h2>
+      <div class="step-label">受け取る側 × のむしかない ｜ Claude を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>あなたは経験豊富な日本の企業法務の専門家です。
+添付した契約書について確認します。
+
+【前提条件】
+・この契約書は相手方の標準書式であり、
+  条件の変更はほぼ見込めない状況です
+・事業上の理由からこの契約を締結する方向で進めており、
+  リスクを正確に把握した上で対応策を検討したいです
+
+【当社の立場・状況】
+・受託側（コンテンツ制作を請け負う小規模企業）
+・この契約の重要度：高（主要取引先からの依頼）
+
+【確認してほしい内容】
+1. リスクの高い条項を重大度順に3つ
+2. 「条件を変えられない前提で当社側でできる現実的な対策」
+3. 念のため確認・交渉を試みる価値のある条項があれば</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">最重要</span>
+              <span class="risk-item-title">第8条 損害賠償（上限なし）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>リスク：契約金額を大きく超える賠償を請求される可能性</p>
+              <div class="label">社内でできる対策</div>
+              <p>• 業務の開始・完了・変更をすべてメールで記録に残す<br>
+              • 仕様変更は必ず書面で合意を取ってから作業を開始する<br>
+              • 業務中に問題が発生したら即座に書面で報告し証拠化する<br>
+              • 賠償リスクに備えて業務賠償責任保険への加入を検討する</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">重要</span>
+              <span class="risk-item-title">第6条 検収（無期限化・異議申し立て禁止）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>リスク：甲の判断で検収を無期限に延ばされ、報酬請求できなくなる可能性</p>
+              <div class="label">社内でできる対策</div>
+              <p>• 納品時に「検収期間・検収基準の合意」をメールで確認してから納品する<br>
+              • 納品物の仕様適合を証明できる確認記録を残す<br>
+              • 「◯日以内に連絡がなければ検収完了とみなす」を口頭で事前合意し記録化する</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">確認推奨</span>
+              <span class="risk-item-title">第4条 支払条件（翌々月末払い）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>リスク：最長60日の支払いサイト。下請法上の制限に該当する可能性がある</p>
+              <div class="label">打診してみる価値がある理由</div>
+              <p>下請法が適用される場合、60日を超える支払いサイトは違法となります。相手方が下請法の対象事業者であれば、是正を求める根拠になります。まず「下請法の適用があるか確認したい」という観点で問い合わせてみることを推奨します。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      ※ この出力例はサンプル契約書を基にした参考例です。実際のAI出力は異なります。社内対策として示された方法は、弁護士への確認を経てから実施することをお勧めします。
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 実演① ルートC ==================== -->
+<div class="section" id="demo3">
+  <div class="section-header">
+    <div class="num">C</div>
+    <div>
+      <h2>実演① ルートC ： 業務委託契約書チェック（渡す側）</h2>
+      <div class="step-label">委託者側からの法的適合性・公平性チェック ｜ Claude を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>あなたは経験豊富な日本の企業法務の専門家です。
+添付した契約書は、当社が取引先に提示しているものです。
+
+【当社の立場】
+・委託者（デザイン業務を発注する中小企業）
+・相手方：フリーランスのデザイナー（個人事業主）
+
+【確認してほしい内容】
+① 法令違反の確認（下請法・個人情報保護法・消費者契約法等）
+② 相手方が「不公平」と感じやすい条項の確認
+③ 意図しない解釈が生まれやすい表現の確認
+④ 追加すべき重要な条項の確認</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">① 法令違反の疑い</span>
+              <span class="risk-item-title">第4条 支払条件（下請法）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状：「成果物の受領後60日以内に支払う」</p>
+              <p>問題：下請法3条は支払期日の明記を義務付けており、「60日以内」という曖昧な表現では特定の支払期日を定めたことにならない可能性があります。「毎月末日締め翌月末日払い」など、確定した期日を明記してください。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">② 相手が受け入れにくい条項</span>
+              <span class="risk-item-title">第9条 知的財産権（全面帰属）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>問題：デザインの過程で使用したフォント、素材、ブラシ等まで含む「一切の知的財産」を委託者に帰属させる条項は、フリーランスが受け入れを拒む可能性が高いです。</p>
+              <p>修正方向：納品物として特定した成果物のみ帰属させ、素材・ツール類は受託者に留保させる表現に変更することで、交渉がスムーズになります。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">③ 曖昧な表現</span>
+              <span class="risk-item-title">第3条 再委託禁止の範囲</span>
+            </div>
+            <div class="risk-item-body">
+              <p>現状：「乙は事前の書面承諾なく再委託してはならない」</p>
+              <p>問題：フリーランスがAIツールやデザインソフトの外部API・クラウドサービスを使用することが「再委託」にあたるかが不明確です。意図しない契約違反を生む可能性があります。</p>
+              <p>修正方向：「第三者への業務全部または主要部分の再委託」など範囲を限定して明確化することを推奨します。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge low">④ 追加すべき条項</span>
+              <span class="risk-item-title">変更・追加作業の扱い</span>
+            </div>
+            <div class="risk-item-body">
+              <p>問題：現在の契約書には、業務範囲の変更・追加が発生した場合の費用・期間の取り決めがありません。これは双方にとってトラブルの温床になります。</p>
+              <p>追加案：「仕様の変更・追加が生じた場合は、その都度甲乙協議の上、書面で合意した費用・期間の変更を行うものとする。」</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      ※ この出力例はサンプル契約書を基にした参考例です。実際のAI出力は異なります。法令違反の疑いがある箇所は弁護士に確認することを推奨します。
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 実演② Step 1 ==================== -->
+<div class="section" id="demo4">
+  <div class="section-header">
+    <div class="num">1</div>
+    <div>
+      <h2>実演② Step 1 ： FC加盟契約書 総合リスクチェック</h2>
+      <div class="step-label">カラアゲーニョFC加盟検討 ｜ Gemini を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>あなたは日本のフランチャイズ契約に精通した法務専門家です。
+添付したFC加盟契約書について、
+加盟を検討している個人事業主の立場から確認してください。
+
+【状況】
+・キッチンカーによるから揚げ移動販売FCへの加盟を検討中
+・加盟金・初期費用は自己資金と銀行融資を組み合わせる予定
+・書類は本部から提示されたものであり、
+  条件変更の余地は限定的
+
+【確認してほしいこと】
+1. 加盟者に著しく不利な条項をリスクの大きい順に5つ
+2. 業界標準と比較して「異常」と感じる条件があれば
+3. 中小小売商業振興法の法定開示書面チェック
+4. 締結前に確認・交渉を試みるべきことを優先度順に</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高 ★業界標準外</span>
+              <span class="risk-item-title">第4条 ロイヤルティ 10%（税抜き売上に対して）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>飲食業FC全般の業界平均は売上の3〜7%とされています。10%は高水準であり、収益圧迫の主因になります。</p>
+              <div class="label">シナリオ</div>
+              <p>月次売上100万円の場合、ロイヤルティだけで10万円。広告分担金2%（2万円）と合わせて毎月12万円が固定で流出します。食材原価・人件費・車両維持費を加えると、薄利の移動販売業態では利益が消える可能性があります。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高 ★要交渉</span>
+              <span class="risk-item-title">第6条 テリトリー「参考区域」表記</span>
+            </div>
+            <div class="risk-item-body">
+              <p>独占的営業区域が「参考区域」と記載されており、法的な独占性が保証されていません。本部が同エリアに別の加盟者を受け入れることを明示的に禁止していません。</p>
+              <div class="label">シナリオ</div>
+              <p>開業後に近隣の同じエリアに別のカラアゲーニョ加盟者が出店しても、契約上では抵抗する手段がない状態です。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">リスク：高</span>
+              <span class="risk-item-title">第11条 解除条件の非対称性</span>
+            </div>
+            <div class="risk-item-body">
+              <p>本部側：30日前通知で解除可能<br>
+              加盟者側：6ヶ月前通知が必要</p>
+              <div class="label">シナリオ</div>
+              <p>加盟者が初期投資（数百〜1,000万円超の可能性）をまだ回収できていない段階でも、本部の経営判断で1か月後に契約が終わる可能性があります。加盟者側が事業継続を望んでいても抵抗できません。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">リスク：中</span>
+              <span class="risk-item-title">第13条 競業禁止（退会後3年・全国）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>退会後3年間、全国で同種事業を禁止する条項です。飲食業では退会後2年・営業区域内が業界の一般的な範囲とされており、全国・3年は過大な可能性があります。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">要確認</span>
+              <span class="risk-item-title">法定開示書面（中小小売商業振興法）</span>
+            </div>
+            <div class="risk-item-body">
+              <p>中小小売商業振興法に基づき、FC本部は契約締結の20日前までに法定開示書面を交付する義務があります。本書類での開示状況は確認できる範囲に限りがあるため、本部に対して「法定開示書面の交付日と内容」を書面で確認することを強く推奨します。</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="explain-box" style="margin: 0 0 16px; border-radius: 0;">
+      <strong>講師からの補足説明：業界・状況によって数字は変わります</strong>
+      今日の実演で出てくるロイヤルティ10%、競業禁止3年といった数値は、このサンプルFCの設定に基づいています。飲食業以外のFCや、異なる業態では全く別の基準が適用されます。ご自身の業界の標準と比較する際は、業界団体や専門家への確認を併用してください。
+    </div>
+    <div class="footnote">
+      ※ このAI出力例はsample_FC加盟契約書_本体.md を基に作成した参考例です。実際のAI出力は契約書の内容・プロンプトによって異なります。
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 実演② Step 2 ==================== -->
+<div class="section" id="demo5">
+  <div class="section-header">
+    <div class="num">2</div>
+    <div>
+      <h2>実演② Step 2 ： FC加盟契約書 費用・収支検証</h2>
+      <div class="step-label">カラアゲーニョFC ｜ Gemini を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>添付した費用明細書（別紙1）と契約書を合わせて確認してください。
+
+【確認してほしいこと】
+1. 加盟から開業までに必要な費用の合計を、
+   明示されているものと「別途定める」として
+   不明確なものに分けてリストアップ
+
+2. ロイヤルティ・広告分担金・最低保証額を合計した
+   月次の固定費用を計算してください。
+   また、これらを賄うために必要な最低月次売上を試算
+   （食材原価30%・人件費20%・車両維持費等を仮定）
+
+3. 加盟金・研修費・保証金・設備費を初期投資とした場合、
+   回収に必要な月次純利益と期間の目安を計算
+
+4. 費用構造として加盟者に不透明または不利な点を指摘</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">要注意</span>
+              <span class="risk-item-title">1. 費用の全体像（明示 vs 「別途定める」）</span>
+            </div>
+            <div class="risk-item-body">
+              <div class="label">明示されている費用</div>
+              <p>• 加盟金：300万円<br>
+              • 保証金：50万円（退会時返還条件あり）<br>
+              • 開業研修費：60万円（別紙3に初めて金額が登場）</p>
+              <div class="label">「別途定める」として金額不明の費用</div>
+              <p>• キッチンカー車両費：「本部推奨業者より調達。費用は別途協議」<br>
+              • 調理器具・設備費：「本部指定品目表に基づく」（金額記載なし）<br>
+              • 開業販促費：「エリアごとに異なる」<br>
+              • 年次更新料：「別途定める」</p>
+              <p style="margin-top:10px; color: var(--risk-h); font-weight:700;">合計の可能性：最低でも700万円〜、設備費次第で1,000万円超の可能性</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">試算</span>
+              <span class="risk-item-title">2. 月次固定費と最低売上の試算</span>
+            </div>
+            <div class="risk-item-body">
+              <p>ロイヤルティ（10%）＋広告分担金（2%）＝ 売上の12%が本部へ</p>
+              <div class="label">食材原価30%・人件費20%・その他経費で試算</div>
+              <p>変動費合計：売上の約62%（食材30%＋人件費20%＋本部12%）<br>
+              残る利益：38%（車両維持費・燃料費・駐車場代・消耗品費等を差し引く前）</p>
+              <p style="margin-top:8px;">最低限の事業継続に必要な月次売上（目安）：<br>
+              固定費（車両リース・駐車場・保険等）を月15〜20万円と仮定すると、<br>
+              最低月次売上：<strong>約60〜80万円</strong>が損益分岐点の目安となります。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">試算</span>
+              <span class="risk-item-title">3. 初期投資回収の目安</span>
+            </div>
+            <div class="risk-item-body">
+              <p>初期投資概算（最低ラインで計算）：700万円<br>
+              月次純利益が10万円の場合：回収まで約70ヶ月（5年10ヶ月）<br>
+              月次純利益が20万円の場合：回収まで約35ヶ月（2年11ヶ月）</p>
+              <p style="margin-top:8px; color: var(--risk-m);">本部が提示する収支シミュレーションとこの試算を並べて、ギャップを確認することを推奨します。</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">要注意</span>
+              <span class="risk-item-title">4. 費用構造として不透明・不利な点</span>
+            </div>
+            <div class="risk-item-body">
+              <p>• 主要な費用（車両・設備）が「別途定める」であるため、契約書だけでは総費用が把握不可能<br>
+              • 指定仕入先から食材を購入する義務があり、価格は本部がコントロールする。食材原価の上昇を防げない<br>
+              • 最低保証売上が設定されており、未達の場合でも一定額のロイヤルティ支払い義務が生じる</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      ※ この出力例はsample_FC加盟契約書_本体.md・sample_FC加盟契約書_別紙一式.md を基にした参考例です。
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 実演② Step 3 ==================== -->
+<div class="section" id="demo6">
+  <div class="section-header">
+    <div class="num">3</div>
+    <div>
+      <h2>実演② Step 3 ： FC本部の信用度・実態確認の方法</h2>
+      <div class="step-label">書類なしでもできるリサーチ手順 ｜ Gemini を使用</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="two-col">
+      <div class="pane">
+        <div class="pane-title">入力：プロンプト</div>
+        <pre>フランチャイズ本部「株式会社カラアゲーニョジャパン」について
+加盟前に実施すべき信用度・実態確認の方法を教えてください。
+
+【確認してほしいこと】
+1. 自分でできる調査方法のリスト（無料・有料それぞれ）
+2. FC本部に直接確認すべき質問リスト
+3. 確認する際の注意点（不誠実な場合の見分け方）
+4. 専門家への確認を依頼すべきポイント</pre>
+      </div>
+      <div class="pane">
+        <div class="pane-title">出力：AI回答例</div>
+        <div class="output-block">
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge low">無料でできる調査</span>
+              <span class="risk-item-title">1. 自分でできる信用度調査</span>
+            </div>
+            <div class="risk-item-body">
+              <div class="label">無料でできること</div>
+              <p>• <strong>法人番号・登記情報</strong>：国税庁法人番号公表サイトで会社の実在確認<br>
+              • <strong>法務局オンライン</strong>：商業登記の閲覧（500円〜）で役員・資本金・設立年を確認<br>
+              • <strong>日本フランチャイズ協会</strong>：会員登録の有無を確認（非会員でも問題ないが参考に）<br>
+              • <strong>公正取引委員会</strong>：フランチャイズに関する相談・苦情の申告窓口<br>
+              • <strong>SNS・クチコミ</strong>：既存加盟者の投稿・Googleレビュー等で実態を確認</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">必ず聞く</span>
+              <span class="risk-item-title">2. FC本部への直接確認リスト</span>
+            </div>
+            <div class="risk-item-body">
+              <p>① 現在の加盟店数と過去2年間の解約・退会数（解約率の把握）<br>
+              ② 既存の加盟オーナーとの個別面談は可能か<br>
+              ③ 直近3期の決算書の提示が可能か<br>
+              ④ 法定開示書面の交付日はいつか（締結20日前の義務確認）<br>
+              ⑤ 本部が提示する収支モデルの根拠データは何か</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge high">注意サイン</span>
+              <span class="risk-item-title">3. 不誠実な本部を見分ける方法</span>
+            </div>
+            <div class="risk-item-body">
+              <p>以下の行動が見られた場合は慎重に判断してください：</p>
+              <p>• <strong>数字を見せない</strong>：解約率・既存店の売上実績を開示しない<br>
+              • <strong>既存オーナーとの面談を避ける</strong>：「個人情報のため」と断る<br>
+              • <strong>契約を急かす</strong>：「今月中に決めないと枠がなくなる」<br>
+              • <strong>法定開示書面を直前まで渡さない</strong>：20日ルールを守らない<br>
+              • <strong>収支の根拠を出さない</strong>：「他の加盟者が成功しているから大丈夫」だけの説明</p>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div class="risk-item-header">
+              <span class="risk-badge medium">専門家活用</span>
+              <span class="risk-item-title">4. 専門家への確認を依頼すべきポイント</span>
+            </div>
+            <div class="risk-item-body">
+              <p>• <strong>FC専門弁護士</strong>：契約書の法的リスクの最終確認（初回相談1〜3万円目安）<br>
+              • <strong>中小企業診断士</strong>：収支シミュレーションの妥当性チェック<br>
+              • <strong>日本フランチャイズチェーン協会</strong>：業界水準の照会相談<br>
+              • 探し方：「FC 弁護士 無料相談」「よろず支援拠点」「日弁連法律相談センター」</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="footnote">
+      ※ この出力例は参考例です。実際のAI出力はプロンプトによって異なります。専門家への相談は実際に行ってください。
+    </div>
+  </div>
+</div>
+
+
+<footer>
+  契約書AIチェックセミナー | 実演デモ出力（オフライン版）<br>
+  AS株式会社 セミナー事業部 | 2026年5月 | このファイルはセミナー当日の通信トラブル対策用です
+</footer>
+
+</body>
+</html>

@@ -29,7 +29,12 @@ Diagram Engine v2 - SVG（絵のみ）+ テキストオーバーレイ分離ア�
 
 from pathlib import Path
 import math
-import cairosvg
+try:
+    import cairosvg
+    _CAIRO_AVAILABLE = True
+except (ImportError, OSError):
+    cairosvg = None
+    _CAIRO_AVAILABLE = False
 
 
 # ===== カラーパレット解決 =====
@@ -70,6 +75,8 @@ def svg_header(width, height, bg_color="#FFFFFF"):
 
 
 def svg_to_png(svg_content, output_path, width=1600):
+    if not _CAIRO_AVAILABLE:
+        return None
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     png_data = cairosvg.svg2png(
@@ -509,6 +516,8 @@ def make_icon_grid(icons, style, output_path, cols=3):
 
 def make_diagram_for_slide(slide_spec, style, tmp_dir):
     """slide_spec の '図解' フィールドから図解を生成"""
+    if not _CAIRO_AVAILABLE:
+        return None
     diagram_spec = slide_spec.get("図解")
     if not diagram_spec:
         return None

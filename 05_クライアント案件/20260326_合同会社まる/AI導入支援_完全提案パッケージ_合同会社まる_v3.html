@@ -589,14 +589,14 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 <h3>全体構成の考え方</h3>
 <div class="info">
 <span class="label">設計原則</span>
-<strong>Googleツールを基盤に、ライモBizは「現場の手書きをゼロにする」ためだけに使う</strong>。音声入力・打刻・スマホ操作など、GWS単体では補えない現場接点にのみカスタムアプリを開発します。データはすべてGoogle Sheetsに集約し、Gemini（GWSのAI）が分析・出力します。
+<strong>Googleツールを基盤に、ライモBizは「現場の手書きをゼロにする」ためだけに使う</strong>。音声入力・打刻・スマホ操作など、Google Workspace（Googleが提供するクラウド型業務ツール群。Gmail・Drive・Sheets・Meet・GeminiなどがセットになったプランでBusiness Standardを契約します）単体では補えない現場接点にのみカスタムアプリを開発します。データはすべてGoogle Sheetsに集約し、Gemini（Google WorkspaceのAI機能）が分析・出力します。
 </div>
 
 <h3>Google Workspace Business Standard</h3>
 
 <div class="ok">
 <span class="label">契約対象：AIマネージャーとして活動する3名のみ</span>
-管理者1名 + AIマネージャー候補2名。<strong>他の職員はGWSアカウント不要</strong>。スマホのブラウザからライモBizアプリにアクセスするだけで業務が完結します。
+管理者1名 + AIマネージャー候補2名。<strong>他の職員はGoogle Workspaceアカウント不要</strong>。スマホのブラウザからライモBizアプリにアクセスするだけで業務が完結します。
 </div>
 
 <table>
@@ -605,7 +605,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 <tr><td><strong>契約アカウント数</strong></td><td>3アカウント（管理者1名 + AIマネージャー2名）</td></tr>
 <tr><td><strong>月額費用</strong></td><td>¥1,872 × 3 = <strong>¥5,616/月</strong></td></tr>
 <tr><td><strong>主な活用機能</strong></td><td>Google Drive（データ保存・共有）、Sheets（台帳・集計・テンプレ）、Docs（書類作成）、Meet（面談・録音）、Gemini（AI分析・下書き生成）、Chat（連絡）</td></tr>
-<tr><td><strong>他職員の操作方法</strong></td><td>スマホブラウザからライモBizアプリのWebUIにアクセス。GWSアカウント不要。AIを直接操作しない。</td></tr>
+<tr><td><strong>他職員の操作方法</strong></td><td>スマホブラウザからライモBizアプリのWebUIにアクセス。Google Workspaceアカウント不要。AIを直接操作しない。</td></tr>
 </table>
 
 <h3>Google Drive フォルダ構成（設計案）</h3>
@@ -640,7 +640,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
   <table style="margin-top:10px">
   <tr><th>項目</th><th>仕様</th></tr>
   <tr><td><strong>目的</strong></td><td>紙の出勤簿をゼロにし、利用者・スタッフの出退勤をスマホで30秒記録</td></tr>
-  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— GWSアカウント不要</td></tr>
+  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
   <tr><td><strong>入力</strong></td><td>利用者名選択 → 出勤/退勤ボタン → 自動タイムスタンプ</td></tr>
   <tr><td><strong>出力先</strong></td><td>Google Sheets「出退勤DB」に自動保存（GAS連携）</td></tr>
   <tr><td><strong>月次連携</strong></td><td>Sheetsの関数で月次集計表を自動生成 → 国保連テンプレへ自動流し込み</td></tr>
@@ -653,7 +653,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
   <table style="margin-top:10px">
   <tr><th>項目</th><th>仕様</th></tr>
   <tr><td><strong>目的</strong></td><td>手書きメモ・夜間転記をゼロにする。現場でのその場記録を実現</td></tr>
-  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— GWSアカウント不要</td></tr>
+  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
   <tr><td><strong>入力方式</strong></td><td>①スマホのマイクで音声入力 → テキスト自動変換、②テキスト直接入力（選択可）</td></tr>
   <tr><td><strong>入力項目</strong></td><td>利用者名・記録日・支援員名・内容（音声/テキスト）・カテゴリ（特記/提供記録/相談）</td></tr>
   <tr><td><strong>出力先</strong></td><td>Google Sheets「記録DB」に自動保存（日別・利用者別に索引化）</td></tr>
@@ -715,13 +715,12 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 <p>国保連への請求書類（就労継続支援B型）は、SEでなくても段階的にシステム化できます。以下の3レベルで現実的なアプローチを示します。</p>
 
 <div class="level-card">
-  <span class="lv lv-1">レベル1 — すぐ実施できる（AIなし）</span>
+  <span class="lv lv-1">レベル1（AIなし）</span>
   <h4>Google Sheets で提供実績記録票テンプレートを作成</h4>
   <ul>
     <li>提供実績記録票の様式をSheetsで再現（行列・書式を忠実にコピー）</li>
     <li>ライモBiz出退勤アプリのDBデータをVLOOKUP/QUERY関数で自動集計</li>
     <li>月末に数値が入ったシートを印刷して提出（手入力ゼロ）</li>
-    <li>難易度：<span class="badge badge-green">低（AIマネージャーが設計可能）</span></li>
   </ul>
 </div>
 
@@ -741,15 +740,15 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
   <h4>国保連システム（インターフェース）との直接連携</h4>
   <ul>
     <li>国保連の「介護給付費請求書等」をネット請求するシステムとのデータ連携</li>
-    <li>これはSEレベルの作業が必要。有限会社アートソウルでは対応外。</li>
-    <li>現状は専用ソフト（大手ベンダー製）を継続使用し、レベル1・2で入力工数を最小化する方針を推奨</li>
+    <li>これはSEレベルの作業が必要</li>
+    <li>現状の処理を継続。レベル1・2で入力工数を最小化する方針を推奨</li>
     <li>難易度：<span class="badge badge-red">高（外注 or 専門ソフト必要）</span></li>
   </ul>
 </div>
 
 <div class="ok">
 <span class="label">推奨アプローチ</span>
-フェーズ1でレベル1を構築し、フェーズ2でレベル2（GAS自動化）を目指します。「印刷して提出する」という最終工程は変わりませんが、入力・集計作業はほぼゼロになります。<strong>専用の請求ソフトを捨てる必要はありません</strong>。Sheetsで完璧に集計されたデータを専用ソフトに転記する時間を最小化することが現実的なゴールです。
+フェーズ1でレベル1を構築し、フェーズ2でレベル2（GAS自動化）を目指します。「印刷して提出する」という最終工程は変わりませんが、入力・集計作業は最小化できます。Sheetsで集計されたデータを専用ソフトに転記する時間を最小化することが現実的なゴールです。
 </div>
 
 <hr>
@@ -770,7 +769,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
   <div class="timeline-item">
     <div class="tl-date">STEP 2　AIマネージャーが Gemini に分析依頼</div>
     <div class="tl-title">「〇〇さんの直近6ヶ月の記録を分析して、個別支援計画書の下書きを作成して」</div>
-    <p style="font-size:14px;color:#4A5568">GWS の Gemini（または Gemini Advanced）に記録データを貼り付けて依頼。本人の強み・課題・支援目標・具体的支援内容の下書きが出力される。所要時間：約5分。</p>
+    <p style="font-size:14px;color:#4A5568">Google Workspace の Gemini（または Gemini Advanced）に記録データを貼り付けて依頼。本人の強み・課題・支援目標・具体的支援内容の下書きが出力される。所要時間：約5分。</p>
   </div>
   <div class="timeline-item">
     <div class="tl-date">STEP 3　Sheets テンプレートにデータ挿入</div>
@@ -880,7 +879,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 <div class="option-card opt1">
   <div style="font-size:13px; font-weight:bold; color:#2B6CB0; margin-bottom:8px;">オプション① Google Workspace 基盤設定 + 台帳・Sheets設計</div>
   <ul style="font-size:14px;">
-    <li>GWS Business Standard 3アカウント 初期設定・権限管理</li>
+    <li>Google Workspace Business Standard 3アカウント 初期設定・権限管理</li>
     <li>Driveフォルダ設計 + GASによる個人フォルダ自動生成スクリプト</li>
     <li>利用者台帳マスター（5シート構成）設計・初期データ入力</li>
     <li>国保連テンプレート（実績記録票・給付費請求書）Sheets版 作成</li>
@@ -966,7 +965,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 
   <div class="month-card">
     <h4>Month 1（Day 1〜30）— 設計・環境構築</h4>
-    <div class="week-row"><div class="week-label">Week 1</div><div>GWS Business Standard 3アカウント契約・初期設定。Driveフォルダ設計・アクセス権限設定。AIマネージャー3名のGmail/Meet/Sheets研修（基本操作）</div></div>
+    <div class="week-row"><div class="week-label">Week 1</div><div>Google Workspace Business Standard 3アカウント契約・初期設定。Driveフォルダ設計・アクセス権限設定。AIマネージャー3名のGmail/Meet/Sheets研修（基本操作）</div></div>
     <div class="week-row"><div class="week-label">Week 2</div><div>利用者台帳マスター（5シート）設計・既存データ移行。Google Forms受入れフォーム作成。GASによる個人フォルダ自動生成スクリプト開発</div></div>
     <div class="week-row"><div class="week-label">Week 3</div><div>AI研修 第1回・第2回実施（AI基礎 + プロンプト設計）。国保連Sheetsテンプレート（レベル1）作成開始</div></div>
     <div class="week-row"><div class="week-label">Week 4</div><div>ライモBizアプリ①（出退勤管理）設計・開発開始。国保連テンプレート完成・動作確認。週次MTG① 実施</div></div>
@@ -1048,7 +1047,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
   <td>-¥50,000</td>
 </tr>
 <tr>
-  <td><strong>GWS（3アカウント）</strong></td>
+  <td><strong>Google Workspace（3アカウント）</strong></td>
   <td>-¥5,616</td>
   <td>-¥5,616</td>
   <td>-¥5,616</td>
@@ -1083,7 +1082,7 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 
 <div class="ok">
 <span class="label">投資回収後の年間純利益</span>
-フェーズ3 顧問料・GWS・ライモBiz を差し引いた<strong>純利益は ¥87,984/月 → 年間 ¥1,055,808</strong>。さらに「スタッフの離職抑制」「行政書類の提出ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
+フェーズ3 顧問料・Google Workspace・ライモBiz を差し引いた<strong>純利益は ¥87,984/月 → 年間 ¥1,055,808</strong>。さらに「スタッフの離職抑制」「行政書類の提出ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
 </div>
 
 <h3>3パターン試算比較</h3>
