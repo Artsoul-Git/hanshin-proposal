@@ -1214,46 +1214,69 @@ function toggleSection(id) {
 <!-- Section 10 -->
 <h2 id="s10"><span class="sec-num">10</span>ROI・投資回収シミュレーション</h2>
 
-<div class="tip" style="margin-bottom:16px;">
-<span class="label">費用の前提</span>
-<strong>月次費用：</strong>有限会社アートソウル顧問料 ＋ Google Workspace Business Standard（3アカウント：¥1,872×3＝¥5,616/月）＋ ライモBizツールズ（3アカウント：¥550×3＝¥1,650/月 ※1〜2か月目は無料）<br>
-<strong>別途初期費用：</strong>ライモBizラーニング受講料（¥200,000/アカウント × 受講人数）は月次ROIに含まず別途ご負担
-</div>
+<h3>プロジェクト費用総覧</h3>
+<table class="roi-table">
+<tr><th>区分</th><th>内容</th><th>金額</th><th>支払先</th></tr>
+<tr>
+  <td><strong>初期費用（1か月目一括）</strong></td>
+  <td>ライモBizラーニング受講料（3名分）<br><small>※6か月間視聴可能。人材開発支援助成金で最大75%軽減の可能性あり</small></td>
+  <td><strong>¥600,000</strong><br><small>助成金活用時：実質¥150,000</small></td>
+  <td>株式会社ライモ</td>
+</tr>
+<tr>
+  <td><strong>月次費用 第1段階<br>（1〜3か月目）</strong></td>
+  <td>AS顧問料¥300,000 ＋ Google Workspace¥5,616 ＋ ライモBizツールズ（1〜2か月目¥0 / 3か月目¥1,650）</td>
+  <td>¥305,616〜¥307,266/月</td>
+  <td>各社</td>
+</tr>
+<tr>
+  <td><strong>月次費用 第2段階<br>（4〜6か月目）</strong></td>
+  <td>AS顧問料¥150,000 ＋ Google Workspace¥5,616 ＋ ライモBizツールズ¥1,650</td>
+  <td>¥157,266/月</td>
+  <td>各社</td>
+</tr>
+<tr>
+  <td><strong>月次費用 第3段階<br>（7か月目〜）</strong></td>
+  <td>AS顧問料¥50,000 ＋ Google Workspace¥5,616 ＋ ライモBizツールズ¥1,650</td>
+  <td>¥57,266/月</td>
+  <td>各社</td>
+</tr>
+</table>
 
-<h3>月間損益シミュレーション</h3>
+<h3>月間損益シミュレーション（全費用込み）</h3>
 
 <table class="roi-table">
-<tr><th>項目</th><th>1〜2か月目</th><th>3か月目</th><th>4〜6か月目</th><th>7か月目〜</th></tr>
+<tr><th>項目</th><th>1か月目<br><small>初期費用含む</small></th><th>2か月目</th><th>3か月目</th><th>4〜6か月目</th><th>7か月目〜</th></tr>
+<tr style="background:#FFF5F5;">
+  <td><strong>ライモBizラーニング<br>（初期費用・一括計上）</strong></td>
+  <td style="color:#C53030; font-weight:bold;">-¥600,000</td>
+  <td>—</td><td>—</td><td>—</td><td>—</td>
+</tr>
+<tr>
+  <td><strong>有限会社AS 顧問料</strong></td>
+  <td>-¥300,000</td><td>-¥300,000</td><td>-¥300,000</td><td>-¥150,000</td><td>-¥50,000</td>
+</tr>
+<tr>
+  <td><strong>Google Workspace（3名）</strong></td>
+  <td>-¥5,616</td><td>-¥5,616</td><td>-¥5,616</td><td>-¥5,616</td><td>-¥5,616</td>
+</tr>
+<tr>
+  <td><strong>ライモBizツールズ（3名 × ¥550）</strong></td>
+  <td><span style="color:#276749; font-weight:bold;">¥0（無料）</span></td>
+  <td><span style="color:#276749; font-weight:bold;">¥0（無料）</span></td>
+  <td>-¥1,650</td><td>-¥1,650</td><td>-¥1,650</td>
+</tr>
 <tr>
   <td><strong>業務削減効果（労務費換算）</strong></td>
-  <td>+¥30,720<br><small>（導入途中・約20%）</small></td>
-  <td>+¥30,720<br><small>（導入途中・約20%）</small></td>
-  <td>+¥107,520<br><small>（定着中・約70%）</small></td>
-  <td>+¥153,600<br><small>（フル稼働・100%）</small></td>
+  <td>+¥30,720<br><small>（約20%）</small></td>
+  <td>+¥30,720<br><small>（約20%）</small></td>
+  <td>+¥30,720<br><small>（約20%）</small></td>
+  <td>+¥107,520<br><small>（約70%）</small></td>
+  <td>+¥153,600<br><small>（100%）</small></td>
 </tr>
-<tr>
-  <td><strong>有限会社アートソウルへの支払い</strong></td>
-  <td>-¥300,000</td>
-  <td>-¥300,000</td>
-  <td>-¥150,000</td>
-  <td>-¥50,000</td>
-</tr>
-<tr>
-  <td><strong>Google Workspace（3アカウント）</strong></td>
-  <td>-¥5,616</td>
-  <td>-¥5,616</td>
-  <td>-¥5,616</td>
-  <td>-¥5,616</td>
-</tr>
-<tr>
-  <td><strong>ライモBizツールズ（3アカウント）</strong></td>
-  <td><span style="color:#276749; font-weight:bold;">¥0（無料期間）</span></td>
-  <td>-¥1,650</td>
-  <td>-¥1,650</td>
-  <td>-¥1,650</td>
-</tr>
-<tr style="background:#FFF5F5; font-weight:bold;">
+<tr style="background:#EDF2F7; font-weight:bold;">
   <td><strong>月次損益</strong></td>
+  <td style="color:#C53030">-¥874,896</td>
   <td style="color:#C53030">-¥274,896</td>
   <td style="color:#C53030">-¥276,546</td>
   <td style="color:#C05621">-¥49,746</td>
@@ -1261,51 +1284,47 @@ function toggleSection(id) {
 </tr>
 </table>
 
-<h3>累計投資回収グラフ（シミュレーション）</h3>
+<h3>累計投資回収シミュレーション（2シナリオ比較）</h3>
 
-<table class="roi-table">
-<tr><th>期間</th><th>月次損益</th><th>累計損益</th><th>状態</th></tr>
-<tr><td>1か月目</td><td>-¥274,896</td><td>-¥274,896</td><td>—</td></tr>
-<tr><td>2か月目</td><td>-¥274,896</td><td>-¥549,792</td><td>—</td></tr>
-<tr><td>3か月目</td><td>-¥276,546</td><td>-¥826,338</td><td>—</td></tr>
-<tr><td>4か月目</td><td>-¥49,746</td><td>-¥876,084</td><td>—</td></tr>
-<tr><td>5か月目</td><td>-¥49,746</td><td>-¥925,830</td><td>—</td></tr>
-<tr><td>6か月目</td><td>-¥49,746</td><td>-¥975,576</td><td>底打ち</td></tr>
-<tr><td>7か月目〜</td><td>+¥96,334/月</td><td>回収開始</td><td>—</td></tr>
-<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>17か月目（目安）</strong></td><td>+¥96,334</td><td style="color:#276749"><strong>≒ 損益ゼロ（完全回収）</strong></td><td>投資回収完了</td></tr>
-</table>
-
-<div class="ok">
-<span class="label">投資回収後の年間純利益</span>
-第3段階 顧問料・Google Workspace・ライモBizツールズ を差し引いた<strong>純利益は ¥96,334/月 → 年間 ¥1,156,008</strong>。さらに「スタッフの離職抑制」「記録業務ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
+<div class="two-col" style="margin:12px 0 16px;">
+  <div style="background:#FFF5F5; border:2px solid #FEB2B2; border-radius:10px; padding:16px; text-align:center;">
+    <div style="font-weight:bold; font-size:14px; color:#C53030; margin-bottom:6px;">シナリオA — 助成金なし</div>
+    <div style="font-size:12px; color:#718096; margin-bottom:10px;">ラーニング ¥600,000（フル負担）</div>
+    <div style="font-size:32px; font-weight:bold; color:#C53030;">23か月目</div>
+    <div style="font-size:13px; color:#C53030; margin-top:4px;">で投資完全回収（目安）</div>
+    <div style="font-size:11px; color:#718096; margin-top:8px;">6か月累計最大投資：¥1,575,576</div>
+  </div>
+  <div style="background:#F0FFF4; border:2px solid #9AE6B4; border-radius:10px; padding:16px; text-align:center;">
+    <div style="font-weight:bold; font-size:14px; color:#276749; margin-bottom:6px;">シナリオB — 助成金75%活用</div>
+    <div style="font-size:12px; color:#718096; margin-bottom:10px;">ラーニング 実質負担 ¥150,000</div>
+    <div style="font-size:32px; font-weight:bold; color:#276749;">18か月目</div>
+    <div style="font-size:13px; color:#276749; margin-top:4px;">で投資完全回収（目安）</div>
+    <div style="font-size:11px; color:#718096; margin-top:8px;">6か月累計最大投資：¥1,125,576</div>
+  </div>
 </div>
 
-<h3>3パターン試算比較</h3>
-<table>
-<tr><th>パターン</th><th>6ヶ月総投資</th><th>第3段階後<br>月次純利益</th><th>投資回収<br>目安</th></tr>
-<tr>
-  <td><strong>研修のみ</strong><br><small>必須のみ・オプションなし</small></td>
-  <td>¥360,000</td>
-  <td>¥68,000<br><small>（削減効果少）</small></td>
-  <td>約5ヶ月</td>
-</tr>
-<tr class="rec">
-  <td><strong>推奨プラン</strong> <span class="rec-badge">おすすめ</span><br><small>必須 + 全オプション込み</small></td>
-  <td>¥1,350,000</td>
-  <td>¥87,984</td>
-  <td>約18ヶ月</td>
-</tr>
-<tr>
-  <td><strong>研修 + アプリのみ</strong><br><small>コーチングなし</small></td>
-  <td>¥900,000</td>
-  <td>¥80,000<br><small>（自走化遅め）</small></td>
-  <td>約11ヶ月</td>
-</tr>
+<table class="roi-table">
+<tr><th>期間</th><th>月次損益</th><th>累計（A：助成金なし）</th><th>累計（B：助成金75%）</th><th>状態</th></tr>
+<tr><td>1か月目</td><td>A:-¥874,896 / B:-¥424,896</td><td>-¥874,896</td><td>-¥424,896</td><td>—</td></tr>
+<tr><td>2か月目</td><td>-¥274,896</td><td>-¥1,149,792</td><td>-¥699,792</td><td>—</td></tr>
+<tr><td>3か月目</td><td>-¥276,546</td><td>-¥1,426,338</td><td>-¥976,338</td><td>—</td></tr>
+<tr><td>4か月目</td><td>-¥49,746</td><td>-¥1,476,084</td><td>-¥1,026,084</td><td>—</td></tr>
+<tr><td>5か月目</td><td>-¥49,746</td><td>-¥1,525,830</td><td>-¥1,075,830</td><td>—</td></tr>
+<tr style="background:#FFF5F5; font-weight:bold;"><td><strong>6か月目</strong></td><td>-¥49,746</td><td><strong>-¥1,575,576</strong></td><td><strong>-¥1,125,576</strong></td><td><strong>底打ち</strong></td></tr>
+<tr><td>7か月目〜</td><td>+¥96,334/月</td><td colspan="2" style="text-align:center; color:#276749; font-weight:bold;">▶ 毎月 +¥96,334 ずつ回収</td><td>回収開始</td></tr>
+<tr><td>12か月目（1年）</td><td>+¥96,334</td><td>-¥997,572</td><td>-¥547,572</td><td>—</td></tr>
+<tr><td>18か月目</td><td>+¥96,334</td><td>-¥419,568</td><td style="color:#276749; font-weight:bold;">+¥30,432 ✓</td><td>B 完全回収</td></tr>
+<tr style="background:#F0FFF4; font-weight:bold;"><td><strong>23か月目</strong></td><td>+¥96,334</td><td style="color:#276749;"><strong>+¥62,102 ✓</strong></td><td style="color:#276749;"><strong>+¥594,102</strong></td><td>A 完全回収</td></tr>
 </table>
 
-<div class="tip">
-<span class="label">推奨プランをすすめる理由</span>
-週次コーチングなしでのAI導入は「使い始めは良いが3ヶ月後に形骸化する」ケースが多くあります。AIマネージャーが「自分で改善を続けられる」自走力を身につけるためには、第1段階での伴走が不可欠です。投資回収期間は長くなりますが、第3段階以降の年間純利益¥1,055,808は確実に継続します。
+<div class="ok" style="margin-top:16px;">
+<span class="label">回収完了後の年間純利益</span>
+第3段階 AS顧問料・Google Workspace・ライモBizツールズ を差し引いた<strong>純利益は ¥96,334/月 → 年間 ¥1,156,008</strong>。さらに「スタッフの離職抑制」「記録業務ミスゼロ化」「新規受入れ対応力の向上」による間接効果も含めると、実質的な価値はさらに大きくなります。
+</div>
+
+<div class="info" style="margin-top:16px;">
+<span class="label">人材開発支援助成金について</span>
+ライモBizラーニングは<strong>人材開発支援助成金（特別育成訓練コース）</strong>の対象コースです。中小企業の場合、受講費用の最大75%が支給される可能性があります（1名あたり最大¥150,000相当）。適用可否・申請手続きはライモ社担当者または社会保険労務士にご確認ください。助成金を活用することで<strong>回収時期が23か月目 → 18か月目へ約5か月短縮</strong>できます。
 </div>
 
 <h3>KPI目標値（成果の測定指標）</h3>
@@ -1353,7 +1372,7 @@ function toggleSection(id) {
 <div style="text-align:center; padding:40px 0 20px; color:#718096; font-size:13px;">
   <p><strong>有限会社アートソウル</strong>　上村桂右 ／ uemura@artsoul.jp</p>
   <p style="margin-top:8px;">本書は合同会社まる様専用の提案書です。無断転載・転用はお断りします。</p>
-  <p style="margin-top:4px; color:#CBD5E0;">Document Version 3.0 ／ 2026-05-07 改訂</p>
+  <p style="margin-top:4px; color:#CBD5E0;">Document Version 4.0 ／ 2026-05-07 改訂</p>
 </div>
 
 </div>
