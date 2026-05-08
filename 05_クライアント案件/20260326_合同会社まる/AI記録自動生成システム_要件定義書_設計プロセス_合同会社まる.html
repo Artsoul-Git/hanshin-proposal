@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI記録自動生成システム 要件定義書＆設計プロセス詳細資料｜合同会社まる様</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height:1.8; color:#2D3748; background:#FAFBFC; padding:40px 20px; }
+.container { max-width:960px; margin:0 auto; background:white; padding:60px 70px; box-shadow:0 2px 30px rgba(0,0,0,0.08); border-radius:12px; }
+.cover { text-align:center; padding:60px 0 50px; border-bottom:4px solid #1A365D; margin-bottom:50px; }
+.cover .label { font-size:13px; color:#ED8936; font-weight:bold; letter-spacing:3px; margin-bottom:16px; }
+.cover h1 { font-size:28px; color:#1A365D; margin-bottom:12px; line-height:1.4; }
+.cover .sub { font-size:15px; color:#718096; margin-bottom:30px; }
+.cover .meta { display:inline-block; background:#F7FAFC; padding:16px 36px; border-radius:8px; font-size:14px; color:#4A5568; line-height:2.2; }
+.cover .ver-badge { display:inline-block; background:#2B6CB0; color:white; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:bold; margin-bottom:12px; }
+h2 { font-size:22px; color:#1A365D; padding:40px 0 12px; margin-top:30px; border-bottom:3px solid #ED8936; line-height:1.4; }
+h2 .sec-num { display:inline-block; background:#1A365D; color:white; padding:4px 12px; border-radius:6px; font-size:13px; margin-right:10px; }
+h3 { font-size:17px; color:#2D3748; margin:24px 0 10px; padding-left:12px; border-left:5px solid #ED8936; }
+h4 { font-size:15px; color:#1A365D; margin:16px 0 6px; font-weight:bold; }
+p { margin:10px 0; font-size:14px; }
+.lead { font-size:15px; color:#1A365D; background:#EDF2F7; padding:16px 20px; border-radius:8px; margin:16px 0; border-left:5px solid #1A365D; }
+.tip { background:#FFFAF0; padding:14px 18px; border-radius:8px; margin:14px 0; border-left:5px solid #ED8936; font-size:14px; }
+.tip .label { font-weight:bold; color:#C05621; display:block; margin-bottom:4px; font-size:12px; }
+.ok { background:#F0FFF4; padding:14px 18px; border-radius:8px; margin:14px 0; border-left:5px solid #38A169; font-size:14px; }
+.ok .label { font-weight:bold; color:#2F855A; display:block; margin-bottom:4px; font-size:12px; }
+.warn { background:#FFF5F5; padding:14px 18px; border-radius:8px; margin:14px 0; border-left:5px solid #E53E3E; font-size:14px; }
+.warn .label { font-weight:bold; color:#C53030; display:block; margin-bottom:4px; font-size:12px; }
+.info { background:#EBF8FF; padding:14px 18px; border-radius:8px; margin:14px 0; border-left:5px solid #3182CE; font-size:14px; }
+.info .label { font-weight:bold; color:#2B6CB0; display:block; margin-bottom:4px; font-size:12px; }
+table { width:100%; border-collapse:collapse; margin:14px 0; font-size:13px; }
+th { background:#1A365D; color:white; padding:9px 11px; text-align:left; }
+td { padding:9px 11px; border-bottom:1px solid #E2E8F0; vertical-align:top; }
+tr:nth-child(even) { background:#F7FAFC; }
+.phase-box { border:2px solid #E2E8F0; border-radius:10px; padding:18px 22px; margin:14px 0; }
+.phase-box.p1 { border-color:#553C9A; border-top:5px solid #553C9A; }
+.phase-box.p2 { border-color:#2F855A; border-top:5px solid #2F855A; }
+.phase-box.p3 { border-color:#2B6CB0; border-top:5px solid #2B6CB0; }
+.phase-box.p4 { border-color:#C05621; border-top:5px solid #C05621; }
+.phase-label { font-size:13px; font-weight:bold; letter-spacing:1px; margin-bottom:8px; }
+.p1 .phase-label { color:#553C9A; }
+.p2 .phase-label { color:#2F855A; }
+.p3 .phase-label { color:#2B6CB0; }
+.p4 .phase-label { color:#C05621; }
+.flow-step { display:flex; gap:0; margin:16px 0; flex-wrap:wrap; }
+.flow-item { background:#EDF2F7; border:2px solid #CBD5E0; border-radius:8px; padding:12px 16px; font-size:13px; flex:1; min-width:140px; text-align:center; position:relative; }
+.flow-item.highlight { background:#EBF8FF; border-color:#90CDF4; }
+.flow-item.highlight2 { background:#F0FFF4; border-color:#9AE6B4; }
+.flow-item .step-num { display:block; font-size:11px; font-weight:bold; color:#718096; margin-bottom:4px; }
+.flow-arrow { display:flex; align-items:center; padding:0 4px; color:#CBD5E0; font-size:20px; }
+.badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:11px; font-weight:bold; margin:2px; }
+.badge-must { background:#FFF5F5; color:#C53030; }
+.badge-should { background:#FFFAF0; color:#C05621; }
+.badge-could { background:#F0FFF4; color:#276749; }
+.req-table th.must { background:#C53030; }
+.req-table th.should { background:#C05621; }
+.req-table th.could { background:#276749; }
+hr { border:none; border-top:1px solid #E2E8F0; margin:30px 0; }
+ul { padding-left:20px; font-size:14px; }
+li { margin:4px 0; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:14px 0; }
+.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:14px 0; }
+.card { background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:14px; }
+.card h4 { margin-top:0; font-size:14px; }
+.card p { font-size:13px; }
+.toc { background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:20px 24px; margin-bottom:30px; }
+.toc h4 { color:#1A365D; margin-bottom:10px; font-size:15px; }
+.toc ol { padding-left:18px; }
+.toc li { margin:5px 0; font-size:14px; color:#2B6CB0; }
+@media print { body { padding:0; } .container { box-shadow:none; padding:30px 40px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 表紙 -->
+<div class="cover">
+  <div class="label">TECHNICAL REQUIREMENTS DOCUMENT</div>
+  <div class="ver-badge">VERSION 1.0 ／ 2026年5月</div>
+  <h1>AI記録自動生成システム<br>要件定義書＆設計プロセス詳細資料</h1>
+  <p class="sub">面談予約 → Meet録音 → AI記録書類自動生成 → WebUI確認・保存・PDF出力</p>
+  <div class="meta">
+    クライアント：合同会社まる 様<br>
+    作成者：上村桂右（有限会社アートソウル）<br>
+    対象システム：アプリ④ 面談予約＋AI記録生成アプリ<br>
+    作成日：2026-05-08
+  </div>
+</div>
+
+<!-- 目次 -->
+<div class="toc">
+  <h4>目次</h4>
+  <ol>
+    <li>システム概要・目的</li>
+    <li>全体フロー設計</li>
+    <li>機能要件（MUST / SHOULD / COULD）</li>
+    <li>非機能要件</li>
+    <li>技術スタック・アーキテクチャ</li>
+    <li>コンポーネント別 詳細設計</li>
+    <li>データ設計（DB・ファイル構造）</li>
+    <li>WebUI 画面設計</li>
+    <li>開発プロセス・マイルストーン</li>
+    <li>リスクと対応策</li>
+  </ol>
+</div>
+
+<!-- Section 1 -->
+<h2><span class="sec-num">1</span>システム概要・目的</h2>
+
+<div class="lead">
+合同会社まる様の支援員・管理者が行う「面談実施 → 記録作成 → 書類整理」という一連の業務を、Google Meet・GAS・Gemini AIを組み合わせて自動化するシステムです。<br>
+目標：面談後の記録書類作成にかかる時間を現状比 <strong>70%以上削減</strong>し、当日中の記録完了率を <strong>80%以上</strong>に引き上げます。
+</div>
+
+<h3>解決する課題</h3>
+<table>
+<tr><th>現状の課題</th><th>このシステムで解決すること</th></tr>
+<tr><td>面談後に手書きメモをもとに記録を書き起こす（30〜60分/件）</td><td>Meet文字起こしをAIが読み込み、記録下書きを自動生成（5分以内）</td></tr>
+<tr><td>相談支援記録・議事録・面接記録で書く内容が重複する</td><td>1回の面談データから複数書類の下書きを同時生成</td></tr>
+<tr><td>記録を複数のファイルに転記するミスが発生する</td><td>WebUIで一元管理し、DBへの一括保存でミスゼロ化</td></tr>
+<tr><td>面談の予約・Meet設定を手動でGoogleカレンダーに登録する</td><td>アプリ操作1回でカレンダー登録＋Meet URL発行が完了</td></tr>
+<tr><td>記録書類の保管・検索がフォルダ管理で非効率</td><td>利用者別DBに自動保存・シートから即参照可能</td></tr>
+</table>
+
+<!-- Section 2 -->
+<h2><span class="sec-num">2</span>全体フロー設計</h2>
+
+<h3>システム全体フロー（3フェーズ）</h3>
+
+<div class="phase-box p1">
+  <div class="phase-label">PHASE 1 — 面談予約フロー</div>
+  <div class="flow-step">
+    <div class="flow-item highlight"><span class="step-num">STEP 1</span>アプリ④起動<br>（ライモBiz）</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 2</span>利用者選択<br>日時入力<br>タイトル入力</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 3</span>「面談予約」<br>ボタン押下</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><span class="step-num">GAS実行</span>Googleカレンダーに<br>予定を自動登録<br>＋Meet URL発行</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><span class="step-num">自動記録</span>Sheetsの利用者<br>記録シートに<br>予約履歴を追記</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight2"><span class="step-num">完了</span>担当者に<br>カレンダー招待<br>メール送信</div>
+  </div>
+</div>
+
+<div class="phase-box p2">
+  <div class="phase-label">PHASE 2 — 面談実施・文字起こし取得フロー</div>
+  <div class="flow-step">
+    <div class="flow-item"><span class="step-num">STEP 1</span>Google Meet<br>で面談実施<br>（録音ON）</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><span class="step-num">STEP 2</span>Meet終了後<br>文字起こし<br>Doc自動生成</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 3</span>GASが<br>Doc生成を検知<br>（タイマー or<br>Drive連携）</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 4</span>Sheetsの<br>面談履歴行に<br>Docリンクを<br>自動入力</div>
+  </div>
+</div>
+
+<div class="phase-box p3">
+  <div class="phase-label">PHASE 3 — AI記録生成・WebUI確認・保存フロー</div>
+  <div class="flow-step">
+    <div class="flow-item highlight"><span class="step-num">STEP 1</span>GASがDoc<br>の文字起こし<br>テキストを取得</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 2</span>Gemini APIに<br>プロンプト＋<br>文字起こし送信</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight"><span class="step-num">STEP 3</span>AI が各書類<br>の下書きを<br>Markdown生成</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><span class="step-num">STEP 4</span>完了通知<br>メール/LINE<br>＋WebURL送信</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight2"><span class="step-num">STEP 5</span>WebUIで<br>確認・編集<br>・承認</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item highlight2"><span class="step-num">STEP 6</span>保存・PDF出力<br>・Docs保存<br>・印刷</div>
+  </div>
+</div>
+
+<!-- Section 3 -->
+<h2><span class="sec-num">3</span>機能要件（MUST / SHOULD / COULD）</h2>
+
+<p>機能の優先度を3段階で定義します。<strong>MUST</strong>は初回リリース必須、<strong>SHOULD</strong>は第1段階中に追加実装、<strong>COULD</strong>は第2段階以降の拡張候補。</p>
+
+<h3>PHASE 1：面談予約機能</h3>
+<table class="req-table">
+<tr><th class="must">MUST（必須）</th><th class="should">SHOULD（推奨）</th><th class="could">COULD（拡張）</th></tr>
+<tr>
+  <td>
+    ・利用者一覧から選択<br>
+    ・日付・開始時刻・終了時刻入力<br>
+    ・面談タイトル入力<br>
+    ・Googleカレンダーへ予定自動登録<br>
+    ・Google Meet URL 自動発行・カレンダー予定へ付与<br>
+    ・利用者記録シートへ予約履歴自動追記
+  </td>
+  <td>
+    ・予約完了時に担当者へメール通知<br>
+    ・担当支援員を複数選択してカレンダー招待<br>
+    ・予約済み一覧ビュー（アプリ内）
+  </td>
+  <td>
+    ・LINEへ予約通知<br>
+    ・利用者本人へのリマインダー通知<br>
+    ・予約のキャンセル・変更機能
+  </td>
+</tr>
+</table>
+
+<h3>PHASE 2：文字起こし取得機能</h3>
+<table class="req-table">
+<tr><th class="must">MUST（必須）</th><th class="should">SHOULD（推奨）</th><th class="could">COULD（拡張）</th></tr>
+<tr>
+  <td>
+    ・GASによるDriveフォルダ監視（5分間隔）<br>
+    ・Meet文字起こしDocを検知<br>
+    ・DocのテキストをGASで取得<br>
+    ・Sheetsの対応行にDocリンクを自動入力<br>
+    ・「文字起こし取得済み」フラグをSheetsに記録
+  </td>
+  <td>
+    ・Drive変更通知Webhookによるリアルタイム検知<br>
+    ・文字起こし取得失敗時のエラー通知メール
+  </td>
+  <td>
+    ・音声ファイルを別サービスで高精度文字起こし<br>（Whisper API等との連携）
+  </td>
+</tr>
+</table>
+
+<h3>PHASE 3：AI記録生成機能</h3>
+<table class="req-table">
+<tr><th class="must">MUST（必須）</th><th class="should">SHOULD（推奨）</th><th class="could">COULD（拡張）</th></tr>
+<tr>
+  <td>
+    ・文字起こしテキストをGemini API（gemini-1.5-flash等）に送信<br>
+    ・以下の書類ごとの下書きをMarkdown形式で生成：<br>
+    　- 相談支援記録（書類5相当）<br>
+    　- 議事録（書類6相当）<br>
+    　- 面接記録（書類7相当）<br>
+    ・生成結果をSheetsに保存（JSON or テキスト）<br>
+    ・担当者へ完了通知メール送信（WebUI URL付き）
+  </td>
+  <td>
+    ・アセスメントシートの下書き生成<br>
+    ・生成失敗時の自動リトライ（最大3回）<br>
+    ・LINE通知への対応
+  </td>
+  <td>
+    ・個別支援計画案の下書き生成<br>
+    ・過去記録との差分分析・サマリー生成<br>
+    ・多言語対応（外国籍利用者向け）
+  </td>
+</tr>
+</table>
+
+<h3>PHASE 3：WebUI機能</h3>
+<table class="req-table">
+<tr><th class="must">MUST（必須）</th><th class="should">SHOULD（推奨）</th><th class="could">COULD（拡張）</th></tr>
+<tr>
+  <td>
+    ・URLアクセスで対象面談の情報を表示<br>
+    ・文字起こし全文を左ペインに表示<br>
+    ・各書類の下書きを右ペインにタブ切替で表示<br>
+    ・テキストエリアで直接編集可能<br>
+    ・「保存」でSheetsDBに記録<br>
+    ・「PDF出力」でGoogle Docsへ自動書き込み＋PDF化<br>
+    ・PDFのダウンロードボタン<br>
+    ・印刷対応（window.print()）
+  </td>
+  <td>
+    ・「再生成」ボタン（AIに再度生成させる）<br>
+    ・編集履歴の保存（バージョン管理）<br>
+    ・承認ステータス管理（下書き/確認中/承認済み）
+  </td>
+  <td>
+    ・モバイル対応レスポンシブUI<br>
+    ・複数職員のコメント機能<br>
+    ・書類ごとのテンプレートカスタマイズ画面
+  </td>
+</tr>
+</table>
+
+<!-- Section 4 -->
+<h2><span class="sec-num">4</span>非機能要件</h2>
+
+<table>
+<tr><th>項目</th><th>要件</th><th>補足</th></tr>
+<tr><td><strong>パフォーマンス</strong></td><td>AI生成完了まで2分以内（1面談分）</td><td>Gemini 1.5-flash は通常30秒〜1分で応答</td></tr>
+<tr><td><strong>可用性</strong></td><td>Google Workspace の稼働率に準拠（99.9%）</td><td>GASはGoogle側で管理。障害時はメール通知</td></tr>
+<tr><td><strong>セキュリティ</strong></td><td>Google Workspaceのドメイン認証でアクセス制限</td><td>WebUIはGWSアカウントログイン必須。URLの無断共有禁止をルール化</td></tr>
+<tr><td><strong>データ保持</strong></td><td>記録データはSheetsとDocsに永続保存</td><td>Driveのバックアップ設定を推奨</td></tr>
+<tr><td><strong>プロンプト管理</strong></td><td>書類ごとのプロンプトをSheetsで管理・編集可能</td><td>AIマネージャーが改善できる設計にする</td></tr>
+<tr><td><strong>拡張性</strong></td><td>書類テンプレートの追加・変更がコードなしで可能</td><td>SheetsのテンプレートシートをCRUDで管理</td></tr>
+<tr><td><strong>コスト</strong></td><td>Gemini API費用：1面談あたり約¥1〜¥5（目安）</td><td>月50件の場合 約¥50〜¥250/月。Google AI Studio無料枠内に収まる可能性あり</td></tr>
+</table>
+
+<!-- Section 5 -->
+<h2><span class="sec-num">5</span>技術スタック・アーキテクチャ</h2>
+
+<h3>使用技術一覧</h3>
+<div class="three-col">
+  <div class="card">
+    <h4>フロントエンド（予約UI）</h4>
+    <p>ライモBizカスタムアプリ<br>HTML/CSS/JS（ライモBiz提供環境）</p>
+  </div>
+  <div class="card">
+    <h4>バックエンド（自動処理）</h4>
+    <p>Google Apps Script（GAS）<br>・カレンダー/Drive/Gmail連携<br>・Gemini API呼び出し<br>・定期実行（タイマー）</p>
+  </div>
+  <div class="card">
+    <h4>WebUI（確認・編集画面）</h4>
+    <p>GAS Web App（doGet/doPost）<br>HTML + Vanilla JS<br>Bootstrap 5（モバイル対応）</p>
+  </div>
+  <div class="card">
+    <h4>データベース</h4>
+    <p>Google Sheets<br>・面談マスターDB<br>・記録書類DB<br>・プロンプトテンプレート管理</p>
+  </div>
+  <div class="card">
+    <h4>ファイル管理</h4>
+    <p>Google Drive<br>・利用者別フォルダ<br>・Meet文字起こしDoc<br>・PDF保存先Doc</p>
+  </div>
+  <div class="card">
+    <h4>AI処理</h4>
+    <p>Gemini API（Google AI Studio）<br>推奨モデル：gemini-1.5-flash<br>または gemini-2.0-flash</p>
+  </div>
+</div>
+
+<h3>システム構成図（テキスト版）</h3>
+<div style="background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:20px; font-family:monospace; font-size:13px; white-space:pre-line; line-height:2;">
+[支援員/AIマネージャー]
+        │ ライモBizアプリ④ （予約UI）
+        ▼
+[GAS: 予約処理]
+  ├─ Google カレンダー（予定登録 + Meet URL発行）
+  └─ Google Sheets「面談履歴DB」（予約行追加）
+
+[面談実施 via Google Meet]
+        │ Meet終了後に文字起こしDoc自動生成
+        ▼
+[GAS: Drive監視（5分タイマー）]
+  └─ 文字起こしDocを検知 → Sheets該当行にDocリンク記録
+
+[GAS: AI記録生成処理]
+  ├─ DocからテキストをGAS.getBody()で取得
+  ├─ Gemini API（UrlFetchApp.fetch）にプロンプト＋テキスト送信
+  ├─ 各書類の下書きMarkdownをSheetsに保存
+  └─ 完了通知メール送信（WebUI URLを本文に記載）
+
+[AIマネージャー] → WebUI（GAS Web App）を開く
+  ├─ 左ペイン：文字起こし全文
+  ├─ 右ペイン：各書類タブ（相談支援記録/議事録/面接記録）
+  ├─ 編集 → 「保存」→ SheetsDB更新
+  └─ 「PDF出力」→ Google Docs書き込み → PDF化 → DL/印刷
+</div>
+
+<!-- Section 6 -->
+<h2><span class="sec-num">6</span>コンポーネント別 詳細設計</h2>
+
+<h3>6-1. GAS：面談予約処理（booking.gs）</h3>
+<table>
+<tr><th>処理</th><th>詳細</th></tr>
+<tr><td><strong>トリガー</strong></td><td>ライモBizアプリからHTTPリクエスト（doPost）</td></tr>
+<tr><td><strong>入力パラメータ</strong></td><td>利用者ID・利用者名・面談日時（開始/終了）・タイトル・担当者メールアドレス</td></tr>
+<tr><td><strong>処理①</strong></td><td>CalendarApp.createEventWithConference()でMeet付き予定を作成</td></tr>
+<tr><td><strong>処理②</strong></td><td>生成されたMeet URLをイベントの説明欄に記録</td></tr>
+<tr><td><strong>処理③</strong></td><td>Sheetsの「面談履歴DB」に1行追加（利用者ID・面談日時・Meet URL・予約日時・担当者）</td></tr>
+<tr><td><strong>処理④</strong></td><td>GmailApp.sendEmail()で担当者に確認メール送信</td></tr>
+<tr><td><strong>エラー処理</strong></td><td>失敗時にエラーログをSheetsに記録 + 管理者へエラーメール</td></tr>
+</table>
+
+<h3>6-2. GAS：Drive監視（watcher.gs）</h3>
+<table>
+<tr><th>処理</th><th>詳細</th></tr>
+<tr><td><strong>トリガー</strong></td><td>時間ベーストリガー（5分ごとに実行）</td></tr>
+<tr><td><strong>処理①</strong></td><td>指定Driveフォルダ（Meet録音保存先）の新規Docファイルを検索</td></tr>
+<tr><td><strong>処理②</strong></td><td>ファイル名から面談日時・利用者名を解析してSheetsの対応行を特定</td></tr>
+<tr><td><strong>処理③</strong></td><td>Sheetsの「文字起こしDocリンク」列にURLを記入 + 「処理ステータス」を「取得済み」に更新</td></tr>
+<tr><td><strong>重複防止</strong></td><td>「処理ステータス」が「取得済み」の行はスキップ</td></tr>
+</table>
+
+<div class="info">
+<span class="label">文字起こしDocのファイル名規則（Meet側の設定）</span>
+Google Meetの文字起こしDocはデフォルトで「[ミーティング名] の文字起こし - YYYY-MM-DD」形式で保存されます。面談予約時のMeet名を「利用者ID_YYYYMMDD_面談タイトル」形式に統一することで、GASの解析精度を高めます。
+</div>
+
+<h3>6-3. GAS：AI記録生成処理（ai_generator.gs）</h3>
+<table>
+<tr><th>処理</th><th>詳細</th></tr>
+<tr><td><strong>トリガー</strong></td><td>Drive監視GASから呼び出し（ステータス「取得済み」の行を処理）</td></tr>
+<tr><td><strong>処理①</strong></td><td>DocApp.openById()でDocのテキストを取得。長文の場合は先頭10,000文字を使用（Geminiのトークン上限考慮）</td></tr>
+<tr><td><strong>処理②</strong></td><td>Sheetsの「プロンプトテンプレート」シートから各書類のシステムプロンプトを取得</td></tr>
+<tr><td><strong>処理③</strong></td><td>Gemini API（UrlFetchApp.fetch）に以下を送信：<br>
+  - systemInstruction（書類の書き方・フォーマット指示）<br>
+  - contents（文字起こしテキスト）
+</td></tr>
+<tr><td><strong>処理④</strong></td><td>APIレスポンス（Markdown）をSheetsの各列に保存<br>（相談支援記録列・議事録列・面接記録列）</td></tr>
+<tr><td><strong>処理⑤</strong></td><td>「処理ステータス」を「生成済み」に更新 + WebUI URLを生成してSheetsに記録</td></tr>
+<tr><td><strong>処理⑥</strong></td><td>GmailApp.sendEmail()で完了通知メール送信（WebUI URLを本文に埋め込み）</td></tr>
+</table>
+
+<h3>6-4. GAS WebUI（webapp.gs + index.html）</h3>
+<table>
+<tr><th>コンポーネント</th><th>詳細</th></tr>
+<tr><td><strong>doGet(e)</strong></td><td>URLパラメータ（?id=行番号）でSheetsから対象行データを取得してHTMLテンプレートに渡す</td></tr>
+<tr><td><strong>左ペイン</strong></td><td>文字起こし全文をスクロール表示。強調ワード（利用者名・日付）をハイライト</td></tr>
+<tr><td><strong>右ペイン</strong></td><td>タブ切替UIで「相談支援記録」「議事録」「面接記録」を切り替え。各タブに編集可能テキストエリア</td></tr>
+<tr><td><strong>保存処理</strong></td><td>「保存」ボタン → doPost() → Sheetsの対応行を更新 → 保存日時・編集者を記録</td></tr>
+<tr><td><strong>PDF出力処理</strong></td><td>「PDF出力」ボタン → GASがGoogle Docsに書類フォーマットで書き込み → DriveでPDF変換 → ダウンロードURLを返す</td></tr>
+<tr><td><strong>印刷</strong></td><td>「印刷」ボタン → window.print()（CSS @media printで印刷用レイアウト適用）</td></tr>
+<tr><td><strong>アクセス制限</strong></td><td>GAS Web Appのデプロイ設定：「組織内のユーザーのみ」にアクセス制限</td></tr>
+</table>
+
+<!-- Section 7 -->
+<h2><span class="sec-num">7</span>データ設計（DB・ファイル構造）</h2>
+
+<h3>Google Sheets — 「面談履歴DB」シート</h3>
+<table>
+<tr><th>列名</th><th>データ型</th><th>説明</th></tr>
+<tr><td>record_id</td><td>文字列（自動採番）</td><td>ユニークID（例：MARU-20260508-001）</td></tr>
+<tr><td>利用者ID</td><td>文字列</td><td>台帳マスターのID</td></tr>
+<tr><td>利用者名</td><td>文字列</td><td></td></tr>
+<tr><td>面談日時（開始）</td><td>日時</td><td></td></tr>
+<tr><td>面談日時（終了）</td><td>日時</td><td></td></tr>
+<tr><td>面談タイトル</td><td>文字列</td><td></td></tr>
+<tr><td>担当者メール</td><td>文字列</td><td></td></tr>
+<tr><td>カレンダーイベントID</td><td>文字列</td><td>GAS管理用</td></tr>
+<tr><td>Meet URL</td><td>URL</td><td></td></tr>
+<tr><td>文字起こしDocリンク</td><td>URL</td><td>自動入力</td></tr>
+<tr><td>処理ステータス</td><td>選択（予約済み/取得済み/生成済み/承認済み）</td><td></td></tr>
+<tr><td>相談支援記録（AI生成）</td><td>テキスト（Markdown）</td><td>AI生成後の下書き</td></tr>
+<tr><td>議事録（AI生成）</td><td>テキスト（Markdown）</td><td></td></tr>
+<tr><td>面接記録（AI生成）</td><td>テキスト（Markdown）</td><td></td></tr>
+<tr><td>相談支援記録（編集済み）</td><td>テキスト</td><td>WebUIで確定した内容</td></tr>
+<tr><td>議事録（編集済み）</td><td>テキスト</td><td></td></tr>
+<tr><td>面接記録（編集済み）</td><td>テキスト</td><td></td></tr>
+<tr><td>PDF保存DocID</td><td>文字列</td><td>PDF出力後に記録</td></tr>
+<tr><td>WebUI URL</td><td>URL</td><td>確認画面のURL</td></tr>
+<tr><td>最終更新日時</td><td>日時</td><td>自動更新</td></tr>
+<tr><td>最終更新者</td><td>文字列（メール）</td><td>自動記録</td></tr>
+</table>
+
+<h3>Google Sheets — 「プロンプトテンプレート」シート</h3>
+<table>
+<tr><th>列名</th><th>説明</th></tr>
+<tr><td>書類種別</td><td>相談支援記録 / 議事録 / 面接記録 / アセスメント など</td></tr>
+<tr><td>システムプロンプト</td><td>AIへの指示文（書類のフォーマット・記載ルール・文体など）</td></tr>
+<tr><td>出力フォーマット</td><td>Markdown見出し構造の定義（例：## 1. 相談内容 ## 2. 対応内容）</td></tr>
+<tr><td>有効フラグ</td><td>TRUE/FALSE（使用しないテンプレートをOFFにできる）</td></tr>
+<tr><td>最終更新日</td><td>AIマネージャーがいつ修正したか記録</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">プロンプト管理のポイント</span>
+プロンプトをSheetsで管理することで、AIマネージャーがコードに触れることなく「書類の書き方をAIに指示する文」を改善できます。運用開始後2〜3か月でプロンプトの精度が上がり、AIの出力品質が向上します。
+</div>
+
+<h3>Google Drive — フォルダ構造</h3>
+<div style="background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:16px; font-family:monospace; font-size:13px; white-space:pre-line; line-height:2;">
+まる様 Google Drive（共有ドライブ）/
+├── 00_管理システム/
+│   ├── 面談履歴DB.xlsx（Sheets）
+│   ├── プロンプトテンプレート.xlsx（Sheets）
+│   └── GASスクリプト（コード管理）
+├── 01_利用者フォルダ/
+│   ├── [利用者名_ID]/
+│   │   ├── 基本情報/（台帳・アセスメント）
+│   │   ├── 面談記録/
+│   │   │   ├── YYYYMMDD_[タイトル]_文字起こし.doc
+│   │   │   └── YYYYMMDD_[タイトル]_記録書類.doc（PDF出力先）
+│   │   └── 個別支援計画/
+└── 02_Meet録音・文字起こし/（Meetの自動保存先）
+    └── YYYYMMDD_[利用者名]_[タイトル]_文字起こし.doc
+</div>
+
+<!-- Section 8 -->
+<h2><span class="sec-num">8</span>WebUI 画面設計</h2>
+
+<h3>画面レイアウト</h3>
+<div style="background:#F7FAFC; border:2px solid #E2E8F0; border-radius:8px; padding:20px; font-family:monospace; font-size:13px; line-height:1.6;">
+┌──────────────────────────────────────────────────────┐<br>
+│ ヘッダー：利用者名 ／ 面談日時 ／ 担当者 ／ ステータスバッジ               │<br>
+├────────────────────┬─────────────────────────────────┤<br>
+│ 【左ペイン 40%】         │ 【右ペイン 60%】                        │<br>
+│ 文字起こし全文           │ [タブ] 相談支援記録 ｜ 議事録 ｜ 面接記録  │<br>
+│                         │                                       │<br>
+│ スクロール可能な          │ &lt;テキストエリア：編集可能&gt;              │<br>
+│ テキスト表示              │                                       │<br>
+│                         │ AIが生成した下書きが初期表示              │<br>
+│                         │ 直接編集して内容を確定する               │<br>
+│                         │                                       │<br>
+├────────────────────┴─────────────────────────────────┤<br>
+│ フッターボタン：[保存] [再生成] [PDF出力] [印刷] [閉じる]          │<br>
+└──────────────────────────────────────────────────────┘
+</div>
+
+<h3>UIの設計方針</h3>
+<ul>
+  <li>PCブラウザでの利用を主とする（スマホ対応はSHOULD）</li>
+  <li>フォントサイズは14〜16px、視認性優先</li>
+  <li>「保存」「PDF出力」は誤操作防止のため確認ダイアログを表示</li>
+  <li>編集中は画面上部に「未保存」バッジを表示して保存忘れを防止</li>
+  <li>「AI下書きを復元」ボタン：誤って消した場合に元のAI生成内容に戻せる</li>
+</ul>
+
+<!-- Section 9 -->
+<h2><span class="sec-num">9</span>開発プロセス・マイルストーン</h2>
+
+<div class="phase-box p1">
+  <div class="phase-label">Sprint 1（第1段階 6〜7週目）— 面談予約機能</div>
+  <table>
+  <tr><th>タスク</th><th>担当</th><th>完了基準</th></tr>
+  <tr><td>ライモBizアプリ④ 予約UIの設計・実装</td><td>上村（アートソウル）</td><td>利用者選択→日時入力→ボタン押下でGASが呼ばれる</td></tr>
+  <tr><td>GAS：カレンダー登録 + Meet URL発行</td><td>上村</td><td>テストアカウントでカレンダー予定が作成される</td></tr>
+  <tr><td>GAS：Sheets「面談履歴DB」への行追加</td><td>上村</td><td>予約情報が正しく記録される</td></tr>
+  <tr><td>GAS：担当者へのメール通知</td><td>上村</td><td>予約完了メールが届く</td></tr>
+  <tr><td>まる様担当者によるUAT（受入テスト）</td><td>AIマネージャー</td><td>実際の面談を1件予約してエラーなし</td></tr>
+  </table>
+</div>
+
+<div class="phase-box p2">
+  <div class="phase-label">Sprint 2（第1段階 7〜9週目）— 文字起こし取得 + AI記録生成</div>
+  <table>
+  <tr><th>タスク</th><th>担当</th><th>完了基準</th></tr>
+  <tr><td>Gemini APIキー取得・GAS連携テスト</td><td>上村</td><td>GASからGemini APIにテスト送信→レスポンス確認</td></tr>
+  <tr><td>書類ごとのプロンプト設計（相談支援記録・議事録・面接記録）</td><td>上村＋AIマネージャー</td><td>テスト文字起こしで3書類のMarkdown下書き生成を確認</td></tr>
+  <tr><td>GAS：Drive監視（文字起こしDoc検知）</td><td>上村</td><td>Meetテスト録音のDocが正しく検知される</td></tr>
+  <tr><td>GAS：AI生成処理フル実装</td><td>上村</td><td>文字起こし取得→Gemini API→Sheets保存→完了メールの一連を確認</td></tr>
+  <tr><td>プロンプト精度チューニング（初回）</td><td>上村＋AIマネージャー</td><td>AIマネージャーが「使える下書き」と判断できる品質</td></tr>
+  </table>
+</div>
+
+<div class="phase-box p3">
+  <div class="phase-label">Sprint 3（第1段階 10〜11週目）— WebUI開発・PDF出力</div>
+  <table>
+  <tr><th>タスク</th><th>担当</th><th>完了基準</th></tr>
+  <tr><td>GAS WebApp：doGet() + HTMLテンプレート実装</td><td>上村</td><td>URLでWebUIが開き、対象面談データが表示される</td></tr>
+  <tr><td>左ペイン（文字起こし表示）+ 右ペイン（タブ切替・編集）実装</td><td>上村</td><td>3書類タブの切替・テキストエリア編集が動作する</td></tr>
+  <tr><td>「保存」機能実装（doPost → Sheets更新）</td><td>上村</td><td>編集内容がSheetsに正しく保存される</td></tr>
+  <tr><td>「PDF出力」機能実装（Docs書き込み → PDF化）</td><td>上村</td><td>PDFがDriveに保存され、ダウンロードURLが取得できる</td></tr>
+  <tr><td>統合テスト（面談予約〜WebUI保存まで全フロー）</td><td>上村＋AIマネージャー</td><td>実際の面談1件でエンドツーエンド動作確認</td></tr>
+  </table>
+</div>
+
+<div class="phase-box p4">
+  <div class="phase-label">Sprint 4（第2段階 4か月目〜）— 運用改善・拡張</div>
+  <table>
+  <tr><th>タスク</th><th>担当</th><th>内容</th></tr>
+  <tr><td>プロンプト継続チューニング</td><td>AIマネージャー主導</td><td>月次で出力品質をレビューし、Sheetsのプロンプトを改善</td></tr>
+  <tr><td>アセスメントシート対応</td><td>上村</td><td>プロンプト追加のみで対応可能</td></tr>
+  <tr><td>LINE通知連携</td><td>上村</td><td>SHOULD項目。LINE Notify（無料）またはLINE Messaging API</td></tr>
+  <tr><td>承認ステータス管理機能</td><td>上村</td><td>WebUIにステータス変更ボタン追加</td></tr>
+  </table>
+</div>
+
+<!-- Section 10 -->
+<h2><span class="sec-num">10</span>リスクと対応策</h2>
+
+<table>
+<tr><th>リスク</th><th>発生可能性</th><th>影響度</th><th>対応策</th></tr>
+<tr>
+  <td>Meetの文字起こし精度が低い（専門用語・方言）</td>
+  <td>高</td>
+  <td>中</td>
+  <td>AIプロンプトで「不明な部分は[要確認]と記載」と指示。WebUIでの手動確認を必須工程に設計</td>
+</tr>
+<tr>
+  <td>Gemini APIのレート制限・コスト超過</td>
+  <td>低</td>
+  <td>中</td>
+  <td>Google AI Studioの無料枠を最大活用。月次コスト監視。GASのエラーハンドリングでリトライ上限を設定</td>
+</tr>
+<tr>
+  <td>文字起こしDocのファイル名が規則通りにならない</td>
+  <td>中</td>
+  <td>中</td>
+  <td>GASの検知ロジックを柔軟に設計（ファイル名よりも保存フォルダ＋作成日時で特定）。手動紐づけUIも用意</td>
+</tr>
+<tr>
+  <td>個人情報が含まれるテキストの外部API送信リスク</td>
+  <td>中</td>
+  <td>高</td>
+  <td>Gemini APIはGoogle Workspaceと同一のGoogle契約のため、データはGoogleの規約に準拠。利用者名等の個人情報をAPIに送信することを社内規則に明記・同意取得を推奨</td>
+</tr>
+<tr>
+  <td>GAS実行時間上限（6分）に達する</td>
+  <td>低</td>
+  <td>低</td>
+  <td>文字起こしが長大な場合は先頭部分のみ送信する設計。将来的にCloud Functionsへ移行可能なアーキテクチャで設計</td>
+</tr>
+<tr>
+  <td>AIマネージャーの操作ミス（誤保存・誤削除）</td>
+  <td>中</td>
+  <td>中</td>
+  <td>「AI下書きを復元」機能でいつでも元に戻せる設計。Sheetsのバージョン履歴も活用</td>
+</tr>
+</table>
+
+<hr>
+
+<div style="text-align:center; padding:30px 0 20px; color:#718096; font-size:13px;">
+  <p><strong>有限会社アートソウル</strong>　上村桂右 ／ uemura@artsoul.jp</p>
+  <p style="margin-top:8px;">本書は合同会社まる様専用の技術設計資料です。無断転載・転用はお断りします。</p>
+  <p style="margin-top:4px; color:#CBD5E0;">Document Version 1.0 ／ 2026-05-08 作成</p>
+</div>
+
+</div>
+</body>
+</html>

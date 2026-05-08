@@ -105,12 +105,29 @@ hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
 function toggleSection(id) {
   var el = document.getElementById(id);
   var btn = document.querySelector('[data-target="' + id + '"]');
-  if (el.style.display === 'none' || el.style.display === '') {
-    el.style.display = 'block';
-    if (btn) btn.textContent = btn.textContent.replace('▼','▲');
+  var group = btn ? btn.getAttribute('data-group') : null;
+  var isOpen = el.style.display === 'block';
+
+  if (group) {
+    // 排他切替：同グループを全て閉じてから対象だけ開く
+    document.querySelectorAll('[data-group="' + group + '"]').forEach(function(s) {
+      var sibEl = document.getElementById(s.getAttribute('data-target'));
+      if (sibEl) sibEl.style.display = 'none';
+      s.textContent = s.textContent.replace('▲', '▼');
+    });
+    if (!isOpen) {
+      el.style.display = 'block';
+      if (btn) btn.textContent = btn.textContent.replace('▼', '▲');
+    }
   } else {
-    el.style.display = 'none';
-    if (btn) btn.textContent = btn.textContent.replace('▲','▼');
+    // 通常切替
+    if (isOpen) {
+      el.style.display = 'none';
+      if (btn) btn.textContent = btn.textContent.replace('▲', '▼');
+    } else {
+      el.style.display = 'block';
+      if (btn) btn.textContent = btn.textContent.replace('▼', '▲');
+    }
   }
 }
 </script>
@@ -646,7 +663,7 @@ function toggleSection(id) {
 </pre>
 </div>
 
-<h3>ライモBiz カスタムアプリ（3本開発）</h3>
+<h3>ライモBiz カスタムアプリ（4本開発）</h3>
 
 <div class="app-card">
   <div class="app-name">アプリ① 出退勤管理アプリ <span class="app-priority">第1段階 2か月目 開発</span></div>
@@ -685,6 +702,23 @@ function toggleSection(id) {
   <tr><td><strong>自動連携</strong></td><td>登録完了 → GASで担当者へ通知メール送信 + 個人フォルダ自動生成のトリガーに連携</td></tr>
   <tr><td><strong>技術基盤</strong></td><td>ライモBizカスタムアプリ + Google Sheets DB + GAS連携</td></tr>
   </table>
+</div>
+
+<div class="app-card c">
+  <div class="app-name" style="color:#2B6CB0;">アプリ④ 面談予約＋AI記録生成アプリ <span class="app-priority" style="background:#2B6CB0;">第1段階 2〜3か月目 開発</span></div>
+  <table style="margin-top:10px">
+  <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>目的</strong></td><td>面談の予約〜Meet録音〜文字起こし〜記録書類下書き生成〜WebUI確認・保存・PDF出力までを一気通貫で自動化。記録作成の属人作業をゼロにする</td></tr>
+  <tr><td><strong>操作者</strong></td><td>AIマネージャー（スマホ/PC）</td></tr>
+  <tr><td><strong>フロー①<br>面談予約</strong></td><td>利用者選択 → 日付・時間選択 → 面談タイトル入力 → 「予約」ボタン → GASがGoogle カレンダーに予定＋Meet URLを自動登録 → 利用者記録シートに予約履歴を自動記録</td></tr>
+  <tr><td><strong>フロー②<br>記録生成</strong></td><td>面談後、Meet文字起こし完了を検知 → SheetsにDocリンクを自動入力 → GAS+Gemini APIが文字起こし内容を取得・解析 → 相談支援記録・議事録・面接記録・アセスメント等の下書きをMarkdown形式で生成 → 完了通知をメール（またはLINE）で送信＋WebUI URLを通知</td></tr>
+  <tr><td><strong>フロー③<br>WebUI確認・保存</strong></td><td>URLからWebUIを開く → 文字起こし全文と各書類の下書きを並べて表示 → 画面上で直接編集 → 「保存」でSheetsDBに記録 → 「PDF出力」でDocへ自動保存＋ダウンロード/印刷対応</td></tr>
+  <tr><td><strong>技術基盤</strong></td><td>ライモBizアプリ（予約UI）+ GAS（Calendar/Meet連携・Gemini API呼び出し・通知）+ GAS Web App（WebUI）+ Google Sheets DB + Google Docs（PDF出力）</td></tr>
+  </table>
+  <div class="info" style="margin-top:12px; font-size:13px;">
+    <span class="label">詳細設計について</span>
+    このアプリの要件定義書・設計プロセス詳細資料を別途ご提供しています。システム全体の仕様・開発ステップ・リスク・スケジュール目安が記載されています。
+  </div>
 </div>
 
 <hr>
@@ -969,8 +1003,8 @@ function toggleSection(id) {
   </div>
 
   <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-    <button data-target="curriculum-detail" onclick="toggleSection('curriculum-detail')" style="background:#2B6CB0; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-size:14px; font-weight:bold;">研修カリキュラムを見る ▼</button>
-    <button data-target="usecase-detail" onclick="toggleSection('usecase-detail')" style="background:#276749; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-size:14px; font-weight:bold;">ライモBizでできること・活用事例 ▼</button>
+    <button data-target="curriculum-detail" data-group="limo-detail" onclick="toggleSection('curriculum-detail')" style="background:#2B6CB0; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-size:14px; font-weight:bold;">研修カリキュラムを見る ▼</button>
+    <button data-target="usecase-detail" data-group="limo-detail" onclick="toggleSection('usecase-detail')" style="background:#276749; color:white; border:none; padding:10px 20px; border-radius:6px; cursor:pointer; font-size:14px; font-weight:bold;">ライモBizでできること・活用事例 ▼</button>
   </div>
 
   <!-- カリキュラム詳細（折りたたみ） -->
@@ -1095,8 +1129,10 @@ function toggleSection(id) {
   <td>
     <span class="badge badge-red">必須</span> AI導入研修（ライモBiz）<br>
     <span class="badge badge-blue">①</span> Google Workspace設定・台帳・Sheets設計<br>
-    <span class="badge badge-purple">②</span> ライモBizアプリ2本開発<br>
-    <span class="badge badge-green">③</span> 週次コーチング（月4回）
+    <span class="badge badge-orange">②</span> Meet録音＋文字起こし 記録業務効率化設計<br>
+    <span class="badge badge-orange">③</span> AI文字起こし→記録書類自動生成（相談支援・議事録・面接記録）<br>
+    <span class="badge badge-purple">④</span> ライモBizアプリ4本開発<br>
+    <span class="badge badge-green">⑤</span> 週次コーチング（月4回）
   </td>
   <td><span class="big-price">¥300,000</span><br><small>/月</small></td>
 </tr>
@@ -1124,7 +1160,7 @@ function toggleSection(id) {
 
 <div class="ok">
 <span class="label">各段階の説明</span>
-<strong>第1段階（基盤づくり）</strong>：システムを作る3か月。Google Workspaceの土台を整え、Meet録音＋文字起こしで記録業務を即時効率化。ライモBizアプリを3本開発し、現場での使い方を研修で習得します。<br>
+<strong>第1段階（基盤づくり）</strong>：システムを作る3か月。Google Workspaceの土台を整え（①）、Meet録音＋文字起こし体制を即日構築して相談支援記録・議事録・面接記録の入力負担を初週から削減（②）。AIが文字起こしを読み込み各記録書類の下書きを自動生成するシステムを構築（③）。ライモBizアプリを4本開発し、現場での使い方を研修で習得します（④）。<br>
 <strong>第2段階（定着・活用）</strong>：現場に馴染ませる3か月。アプリ開発はなく、AIマネージャーが「自分でできる」確信を持てるまで伴走します。<br>
 <strong>第3段階（継続サポート）</strong>：有限会社アートソウルが「見守る存在」になる期間。月1回の相談で新しい改善提案や最新AIトレンドを提供し続けます。
 </div>
@@ -1158,16 +1194,16 @@ function toggleSection(id) {
   <div class="month-card">
     <h4>2か月目（31〜60日目）— アプリ開発・テスト</h4>
     <div class="week-row"><div class="week-label">5週目</div><div>ライモBizアプリ①（出退勤）開発完了 → テスト環境で試用開始。スタッフ向け操作説明会（30分）実施</div></div>
-    <div class="week-row"><div class="week-label">6週目</div><div>ライモBizアプリ②（音声入力記録）設計・開発開始。アプリ①の本番稼働開始（紙の出勤簿と並行運用1週間）</div></div>
-    <div class="week-row"><div class="week-label">7週目</div><div>AI研修 第3回実施（ライモBizアプリ操作）。アプリ①紙廃止・完全デジタル化。アプリ②開発完了 → テスト</div></div>
-    <div class="week-row"><div class="week-label">8週目</div><div>アプリ②本番稼働（音声記録スタート）。個別支援計画Sheetsテンプレート設計・作成。週次MTG② 実施</div></div>
+    <div class="week-row"><div class="week-label">6週目</div><div>ライモBizアプリ②（音声入力記録）設計・開発開始。アプリ①の本番稼働開始（紙の出勤簿と並行運用1週間）。<strong>アプリ④（面談予約）設計開始：利用者選択UI・Google カレンダー/Meet自動登録GAS設計</strong></div></div>
+    <div class="week-row"><div class="week-label">7週目</div><div>AI研修 第3回実施（ライモBizアプリ操作）。アプリ①紙廃止・完全デジタル化。アプリ②開発完了 → テスト。<strong>アプリ④ 面談予約UI開発完了・GAS連携テスト</strong></div></div>
+    <div class="week-row"><div class="week-label">8週目</div><div>アプリ②本番稼働（音声記録スタート）。個別支援計画Sheetsテンプレート設計・作成。<strong>アプリ④ 面談予約 本番稼働開始。</strong>週次MTG② 実施</div></div>
   </div>
 
   <div class="month-card">
     <h4>3か月目（61〜90日目）— 本格稼働・研修完了</h4>
-    <div class="week-row"><div class="week-label">9週目</div><div>AI研修 第4回実施（個別支援計画 演習）。記録DB蓄積データを使ったGemini分析テスト実施</div></div>
-    <div class="week-row"><div class="week-label">10週目</div><div>国保連テンプレート（レベル1）本番適用。初回月次データを自動集計で確認・精度チェック</div></div>
-    <div class="week-row"><div class="week-label">11週目</div><div>GASによる国保連PDF自動変換（レベル2）開発開始。個別支援計画下書き自動化 初回テスト</div></div>
+    <div class="week-row"><div class="week-label">9週目</div><div>AI研修 第4回実施（個別支援計画 演習）。記録DB蓄積データを使ったGemini分析テスト実施。<strong>アプリ④ AI記録生成システム設計：Gemini API連携・Markdown生成・WebUI設計</strong></div></div>
+    <div class="week-row"><div class="week-label">10週目</div><div>国保連テンプレート（レベル1）本番適用。初回月次データを自動集計で確認・精度チェック。<strong>アプリ④ WebUI開発（文字起こし表示・書類下書き確認・編集UI）</strong></div></div>
+    <div class="week-row"><div class="week-label">11週目</div><div>GASによる国保連PDF自動変換（レベル2）開発開始。<strong>アプリ④ PDF出力・Docs保存・メール通知 完成・テスト運用開始。実際の面談録音データで動作確認</strong></div></div>
     <div class="week-row"><div class="week-label">12週目</div><div>第1段階 総括ミーティング（AIマネージャー3名 + 管理者 + ケイ）。第2段階への移行確認・自走度評価。週次ミーティング→隔週ミーティングへ切り替え</div></div>
   </div>
 </div>
