@@ -121,6 +121,7 @@
     <li><a href="#ch17">第17章　よくあるトラブルと対処</a></li>
     <li><a href="#ch18">第18章　用語集</a></li>
     <li><a href="#ch19">第19章　Claude Code 操作（起動・セッション再開・git管理）</a></li>
+    <li><a href="#ch20">第20章　提案書のURL公開（/publish-proposal）</a></li>
   </ul>
 </div>
 
@@ -1329,9 +1330,73 @@ Claude を介さず直接コマンドが実行される。
 
 <hr>
 
+<!-- 第20章 -->
+<h2 id="ch20"><span class="num">20</span>提案書のURL公開（/publish-proposal）</h2>
+
+<div class="lead">
+完成した提案書HTMLをパスワード保護付きでGitHub Pagesに公開し、クライアントへ即日URLを送付できる状態にする。Claudeがすべて自動で処理するので、操作は「指示を出す」だけ。
+</div>
+
+<h3>使うタイミング</h3>
+<ul>
+  <li>提案書HTMLが完成してクライアントに送りたいとき</li>
+  <li>提案書を新バージョンに更新してURLを差し替えたいとき</li>
+</ul>
+
+<h3>指示の出し方（コピー用）</h3>
+
+<div class="step">
+<span class="step-num">A</span>新しい提案書を公開する（初回）
+</div>
+<div class="prompt-box">
+<span class="highlight">&amp; 'D:\Google Antigravity\AS_AI導入支援事業_cc\05_クライアント案件\{案件フォルダ}\AI導入支援_完全提案パッケージ_{クライアント名}_v{n}.html'</span><br>
+これをGitHub Pagesで公開して。パスワードは「<span class="highlight">{パスワード}</span>」
+</div>
+
+<div class="step">
+<span class="step-num">B</span>既存のページをバージョンアップする
+</div>
+<div class="prompt-box">
+GitHub Pagesを更新して。最新の提案書は v{n} です。
+</div>
+
+<h3>Claudeが自動で行う処理（Step 1〜5）</h3>
+
+<table>
+<tr><th>Step</th><th>処理内容</th><th>使うツール</th></tr>
+<tr><td><strong>Step 1</strong></td><td>元HTMLにパスワードゲートを自動追加。正しいパスワードを入力するまで全画面でブロック。元の本文は一切変更しない（fixed overlay方式）</td><td>PowerShell</td></tr>
+<tr><td><strong>Step 2</strong></td><td>一時フォルダでgit初期化 → GitHubに公開リポジトリ（<code>index.html</code>）を作成 → プッシュ</td><td>git / gh CLI</td></tr>
+<tr><td><strong>Step 3</strong></td><td>GitHub Pages を有効化（masterブランチのルートから配信）</td><td>GitHub API</td></tr>
+<tr><td><strong>Step 4</strong></td><td>ビルド完了まで自動待機（約1〜2分）</td><td>GitHub API</td></tr>
+<tr><td><strong>Step 5</strong></td><td>URLとパスワードをセットで報告</td><td>—</td></tr>
+</table>
+
+<div class="ok">
+<span class="label">パスワードゲートの動作</span>
+ページを開くとパスワード入力画面が全面表示される。正しいパスワードを入力すると提案書が全ページ表示。同じブラウザセッション内で再アクセスする場合は入力不要（sessionStorageで記憶）。ブラウザを閉じると次回は再入力が必要。
+</div>
+
+<h3>既存ページの更新（バージョンアップ時）</h3>
+<p>提案書の新バージョンが完成したら「GitHub Pagesを更新して」と伝えるだけ。<strong>URLは変わらない</strong>のでクライアントへの再案内も不要。Claudeが自動でパスワードゲート再付加 → コミット → プッシュ → 1〜2分で反映する。</p>
+
+<h3>公開済みページ一覧</h3>
+<table>
+<tr><th>クライアント</th><th>URL</th><th>パスワード</th><th>GitHubリポジトリ</th></tr>
+<tr><td>合同会社まる</td><td><a href="https://artsoul-git.github.io/maru-proposal-2026/" target="_blank">https://artsoul-git.github.io/maru-proposal-2026/</a></td><td><code>as09052026</code></td><td>Artsoul-Git/maru-proposal-2026</td></tr>
+</table>
+
+<div class="warn">
+<span class="label">⚠️ セキュリティの注意</span>
+パスワードはブラウザ側（JavaScript）で照合するため、技術的な知識がある人はバイパス可能。完全な機密保護ではない。<br>
+・リポジトリが公開状態のためGitHubからHTMLソースを閲覧可能<br>
+・URLとパスワードは<strong>別経路</strong>で伝える（同じメール本文に両方書かない）
+</div>
+
+<hr>
+
 <div class="ok">
 <span class="label">このマニュアルについて</span>
-最終更新：2026年5月8日 / バージョン：v1.1<br>
+最終更新：2026年5月9日 / バージョン：v1.2<br>
 更新・追記が必要な場合は <code>07_マニュアル\エージェント操作マニュアル.html</code> を直接編集してください。<br>
 エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。
 </div>
