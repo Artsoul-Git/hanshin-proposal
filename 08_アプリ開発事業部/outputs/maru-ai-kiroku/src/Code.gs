@@ -3,6 +3,12 @@
 // ============================================================
 
 function doGet(e) {
+  // doGetコンテキストでのみ正しいURLが取れるため、初回アクセス時に保存する
+  const url = ScriptApp.getService().getUrl();
+  if (url) {
+    PropertiesService.getScriptProperties().setProperty('WEBAPP_URL', url);
+  }
+
   return HtmlService.createHtmlOutputFromFile('UI')
     .setTitle('AI記録自動生成 | まる')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);

@@ -210,10 +210,12 @@ function showGuide() {
 }
 
 function showAppUrl() {
-  const url = ScriptApp.getService().getUrl();
+  // メニューからの呼び出しではScriptApp.getService().getUrl()が正しいURLを返さないため
+  // doGet時に保存したWEBAPP_URLを使用する
+  const url = PropertiesService.getScriptProperties().getProperty('WEBAPP_URL');
   const msg = url
     ? `以下のURLをスタッフに共有してください：\n\n${url}\n\n※ スマホのブラウザで開けます`
-    : 'まだデプロイされていません。\n\n「デプロイ」→「新しいデプロイ」→ 種類「ウェブアプリ」で設定してください。';
+    : 'URLがまだ記録されていません。\n\n【手順】\n① デプロイ管理画面のウェブアプリURLをブラウザで一度開く\n② その後、このメニューを再度クリックするとURLが表示されます\n\n※ /exec で終わるURLが正しいアドレスです';
   SpreadsheetApp.getUi().alert('📱 アプリURL', msg, SpreadsheetApp.getUi().ButtonSet.OK);
 }
 
