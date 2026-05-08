@@ -210,13 +210,86 @@ function showGuide() {
 }
 
 function showAppUrl() {
-  // メニューからの呼び出しではScriptApp.getService().getUrl()が正しいURLを返さないため
-  // doGet時に保存したWEBAPP_URLを使用する
   const url = PropertiesService.getScriptProperties().getProperty('WEBAPP_URL');
-  const msg = url
-    ? `以下のURLをスタッフに共有してください：\n\n${url}\n\n※ スマホのブラウザで開けます`
-    : 'URLがまだ記録されていません。\n\n【手順】\n① デプロイ管理画面のウェブアプリURLをブラウザで一度開く\n② その後、このメニューを再度クリックするとURLが表示されます\n\n※ /exec で終わるURLが正しいアドレスです';
-  SpreadsheetApp.getUi().alert('📱 アプリURL', msg, SpreadsheetApp.getUi().ButtonSet.OK);
+
+  if (!url) {
+    SpreadsheetApp.getUi().alert(
+      '📱 アプリURL',
+      'URLがまだ記録されていません。\n\n【手順】\n① デプロイ管理画面のウェブアプリURLをブラウザで一度開く\n② その後、このメニューを再度クリックするとURLが表示されます\n\n※ /exec で終わるURLが正しいアドレスです',
+      SpreadsheetApp.getUi().ButtonSet.OK
+    );
+    return;
+  }
+
+  const html = HtmlService.createHtmlOutput(`<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; padding: 20px; font-size: 13px; color: #2D3748; }
+p { color: #4A5568; margin-bottom: 10px; font-size: 12px; }
+.url-box {
+  background: #F7FAFC;
+  border: 1px solid #CBD5E0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  word-break: break-all;
+  font-size: 11px;
+  color: #2D3748;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.btn {
+  background: #2B6CB0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  width: 100%;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn:hover { background: #2C5282; }
+.btn.copied { background: #38A169; }
+</style>
+</head>
+<body>
+<p>スタッフに共有するURLです：</p>
+<div class="url-box" id="url">${url}</div>
+<button class="btn" id="btn" onclick="copyUrl()">📋 URLをコピー</button>
+<script>
+function copyUrl() {
+  const text = document.getElementById('url').innerText;
+  const btn = document.getElementById('btn');
+  const done = () => {
+    btn.textContent = '✅ コピーしました！';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 URLをコピー'; btn.classList.remove('copied'); }, 2000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+  } else {
+    fallback();
+  }
+  function fallback() {
+    const el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    done();
+  }
+}
+</script>
+</body>
+</html>`)
+    .setWidth(420)
+    .setHeight(190);
+
+  SpreadsheetApp.getUi().showModalDialog(html, '📱 アプリURL');
 }
 
 function refreshUsers() {
