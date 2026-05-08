@@ -28,7 +28,7 @@ function setupSpreadsheet() {
   const ui = SpreadsheetApp.getUi();
 
   // 既存シートの確認
-  const exists = [CONFIG.SHEET_USERS, CONFIG.SHEET_LOG, CONFIG.SHEET_MASK]
+  const exists = [CONFIG.SHEET_USERS, CONFIG.SHEET_STAFF, CONFIG.SHEET_LOG, CONFIG.SHEET_MASK]
     .filter(n => ss.getSheetByName(n));
 
   if (exists.length > 0) {
@@ -42,6 +42,7 @@ function setupSpreadsheet() {
 
   try {
     _setupUsersSheet(ss);
+    _setupStaffSheet(ss);
     _setupLogSheet(ss);
     _setupMaskSheet(ss);
 
@@ -55,11 +56,12 @@ function setupSpreadsheet() {
 
     ui.alert(
       '✅ セットアップ完了',
-      '3つのシートが作成されました。\n\n' +
+      '4つのシートが作成されました。\n\n' +
       '【次のステップ】\n' +
       '① 「利用者マスター」のサンプルデータを実際の利用者情報に書き換える\n' +
-      '② 「🤖 AI記録システム」→「アプリのURLを確認する」でURLを取得\n' +
-      '③ スタッフにURLを共有する\n\n' +
+      '② 「職員マスター」のサンプルデータを実際の職員情報に書き換える\n' +
+      '③ 「🤖 AI記録システム」→「アプリのURLを確認する」でURLを取得\n' +
+      '④ スタッフにURLを共有する\n\n' +
       '詳しくは「使い方ガイドを開く」を参照してください。',
       ui.ButtonSet.OK
     );
@@ -125,6 +127,43 @@ function _setupUsersSheet(ss) {
     '生年月日：yyyy/MM/dd 形式\n' +
     '障害種別：精神障害/知的障害/身体障害 など\n' +
     '計画相談員名：担当者の氏名';
+  sh.getRange('A1').setNote(note);
+}
+
+// ============================================================
+// 職員マスター シート
+// ============================================================
+function _setupStaffSheet(ss) {
+  let sh = ss.getSheetByName(CONFIG.SHEET_STAFF) || ss.insertSheet(CONFIG.SHEET_STAFF);
+  sh.clearContents();
+  sh.clearFormats();
+
+  const headers = [['職員ID', '氏名', 'フリガナ', '役職']];
+  sh.getRange(1, 1, 1, 4).setValues(headers);
+  sh.getRange(1, 1, 1, 4)
+    .setBackground('#553C9A').setFontColor('#FFFFFF')
+    .setFontWeight('bold').setFontSize(11)
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+
+  [80, 120, 150, 120].forEach((w, i) => sh.setColumnWidth(i + 1, w));
+
+  const samples = [
+    ['S001', '田中 花子', 'タナカ ハナコ', '計画相談員'],
+    ['S002', '佐藤 次郎', 'サトウ ジロウ', '生活支援員'],
+  ];
+  sh.getRange(2, 1, 2, 4).setValues(samples).setBackground('#FAF5FF');
+  sh.getRange(4, 1, 97, 4).setBackground('#F7FAFC');
+
+  sh.getRange(1, 1, 100, 4)
+    .setBorder(true, true, true, true, true, true, '#CBD5E0', SpreadsheetApp.BorderStyle.SOLID);
+
+  sh.setRowHeight(1, 34);
+  sh.setRowHeightsForced(2, 99, 28);
+  sh.setFrozenRows(1);
+  sh.setTabColor('#553C9A');
+
+  const note = '【入力方法】\n職員ID：S001, S002... と連番\n氏名：姓と名の間にスペース\nフリガナ：カタカナ\n役職：計画相談員/生活支援員 など';
   sh.getRange('A1').setNote(note);
 }
 

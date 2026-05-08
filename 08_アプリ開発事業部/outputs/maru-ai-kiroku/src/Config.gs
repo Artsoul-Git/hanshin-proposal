@@ -4,6 +4,7 @@
 
 const CONFIG = {
   SHEET_USERS:  '利用者マスター',
+  SHEET_STAFF:  '職員マスター',
   SHEET_LOG:    '生成ログ',
   SHEET_MASK:   'マスキングセッション',
 

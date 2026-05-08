@@ -22,6 +22,25 @@ function getUsers() {
   return users;
 }
 
+// 職員マスターを取得
+// シート列構成: A=職員ID B=氏名 C=フリガナ D=役職
+function getStaff() {
+  const sheet = getSpreadsheet().getSheetByName(CONFIG.SHEET_STAFF);
+  if (!sheet) return [];
+  const data = sheet.getDataRange().getValues();
+  const staff = [];
+  for (let i = 1; i < data.length; i++) {
+    if (!data[i][0] || !data[i][1]) continue;
+    staff.push({
+      id:   String(data[i][0]),
+      name: String(data[i][1] || ''),
+      kana: String(data[i][2] || ''),
+      role: String(data[i][3] || ''),
+    });
+  }
+  return staff;
+}
+
 // 生成ログに保存
 // シート列構成: A=ログID B=生成日時 C=利用者ID D=利用者名 E=書類種別 F=担当者 G=生成内容 H=ステータス
 function saveDocument(params) {

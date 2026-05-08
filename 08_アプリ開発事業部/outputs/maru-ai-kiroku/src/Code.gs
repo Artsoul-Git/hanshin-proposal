@@ -20,6 +20,10 @@ function serverGetUsers() {
   return getUsers();
 }
 
+function serverGetStaff() {
+  return getStaff();
+}
+
 function serverGetDocTypes() {
   return CONFIG.DOC_TYPES;
 }

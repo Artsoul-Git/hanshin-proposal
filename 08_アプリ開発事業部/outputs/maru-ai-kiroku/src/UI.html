@@ -118,8 +118,12 @@ body { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif
   </div>
 
   <div class="card">
-    <label class="form-label" for="staffName">担当者名</label>
-    <input class="form-input" id="staffName" type="text" placeholder="例：山田 花子">
+    <label class="form-label" for="staffSelect">担当者名</label>
+    <select class="form-input" id="staffSelect" onchange="onStaffChange()">
+      <option value="">-- 選択してください --</option>
+      <option value="__other__">その他（直接入力）</option>
+    </select>
+    <input class="form-input" id="staffOther" type="text" placeholder="担当者名を入力" style="margin-top:8px;display:none;">
   </div>
 
   <div class="card">
@@ -183,25 +187,28 @@ const S = { user: null, docType: null, sessionId: null };
 window.addEventListener('load', () => {
   google.script.run.withSuccessHandler(renderUsers).withFailureHandler(loadErr).serverGetUsers();
   google.script.run.withSuccessHandler(renderDocTypes).withFailureHandler(loadErr).serverGetDocTypes();
+  google.script.run.withSuccessHandler(renderStaff).withFailureHandler(() => {}).serverGetStaff();
 });
 
 // ========== 画面遷移 ==========
-const SCREEN_HISTORY = [];
+const BACK_MAP = {
+  's-input':  { screen: 's-select', title: 'AI記録自動生成システム' },
+  's-result': { screen: 's-input',  title: '入力' },
+};
+let _currentScreen = 's-select';
 
 function showScreen(id, title) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   document.getElementById('hdrTitle').textContent = title || '';
-  document.getElementById('backBtn').style.display = id === 's-select' ? 'none' : 'block';
+  document.getElementById('backBtn').style.display = BACK_MAP[id] ? 'block' : 'none';
+  _currentScreen = id;
   window.scrollTo(0, 0);
-  SCREEN_HISTORY.push(id);
 }
 
 function goBack() {
-  SCREEN_HISTORY.pop(); // 現在
-  const prev = SCREEN_HISTORY.pop(); // 一個前
-  const titles = { 's-select': 'AI記録自動生成システム', 's-input': '入力', 's-result': '結果確認' };
-  if (prev) showScreen(prev, titles[prev]);
+  const prev = BACK_MAP[_currentScreen];
+  if (prev) showScreen(prev.screen, prev.title);
 }
 
 // ========== 利用者レンダリング ==========
@@ -226,6 +233,31 @@ function renderDocTypes(types) {
        <div class="doctype-label">${esc(t.label)}</div>
      </button>`
   ).join('');
+}
+
+function renderStaff(staffList) {
+  const sel = document.getElementById('staffSelect');
+  const otherOpt = sel.lastElementChild; // 「その他」オプション
+  // 既存の職員オプションをクリア（先頭の空白とその他は残す）
+  while (sel.children.length > 1) sel.removeChild(sel.children[1]);
+  staffList.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.name;
+    opt.textContent = s.name + (s.role ? `（${s.role}）` : '');
+    sel.insertBefore(opt, otherOpt);
+  });
+}
+
+function onStaffChange() {
+  const sel = document.getElementById('staffSelect');
+  document.getElementById('staffOther').style.display = sel.value === '__other__' ? 'block' : 'none';
+}
+
+function getStaffName() {
+  const sel = document.getElementById('staffSelect');
+  return sel.value === '__other__'
+    ? document.getElementById('staffOther').value.trim()
+    : sel.value;
 }
 
 function loadErr(e) {
@@ -261,8 +293,8 @@ function goToInput() {
 // ========== 生成 ==========
 function startGenerate() {
   const text  = document.getElementById('inputText').value.trim();
-  const staff = document.getElementById('staffName').value.trim();
-  if (!staff) { alert('担当者名を入力してください'); return; }
+  const staff = getStaffName();
+  if (!staff) { alert('担当者名を選択してください'); return; }
   if (!text)  { alert('面談メモを入力してください'); return; }
 
   showScreen('s-loading', '生成中');
@@ -296,7 +328,7 @@ function saveDoc() {
     .serverSaveDocument({
       userId: S.user.id, userName: S.user.name,
       docTypeId: S.docType.id,
-      staffName: document.getElementById('staffName').value,
+      staffName: getStaffName(),
       generatedText: text,
       sessionId: S.sessionId,
     });
