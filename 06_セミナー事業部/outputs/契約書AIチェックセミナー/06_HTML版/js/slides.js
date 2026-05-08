@@ -342,24 +342,41 @@
     return '<section class="slide" data-section="part3" data-title="Step 3：FC本部の信用度・実態確認の方法" data-notes="「法人番号・登記情報の確認、国税庁の法人情報、日本フランチャイズ協会への登録有無、こういった具体的な確認先が出てきていますね。これらは無料でできます。FC本部に直接確認すべき質問として「現在の加盟店数と過去2年間の解約・退会数」は特に重要です。」">' +
       H('Step 3：FC本部の信用度・実態確認の方法') +
       '<div class="slide-content">' +
-        '<ul class="s-list">' +
-          '<li class="s-list-head">自分でできる無料調査</li>' +
-          '<li class="s-list-sub">法人番号・登記情報（法務局・国税庁）</li>' +
-          '<li class="s-list-sub">日本フランチャイズ協会への登録有無</li>' +
-          '<li class="s-list-sub">公正取引委員会への相談・苦情事例検索</li>' +
-          '<li class="s-list-head">FC本部への直接確認</li>' +
-          '<li class="s-list-sub">現在の加盟店数と過去2年間の解約・退会数</li>' +
-          '<li class="s-list-sub">既存加盟者との面談の可否</li>' +
-          '<li class="s-list-head">不誠実な本部のサイン</li>' +
-          '<li class="s-list-sub">数字を見せない ／ 既存オーナーとの面談を避ける ／ 契約を急かす</li>' +
-        '</ul>' +
+        '<div class="s-routes">' +
+          '<div class="s-route-card">' +
+            '<div class="s-route-label">無料でできる</div>' +
+            '<div class="s-route-title">自分で調べる</div>' +
+            '<ul class="s-card-items">' +
+              '<li>法人番号・登記情報（法務局・国税庁）</li>' +
+              '<li>日本フランチャイズ協会への登録有無</li>' +
+              '<li>公正取引委員会の相談・苦情事例検索</li>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="s-route-card">' +
+            '<div class="s-route-label">本部に直接確認</div>' +
+            '<div class="s-route-title">必ず聞くこと</div>' +
+            '<ul class="s-card-items">' +
+              '<li>現在の加盟店数と<br><strong>過去2年の解約・退会数</strong></li>' +
+              '<li>既存加盟者との面談の可否</li>' +
+            '</ul>' +
+          '</div>' +
+          '<div class="s-route-card danger">' +
+            '<div class="s-route-label">⚠ 危険サイン</div>' +
+            '<div class="s-route-title">これが出たら撤退検討</div>' +
+            '<ul class="s-card-items danger">' +
+              '<li>数字を見せない</li>' +
+              '<li>既存オーナーとの面談を避ける</li>' +
+              '<li>契約を急かす</li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
     '</section>';
   }
 
   function slide25() {
-    return '<section class="slide" data-section="part3" data-title="Step 6：Gemで日常的に使えるエージェントを作る" data-notes="「Geminiには\'Gem\'という機能があります。今日やったFC契約チェックの流れを、一度Gemとして設定しておけば、次からは\'Gemを開いて書類を貼るだけ\'で同じ分析が自動的に動きます。」">' +
-      H('Step 6：Gemで日常的に使えるエージェントを作る') +
+    return '<section class="slide" data-section="part3" data-title="Step 4：Gemで日常的に使えるエージェントを作る" data-notes="「Geminiには\'Gem\'という機能があります。今日やったFC契約チェックの流れを、一度Gemとして設定しておけば、次からは\'Gemを開いて書類を貼るだけ\'で同じ分析が自動的に動きます。」">' +
+      H('Step 4：Gemで日常的に使えるエージェントを作る') +
       '<div class="slide-content">' +
         '<div class="s-callout"><strong>Gem とは：</strong>特定の目的に特化したAIエージェントを自分で作れる機能</div>' +
         '<div class="s-steps" style="margin-top:.8cqw;">' +
