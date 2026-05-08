@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -76,12 +76,12 @@ li { margin:4px 0; }
 <!-- 表紙 -->
 <div class="cover">
   <div class="label">TECHNICAL REQUIREMENTS DOCUMENT</div>
-  <div class="ver-badge">VERSION 1.0 ／ 2026年5月</div>
+  <div class="ver-badge">VERSION 2.0 ／ 2026年5月改訂</div>
   <h1>AI記録自動生成システム<br>要件定義書＆設計プロセス詳細資料</h1>
-  <p class="sub">面談予約 → Meet録音 → AI記録書類自動生成 → WebUI確認・保存・PDF出力</p>
+  <p class="sub">面談予約 → Meet録音 → 個人情報マスキング → AI記録書類自動生成 → WebUI確認・保存・PDF出力</p>
   <div class="meta">
     クライアント：合同会社まる 様<br>
-    作成者：上村桂右（有限会社アートソウル）<br>
+    作成者：上村桂右・三谷小百合（有限会社アートソウル）<br>
     対象システム：アプリ④ 面談予約＋AI記録生成アプリ<br>
     作成日：2026-05-08
   </div>
@@ -96,6 +96,7 @@ li { margin:4px 0; }
     <li>機能要件（MUST / SHOULD / COULD）</li>
     <li>非機能要件</li>
     <li>技術スタック・アーキテクチャ</li>
+    <li>個人情報マスキング設計（プライバシー保護アーキテクチャ）</li>
     <li>コンポーネント別 詳細設計</li>
     <li>データ設計（DB・ファイル構造）</li>
     <li>WebUI 画面設計</li>
@@ -155,6 +156,13 @@ li { margin:4px 0; }
     <div class="flow-arrow">→</div>
     <div class="flow-item highlight"><span class="step-num">STEP 4</span>Sheetsの<br>面談履歴行に<br>Docリンクを<br>自動入力</div>
   </div>
+</div>
+
+<div class="warn">
+<span class="label">重要：Google Meet 文字起こし自動Docs保存はBusiness Standardでは利用不可</span>
+Meet文字起こしのDocsへの自動保存は<strong>Business Plus以上が必要</strong>です。Business Standardでは字幕表示のみ。本システムは以下2モードで対応します：<br><br>
+<strong>Mode A（手動）</strong>：面談後、支援員が字幕テキストをアプリ④に手動貼り付け → AI生成実行。追加費用なし・即日利用可。<br>
+<strong>Mode B（自動・推奨）</strong>：GASがDriveのMeet録音MP4を検知 → Gemini File APIで音声ファイルを直接処理し、文字起こし+書類生成を同時実行。中間Docが不要でフローがシンプル。
 </div>
 
 <div class="phase-box p3">
@@ -230,7 +238,9 @@ li { margin:4px 0; }
 <tr><th class="must">MUST（必須）</th><th class="should">SHOULD（推奨）</th><th class="could">COULD（拡張）</th></tr>
 <tr>
   <td>
-    ・文字起こしテキストをGemini API（gemini-1.5-flash等）に送信<br>
+    ・<strong>個人情報マスキング処理</strong>（AI送信前に氏名等をプレースホルダー置換）<br>
+    ・マスキング済みテキストをGemini API（gemini-2.0-flash）に送信<br>
+    ・AI生成後にマスキング解除（プレースホルダーを実情報に戻す）<br>
     ・以下の書類ごとの下書きをMarkdown形式で生成：<br>
     　- 相談支援記録（書類5相当）<br>
     　- 議事録（書類6相当）<br>
@@ -286,10 +296,11 @@ li { margin:4px 0; }
 <tr><td><strong>パフォーマンス</strong></td><td>AI生成完了まで2分以内（1面談分）</td><td>Gemini 1.5-flash は通常30秒〜1分で応答</td></tr>
 <tr><td><strong>可用性</strong></td><td>Google Workspace の稼働率に準拠（99.9%）</td><td>GASはGoogle側で管理。障害時はメール通知</td></tr>
 <tr><td><strong>セキュリティ</strong></td><td>Google Workspaceのドメイン認証でアクセス制限</td><td>WebUIはGWSアカウントログイン必須。URLの無断共有禁止をルール化</td></tr>
+<tr><td><strong>個人情報保護</strong></td><td>AIへの送信前に個人情報をマスキング（氏名→プレースホルダー化）</td><td>GWS Business StandardのWorkspace内AI機能：学習利用なし。外部Gemini API（AI Studio）は別規約のためマスキングで対応。詳細はSection 6参照</td></tr>
 <tr><td><strong>データ保持</strong></td><td>記録データはSheetsとDocsに永続保存</td><td>Driveのバックアップ設定を推奨</td></tr>
 <tr><td><strong>プロンプト管理</strong></td><td>書類ごとのプロンプトをSheetsで管理・編集可能</td><td>AIマネージャーが改善できる設計にする</td></tr>
 <tr><td><strong>拡張性</strong></td><td>書類テンプレートの追加・変更がコードなしで可能</td><td>SheetsのテンプレートシートをCRUDで管理</td></tr>
-<tr><td><strong>コスト</strong></td><td>Gemini API費用：1面談あたり約¥1〜¥5（目安）</td><td>月50件の場合 約¥50〜¥250/月。Google AI Studio無料枠内に収まる可能性あり</td></tr>
+<tr><td><strong>コスト</strong></td><td>Gemini API：Google AI Studio無料枠を使用（gemini-2.0-flash推奨）</td><td>無料枠：15 RPM・1,500 RPD。月50件×3書類=150リクエスト/月 → 無料枠内 ✅。1日に集中する場合は15 RPMに注意。超過時：約¥0.075/100万トークン（gemini-2.0-flash）</td></tr>
 </table>
 
 <!-- Section 5 -->
@@ -319,8 +330,15 @@ li { margin:4px 0; }
   </div>
   <div class="card">
     <h4>AI処理</h4>
-    <p>Gemini API（Google AI Studio）<br>推奨モデル：gemini-1.5-flash<br>または gemini-2.0-flash</p>
+    <p>Gemini API（Google AI Studio）<br>推奨モデル：<strong>gemini-2.0-flash</strong><br>無料枠：15RPM・1,500RPD<br>※個人情報マスキング後に送信</p>
   </div>
+</div>
+
+<div class="info">
+<span class="label">GWS Business Standard と Gemini API のデータプライバシーについて</span>
+<strong>Workspace内のGemini機能（Gmail AI、Docs AI等）</strong>：GWSの契約によりデータは学習に使用されません ✅<br>
+<strong>GASから外部のGemini API（AI Studio）を呼び出す場合</strong>：GWSの保護対象外です ⚠️。AI Studioの無料版はデフォルトでGoogleのAI改善に使用される可能性があります。<br>
+<strong>本システムの対応策：個人情報マスキング</strong>。AIに送信する前に氏名等をプレースホルダーに置換することで、たとえデータが利用されても個人を特定できない設計にします。
 </div>
 
 <h3>システム構成図（テキスト版）</h3>
@@ -351,6 +369,93 @@ li { margin:4px 0; }
   └─ 「PDF出力」→ Google Docs書き込み → PDF化 → DL/印刷
 </div>
 
+<!-- Section 5.5 / 個人情報マスキング設計 -->
+<h2><span class="sec-num" style="background:#553C9A;">5.5</span>個人情報マスキング設計（プライバシー保護アーキテクチャ）</h2>
+
+<div class="lead">
+外部AI API（Gemini）に送信する文字起こしテキストから個人を特定できる情報を除去し、AI生成後に元の情報を復元する「マスキング＆アンマスキング」設計です。個人情報がAIに渡らない構造を実現します。
+</div>
+
+<h3>マスキング対象情報</h3>
+<table>
+<tr><th>情報種別</th><th>例</th><th>置換後（プレースホルダー）</th></tr>
+<tr><td>利用者氏名</td><td>田中一郎、田中さん、たなかさん</td><td>利用者_A</td></tr>
+<tr><td>担当者氏名</td><td>山田支援員、山田さん</td><td>担当者_B</td></tr>
+<tr><td>施設・拠点名</td><td>○○拠点、△△事業所</td><td>施設_C</td></tr>
+<tr><td>その他（設定可能）</td><td>電話番号・住所等</td><td>個人情報_D</td></tr>
+</table>
+
+<h3>処理フロー（GAS: masking.gs）</h3>
+<div style="background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:18px; font-family:monospace; font-size:13px; white-space:pre-line; line-height:2;">
+① Sheets「利用者マスター」から氏名・担当者リストを取得
+② テキスト内で出現する全パターンを照合（姓のみ・名のみ・敬称付き・ひらがな等）
+③ 長い文字列から順にプレースホルダーへ置換（部分一致防止）
+④ マッピング表（元情報 ↔ プレースホルダー）をSheetsに一時保存
+    └── シート名：「マスキングセッション」列：record_id・マッピングJSON・タイムスタンプ
+⑤ マスキング済みテキストをGemini APIに送信
+⑥ AI生成後のテキストのプレースホルダーを逆引きで元情報に戻す
+⑦ マスキングセッションレコードを削除（3日後に自動クリーン）
+</div>
+
+<h3>GASコードの核心ロジック（実装イメージ）</h3>
+<div style="background:#1A202C; color:#F7FAFC; border-radius:8px; padding:18px; font-family:monospace; font-size:12px; white-space:pre-line; line-height:1.7; overflow-x:auto;">
+function maskPersonalInfo(text, recordId) {
+  const master = SpreadsheetApp.getActive()
+    .getSheetByName('利用者マスター').getDataRange().getValues();
+
+  const maskMap = {};  // { プレースホルダー: 元の文字列 }
+  let idx = 0;
+
+  master.slice(1).forEach(row => {
+    const fullName = row[1];  // 例: "田中一郎"
+    const patterns = [
+      fullName,
+      fullName + 'さん', fullName + '様',
+      row[2],  // 姓のみ列
+      row[2] + 'さん'
+    ].filter(Boolean);
+    const ph = `利用者_${String.fromCharCode(65 + idx)}`;
+    patterns.forEach(p => { if (!maskMap[p]) maskMap[p] = ph; });
+    idx++;
+  });
+
+  // 長い順に置換（部分一致防止）
+  let masked = text;
+  Object.keys(maskMap).sort((a,b) => b.length - a.length).forEach(original => {
+    masked = masked.replaceAll(original, maskMap[original]);
+  });
+
+  // セッション保存（逆引き用）
+  const revMap = Object.fromEntries(
+    Object.entries(maskMap).map(([k,v]) => [v, k])
+  );
+  SpreadsheetApp.getActive().getSheetByName('マスキングセッション')
+    .appendRow([recordId, new Date(), JSON.stringify(revMap)]);
+
+  return masked;
+}
+
+function unmaskPersonalInfo(text, recordId) {
+  const sessions = SpreadsheetApp.getActive()
+    .getSheetByName('マスキングセッション').getDataRange().getValues();
+  const row = sessions.find(r => r[0] === recordId);
+  if (!row) return text;  // セッションなければそのまま返す
+
+  const revMap = JSON.parse(row[2]);
+  let result = text;
+  Object.entries(revMap).sort((a,b) => b[0].length - a[0].length)
+    .forEach(([ph, original]) => {
+      result = result.replaceAll(ph, original);
+    });
+  return result;
+}
+</div>
+
+<div class="tip">
+<span class="label">プレースホルダーとAI生成の相性</span>
+Geminiは「利用者_A」というプレースホルダーをそのまま文中で使用します。プロンプトに「文中の利用者_Aという表記はそのまま使用してください」と明記することで、AIが誤ってプレースホルダーを書き換えるリスクを排除します。
+</div>
+
 <!-- Section 6 -->
 <h2><span class="sec-num">6</span>コンポーネント別 詳細設計</h2>
 
@@ -370,11 +475,17 @@ li { margin:4px 0; }
 <table>
 <tr><th>処理</th><th>詳細</th></tr>
 <tr><td><strong>トリガー</strong></td><td>時間ベーストリガー（5分ごとに実行）</td></tr>
-<tr><td><strong>処理①</strong></td><td>指定Driveフォルダ（Meet録音保存先）の新規Docファイルを検索</td></tr>
-<tr><td><strong>処理②</strong></td><td>ファイル名から面談日時・利用者名を解析してSheetsの対応行を特定</td></tr>
-<tr><td><strong>処理③</strong></td><td>Sheetsの「文字起こしDocリンク」列にURLを記入 + 「処理ステータス」を「取得済み」に更新</td></tr>
-<tr><td><strong>重複防止</strong></td><td>「処理ステータス」が「取得済み」の行はスキップ</td></tr>
+<tr><td><strong>処理① [Mode A]</strong></td><td>指定Driveフォルダの新規Docファイル（手動貼り付けによる文字起こし）を検索</td></tr>
+<tr><td><strong>処理① [Mode B]</strong></td><td>指定DriveフォルダのMeet録音MP4ファイル（Business Standardで自動保存される）を検索</td></tr>
+<tr><td><strong>処理②</strong></td><td>ファイル名・作成日時からSheetsの対応行を特定（ファイル名が規則外でも作成日時で紐づけ）</td></tr>
+<tr><td><strong>処理③</strong></td><td>Sheetsの「録音/文字起こしファイルリンク」列にURLを記入 + ステータス「取得済み」に更新</td></tr>
+<tr><td><strong>重複防止</strong></td><td>ステータスが「取得済み」以降の行はスキップ</td></tr>
 </table>
+
+<div class="info">
+<span class="label">Mode B：Gemini File APIで音声ファイルを直接処理する方法</span>
+Meet録音MP4をGemini File API（generativelanguage.googleapis.com/v1beta/files）にアップロードし、"文字起こし + 記録書類生成"をプロンプト1回で実行します。GASの6分タイムアウト対策として、①アップロード（watcher.gs）と②生成処理（ai_generator.gs）を別トリガーで分離します。ファイルサイズ上限：GAS UrlFetchApp の50MB制限があるため、長時間録音は音声トラックのみ抽出または分割送信を検討。
+</div>
 
 <div class="info">
 <span class="label">文字起こしDocのファイル名規則（Meet側の設定）</span>
@@ -385,15 +496,17 @@ Google Meetの文字起こしDocはデフォルトで「[ミーティング名] 
 <table>
 <tr><th>処理</th><th>詳細</th></tr>
 <tr><td><strong>トリガー</strong></td><td>Drive監視GASから呼び出し（ステータス「取得済み」の行を処理）</td></tr>
-<tr><td><strong>処理①</strong></td><td>DocApp.openById()でDocのテキストを取得。長文の場合は先頭10,000文字を使用（Geminiのトークン上限考慮）</td></tr>
-<tr><td><strong>処理②</strong></td><td>Sheetsの「プロンプトテンプレート」シートから各書類のシステムプロンプトを取得</td></tr>
-<tr><td><strong>処理③</strong></td><td>Gemini API（UrlFetchApp.fetch）に以下を送信：<br>
-  - systemInstruction（書類の書き方・フォーマット指示）<br>
-  - contents（文字起こしテキスト）
+<tr><td><strong>処理①</strong></td><td>[Mode A] DocApp.openById()でDocのテキストを取得（先頭15,000文字）<br>[Mode B] Gemini File APIにアップロード済みの音声ファイルURIを取得</td></tr>
+<tr><td><strong>処理②【重要】</strong></td><td><strong>個人情報マスキング実行</strong>（masking.gs呼び出し）<br>・利用者マスターから氏名リスト取得<br>・テキスト/音声ファイル名内の個人情報をプレースホルダーに置換<br>・マッピング表をSheetsに一時保存（record_id紐づけ）</td></tr>
+<tr><td><strong>処理③</strong></td><td>Sheetsの「プロンプトテンプレート」シートから各書類のシステムプロンプトを取得<br>※プロンプトに「プレースホルダー（利用者_A等）はそのまま使用」と明記</td></tr>
+<tr><td><strong>処理④</strong></td><td>Gemini API（UrlFetchApp.fetch）にマスキング済みデータを送信：<br>
+  - systemInstruction（書類フォーマット指示 + プレースホルダー指示）<br>
+  - contents（マスキング済み文字起こしテキスト / 音声ファイルURI）
 </td></tr>
-<tr><td><strong>処理④</strong></td><td>APIレスポンス（Markdown）をSheetsの各列に保存<br>（相談支援記録列・議事録列・面接記録列）</td></tr>
-<tr><td><strong>処理⑤</strong></td><td>「処理ステータス」を「生成済み」に更新 + WebUI URLを生成してSheetsに記録</td></tr>
-<tr><td><strong>処理⑥</strong></td><td>GmailApp.sendEmail()で完了通知メール送信（WebUI URLを本文に埋め込み）</td></tr>
+<tr><td><strong>処理⑤【重要】</strong></td><td><strong>マスキング解除（アンマスク）実行</strong><br>・APIレスポンスのプレースホルダーを実際の個人情報に逆置換<br>・マスキングセッションレコードを削除</td></tr>
+<tr><td><strong>処理⑥</strong></td><td>アンマスク済みMarkdownをSheetsの各列に保存<br>（相談支援記録列・議事録列・面接記録列）</td></tr>
+<tr><td><strong>処理⑦</strong></td><td>「処理ステータス」を「生成済み」に更新 + WebUI URLを生成してSheetsに記録</td></tr>
+<tr><td><strong>処理⑧</strong></td><td>GmailApp.sendEmail()で完了通知メール送信（WebUI URLを本文に埋め込み）</td></tr>
 </table>
 
 <h3>6-4. GAS WebUI（webapp.gs + index.html）</h3>
@@ -577,7 +690,7 @@ Google Meetの文字起こしDocはデフォルトで「[ミーティング名] 
   <td>個人情報が含まれるテキストの外部API送信リスク</td>
   <td>中</td>
   <td>高</td>
-  <td>Gemini APIはGoogle Workspaceと同一のGoogle契約のため、データはGoogleの規約に準拠。利用者名等の個人情報をAPIに送信することを社内規則に明記・同意取得を推奨</td>
+  <td><strong>個人情報マスキング設計で対応（Section 5.5参照）</strong>。GASがAI送信前に氏名等をプレースホルダーに置換。AI生成後に実情報に戻す。GWS Business Standardの保護はWorkspace内AI機能のみ有効で外部AI Studio APIには適用されないため、マスキングが必須。</td>
 </tr>
 <tr>
   <td>GAS実行時間上限（6分）に達する</td>
@@ -595,10 +708,47 @@ Google Meetの文字起こしDocはデフォルトで「[ミーティング名] 
 
 <hr>
 
+<!-- 実装可能性評価 -->
+<h2><span class="sec-num" style="background:#276749;">11</span>実装可能性評価・費用分析</h2>
+
+<div class="ok">
+<span class="label">結論：ライモBiz + GWS Business Standardの費用のみで全システム実装可能</span>
+追加費用なし（Gemini API無料枠・AppSheet Core・GAS・Driveすべて既存費用内）で、本システム全体を構築・運用できます。
+</div>
+
+<h3>コンポーネント別 実装可能性</h3>
+<table>
+<tr><th>コンポーネント</th><th>実装可否</th><th>追加費用</th><th>主な課題・対策</th></tr>
+<tr><td>面談予約UI（ライモBiz）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし（¥550/月含む）</td><td>GAS doPost URLへの fetch()でAPIコール</td></tr>
+<tr><td>面談予約UI（AppSheet Core）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし（GWS含む）</td><td>Sheetsへの行追加でGASトリガー連動</td></tr>
+<tr><td>GAS 自動処理（カレンダー・Drive・Gmail）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし</td><td>6分タイムアウト対策：処理を分割トリガー化</td></tr>
+<tr><td>Gemini API（AI生成）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし（無料枠内）</td><td>月50件×3書類=150リクエスト → 無料枠(1,500RPD)内</td></tr>
+<tr><td>Meet文字起こしDoc自動保存</td><td style="color:#C53030; font-weight:bold;">❌ 不可</td><td>要Business Plus</td><td><strong>代替：Mode A（手動貼付）or Mode B（録音ファイルをGemini File APIで直接処理）</strong></td></tr>
+<tr><td>個人情報マスキング（GAS）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし</td><td>利用者マスターからの名前一覧マッチング。方言・敬称対策が実装ポイント</td></tr>
+<tr><td>GAS WebUI（確認・編集・PDF）</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし</td><td>GAS Web App（doGet/doPost）。組織内ユーザーのみアクセス制限で安全運用</td></tr>
+<tr><td>Google Sheets DB・Drive保管</td><td style="color:#276749; font-weight:bold;">✅ 可能</td><td>なし（GWS含む）</td><td>共有ドライブ推奨（誰かが退職してもデータ保持）</td></tr>
+</table>
+
+<h3>開発工数の目安</h3>
+<table>
+<tr><th>Sprint</th><th>内容</th><th>工数目安</th><th>Claude Code・AI壁打ち活用範囲</th></tr>
+<tr><td>Sprint 1</td><td>予約UI + GASカレンダー連携</td><td>10〜15時間</td><td>GASコード全量生成・デバッグ支援</td></tr>
+<tr><td>Sprint 2</td><td>Drive監視 + マスキング + Gemini API連携</td><td>15〜20時間</td><td>masking.gs・ai_generator.gs 全量生成</td></tr>
+<tr><td>Sprint 3</td><td>WebUI（doGet/doPost） + PDF出力</td><td>15〜20時間</td><td>index.html・webapp.gs 全量生成・CSS調整</td></tr>
+<tr><td>Sprint 4+</td><td>プロンプトチューニング・運用改善</td><td>継続</td><td>プロンプト最適化・バグ修正支援</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">Claude Code・AI壁打ちでの実装加速について</span>
+GASコード（JavaScript）はClaude CodeまたはAIとの壁打ちで全量生成・テストが可能です。コードをGASエディタに貼り付けてテスト実行 → エラーをAIに渡してデバッグ → 修正コードを貼り付け、というサイクルで進めます。予約機能のGASコードであれば1〜2時間でプロトタイプが動く状態になります。本資料のSection 6の関数設計をプロンプトとして活用してください。
+</div>
+
+<hr>
+
 <div style="text-align:center; padding:30px 0 20px; color:#718096; font-size:13px;">
   <p><strong>有限会社アートソウル</strong>　上村桂右 ／ uemura@artsoul.jp</p>
   <p style="margin-top:8px;">本書は合同会社まる様専用の技術設計資料です。無断転載・転用はお断りします。</p>
-  <p style="margin-top:4px; color:#CBD5E0;">Document Version 1.0 ／ 2026-05-08 作成</p>
+  <p style="margin-top:4px; color:#CBD5E0;">Document Version 2.0 ／ 2026-05-08 作成・改訂</p>
 </div>
 
 </div>
