@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  font-size: 12px;
+  color: #2D3748;
+  background: #F7FAFC;
+  line-height: 1.7;
+}
+
+/* ヘッダー */
+.top {
+  background: linear-gradient(135deg, #1A365D, #2B6CB0);
+  color: white;
+  padding: 14px 14px 12px;
+}
+.top h1 { font-size: 14px; margin-bottom: 3px; }
+.top p  { font-size: 10px; opacity: 0.8; }
+
+/* コンテンツ */
+.content { padding: 12px; }
+
+/* セクション */
+details {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  overflow: hidden;
+}
+summary {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  color: #1A365D;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  list-style: none;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '▼';
+  margin-left: auto;
+  font-size: 9px;
+  color: #A0AEC0;
+  transition: transform 0.2s;
+}
+details[open] summary::after { transform: rotate(180deg); }
+details[open] summary { border-bottom: 1px solid #EBF8FF; }
+
+.sec-body { padding: 10px 12px 12px; }
+
+/* バッジ */
+.badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 1px 7px;
+  border-radius: 20px;
+  background: #BEE3F8;
+  color: #1A365D;
+  margin-bottom: 8px;
+}
+.badge-g { background: #C6F6D5; color: #22543D; }
+.badge-r { background: #FED7D7; color: #742A2A; }
+.badge-y { background: #FEFCBF; color: #744210; }
+
+/* ステップ */
+.step {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 22px;
+  height: 22px;
+  background: #2B6CB0;
+  color: white;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-body { flex: 1; }
+.step-title { font-weight: bold; color: #1A365D; margin-bottom: 2px; font-size: 12px; }
+.step-desc { color: #4A5568; font-size: 11px; line-height: 1.6; }
+
+/* ヒント */
+.tip {
+  background: #EBF8FF;
+  border-left: 3px solid #2B6CB0;
+  border-radius: 0 6px 6px 0;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: #2B6CB0;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.warn {
+  background: #FFFAF0;
+  border-left: 3px solid #F6AD55;
+  border-radius: 0 6px 6px 0;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: #C05621;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* Q&A */
+.qa { margin-bottom: 10px; }
+.q { font-weight: bold; color: #1A365D; margin-bottom: 3px; font-size: 11px; }
+.q::before { content: 'Q. '; color: #2B6CB0; }
+.a { color: #4A5568; font-size: 11px; line-height: 1.6; padding-left: 14px; }
+.a::before { content: 'A. '; color: #38A169; font-weight: bold; }
+
+/* コード */
+.code {
+  background: #1A202C;
+  color: #E2E8F0;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-family: monospace;
+  font-size: 10px;
+  margin: 6px 0;
+  word-break: break-all;
+}
+
+/* フッター */
+.footer {
+  background: #EDF2F7;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #4A5568;
+  text-align: center;
+}
+.footer strong { color: #1A365D; }
+
+p { font-size: 11px; color: #4A5568; margin-bottom: 6px; line-height: 1.6; }
+ul { padding-left: 16px; font-size: 11px; color: #4A5568; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>📖 AI記録システム 使い方ガイド</h1>
+  <p>まる様専用 ／ IT初心者向け</p>
+</div>
+
+<div class="content">
+
+  <!-- 1. システムの概要 -->
+  <details open>
+    <summary>🤖 このシステムでできること</summary>
+    <div class="sec-body">
+      <p>面談後のメモを入力するだけで、AIが支援記録・書類を自動で作成するシステムです。</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">利用者と書類の種類を選ぶ</div>
+          <div class="step-desc">アプリを開いて対象の方と書類の種別をタップする</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">面談のメモを入力する</div>
+          <div class="step-desc">箇条書きでもOK。覚えている内容を自由に書く</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">AIが書類を生成する</div>
+          <div class="step-desc">約20〜40秒で書類形式に整えて表示</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">確認・修正して保存</div>
+          <div class="step-desc">内容を確認して「保存する」をタップ。このシートに自動で記録される</div>
+        </div>
+      </div>
+      <div class="tip">💡 個人情報（氏名等）は送信前に自動でマスキングされます。AIに個人を特定できる情報は渡りません。</div>
+    </div>
+  </details>
+
+  <!-- 2. 利用者マスターの使い方 -->
+  <details>
+    <summary>👥 利用者マスターの登録方法</summary>
+    <div class="sec-body">
+      <p>「利用者マスター」シートに利用者の情報を登録します。</p>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">サンプルデータを削除する</div>
+          <div class="step-desc">黄色い背景の2行（山田 太郎、鈴木 花子）を選択して削除キーを押す</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">2行目から実際の利用者を入力</div>
+          <div class="step-desc">
+            <strong>A列（利用者ID）</strong>：U001、U002... と連番<br>
+            <strong>B列（氏名）</strong>：姓と名の間にスペース<br>
+            <strong>C列（フリガナ）</strong>：カタカナで入力<br>
+            <strong>D列（生年月日）</strong>：1985/04/12 の形式<br>
+            <strong>E列（障害種別）</strong>：精神障害など<br>
+            <strong>F列（計画相談員名）</strong>：担当者名
+          </div>
+        </div>
+      </div>
+      <div class="warn">⚠️ 利用者IDは変更しないでください。既存の記録ログと紐づいています。新規追加のみ行ってください。</div>
+    </div>
+  </details>
+
+  <!-- 3. 書類の種類 -->
+  <details>
+    <summary>📋 対応している書類の種類</summary>
+    <div class="sec-body">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div style="display:flex; align-items:center; gap:8px; background:#EBF8FF; border-radius:6px; padding:7px 10px;">
+          <span style="font-size:16px;">💬</span>
+          <div><strong>面談記録</strong><br><span style="font-size:10px; color:#718096;">個別面談の内容・対応・方針</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:#F0FFF4; border-radius:6px; padding:7px 10px;">
+          <span style="font-size:16px;">📊</span>
+          <div><strong>モニタリング記録</strong><br><span style="font-size:10px; color:#718096;">生活・就労状況・計画進捗の確認</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:#FAF5FF; border-radius:6px; padding:7px 10px;">
+          <span style="font-size:16px;">📋</span>
+          <div><strong>個別支援計画</strong><br><span style="font-size:10px; color:#718096;">長期・短期目標と支援内容</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:#FFFAF0; border-radius:6px; padding:7px 10px;">
+          <span style="font-size:16px;">🤝</span>
+          <div><strong>相談支援記録</strong><br><span style="font-size:10px; color:#718096;">相談内容・対応・結果</span></div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; background:#FFF5F5; border-radius:6px; padding:7px 10px;">
+          <span style="font-size:16px;">👥</span>
+          <div><strong>サービス担当者会議録</strong><br><span style="font-size:10px; color:#718096;">会議内容・合意事項・次回予定</span></div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 4. 生成ログの見方 -->
+  <details>
+    <summary>📂 生成ログの見方</summary>
+    <div class="sec-body">
+      <p>「生成ログ」シートには、アプリから保存したすべての書類が自動で記録されます。</p>
+      <ul>
+        <li><strong>A列（ログID）</strong>：システムが自動で付番</li>
+        <li><strong>B列（生成日時）</strong>：保存した日時</li>
+        <li><strong>D列（利用者名）</strong>：対象の方の名前</li>
+        <li><strong>E列（書類種別）</strong>：生成した書類の種類</li>
+        <li><strong>G列（生成内容）</strong>：AIが作成した書類の全文</li>
+      </ul>
+      <div class="tip">💡 G列の内容は長いため、セルをダブルクリックすると全文を確認できます。Ctrl+Cでコピーして他のシステムに貼り付けることもできます。</div>
+    </div>
+  </details>
+
+  <!-- 5. よくある質問 -->
+  <details>
+    <summary>❓ よくある質問（FAQ）</summary>
+    <div class="sec-body">
+      <div class="qa">
+        <div class="q">アプリが開かない・白い画面になる</div>
+        <div class="a">GWSアカウントでログインしているか確認してください。ブラウザを再読み込み（F5）しても改善しない場合は担当者に連絡。</div>
+      </div>
+      <div class="qa">
+        <div class="q">利用者の名前が表示されない</div>
+        <div class="a">「利用者マスター」シートに情報が入力されているか確認してください。入力後はアプリを開き直すと反映されます。</div>
+      </div>
+      <div class="qa">
+        <div class="q">生成に失敗したというエラーが出た</div>
+        <div class="a">APIキーの設定またはインターネット接続の問題の可能性があります。少し待ってから再試行してください。</div>
+      </div>
+      <div class="qa">
+        <div class="q">生成された内容が違う、おかしい</div>
+        <div class="a">「再生成する」ボタンで再度生成するか、生成後の画面で直接テキストを修正してから保存できます。</div>
+      </div>
+      <div class="qa">
+        <div class="q">書類を削除したい</div>
+        <div class="a">「生成ログ」シートで該当行を直接削除してください。</div>
+      </div>
+      <div class="qa">
+        <div class="q">スマホで使えるか</div>
+        <div class="a">はい。GWSアカウントでログインしたスマホのブラウザでURLを開いてください。</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 6. 管理者向け -->
+  <details>
+    <summary>⚙️ 管理者向け設定メモ</summary>
+    <div class="sec-body">
+      <p>スプレッドシートを開いた時に自動でIDが保存されるため、<br>
+      通常は追加設定不要です。</p>
+      <p style="margin-top:6px; font-weight:bold; color:#1A365D;">スクリプトプロパティ（手動設定が必要なもの）</p>
+      <div class="code">GEMINI_API_KEY = xxxxxxxxxxxxxxxxxxxxxxxx</div>
+      <p style="font-size:10px; color:#718096;">Google AI Studio（aistudio.google.com）で取得。無料。</p>
+      <div class="tip">💡 APIキーの取得・設定方法は担当の上村・三谷にお問い合わせください。</div>
+      <div style="margin-top:10px; font-weight:bold; color:#1A365D;">デプロイ設定</div>
+      <ul style="margin-top:4px;">
+        <li>種別：ウェブアプリ</li>
+        <li>実行ユーザー：自分</li>
+        <li>アクセス：組織内のユーザー</li>
+      </ul>
+    </div>
+  </details>
+
+  <!-- フッター -->
+  <div class="footer">
+    <strong>有限会社アートソウル</strong><br>
+    担当：上村桂右 / 三谷小百合<br>
+    <span style="font-size:10px;">uemura@artsoul.jp</span>
+  </div>
+
+</div>
+</body>
+</html>
