@@ -273,7 +273,7 @@
           '<div class="s-step-row"><div class="s-step-num">1</div><div class="s-step-text">FC契約書の総合リスクチェック</div></div>' +
           '<div class="s-step-row"><div class="s-step-num">2</div><div class="s-step-text">費用の全体像と収支の妥当性検証</div></div>' +
           '<div class="s-step-row"><div class="s-step-num">3</div><div class="s-step-text">FC本部の信用度・実態確認の方法</div></div>' +
-          '<div class="s-step-row"><div class="s-step-num">6</div><div class="s-step-text">Gemを使った日常的な活用方法</div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">4</div><div class="s-step-text">Gemを使った日常的な活用方法</div></div>' +
         '</div>' +
         '<p style="font-size:1.3cqw;color:var(--c-text-sub);">数値（ロイヤルティ率・期間等）は業界・状況によって変わります。ご自身の業界に置き換えながらご覧ください</p>' +
       '</div>' +
