@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ライモBiz × まる様システム 設計分析</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { zoom: 1.4; }
+body { font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; background: #F7FAFC; color: #2D3748; line-height: 1.7; }
+
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+
+/* ヘッダー */
+.page-header { background: linear-gradient(135deg, #1A365D 0%, #2B6CB0 100%); border-radius: 14px; padding: 28px 32px; margin-bottom: 28px; color: white; }
+.page-header h1 { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
+.page-header .sub { font-size: 12px; opacity: 0.8; }
+.page-header .meta { margin-top: 14px; display: flex; gap: 20px; font-size: 11px; opacity: 0.75; }
+
+/* セクション */
+.section { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 24px 28px; margin-bottom: 20px; }
+.section-title { font-size: 14px; font-weight: bold; color: #1A365D; border-left: 4px solid #2B6CB0; padding-left: 10px; margin-bottom: 16px; }
+.section-sub { font-size: 12px; font-weight: bold; color: #2B6CB0; margin: 16px 0 8px; }
+
+p { font-size: 12px; color: #4A5568; margin-bottom: 8px; }
+
+/* バッジ */
+.badge { display: inline-block; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 20px; }
+.badge-blue { background: #BEE3F8; color: #1A365D; }
+.badge-green { background: #C6F6D5; color: #22543D; }
+.badge-red { background: #FED7D7; color: #742A2A; }
+.badge-yellow { background: #FEFCBF; color: #744210; }
+.badge-gray { background: #E2E8F0; color: #4A5568; }
+
+/* 評価マーク */
+.mark { font-size: 16px; font-weight: bold; }
+.mark-ok { color: #38A169; }
+.mark-ng { color: #E53E3E; }
+.mark-tri { color: #D69E2E; }
+
+/* テーブル */
+table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 12px; }
+th { background: #2B6CB0; color: white; padding: 8px 10px; text-align: left; font-weight: bold; }
+td { padding: 7px 10px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) td { background: #F7FAFC; }
+tr:hover td { background: #EBF8FF; }
+
+/* パターンカード */
+.pattern-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.pattern-card { border-radius: 10px; padding: 16px 14px; border: 2px solid; }
+.pattern-card.ng { border-color: #FC8181; background: #FFF5F5; }
+.pattern-card.mid { border-color: #F6AD55; background: #FFFAF0; }
+.pattern-card.ok { border-color: #68D391; background: #F0FFF4; }
+.pattern-card .phead { font-size: 11px; font-weight: bold; margin-bottom: 8px; }
+.pattern-card .pjudge { font-size: 20px; font-weight: bold; text-align: center; margin-bottom: 8px; }
+.pattern-card ul { font-size: 10px; color: #4A5568; padding-left: 14px; }
+.pattern-card ul li { margin-bottom: 4px; }
+.pattern-card .presult { font-size: 10px; font-weight: bold; margin-top: 10px; padding: 5px 8px; border-radius: 5px; text-align: center; }
+.pattern-card.ng .presult { background: #FED7D7; color: #742A2A; }
+.pattern-card.mid .presult { background: #FEFCBF; color: #744210; }
+.pattern-card.ok .presult { background: #C6F6D5; color: #22543D; }
+
+/* コードブロック */
+.code { background: #1A202C; color: #E2E8F0; border-radius: 8px; padding: 14px 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 10px; line-height: 1.7; overflow-x: auto; margin: 10px 0; }
+.code .cm { color: #68D391; }
+.code .kw { color: #63B3ED; }
+.code .str { color: #F6AD55; }
+.code .fn { color: #B794F4; }
+
+/* フロー矢印 */
+.flow-arrow { text-align: center; font-size: 18px; color: #2B6CB0; margin: 4px 0; }
+
+/* ステップボックス */
+.step-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.step-box { border: 1px solid #BEE3F8; border-radius: 8px; padding: 14px; }
+.step-num { font-size: 10px; font-weight: bold; color: #2B6CB0; margin-bottom: 6px; }
+.step-title { font-size: 12px; font-weight: bold; color: #1A365D; margin-bottom: 6px; }
+.step-body { font-size: 10px; color: #4A5568; line-height: 1.6; }
+
+/* infoボックス */
+.info { background: #EBF8FF; border: 1px solid #BEE3F8; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #2B6CB0; margin: 12px 0; }
+.warn { background: #FFFAF0; border: 1px solid #F6AD55; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #C05621; margin: 12px 0; }
+.success { background: #F0FFF4; border: 1px solid #9AE6B4; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #276749; margin: 12px 0; }
+
+/* 注釈 */
+.footnote { font-size: 10px; color: #718096; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ヘッダー -->
+  <div class="page-header">
+    <h1>ライモBiz × まる様システム 設計分析レポート</h1>
+    <div class="sub">AI記録自動生成システムの実装アーキテクチャ検討</div>
+    <div class="meta">
+      <span>作成：有限会社アートソウル　上村桂右・三谷小百合</span>
+      <span>作成日：2026年5月</span>
+      <span>対象：合同会社まる 様</span>
+    </div>
+  </div>
+
+  <!-- 1. ライモBizミニアプリとは -->
+  <div class="section">
+    <div class="section-title">1. ライモBizミニアプリの仕組み（前提知識）</div>
+    <p>ライモBizツールズのミニアプリは、<strong>HTML/CSS/JavaScript のコードをライモBizのコード入力欄に貼り付けると動くWebアプリ</strong>です。プラットフォームがサンドボックス環境として機能します。</p>
+
+    <div style="margin: 16px 0;">
+      <svg viewBox="0 0 760 200" style="max-width:100%; width:100%; font-family:sans-serif;">
+        <!-- ライモBizプラットフォーム外枠 -->
+        <rect x="10" y="10" width="740" height="180" rx="10" fill="#F0F8FF" stroke="#2B6CB0" stroke-width="1.5"/>
+        <text x="380" y="28" text-anchor="middle" font-size="11" fill="#2B6CB0" font-weight="bold">ライモBizツールズ プラットフォーム（月¥1,650）</text>
+
+        <!-- バックエンドなし -->
+        <rect x="30" y="38" width="320" height="140" rx="8" fill="white" stroke="#68D391" stroke-width="1.5"/>
+        <text x="190" y="58" text-anchor="middle" font-size="10" fill="#276749" font-weight="bold">バックエンドなし</text>
+        <!-- ブラウザ -->
+        <rect x="50" y="68" width="130" height="96" rx="6" fill="#EBF8FF" stroke="#63B3ED" stroke-width="1"/>
+        <text x="115" y="84" text-anchor="middle" font-size="9" fill="#2B6CB0" font-weight="bold">ブラウザ（現場端末）</text>
+        <text x="115" y="100" text-anchor="middle" font-size="8" fill="#4A5568">HTML/CSS/JS</text>
+        <text x="115" y="114" text-anchor="middle" font-size="8" fill="#4A5568">が動く</text>
+        <text x="115" y="128" text-anchor="middle" font-size="8" fill="#E53E3E">データ保存なし</text>
+        <text x="115" y="142" text-anchor="middle" font-size="8" fill="#E53E3E">（セッション限り）</text>
+        <!-- 用途 -->
+        <rect x="200" y="68" width="130" height="96" rx="6" fill="#F0FFF4" stroke="#9AE6B4" stroke-width="1"/>
+        <text x="265" y="84" text-anchor="middle" font-size="9" fill="#276749" font-weight="bold">向いている用途</text>
+        <text x="265" y="100" text-anchor="middle" font-size="8" fill="#4A5568">・計算ツール</text>
+        <text x="265" y="114" text-anchor="middle" font-size="8" fill="#4A5568">・チェックシート</text>
+        <text x="265" y="128" text-anchor="middle" font-size="8" fill="#4A5568">・マニュアル表示</text>
+        <text x="265" y="142" text-anchor="middle" font-size="8" fill="#4A5568">・一時的な入力フォーム</text>
+
+        <!-- バックエンドあり -->
+        <rect x="370" y="38" width="360" height="140" rx="8" fill="white" stroke="#F6AD55" stroke-width="1.5"/>
+        <text x="550" y="58" text-anchor="middle" font-size="10" fill="#C05621" font-weight="bold">バックエンドあり</text>
+        <!-- 構成要素 -->
+        <rect x="390" y="68" width="95" height="96" rx="6" fill="#EBF8FF" stroke="#63B3ED" stroke-width="1"/>
+        <text x="437" y="84" text-anchor="middle" font-size="9" fill="#2B6CB0" font-weight="bold">ブラウザUI</text>
+        <text x="437" y="100" text-anchor="middle" font-size="8" fill="#4A5568">HTML/CSS/JS</text>
+        <!-- 矢印 -->
+        <line x1="485" y1="116" x2="500" y2="116" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
+        <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#718096"/></marker></defs>
+        <!-- DB -->
+        <rect x="500" y="68" width="95" height="44" rx="6" fill="#FEFCE8" stroke="#F6E05E" stroke-width="1"/>
+        <text x="547" y="86" text-anchor="middle" font-size="9" fill="#744210" font-weight="bold">ライモBiz DB</text>
+        <text x="547" y="102" text-anchor="middle" font-size="8" fill="#4A5568">データ永続化</text>
+        <!-- 認証 -->
+        <rect x="500" y="120" width="95" height="44" rx="6" fill="#F0FFF4" stroke="#9AE6B4" stroke-width="1"/>
+        <text x="547" y="138" text-anchor="middle" font-size="9" fill="#276749" font-weight="bold">ログイン認証</text>
+        <text x="547" y="154" text-anchor="middle" font-size="8" fill="#4A5568">アクセス制御</text>
+        <!-- Gemini -->
+        <rect x="615" y="68" width="100" height="96" rx="6" fill="#FAF5FF" stroke="#B794F4" stroke-width="1"/>
+        <text x="665" y="84" text-anchor="middle" font-size="9" fill="#6B46C1" font-weight="bold">Gemini API</text>
+        <text x="665" y="100" text-anchor="middle" font-size="8" fill="#4A5568">（ライモBiz経由）</text>
+        <text x="665" y="116" text-anchor="middle" font-size="8" fill="#E53E3E">Geminiのみ対応</text>
+        <text x="665" y="130" text-anchor="middle" font-size="8" fill="#E53E3E">GPT/Claude不可</text>
+      </svg>
+    </div>
+
+    <div class="section-sub">コード修正の方法</div>
+    <table>
+      <tr><th>修正規模</th><th>方法</th><th>備考</th></tr>
+      <tr><td><span class="badge badge-red">大規模</span></td><td>コード全体を生成し直して全置換</td><td>Claude Codeで全コード出力 → 貼り替え</td></tr>
+      <tr><td><span class="badge badge-yellow">細かい修正</span></td><td>置換ボタン（改修前/改修後コードを貼り付け）</td><td>軽微な変更向け。出力コスト節約</td></tr>
+      <tr><td><span class="badge badge-green">機能追加</span></td><td>「改修用プロンプト」機能を使う</td><td>ライモBiz内のAIが差分コードを生成</td></tr>
+    </table>
+  </div>
+
+  <!-- 2. まる様の要件整理 -->
+  <div class="section">
+    <div class="section-title">2. まる様システムの要件（アーキテクチャ選定に影響するもの）</div>
+    <table>
+      <tr><th>要件</th><th>内容</th><th>実現に必要な技術</th></tr>
+      <tr><td>面談音声の自動処理</td><td>Google MeetのMP4録音からAIが文字起こし＋書類生成</td><td>Gemini File API（GASから直接呼び出し）</td></tr>
+      <tr><td>Drive監視・自動起動</td><td>録音ファイルがDriveに保存されたら自動でGASが起動</td><td>GASのDriveアクティビティトリガー</td></tr>
+      <tr><td>個人情報マスキング</td><td>AI送信前に氏名等をプレースホルダーに置換、生成後に復元</td><td>masking.gs（GAS）＋ 利用者マスターシート</td></tr>
+      <tr><td>Sheetsへの記録保存</td><td>生成した書類・ログをスプレッドシートに蓄積</td><td>GAS ＋ Google Sheets</td></tr>
+      <tr><td>月次集計・自動レポート</td><td>支援実績を月次でまとめて出力</td><td>GAS（定期トリガー）</td></tr>
+      <tr><td>現場UIのスマホ対応</td><td>支援員がスマホから入力・確認・書類送信</td><td>スマホ対応UIが必要</td></tr>
+      <tr><td>追加コストゼロ</td><td>ライモBiz ＋ GWS Business Standardの範囲内</td><td>Gemini API無料枠（1,500リクエスト/日）</td></tr>
+    </table>
+    <div class="warn">⚠️ Google Meet の文字起こしDocsへの自動保存はBusiness Plus以上が必要（Business Standardでは不可）。代替：Gemini File APIでMP4を直接処理するMode Bを採用。</div>
+  </div>
+
+  <!-- 3. 3パターン比較 -->
+  <div class="section">
+    <div class="section-title">3. 実装アーキテクチャ 3パターン比較</div>
+    <div class="pattern-grid">
+      <!-- パターン1 -->
+      <div class="pattern-card ng">
+        <div class="phead">パターン①</div>
+        <div class="pjudge mark-ng">✗</div>
+        <div style="font-size:11px; font-weight:bold; color:#742A2A; text-align:center; margin-bottom:8px;">ライモBizのみ<br>（バックエンドあり）</div>
+        <ul>
+          <li>Gemini File API（音声処理）が使えるか不明</li>
+          <li>Drive監視トリガーが使えない</li>
+          <li>個人情報マスキング処理が困難</li>
+          <li>Sheetsとの連携が複雑</li>
+          <li>GASトリガーが使えない</li>
+        </ul>
+        <div class="presult">まる様の要件を満たせない</div>
+      </div>
+      <!-- パターン2 -->
+      <div class="pattern-card mid">
+        <div class="phead">パターン②</div>
+        <div class="pjudge mark-tri">△</div>
+        <div style="font-size:11px; font-weight:bold; color:#744210; text-align:center; margin-bottom:8px;">GAS + Sheets +<br>Gemini API のみ</div>
+        <ul>
+          <li>✓ Drive監視・File API：最得意</li>
+          <li>✓ マスキング処理：完全対応</li>
+          <li>✓ Sheets連携・月次集計：完全対応</li>
+          <li>✗ GAS Web AppのUIは貧弱</li>
+          <li>✗ スマホ対応が難しい</li>
+          <li>✗ 現場での使いにくさが課題</li>
+        </ul>
+        <div class="presult">バックエンド◎ UIが課題</div>
+      </div>
+      <!-- パターン3 -->
+      <div class="pattern-card ok">
+        <div class="phead">パターン③ ★推奨</div>
+        <div class="pjudge mark-ok">◎</div>
+        <div style="font-size:11px; font-weight:bold; color:#22543D; text-align:center; margin-bottom:8px;">ライモBiz（UI）+<br>GAS + Sheets + Gemini API</div>
+        <ul>
+          <li>✓ ライモBizで現場スタッフ向けUI</li>
+          <li>✓ GASが全バックエンド処理を担当</li>
+          <li>✓ マスキング・File API・Drive連携</li>
+          <li>✓ スマホ対応（ライモBizのUI）</li>
+          <li>✓ 追加コストゼロ</li>
+          <li>⚠️ ライモBiz→GASへのfetch()通信の検証が必要</li>
+        </ul>
+        <div class="presult">UI品質 × バックエンド処理力</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. パターン3 アーキテクチャ詳細 -->
+  <div class="section">
+    <div class="section-title">4. パターン③（推奨）のアーキテクチャ詳細</div>
+
+    <div style="margin: 16px 0 20px;">
+      <svg viewBox="0 0 760 380" style="max-width:100%; width:100%; font-family:sans-serif;">
+
+        <!-- ========== フロントエンド ========== -->
+        <rect x="10" y="10" width="220" height="360" rx="10" fill="#EBF8FF" stroke="#2B6CB0" stroke-width="1.5"/>
+        <text x="120" y="30" text-anchor="middle" font-size="10" fill="#2B6CB0" font-weight="bold">フロントエンド</text>
+        <text x="120" y="44" text-anchor="middle" font-size="9" fill="#4A5568">ライモBizミニアプリ</text>
+        <text x="120" y="56" text-anchor="middle" font-size="9" fill="#4A5568">（バックエンドなし）</text>
+
+        <!-- スマホ -->
+        <rect x="30" y="65" width="80" height="120" rx="10" fill="white" stroke="#CBD5E0" stroke-width="1"/>
+        <rect x="40" y="78" width="60" height="80" rx="4" fill="#BEE3F8"/>
+        <circle cx="70" cy="170" r="5" fill="#CBD5E0"/>
+        <text x="70" y="95" text-anchor="middle" font-size="8" fill="#2B6CB0">利用者選択</text>
+        <text x="70" y="110" text-anchor="middle" font-size="8" fill="#2B6CB0">書類種別選択</text>
+        <text x="70" y="125" text-anchor="middle" font-size="8" fill="#2B6CB0">テキスト入力</text>
+        <text x="70" y="140" text-anchor="middle" font-size="8" fill="#2B6CB0">結果確認・修正</text>
+        <text x="70" y="205" text-anchor="middle" font-size="9" fill="#4A5568">支援員スマホ</text>
+
+        <!-- 動作説明 -->
+        <rect x="30" y="225" width="180" height="130" rx="8" fill="white" stroke="#BEE3F8" stroke-width="1"/>
+        <text x="120" y="244" text-anchor="middle" font-size="9" fill="#2B6CB0" font-weight="bold">ライモBizの役割</text>
+        <text x="40" y="262" font-size="8" fill="#4A5568">・利用者マスターから選択UI</text>
+        <text x="40" y="278" font-size="8" fill="#4A5568">・書類種別ボタン表示</text>
+        <text x="40" y="294" font-size="8" fill="#4A5568">・Mode A：テキスト貼付入力</text>
+        <text x="40" y="310" font-size="8" fill="#4A5568">・Mode B：ファイルパス指定</text>
+        <text x="40" y="326" font-size="8" fill="#38A169" font-weight="bold">・生成された書類を画面表示</text>
+        <text x="40" y="342" font-size="8" fill="#4A5568">・確認・修正・保存ボタン</text>
+
+        <!-- fetch矢印 -->
+        <line x1="230" y1="130" x2="268" y2="130" stroke="#E53E3E" stroke-width="2" stroke-dasharray="4,2"/>
+        <polygon points="266,126 274,130 266,134" fill="#E53E3E"/>
+        <text x="250" y="122" text-anchor="middle" font-size="8" fill="#E53E3E" font-weight="bold">fetch()</text>
+        <text x="250" y="146" text-anchor="middle" font-size="7" fill="#E53E3E">HTTP POST</text>
+        <text x="250" y="158" text-anchor="middle" font-size="7" fill="#E53E3E">JSON</text>
+
+        <!-- 戻り矢印 -->
+        <line x1="268" y1="180" x2="230" y2="180" stroke="#38A169" stroke-width="2" stroke-dasharray="4,2"/>
+        <polygon points="232,176 224,180 232,184" fill="#38A169"/>
+        <text x="250" y="172" text-anchor="middle" font-size="8" fill="#38A169" font-weight="bold">生成結果</text>
+        <text x="250" y="198" text-anchor="middle" font-size="7" fill="#38A169">JSON返却</text>
+
+        <!-- ========== バックエンド（GAS） ========== -->
+        <rect x="274" y="10" width="220" height="360" rx="10" fill="#F0FFF4" stroke="#38A169" stroke-width="1.5"/>
+        <text x="384" y="30" text-anchor="middle" font-size="10" fill="#276749" font-weight="bold">バックエンド</text>
+        <text x="384" y="44" text-anchor="middle" font-size="9" fill="#4A5568">GAS Web App (doPost)</text>
+
+        <rect x="294" y="58" width="180" height="295" rx="8" fill="white" stroke="#9AE6B4" stroke-width="1"/>
+        <text x="384" y="76" text-anchor="middle" font-size="9" fill="#276749" font-weight="bold">処理フロー</text>
+
+        <!-- ステップ -->
+        <rect x="304" y="84" width="160" height="36" rx="5" fill="#BEE3F8"/>
+        <text x="384" y="99" text-anchor="middle" font-size="8" fill="#1A365D" font-weight="bold">① doPost() リクエスト受信</text>
+        <text x="384" y="113" text-anchor="middle" font-size="7" fill="#4A5568">利用者ID・書類種別・テキスト</text>
+
+        <text x="384" y="132" text-anchor="middle" font-size="11" fill="#38A169">↓</text>
+
+        <rect x="304" y="138" width="160" height="36" rx="5" fill="#FEFCBF" stroke="#F6E05E" stroke-width="1"/>
+        <text x="384" y="153" text-anchor="middle" font-size="8" fill="#744210" font-weight="bold">② 個人情報マスキング</text>
+        <text x="384" y="167" text-anchor="middle" font-size="7" fill="#4A5568">masking.gs で氏名→プレースホルダー</text>
+
+        <text x="384" y="186" text-anchor="middle" font-size="11" fill="#38A169">↓</text>
+
+        <rect x="304" y="192" width="160" height="48" rx="5" fill="#FAF5FF" stroke="#B794F4" stroke-width="1"/>
+        <text x="384" y="207" text-anchor="middle" font-size="8" fill="#6B46C1" font-weight="bold">③ Gemini API 呼び出し</text>
+        <text x="384" y="221" text-anchor="middle" font-size="7" fill="#4A5568">Mode A: テキストで生成</text>
+        <text x="384" y="233" text-anchor="middle" font-size="7" fill="#4A5568">Mode B: File API で音声処理</text>
+
+        <text x="384" y="252" text-anchor="middle" font-size="11" fill="#38A169">↓</text>
+
+        <rect x="304" y="258" width="160" height="36" rx="5" fill="#FEFCBF" stroke="#F6E05E" stroke-width="1"/>
+        <text x="384" y="273" text-anchor="middle" font-size="8" fill="#744210" font-weight="bold">④ マスキング解除</text>
+        <text x="384" y="287" text-anchor="middle" font-size="7" fill="#4A5568">プレースホルダー→実際の氏名に戻す</text>
+
+        <text x="384" y="306" text-anchor="middle" font-size="11" fill="#38A169">↓</text>
+
+        <rect x="304" y="312" width="160" height="32" rx="5" fill="#C6F6D5"/>
+        <text x="384" y="326" text-anchor="middle" font-size="8" fill="#22543D" font-weight="bold">⑤ Sheets保存 + JSON返却</text>
+        <text x="384" y="340" text-anchor="middle" font-size="7" fill="#4A5568">生成書類をライモBizに返す</text>
+
+        <!-- GASからの矢印 -->
+        <line x1="494" y1="230" x2="532" y2="230" stroke="#6B46C1" stroke-width="1.5"/>
+        <polygon points="530,226 538,230 530,234" fill="#6B46C1"/>
+
+        <line x1="494" y1="310" x2="532" y2="310" stroke="#38A169" stroke-width="1.5"/>
+        <polygon points="530,306 538,310 530,314" fill="#38A169"/>
+
+        <!-- ========== 外部サービス ========== -->
+        <rect x="538" y="10" width="212" height="360" rx="10" fill="#FAF5FF" stroke="#B794F4" stroke-width="1.5"/>
+        <text x="644" y="30" text-anchor="middle" font-size="10" fill="#6B46C1" font-weight="bold">外部サービス・データ</text>
+
+        <!-- Gemini -->
+        <rect x="556" y="42" width="176" height="80" rx="8" fill="white" stroke="#B794F4" stroke-width="1"/>
+        <text x="644" y="60" text-anchor="middle" font-size="10" fill="#6B46C1" font-weight="bold">Gemini API</text>
+        <text x="644" y="76" text-anchor="middle" font-size="8" fill="#4A5568">gemini-2.0-flash（推奨）</text>
+        <text x="644" y="90" text-anchor="middle" font-size="8" fill="#4A5568">File API（音声→書類）</text>
+        <text x="644" y="106" text-anchor="middle" font-size="8" fill="#38A169">無料枠：1,500リクエスト/日</text>
+
+        <!-- Google Drive -->
+        <rect x="556" y="136" width="176" height="70" rx="8" fill="white" stroke="#F6AD55" stroke-width="1"/>
+        <text x="644" y="154" text-anchor="middle" font-size="10" fill="#C05621" font-weight="bold">Google Drive</text>
+        <text x="644" y="170" text-anchor="middle" font-size="8" fill="#4A5568">Meet録音MP4 の保存先</text>
+        <text x="644" y="186" text-anchor="middle" font-size="8" fill="#4A5568">GASトリガーで自動検知</text>
+        <text x="644" y="200" text-anchor="middle" font-size="8" fill="#4A5568">→ Mode B自動処理起動</text>
+
+        <!-- Google Sheets -->
+        <rect x="556" y="220" width="176" height="70" rx="8" fill="white" stroke="#68D391" stroke-width="1"/>
+        <text x="644" y="238" text-anchor="middle" font-size="10" fill="#276749" font-weight="bold">Google Sheets</text>
+        <text x="644" y="254" text-anchor="middle" font-size="8" fill="#4A5568">利用者マスター</text>
+        <text x="644" y="270" text-anchor="middle" font-size="8" fill="#4A5568">生成書類ログ</text>
+        <text x="644" y="286" text-anchor="middle" font-size="8" fill="#4A5568">月次集計データ</text>
+
+        <!-- セキュリティ -->
+        <rect x="556" y="304" width="176" height="56" rx="8" fill="#FFF5F5" stroke="#FC8181" stroke-width="1"/>
+        <text x="644" y="322" text-anchor="middle" font-size="10" fill="#C53030" font-weight="bold">個人情報保護</text>
+        <text x="644" y="338" text-anchor="middle" font-size="8" fill="#4A5568">マスキング済みデータのみAI送信</text>
+        <text x="644" y="352" text-anchor="middle" font-size="8" fill="#4A5568">ライモBizには結果のみ返す</text>
+      </svg>
+    </div>
+
+    <div class="success">✅ このアーキテクチャの最大のメリット：<strong>ライモBizには個人情報が一切渡らない。</strong>マスキング・AI処理・復元はすべてGAS側で完結するため、セキュリティが高い。</div>
+  </div>
+
+  <!-- 5. 唯一の検証ポイント -->
+  <div class="section">
+    <div class="section-title">5. 唯一の事前検証ポイント：ライモBiz → GAS への fetch() 通信</div>
+
+    <p>このアーキテクチャの実現可否は<strong>「ライモBizのサンドボックス内のJavaScriptから、外部URL（GAS Web App）へのHTTPリクエストが通るか」</strong>一点にかかっています。</p>
+
+    <div class="info">ℹ️ GAS側はCORSを許可できます。問題はライモBizのサンドボックスが外部へのfetch()を許可しているかどうかです。</div>
+
+    <div class="section-sub">検証手順（所要時間：約30分）</div>
+
+    <div class="step-grid">
+      <div class="step-box">
+        <div class="step-num">STEP 1</div>
+        <div class="step-title">GASテスト用Web Appを用意</div>
+        <div class="step-body">下記のGASコードをGoogleスプレッドシートのApps Scriptに貼り付け、「ウェブアプリとしてデプロイ」→「全員」に公開してURLを取得する。</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">STEP 2</div>
+        <div class="step-title">ライモBizにテストアプリを新規作成</div>
+        <div class="step-body">ライモBizで新規ミニアプリを作成し、下記のテスト用HTMLコードを貼り付ける（既存アプリは変更しない）。GAS Web AppのURLを入力欄に入力してボタンをクリック。</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">STEP 3：成功パターン</div>
+        <div class="step-title" style="color:#276749;">「接続成功」と表示される</div>
+        <div class="step-body" style="color:#276749;">→ パターン③（ハイブリッド）で確定。本番開発に進む。</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">STEP 3：失敗パターン</div>
+        <div class="step-title" style="color:#C53030;">CORSエラー / 接続失敗</div>
+        <div class="step-body" style="color:#C53030;">→ ライモBizのサンドボックスが外部通信をブロック。パターン②（GAS単独）に切り替えてUIをGAS Web Appで作る。</div>
+      </div>
+    </div>
+
+    <div class="section-sub">GAS側テストコード（Apps Scriptに貼り付け → デプロイ）</div>
+    <div class="code"><span class="cm">// GAS Web App テスト用（全員アクセス可能でデプロイ）</span>
+<span class="kw">function</span> <span class="fn">doPost</span>(e) {
+  <span class="kw">const</span> received = JSON.parse(e.postData.contents);
+  <span class="kw">const</span> result = {
+    status: <span class="str">'success'</span>,
+    message: <span class="str">'GAS Web Appへの接続成功！'</span>,
+    received: received,
+    timestamp: <span class="kw">new</span> Date().toISOString()
+  };
+  <span class="kw">const</span> output = ContentService.createTextOutput(JSON.stringify(result));
+  output.setMimeType(ContentService.MimeType.JSON);
+  <span class="kw">return</span> output;
+}
+
+<span class="cm">// GETでもアクセスできるようにしておく（デプロイ確認用）</span>
+<span class="kw">function</span> <span class="fn">doGet</span>(e) {
+  <span class="kw">return</span> ContentService.createTextOutput(<span class="str">'GAS接続OK'</span>);
+}</div>
+
+    <div class="section-sub">ライモBiz側テスト用HTMLコード（新規ミニアプリに貼り付け）</div>
+    <div class="code"><span class="cm">&lt;!-- HTML部分 --&gt;</span>
+&lt;div style=<span class="str">"padding:20px; font-family:sans-serif;"</span>&gt;
+  &lt;h3&gt;GAS接続テスト&lt;/h3&gt;
+  &lt;label&gt;GAS Web App URL：&lt;/label&gt;&lt;br&gt;
+  &lt;input id=<span class="str">"gasUrl"</span> type=<span class="str">"text"</span> placeholder=<span class="str">"https://script.google.com/macros/s/..."</span>
+         style=<span class="str">"width:100%;padding:8px;margin:8px 0;"</span>&gt;
+  &lt;button onclick=<span class="str">"testConnection()"</span> style=<span class="str">"padding:10px 20px;background:#2B6CB0;color:white;border:none;border-radius:6px;cursor:pointer;"</span>&gt;
+    接続テスト実行
+  &lt;/button&gt;
+  &lt;div id=<span class="str">"result"</span> style=<span class="str">"margin-top:16px;padding:12px;border-radius:6px;display:none;"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="cm">&lt;!-- JavaScript部分 --&gt;</span>
+&lt;script&gt;
+<span class="kw">async function</span> <span class="fn">testConnection</span>() {
+  <span class="kw">const</span> url = document.getElementById(<span class="str">'gasUrl'</span>).value.trim();
+  <span class="kw">const</span> resultDiv = document.getElementById(<span class="str">'result'</span>);
+  resultDiv.style.display = <span class="str">'block'</span>;
+  resultDiv.style.background = <span class="str">'#EBF8FF'</span>;
+  resultDiv.textContent = <span class="str">'接続中...'</span>;
+
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(url, {
+      method: <span class="str">'POST'</span>,
+      headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+      body: JSON.stringify({ test: <span class="str">'hello from ライモBiz'</span> })
+    });
+    <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+    resultDiv.style.background = <span class="str">'#F0FFF4'</span>;
+    resultDiv.style.border = <span class="str">'1px solid #9AE6B4'</span>;
+    resultDiv.innerHTML = <span class="str">'✅ &lt;strong&gt;接続成功！&lt;/strong&gt;&lt;br&gt;'</span> + JSON.stringify(data, null, 2);
+  } <span class="kw">catch</span>(err) {
+    resultDiv.style.background = <span class="str">'#FFF5F5'</span>;
+    resultDiv.style.border = <span class="str">'1px solid #FC8181'</span>;
+    resultDiv.innerHTML = <span class="str">'❌ &lt;strong&gt;接続失敗&lt;/strong&gt;&lt;br&gt;'</span> + err.message;
+  }
+}
+&lt;/script&gt;</div>
+  </div>
+
+  <!-- 6. 検証結果による方針 -->
+  <div class="section">
+    <div class="section-title">6. 検証結果による最終方針</div>
+    <table>
+      <tr><th>検証結果</th><th>採用アーキテクチャ</th><th>次のアクション</th></tr>
+      <tr>
+        <td><span class="badge badge-green">✅ 接続成功</span></td>
+        <td><strong>パターン③ ハイブリッド</strong><br>ライモBizフロント + GASバックエンド</td>
+        <td>まる様用のライモBizミニアプリ本番コードを作成<br>GAS側はmasking.gs + ai_generator.gsを実装</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-red">❌ 接続失敗</span></td>
+        <td><strong>パターン② 改良版</strong><br>GAS Web App + Sheets（UIもGASで作る）</td>
+        <td>GAS doGet()でスマホ対応HTMLを返すUIを設計<br>AppSheetでUIを代替する方法も検討</td>
+      </tr>
+    </table>
+    <div class="footnote">※ 検証は新規ミニアプリを作成して実施（既存のMyミニアプリは変更しない）。GAS Web AppのURLは毎回デプロイごとに変わるため、本番では固定URLになるよう「デプロイを管理」から同じデプロイを更新する。</div>
+  </div>
+
+</div>
+</body>
+</html>
