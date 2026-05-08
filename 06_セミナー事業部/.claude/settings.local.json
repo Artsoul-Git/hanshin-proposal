@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pip show python-pptx)",
+      "Bash(python build_pptx.py)",
+      "Bash(python *)"
+    ]
+  }
+}

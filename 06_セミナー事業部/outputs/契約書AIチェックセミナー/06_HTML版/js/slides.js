@@ -226,7 +226,7 @@
 
   function slide16() {
     return '<section class="slide" data-section="part2" data-title="AI出力例：ルートA" data-notes="※ このスライドは通信トラブル時の予備。通常はリアルタイムのAI出力を解説する。\n「AIが最初に挙げた条項を見てください。損害賠償の条項が先頭に来ていますね。\'一切の損害を賠償する\'という表現は、上限がないという意味です。修正案をそのまま相手に送るのではなく、交渉のたたき台として使います。」">' +
-      H('AI出力例：ルートA（事前処理済）') +
+      H('AI出力例：ルートA') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
         '<div class="s-risk-list">' +
           '<div class="s-risk-item"><div class="s-risk-header"><span class="s-risk-badge high">リスク：高</span><span class="s-risk-title">第8条 損害賠償条項</span></div><div class="s-risk-body">「甲に生じた一切の損害を乙が賠償する」→ 上限なし<div class="s-risk-proposal">修正案：「損害賠償額は本契約の報酬総額を上限とする」</div></div></div>' +
@@ -313,7 +313,7 @@
 
   function slide22() {
     return '<section class="slide" data-section="part3" data-title="AI出力例：Step 1 リスクチェック" data-notes="※ このスライドは通信トラブル時の予備。\n「ロイヤルティが10%という数字が出てきていますね。業界平均は3〜7%とされているので、これは高い水準です。テリトリーの項目を見てください。\'参考区域\'となっています。これは、同じエリアに別の加盟者が入る可能性を本部が否定していない、ということです。」">' +
-      H('AI出力例：Step 1 リスクチェック（事前処理済）') +
+      H('AI出力例：Step 1 リスクチェック') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
         '<div class="s-risk-list">' +
           '<div class="s-risk-item"><div class="s-risk-header"><span class="s-risk-badge high">リスク：高 ★業界標準外</span><span class="s-risk-title">第4条 ロイヤルティ 10%</span></div><div class="s-risk-body">飲食FC業界平均は3〜7%。月売上100万円でロイヤルティ＋広告分担金が毎月12万円流出</div></div>' +
@@ -327,7 +327,7 @@
 
   function slide23() {
     return '<section class="slide" data-section="part3" data-title="AI出力例：Step 2 費用・収支検証" data-notes="※ このスライドは通信トラブル時の予備。\n「明示されている費用と、\'別途定める\'として金額が見えない費用が分かれて出てきていますね。契約書の加盟金300万円だけを見ていると、実際のスタートコストが全く見えない構造になっています。」">' +
-      H('AI出力例：Step 2 費用・収支検証（事前処理済）') +
+      H('AI出力例：Step 2 費用・収支検証') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
         '<div class="s-risk-list">' +
           '<div class="s-risk-item"><div class="s-risk-header"><span class="s-risk-badge high">要注意</span><span class="s-risk-title">費用の全体像（明示 vs「別途定める」）</span></div><div class="s-risk-body"><strong>明示：</strong>加盟金300万円＋研修費60万円＋設備費<br><strong>不明：</strong>キッチンカー車両費・調理器具・開業販促費・年次更新料<div class="s-risk-proposal">合計：最低でも700万円〜、設備費次第で1,000万円超の可能性</div></div></div>' +
@@ -454,10 +454,10 @@
         '<ul class="s-list">' +
           '<li class="s-list-head">【今日から】手元にある書類を1つ、今日のプロンプトで試す</li>' +
           '<li class="s-list-sub">30分もかからない。これだけでセミナーの元が取れる</li>' +
-          '<li class="s-list-head">【Step 2】業種別プロンプトの最適化</li>' +
+          '<li class="s-list-head">【次のステップ①】業種別プロンプトの最適化</li>' +
           '<li class="s-list-sub">自分の業種・よく使う書類に合わせてカスタマイズ</li>' +
           '<li class="s-list-sub">次回セミナー「業種別AI活用」で扱います</li>' +
-          '<li class="s-list-head">【Step 3】法務AIツールの本格導入（LegalForce・Holmesなど）</li>' +
+          '<li class="s-list-head">【次のステップ②】法務AIツールの本格導入（LegalForce・Holmesなど）</li>' +
           '<li class="s-list-sub">まず今日のレベルで習慣化してから検討する順番がおすすめ</li>' +
         '</ul>' +
       '</div>' +
