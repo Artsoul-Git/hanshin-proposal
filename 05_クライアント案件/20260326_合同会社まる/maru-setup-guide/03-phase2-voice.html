@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 2 ガイド — 音声入力 記録アプリ ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.75}
+  .top-bar{background:linear-gradient(135deg,#276749 0%,#1C4532 100%);color:white;padding:24px 32px 20px}
+  .top-bar .breadcrumb{font-size:12px;color:#9AE6B4;margin-bottom:8px}
+  .top-bar .breadcrumb a{color:#9AE6B4;text-decoration:none}
+  .top-bar .phase-label{font-size:11px;letter-spacing:3px;color:#68D391;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:20px;font-weight:700;margin-bottom:6px}
+  .top-bar .timing{font-size:13px;color:#C6F6D5;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
+  .container{max-width:820px;margin:0 auto;padding:32px 20px}
+  .summary-card{background:white;border-radius:14px;padding:22px 26px;margin-bottom:28px;border-left:5px solid #276749;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .summary-card h2{font-size:15px;font-weight:700;color:#1C4532;margin-bottom:10px}
+  .summary-card ul{padding-left:20px}
+  .summary-card li{font-size:14px;color:#4A5568;margin-bottom:5px}
+  .prereq{background:#FFFBEB;border:2px solid #F6AD55;border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#7B341E}
+  .prereq strong{color:#C05621}
+  .section{background:white;border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #E2E8F0}
+  .section-num{width:40px;height:40px;border-radius:50%;background:#276749;color:white;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-header h2{font-size:17px;font-weight:700;color:#1A365D}
+  .step{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #E2E8F0}
+  .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#C6F6D5;color:#276749;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px}
+  .step-body h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#2D3748}
+  .step-body p{font-size:14px;color:#4A5568;margin-bottom:8px}
+  .step-body .note{background:#FFFBEB;border-left:4px solid #F6AD55;padding:10px 14px;border-radius:6px;font-size:13px;color:#7B341E;margin-top:8px}
+  .step-body .tip{background:#EBF8FF;border-left:4px solid #4299E1;padding:10px 14px;border-radius:6px;font-size:13px;color:#2A4365;margin-top:8px}
+  .step-body .ok{background:#F0FFF4;border-left:4px solid #48BB78;padding:10px 14px;border-radius:6px;font-size:13px;color:#22543D;margin-top:8px}
+  .step-body code{background:#EDF2F7;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#276749}
+  .step-body ul,ol{padding-left:20px;margin:8px 0}
+  .step-body li{font-size:14px;color:#4A5568;margin-bottom:4px}
+  .voice-tip{background:linear-gradient(135deg,#F0FFF4,#E6FFFA);border:2px solid #9AE6B4;border-radius:12px;padding:20px 24px;margin:16px 0}
+  .voice-tip .label{font-size:11px;font-weight:700;color:#276749;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+  .voice-tip p{font-size:14px;color:#2D3748}
+  .device-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+  @media(max-width:580px){.device-grid{grid-template-columns:1fr}}
+  .device-card{background:#F7FAFC;border:2px solid #E2E8F0;border-radius:10px;padding:16px}
+  .device-card h3{font-size:14px;font-weight:700;margin-bottom:8px;color:#2D3748}
+  .device-card ol{padding-left:16px}
+  .device-card li{font-size:13px;color:#4A5568;margin-bottom:4px}
+  .nav-bar{display:flex;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0}
+  .nav-btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+  .nav-btn.next{background:#276749;color:white}
+  .nav-btn.back{background:#E2E8F0;color:#4A5568}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="breadcrumb"><a href="index.html">← 総合ガイドに戻る</a></div>
+  <div class="phase-label">Phase 2 ／ Month 2</div>
+  <h1>音声入力 記録アプリの使い方</h1>
+  <div class="timing">スマホに話しかけるだけで記録が完成（アプリ②）</div>
+</div>
+
+<div class="container">
+
+  <div class="prereq">
+    <strong>前提条件：</strong>Phase 0〜1が完了していること。アプリ②は上村が開発してお渡しします。このガイドはアプリを「使う」ためのマニュアルです。
+  </div>
+
+  <div class="summary-card">
+    <h2>このフェーズでできるようになること</h2>
+    <ul>
+      <li>スマートフォンのマイクに話しかけて日々の支援記録を入力できる</li>
+      <li>入力した内容が記録アプリに自動保存される</li>
+      <li>あとから編集・確認・印刷ができる</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: なぜ音声入力？ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">–</div>
+      <h2>音声入力記録とは？</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>キーボードを使わずに記録できます</h3>
+        <p>「キーボードを打つのが苦手」「タイピングに時間がかかる」という方でも、スマホのマイクに向かって話すだけで記録が作れます。</p>
+        <p>たとえば、支援後にすぐスマホを取り出し、「今日の面談では○○さんが△△について話し、□□することを確認しました」と話せば、そのまま記録のテキストになります。</p>
+        <div class="voice-tip">
+          <div class="label">音声入力のメリット</div>
+          <p>・タイピング速度に関係なく、話すスピードで入力できる<br>
+          ・支援直後に素早く記録できるので、記憶が正確なうちに残せる<br>
+          ・手が塞がっていても（移動中・立っている状態でも）記録できる</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 音声入力の方法 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>スマホで音声入力する手順</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>記録アプリを開く</h3>
+        <p>上村からお渡しするURLをスマホのホーム画面に追加してください（Phase 1と同じ方法）。アプリを開いてGWSアカウントでログインします。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>「新規記録」を作成する</h3>
+        <p>アプリのトップ画面から「新規記録」または「＋」ボタンをタップします。記録の種類（日常支援記録・面談記録・カンファレンス記録など）を選択します。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>音声入力を開始する</h3>
+        <p>テキスト入力欄をタップすると、スマホのキーボードが表示されます。キーボードの<strong>マイクアイコン（🎤）</strong>をタップしてください。</p>
+
+        <div class="device-grid">
+          <div class="device-card">
+            <h3>iPhoneの場合</h3>
+            <ol>
+              <li>キーボードを開く</li>
+              <li>キーボード右下の🌐か🎤をタップ</li>
+              <li>マイクアイコンをタップして話す</li>
+              <li>終わったらもう一度タップ</li>
+            </ol>
+          </div>
+          <div class="device-card">
+            <h3>Androidの場合</h3>
+            <ol>
+              <li>キーボードを開く</li>
+              <li>スペースキー左のマイクアイコンをタップ</li>
+              <li>「お話しください」と表示されたら話す</li>
+              <li>自動で停止するか、マイクをタップして終了</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="tip">マイクアイコンが見つからない場合：設定 → キーボード → 音声入力 → オンにする</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>話す内容の例</h3>
+        <p>普段の言葉でOKです。専門用語でなくても構いません。以下のように話してみてください：</p>
+        <div class="voice-tip">
+          <div class="label">話し方の例</div>
+          <p>「今日は午後2時から山田さんの個別面談を行いました。就労に向けた体力づくりについて話し合い、来週から週3回の散歩を一緒にする計画を立てました。ご本人は前向きな様子でした。次回の面談は2週間後の予定です。」</p>
+        </div>
+        <div class="ok">この程度の内容を話せば、Phase 3のAIが整った記録に仕上げてくれます。完璧な文章でなくて大丈夫です。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>内容を確認して保存する</h3>
+        <p>音声認識の結果をざっと確認して、大きな誤りがあれば修正します。問題なければ「保存」ボタンをタップします。</p>
+        <div class="note">誤変換（固有名詞など）は気にしすぎなくて大丈夫です。Phase 3のAI処理の際に整えられます。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: 記録の確認・管理 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>記録の確認・修正・共有</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>保存した記録を一覧で確認する</h3>
+        <p>アプリのトップ画面に戻ると、保存済みの記録が一覧で表示されます。日付・利用者名・記録種別でフィルタリングできます。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>記録を修正する</h3>
+        <p>記録をタップして「編集」ボタンから内容を修正できます。修正後は「保存」をタップします。</p>
+        <div class="tip">誰が・いつ修正したかの履歴が自動で記録されます（管理者が確認できます）。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Sheetsで一元管理する</h3>
+        <p>保存した記録はGoogle Sheetsの台帳にも自動で反映されます。管理者はSheetsから全利用者の記録を確認・確認印をつけられます。</p>
+        <div class="ok">「今日の記録が全員分完了しているか」をSheetsで一目で確認できます。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: よくある質問 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>よくある質問 ／ 困ったときは</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>音声がうまく認識されない</h3>
+        <p>以下をお試しください：</p>
+        <ul>
+          <li>静かな環境で話す（騒音があると誤認識しやすい）</li>
+          <li>スマホのマイクを口から20〜30cm程度離す</li>
+          <li>はっきりと、ゆっくり話す</li>
+          <li>インターネット接続を確認する（音声認識はネット必須）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>間違えて保存してしまった</h3>
+        <p>記録を開いて「削除」または「編集」から修正できます。削除した記録はゴミ箱に30日間保存されます。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>利用者のプライバシーは？</h3>
+        <p>記録はGWSのDriveに保存され、権限を持つスタッフのみがアクセスできます。外部には一切公開されません。</p>
+        <div class="note">音声入力の際はフルネームでなく「Uさん」等のイニシャルで話すと、より安心です。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    わからないことがあれば気軽にご連絡を。<strong>上村桂右</strong>：<a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a>
+  </div>
+
+  <div class="nav-bar">
+    <a href="02-phase1-apps.html" class="nav-btn back">← Phase 1 ガイドへ</a>
+    <a href="04-phase3-ai-records.html" class="nav-btn next">Phase 3 ガイドへ →</a>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ Phase 2</footer>
+
+</body>
+</html>

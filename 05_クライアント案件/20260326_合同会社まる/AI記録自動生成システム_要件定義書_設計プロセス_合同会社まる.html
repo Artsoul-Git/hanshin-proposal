@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI記録自動生成システム 要件定義書＆設計プロセス詳細資料 v9.0｜合同会社まる様</title>
+<title>AI記録自動生成システム 要件定義書＆設計プロセス詳細資料 v10.0｜合同会社まる様</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height:1.8; color:#2D3748; background:#FAFBFC; padding:40px 20px; }
@@ -74,9 +74,30 @@ li { margin:4px 0; }
 <div class="container">
 
 <!-- 表紙 -->
+<div style="background:linear-gradient(135deg,#276749 0%,#1C4532 100%); color:white; padding:18px 28px; border-radius:12px 12px 0 0; margin-bottom:0;">
+  <div style="font-size:11px; letter-spacing:3px; color:#9AE6B4; font-weight:700; text-transform:uppercase; margin-bottom:6px;">操作マニュアルはこちら</div>
+  <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:4px;">スタッフ向け 導入ガイド（総合インデックス）</div>
+      <div style="font-size:13px; color:#C6F6D5;">IT初心者の方はこちらのガイドからはじめてください。Phase 0〜3の操作手順を丁寧に解説しています。</div>
+    </div>
+    <a href="maru-setup-guide/index.html" style="display:inline-block; background:white; color:#276749; font-weight:700; font-size:14px; padding:10px 20px; border-radius:8px; text-decoration:none; flex-shrink:0;">ガイドを開く →</a>
+  </div>
+  <div style="margin-top:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,.2); font-size:12px; color:#9AE6B4;">このページは<strong style="color:white;">システム設計資料（技術ドキュメント）</strong>です。スタッフの操作手順はリンク先のガイドをご利用ください。</div>
+</div>
+<div style="background:#FFFBEB; border:2px solid #F6AD55; border-top:none; border-radius:0 0 12px 12px; padding:12px 28px; margin-bottom:28px; font-size:13px; color:#7B341E; flex-wrap:wrap; display:flex; gap:10px; align-items:center;">
+  <span style="font-weight:700;">Phase別ガイド：</span>
+  <a href="maru-setup-guide/01-phase0-gws.html" style="color:#C05621; font-weight:700;">Phase 0 GWSセットアップ</a>
+  <span style="color:#CBD5E0;">|</span>
+  <a href="maru-setup-guide/02-phase1-apps.html" style="color:#C05621; font-weight:700;">Phase 1 受入れ・出退勤アプリ</a>
+  <span style="color:#CBD5E0;">|</span>
+  <a href="maru-setup-guide/03-phase2-voice.html" style="color:#C05621; font-weight:700;">Phase 2 音声入力記録</a>
+  <span style="color:#CBD5E0;">|</span>
+  <a href="maru-setup-guide/04-phase3-ai-records.html" style="color:#C05621; font-weight:700;">Phase 3 AI記録自動生成</a>
+</div>
 <div class="cover">
   <div class="label">TECHNICAL REQUIREMENTS DOCUMENT</div>
-  <div class="ver-badge">VERSION 9.0 ／ 2026年5月改訂</div>
+  <div class="ver-badge">VERSION 10.0 ／ 2026年5月改訂</div>
   <h1>AI記録自動生成システム<br>要件定義書＆設計プロセス詳細資料</h1>
   <p class="sub">面談予約 → Meet録音 → 個人情報マスキング → AI記録書類自動生成 → WebUI確認・保存・PDF出力</p>
   <div class="meta">

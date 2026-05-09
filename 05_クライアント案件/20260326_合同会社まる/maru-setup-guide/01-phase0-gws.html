@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 0 ガイド — GWSセットアップ ＋ 即効録音体制 ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.75}
+  .top-bar{background:linear-gradient(135deg,#553C9A 0%,#3B2C6E 100%);color:white;padding:24px 32px 20px}
+  .top-bar .breadcrumb{font-size:12px;color:#D6BCFA;margin-bottom:8px}
+  .top-bar .breadcrumb a{color:#D6BCFA;text-decoration:none}
+  .top-bar .phase-label{font-size:11px;letter-spacing:3px;color:#B794F4;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:20px;font-weight:700;margin-bottom:6px}
+  .top-bar .timing{font-size:13px;color:#E9D8FD;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
+  .container{max-width:820px;margin:0 auto;padding:32px 20px}
+  .summary-card{background:white;border-radius:14px;padding:22px 26px;margin-bottom:28px;border-left:5px solid #553C9A;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .summary-card h2{font-size:15px;font-weight:700;color:#553C9A;margin-bottom:10px}
+  .summary-card ul{padding-left:20px}
+  .summary-card li{font-size:14px;color:#4A5568;margin-bottom:5px}
+  .section{background:white;border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #E2E8F0}
+  .section-num{width:40px;height:40px;border-radius:50%;background:#553C9A;color:white;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-header h2{font-size:17px;font-weight:700;color:#1A365D}
+  .step{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #E2E8F0}
+  .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#EDE9FE;color:#553C9A;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px}
+  .step-body h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#2D3748}
+  .step-body p{font-size:14px;color:#4A5568;margin-bottom:8px}
+  .step-body .note{background:#FFFBEB;border-left:4px solid #F6AD55;padding:10px 14px;border-radius:6px;font-size:13px;color:#7B341E;margin-top:8px}
+  .step-body .tip{background:#EBF8FF;border-left:4px solid #4299E1;padding:10px 14px;border-radius:6px;font-size:13px;color:#2A4365;margin-top:8px}
+  .step-body .ok{background:#F0FFF4;border-left:4px solid #48BB78;padding:10px 14px;border-radius:6px;font-size:13px;color:#22543D;margin-top:8px}
+  .step-body code{background:#EDF2F7;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#553C9A}
+  .step-body ul,ol{padding-left:20px;margin:8px 0}
+  .step-body li{font-size:14px;color:#4A5568;margin-bottom:4px}
+  .mode-a-box{background:linear-gradient(135deg,#EDE9FE,#FFF5F7);border:2px solid #B794F4;border-radius:12px;padding:20px 24px;margin:20px 0}
+  .mode-a-box .label{font-size:11px;letter-spacing:2px;font-weight:700;color:#553C9A;text-transform:uppercase;margin-bottom:8px}
+  .mode-a-box h3{font-size:16px;font-weight:700;color:#2D3748;margin-bottom:12px}
+  .mode-a-box .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .mode-a-box .fl-item{background:#553C9A;color:white;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600}
+  .mode-a-box .fl-arrow{color:#553C9A;font-size:18px;font-weight:700}
+  .prompt-box{background:#1A202C;border-radius:10px;padding:20px;margin:12px 0;font-family:Consolas,monospace;font-size:13px;color:#A0AEC0;line-height:1.6}
+  .prompt-box .ph{color:#68D391}
+  .nav-bar{display:flex;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0}
+  .nav-btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+  .nav-btn.next{background:#553C9A;color:white}
+  .nav-btn.back{background:#E2E8F0;color:#4A5568}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="breadcrumb"><a href="index.html">← 総合ガイドに戻る</a></div>
+  <div class="phase-label">Phase 0 ／ Week 1〜2</div>
+  <h1>GWSセットアップ ＋ 即効録音体制の構築</h1>
+  <div class="timing">アプリ開発なし ／ 設定だけ ／ 第1週目から効果が出ます</div>
+</div>
+
+<div class="container">
+
+  <div class="summary-card">
+    <h2>このフェーズでできるようになること</h2>
+    <ul>
+      <li>Google Workspace（Gmail・Meet・Drive）を業務で使えるようにする</li>
+      <li>Google Meetで面談を録音・字幕付きで記録する</li>
+      <li>字幕テキストをGeminiに貼り付けて、面談記録の下書きを自動生成する（Mode A）</li>
+      <li>生成した記録をGoogle Driveに保存・整理する</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: GWSとは何か -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Google Workspace（GWS）とは？</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>まず「GWS」のイメージをつかみましょう</h3>
+        <p>Google Workspaceとは、Googleが提供する<strong>仕事用のクラウドツールセット</strong>です。個人用のGoogleアカウント（@gmail.com）とは別に、会社専用のアドレス（例：<code>maru@marufukushi.jp</code>）でGoogleのサービスが使えるようになります。</p>
+        <p>具体的には以下のツールが含まれます：</p>
+        <ul>
+          <li><strong>Gmail</strong> — 会社のメールアドレスでメールを送受信</li>
+          <li><strong>Google Meet</strong> — ビデオ通話・会議・録音</li>
+          <li><strong>Google Drive</strong> — ファイルのクラウド保存・共有</li>
+          <li><strong>Google Sheets</strong> — Excelのようなスプレッドシート</li>
+          <li><strong>Google Gemini</strong> — AIアシスタント（記録生成に使います）</li>
+        </ul>
+        <div class="tip">GWSは既にご契約いただいています。上村より各アカウント情報をお渡しします。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 初期設定 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>初期設定 — アカウントにログインする</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>パソコンでChromeブラウザを開く</h3>
+        <p>Google Chromeというブラウザ（インターネット閲覧ソフト）を使います。まだインストールされていない場合は上村に連絡してください。</p>
+        <div class="note">InternetExplorerやEdgeでも動きますが、ChromeかSafariを推奨します。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Googleアカウントにログインする</h3>
+        <p>ブラウザの右上にある人型のアイコンをクリックして、<strong>上村からお渡ししたメールアドレスとパスワード</strong>でログインしてください。</p>
+        <div class="note">パスワードは必ず変更してください。変更方法：画面右上のアカウントアイコン → 「Googleアカウントを管理」 → 「セキュリティ」 → 「パスワード」</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Driveを開いて「まるフォルダ」を確認する</h3>
+        <p>ブラウザで <code>drive.google.com</code> を開き、上村が準備したフォルダが共有されているか確認してください。以下のフォルダが見えていればOKです。</p>
+        <ul>
+          <li>📁 面談記録（GeminiAI生成）</li>
+          <li>📁 利用者台帳</li>
+        </ul>
+        <div class="ok">フォルダが見えたら初期設定は完了です！</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Google Meetで面談を録音 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Google Meetで面談を録音する（字幕機能）</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Meetで会議を開始する</h3>
+        <p>ブラウザで <code>meet.google.com</code> を開き、「新しい会議」→「今すぐ開始」をクリックします。</p>
+        <div class="tip">面談相手が別の場所にいる場合はリンクを送って招待します。対面の場合はタブレット・パソコンをテーブルに置いて録音専用として使います。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>字幕（文字起こし）をオンにする</h3>
+        <p>会議画面の下部にある「…（その他のオプション）」をクリック → 「字幕をオンにする」を選択します。</p>
+        <p>すると、話した言葉が画面の下部にテキストで表示されます。</p>
+        <div class="note">字幕は自動生成のため、固有名詞や専門用語は誤変換される場合があります。あとでGeminiのプロンプトで補正できます。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>字幕のトランスクリプト（全文テキスト）を保存する</h3>
+        <p>会議終了後、Googleがトランスクリプト（話した内容の全文テキスト）を自動的にDriveへ保存します。場所：Drive → 「マイドライブ」 → 「Meet の録音と文字起こし」</p>
+        <div class="ok">面談が終わったら、このトランスクリプトファイルを開いてテキストをすべてコピーします（Ctrl+A → Ctrl+C）。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>【対面面談の場合】スマホ録音 → 字幕代わりの方法</h3>
+        <p>相手と同じ部屋で話す対面面談では、以下の方法を使います：</p>
+        <ol>
+          <li>スマホ（Android or iPhone）でGoogle Meetを開く</li>
+          <li>自分だけで会議を作成し、スマホのマイクに向かって話す</li>
+          <li>字幕が表示され、終了後にトランスクリプトが保存される</li>
+        </ol>
+        <div class="tip">または、スマホのメモアプリ（iPhoneの「メモ」等）の音声入力機能で話してテキスト化する方法でも構いません。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Geminiで記録生成（Mode A） -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Geminiで面談記録を生成する（Mode A — 手動コピペ）</h2>
+    </div>
+
+    <div class="mode-a-box">
+      <div class="label">Mode A とは？</div>
+      <h3>字幕テキスト → コピー → Geminiに貼り付ける → 記録完成！</h3>
+      <p style="font-size:14px;color:#4A5568;">アプリや自動化は使いません。「コピー＆ペースト」だけで記録が60分→15分になります。Phase 3で自動化される前のステップです。</p>
+      <div class="flow">
+        <div class="fl-item">面談（Meet録音）</div>
+        <div class="fl-arrow">→</div>
+        <div class="fl-item">字幕テキスト取得</div>
+        <div class="fl-arrow">→</div>
+        <div class="fl-item">Geminiに貼り付け</div>
+        <div class="fl-arrow">→</div>
+        <div class="fl-item">記録完成</div>
+        <div class="fl-arrow">→</div>
+        <div class="fl-item">Driveに保存</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Geminiを開く</h3>
+        <p>ブラウザで <code>gemini.google.com</code> を開きます（GWSアカウントでログイン済みの状態で）。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>プロンプト（指示文）に字幕テキストを貼り付ける</h3>
+        <p>以下のプロンプトをコピーして、テキストボックスに貼り付けます。「（ここにトランスクリプトを貼り付け）」の部分を、Meetのトランスクリプトに置き換えてください。</p>
+
+        <div class="prompt-box">
+          <span class="ph">あなたは障害福祉の専門家です。以下の面談トランスクリプト（会話の文字起こし）をもとに、個別支援計画の面談記録を作成してください。</span>
+          <br><br>
+          【出力フォーマット】<br>
+          ・面談日：<br>
+          ・参加者：<br>
+          ・面談の目的：<br>
+          ・主な話し合い内容（箇条書き）：<br>
+          ・利用者の意向・希望：<br>
+          ・支援者からの提案・対応内容：<br>
+          ・次回面談までの課題・確認事項：<br>
+          ・次回面談予定：<br>
+          <br>
+          ※ 固有名詞（名前・住所等）は「○○さん」「△△市」のように伏せてください。<br>
+          ※ 日本語の福祉記録として適切な表現に整えてください。<br>
+          <br>
+          【トランスクリプト】<br>
+          <span class="ph">（ここにMeetのトランスクリプトを貼り付け）</span>
+        </div>
+
+        <div class="note">プロンプトはそのまま使っても構いませんし、上村と一緒にカスタマイズすることもできます。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>生成された記録を確認・修正する</h3>
+        <p>Geminiが記録の下書きを生成します。内容を読んで、不正確な部分や追記が必要な部分を修正してください。</p>
+        <div class="ok">修正は数分で終わります。60分かかっていた記録作成が10〜15分になります！</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>DriveのSheetsに記録を貼り付けて保存する</h3>
+        <p>上村が準備した「面談記録台帳（Sheets）」を開き、該当行に記録を貼り付けます。</p>
+        <ul>
+          <li>Drive → 📁 面談記録 → 「面談記録台帳.xlsx」を開く</li>
+          <li>新しい行に日付・利用者名・担当者・生成した記録内容を入力</li>
+        </ul>
+        <div class="tip">利用者名は台帳での管理番号（例：U001）で入力し、フルネームは別シートで管理します。個人情報の取り扱い上の工夫です。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: よくある質問 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>よくある質問 ／ 困ったときは</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>字幕が表示されない</h3>
+        <p>設定 → 「字幕」→ 「日本語」が選択されているか確認してください。それでも表示されない場合はブラウザを再起動してください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>Geminiがうまく記録を生成してくれない</h3>
+        <p>トランスクリプトが短すぎる場合（5分以下の面談等）は精度が下がります。その場合は手動で要点をメモしてから貼り付けてください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>個人情報は大丈夫？</h3>
+        <p>GWSのGeminiはデータがGoogleの学習に使われない設定になっています（企業向けGWSの仕様）。ただし、面談のフルネームや住所をそのまま入力しないよう、プロンプトでマスキングを指示しています。</p>
+        <div class="note">不安な場合は、Geminiに入力する前に「○○さん」「△△市」と手動で置き換えてから貼り付けてください。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    わからないことがあれば気軽にご連絡を。<strong>上村桂右</strong>：<a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a>
+  </div>
+
+  <div class="nav-bar">
+    <a href="index.html" class="nav-btn back">← 総合ガイドへ</a>
+    <a href="02-phase1-apps.html" class="nav-btn next">Phase 1 ガイドへ →</a>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ Phase 0</footer>
+
+</body>
+</html>

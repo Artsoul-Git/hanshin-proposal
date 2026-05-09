@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase 3 ガイド — AI記録自動生成システム ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.75}
+  .top-bar{background:linear-gradient(135deg,#C05621 0%,#7B341E 100%);color:white;padding:24px 32px 20px}
+  .top-bar .breadcrumb{font-size:12px;color:#FBD38D;margin-bottom:8px}
+  .top-bar .breadcrumb a{color:#FBD38D;text-decoration:none}
+  .top-bar .phase-label{font-size:11px;letter-spacing:3px;color:#FEEBC8;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:20px;font-weight:700;margin-bottom:6px}
+  .top-bar .timing{font-size:13px;color:#FEFCBF;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
+  .container{max-width:820px;margin:0 auto;padding:32px 20px}
+  .summary-card{background:white;border-radius:14px;padding:22px 26px;margin-bottom:28px;border-left:5px solid #C05621;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .summary-card h2{font-size:15px;font-weight:700;color:#7B341E;margin-bottom:10px}
+  .summary-card ul{padding-left:20px}
+  .summary-card li{font-size:14px;color:#4A5568;margin-bottom:5px}
+  .prereq{background:#FFFBEB;border:2px solid #F6AD55;border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#7B341E}
+  .prereq strong{color:#C05621}
+  .section{background:white;border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #E2E8F0}
+  .section-num{width:40px;height:40px;border-radius:50%;background:#C05621;color:white;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-header h2{font-size:17px;font-weight:700;color:#1A365D}
+  .step{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #E2E8F0}
+  .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#FEEBC8;color:#C05621;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px}
+  .step-body h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#2D3748}
+  .step-body p{font-size:14px;color:#4A5568;margin-bottom:8px}
+  .step-body .note{background:#FFFBEB;border-left:4px solid #F6AD55;padding:10px 14px;border-radius:6px;font-size:13px;color:#7B341E;margin-top:8px}
+  .step-body .tip{background:#EBF8FF;border-left:4px solid #4299E1;padding:10px 14px;border-radius:6px;font-size:13px;color:#2A4365;margin-top:8px}
+  .step-body .ok{background:#F0FFF4;border-left:4px solid #48BB78;padding:10px 14px;border-radius:6px;font-size:13px;color:#22543D;margin-top:8px}
+  .step-body .warn{background:#FFF5F5;border-left:4px solid #FC8181;padding:10px 14px;border-radius:6px;font-size:13px;color:#742A2A;margin-top:8px}
+  .step-body code{background:#EDF2F7;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#C05621}
+  .step-body ul,ol{padding-left:20px;margin:8px 0}
+  .step-body li{font-size:14px;color:#4A5568;margin-bottom:4px}
+  .flow-diagram{background:#1A202C;border-radius:12px;padding:24px;margin:16px 0}
+  .flow-diagram .flow-title{font-size:11px;letter-spacing:2px;color:#718096;text-transform:uppercase;margin-bottom:16px;font-weight:700}
+  .flow-row-d{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}
+  .fl-box{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:white}
+  .fl-auto{background:#553C9A}
+  .fl-manual{background:#276749}
+  .fl-ai{background:#C05621}
+  .fl-arrow{color:#4A5568;font-size:18px;font-weight:700}
+  .fl-label{font-size:11px;color:#718096;margin-top:4px}
+  .masking-box{background:linear-gradient(135deg,#FFFBEB,#FFF5F5);border:2px solid #F6AD55;border-radius:12px;padding:20px 24px;margin:16px 0}
+  .masking-box h3{font-size:15px;font-weight:700;color:#7B341E;margin-bottom:12px}
+  .mask-example{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:10px 0;font-size:13px}
+  .mask-before{background:#FED7D7;padding:8px 12px;border-radius:6px;color:#742A2A}
+  .mask-after{background:#C6F6D5;padding:8px 12px;border-radius:6px;color:#22543D}
+  .mask-arrow{color:#718096;font-weight:700;text-align:center}
+  .error-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+  .error-table th{background:#FED7D7;padding:8px 12px;text-align:left;color:#742A2A;font-weight:700}
+  .error-table td{padding:8px 12px;border-bottom:1px solid #E2E8F0;color:#4A5568;vertical-align:top}
+  .error-table tr:last-child td{border-bottom:none}
+  .nav-bar{display:flex;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0}
+  .nav-btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+  .nav-btn.finish{background:#1A365D;color:white}
+  .nav-btn.back{background:#E2E8F0;color:#4A5568}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="breadcrumb"><a href="index.html">← 総合ガイドに戻る</a></div>
+  <div class="phase-label">Phase 3 ／ Month 2〜3</div>
+  <h1>AI記録自動生成システムの使い方</h1>
+  <div class="timing">面談テキストが自動でAIに送られ、記録の下書きが完成（アプリ④）</div>
+</div>
+
+<div class="container">
+
+  <div class="prereq">
+    <strong>前提条件：</strong>Phase 0〜2が完了・安定稼働していること。このシステムは上村がGAS（Google Apps Script）とGemini APIを使って構築します。このガイドは「使い方」のマニュアルです。技術的な設定は上村が担当します。
+  </div>
+
+  <div class="summary-card">
+    <h2>このフェーズでできるようになること</h2>
+    <ul>
+      <li>面談が終わったら、あとは何もしなくてもAIが記録の下書きを生成する</li>
+      <li>生成された下書きをチェック・修正して保存するだけで記録完了</li>
+      <li>個人情報（名前・住所など）が自動でマスキング（保護）される仕組みを理解する</li>
+      <li>エラーが起きたときに自分で対処できる</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: 仕組みの説明 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>AI記録自動生成の仕組みを理解する</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>全体の流れ（自動処理と手動確認の区別）</h3>
+
+        <div class="flow-diagram">
+          <div class="flow-title">AI記録自動生成フロー</div>
+
+          <div class="flow-row-d">
+            <div class="fl-box fl-manual">① 面談終了・録音停止</div>
+            <div class="fl-arrow">→</div>
+            <div class="fl-box fl-auto">② Meetが自動でトランスクリプト保存</div>
+          </div>
+          <div class="fl-label">（あなたがやること：面談を終える）</div>
+
+          <div style="margin:10px 0;color:#4A5568;font-size:13px;">↓ 約5〜10分後（GASが自動で動きます）</div>
+
+          <div class="flow-row-d">
+            <div class="fl-box fl-auto">③ GASがトランスクリプトを検知</div>
+            <div class="fl-arrow">→</div>
+            <div class="fl-box fl-auto">④ 個人情報を自動マスキング</div>
+            <div class="fl-arrow">→</div>
+            <div class="fl-box fl-ai">⑤ GeminiAIが記録を生成</div>
+          </div>
+          <div class="fl-label">（すべて自動。あなたは何もしなくてOK）</div>
+
+          <div style="margin:10px 0;color:#4A5568;font-size:13px;">↓ 完成したらメールで通知</div>
+
+          <div class="flow-row-d">
+            <div class="fl-box fl-manual">⑥ 生成された記録を確認</div>
+            <div class="fl-arrow">→</div>
+            <div class="fl-box fl-manual">⑦ 必要なら修正して保存</div>
+          </div>
+          <div class="fl-label">（あなたがやること：確認と修正）</div>
+        </div>
+
+        <div class="ok">Phase 0のMode Aでは自分でコピペしていた部分が、すべて自動になります。あなたがやることは「確認と修正」だけです。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>GASとは何か（簡単に）</h3>
+        <p>GAS（Google Apps Script）とは、Google のサービスを自動で動かす仕組みです。たとえば「新しいファイルがDriveに保存されたら、自動でGeminiに送る」という動作を実現しています。</p>
+        <p>難しい設定は上村が行います。あなたはGASの存在を知っておくだけで大丈夫です。</p>
+        <div class="tip">GASはGoogleのサーバー上で動くため、パソコンの電源が切れていても24時間自動で動き続けます。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 個人情報マスキング -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>個人情報マスキングの仕組み</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>なぜマスキングが必要か</h3>
+        <p>AIサービス（Gemini API）にデータを送る際、利用者のフルネームや住所などの個人情報が含まれていると、セキュリティ上のリスクがあります。そのため、AIに送る前に自動でマスキング（置き換え）を行います。</p>
+
+        <div class="masking-box">
+          <h3>マスキングの例</h3>
+          <div class="mask-example">
+            <div class="mask-before">田中 健一（利用者）</div>
+            <div class="mask-arrow">→ AI送信前に →</div>
+            <div class="mask-after">[USER_001]</div>
+          </div>
+          <div class="mask-example">
+            <div class="mask-before">○○市△△町1-2-3</div>
+            <div class="mask-arrow">→ AI送信前に →</div>
+            <div class="mask-after">[ADDRESS_001]</div>
+          </div>
+          <div class="mask-example">
+            <div class="mask-before">090-xxxx-xxxx</div>
+            <div class="mask-arrow">→ AI送信前に →</div>
+            <div class="mask-after">[PHONE_001]</div>
+          </div>
+          <p style="font-size:13px;color:#7B341E;margin-top:12px;">※ AIが記録を生成した後、自動でマスクを外して元の情報に戻します。最終的に保存される記録には正しい情報が含まれます。</p>
+        </div>
+
+        <div class="note">マスキングは完全に自動です。あなたが何か操作する必要はありません。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>マスキングの対象情報（自動で検知されるもの）</h3>
+        <ul>
+          <li>利用者・スタッフのフルネーム（台帳に登録されたもの）</li>
+          <li>住所（都道府県・市区町村・番地）</li>
+          <li>電話番号</li>
+          <li>メールアドレス</li>
+        </ul>
+        <div class="tip">新しい利用者を登録した場合は、台帳に追加するだけで自動的にマスキング対象になります。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: 記録の確認・修正 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>生成された記録を確認・修正する</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>完成通知メールを受け取る</h3>
+        <p>記録の生成が完了すると、担当スタッフのGmailに通知メールが届きます。メールに記録のリンクが含まれています。</p>
+        <div class="ok">面談終了から通常5〜15分で通知が届きます。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>記録を開いて内容を確認する</h3>
+        <p>メールのリンクをクリックすると、アプリ（または Sheets）で生成された記録が開きます。以下の点を確認してください：</p>
+        <ul>
+          <li>日付・参加者の情報は正しいか</li>
+          <li>面談の主な内容が正確に書かれているか</li>
+          <li>利用者の意向・希望が正しく反映されているか</li>
+          <li>次回のアクションや確認事項が漏れていないか</li>
+        </ul>
+        <div class="note">AIは完璧ではありません。内容の正確性はスタッフが確認・保証する必要があります。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>必要な部分を修正する</h3>
+        <p>「編集」ボタンをクリックして、不正確な部分・不足している部分を修正します。</p>
+        <p>修正のポイント：</p>
+        <ul>
+          <li>固有名詞の誤変換（人名・地名）</li>
+          <li>数字（時間・金額・回数）の確認</li>
+          <li>福祉専門用語の表現が適切か</li>
+        </ul>
+        <div class="tip">修正は全体の10〜20%程度です。60分かかっていた記録作成が5〜10分になります。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>「確認済み」にして保存する</h3>
+        <p>修正が終わったら「確認済みとして保存」ボタンをクリックします。管理者に確認済みの状態が通知され、台帳に自動反映されます。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: エラー対処 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>エラーが起きたときの対処法</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>よくあるエラーと対処法</h3>
+
+        <table class="error-table">
+          <tr>
+            <th>症状</th>
+            <th>原因</th>
+            <th>対処法</th>
+          </tr>
+          <tr>
+            <td>15分経っても通知が来ない</td>
+            <td>GASの処理が遅延、またはMeetのトランスクリプト保存が未完了</td>
+            <td>20分待ってから上村に連絡。その間はMode A（Phase 0の手動方法）で対応</td>
+          </tr>
+          <tr>
+            <td>記録の内容が全然違う</td>
+            <td>面談の録音が短すぎる（5分以下）か、トランスクリプトの品質が低い</td>
+            <td>Mode Aで手動入力。次回は面談中にはっきり話すよう心がける</td>
+          </tr>
+          <tr>
+            <td>名前が「[USER_001]」のまま残っている</td>
+            <td>アンマスク処理のエラー</td>
+            <td>手動で名前を入力して修正し、上村に報告</td>
+          </tr>
+          <tr>
+            <td>エラーメールが届いた</td>
+            <td>GAS または Gemini API のエラー</td>
+            <td>メールを上村に転送。Mode Aで手動対応</td>
+          </tr>
+        </table>
+
+        <div class="warn">システムに問題があってもMode A（Phase 0の手動方法）に戻れば記録は作れます。AI自動化はあくまでサポートです。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: AIマネージャーの役割 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>AIマネージャーの役割（担当スタッフへ）</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>AIマネージャーとは？</h3>
+        <p>まる様の中で、AIシステムの日常的な管理・運用を担当するスタッフを「AIマネージャー」と呼びます。技術的な知識がなくても大丈夫です。以下を担当します：</p>
+        <ul>
+          <li>毎週の記録生成状況を確認する（Sheetsの確認済み/未確認件数）</li>
+          <li>スタッフからの質問・困りごとをまとめて上村に報告する</li>
+          <li>月1回の改善MTGで「こうすればもっと使いやすくなる」という提案を出す</li>
+        </ul>
+        <div class="ok">6か月後には「ほぼ独力で運用改善できる」状態を目指します。上村が毎月のMTGでサポートします。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    わからないことがあれば気軽にご連絡を。<strong>上村桂右</strong>：<a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a>
+  </div>
+
+  <div class="nav-bar">
+    <a href="03-phase2-voice.html" class="nav-btn back">← Phase 2 ガイドへ</a>
+    <a href="index.html" class="nav-btn finish">総合ガイドへ戻る →</a>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ Phase 3</footer>
+
+</body>
+</html>
