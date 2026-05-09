@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>オプション③ ガイド — AIコーチングセッション準備と進め方 ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.75}
+  .top-bar{background:linear-gradient(135deg,#276749 0%,#1C4532 100%);color:white;padding:24px 32px 20px}
+  .top-bar .breadcrumb{font-size:12px;color:#9AE6B4;margin-bottom:8px}
+  .top-bar .breadcrumb a{color:#9AE6B4;text-decoration:none}
+  .top-bar .phase-label{font-size:11px;letter-spacing:3px;color:#68D391;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:20px;font-weight:700;margin-bottom:6px}
+  .top-bar .timing{font-size:13px;color:#C6F6D5;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
+  .container{max-width:820px;margin:0 auto;padding:32px 20px}
+  .summary-card{background:white;border-radius:14px;padding:22px 26px;margin-bottom:28px;border-left:5px solid #276749;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .summary-card h2{font-size:15px;font-weight:700;color:#1C4532;margin-bottom:10px}
+  .summary-card ul{padding-left:20px}
+  .summary-card li{font-size:14px;color:#4A5568;margin-bottom:5px}
+  .section{background:white;border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #E2E8F0}
+  .section-num{width:40px;height:40px;border-radius:50%;background:#276749;color:white;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-header h2{font-size:17px;font-weight:700;color:#1A365D}
+  .step{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #E2E8F0}
+  .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#C6F6D5;color:#276749;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px}
+  .step-body h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#2D3748}
+  .step-body p{font-size:14px;color:#4A5568;margin-bottom:8px}
+  .step-body .note{background:#FFFBEB;border-left:4px solid #F6AD55;padding:10px 14px;border-radius:6px;font-size:13px;color:#7B341E;margin-top:8px}
+  .step-body .tip{background:#EBF8FF;border-left:4px solid #4299E1;padding:10px 14px;border-radius:6px;font-size:13px;color:#2A4365;margin-top:8px}
+  .step-body .ok{background:#F0FFF4;border-left:4px solid #48BB78;padding:10px 14px;border-radius:6px;font-size:13px;color:#22543D;margin-top:8px}
+  .step-body code{background:#EDF2F7;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#276749}
+  .step-body ul,ol{padding-left:20px;margin:8px 0}
+  .step-body li{font-size:14px;color:#4A5568;margin-bottom:4px}
+  .session-type{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+  @media(max-width:600px){.session-type{grid-template-columns:1fr}}
+  .session-card{border-radius:10px;padding:18px;border:2px solid}
+  .session-visit{border-color:#276749;background:#F0FFF4}
+  .session-online{border-color:#2B6CB0;background:#EBF8FF}
+  .session-card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+  .session-visit h3{color:#276749}
+  .session-online h3{color:#2B6CB0}
+  .session-card ul{padding-left:16px}
+  .session-card li{font-size:13px;color:#4A5568;margin-bottom:4px}
+  .weekly-report{background:#1A202C;border-radius:10px;padding:20px;margin:12px 0;font-family:Consolas,monospace;font-size:13px;color:#A0AEC0;line-height:1.8}
+  .weekly-report .green{color:#68D391}
+  .weekly-report .blue{color:#90CDF4}
+  .improvement-box{background:linear-gradient(135deg,#F0FFF4,#EBF8FF);border:2px solid #9AE6B4;border-radius:12px;padding:20px 24px;margin:16px 0}
+  .improvement-box h3{font-size:15px;font-weight:700;color:#1C4532;margin-bottom:12px}
+  .improvement-box p{font-size:14px;color:#2D3748}
+  .nav-bar{display:flex;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0}
+  .nav-btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+  .nav-btn.finish{background:#1A365D;color:white}
+  .nav-btn.back{background:#E2E8F0;color:#4A5568}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="breadcrumb"><a href="index.html">← 総合ガイドに戻る</a></div>
+  <div class="phase-label">オプション③ ／ 月4回・第1段階〜</div>
+  <h1>AIコーチングセッション準備と進め方</h1>
+  <div class="timing">月1回訪問（2時間）＋ オンライン3回（各1時間）</div>
+</div>
+
+<div class="container">
+
+  <div class="summary-card">
+    <h2>AIコーチングとは何か</h2>
+    <ul>
+      <li>上村が毎月4回（訪問1回＋オンライン3回）まる様に伴走するセッションです</li>
+      <li>「AIを使ってどう業務を改善するか」をAIマネージャーと一緒に考えます</li>
+      <li>正解を教えるのではなく「自分で考えて改善できる力」を育てるOJT形式です</li>
+      <li>準備5分・セッション1時間で、毎月確実に業務が改善されます</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: セッションの種類 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>セッションの種類と内容</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <div class="session-type">
+          <div class="session-card session-visit">
+            <h3>🏢 月1回 訪問セッション（2時間）</h3>
+            <ul>
+              <li>現場に上村が伺います</li>
+              <li>実際の業務を一緒に確認</li>
+              <li>スタッフ全員が参加可能</li>
+              <li>その場でアプリ操作・Gemini活用を体験</li>
+              <li>翌月の改善テーマを決定</li>
+            </ul>
+          </div>
+          <div class="session-card session-online">
+            <h3>💻 月3回 オンラインセッション（各1時間）</h3>
+            <ul>
+              <li>Google MeetでAIマネージャー + 上村</li>
+              <li>週次レポートをもとに進捗確認</li>
+              <li>困っていることへのアドバイス</li>
+              <li>プロンプト改善・新しい使い方の提案</li>
+              <li>翌週の改善アクションを決定</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ok">第2段階（4か月目〜）からは隔週オンライン（月2回・各1時間）に切り替わります。自走できる状態を目指します。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: セッション前の準備 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>セッション前の準備（所要5分）</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>週次レポートを作る（毎週金曜日・5分）</h3>
+        <p>「何を改善できたか・何が困っているか」を簡単にまとめるだけでOKです。以下のテンプレートをGeminiで入力して作れます。</p>
+        <div class="weekly-report">
+<span class="green">【週次AIマネージャーレポート — テンプレート】</span><br>
+<br>
+<span class="blue">日付：</span>2026年__月__日（週）<br>
+<span class="blue">担当者：</span>（氏名）<br>
+<br>
+<span class="blue">1. 今週できるようになったこと（よかったこと）</span><br>
+→ （例：Geminiで面談記録を3件作成できた。20分→8分に短縮）<br>
+<br>
+<span class="blue">2. 困ったこと・うまくいかなかったこと</span><br>
+→ （例：音声入力で固有名詞が誤変換される。対処法がわからない）<br>
+<br>
+<span class="blue">3. 来週やってみたいこと（改善アイデア）</span><br>
+→ （例：個別支援計画の下書きをGeminiで作ってみたい）<br>
+<br>
+<span class="blue">4. 数値（あれば）</span><br>
+→ 記録作成時間：今週平均 __分（先週比 __分 短縮）<br>
+        </div>
+        <div class="tip">完璧に書こうとしなくていいです。箇条書き3行でもOK。「続けること」が大切です。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>レポートをGeminiに書いてもらう方法</h3>
+        <p>Geminiに話しかけるだけで週次レポートが完成します：</p>
+        <div class="weekly-report">
+<span class="green">【Geminiへのお願い（コピーして使用可）】</span><br>
+<br>
+今週の業務改善レポートを作りたいです。<br>
+以下の内容を週次レポートとしてまとめてください。<br>
+<br>
+今週よかったこと：（自由に話す）<br>
+困ったこと：（自由に話す）<br>
+来週やりたいこと：（自由に話す）<br>
+        </div>
+        <div class="ok">Geminiがわかりやすく整理してくれます。あとはDriveに保存してコーチングセッションで共有するだけです。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Google Meetの準備（オンラインセッション前）</h3>
+        <ol>
+          <li>上村から届くMeet招待リンクをクリック（Googleカレンダーにも表示されます）</li>
+          <li>カメラ・マイクが使えることを確認する（前日までに動作確認推奨）</li>
+          <li>週次レポートをDriveで開いておく（画面共有して見せます）</li>
+          <li>メモ用のGoogle Docsを1つ開いておく（セッション中のメモ用）</li>
+        </ol>
+        <div class="note">Meetのマイクが聞こえにくい場合は、スマホのイヤホンを使うと改善することが多いです。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: セッションの流れ -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>セッション中の流れ（オンライン1時間）</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>標準的な1時間の進め方</h3>
+        <ol>
+          <li style="margin-bottom:10px"><strong>最初の10分：先週のレポート共有</strong><br>
+            AIマネージャーが週次レポートを見せながら、よかったこと・困ったことを話します。上村が質問しながら深掘りします。</li>
+          <li style="margin-bottom:10px"><strong>次の30分：困っていることを解決する</strong><br>
+            困っていることを一緒に解決します。プロンプトの改善・アプリの使い方・Geminiへの指示方法など。「やってみる」を重視します。</li>
+          <li style="margin-bottom:10px"><strong>次の15分：来週のアクションを決める</strong><br>
+            「来週1つだけやること」を決めます。大きな改善より「小さく・確実に」が原則です。</li>
+          <li><strong>最後の5分：まとめ・メモ確認</strong><br>
+            決めたアクションをGoogle Docsにメモして確認。次回セッションの日程を確認して終了。</li>
+        </ol>
+        <div class="tip">上村が一方的に教える形式ではなく、AIマネージャーが「気づく・試す・報告する」サイクルを回す形式です。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: 業務改善アイデアの見つけ方 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>業務改善アイデアの見つけ方</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>「面倒だな」「時間がかかるな」と感じた瞬間がヒント</h3>
+        <p>改善アイデアは特別なところにあるのではなく、日々の業務の中にあります。以下のサインに気づいたらメモしておきましょう：</p>
+        <ul>
+          <li>「同じことを何度も入力している」→ 自動化・テンプレート化のチャンス</li>
+          <li>「この書類どこにあったっけ？」→ Driveフォルダ整理・検索改善のチャンス</li>
+          <li>「毎月この集計に時間がかかる」→ GAS自動化・Sheets関数活用のチャンス</li>
+          <li>「新人への説明が毎回大変」→ Gemini活用の手順書・動画マニュアル化のチャンス</li>
+          <li>「この記録を書くのに何を書けばいいか迷う」→ Geminiプロンプトテンプレート作成のチャンス</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>Geminiに「改善アイデア」を相談してみる</h3>
+        <div class="improvement-box">
+          <h3>AIマネージャーが使えるプロンプト例</h3>
+          <p>「就労継続支援B型施設のスタッフです。毎月の国保連書類作成に2〜3時間かかっています。Google SheetsとGeminiを使って効率化するアイデアを3つ教えてください。」</p>
+        </div>
+        <div class="ok">Geminiに相談したアイデアをそのままコーチングセッションで上村に見せてください。一緒に「本当に使えるか」を判断します。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>月に1件の「自主改善提案」を目標にする</h3>
+        <p>第1段階（1〜3か月目）の目標は、<strong>「月に1件、自分で業務改善提案を発見・報告できること」</strong>です。</p>
+        <p>どんな小さなことでも構いません：</p>
+        <ul>
+          <li>「Geminiへのプロンプトをこう変えたら記録が早くなった」</li>
+          <li>「Driveのフォルダ名をこう変えたら探しやすくなった」</li>
+          <li>「アプリのこのボタンを変えてほしい（上村に要望）」</li>
+        </ul>
+        <div class="tip">「自分で気づいて提案した改善」は、コーチングセッションで必ず取り上げます。小さな成功体験が「AIが使える」という自信になります。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: KPI管理（自走度評価） -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>KPI管理と自走度評価</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>月末に記録する3つの数値</h3>
+        <p>AIマネージャーが毎月末に台帳シートに記録します（所要5分）：</p>
+        <ol>
+          <li><strong>記録作成時間の平均（分）</strong>：Geminiを使って面談記録を作るのに何分かかったか</li>
+          <li><strong>当日中の記録完了率（%）</strong>：面談当日中に記録を保存できた件数 ÷ 総件数</li>
+          <li><strong>自主改善提案件数</strong>：今月自分で発見・報告した改善アイデアの数</li>
+        </ol>
+        <div class="ok">数値を見ることで「自分が成長している」実感が持てます。6か月後に「記録時間が半分になった」という事実が、まる様全体のモチベーションになります。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>第2段階への移行判定基準</h3>
+        <p>3か月目の最終コーチングセッションで、上村が以下を確認して第2段階（定着期）へ移行を判断します：</p>
+        <ul>
+          <li>全4アプリが本番稼働していること</li>
+          <li>AIマネージャーが「ひとりでアプリを使って記録できる」状態であること</li>
+          <li>月1件以上の自主改善提案が出ていること</li>
+          <li>管理者が「記録作業が楽になった」と実感していること</li>
+        </ul>
+        <div class="note">基準を満たせない場合は、第1段階を1か月延長して対応します。「完成度100%でなくていい」という原則で進めます。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    コーチングセッションの日程調整は上村から連絡します。<strong>上村桂右</strong>：<a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a>
+  </div>
+
+  <div class="nav-bar">
+    <a href="06-sheets-ledger.html" class="nav-btn back">← 利用者台帳ガイドへ</a>
+    <a href="index.html" class="nav-btn finish">▶ 総合インデックスへ戻る</a>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ オプション③</footer>
+
+</body>
+</html>

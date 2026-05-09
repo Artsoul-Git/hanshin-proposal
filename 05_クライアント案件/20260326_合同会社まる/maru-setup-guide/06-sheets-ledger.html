@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>利用者台帳・Google Sheets 操作ガイド ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.75}
+  .top-bar{background:linear-gradient(135deg,#00A8B5 0%,#007B87 100%);color:white;padding:24px 32px 20px}
+  .top-bar .breadcrumb{font-size:12px;color:#B2F5EA;margin-bottom:8px}
+  .top-bar .breadcrumb a{color:#B2F5EA;text-decoration:none}
+  .top-bar .phase-label{font-size:11px;letter-spacing:3px;color:#81E6D9;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:20px;font-weight:700;margin-bottom:6px}
+  .top-bar .timing{font-size:13px;color:#E6FFFA;background:rgba(255,255,255,.12);display:inline-block;padding:3px 12px;border-radius:20px}
+  .container{max-width:820px;margin:0 auto;padding:32px 20px}
+  .summary-card{background:white;border-radius:14px;padding:22px 26px;margin-bottom:28px;border-left:5px solid #00A8B5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .summary-card h2{font-size:15px;font-weight:700;color:#007B87;margin-bottom:10px}
+  .summary-card ul{padding-left:20px}
+  .summary-card li{font-size:14px;color:#4A5568;margin-bottom:5px}
+  .prereq{background:#FFFBEB;border:2px solid #F6AD55;border-radius:12px;padding:16px 20px;margin-bottom:20px;font-size:14px;color:#7B341E}
+  .prereq strong{color:#C05621}
+  .section{background:white;border-radius:14px;padding:26px 28px;margin-bottom:22px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #E2E8F0}
+  .section-num{width:40px;height:40px;border-radius:50%;background:#00A8B5;color:white;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .section-header h2{font-size:17px;font-weight:700;color:#1A365D}
+  .step{display:flex;gap:14px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px dashed #E2E8F0}
+  .step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+  .step-num{width:28px;height:28px;border-radius:50%;background:#E6FFFA;color:#007B87;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px}
+  .step-body h3{font-size:15px;font-weight:700;margin-bottom:6px;color:#2D3748}
+  .step-body p{font-size:14px;color:#4A5568;margin-bottom:8px}
+  .step-body .note{background:#FFFBEB;border-left:4px solid #F6AD55;padding:10px 14px;border-radius:6px;font-size:13px;color:#7B341E;margin-top:8px}
+  .step-body .tip{background:#EBF8FF;border-left:4px solid #4299E1;padding:10px 14px;border-radius:6px;font-size:13px;color:#2A4365;margin-top:8px}
+  .step-body .ok{background:#F0FFF4;border-left:4px solid #48BB78;padding:10px 14px;border-radius:6px;font-size:13px;color:#22543D;margin-top:8px}
+  .step-body .warn{background:#FFF5F5;border-left:4px solid #FC8181;padding:10px 14px;border-radius:6px;font-size:13px;color:#742A2A;margin-top:8px}
+  .step-body code{background:#EDF2F7;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#007B87}
+  .step-body ul,ol{padding-left:20px;margin:8px 0}
+  .step-body li{font-size:14px;color:#4A5568;margin-bottom:4px}
+  .sheet-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .sheet-tab{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;border-top:4px solid}
+  .tab1{background:#EBF8FF;border-color:#2B6CB0;color:#2B6CB0}
+  .tab2{background:#F0FFF4;border-color:#276749;color:#276749}
+  .tab3{background:#FAF5FF;border-color:#553C9A;color:#553C9A}
+  .tab4{background:#FFFBEB;border-color:#D69E2E;color:#7B341E}
+  .tab5{background:#FFF5F5;border-color:#C53030;color:#C53030}
+  .sheet-detail{background:white;border:2px solid #E2E8F0;border-radius:10px;padding:16px 20px;margin:10px 0}
+  .sheet-detail h4{font-size:14px;font-weight:700;color:#1A365D;margin-bottom:8px}
+  .sheet-detail p{font-size:13px;color:#4A5568}
+  .sheet-detail ul{padding-left:18px;margin-top:6px}
+  .sheet-detail li{font-size:13px;color:#4A5568;margin-bottom:3px}
+  .nav-bar{display:flex;justify-content:space-between;margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0}
+  .nav-btn{display:inline-block;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px}
+  .nav-btn.next{background:#00A8B5;color:white}
+  .nav-btn.back{background:#E2E8F0;color:#4A5568}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:18px 22px;margin-top:24px;font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="breadcrumb"><a href="index.html">← 総合ガイドに戻る</a></div>
+  <div class="phase-label">オプション① 続き ／ Week 1〜常時</div>
+  <h1>利用者台帳・Google Sheets 操作ガイド</h1>
+  <div class="timing">台帳の構成・日常操作・国保連テンプレートの使い方</div>
+</div>
+
+<div class="container">
+
+  <div class="prereq">
+    <strong>前提条件：</strong>GWS管理者設定ガイド（オプション①）が完了し、上村から台帳ファイルが共有されていること。
+  </div>
+
+  <div class="summary-card">
+    <h2>このガイドでできるようになること</h2>
+    <ul>
+      <li>利用者台帳（5シート）の役割と使い方を理解できる</li>
+      <li>新規利用者の登録・既存情報の更新ができる</li>
+      <li>出退勤の月次集計を確認できる</li>
+      <li>国保連テンプレート（実績記録票・給付費請求書）でデータを集計・出力できる</li>
+      <li>個別支援計画の更新スケジュールを管理できる</li>
+    </ul>
+  </div>
+
+  <!-- Section 1: 台帳の構成 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>利用者台帳マスターの5シート構成</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">–</div>
+      <div class="step-body">
+        <h3>台帳は1つのファイル（5枚のシートを持つ）</h3>
+        <p>Google Sheetsでは1つのファイルの中に複数の「シート（タブ）」が持てます。利用者台帳は以下の5シートで構成されています。画面下のタブをクリックして切り替えます。</p>
+
+        <div class="sheet-tabs">
+          <div class="sheet-tab tab1">① 利用者マスター</div>
+          <div class="sheet-tab tab2">② 出退勤記録</div>
+          <div class="sheet-tab tab3">③ 記録DB</div>
+          <div class="sheet-tab tab4">④ 国保連集計</div>
+          <div class="sheet-tab tab5">⑤ 計画書管理</div>
+        </div>
+
+        <div class="sheet-detail">
+          <h4>① 利用者マスター</h4>
+          <p>利用者全員の基本情報を管理するシートです。</p>
+          <ul>
+            <li>氏名・生年月日・住所・連絡先</li>
+            <li>障害の種別・等級・受給者証番号</li>
+            <li>利用開始日・担当支援員・緊急連絡先</li>
+            <li>利用状況（継続中 / 利用終了 / 休止中）</li>
+          </ul>
+        </div>
+
+        <div class="sheet-detail">
+          <h4>② 出退勤記録</h4>
+          <p>アプリ①から自動で書き込まれる出退勤データシートです。</p>
+          <ul>
+            <li>日付・利用者名・出勤時刻・退勤時刻・利用時間</li>
+            <li>月末に自動で合計利用時間を集計</li>
+            <li>欠席・キャンセルの記録も含む</li>
+          </ul>
+        </div>
+
+        <div class="sheet-detail">
+          <h4>③ 記録DB</h4>
+          <p>アプリ②（音声記録）やPhase 0（Mode A）で作成した支援記録が蓄積されるデータベースです。</p>
+          <ul>
+            <li>利用者ID・日付・記録種別・内容・担当者</li>
+            <li>個別支援計画書の下書き作成にここのデータを使います</li>
+          </ul>
+        </div>
+
+        <div class="sheet-detail">
+          <h4>④ 国保連集計</h4>
+          <p>毎月の国保連請求データを集計するシートです。②出退勤記録から自動でデータを集計します。</p>
+          <ul>
+            <li>月次の利用日数・利用時間・報酬単位の集計</li>
+            <li>実績記録票テンプレートへのデータ出力元として使用</li>
+          </ul>
+        </div>
+
+        <div class="sheet-detail">
+          <h4>⑤ 計画書管理</h4>
+          <p>個別支援計画書の作成・更新スケジュールを管理するシートです。</p>
+          <ul>
+            <li>前回の計画書作成日・次回更新予定日（6か月後）</li>
+            <li>1か月前になるとGASから自動でメール通知が届きます</li>
+            <li>計画書のDrive保存URLも記録</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: 日常操作 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>日常の操作手順</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>新規利用者を登録する（①利用者マスター）</h3>
+        <p>アプリ③（受入れフォームアプリ）が稼働していれば自動で追加されますが、手動で追加する場合は以下の手順です：</p>
+        <ol>
+          <li>台帳を開き、「①利用者マスター」タブをクリック</li>
+          <li>一番下の空白行をクリックしてカーソルを置く</li>
+          <li>各セルに情報を入力（氏名→生年月日→住所→…の順）</li>
+          <li>利用者IDは「U001」「U002」のように連番で付ける</li>
+          <li>入力後は上書き保存（Ctrl+S）— Sheetsは自動保存されますが念のため</li>
+        </ol>
+        <div class="warn">利用者の氏名・住所・電話番号は個人情報です。印刷や外部への送付は行わないでください。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>出退勤データを確認する（②出退勤記録）</h3>
+        <p>アプリ①が稼働していれば自動記録されます。日々の確認手順：</p>
+        <ol>
+          <li>「②出退勤記録」タブをクリック</li>
+          <li>今日の日付の行を探す（行は日付順に並んでいます）</li>
+          <li>全利用者の出退勤が記録されているか確認する</li>
+          <li>打刻漏れがある場合は上村に連絡するか、該当セルに手動入力</li>
+        </ol>
+        <div class="tip">管理者は毎日15〜16時に確認する習慣をつけると、退勤漏れを当日中に確認できます。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>月末の国保連データを集計する（④国保連集計）</h3>
+        <p>毎月月末（または翌月1〜3日）に行う作業です：</p>
+        <ol>
+          <li>「④国保連集計」タブをクリック</li>
+          <li>月末処理ボタン（上村が設置するGASボタン）をクリック → 自動で当月データが集計される</li>
+          <li>集計結果をざっと確認（利用日数・時間が実績と合っているか）</li>
+          <li>「国保連書類」フォルダの「実績記録票テンプレート.xlsx」を開く</li>
+          <li>集計データを実績記録票に転記する（または上村が作成したマクロで自動転記）</li>
+        </ol>
+        <div class="ok">第2段階（4か月目〜）からはGASで国保連PDF自動変換まで対応します。第1段階はSheetsへの転記のみで進めます。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>個別支援計画の更新期限を確認する（⑤計画書管理）</h3>
+        <ol>
+          <li>「⑤計画書管理」タブをクリック</li>
+          <li>「次回更新予定日」の列を確認</li>
+          <li>今月中・来月に更新期限が来る利用者をピックアップ</li>
+          <li>Gemini（または記録DBのデータ）を使って個別支援計画の下書きを作成する（Phase 0 Mode Aの手順参照）</li>
+        </ol>
+        <div class="note">更新1か月前にGASから自動でメール通知が届くよう設定されています。メールが届いたら優先的に対応してください。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: 国保連テンプレートの使い方 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>国保連テンプレートの使い方</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>実績記録票テンプレートを開く</h3>
+        <p>Drive → 「国保連書類」フォルダ → 「実績記録票テンプレート.xlsx」を開きます。</p>
+        <div class="tip">テンプレートは毎月コピーして使います。元のテンプレートを書き換えないように注意してください。</div>
+        <ol>
+          <li>ファイルを右クリック → 「コピーを作成」</li>
+          <li>ファイル名を「実績記録票_2026年05月」のように変更</li>
+          <li>コピーしたファイルを開いて編集する</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>利用者ごとの実績を入力する</h3>
+        <p>④国保連集計シートの数値を実績記録票に転記します：</p>
+        <ol>
+          <li>利用者名・受給者証番号をマスターシートから確認して入力</li>
+          <li>利用日ごとにカレンダー形式で出勤に◯をつける（または自動マクロで入力）</li>
+          <li>合計利用日数・単位数が自動計算されることを確認</li>
+          <li>担当支援員のサインを確認欄に記入</li>
+        </ol>
+        <div class="note">実績記録票は国保連への請求根拠書類です。誤記があると返戻（差し戻し）になります。入力後は必ず管理者が確認してください。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>給付費請求書を作成する</h3>
+        <p>実績記録票をもとに給付費請求書を作成します：</p>
+        <ol>
+          <li>「給付費請求書テンプレート.xlsx」をコピーして月別ファイルを作成</li>
+          <li>利用者ごとの単位数合計を入力</li>
+          <li>単位数 × 地域加算率 = 金額が自動計算される</li>
+          <li>印刷してサインを記入 → 国保連に提出（または電子請求システムへ入力）</li>
+        </ol>
+        <div class="tip">レベル2（第2段階）では、GASでこの作業が半自動化されます。第1段階はテンプレートへの手入力で進めます。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: よくある操作ミスと対処法 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>よくある操作ミスと対処法</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>セルを間違えて書き換えてしまった</h3>
+        <p>Ctrl+Z（Undo）で直前の操作を取り消せます。保存後でも「ファイル → 変更履歴 → 変更履歴を表示」から過去の状態に戻せます。</p>
+        <div class="ok">Google Sheetsは変更履歴が自動で保存されています。完全に消えることはありません。</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>数式が壊れた（エラーが出た）</h3>
+        <p>#REF! や #VALUE! などのエラーが出たら上村に連絡してください。数式は上村が管理します。セルを空白にして保存しておいてください。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">Q</div>
+      <div class="step-body">
+        <h3>他のスタッフが同時に編集しようとしている</h3>
+        <p>Google Sheetsは複数人が同時に編集できます。誰かが編集中のセルは色がつきます。同じセルを同時に編集しないよう声かけして対応してください。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-box">
+    わからないことがあれば気軽にご連絡を。<strong>上村桂右</strong>：<a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a>
+  </div>
+
+  <div class="nav-bar">
+    <a href="05-gws-admin-setup.html" class="nav-btn back">← GWS管理者設定へ</a>
+    <a href="07-ai-coaching.html" class="nav-btn next">AIコーチングガイドへ →</a>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ オプション① 台帳編</footer>
+
+</body>
+</html>
