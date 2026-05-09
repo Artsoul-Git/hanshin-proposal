@@ -16,6 +16,7 @@
 | `/write-brain-article` | Brain記事（有料コンテンツ）執筆 |
 | `/beginner-guide` | 初心者向けHTMLガイドブック作成 |
 | `/ai-news-digest` | AIニュースダイジェスト生成 |
+| `/company-setup` | AI組織をゼロベース設計・構築（業種・業態問わず対応） |
 
 ---
 

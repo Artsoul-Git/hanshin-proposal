@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/company-setup スキル 完全マニュアル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+    line-height: 1.8;
+    color: #2D3748;
+    background: #FAFBFC;
+    padding: 40px 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+  .cover { text-align: center; padding: 80px 0 60px; border-bottom: 4px solid #2F855A; margin-bottom: 50px; }
+  .cover h1 { font-size: 34px; color: #1A365D; margin-bottom: 16px; line-height: 1.4; }
+  .cover .sub { font-size: 20px; color: #38A169; font-weight: bold; margin-bottom: 40px; }
+  .cover .badge { display: inline-block; background: #2F855A; color: white; padding: 6px 20px; border-radius: 20px; font-size: 14px; margin: 6px 4px; }
+  .cover .badge.orange { background: #ED8936; }
+  .cover .meta { color: #718096; font-size: 14px; line-height: 2; margin-top: 24px; }
+  h2 { font-size: 26px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #38A169; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h2 .num { display: inline-block; background: #2F855A; color: white; padding: 6px 16px; border-radius: 6px; font-size: 16px; margin-right: 12px; vertical-align: middle; }
+  h3 { font-size: 20px; color: #2D3748; margin: 30px 0 12px; padding-left: 16px; border-left: 6px solid #38A169; line-height: 1.5; }
+  h4 { font-size: 16px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+  p { margin: 12px 0; }
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .tip .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .ok { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+  .info { background: #EBF8FF; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #3182CE; }
+  .info .label { font-weight: bold; color: #2B6CB0; display: block; margin-bottom: 6px; font-size: 14px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas", "SF Mono", monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 25px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-family: "Consolas", "SF Mono", monospace; font-size: 13px; line-height: 1.7; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 28px; margin: 12px 0; }
+  li { margin: 7px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th { background: #2F855A; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  .step { background: #F0FFF4; padding: 22px 28px; border-radius: 8px; margin: 22px 0; border-top: 4px solid #2F855A; }
+  .step-num { display: inline-block; background: #38A169; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: bold; margin-right: 10px; font-size: 15px; }
+  .toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #38A169; }
+  .toc .sub-item { padding-left: 20px; font-size: 14px; color: #4A5568; }
+  .mode-card { border: 2px solid #E2E8F0; border-radius: 12px; padding: 24px 28px; margin: 16px 0; }
+  .mode-card.mode-a { border-left: 8px solid #3182CE; }
+  .mode-card.mode-b { border-left: 8px solid #805AD5; }
+  .mode-card .mode-title { font-size: 18px; font-weight: bold; margin-bottom: 12px; }
+  .mode-card.mode-a .mode-title { color: #2B6CB0; }
+  .mode-card.mode-b .mode-title { color: #6B46C1; }
+  .flow-diagram { background: #FAFBFC; padding: 30px; border-radius: 8px; margin: 22px 0; border: 2px solid #E2E8F0; }
+  .flow-step { display: flex; align-items: flex-start; margin: 16px 0; }
+  .flow-step .icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; color: white; flex-shrink: 0; margin-right: 16px; margin-top: 4px; }
+  .flow-step .icon.green { background: #38A169; }
+  .flow-step .icon.blue { background: #3182CE; }
+  .flow-step .icon.purple { background: #805AD5; }
+  .flow-step .icon.orange { background: #ED8936; }
+  .flow-step .icon.dark { background: #1A365D; }
+  .flow-step .content { flex: 1; }
+  .flow-step .content strong { display: block; font-size: 15px; margin-bottom: 4px; }
+  .flow-arrow { text-align: center; color: #A0AEC0; font-size: 24px; margin: 4px 0 4px 22px; }
+  .file-tree { background: #1A202C; color: #E2E8F0; padding: 24px 28px; border-radius: 8px; font-family: "Consolas", monospace; font-size: 13px; line-height: 1.9; margin: 18px 0; }
+  .file-tree .dir { color: #F6AD55; }
+  .file-tree .file { color: #68D391; }
+  .file-tree .comment { color: #718096; }
+  .choice-box { display: flex; gap: 20px; margin: 24px 0; }
+  .choice-box > div { flex: 1; border: 2px solid; border-radius: 10px; padding: 20px; }
+  .choice-a { border-color: #3182CE; background: #EBF8FF; }
+  .choice-b { border-color: #805AD5; background: #FAF5FF; }
+  .choice-title { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+  .choice-a .choice-title { color: #2B6CB0; }
+  .choice-b .choice-title { color: #6B46C1; }
+  .timeline { margin: 24px 0; }
+  .timeline-item { display: flex; margin: 0; }
+  .timeline-left { width: 120px; flex-shrink: 0; text-align: right; padding-right: 20px; padding-top: 18px; font-size: 13px; color: #718096; font-weight: bold; }
+  .timeline-line { display: flex; flex-direction: column; align-items: center; width: 24px; flex-shrink: 0; }
+  .timeline-dot { width: 14px; height: 14px; border-radius: 50%; background: #2F855A; margin-top: 20px; flex-shrink: 0; }
+  .timeline-bar { width: 2px; background: #C6F6D5; flex: 1; }
+  .timeline-right { flex: 1; padding-left: 20px; padding-bottom: 24px; padding-top: 16px; }
+  .timeline-right strong { display: block; font-size: 15px; margin-bottom: 4px; }
+  summary { cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  details > summary { padding: 14px 18px; background: #F7FAFC; border-radius: 8px; font-weight: bold; color: #2F855A; border: 1px solid #E2E8F0; margin: 10px 0; }
+  details[open] > summary { border-radius: 8px 8px 0 0; border-bottom: none; }
+  details > .details-body { border: 1px solid #E2E8F0; border-top: none; padding: 20px 24px; border-radius: 0 0 8px 8px; margin-top: -10px; margin-bottom: 10px; }
+  .sample-dialog { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px; margin: 16px 0; }
+  .dialog-kai { background: #EDF2F7; border-radius: 8px; padding: 12px 16px; margin: 10px 0; position: relative; }
+  .dialog-kai::before { content: "Kai"; display: block; font-weight: bold; color: #2F855A; font-size: 12px; margin-bottom: 4px; }
+  .dialog-owner { background: #E9D8FD; border-radius: 8px; padding: 12px 16px; margin: 10px 0; text-align: right; }
+  .dialog-owner::before { content: "オーナー"; display: block; font-weight: bold; color: #6B46C1; font-size: 12px; margin-bottom: 4px; text-align: left; }
+  @media (max-width: 700px) {
+    .container { padding: 30px 20px; }
+    .choice-box { flex-direction: column; }
+    h2 { font-size: 22px; }
+    .timeline-left { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 表紙 -->
+<div class="cover">
+  <h1>AI組織ゼロベース設計スキル<br><code>/company-setup</code> 完全マニュアル</h1>
+  <div class="sub">どんな業種・業態にも対応するAI組織の構築ガイド</div>
+  <div>
+    <span class="badge">スキル版 v1.0</span>
+    <span class="badge orange">初版 2026-05-10</span>
+  </div>
+  <div class="meta">
+    作成：有限会社アートソウル / Kai（AIパートナー）<br>
+    対象：AI組織をゼロから立ち上げたいすべてのオーナー
+  </div>
+</div>
+
+<!-- 目次 -->
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#overview">第1章　/company-setup とは何か</a></li>
+    <li><a href="#start">第2章　スキルの起動と基本情報の入力</a></li>
+    <li class="sub-item"><a href="#trigger">2-1　起動方法</a></li>
+    <li class="sub-item"><a href="#basic5">2-2　最初の5項目</a></li>
+    <li class="sub-item"><a href="#hearing-sheet">2-3　ヒアリングシートの生成</a></li>
+    <li><a href="#modes">第3章　2つの進行モード</a></li>
+    <li class="sub-item"><a href="#mode-a">3-1　Aモード：ファイル記入</a></li>
+    <li class="sub-item"><a href="#mode-b">3-2　Bモード：壁打ち</a></li>
+    <li><a href="#output">第4章　生成される成果物</a></li>
+    <li class="sub-item"><a href="#files">4-1　ファイル一覧</a></li>
+    <li class="sub-item"><a href="#constitution">4-2　CONSTITUTIONのカスタマイズ内容</a></li>
+    <li><a href="#deploy">第5章　生成後の配置・運用開始</a></li>
+    <li><a href="#scenarios">第6章　業種別シナリオ例</a></li>
+    <li><a href="#faq">第7章　よくある質問</a></li>
+    <li><a href="#reference">付録　ヒアリングシート 全項目一覧</a></li>
+  </ul>
+</div>
+
+<!-- 第1章 -->
+<h2 id="overview"><span class="num">1</span>/company-setup とは何か</h2>
+
+<div class="lead">
+  このスキルは「AI組織を新規に立ち上げたい」というオーナーとの対話を通じて、<strong>そのオーナー専用のAI組織一式（憲法・ルール・スキル・管理フォルダ）をゼロから設計・生成する</strong>スキルです。
+</div>
+
+<p>有限会社アートソウルが持つ「AI導入支援組織」の設計思想をテンプレートとして応用し、業種・業態・規模・コンセプトが異なる任意のオーナーに対して繰り返し使えます。</p>
+
+<h3>このスキルでできること</h3>
+<table>
+  <tr><th>できること</th><th>説明</th></tr>
+  <tr><td>AI組織の設計</td><td>業種・規模に合った判断権限マトリクス・品質ゲートの設計</td></tr>
+  <tr><td>憲法ファイルの生成</td><td><code>CONSTITUTION.md</code>をオーナーのミッション・制約に合わせて作成</td></tr>
+  <tr><td>スキル体系の設計</td><td>その事業に必要なスキルコマンド一覧を設計</td></tr>
+  <tr><td>管理フォルダ構造の生成</td><td>案件パイプライン・自律レベル記録・スターターパックの生成</td></tr>
+  <tr><td>2つの情報収集モード</td><td>ファイル記入 または 壁打ちセッションを選択可能</td></tr>
+</table>
+
+<h3>このスキルを使うタイミング</h3>
+<ul>
+  <li>新しいクライアント企業のAI組織を立ち上げる支援をするとき</li>
+  <li>自社のAI組織を最初から作り直したいとき</li>
+  <li>「AI担当者を採用せずにKaiで会社を動かしたい」という経営者に出会ったとき</li>
+</ul>
+
+<div class="tip">
+  <span class="label">Kai's Point</span>
+  このスキルは「提案書を作る」ではなく「組織そのものを設計する」ものです。完成後はそのまま Claude Code 上で運用が始まります。提案書より一段上の支援です。
+</div>
+
+<!-- 第2章 -->
+<h2 id="start"><span class="num">2</span>スキルの起動と基本情報の入力</h2>
+
+<h3 id="trigger">2-1　起動方法</h3>
+
+<p>Claude Code のプロンプトに以下のいずれかを入力します：</p>
+
+<pre><code>/company-setup</code></pre>
+
+<p>または自然言語でも起動できます：</p>
+<ul>
+  <li>「AI組織をゼロから作りたい」</li>
+  <li>「この会社のAI体制を設計してほしい」</li>
+  <li>「company-setupスキルを起動して」</li>
+</ul>
+
+<div class="step">
+  <p>起動すると Kai から以下の挨拶が表示されます：</p>
+  <div class="sample-dialog">
+    <div class="dialog-kai">
+      こんにちは。company-setup スキルを起動しました。<br><br>
+      これからあなた（オーナー）の事業・コンセプト・課題をヒアリングして、専用のAI組織設計一式を作成します。<br><br>
+      所要時間：<br>
+      　・ファイル記入モード → 記入15〜30分 ＋ Kai生成10分<br>
+      　・壁打ちモード　　　→ 対話30〜60分（記入不要）<br><br>
+      まず5つの基本情報を教えてください。
+    </div>
+  </div>
+</div>
+
+<h3 id="basic5">2-2　最初の5項目</h3>
+
+<p>起動直後にKaiが以下の5項目を聞いてきます。まとめて答えてもOKです。</p>
+
+<table>
+  <tr><th>#</th><th>項目</th><th>入力例</th></tr>
+  <tr><td>①</td><td>事業・会社名</td><td>有限会社アートソウル、○○デンタルクリニック、仮称「プロジェクト名」でもOK</td></tr>
+  <tr><td>②</td><td>主な業種・業態</td><td>障害福祉（就労支援）、歯科クリニック、金属加工製造業、税理士事務所、ECサイト など</td></tr>
+  <tr><td>③</td><td>ターゲット顧客・利用者</td><td>障害者手帳所持者、地域住民（20〜60代）、中小製造業、個人事業主 など</td></tr>
+  <tr><td>④</td><td>規模感</td><td>スタッフ5名・利用者30名、従業員12名・年商2億円 など（概算でOK）</td></tr>
+  <tr><td>⑤</td><td>現在の最大の課題（3つ以内）</td><td>記録業務が多い・採用に困っている・提案書の作成に時間がかかる など</td></tr>
+</table>
+
+<div class="tip">
+  <span class="label">ポイント</span>
+  5項目のうち「わからない」「まだ決まっていない」で構いません。後のヒアリングで補完できます。まず動かすことが大切です。
+</div>
+
+<h3 id="hearing-sheet">2-3　ヒアリングシートの生成</h3>
+
+<p>5項目を受け取った直後、Kaiは自動的にヒアリングシートを生成・保存します。</p>
+
+<div class="file-tree">
+<span class="dir">setup_[事業名略称]_[YYYYMMDD]/</span><br>
+└── <span class="file">hearing_sheet.md</span>　　<span class="comment"># ← ここに保存される</span>
+</div>
+
+<div class="info">
+  <span class="label">ファイル名の例</span>
+  事業名「コーデ就労支援」なら → <code>setup_コーデ_20260510/hearing_sheet.md</code>
+</div>
+
+<p>ヒアリングシートには A〜C の3セクションがあります：</p>
+<ul>
+  <li><strong>A. 事業プロフィール</strong>：Step 1 で答えた5項目が自動記入されています</li>
+  <li><strong>B. 詳細ヒアリング（B-1〜B-6）</strong>：ここが空白 → ファイル記入 か 壁打ち で埋める</li>
+  <li><strong>C. Kaiへのメモ</strong>：追加で伝えたいことを自由に書く欄</li>
+</ul>
+
+<!-- 第3章 -->
+<h2 id="modes"><span class="num">3</span>2つの進行モード</h2>
+
+<p>ヒアリングシートを保存したら、Kaiが2つのモードを提示します。どちらを選ぶかはオーナーの好みや状況次第です。</p>
+
+<div class="choice-box">
+  <div class="choice-a">
+    <div class="choice-title">A) ファイル記入モード</div>
+    <ul>
+      <li>ヒアリングシート（B〜C欄）を自分で記入して提出する</li>
+      <li>自分のペースで書ける（深夜でも移動中でもOK）</li>
+      <li>整理して書くのが得意な人向け</li>
+      <li>所要時間：記入15〜30分</li>
+    </ul>
+  </div>
+  <div class="choice-b">
+    <div class="choice-title">B) 壁打ちモード</div>
+    <ul>
+      <li>Kaiと会話しながら情報を整理していく</li>
+      <li>書くのが苦手・考えながら話したい人向け</li>
+      <li>Kaiが業種知識で仮説を出し、オーナーが修正する形で進む</li>
+      <li>所要時間：対話30〜60分</li>
+    </ul>
+  </div>
+</div>
+
+<h3 id="mode-a">3-1　Aモード：ファイル記入の手順</h3>
+
+<div class="flow-diagram">
+  <div class="flow-step">
+    <div class="icon blue">A</div>
+    <div class="content">
+      <strong>ヒアリングシートを開いて記入する</strong>
+      保存先：<code>setup_[事業名]_[日付]/hearing_sheet.md</code><br>
+      B-1〜B-6の空欄に記入する（C欄は任意）
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="icon blue">↩</div>
+    <div class="content">
+      <strong>「記入しました」と Kai に伝える</strong>
+      ファイルに「記入が終わりました」「Aで進めます」などと伝えればOK
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step">
+    <div class="icon green">✓</div>
+    <div class="content">
+      <strong>Kaiがシートを読んで空欄チェック</strong>
+      空欄3項目以下 → 設計フェーズへ進む<br>
+      空欄4項目以上 → 未記入箇所だけ壁打ちで補完する
+    </div>
+  </div>
+</div>
+
+<div class="tip">
+  <span class="label">記入のコツ</span>
+  完璧に書こうとしなくて大丈夫です。「B-2 の日々の業務フローがわからない」なら「なんとなく…」でOK。Kaiが整理します。
+</div>
+
+<h3 id="mode-b">3-2　Bモード：壁打ちセッションの進め方</h3>
+
+<p>壁打ちモードを選ぶと、Kaiが会話形式でB-1〜B-6の内容を引き出していきます。</p>
+
+<div class="step">
+  <p><span class="step-num">1</span><strong>「壁打ちモード」または「Bで」と伝える</strong></p>
+  <p>すると Kai が B-1（ミッション・コンセプト）から質問を開始します。</p>
+</div>
+
+<div class="step">
+  <p><span class="step-num">2</span><strong>一度に1〜2項目ずつ対話する</strong></p>
+  <p>Kaiは一度に大量の質問をしません。答えに対して深掘り質問を1つ加えながら進みます。</p>
+</div>
+
+<div class="step">
+  <p><span class="step-num">3</span><strong>業種知識でKaiが仮説を出す</strong></p>
+  <p>Kaiは業種の「あるある」を知っているので、「障害福祉の場合、月末の個別支援計画作成に多くの時間がかかるケースが多いですが、御社はいかがですか？」のように仮説を投げ、オーナーが修正する形で進みます。</p>
+</div>
+
+<h4>壁打ちの会話サンプル</h4>
+<div class="sample-dialog">
+  <div class="dialog-kai">
+    まずミッション・コンセプトを整理しましょう。<br>
+    「この事業で最終的に何を実現したいか」を1〜2文で教えてください。<br>
+    「障害者が地域で自分らしく生きられる社会を作る」「医療の質を落とさずに残業ゼロにしたい」のような言葉でOKです。
+  </div>
+  <div class="dialog-owner">
+    スタッフが余裕を持って利用者に向き合える福祉施設を作りたい。今は書類に追われていて疲弊している。
+  </div>
+  <div class="dialog-kai">
+    ありがとうございます。「書類に追われてスタッフが疲弊している」ということは、現場での利用者支援の質にも影響が出ていますか？<br>
+    例えば「支援記録を書く時間がなくて帰宅が遅くなる」「ケース会議の準備が間に合わない」などはありますか？
+  </div>
+  <div class="dialog-owner">
+    まさにそれです。月末の個別支援計画の作成が特にひどくて、管理者が毎月残業100時間近くになっています。
+  </div>
+  <div class="dialog-kai">
+    それは深刻ですね。個別支援計画の作成がボトルネックになっているわけですね。<br>
+    これは B-2（オペレーション現状）の最重要課題として記録します。<br><br>
+    次に、ITリテラシーについて聞かせてください。スタッフの中でパソコン操作が得意な人は何人くらいいますか？
+  </div>
+</div>
+
+<div class="ok">
+  <span class="label">壁打ちのメリット</span>
+  「書くのが苦手」なオーナーはもちろん、「課題はあるけど整理できていない」「ビジョンがぼんやりしている」という場合に特に効果的です。Kaiとの対話を通じて自分のビジネスを再発見することもあります。
+</div>
+
+<!-- 第4章 -->
+<h2 id="output"><span class="num">4</span>生成される成果物</h2>
+
+<h3 id="files">4-1　ファイル一覧</h3>
+
+<p>情報収集が完了すると、Kaiが以下のファイルを自動生成します。</p>
+
+<div class="file-tree">
+<span class="dir">setup_[事業名]_[日付]/</span><br>
+├── <span class="file">hearing_sheet.md</span>　　　　<span class="comment"># ヒアリングシート（記入済み版）</span><br>
+├── <span class="file">CONSTITUTION.md</span>　　　　　<span class="comment"># AI組織の憲法</span><br>
+├── <span class="file">CLAUDE.md</span>　　　　　　　　<span class="comment"># Claude Code 設定ハブ</span><br>
+├── <span class="dir">rules/</span><br>
+│　　├── <span class="file">self-validation-protocol.md</span>　<span class="comment"># Kai自己検証ルール</span><br>
+│　　└── <span class="file">kai-style-guide.md</span>　　　　<span class="comment"># フィードバック蓄積辞書（空）</span><br>
+├── <span class="dir">skill/</span><br>
+│　　└── <span class="dir">project-intake/</span><br>
+│　　　　└── <span class="file">SKILL.md</span>　　　　　<span class="comment"># 標準インテークスキル（業種向けカスタム）</span><br>
+├── <span class="dir">01_経営管理/</span><br>
+│　　├── <span class="file">構造改革ロードマップ.md</span>　<span class="comment"># L1→L4フェーズ計画</span><br>
+│　　└── <span class="file">自律レベル記録.md</span>　　　<span class="comment"># Kaiの自律レベル追跡表</span><br>
+└── <span class="dir">05_クライアント案件/</span><br>
+　　└── <span class="file">00_Kaiスターターパック_テンプレート.md</span>
+</div>
+
+<table>
+  <tr><th>ファイル</th><th>役割</th><th>カスタマイズ内容</th></tr>
+  <tr><td><code>CONSTITUTION.md</code></td><td>AI組織の行動憲法</td><td>ミッション文・業種固有の判断権限・個人情報ルールをカスタマイズ</td></tr>
+  <tr><td><code>CLAUDE.md</code></td><td>Claude Code の設定ハブ</td><td>事業名・スキル一覧・参照ドキュメントを実際の内容で記述</td></tr>
+  <tr><td><code>rules/self-validation-protocol.md</code></td><td>Kai品質保証プロトコル</td><td>業種固有のチェック観点を追加</td></tr>
+  <tr><td><code>rules/kai-style-guide.md</code></td><td>フィードバック蓄積辞書</td><td>空テンプレ（使いながら育てる）</td></tr>
+  <tr><td><code>skill/project-intake/SKILL.md</code></td><td>標準インテークスキル</td><td>ルーティング先をその事業のスキル体系に合わせる</td></tr>
+  <tr><td><code>01_経営管理/構造改革ロードマップ.md</code></td><td>L1〜L4段階的自律計画</td><td>現在の規模・課題に合わせてフェーズタイムラインを調整</td></tr>
+  <tr><td><code>01_経営管理/自律レベル記録.md</code></td><td>Kai自律度トラッカー</td><td>初期値L1・カウンター0からスタート</td></tr>
+  <tr><td><code>00_Kaiスターターパック_テンプレート.md</code></td><td>案件受付テンプレ</td><td>業種特有の必須確認事項を追加</td></tr>
+</table>
+
+<h3 id="constitution">4-2　CONSTITUTIONのカスタマイズ内容</h3>
+
+<p>CONSTITUTION.md は業種によって以下の部分が大きく変わります：</p>
+
+<details>
+  <summary>▶ 障害福祉事業所の場合</summary>
+  <div class="details-body">
+    <ul>
+      <li>§3 判断権限「個別支援計画の内容変更は必ず管理者確認」</li>
+      <li>§3「モニタリング記録・サービス等利用計画の外部提出前にオーナー確認」</li>
+      <li>§4 個人情報「利用者名は匿名化（利用者A/Bなど）。支援内容の詳細は外部提示禁止」</li>
+      <li>§5 品質ゲート「障害支援区分・加算種別を正確に把握してから提案書を作成」</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 歯科クリニックの場合</summary>
+  <div class="details-body">
+    <ul>
+      <li>§3「診療記録・処方内容はAIが生成しない（参照のみ）」</li>
+      <li>§3「患者説明資料は院長の最終確認必須」</li>
+      <li>§4「患者情報はKnowledge/に格納。問診内容の外部提示禁止」</li>
+      <li>§5「保険点数・治療ガイドラインの根拠を必ず明示」</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 士業事務所（税理士・社労士など）の場合</summary>
+  <div class="details-body">
+    <ul>
+      <li>§3「税務申告書・労務書類の確認は必ず有資格者」</li>
+      <li>§3「クライアント企業の財務情報・給与情報はAIから外部共有禁止」</li>
+      <li>§4「依頼者情報はKnowledge/のみ。コーデ等のシミュレーションデータと混在させない」</li>
+      <li>§5「法改正・通達の反映漏れチェックを品質ゲートに追加」</li>
+    </ul>
+  </div>
+</details>
+
+<!-- 第5章 -->
+<h2 id="deploy"><span class="num">5</span>生成後の配置・運用開始</h2>
+
+<h3>Step 1：生成フォルダの確認</h3>
+<p>生成が終わると Kai から「AI組織設計 完成レポート」が表示されます。内容を確認してください。</p>
+
+<h3>Step 2：プロジェクトルートへの配置</h3>
+<p>確認が取れたら以下を伝えるだけで Kai が配置します：</p>
+<pre><code>配置してください</code></pre>
+<p>または手動でコピーしても構いません。<code>setup_[事業名]_[日付]/</code>の中身を作業ディレクトリのルートにコピーします。</p>
+
+<div class="warn">
+  <span class="label">注意</span>
+  既存のプロジェクトに配置する場合、<code>CLAUDE.md</code>や<code>CONSTITUTION.md</code>が既にある場合は<strong>上書きしないでください</strong>。差分をKaiに確認させてからマージしてください。
+</div>
+
+<h3>Step 3：git 管理の開始</h3>
+<pre><code>git init
+git add .
+git commit -m "feat: AI組織設計 初期セットアップ"</code></pre>
+
+<h3>Step 4：最初の運用</h3>
+<p>配置が完了したら、普通に Claude Code を起動してみてください。<code>CLAUDE.md</code>が読み込まれ、Kaiがその事業の文脈で動き始めます。</p>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-left">Day 1</div>
+    <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-bar"></div></div>
+    <div class="timeline-right">
+      <strong>初回セットアップ完了</strong>
+      <code>/company-setup</code>で生成 → 配置 → git commit
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-left">Day 2〜7</div>
+    <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-bar"></div></div>
+    <div class="timeline-right">
+      <strong>最初の案件で運用スタート</strong>
+      スターターパックに記入 → <code>/sme-ai-proposal</code>で提案書作成 → フィードバック記録
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-left">Week 2〜</div>
+    <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-bar"></div></div>
+    <div class="timeline-right">
+      <strong>スタイルガイドが育ち始める</strong>
+      修正のたびに<code>rules/kai-style-guide.md</code>に記録。L1→L2への道が始まる
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-left">Month 2〜</div>
+    <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-bar"></div></div>
+    <div class="timeline-right">
+      <strong>L2（半自律モード）への昇格</strong>
+      5件連続承認・修正3件以下の基準をクリアでL2へ
+    </div>
+  </div>
+</div>
+
+<!-- 第6章 -->
+<h2 id="scenarios"><span class="num">6</span>業種別シナリオ例</h2>
+
+<details>
+  <summary>▶ シナリオ1：障害福祉就労支援B型（スタッフ8名）</summary>
+  <div class="details-body">
+    <h4>課題</h4>
+    <ul>
+      <li>月末の個別支援計画作成で管理者が月80時間超の残業</li>
+      <li>支援記録を紙に書いてからPCに転記する二重作業</li>
+      <li>スタッフのITリテラシー差が大きい（得意2名・苦手6名）</li>
+    </ul>
+    <h4>生成されたCONSTITUTIONの主な特徴</h4>
+    <ul>
+      <li>§3：個別支援計画の変更は管理者の承認が必須</li>
+      <li>§4：利用者情報はKnowledgeフォルダのみ、外部提示禁止</li>
+      <li>§5：支援記録の雛形生成時は「実際のサービス内容との差異確認」をゲートに追加</li>
+    </ul>
+    <h4>生成されたスキル体系</h4>
+    <ul>
+      <li><code>/sme-ai-proposal</code>：AI導入支援提案書生成</li>
+      <li><code>/support-record-template</code>：支援記録雛形生成（カスタム追加）</li>
+      <li><code>/monthly-report-assist</code>：月次報告書アシスト（カスタム追加）</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>▶ シナリオ2：歯科クリニック（院長1名・スタッフ5名）</summary>
+  <div class="details-body">
+    <h4>課題</h4>
+    <ul>
+      <li>患者への治療説明が毎回口頭で時間がかかる</li>
+      <li>予約キャンセル対応メールを毎回一から書いている</li>
+      <li>スタッフ向けトレーニング資料が古いまま</li>
+    </ul>
+    <h4>生成されたCONSTITUTIONの主な特徴</h4>
+    <ul>
+      <li>§3：患者向け文書は院長の最終確認必須</li>
+      <li>§3：診療記録・処方内容はKaiが生成しない（参照のみ）</li>
+      <li>§4：患者情報はKnowledge/配下のみ。HIPAA相当の匿名化を徹底</li>
+    </ul>
+    <h4>生成されたスキル体系</h4>
+    <ul>
+      <li><code>/patient-explain</code>：治療説明資料の雛形生成（カスタム追加）</li>
+      <li><code>/mail-template</code>：患者対応メール生成（カスタム追加）</li>
+      <li><code>/staff-manual</code>：スタッフ向けトレーニング資料生成（カスタム追加）</li>
+    </ul>
+  </div>
+</details>
+
+<details>
+  <summary>▶ シナリオ3：税理士事務所（税理士2名・スタッフ4名）</summary>
+  <div class="details-body">
+    <h4>課題</h4>
+    <ul>
+      <li>クライアント向け決算報告書の作成に時間がかかる</li>
+      <li>法改正対応の社内勉強会資料を毎回作っている</li>
+      <li>新規クライアントへのヒアリングが属人化している</li>
+    </ul>
+    <h4>生成されたCONSTITUTIONの主な特徴</h4>
+    <ul>
+      <li>§3：税務書類・申告内容は必ず有資格者が確認</li>
+      <li>§3：クライアント財務データの外部提示禁止（匿名化レポートのみ可）</li>
+      <li>§5：法令根拠の明示をすべての成果物の品質ゲートに追加</li>
+    </ul>
+    <h4>生成されたスキル体系</h4>
+    <ul>
+      <li><code>/tax-report-draft</code>：決算報告書ドラフト生成（カスタム追加）</li>
+      <li><code>/tax-law-update</code>：法改正サマリー作成（カスタム追加）</li>
+      <li><code>/client-intake</code>：新規クライアントヒアリングシート（カスタム追加）</li>
+    </ul>
+  </div>
+</details>
+
+<!-- 第7章 -->
+<h2 id="faq"><span class="num">7</span>よくある質問</h2>
+
+<details>
+  <summary>▶ /company-setup と /sme-ai-proposal の違いは？</summary>
+  <div class="details-body">
+    <p><strong>/sme-ai-proposal</strong>：クライアントへの「提案書」を作るスキル。成果物はHTMLの提案書ファイル。</p>
+    <p><strong>/company-setup</strong>：そのクライアント（またはオーナー自身）の「AI組織そのもの」を構築するスキル。成果物は CONSTITUTION・CLAUDE.md・スキル群・管理フォルダ一式。</p>
+    <p>使い分け：まず /sme-ai-proposal で「AI導入を提案」→ 採用されたら /company-setup で「組織を構築」という流れが自然です。</p>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 生成されたファイルの内容は後から変更できるか？</summary>
+  <div class="details-body">
+    <p>もちろんできます。特に <code>CONSTITUTION.md</code> は「生きているドキュメント」として、運用しながらアップデートするものです。変更する際は CONSTITUTION §7（改訂ルール）に従い、バージョン番号と日付を更新してから git commit してください。</p>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 壁打ちモードで途中で止めてもいいか？</summary>
+  <div class="details-body">
+    <p>大丈夫です。「今日はここまでにします」と伝えれば Kai が途中までの情報をヒアリングシートに保存します。次回同じプロジェクトフォルダで再開できます。</p>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 既存のCLAUDE.mdがある場合はどうするか？</summary>
+  <div class="details-body">
+    <p>「既存の CLAUDE.md を上書きしないで差分を確認したい」と伝えてください。Kai が既存ファイルを読んで、新しい設計との差分を提示します。どの部分を採用するかオーナーが判断してからマージします。</p>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 生成後にスキルを追加・削除したい場合は？</summary>
+  <div class="details-body">
+    <p>スキルの追加：<code>skill/[スキル名]/SKILL.md</code>を作成し、<code>CLAUDE.md</code>のスキル一覧に追記します。</p>
+    <p>スキルの削除：フォルダを削除し、<code>CLAUDE.md</code>から該当行を削除します。削除はオーナー確認後に行います（CONSTITUTION §3）。</p>
+  </div>
+</details>
+
+<details>
+  <summary>▶ 「Kai」という名前を変えたいのだが？</summary>
+  <div class="details-body">
+    <p>可能です。setup 完了後に「AIパートナーの名前を〇〇に変更して」と伝えてください。<code>CONSTITUTION.md</code>・<code>CLAUDE.md</code>・各 SKILL.md の該当箇所を一括変更します。ただし「Kai」は有限会社アートソウルのプロジェクトでの呼称なので、別オーナーの環境では別の名前を推奨します。</p>
+  </div>
+</details>
+
+<!-- 付録 -->
+<h2 id="reference"><span class="num">付</span>ヒアリングシート 全項目一覧</h2>
+
+<p>壁打ちモードでKaiが確認する全項目の一覧です。</p>
+
+<table>
+  <tr><th>セクション</th><th>項目</th><th>なぜ必要か</th></tr>
+  <tr><td rowspan="3">B-1 ミッション</td><td>事業で実現したいこと（1〜2文）</td><td>CONSTITUTION §1 ミッション文の根拠</td></tr>
+  <tr><td>5年後の理想の姿</td><td>構造改革ロードマップのゴール設定</td></tr>
+  <tr><td>大切にしている価値観・哲学</td><td>「自律判断してよいこと・ダメなこと」の根拠</td></tr>
+  <tr><td rowspan="3">B-2 オペレーション</td><td>日々の主要業務3〜5つ</td><td>自動化候補の特定</td></tr>
+  <tr><td>一番時間がかかっている作業</td><td>最初のROI計算に使用</td></tr>
+  <tr><td>記録・書類業務の量と頻度</td><td>文書生成スキルの優先度決定</td></tr>
+  <tr><td rowspan="3">B-3 IT環境</td><td>現在使っているツール</td><td>連携可能システムの確認</td></tr>
+  <tr><td>ITが得意・苦手なスタッフの割合</td><td>UI複雑度・研修計画の設計</td></tr>
+  <tr><td>過去のデジタル化・AI導入の試み</td><td>失敗パターンを避けた設計のため</td></tr>
+  <tr><td rowspan="3">B-4 AI活用</td><td>AIに任せたい業務TOP3</td><td>スキル優先順位の決定</td></tr>
+  <tr><td>AIに任せてはいけないこと</td><td>CONSTITUTION §3 判断権限マトリクスに反映</td></tr>
+  <tr><td>予算感（月額）</td><td>ツール選定・フェーズ設計の制約</td></tr>
+  <tr><td rowspan="3">B-5 組織</td><td>AI最終承認者（役割）</td><td>CONSTITUTION §3 承認フローの設計</td></tr>
+  <tr><td>AI担当として育てたいスタッフ</td><td>研修・引き継ぎ設計</td></tr>
+  <tr><td>外部公開可・不可なもの</td><td>CONSTITUTION §4 データ取り扱い原則</td></tr>
+  <tr><td rowspan="3">B-6 成果物</td><td>最初に作りたい成果物</td><td>初期スキル選定の根拠</td></tr>
+  <tr><td>成果物を見る相手</td><td>トーン・品質基準の設定</td></tr>
+  <tr><td>フォーマット希望</td><td>出力スキルの設定</td></tr>
+</table>
+
+<div class="ok">
+  <span class="label">最後に</span>
+  このスキルは「使えば使うほど育つ」設計です。<code>rules/kai-style-guide.md</code>にフィードバックを蓄積し、<code>01_経営管理/自律レベル記録.md</code>でKaiの成長を追跡してください。AI組織は作って終わりではなく、運用しながら鍛えるものです。
+</div>
+
+<br>
+<p style="text-align:center; color:#A0AEC0; font-size:13px; margin-top:40px; border-top:1px solid #E2E8F0; padding-top:20px;">
+  /company-setup スキル 完全マニュアル v1.0 ・ 有限会社アートソウル / Kai
+</p>
+
+</div>
+</body>
+</html>

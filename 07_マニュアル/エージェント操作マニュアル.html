@@ -188,6 +188,7 @@
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。AI組織ゼロベース設計・ヒアリングシート生成・壁打ちモード対応。company-setup-manual.html 新設。</td></tr>
 <tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・project-intake（ブリーフィング型）・スターターパック・パイプライン・自己検証プロトコル・L1-L4自律レベル・フィードバックループ・経営管理フォルダ。マニュアル全面改訂・アコーディオン化。</td></tr>
 <tr><td>v1.2</td><td>2026-05-09</td><td>/publish-proposal スキル追加。第20章を新設。</td></tr>
 <tr><td>v1.0</td><td>2026-05-07</td><td>初版作成。11エージェント・第1〜19章。</td></tr>
@@ -213,6 +214,7 @@
     <li class="sub-item"><a href="#sk-brain">/write-brain-article — Brain記事執筆</a></li>
     <li class="sub-item"><a href="#sk-beginner">/beginner-guide — 初心者向けガイド</a></li>
     <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
+    <li class="sub-item"><a href="#sk-setup">/company-setup — AI組織ゼロベース設計</a></li>
     <li><strong>PART 2: クライアント案件フロー</strong></li>
     <li class="sub-item"><a href="#ch1">第1章　このマニュアルで何ができるようになるか</a></li>
     <li class="sub-item"><a href="#ch2">第2章　準備するもの</a></li>
@@ -869,6 +871,70 @@ GitHub Pagesを更新して。最新の提案書は v{n} です。
   <li>クライアントへの提案で「今どのAIが使われているか」を整理したいとき</li>
   <li>週次の情報収集・まとめに使いたいとき</li>
 </ul>
+
+</div>
+</details>
+
+<!-- /company-setup -->
+<details id="sk-setup">
+<summary><span class="acc-num">SK</span>/company-setup — AI組織ゼロベース設計<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#2F855A">
+  <div class="agent-name">/company-setup</div>
+  <div class="agent-phase">AI組織をゼロから作りたい時 / 新規クライアントのAI体制を構築する時</div>
+  <p>オーナーとの対話を通じて、<strong>その業種・業態専用のAI組織一式</strong>（憲法・ルール・スキル・管理フォルダ）を設計・生成します。提案書を「作る」のではなく、運用可能なAI組織そのものを「構築する」スキルです。</p>
+</div>
+
+<h3>使うタイミング</h3>
+<ul>
+  <li>新しいクライアント企業のAI組織を立ち上げる支援をするとき</li>
+  <li>自社のAI組織を最初から作り直したいとき</li>
+  <li>「AI担当者を採用せずにKaiで会社を動かしたい」という経営者に出会ったとき</li>
+</ul>
+
+<h3>2つの進行モード</h3>
+<table>
+  <tr><th>モード</th><th>特徴</th><th>所要時間</th></tr>
+  <tr>
+    <td><strong>A) ファイル記入</strong></td>
+    <td>Kaiが生成したヒアリングシートを自分で記入して提出。整理して書くのが得意な人向け。</td>
+    <td>記入15〜30分 ＋ Kai生成10分</td>
+  </tr>
+  <tr>
+    <td><strong>B) 壁打ちモード</strong></td>
+    <td>Kaiと会話しながら情報を整理。業種知識で仮説を出し、オーナーが修正しながら進む。記入不要。</td>
+    <td>対話30〜60分</td>
+  </tr>
+</table>
+
+<h3>生成される成果物</h3>
+<pre>setup_[事業名]_[日付]/
+├── hearing_sheet.md         # ヒアリングシート
+├── CONSTITUTION.md          # AI組織の憲法
+├── CLAUDE.md                # Claude Code設定ハブ
+├── rules/
+│   ├── self-validation-protocol.md
+│   └── kai-style-guide.md
+├── skill/project-intake/SKILL.md
+├── 01_経営管理/構造改革ロードマップ.md
+├── 01_経営管理/自律レベル記録.md
+└── 05_クライアント案件/00_Kaiスターターパック_テンプレート.md</pre>
+
+<h3>完全マニュアル</h3>
+<p>詳細な使い方・業種別シナリオ・FAQ は以下のマニュアルを参照：</p>
+<div class="file-card">
+  <div class="file-icon">📗</div>
+  <div>
+    <span class="file-path">07_マニュアル/company-setup-manual.html</span>
+    <div class="file-desc">/company-setup スキル 完全マニュアル（業種別シナリオ・FAQ・ヒアリングシート全項目）</div>
+  </div>
+</div>
+
+<div class="tip">
+  <span class="label">Kai's Point</span>
+  /sme-ai-proposal との違い：提案書を「作る」のが sme-ai-proposal、組織そのものを「構築する」のが company-setup。採用されたクライアントには company-setup で即日運用体制を整えられます。
+</div>
 
 </div>
 </details>
