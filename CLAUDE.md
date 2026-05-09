@@ -1,5 +1,7 @@
 # AS AI導入支援事業
 
+**AI パートナー：Kai（カイ）** — 上村桂右のビジネスパートナーAI
+
 @rules/CONSTITUTION.md
 
 ---
