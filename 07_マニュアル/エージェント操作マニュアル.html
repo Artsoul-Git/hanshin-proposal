@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AS株式会社 AIエージェント操作マニュアル</title>
+<title>有限会社アートソウル AIエージェント操作マニュアル</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -82,6 +82,93 @@
   .handoff .label { font-weight: bold; color: #553C9A; display: block; margin-bottom: 8px; }
   .price-table th { background: #276749; }
   .price-table .total td { background: #F0FFF4; font-weight: bold; }
+
+  /* アコーディオン */
+  details {
+    border: 2px solid #E2E8F0;
+    border-radius: 10px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  details > summary {
+    background: #EDF2F7;
+    padding: 18px 24px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    color: #1A365D;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary .acc-arrow {
+    margin-left: auto;
+    color: #ED8936;
+    font-size: 18px;
+  }
+  details[open] > summary {
+    background: #1A365D;
+    color: white;
+  }
+  details[open] > summary .acc-arrow { color: #ED8936; }
+  .acc-num {
+    background: #ED8936;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .acc-content { padding: 28px 32px; }
+
+  /* PARTヘッダー */
+  .part-header {
+    background: #1A365D;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    margin: 40px 0 16px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+  .part-header span { color: #ED8936; }
+
+  /* ファイルカード */
+  .file-path {
+    background: #1A202C;
+    color: #68D391;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+  }
+  .file-card {
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .file-card .file-icon { font-size: 20px; }
+  .file-card .file-desc { font-size: 13px; color: #718096; margin-top: 4px; }
+
+  /* 変更履歴テーブル */
+  .changelog th { background: #2D3748; }
+
+  /* 2列テーブル */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .two-col-box { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 20px; }
+  .two-col-box h4 { margin-top: 0; }
 </style>
 </head>
 <body>
@@ -89,52 +176,717 @@
 
 <!-- 表紙 -->
 <div class="cover">
-  <h1>AS株式会社<br>AIエージェント操作マニュアル</h1>
-  <div class="sub">初回面談から6ヶ月自走化まで — 11エージェントの使い方</div>
+  <h1>有限会社アートソウル<br>AIエージェント操作マニュアル</h1>
+  <div class="sub">Kaiとの協働 + 11エージェント + スキルコマンド完全ガイド</div>
   <div class="meta">
     2026年5月 発行<br>
-    対象：ケイ・さちな・案件担当者<br>
-    バージョン：v1.0
+    対象：上村桂右・案件担当者<br>
+    バージョン：v2.0
   </div>
 </div>
+
+<!-- 変更履歴 -->
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・project-intake（ブリーフィング型）・スターターパック・パイプライン・自己検証プロトコル・L1-L4自律レベル・フィードバックループ・経営管理フォルダ。マニュアル全面改訂・アコーディオン化。</td></tr>
+<tr><td>v1.2</td><td>2026-05-09</td><td>/publish-proposal スキル追加。第20章を新設。</td></tr>
+<tr><td>v1.0</td><td>2026-05-07</td><td>初版作成。11エージェント・第1〜19章。</td></tr>
+</table>
+
+<hr>
 
 <!-- 目次 -->
 <div class="toc">
   <h3>もくじ</h3>
   <ul>
-    <li><a href="#ch1">第1章　このマニュアルで何ができるようになるか</a></li>
-    <li><a href="#ch2">第2章　準備するもの</a></li>
-    <li><a href="#ch3">第3章　用語の事前説明</a></li>
-    <li><a href="#ch4">第4章　全体フロー（11エージェントの流れ）</a></li>
-    <li><a href="#ch5">第5章　DEAL — 営業フェーズ</a></li>
-    <li><a href="#ch6">第6章　MAPPER — ロードマップ策定フェーズ ★フロントエンド商品</a></li>
-    <li><a href="#ch7">第7章　INTAKE — 事前アンケート・ヒアリング準備</a></li>
-    <li><a href="#ch8">第8章　ANALYST — 現状分析・フロー図作成</a></li>
-    <li><a href="#ch9">第9章　PLANNER — 改善フロー図・6ヶ月計画</a></li>
-    <li><a href="#ch10">第10章　BLUEPRINT — スペシャル資料生成 ★最終成果物</a></li>
-    <li><a href="#ch11">第11章　TRAINER — ライモ研修の実施（ACTモデル）</a></li>
-    <li><a href="#ch12">第12章　COACH — 手順書作成・実装コーチング</a></li>
-    <li><a href="#ch13">第13章　TRACKER — KPI追跡・成果可視化</a></li>
-    <li><a href="#ch14">第14章　GROWER — 自走化支援・Phase 3移行</a></li>
-    <li><a href="#ch15">第15章　PIPELINE — 案件管理・週次ダッシュボード</a></li>
-    <li><a href="#ch16">第16章　エージェントへの正しい指示の出し方</a></li>
-    <li><a href="#ch17">第17章　よくあるトラブルと対処</a></li>
-    <li><a href="#ch18">第18章　用語集</a></li>
-    <li><a href="#ch19">第19章　Claude Code 操作（起動・セッション再開・git管理）</a></li>
-    <li><a href="#ch20">第20章　提案書のURL公開（/publish-proposal）</a></li>
+    <li><strong>PART 0: Kaiとの協働</strong></li>
+    <li class="sub-item"><a href="#p0-1">0-1. Kaiとは</a></li>
+    <li class="sub-item"><a href="#p0-2">0-2. 話しかけ方（/project-intake）</a></li>
+    <li class="sub-item"><a href="#p0-3">0-3. 憲法・ルール体系</a></li>
+    <li class="sub-item"><a href="#p0-4">0-4. セッション履歴・ブリーフィング記録の管理</a></li>
+    <li class="sub-item"><a href="#p0-5">0-5. 自律レベル記録（L1→L4）</a></li>
+    <li class="sub-item"><a href="#p0-6">0-6. 重要ファイル一覧</a></li>
+    <li><strong>PART 1: スキルコマンドリファレンス</strong></li>
+    <li class="sub-item"><a href="#sk-intake">/project-intake — 受付・ブリーフィング生成</a></li>
+    <li class="sub-item"><a href="#sk-proposal">/sme-ai-proposal — 提案書生成</a></li>
+    <li class="sub-item"><a href="#sk-publish">/publish-proposal — GitHub Pages公開</a></li>
+    <li class="sub-item"><a href="#sk-brain">/write-brain-article — Brain記事執筆</a></li>
+    <li class="sub-item"><a href="#sk-beginner">/beginner-guide — 初心者向けガイド</a></li>
+    <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
+    <li><strong>PART 2: クライアント案件フロー</strong></li>
+    <li class="sub-item"><a href="#ch1">第1章　このマニュアルで何ができるようになるか</a></li>
+    <li class="sub-item"><a href="#ch2">第2章　準備するもの</a></li>
+    <li class="sub-item"><a href="#ch3">第3章　用語の事前説明</a></li>
+    <li class="sub-item"><a href="#ch4">第4章　全体フロー（11エージェントの流れ）</a></li>
+    <li class="sub-item"><a href="#pipeline-mgmt">案件パイプライン管理</a></li>
+    <li class="sub-item"><a href="#starter-pack">Kaiスターターパック</a></li>
+    <li><strong>PART 3: 詳細エージェントガイド</strong></li>
+    <li class="sub-item"><a href="#ch5">第5章　DEAL — 営業フェーズ</a></li>
+    <li class="sub-item"><a href="#ch6">第6章　MAPPER — ロードマップ策定フェーズ</a></li>
+    <li class="sub-item"><a href="#ch7">第7章　INTAKE — 事前アンケート・ヒアリング準備</a></li>
+    <li class="sub-item"><a href="#ch8">第8章　ANALYST — 現状分析・ROI概算</a></li>
+    <li class="sub-item"><a href="#ch9">第9章　PLANNER — 提案書・6ヶ月計画</a></li>
+    <li class="sub-item"><a href="#ch10">第10章　BLUEPRINT — スペシャル資料生成</a></li>
+    <li class="sub-item"><a href="#ch11">第11章　TRAINER — ライモ研修の実施</a></li>
+    <li class="sub-item"><a href="#ch12">第12章　COACH — 手順書作成・実装コーチング</a></li>
+    <li class="sub-item"><a href="#ch13">第13章　TRACKER — KPI追跡・成果可視化</a></li>
+    <li class="sub-item"><a href="#ch14">第14章　GROWER — 自走化支援・Phase 3移行</a></li>
+    <li class="sub-item"><a href="#ch15">第15章　PIPELINE — 案件管理・週次ダッシュボード</a></li>
+    <li><strong>PART 4: 運用・管理</strong></li>
+    <li class="sub-item"><a href="#ch16">第16章　エージェントへの正しい指示の出し方</a></li>
+    <li class="sub-item"><a href="#ch17">第17章　よくあるトラブルと対処</a></li>
+    <li class="sub-item"><a href="#ch18">第18章　用語集</a></li>
+    <li class="sub-item"><a href="#ch19">第19章　Claude Code 操作（起動・セッション再開・git管理）</a></li>
+    <li class="sub-item"><a href="#ch20">第20章　提案書のURL公開（/publish-proposal）</a></li>
   </ul>
 </div>
 
 <hr>
+<!-- ===== PART 0: Kaiとの協働 ===== -->
+<div class="part-header">PART <span>0</span>　Kaiとの協働</div>
 
-<!-- 第1章 -->
-<h2 id="ch1"><span class="num">1</span>このマニュアルで何ができるようになるか</h2>
+<!-- 0-1 -->
+<details id="p0-1">
+<summary><span class="acc-num">0-1</span>Kaiとは<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="lead">
-このマニュアルを読むと、AS株式会社の11種類のAIエージェントを使って、新規クライアントの初回面談から6ヶ月後の自走化・Phase 3継続まで、一連のコンサルティング業務をひとりで回せるようになります。
+Kai（カイ）は、上村桂右のビジネスパートナーAIです。Claude Code 上で動作しますが、毎セッション憲法（CONSTITUTION.md）を読み込み、常に同じ原則で行動します。
 </div>
 
-<p>現在、AS株式会社のコンサルティング業務には以下の11種類のエージェントが設計されています。</p>
+<h3>Kaiの基本姿勢</h3>
+<ul>
+  <li>単なる実行者ではなく、<strong>パートナーとして意見・アイデアを積極的に提供する</strong></li>
+  <li>上村が気づいていない視点や懸念点があれば先回りして指摘する</li>
+  <li>判断の透明性：解釈 → 補完 → 提示 → 承認 → 実行のフローを守る</li>
+  <li>不明点があれば推測して実行するのではなく、ブリーフィングで確認する</li>
+</ul>
+
+<h3>Kaiの判断透明性フロー</h3>
+<div class="flow-diagram">
+<svg viewBox="0 0 680 80" width="100%" style="max-width:680px">
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <polygon points="0,0 7,3 0,6" fill="#1A365D"/>
+    </marker>
+  </defs>
+  <rect x="10" y="20" width="100" height="36" fill="#EDF2F7" rx="6" stroke="#1A365D" stroke-width="1.5"/>
+  <text x="60" y="43" fill="#1A365D" text-anchor="middle" font-size="13" font-weight="bold">解釈</text>
+  <line x1="110" y1="38" x2="130" y2="38" stroke="#1A365D" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="130" y="20" width="100" height="36" fill="#EDF2F7" rx="6" stroke="#1A365D" stroke-width="1.5"/>
+  <text x="180" y="43" fill="#1A365D" text-anchor="middle" font-size="13" font-weight="bold">補完</text>
+  <line x1="230" y1="38" x2="250" y2="38" stroke="#1A365D" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="250" y="20" width="100" height="36" fill="#EDF2F7" rx="6" stroke="#1A365D" stroke-width="1.5"/>
+  <text x="300" y="43" fill="#1A365D" text-anchor="middle" font-size="13" font-weight="bold">提示</text>
+  <line x1="350" y1="38" x2="370" y2="38" stroke="#ED8936" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="370" y="20" width="120" height="36" fill="#FFFAF0" rx="6" stroke="#ED8936" stroke-width="2"/>
+  <text x="430" y="43" fill="#C05621" text-anchor="middle" font-size="13" font-weight="bold">承認（上村）</text>
+  <line x1="490" y1="38" x2="510" y2="38" stroke="#38A169" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="510" y="20" width="120" height="36" fill="#F0FFF4" rx="6" stroke="#38A169" stroke-width="2"/>
+  <text x="570" y="43" fill="#276749" text-anchor="middle" font-size="13" font-weight="bold">実行</text>
+</svg>
+</div>
+
+<h3>分業マップ</h3>
+<table>
+<tr><th>Kaiがやること</th><th>上村がやること</th></tr>
+<tr><td>ファイル読み込み・分析・整理</td><td>最終判断・承認・方針決定</td></tr>
+<tr><td>成果物（HTML・MD・資料）の生成</td><td>クライアントとの対話・関係構築</td></tr>
+<tr><td>ブリーフィング提示・論点整理</td><td>新規案件の発掘・営業活動</td></tr>
+<tr><td>パイプライン状況の更新・アラート</td><td>現地訪問・セミナー登壇</td></tr>
+<tr><td>ドラフト・たたき台の作成</td><td>内容のレビュー・承認</td></tr>
+<tr><td>ルール・憲法に基づく品質チェック</td><td>フィードバック・指摘（Kaiが学習）</td></tr>
+</table>
+
+</div>
+</details>
+
+<!-- 0-2 -->
+<details id="p0-2">
+<summary><span class="acc-num">0-2</span>話しかけ方（/project-intake）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+スキルコマンドを使わなくても、普通に話しかけるだけで大丈夫です。Kaiが自動的にブリーフィングを生成して「進めていいですか？」と確認します。
+</div>
+
+<h3>Kaiのブリーフィング形式</h3>
+<p>話しかけると、Kaiは以下の形式でブリーフィングを返します：</p>
+
+<div class="prompt-box">
+<span class="highlight">【解釈】</span><br>
+あなたの依頼をKaiがどう理解したか<br><br>
+<span class="highlight">【補完した視点】</span><br>
+依頼に含まれていないが重要と判断したこと<br><br>
+<span class="highlight">【進め方の提案】</span><br>
+具体的な実行ステップの提案<br><br>
+<span class="highlight">【担当スキル】</span><br>
+使用するスキルコマンド（例：/sme-ai-proposal）<br><br>
+<span class="highlight">→ このまま進めてよいですか？</span>
+</div>
+
+<div class="tip">
+<span class="label">重要：ブリーフィングをスキップしない</span>
+Kaiは「とりあえず実行してみる」ことをしません。必ずブリーフィングを提示してから実行します。「OK」「進めて」と返すと実行に移ります。
+</div>
+
+<h3>実例</h3>
+<p>上村「まる様の提案書を最新版に更新して」</p>
+
+<div class="prompt-box">
+<span class="highlight">【解釈】</span><br>
+合同会社まる様の提案書HTMLを最新バージョンに更新する依頼と解釈しました。<br><br>
+<span class="highlight">【補完した視点】</span><br>
+・現在v10が最新版と記録されています<br>
+・更新内容が未指定のため確認が必要です<br>
+・更新後に /publish-proposal でURL更新も必要かもしれません<br><br>
+<span class="highlight">【進め方の提案】</span><br>
+①更新内容を確認（新しい情報・修正点をお知らせください）<br>
+②既存v10を読み込み → 更新箇所を反映 → v11として保存<br>
+③必要であれば /publish-proposal でGitHub Pages更新<br><br>
+<span class="highlight">【担当スキル】</span>：/sme-ai-proposal（更新モード）<br><br>
+→ 更新内容を教えていただければ進めます。何を変更しますか？
+</div>
+
+</div>
+</details>
+
+<!-- 0-3 -->
+<details id="p0-3">
+<summary><span class="acc-num">0-3</span>憲法・ルール体系<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>ルール階層図</h3>
+<div class="flow-diagram">
+<svg viewBox="0 0 640 260" width="100%" style="max-width:600px">
+  <rect x="170" y="10" width="300" height="40" fill="#1A365D" rx="8"/>
+  <text x="320" y="36" fill="white" text-anchor="middle" font-size="14" font-weight="bold">CLAUDE.md（最優先・常時読込）</text>
+  <line x1="320" y1="50" x2="320" y2="70" stroke="#CBD5E0" stroke-width="2"/>
+  <rect x="140" y="70" width="360" height="40" fill="#2D3748" rx="8"/>
+  <text x="320" y="96" fill="white" text-anchor="middle" font-size="13" font-weight="bold">rules/CONSTITUTION.md（判断基準・データ原則・品質ゲート）</text>
+  <line x1="200" y1="110" x2="200" y2="130" stroke="#CBD5E0" stroke-width="2"/>
+  <line x1="320" y1="110" x2="320" y2="130" stroke="#CBD5E0" stroke-width="2"/>
+  <line x1="440" y1="110" x2="440" y2="130" stroke="#CBD5E0" stroke-width="2"/>
+  <rect x="40" y="130" width="300" height="40" fill="#4A5568" rx="8"/>
+  <text x="190" y="148" fill="white" text-anchor="middle" font-size="12">rules/self-validation-protocol.md</text>
+  <text x="190" y="163" fill="#CBD5E0" text-anchor="middle" font-size="11">自己検証チェックリスト</text>
+  <rect x="360" y="130" width="240" height="40" fill="#4A5568" rx="8"/>
+  <text x="480" y="148" fill="white" text-anchor="middle" font-size="12">rules/kai-style-guide.md</text>
+  <text x="480" y="163" fill="#CBD5E0" text-anchor="middle" font-size="11">フィードバック蓄積辞書</text>
+  <line x1="200" y1="170" x2="200" y2="200" stroke="#CBD5E0" stroke-width="1.5"/>
+  <line x1="320" y1="110" x2="320" y2="200" stroke="#CBD5E0" stroke-width="1.5"/>
+  <line x1="440" y1="110" x2="440" y2="200" stroke="#CBD5E0" stroke-width="1.5"/>
+  <rect x="50" y="200" width="160" height="40" fill="#ED8936" rx="8"/>
+  <text x="130" y="220" fill="white" text-anchor="middle" font-size="12" font-weight="bold">skill/project-intake</text>
+  <text x="130" y="234" fill="white" text-anchor="middle" font-size="10">受付スキル</text>
+  <rect x="240" y="200" width="160" height="40" fill="#ED8936" rx="8"/>
+  <text x="320" y="220" fill="white" text-anchor="middle" font-size="12" font-weight="bold">skill/sme-ai-proposal</text>
+  <text x="320" y="234" fill="white" text-anchor="middle" font-size="10">提案書スキル</text>
+  <rect x="430" y="200" width="160" height="40" fill="#ED8936" rx="8"/>
+  <text x="510" y="220" fill="white" text-anchor="middle" font-size="12" font-weight="bold">skill/publish-proposal</text>
+  <text x="510" y="234" fill="white" text-anchor="middle" font-size="10">公開スキル</text>
+</svg>
+</div>
+
+<h3>優先順位</h3>
+<div class="lead">正確性 &gt; 品質 &gt; スピード &gt; 見栄え</div>
+
+<h3>Kaiの判断基準</h3>
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>自律判断できること</h4>
+    <ul>
+      <li>ファイルの読み込み・分析</li>
+      <li>ドラフト・たたき台の作成</li>
+      <li>既存ファイルへの小規模編集</li>
+      <li>パイプライン状況の更新</li>
+      <li>ブリーフィングの生成</li>
+    </ul>
+  </div>
+  <div class="two-col-box">
+    <h4>必ず確認が必要なこと</h4>
+    <ul>
+      <li>新規ファイルの作成・削除</li>
+      <li>クライアントへの送付物の確定</li>
+      <li>git commit（自動保存以外）</li>
+      <li>GitHub Pagesへのデプロイ</li>
+      <li>実データ（Knowledgeフォルダ）の参照</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+</details>
+
+<!-- 0-4 -->
+<details id="p0-4">
+<summary><span class="acc-num">0-4</span>セッション履歴・ブリーフィング記録の管理<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>2種類のログ</h3>
+<table>
+<tr><th>種類</th><th>場所</th><th>内容</th></tr>
+<tr>
+  <td><strong>セッションINDEX</strong></td>
+  <td><span class="file-path">memory/session-log.md</span></td>
+  <td>日々のやり取りの索引。「あの日何をやったか」を一覧で確認できる</td>
+</tr>
+<tr>
+  <td><strong>Kaiブリーフィング記録</strong></td>
+  <td><span class="file-path">01_経営管理/Kaiブリーフィング記録/</span></td>
+  <td>戦略・思考ログ。重要な判断・設計ディスカッションを保存</td>
+</tr>
+</table>
+
+<h3>使い方のヒント</h3>
+<div class="tip">
+<span class="label">「あーあれね」ヒントの使い方</span>
+「先週のまる様の話の続き」「5月7日に決めたルール」など曖昧な参照をするとき、Kaiはsession-log.mdを検索して文脈を復元します。日付や案件名のキーワードを添えると精度が上がります。
+</div>
+
+<h3>記録の保存タイミング</h3>
+<ul>
+  <li>セッション終了時にKaiが自動でINDEXを更新</li>
+  <li>重要な設計決定・方針変更はブリーフィング記録フォルダに保存</li>
+  <li>詳細ログは <span class="file-path">memory/sessions/</span> フォルダに日付別で保存</li>
+</ul>
+
+</div>
+</details>
+
+<!-- 0-5 -->
+<details id="p0-5">
+<summary><span class="acc-num">0-5</span>自律レベル記録（L1→L4）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>自律レベル（L1〜L4）</h3>
+<table>
+<tr><th>レベル</th><th>呼称</th><th>特徴</th><th>上村の関与</th></tr>
+<tr><td><strong>L1</strong></td><td>アシスタント</td><td>全成果物を確認・承認してから実行</td><td>毎回確認必須</td></tr>
+<tr><td><strong>L2</strong></td><td>コ・パイロット</td><td>定型作業は承認なし・新規は確認</td><td>定型作業は省略可</td></tr>
+<tr><td><strong>L3</strong></td><td>オートパイロット</td><td>案件フロー全体を自律実行・報告のみ</td><td>週次レビューのみ</td></tr>
+<tr><td><strong>L4</strong></td><td>パートナー</td><td>戦略提案・新機能開発まで自律</td><td>月次レビュー</td></tr>
+</table>
+
+<div class="ok">
+<span class="label">現在のレベル</span>
+<strong>L1（2026-05-09 スタート）</strong><br>
+すべての成果物は上村の確認・承認後に実行します。
+</div>
+
+<h3>L2解放条件</h3>
+<ul>
+  <li>連続5件の案件で品質基準を達成する</li>
+  <li>上村からの修正指摘が3件以下（5件中）</li>
+  <li>上村が「L2に上げる」と明示的に承認する</li>
+</ul>
+
+<p>記録場所：<span class="file-path">01_経営管理/自律レベル記録.md</span></p>
+
+<h3>Kaiの自己検証プロトコル</h3>
+<p>Kaiはすべての成果物を出力する前に以下を確認します：</p>
+
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>コンプライアンスチェック（C）</h4>
+    <ul>
+      <li><strong>C1</strong>: 実データ（Knowledgeフォルダ）のみ参照しているか</li>
+      <li><strong>C2</strong>: 架空データは「実例ベース」と明記したか</li>
+      <li><strong>C3</strong>: 会社名・担当者名は正確か（有限会社アートソウル・上村桂右）</li>
+    </ul>
+  </div>
+  <div class="two-col-box">
+    <h4>品質チェック（P）</h4>
+    <ul>
+      <li><strong>P1</strong>: 依頼の解釈は正確か</li>
+      <li><strong>P2</strong>: 補完した視点を明示したか</li>
+      <li><strong>P3</strong>: ROI定量試算が含まれているか（提案書の場合）</li>
+      <li><strong>P4</strong>: 次のアクションが明確か</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+</details>
+
+<!-- 0-6 -->
+<details id="p0-6">
+<summary><span class="acc-num">0-6</span>重要ファイル一覧（パス付き）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<p>すべてのパスは <code>D:\Google Antigravity\AS_AI導入支援事業_cc\</code> からの相対パス。</p>
+
+<h3>ルール・設定ファイル</h3>
+
+<div class="file-card">
+  <div class="file-icon">📋</div>
+  <div>
+    <span class="file-path">CLAUDE.md</span>
+    <div class="file-desc">憲法のインポート・スキル一覧。Kaiがセッション開始時に必ず読み込む</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">⚖️</div>
+  <div>
+    <span class="file-path">rules/CONSTITUTION.md</span>
+    <div class="file-desc">判断基準・データ原則・品質ゲート。Kaiの行動規範の核心</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">✅</div>
+  <div>
+    <span class="file-path">rules/self-validation-protocol.md</span>
+    <div class="file-desc">自己検証チェックリスト（C1-C3・P1-P4）</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📖</div>
+  <div>
+    <span class="file-path">rules/kai-style-guide.md</span>
+    <div class="file-desc">フィードバック蓄積辞書。上村の指摘から学んだスタイルルールを蓄積</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">✍️</div>
+  <div>
+    <span class="file-path">rules/brain-article-rules.md</span>
+    <div class="file-desc">Brain記事スタイルガイド（ユニコスタイル8要素）</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📝</div>
+  <div>
+    <span class="file-path">rules/briefing-log-rules.md</span>
+    <div class="file-desc">ブリーフィング記録のフォーマット・保存ルール</div>
+  </div>
+</div>
+
+<h3>スキルファイル</h3>
+
+<div class="file-card">
+  <div class="file-icon">🎯</div>
+  <div>
+    <span class="file-path">skill/project-intake/SKILL.md</span>
+    <div class="file-desc">受付・ブリーフィング生成スキルの定義</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📊</div>
+  <div>
+    <span class="file-path">skill/sme-ai-proposal/SKILL.md</span>
+    <div class="file-desc">中小企業向けAI導入提案書生成スキルの定義</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">🌐</div>
+  <div>
+    <span class="file-path">skill/publish-proposal/SKILL.md</span>
+    <div class="file-desc">GitHub Pages公開スキルの定義</div>
+  </div>
+</div>
+
+<h3>経営管理ファイル</h3>
+
+<div class="file-card">
+  <div class="file-icon">🗺️</div>
+  <div>
+    <span class="file-path">01_経営管理/構造改革ロードマップ_2026.md</span>
+    <div class="file-desc">アートソウルの2026年度経営改革計画</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📈</div>
+  <div>
+    <span class="file-path">01_経営管理/案件パイプライン.md</span>
+    <div class="file-desc">全案件のステータス管理（5段階）。Kaiが週次更新</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">🏆</div>
+  <div>
+    <span class="file-path">01_経営管理/自律レベル記録.md</span>
+    <div class="file-desc">L1→L4の進捗・解放条件の達成記録</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">💡</div>
+  <div>
+    <span class="file-path">01_経営管理/Kaiブリーフィング記録/</span>
+    <div class="file-desc">戦略・思考ログフォルダ。重要な判断・設計ディスカッションを保存</div>
+  </div>
+</div>
+
+<h3>案件・セッションファイル</h3>
+
+<div class="file-card">
+  <div class="file-icon">📦</div>
+  <div>
+    <span class="file-path">05_クライアント案件/00_Kaiスターターパック_テンプレート.md</span>
+    <div class="file-desc">新規案件開始時に記入するテンプレート（6セクション）</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">🗓️</div>
+  <div>
+    <span class="file-path">memory/session-log.md</span>
+    <div class="file-desc">セッションINDEX。日々のやり取りを一覧で管理</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📁</div>
+  <div>
+    <span class="file-path">memory/sessions/</span>
+    <div class="file-desc">詳細ログフォルダ。日付別の詳細なセッション記録</div>
+  </div>
+</div>
+
+</div>
+</details>
+
+<hr>
+<!-- ===== PART 1: スキルコマンドリファレンス ===== -->
+<div class="part-header">PART <span>1</span>　スキルコマンドリファレンス</div>
+
+<!-- /project-intake -->
+<details id="sk-intake">
+<summary><span class="acc-num">SK</span>/project-intake — 受付・ブリーフィング生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/project-intake</div>
+  <div class="agent-phase">自動起動 / すべての依頼の入口</div>
+  <p>コマンドを打たなくても、Kaiに話しかけるだけで自動起動します。依頼を解釈・補完し、ブリーフィングを提示して承認後に実行します。</p>
+</div>
+
+<h3>使うタイミング</h3>
+<ul>
+  <li>何か新しい作業を依頼するとき（コマンド不要・普通に話しかける）</li>
+  <li>「〜をやって」「〜が欲しい」など自然な日本語で依頼する</li>
+</ul>
+
+<h3>何をするか</h3>
+<ol>
+  <li>依頼の内容を解釈する</li>
+  <li>依頼に含まれていない重要な視点を補完する</li>
+  <li>ブリーフィング（解釈・補完・進め方・担当スキル）を提示する</li>
+  <li>「進めていいですか？」と確認する</li>
+  <li>上村が「OK」と返したら実行に移る</li>
+</ol>
+
+<div class="warn">
+<span class="label">ポイント：スキップして即実行しない</span>
+Kaiはどんなに簡単な依頼でも、ブリーフィングを提示せずに即実行しません。確認なしに大きな変更を行うことで生じるミスを防ぐためです。
+</div>
+
+</div>
+</details>
+
+<!-- /sme-ai-proposal -->
+<details id="sk-proposal">
+<summary><span class="acc-num">SK</span>/sme-ai-proposal — 提案書生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#2F855A">
+  <div class="agent-name">/sme-ai-proposal</div>
+  <div class="agent-phase">クライアントへのAI導入提案書を作る時</div>
+  <p>クライアントのヒアリング記録・書類をもとに中小企業向けAI導入支援提案書（HTMLパッケージ）を生成します。オペレーション改善が先・ツールは補助の哲学で設計。</p>
+</div>
+
+<h3>使う前の準備：Kaiスターターパックに記入する</h3>
+
+<div class="step">
+<h3><span class="step-num">1</span>テンプレートを開く</h3>
+<p><span class="file-path">05_クライアント案件/00_Kaiスターターパック_テンプレート.md</span> をコピーして案件フォルダに置く</p>
+</div>
+
+<div class="step">
+<h3><span class="step-num">2</span>6セクションを記入する</h3>
+<table>
+<tr><th>セクション</th><th>内容</th></tr>
+<tr><td>基本情報</td><td>会社名・業種・スタッフ数・拠点数</td></tr>
+<tr><td>課題</td><td>面談で聞いた業務の困りごと（具体的に）</td></tr>
+<tr><td>ITリテラシー</td><td>現在使っているツール・スタッフのITスキルレベル</td></tr>
+<tr><td>予算</td><td>月額予算感・支払い条件</td></tr>
+<tr><td>ゴール</td><td>6ヶ月後にどうなっていたいか</td></tr>
+<tr><td>上村の所感</td><td>面談して感じた温度感・進め方の注意点</td></tr>
+</table>
+</div>
+
+<div class="step">
+<h3><span class="step-num">3</span>Knowledge/ に保存してKaiに指示</h3>
+<div class="prompt-box">
+まる様の提案書を作って。スターターパックは Knowledge/20260509_まる_スターターパック.md に入ってる。
+</div>
+</div>
+
+<h3>出力物</h3>
+<ul>
+  <li>AI導入支援 完全提案パッケージ HTML（パスワードゲート付き）</li>
+  <li>自己検証レポート（C1-C3・P1-P4のチェック結果）</li>
+</ul>
+
+<div class="tip">
+<span class="label">ROI定量試算を必ず入れること</span>
+「月○時間削減・月○万円相当のコスト削減」の数字が入っていないと、クライアントが意思決定できません。スタッフ数・時給・作業頻度は必ずスターターパックに記入してください。
+</div>
+
+<h3>Kai自律判断チェック（提案書生成前）</h3>
+<div class="check-list">
+<ul>
+  <li>Knowledgeフォルダのデータのみ使用している（架空データは使わない）</li>
+  <li>ROI試算に実数（時給・スタッフ数・作業時間）が使われている</li>
+  <li>業種パターンが正しく選択されている（障害福祉・クリニック・製造・士業など）</li>
+  <li>オペレーション改善が先・ツール導入は補助として設計されている</li>
+  <li>架空数値を使う場合は「実例ベース」と明記している</li>
+</ul>
+</div>
+
+</div>
+</details>
+
+<!-- /publish-proposal -->
+<details id="sk-publish">
+<summary><span class="acc-num">SK</span>/publish-proposal — GitHub Pages公開<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#744210">
+  <div class="agent-name">/publish-proposal</div>
+  <div class="agent-phase">提案書URLをクライアントに送りたい時</div>
+  <p>完成した提案書HTMLをパスワード保護付きでGitHub Pagesに公開し、クライアントへ即日URLを送付できる状態にします。Kaiがすべて自動で処理します。</p>
+</div>
+
+<h3>指示の出し方</h3>
+
+<div class="step">
+<span class="step-num">A</span>新しい提案書を公開する（初回）
+</div>
+<div class="prompt-box">
+<span class="highlight">'D:\Google Antigravity\AS_AI導入支援事業_cc\05_クライアント案件\{案件フォルダ}\AI導入支援_完全提案パッケージ_{クライアント名}_v{n}.html'</span><br>
+これをGitHub Pagesで公開して。パスワードは「<span class="highlight">{パスワード}</span>」
+</div>
+
+<div class="step">
+<span class="step-num">B</span>既存のページをバージョンアップする
+</div>
+<div class="prompt-box">
+GitHub Pagesを更新して。最新の提案書は v{n} です。
+</div>
+
+<h3>Kaiが自動で行う処理（Step 1〜5）</h3>
+<table>
+<tr><th>Step</th><th>処理内容</th></tr>
+<tr><td>Step 1</td><td>元HTMLにパスワードゲートを自動追加。正しいパスワードを入力するまで全画面でブロック</td></tr>
+<tr><td>Step 2</td><td>一時フォルダでgit初期化 → GitHubに公開リポジトリを作成 → プッシュ</td></tr>
+<tr><td>Step 3</td><td>GitHub Pages を有効化（masterブランチのルートから配信）</td></tr>
+<tr><td>Step 4</td><td>ビルド完了まで自動待機（約1〜2分）</td></tr>
+<tr><td>Step 5</td><td>URLとパスワードをセットで報告</td></tr>
+</table>
+
+<h3>現在の公開済みページ</h3>
+<table>
+<tr><th>クライアント</th><th>URL</th><th>パスワード</th></tr>
+<tr><td>合同会社まる</td><td><a href="https://artsoul-git.github.io/maru-proposal-2026/" target="_blank">https://artsoul-git.github.io/maru-proposal-2026/</a></td><td><code>as09052026</code></td></tr>
+</table>
+
+</div>
+</details>
+
+<!-- /write-brain-article -->
+<details id="sk-brain">
+<summary><span class="acc-num">SK</span>/write-brain-article — Brain記事執筆<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#553C9A">
+  <div class="agent-name">/write-brain-article</div>
+  <div class="agent-phase">note等のプラットフォーム向け有料コンテンツを書く時</div>
+  <p>参考記事のスタイルを分析して新しいBrain記事を執筆します。</p>
+</div>
+
+<h3>使う前の準備</h3>
+<ul>
+  <li>参考記事ファイルを <code>参考記事\</code> フォルダに置く</li>
+  <li>テーマ・ターゲット読者・文字数目安を決めておく</li>
+</ul>
+
+<h3>Brain記事の必須要素（ユニコスタイル8要素）</h3>
+<table>
+<tr><th>要素</th><th>内容</th></tr>
+<tr><td>冒頭フック</td><td>読者の悩み・共感から入る（結論より先に感情を動かす）</td></tr>
+<tr><td>著者の実体験・実績</td><td>信頼性を裏付ける具体的な数字やエピソード</td></tr>
+<tr><td>問題→解決の流れ</td><td>課題を細分化して、各々に解決策を提示</td></tr>
+<tr><td>番号付き目次</td><td>最初に全体像を見せる</td></tr>
+<tr><td>ステップ・手順の明示</td><td>実行可能な具体的アクションを示す</td></tr>
+<tr><td>失敗パターンと回避法</td><td>「あるある」で共感を得る</td></tr>
+<tr><td>成功事例</td><td>業種・規模別の具体的なストーリー</td></tr>
+<tr><td>CTA（行動喚起）</td><td>最後を「今すぐできること」で締める</td></tr>
+</table>
+
+</div>
+</details>
+
+<!-- /beginner-guide -->
+<details id="sk-beginner">
+<summary><span class="acc-num">SK</span>/beginner-guide — 初心者向けガイド<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#DD6B20">
+  <div class="agent-name">/beginner-guide</div>
+  <div class="agent-phase">IT初心者向けマニュアルを作る時</div>
+  <p>クライアントのスタッフなど、ITに不慣れな方向けの操作マニュアル・手順書を作成します。</p>
+</div>
+
+<h3>使うタイミング</h3>
+<ul>
+  <li>クライアントの現場スタッフ向けにGoogle Formsの使い方を説明するとき</li>
+  <li>ライモBizのミニアプリ操作手順書を作るとき</li>
+  <li>AIツールの初回セットアップガイドを作るとき</li>
+</ul>
+
+<h3>指示例</h3>
+<div class="prompt-box">
+まる様のスタッフ向けに、Google Formsで出退勤を記録する手順書を作って。<br>
+対象：スマートフォン操作が基本・パソコンは苦手なスタッフ<br>
+必要な操作：フォームを開く→日付と名前を入力→送信
+</div>
+
+</div>
+</details>
+
+<!-- /ai-news-digest -->
+<details id="sk-news">
+<summary><span class="acc-num">SK</span>/ai-news-digest — AIニュースまとめ<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#2C7A7B">
+  <div class="agent-name">/ai-news-digest</div>
+  <div class="agent-phase">最新AI動向を整理したい時</div>
+  <p>最新のAI関連ニュース・トレンドを収集・整理し、アートソウルの事業に関係する視点でサマリーを作成します。</p>
+</div>
+
+<h3>使うタイミング</h3>
+<ul>
+  <li>セミナー資料に最新トレンドを盛り込みたいとき</li>
+  <li>クライアントへの提案で「今どのAIが使われているか」を整理したいとき</li>
+  <li>週次の情報収集・まとめに使いたいとき</li>
+</ul>
+
+</div>
+</details>
+
+<hr>
+<!-- ===== PART 2: クライアント案件フロー ===== -->
+<div class="part-header">PART <span>2</span>　クライアント案件フロー</div>
+
+<!-- 第1章 -->
+<details id="ch1">
+<summary><span class="acc-num">1</span>このマニュアルで何ができるようになるか<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+このマニュアルを読むと、有限会社アートソウルの11種類のAIエージェントを使って、新規クライアントの初回面談から6ヶ月後の自走化・Phase 3継続まで、一連のコンサルティング業務をひとりで回せるようになります。
+</div>
+
+<p>現在、有限会社アートソウルのコンサルティング業務には以下の11種類のエージェントが設計されています。</p>
 
 <div class="flow-diagram">
 <svg viewBox="0 0 820 780" width="100%" style="max-width:720px">
@@ -147,43 +899,26 @@
     </marker>
   </defs>
 
-  <!-- ラベル：営業フェーズ -->
   <text x="420" y="18" fill="#718096" text-anchor="middle" font-size="11" font-weight="bold">【営業フェーズ】</text>
-
-  <!-- DEAL -->
   <rect x="300" y="22" width="240" height="42" fill="#553C9A" rx="8"/>
   <text x="420" y="48" fill="white" text-anchor="middle" font-size="14" font-weight="bold">DEAL（営業・提案・クロージング）</text>
   <line x1="420" y1="64" x2="420" y2="80" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- INTAKE 事前AQ -->
   <rect x="300" y="84" width="240" height="42" fill="#3182CE" rx="8"/>
   <text x="420" y="106" fill="white" text-anchor="middle" font-size="14" font-weight="bold">INTAKE（事前アンケート収集）</text>
   <line x1="420" y1="126" x2="420" y2="142" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- DEAL 提案 -->
   <rect x="300" y="146" width="240" height="42" fill="#553C9A" rx="8"/>
   <text x="420" y="168" fill="white" text-anchor="middle" font-size="14" font-weight="bold">DEAL（提案書・見積 → 受注）</text>
   <line x1="420" y1="188" x2="420" y2="204" stroke="#ED8936" stroke-width="2.5" marker-end="url(#arr-orange)"/>
-
-  <!-- 受注ラベル -->
   <text x="420" y="220" fill="#ED8936" text-anchor="middle" font-size="12" font-weight="bold">★ 受注確定</text>
-
-  <!-- ラベル：ロードマップ策定フェーズ -->
   <rect x="280" y="228" width="280" height="22" fill="#FFF8F0" rx="4" stroke="#ED8936" stroke-width="1.5"/>
   <text x="420" y="244" fill="#C05621" text-anchor="middle" font-size="11" font-weight="bold">【ロードマップ策定フェーズ ¥110,000〜】</text>
   <line x1="420" y1="250" x2="420" y2="266" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- INTAKE HS作成 -->
   <rect x="300" y="270" width="240" height="42" fill="#3182CE" rx="8"/>
   <text x="420" y="292" fill="white" text-anchor="middle" font-size="14" font-weight="bold">INTAKE（ヒアリングシート作成）</text>
   <line x1="420" y1="312" x2="420" y2="328" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- MAPPER -->
   <rect x="270" y="332" width="300" height="42" fill="#ED8936" rx="8"/>
   <text x="420" y="358" fill="white" text-anchor="middle" font-size="14" font-weight="bold">MAPPER（訪問ヒアリング → RM策定）</text>
   <line x1="420" y1="374" x2="420" y2="390" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- ANALYST + PLANNER 並列 -->
   <rect x="170" y="394" width="210" height="42" fill="#805AD5" rx="8"/>
   <text x="275" y="420" fill="white" text-anchor="middle" font-size="13" font-weight="bold">ANALYST（現状フロー図）</text>
   <rect x="460" y="394" width="210" height="42" fill="#2F855A" rx="8"/>
@@ -197,45 +932,29 @@
   <line x1="275" y1="452" x2="420" y2="452" stroke="#1A365D" stroke-width="2"/>
   <line x1="565" y1="452" x2="420" y2="452" stroke="#1A365D" stroke-width="2"/>
   <line x1="420" y1="452" x2="420" y2="468" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- COACH 手順書 -->
   <rect x="300" y="472" width="240" height="42" fill="#C53030" rx="8"/>
   <text x="420" y="494" fill="white" text-anchor="middle" font-size="14" font-weight="bold">COACH（手順書・マニュアル作成）</text>
   <line x1="420" y1="514" x2="420" y2="530" stroke="#1A365D" stroke-width="2" marker-end="url(#arr)"/>
-
-  <!-- BLUEPRINT -->
   <rect x="250" y="534" width="340" height="42" fill="#1A365D" rx="8"/>
   <text x="420" y="560" fill="white" text-anchor="middle" font-size="14" font-weight="bold">BLUEPRINT（スペシャル資料生成）</text>
   <line x1="420" y1="576" x2="420" y2="592" stroke="#ED8936" stroke-width="2.5" marker-end="url(#arr-orange)"/>
-
-  <!-- 解説会 -->
   <rect x="310" y="596" width="220" height="34" fill="#FFF8F0" rx="6" stroke="#ED8936" stroke-width="2"/>
   <text x="420" y="618" fill="#C05621" text-anchor="middle" font-size="13" font-weight="bold">解説会 → プランS/A/B/C 選択</text>
   <line x1="420" y1="630" x2="420" y2="646" stroke="#ED8936" stroke-width="2" marker-end="url(#arr-orange)"/>
-
-  <!-- 分岐ラベル -->
   <text x="420" y="662" fill="#718096" text-anchor="middle" font-size="11">↓ ACTモデルへ移行（プランA〜C選択時）</text>
-
-  <!-- ラベル：ACTモデル -->
   <text x="420" y="682" fill="#718096" text-anchor="middle" font-size="11" font-weight="bold">【ACTモデル Phase 1〜3】</text>
-
-  <!-- TRAINER + TRACKER + GROWER 横並び -->
   <rect x="60" y="690" width="170" height="40" fill="#DD6B20" rx="8"/>
   <text x="145" y="715" fill="white" text-anchor="middle" font-size="12" font-weight="bold">TRAINER（研修）</text>
   <rect x="250" y="690" width="170" height="40" fill="#2C7A7B" rx="8"/>
   <text x="335" y="715" fill="white" text-anchor="middle" font-size="12" font-weight="bold">TRACKER（KPI）</text>
   <rect x="440" y="690" width="170" height="40" fill="#276749" rx="8"/>
   <text x="525" y="715" fill="white" text-anchor="middle" font-size="12" font-weight="bold">GROWER（自走化）</text>
-
-  <!-- 分岐線 -->
   <line x1="350" y1="668" x2="145" y2="668" stroke="#1A365D" stroke-width="1.5"/>
   <line x1="145" y1="668" x2="145" y2="690" stroke="#1A365D" stroke-width="1.5" marker-end="url(#arr)"/>
   <line x1="420" y1="668" x2="335" y2="668" stroke="#1A365D" stroke-width="1.5"/>
   <line x1="335" y1="668" x2="335" y2="690" stroke="#1A365D" stroke-width="1.5" marker-end="url(#arr)"/>
   <line x1="490" y1="668" x2="525" y2="668" stroke="#1A365D" stroke-width="1.5"/>
   <line x1="525" y1="668" x2="525" y2="690" stroke="#1A365D" stroke-width="1.5" marker-end="url(#arr)"/>
-
-  <!-- PIPELINE（常駐） -->
   <rect x="660" y="250" width="130" height="300" fill="#1A365D" rx="8" opacity="0.9"/>
   <text x="725" y="370" fill="white" text-anchor="middle" font-size="13" font-weight="bold">PIPELINE</text>
   <text x="725" y="390" fill="#CBD5E0" text-anchor="middle" font-size="11">（案件管理）</text>
@@ -247,10 +966,13 @@
 <p><strong>まる様案件</strong>のような実際の案件では、このフロー通りに進みます：<br>
 初回面談（無料）→ INTAKE が事前アンケートを送付 → DEAL が提案書作成 → 受注後に INTAKE（ヒアリングシート）→ MAPPER（訪問）→ ANALYST・PLANNER（フロー図）→ COACH（手順書）→ BLUEPRINT（スペシャル資料¥132,000）→ 解説会 → 伴走プラン選択</p>
 
-<hr>
+</div>
+</details>
 
 <!-- 第2章 -->
-<h2 id="ch2"><span class="num">2</span>準備するもの</h2>
+<details id="ch2">
+<summary><span class="acc-num">2</span>準備するもの<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="check-list">
 <ul>
@@ -264,7 +986,7 @@
 
 <div class="tip">
 <span class="label">エージェントファイルの場所</span>
-各エージェントは以下のパスに定義ファイルがあります。使うときはそのファイルをClaudeに読み込ませます。
+各エージェントは以下のパスに定義ファイルがあります。
 <pre><code>03_コンサル・実務支援\agents\
   ├── deal.md        ← DEAL（営業・提案・クロージング）
   ├── intake.md      ← INTAKE（事前AQ・ヒアリングシート作成）
@@ -281,10 +1003,13 @@
   └── pipeline.md    ← PIPELINE（案件管理・全期間常駐）</code></pre>
 </div>
 
-<hr>
+</div>
+</details>
 
 <!-- 第3章 -->
-<h2 id="ch3"><span class="num">3</span>用語の事前説明</h2>
+<details id="ch3">
+<summary><span class="acc-num">3</span>用語の事前説明<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <dl class="glossary">
 <dt>エージェント</dt>
@@ -297,13 +1022,13 @@
 <dd>ACTモデルに入る前の「まず設計図だけ作りましょう」サービス（¥110,000〜）。MAPPER が担当。まる様案件で実際に行ったフロント商品。</dd>
 
 <dt>ACTモデル（AI Core Transformation）</dt>
-<dd>AS株式会社のメインサービス。Phase 1（月30万 × 3ヶ月）→ Phase 2（月15万 × 3ヶ月）→ Phase 3（月5万 顧問）の6ヶ月＋継続プログラム。</dd>
+<dd>アートソウルのメインサービス。Phase 1（月30万 × 3ヶ月）→ Phase 2（月15万 × 3ヶ月）→ Phase 3（月5万 顧問）の6ヶ月＋継続プログラム。</dd>
 
 <dt>AIマネージャー</dt>
 <dd>クライアント社内でAI活用を推進する担当者。研修で育成し、6ヶ月後には自走できる状態を目指す。</dd>
 
 <dt>自走化（じそうか）</dt>
-<dd>クライアントが「AS株式会社に頼らなくてもAI活用の月次改善を自分で回せる」状態。6ヶ月後のゴール。</dd>
+<dd>クライアントが「アートソウルに頼らなくてもAI活用の月次改善を自分で回せる」状態。6ヶ月後のゴール。</dd>
 
 <dt>クイックウィン</dt>
 <dd>Month 2 に最初の成果を出すための「最も効果が高く・最も実現しやすい」改善施策。現場の信頼を得るために早期に成果を見せる。</dd>
@@ -315,13 +1040,16 @@
 <dd>業務自動化に使うAIへの指示文（プロンプト）を、現場のフィードバックをもとに3回改善していくサイクル。COACHが管理する。</dd>
 
 <dt>ライモBiz</dt>
-<dd>AS株式会社が研修で使用するAI活用プラットフォーム。ミニアプリ開発・AIスタジオ・チャットボット作成などができる。</dd>
+<dd>アートソウルが研修で使用するAI活用プラットフォーム。ミニアプリ開発・AIスタジオ・チャットボット作成などができる。</dd>
 </dl>
 
-<hr>
+</div>
+</details>
 
 <!-- 第4章 -->
-<h2 id="ch4"><span class="num">4</span>全体フロー（11エージェントの流れ）</h2>
+<details id="ch4">
+<summary><span class="acc-num">4</span>全体フロー（11エージェントの流れ）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="lead">
 案件は「営業フェーズ → ロードマップ策定フェーズ（フロントエンド商品）→ 解説会 → プラン選択 → ACTモデル（6ヶ月）」の順に進みます。PIPELINEだけは全期間を通じて週次で動きます。
@@ -329,124 +1057,98 @@
 
 <table>
 <tr>
-  <th>工程</th>
-  <th>エージェント</th>
-  <th>実施時期</th>
-  <th>主な成果物</th>
-  <th>フェーズ</th>
+  <th>工程</th><th>エージェント</th><th>実施時期</th><th>主な成果物</th><th>フェーズ</th>
 </tr>
-<tr>
-  <td>1. 初回面談・スコアリング</td>
-  <td><strong>DEAL</strong></td>
-  <td>成約前</td>
-  <td>面談議事録・リードスコア</td>
-  <td>営業</td>
-</tr>
-<tr>
-  <td>2. 事前アンケート収集</td>
-  <td><strong>INTAKE</strong></td>
-  <td>面談後・提案前</td>
-  <td>事前アンケートシート・課題整理</td>
-  <td>営業</td>
-</tr>
-<tr>
-  <td>3. 提案書・見積・受注</td>
-  <td><strong>DEAL</strong></td>
-  <td>AQ回答後</td>
-  <td>提案書・見積書・ROI試算</td>
-  <td>営業</td>
-</tr>
-<tr>
-  <td>4. ヒアリングシート作成</td>
-  <td><strong>INTAKE</strong></td>
-  <td>受注後・訪問前</td>
-  <td>カスタムヒアリングシート・書類依頼リスト</td>
-  <td rowspan="7" style="background:#FFF8F0;font-weight:bold;color:#C05621;text-align:center">ロードマップ<br>策定フェーズ<br><br>¥110,000〜<br>¥132,000<br>（税込）</td>
-</tr>
-<tr>
-  <td>5. 訪問ヒアリング</td>
-  <td><strong>MAPPER</strong></td>
-  <td>受注後1〜3日</td>
-  <td>訪問記録・業務量調査・預かり書類リスト</td>
-</tr>
-<tr>
-  <td>6. ロードマップ策定</td>
-  <td><strong>MAPPER</strong></td>
-  <td>訪問後2〜3日</td>
-  <td>6ヶ月ロードマップ（ドラフト）</td>
-</tr>
-<tr>
-  <td>7. 現状フロー図設計</td>
-  <td><strong>ANALYST</strong></td>
-  <td>訪問後2〜5日</td>
-  <td>現状業務フロー図（図解①）・コスト表</td>
-</tr>
-<tr>
-  <td>8. 改善フロー図・計画設計</td>
-  <td><strong>PLANNER</strong></td>
-  <td>訪問後3〜5日</td>
-  <td>改善後フロー図（図解②）・計画書</td>
-</tr>
-<tr>
-  <td>9. 手順書作成</td>
-  <td><strong>COACH</strong></td>
-  <td>フロー図完成後</td>
-  <td>業務別手順書・設定手順</td>
-</tr>
-<tr>
-  <td>10. スペシャル資料生成</td>
-  <td><strong>BLUEPRINT</strong></td>
-  <td>解説会前日まで</td>
-  <td>GWS導入ガイド・超詳細RM・AI研修計画・アップセール提案</td>
-</tr>
-<tr>
-  <td colspan="5" style="background:#FFF8F0;text-align:center;color:#C05621;font-weight:bold">
-    ▼ 解説会（60〜90分）→ プランS（自走）/ プランA・B・C（ACTモデルへ移行）
-  </td>
-</tr>
-<tr>
-  <td>11. ライモ研修（13時間）</td>
-  <td><strong>TRAINER</strong></td>
-  <td>ACTモデル Month 1-2</td>
-  <td>カスタム研修カリキュラム・修了証</td>
-  <td rowspan="4">ACTモデル<br>Phase 1〜3</td>
-</tr>
-<tr>
-  <td>12. 実装コーチング</td>
-  <td><strong>COACH</strong></td>
-  <td>Month 2-4</td>
-  <td>週次アジェンダ・プロンプトv3</td>
-</tr>
-<tr>
-  <td>13. KPI計測・可視化</td>
-  <td><strong>TRACKER</strong></td>
-  <td>Month 2〜6（週次）</td>
-  <td>週次KPI・月次B/A・最終報告書</td>
-</tr>
-<tr>
-  <td>14. 自走化支援</td>
-  <td><strong>GROWER</strong></td>
-  <td>Month 4-6</td>
-  <td>自走度評価・Phase 3提案</td>
-</tr>
-<tr>
-  <td>案件管理（全期間常駐）</td>
-  <td><strong>PIPELINE</strong></td>
-  <td>全期間（週次）</td>
-  <td>週次ダッシュボード・アラート・Phase移行判定</td>
-  <td>全フェーズ</td>
-</tr>
+<tr><td>1. 初回面談・スコアリング</td><td><strong>DEAL</strong></td><td>成約前</td><td>面談議事録・リードスコア</td><td>営業</td></tr>
+<tr><td>2. 事前アンケート収集</td><td><strong>INTAKE</strong></td><td>面談後・提案前</td><td>事前アンケートシート・課題整理</td><td>営業</td></tr>
+<tr><td>3. 提案書・見積・受注</td><td><strong>DEAL</strong></td><td>AQ回答後</td><td>提案書・見積書・ROI試算</td><td>営業</td></tr>
+<tr><td>4. ヒアリングシート作成</td><td><strong>INTAKE</strong></td><td>受注後・訪問前</td><td>カスタムヒアリングシート・書類依頼リスト</td><td rowspan="7" style="background:#FFF8F0;font-weight:bold;color:#C05621;text-align:center">ロードマップ<br>策定フェーズ<br><br>¥110,000〜<br>¥132,000<br>（税込）</td></tr>
+<tr><td>5. 訪問ヒアリング</td><td><strong>MAPPER</strong></td><td>受注後1〜3日</td><td>訪問記録・業務量調査・預かり書類リスト</td></tr>
+<tr><td>6. ロードマップ策定</td><td><strong>MAPPER</strong></td><td>訪問後2〜3日</td><td>6ヶ月ロードマップ（ドラフト）</td></tr>
+<tr><td>7. 現状フロー図設計</td><td><strong>ANALYST</strong></td><td>訪問後2〜5日</td><td>現状業務フロー図（図解①）・コスト表</td></tr>
+<tr><td>8. 改善フロー図・計画設計</td><td><strong>PLANNER</strong></td><td>訪問後3〜5日</td><td>改善後フロー図（図解②）・計画書</td></tr>
+<tr><td>9. 手順書作成</td><td><strong>COACH</strong></td><td>フロー図完成後</td><td>業務別手順書・設定手順</td></tr>
+<tr><td>10. スペシャル資料生成</td><td><strong>BLUEPRINT</strong></td><td>解説会前日まで</td><td>GWS導入ガイド・超詳細RM・AI研修計画・アップセール提案</td></tr>
+<tr><td colspan="5" style="background:#FFF8F0;text-align:center;color:#C05621;font-weight:bold">▼ 解説会（60〜90分）→ プランS（自走）/ プランA・B・C（ACTモデルへ移行）</td></tr>
+<tr><td>11. ライモ研修（13時間）</td><td><strong>TRAINER</strong></td><td>ACTモデル Month 1-2</td><td>カスタム研修カリキュラム・修了証</td><td rowspan="4">ACTモデル<br>Phase 1〜3</td></tr>
+<tr><td>12. 実装コーチング</td><td><strong>COACH</strong></td><td>Month 2-4</td><td>週次アジェンダ・プロンプトv3</td></tr>
+<tr><td>13. KPI計測・可視化</td><td><strong>TRACKER</strong></td><td>Month 2〜6（週次）</td><td>週次KPI・月次B/A・最終報告書</td></tr>
+<tr><td>14. 自走化支援</td><td><strong>GROWER</strong></td><td>Month 4-6</td><td>自走度評価・Phase 3提案</td></tr>
+<tr><td>案件管理（全期間常駐）</td><td><strong>PIPELINE</strong></td><td>全期間（週次）</td><td>週次ダッシュボード・アラート・Phase移行判定</td><td>全フェーズ</td></tr>
 </table>
 
-<div class="tip">
-<span class="label">BLUEPRINTとACTモデルの関係</span>
-BLUEPRINTが生成した「GWS導入ガイド・フロー図・ロードマップ」はACTモデルへの引き継ぎ資料としてそのまま使えます。プランA〜Cへの移行後、Month 1 から即着手できます。
+</div>
+</details>
+
+<!-- 案件パイプライン管理 -->
+<details id="pipeline-mgmt">
+<summary><span class="acc-num">+</span>案件パイプライン管理<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>場所</h3>
+<p><span class="file-path">01_経営管理/案件パイプライン.md</span></p>
+
+<h3>ステータス5段階</h3>
+<table>
+<tr><th>マーク</th><th>ステータス</th><th>内容</th></tr>
+<tr><td>🔵</td><td>リード</td><td>問い合わせ受付・スコアリング中</td></tr>
+<tr><td>🟡</td><td>提案中</td><td>提案書作成・見積提出・交渉中</td></tr>
+<tr><td>🟠</td><td>進行中</td><td>受注済み・ロードマップ策定または伴走中</td></tr>
+<tr><td>🟢</td><td>完了</td><td>6ヶ月プログラム完了・Phase 3移行または終了</td></tr>
+<tr><td>⚫</td><td>失注/中断</td><td>不成約または中断</td></tr>
+</table>
+
+<h3>Kaiが更新するルール</h3>
+<ul>
+  <li>毎週月曜に全案件のステータスを確認・更新する</li>
+  <li>Phase移行・受注・失注は発生時に即時更新する</li>
+  <li>更新後は上村に差分をレポートする</li>
+</ul>
+
+</div>
+</details>
+
+<!-- Kaiスターターパック -->
+<details id="starter-pack">
+<summary><span class="acc-num">+</span>Kaiスターターパック<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>テンプレートのパス</h3>
+<p><span class="file-path">05_クライアント案件/00_Kaiスターターパック_テンプレート.md</span></p>
+
+<h3>6つのセクション</h3>
+<table>
+<tr><th>#</th><th>セクション</th><th>記入例</th></tr>
+<tr><td>1</td><td>基本情報</td><td>合同会社まる・就労継続支援B型・10名・4拠点</td></tr>
+<tr><td>2</td><td>課題</td><td>手書き出勤簿→転記の二度手間・個別支援計画が60分かかる</td></tr>
+<tr><td>3</td><td>ITリテラシー</td><td>スマホは全員使える・パソコン操作は管理者のみ</td></tr>
+<tr><td>4</td><td>予算</td><td>ロードマップ策定：¥132,000以内・伴走：月10〜15万検討</td></tr>
+<tr><td>5</td><td>ゴール</td><td>6ヶ月後に管理者の残業をゼロにしたい</td></tr>
+<tr><td>6</td><td>上村の所感</td><td>代表が課題感を強く持っている。意思決定は早そう。</td></tr>
+</table>
+
+<h3>Kai自律判断チェック（5項目）</h3>
+<div class="check-list">
+<ul>
+  <li>スターターパックはKnowledgeフォルダに保存されているか</li>
+  <li>ROI試算に必要な数値（時給・スタッフ数・作業時間）が揃っているか</li>
+  <li>業種パターンが正しく識別できているか</li>
+  <li>「不明な点」があれば上村に確認を取ったか（推測して進まない）</li>
+  <li>実データのみ使用しているか（架空は「実例ベース」と明記）</li>
+</ul>
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第5章 -->
-<h2 id="ch5"><span class="num">5</span>DEAL — 営業フェーズ</h2>
+<hr>
+<!-- ===== PART 3: 詳細エージェントガイド ===== -->
+<div class="part-header">PART <span>3</span>　詳細エージェントガイド</div>
+
+<!-- 第5章 DEAL -->
+<details id="ch5">
+<summary><span class="acc-num">5</span>DEAL — 営業フェーズ<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card deal">
   <div class="agent-name">DEAL（ディール）</div>
@@ -512,10 +1214,13 @@ deal.md のロールで動いてください。<br><br>
 指示：「deal.md のロールで、○○様の受注完了を INTAKE・MAPPER・PIPELINE に引き継ぐパッケージを作成してください」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第6章 -->
-<h2 id="ch6"><span class="num">6</span>MAPPER — ロードマップ策定フェーズ</h2>
+<!-- 第6章 MAPPER -->
+<details id="ch6">
+<summary><span class="acc-num">6</span>MAPPER — ロードマップ策定フェーズ ★フロントエンド商品<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card mapper">
   <div class="agent-name">MAPPER（マッパー）★フロントエンド商品</div>
@@ -525,7 +1230,6 @@ deal.md のロールで動いてください。<br><br>
 </div>
 
 <h3>サービス構成と価格</h3>
-
 <table class="price-table">
 <tr><th>項目</th><th>内容</th><th>価格（税別）</th></tr>
 <tr><td>① 事前ヒアリングシート</td><td>業種特化のカスタム版を作成・提供</td><td>¥20,000</td></tr>
@@ -548,7 +1252,7 @@ deal.md のロールで動いてください。<br><br>
 <h3>STEP別の指示の出し方</h3>
 
 <div class="step">
-<h3><span class="step-num">1</span>STEP 0：ROI事前試算（提案書と同時に作成）</h3>
+<h3><span class="step-num">1</span>STEP 0：ROI事前試算</h3>
 <div class="prompt-box">
 mapper.md のロールで動いてください。STEP 0 を実行します。<br><br>
 以下の情報から導入効果シミュレーション（ROI事前試算）を作成してください。<br><br>
@@ -631,10 +1335,13 @@ mapper.md のロールで動いてください。STEP 5 を実行します。<br
 「mapper.md のロールで、○○様のプランD選択に伴い、DEAL への受注準備通知を作成してください」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第7章 -->
-<h2 id="ch7"><span class="num">7</span>INTAKE — 事前アンケート・ヒアリング準備</h2>
+<!-- 第7章 INTAKE -->
+<details id="ch7">
+<summary><span class="acc-num">7</span>INTAKE — 事前アンケート・ヒアリング準備<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card intake">
   <div class="agent-name">INTAKE（インテイク）</div>
@@ -680,10 +1387,13 @@ intake.md のロールで動いてください。STEP 1（ヒアリングシー�
 「intake.md のロールで、○○様のカスタムヒアリングシートと書類依頼リストを MAPPER への引き継ぎパッケージ形式でまとめてください」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第8章 -->
-<h2 id="ch8"><span class="num">8</span>ANALYST — 現状分析・ROI概算</h2>
+<!-- 第8章 ANALYST -->
+<details id="ch8">
+<summary><span class="acc-num">8</span>ANALYST — 現状分析・ROI概算<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card analyst">
   <div class="agent-name">ANALYST（アナリスト）</div>
@@ -714,10 +1424,13 @@ analyst.md のロールで動いてください。<br><br>
 「analyst.md のロールで、○○様の分析結果を PLANNER への引き継ぎパッケージ形式でまとめてください」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第9章 -->
-<h2 id="ch9"><span class="num">9</span>PLANNER — 提案書・6ヶ月計画</h2>
+<!-- 第9章 PLANNER -->
+<details id="ch9">
+<summary><span class="acc-num">9</span>PLANNER — 提案書・6ヶ月計画<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card planner">
   <div class="agent-name">PLANNER（プランナー）</div>
@@ -741,21 +1454,22 @@ ANALYSTの引き継ぎパッケージをもとに、<br>
 クライアントの懸念：スタッフのITスキル不足
 </div>
 
-<hr>
+</div>
+</details>
 
 <!-- 第10章 BLUEPRINT -->
-<h2 id="ch10"><span class="num">10</span>BLUEPRINT — スペシャル資料生成 ★最終成果物</h2>
+<details id="ch10">
+<summary><span class="acc-num">10</span>BLUEPRINT — スペシャル資料生成 ★最終成果物<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card" style="border-left-color:#1A365D">
   <div class="agent-name">BLUEPRINT（ブループリント）</div>
   <div class="agent-phase">ロードマップ策定フェーズ 最終工程 / 解説会前日まで</div>
-  <p>MAPPER・ANALYST・PLANNER・COACHの成果物をすべて統合して「めっちゃ頑張れば自社でできる」スペシャル資料を生成するエージェント。<br>
-  Google Workspace Business Standard ベースの導入完全ガイド、ライモBizミニアプリ仕様書、6ヶ月超詳細ロードマップ、AI研修計画、アップセール提案書（プランS/A/B/C）をセットで出力する。</p>
+  <p>MAPPER・ANALYST・PLANNER・COACHの成果物をすべて統合して「めっちゃ頑張れば自社でできる」スペシャル資料を生成するエージェント。</p>
   <p><span class="badge badge-blue">参照ファイル</span> <code>03_コンサル・実務支援\agents\blueprint.md</code></p>
 </div>
 
 <h3>スペシャル資料の構成（6部構成）</h3>
-
 <table>
 <tr><th>第○部</th><th>内容</th><th>目的</th></tr>
 <tr><td>第1部</td><td>現状課題サマリー</td><td>コスト可視化・フロー図解説コメント</td></tr>
@@ -763,7 +1477,7 @@ ANALYSTの引き継ぎパッケージをもとに、<br>
 <tr><td>第3部</td><td>ライモBizミニアプリ仕様書</td><td>優先順位A/B/Cでミニアプリの機能設計を提示</td></tr>
 <tr><td>第4部</td><td>6ヶ月超詳細自走ロードマップ</td><td>週次（24週）で「いつ何を実施するか」を明示</td></tr>
 <tr><td>第5部</td><td>AI活用研修計画</td><td>自力でできるスキル習得スケジュール（月次）</td></tr>
-<tr><td>第6部</td><td>アップセール提案書</td><td>プランS（¥0）/ プランA（¥5万）/ プランB（¥15万）/ プランC（¥30万）の比較</td></tr>
+<tr><td>第6部</td><td>アップセール提案書</td><td>プランS〜プランC（¥30万）の比較</td></tr>
 </table>
 
 <div class="tip">
@@ -771,13 +1485,6 @@ ANALYSTの引き継ぎパッケージをもとに、<br>
 BLUEPRINTに渡す「手順書」はCOACH（第12章）で作成します。<br>
 手順書を作るタイミング：改善後フロー図（PLANNER）が完成したらすぐに → COACHに手順書作成依頼 → 完成した手順書をBLUEPRINTに渡す。
 </div>
-
-<h3>使うタイミング</h3>
-<ul>
-  <li>MAPPER・ANALYST・PLANNER の成果物が揃い、COACHで手順書まで完成したとき（訪問から5〜7日後）</li>
-  <li>解説会の前日まで（当日までに完成させる）</li>
-  <li>アップセールの材料として「次の提案」を準備するとき</li>
-</ul>
 
 <h3>指示の出し方（コピー用）</h3>
 
@@ -805,7 +1512,6 @@ blueprint.md のロールで動いてください。<br><br>
 
 <div class="step">
 <h3><span class="step-num">2</span>特定の部だけ生成（部分生成）</h3>
-<p>GWS導入ガイドだけ先に作りたい場合など：</p>
 <div class="prompt-box">
 blueprint.md のロールで動いてください。STEP 2（第2部：GWS導入完全ガイド）のみ実行します。<br><br>
 業種：○○<br>
@@ -834,10 +1540,13 @@ ROI試算（月間削減コスト）：¥○○万円<br>
 「blueprint.md のロールで、○○様がプランB（¥15万/月）を選択しました。DEAL への受注準備通知と PIPELINE への案件登録依頼を作成してください」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第11章 -->
-<h2 id="ch11"><span class="num">11</span>TRAINER — ライモ研修の実施（ACTモデル）</h2>
+<!-- 第11章 TRAINER -->
+<details id="ch11">
+<summary><span class="acc-num">11</span>TRAINER — ライモ研修の実施（ACTモデル）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card trainer">
   <div class="agent-name">TRAINER（トレーナー）</div>
@@ -866,10 +1575,13 @@ ITリテラシー：低（AI使用経験なし）/ 中（ChatGPT試した程度�
 AIマネージャー候補：○○さん（自発的に質問・業務への応用アイデアが多かった）」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第12章 -->
-<h2 id="ch12"><span class="num">12</span>COACH — 手順書作成・実装コーチング</h2>
+<!-- 第12章 COACH -->
+<details id="ch12">
+<summary><span class="acc-num">12</span>COACH — 手順書作成・実装コーチング<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card coach">
   <div class="agent-name">COACH（コーチ）</div>
@@ -914,7 +1626,7 @@ coach.md のロールで動いてください。STEP 2 のプロンプト改善�
 <h4>③ ライモBizミニアプリ設計</h4>
 <div class="prompt-box">
 coach.md のロールで動いてください。STEP 3 を実行します。<br><br>
-以下の業務のライモBizミニアプリ設計書を作成してください（巧への引き継ぎ用）。<br><br>
+以下の業務のライモBizミニアプリ設計書を作成してください。<br><br>
 アプリ名：○○自動生成アプリ<br>
 対象業務：○○業務（毎日17:00実施）<br>
 ユーザー：AIマネージャー・現場スタッフ全員<br>
@@ -930,10 +1642,13 @@ coach.md のロールで動いてください。STEP 3 を実行します。<br>
 AIマネージャー自走度：○/5点（現状評価）」
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第13章 -->
-<h2 id="ch13"><span class="num">13</span>TRACKER — KPI追跡・成果可視化</h2>
+<!-- 第13章 TRACKER -->
+<details id="ch13">
+<summary><span class="acc-num">13</span>TRACKER — KPI追跡・成果可視化<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card tracker">
   <div class="agent-name">TRACKER（トラッカー）</div>
@@ -975,31 +1690,33 @@ tracker.md のロールで動いてください。STEP 3（3ヶ月中間報告�
 【累計削減コスト】：¥○○○万円
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第14章 -->
-<h2 id="ch14"><span class="num">14</span>GROWER — 自走化支援・Phase 3移行</h2>
+<!-- 第14章 GROWER -->
+<details id="ch14">
+<summary><span class="acc-num">14</span>GROWER — 自走化支援・Phase 3移行<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card grower">
   <div class="agent-name">GROWER（グロワー）</div>
   <div class="agent-phase">Month 4〜6</div>
-  <p>「AS株式会社がいないと動けない」状態から「自分たちで改善を続けられる」状態への移行を担う。自走化は「放置の準備」ではなく「自立した上でのパートナーシップ」の始まり。</p>
+  <p>「アートソウルがいないと動けない」状態から「自分たちで改善を続けられる」状態への移行を担う。自走化は「放置の準備」ではなく「自立した上でのパートナーシップ」の始まり。</p>
   <p><span class="badge badge-green">参照ファイル</span> <code>03_コンサル・実務支援\agents\grower.md</code></p>
 </div>
 
 <h3>自走度スコアカード（6項目 × 5段階 = 最大30点）</h3>
-
 <table>
 <tr><th>評価項目</th><th>レベル1（0点相当）</th><th>レベル5（目標）</th></tr>
 <tr><td>新規提案力</td><td>提案ゼロ</td><td>月2件以上（自発的）</td></tr>
-<tr><td>問題解決力</td><td>常にケイに相談</td><td>自己解決→報告のみ</td></tr>
+<tr><td>問題解決力</td><td>常に上村に相談</td><td>自己解決→報告のみ</td></tr>
 <tr><td>プロンプト管理</td><td>設計できない</td><td>v1から自分で設計できる</td></tr>
 <tr><td>KPIレポート</td><td>作れない</td><td>毎月自主的に作成・提出</td></tr>
 <tr><td>後進育成</td><td>教えられない</td><td>新人に自分でレクチャーできる</td></tr>
 <tr><td>横展開推進</td><td>関心なし</td><td>他部署導入を自分で提案・実行</td></tr>
 </table>
 
-<p><strong>判定基準：</strong>26〜30点 → Phase 3 移行可 ／ 20〜25点 → Phase 2 を1ヶ月延長 ／ 14点以下 → ケイが直接介入</p>
+<p><strong>判定基準：</strong>26〜30点 → Phase 3 移行可 ／ 20〜25点 → Phase 2 を1ヶ月延長 ／ 14点以下 → 上村が直接介入</p>
 
 <h3>指示の出し方</h3>
 
@@ -1024,20 +1741,23 @@ grower.md のロールで動いてください。STEP 3 のPhase移行判定を�
 【GROWERデータ】<br>
 ・AIマネージャー自主提案：月○件（目標2件以上）<br>
 ・社内AI推進委員会：（設立済み / 未設立）<br><br>
-【ケイの面談確認事項】<br>
+【上村の面談確認事項】<br>
 ・経営者満足度：○/5<br>
 ・Phase 3 継続意向：（あり / なし / 未確認）
 </div>
 
-<hr>
+</div>
+</details>
 
-<!-- 第15章 -->
-<h2 id="ch15"><span class="num">15</span>PIPELINE — 案件管理・週次ダッシュボード</h2>
+<!-- 第15章 PIPELINE -->
+<details id="ch15">
+<summary><span class="acc-num">15</span>PIPELINE — 案件管理・週次ダッシュボード<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="agent-card pipeline">
   <div class="agent-name">PIPELINE（パイプライン）</div>
   <div class="agent-phase">全期間（毎週月曜・常駐型）</div>
-  <p>複数のクライアント案件を同時に管理するための「全体見渡し」エージェント。週次ダッシュボード・KPIアラート・Phase移行チェックを自動生成し、ケイが週15分以内で全案件状況を把握できる状態を作る。</p>
+  <p>複数のクライアント案件を同時に管理するための「全体見渡し」エージェント。週次ダッシュボード・KPIアラート・Phase移行チェックを自動生成し、上村桂右が週15分以内で全案件状況を把握できる状態を作る。</p>
   <p><span class="badge badge-orange">参照ファイル</span> <code>00_プロジェクト管理\agents\pipeline.md</code></p>
 </div>
 
@@ -1065,10 +1785,17 @@ PIPELINEは以下を自動でチェックします：<br>
 🟢 正常：全指標が計画内
 </div>
 
+</div>
+</details>
+
 <hr>
+<!-- ===== PART 4: 運用・管理 ===== -->
+<div class="part-header">PART <span>4</span>　運用・管理</div>
 
 <!-- 第16章 -->
-<h2 id="ch16"><span class="num">16</span>エージェントへの正しい指示の出し方</h2>
+<details id="ch16">
+<summary><span class="acc-num">16</span>エージェントへの正しい指示の出し方<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="lead">
 エージェントはシステムプロンプトのように動きます。「○○.md のロールで動いてください」と最初に宣言することで、そのエージェントの知識・手順・出力形式がすべて有効になります。
@@ -1088,7 +1815,6 @@ PIPELINEは以下を自動でチェックします：<br>
 </div>
 
 <h3>うまくいく書き方のコツ</h3>
-
 <table>
 <tr><th>コツ</th><th>悪い例</th><th>良い例</th></tr>
 <tr>
@@ -1123,10 +1849,13 @@ PIPELINEは以下を自動でチェックします：<br>
 先ほどの INTAKE の出力をもとに分析を開始します。」
 </div>
 
-<hr>
+</div>
+</details>
 
 <!-- 第17章 -->
-<h2 id="ch17"><span class="num">17</span>よくあるトラブルと対処</h2>
+<details id="ch17">
+<summary><span class="acc-num">17</span>よくあるトラブルと対処<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <h3>トラブル1：エージェントが「想定と違う出力」をする</h3>
 <p><strong>原因：</strong>インプット情報が少なすぎる or エージェント名の宣言が抜けている</p>
@@ -1138,7 +1867,7 @@ PIPELINEは以下を自動でチェックします：<br>
 
 <h3>トラブル3：引き継ぎパッケージが不完全</h3>
 <p><strong>原因：</strong>引き継ぎを依頼しないまま次のエージェントを呼んだ</p>
-<p><strong>対処：</strong>「○○エージェントへの引き継ぎパッケージをまとめてください」と明示的に依頼してから次に進む。まとめたパッケージを次の指示の冒頭に貼り付ける。</p>
+<p><strong>対処：</strong>「○○エージェントへの引き継ぎパッケージをまとめてください」と明示的に依頼してから次に進む。</p>
 
 <h3>トラブル4：クライアントの業務名が汎用的になってしまう</h3>
 <p><strong>原因：</strong>業種・具体的な業務名を渡していない</p>
@@ -1152,14 +1881,21 @@ PIPELINEは以下を自動でチェックします：<br>
 <p><strong>原因：</strong>MAPPERフェーズでヒアリングシート作成済みなのに、ACTモデル開始時にINTAKEに同じ作業を依頼してしまった</p>
 <p><strong>対処：</strong>ACTモデル開始時にINTAKEへ「MAPPERフェーズで作成・回収済みのヒアリングシートがあります。引き継ぎ確認とANALYSTへの引き継ぎパッケージ作成のみ行ってください」と伝える。</p>
 
-<hr>
+<h3>トラブル7：Kaiがブリーフィングなしに即実行した</h3>
+<p><strong>原因：</strong>依頼文が明確すぎてブリーフィング不要と判断したか、project-intakeスキルが正しく動作していない</p>
+<p><strong>対処：</strong>「ブリーフィングを先に見せて」と明示的に伝える。設定ファイルを確認する。</p>
+
+</div>
+</details>
 
 <!-- 第18章 -->
-<h2 id="ch18"><span class="num">18</span>用語集（詳細版）</h2>
+<details id="ch18">
+<summary><span class="acc-num">18</span>用語集（詳細版）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <dl class="glossary">
 <dt>ACTモデル（AI Core Transformation）</dt>
-<dd>AS株式会社のメインサービス。Phase 1（月30万 × 3ヶ月）→ Phase 2（月15万 × 3ヶ月）→ Phase 3（月5万 顧問継続）の6ヶ月プログラム。LTV は平均215万円。</dd>
+<dd>アートソウルのメインサービス。Phase 1（月30万 × 3ヶ月）→ Phase 2（月15万 × 3ヶ月）→ Phase 3（月5万 顧問継続）の6ヶ月プログラム。LTV は平均215万円。</dd>
 
 <dt>AIマネージャー</dt>
 <dd>クライアント社内でAI活用を推進する内部担当者。TRAINERが育成し、COACHが能力開発し、GROWERが自走化させる。</dd>
@@ -1174,10 +1910,10 @@ PIPELINEは以下を自動でチェックします：<br>
 <dd>Month 2 に最初の成果を出すための最優先施策。「最も効果が高く・最も実現しやすい」業務を選ぶ。現場のモチベーション維持のために必須。</dd>
 
 <dt>ライモBiz</dt>
-<dd>AS株式会社が研修・支援で使用するAIプラットフォーム。ミニアプリ開発・AIスタジオ・QAボット作成・AIパンフレットなどの機能を持つ。</dd>
+<dd>アートソウルが研修・支援で使用するAIプラットフォーム。ミニアプリ開発・AIスタジオ・QAボット作成・AIパンフレットなどの機能を持つ。</dd>
 
 <dt>ミニアプリ</dt>
-<dd>ライモBizで作成する「現場専用のAI入力ツール」。たとえば「日報を音声入力→自動でフォーマット化して出力するアプリ」など。COACHが設計書を作り、巧（AI社員）が実装する。</dd>
+<dd>ライモBizで作成する「現場専用のAI入力ツール」。たとえば「日報を音声入力→自動でフォーマット化して出力するアプリ」など。COACHが設計書を作り、実装担当者に引き継ぐ。</dd>
 
 <dt>SOP（Standard Operating Procedure）</dt>
 <dd>標準操作手順書。プロンプト v3 が完成したタイミングで COACHが設計する。「誰でも・同じ品質で・5分以内に」業務を実行できるようにする文書。</dd>
@@ -1189,7 +1925,7 @@ PIPELINEは以下を自動でチェックします：<br>
 <dd>あるエージェントから次のエージェントへ渡す構造化データ。たとえば「TRAINER → COACH 引き継ぎパッケージ」には「修了者情報・AIマネージャー候補評価・フォロー状況・COACHへの引き継ぎ事項」が含まれる。</dd>
 
 <dt>スペシャル資料</dt>
-<dd>BLUEPRINTが生成するロードマップ策定の最終成果物。GWS導入完全ガイド・ライモBizミニアプリ仕様書・6ヶ月超詳細ロードマップ・AI研修計画・アップセール提案書の6部構成。¥110,000〜¥132,000の料金内で提供される。</dd>
+<dd>BLUEPRINTが生成するロードマップ策定の最終成果物。GWS導入完全ガイド・ライモBizミニアプリ仕様書・6ヶ月超詳細ロードマップ・AI研修計画・アップセール提案書の6部構成。</dd>
 
 <dt>伴走プランS/A/B/C（アップセール）</dt>
 <dd>BLUEPRINTのスペシャル資料内に含まれる4つのアップセールプラン。S=自走（¥0、DIYで実施）、A=¥5万/月（月次レポート+チャットサポート）、B=¥15万/月（隔週コーチング+KPIダッシュボード）、C=¥30万/月（週次コーチング+ミニアプリ開発+月次訪問）。</dd>
@@ -1199,12 +1935,27 @@ PIPELINEは以下を自動でチェックします：<br>
 
 <dt>ROI試算（Return on Investment）</dt>
 <dd>投資回収の計算。「¥○○万円の投資に対して、○ヶ月で回収できる」を数字で示す。ANALYSTが3パターン（保守的・標準・楽観）で計算する。</dd>
+
+<dt>Kai（カイ）</dt>
+<dd>上村桂右のビジネスパートナーAI。Claude Code上で動作し、憲法（CONSTITUTION.md）に基づいて行動する。毎セッション憲法を読み込み、一貫した原則で動く。現在L1（アシスタント）レベル。</dd>
+
+<dt>L1〜L4（自律レベル）</dt>
+<dd>KaiのAI自律度を示す4段階。L1=全確認必須、L2=定型は自律、L3=全体自律、L4=戦略提案まで自律。2026-05-09現在はL1。</dd>
+
+<dt>ブリーフィング</dt>
+<dd>Kaiが依頼を受けた際に出力する「解釈・補完・進め方・担当スキル」のセット。承認後に実行に移る。</dd>
+
+<dt>スターターパック</dt>
+<dd>新規案件開始時にKaiに渡すテンプレート。基本情報・課題・ITリテラシー・予算・ゴール・上村の所感の6セクション。Knowledgeフォルダに保存して渡す。</dd>
 </dl>
 
-<hr>
+</div>
+</details>
 
 <!-- 第19章 -->
-<h2 id="ch19"><span class="num">19</span>Claude Code 操作（起動・セッション再開・git管理）</h2>
+<details id="ch19">
+<summary><span class="acc-num">19</span>Claude Code 操作（起動・セッション再開・git管理）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="lead">
 このプロジェクト全体は Claude Code（CLI）で動いている。作業ファイルはDドライブ、会話履歴はCドライブ。セッションをまたいだ作業継続・変更の取り消しの手順をここに集約する。
@@ -1245,7 +1996,6 @@ PIPELINEは以下を自動でチェックします：<br>
 <div class="prompt-box">自動保存中...</div>
 <p>画面下部に上記が表示されたら保存完了。コミットメッセージの形式：</p>
 <div class="prompt-box">auto: 20260508_143022 [js/slides.js,css/style.css] 自動保存</div>
-<p><code>[ファイル名]</code> 部分で何が変わったか分かる（最大3ファイルまで表示）。変更がなければスキップされる。</p>
 
 <div class="tip">
 <span class="label">設定ファイルの場所</span>
@@ -1281,24 +2031,13 @@ Claude を介さず直接コマンドが実行される。
 <h4>② 特定コミットの時点まで完全に巻き戻す</h4>
 <div class="prompt-box"><code>! git reset --hard a1b2c3d</code></div>
 <div class="warn">
-<span class="label">⚠️ 注意</span>
+<span class="label">注意</span>
 そのコミット以降の変更は消える。やり直しが効かないので慎重に。
 </div>
 
 <h4>③ 特定ファイルだけ元に戻す</h4>
 <div class="prompt-box"><code>! git checkout a1b2c3d -- js/slides.js</code></div>
 <p>1ファイルだけ特定時点の内容に戻す。他のファイルは影響なし。</p>
-
-<hr>
-
-<h3>重要な作業前後は手動コミット</h3>
-<p>自動保存のメッセージは「auto: 自動保存」のみ。大きな変更前後は手動コミットで意味のあるメモを残す。</p>
-
-<h4>Claudeに頼む場合</h4>
-<div class="prompt-box">git commit</div>
-
-<h4>自分で実行する場合</h4>
-<div class="prompt-box"><code>! git add -A &amp;&amp; git commit -m "slides.js: ルートAプロンプトを3パターンに増やした"</code></div>
 
 <hr>
 
@@ -1313,7 +2052,7 @@ Claude を介さず直接コマンドが実行される。
 <tr><td>直前に戻す（安全）</td><td><code>! git revert HEAD</code></td></tr>
 <tr><td>特定コミットに巻き戻す</td><td><code>! git reset --hard &lt;コミットID&gt;</code></td></tr>
 <tr><td>特定ファイルだけ戻す</td><td><code>! git checkout &lt;コミットID&gt; -- &lt;ファイルパス&gt;</code></td></tr>
-<tr><td>手動コミット（Claudeに依頼）</td><td><code>git commit</code></td></tr>
+<tr><td>手動コミット（Kaiに依頼）</td><td><code>git commit</code></td></tr>
 </table>
 
 <hr>
@@ -1322,19 +2061,22 @@ Claude を介さず直接コマンドが実行される。
 <table>
 <tr><th>保存先</th><th>内容</th><th>削除可否</th></tr>
 <tr><td>Dドライブ（プロジェクト）</td><td>Claude が編集したファイル・git管理対象</td><td>—</td></tr>
-<tr><td>C:\Users\kei\.claude\projects\*.jsonl</td><td>会話履歴（セッションごとに増加）</td><td>✅ 削除可（動作に影響なし）</td></tr>
-<tr><td>C:\Users\kei\.claude\projects\...\memory\</td><td>メモリファイル（小さい）</td><td>⚠️ 削除すると記憶が消える</td></tr>
+<tr><td>C:\Users\kei\.claude\projects\*.jsonl</td><td>会話履歴（セッションごとに増加）</td><td>削除可（動作に影響なし）</td></tr>
+<tr><td>C:\Users\kei\.claude\projects\...\memory\</td><td>メモリファイル（小さい）</td><td>削除すると記憶が消える</td></tr>
 </table>
 <p>Cドライブ容量確認コマンド：</p>
 <div class="prompt-box"><code>! Get-ChildItem "C:\Users\kei\.claude\projects" -Recurse | Measure-Object -Property Length -Sum | Select-Object @{N='MB';E={[math]::Round($_.Sum/1MB,1)}}</code></div>
 
-<hr>
+</div>
+</details>
 
 <!-- 第20章 -->
-<h2 id="ch20"><span class="num">20</span>提案書のURL公開（/publish-proposal）</h2>
+<details id="ch20">
+<summary><span class="acc-num">20</span>提案書のURL公開（/publish-proposal）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
 
 <div class="lead">
-完成した提案書HTMLをパスワード保護付きでGitHub Pagesに公開し、クライアントへ即日URLを送付できる状態にする。Claudeがすべて自動で処理するので、操作は「指示を出す」だけ。
+完成した提案書HTMLをパスワード保護付きでGitHub Pagesに公開し、クライアントへ即日URLを送付できる状態にする。Kaiがすべて自動で処理するので、操作は「指示を出す」だけ。
 </div>
 
 <h3>使うタイミング</h3>
@@ -1360,8 +2102,7 @@ Claude を介さず直接コマンドが実行される。
 GitHub Pagesを更新して。最新の提案書は v{n} です。
 </div>
 
-<h3>Claudeが自動で行う処理（Step 1〜5）</h3>
-
+<h3>Kaiが自動で行う処理（Step 1〜5）</h3>
 <table>
 <tr><th>Step</th><th>処理内容</th><th>使うツール</th></tr>
 <tr><td><strong>Step 1</strong></td><td>元HTMLにパスワードゲートを自動追加。正しいパスワードを入力するまで全画面でブロック。元の本文は一切変更しない（fixed overlay方式）</td><td>PowerShell</td></tr>
@@ -1377,7 +2118,7 @@ GitHub Pagesを更新して。最新の提案書は v{n} です。
 </div>
 
 <h3>既存ページの更新（バージョンアップ時）</h3>
-<p>提案書の新バージョンが完成したら「GitHub Pagesを更新して」と伝えるだけ。<strong>URLは変わらない</strong>のでクライアントへの再案内も不要。Claudeが自動でパスワードゲート再付加 → コミット → プッシュ → 1〜2分で反映する。</p>
+<p>提案書の新バージョンが完成したら「GitHub Pagesを更新して」と伝えるだけ。<strong>URLは変わらない</strong>のでクライアントへの再案内も不要。Kaiが自動でパスワードゲート再付加 → コミット → プッシュ → 1〜2分で反映する。</p>
 
 <h3>公開済みページ一覧</h3>
 <table>
@@ -1386,19 +2127,23 @@ GitHub Pagesを更新して。最新の提案書は v{n} です。
 </table>
 
 <div class="warn">
-<span class="label">⚠️ セキュリティの注意</span>
+<span class="label">セキュリティの注意</span>
 パスワードはブラウザ側（JavaScript）で照合するため、技術的な知識がある人はバイパス可能。完全な機密保護ではない。<br>
 ・リポジトリが公開状態のためGitHubからHTMLソースを閲覧可能<br>
 ・URLとパスワードは<strong>別経路</strong>で伝える（同じメール本文に両方書かない）
 </div>
 
+</div>
+</details>
+
 <hr>
 
 <div class="ok">
 <span class="label">このマニュアルについて</span>
-最終更新：2026年5月9日 / バージョン：v1.2<br>
+最終更新：2026年5月9日 / バージョン：v2.0<br>
 更新・追記が必要な場合は <code>07_マニュアル\エージェント操作マニュアル.html</code> を直接編集してください。<br>
-エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。
+エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。<br>
+Kai自律レベル更新は <code>01_経営管理\自律レベル記録.md</code> を参照してください。
 </div>
 
 </div>
