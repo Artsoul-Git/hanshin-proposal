@@ -437,10 +437,14 @@ HTML 出力前に以下を確認する：
 
 ---
 
-## Kai自己検証フェーズ（HTML生成後・上村提示前）
+## Kai自己検証フェーズ（HTML生成後）
 
-`rules/self-validation-protocol.md` の提案書専用チェック（P1〜P4）を実行し、
-検証レポートを成果物の冒頭に付けて上村に渡す。
+`rules/self-validation-protocol.md` の提案書専用チェック（P1〜P4）を実行する。
+自己検証通過後、**自動的に fact-check → persona-review のパイプラインへ進む**（上村への提示前）。
+
+パイプライン詳細：`rules/check-pipeline-rules.md` 参照
+
+**上村へ提出するのはパイプライン全通過後のみ。**
 
 ```
 【Kai自己検証レポート】
