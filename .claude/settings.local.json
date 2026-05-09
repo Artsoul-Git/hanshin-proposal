@@ -11,7 +11,12 @@
       "Bash(powershell.exe -Command \"Get-ChildItem 'C:\\\\tmp\\\\manual_parts' -ErrorAction SilentlyContinue\")",
       "PowerShell(Get-ChildItem *)",
       "Bash(wc -l \"07_マニュアル/エージェント操作マニュアル.html\")",
-      "Bash(powershell -command \"\\(Get-Content '07_マニュアル\\\\エージェント操作マニュアル.html'\\).Count\")"
+      "Bash(powershell -command \"\\(Get-Content '07_マニュアル\\\\エージェント操作マニュアル.html'\\).Count\")",
+      "WebSearch",
+      "Bash(not exist *)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\logs\\\\2026-05\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"ok\")"
     ]
   }
 }
