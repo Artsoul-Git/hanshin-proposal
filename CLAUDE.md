@@ -24,3 +24,5 @@
 - **全体像・ファイルゾーン・フロー：** `00_AIエージェント活用ガイド.md`
 - **Brain記事執筆ルール：** `rules/brain-article-rules.md`
 - **憲法（判断基準・データ原則）：** `rules/CONSTITUTION.md`
+- **ブリーフィング記録ルール：** `rules/briefing-log-rules.md`
+- **構造改革ロードマップ：** `01_経営管理/構造改革ロードマップ_2026.md`
