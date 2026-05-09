@@ -16,7 +16,10 @@
       "Bash(not exist *)",
       "Bash(New-Item -ItemType Directory -Force -Path \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\logs\\\\2026-05\")",
       "Bash(Out-Null)",
-      "Bash(Write-Output \"ok\")"
+      "Bash(Write-Output \"ok\")",
+      "Bash(Get-ChildItem -Path \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\05_クライアント案件\\\\20260504_株式会社コーデ就労支援\\\\03_利用者\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)"
     ]
   }
 }
