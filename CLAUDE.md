@@ -25,4 +25,7 @@
 - **Brain記事執筆ルール：** `rules/brain-article-rules.md`
 - **憲法（判断基準・データ原則）：** `rules/CONSTITUTION.md`
 - **ブリーフィング記録ルール：** `rules/briefing-log-rules.md`
+- **自己検証プロトコル：** `rules/self-validation-protocol.md`
+- **上村フィードバック蓄積：** `rules/kai-style-guide.md`
+- **自律レベル記録：** `01_経営管理/自律レベル記録.md`
 - **構造改革ロードマップ：** `01_経営管理/構造改革ロードマップ_2026.md`
