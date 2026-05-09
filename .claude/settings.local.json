@@ -36,7 +36,10 @@
       "Read(//c/Users/kei/AppData/Local/Temp/maru-proposal-2026-deploy/**)",
       "Bash(Select-String -Path \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\05_クライアント案件\\\\20260326_合同会社まる\\\\AI導入支援_完全提案パッケージ_合同会社まる_v10_as.html\" -Pattern \"<body\")",
       "Bash(Select-Object -First 3)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(Select-String -Path \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\06_セミナー事業部\\\\outputs\\\\契約書AIチェックセミナー\\\\06_HTML版\\\\js\\\\slides.js\" -Pattern \"function slide\\\\d+\")",
+      "Bash(Measure-Object)",
+      "Bash(Select-Object -ExpandProperty Count)"
     ]
   }
 }

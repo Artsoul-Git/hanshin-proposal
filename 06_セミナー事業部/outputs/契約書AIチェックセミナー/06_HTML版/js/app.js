@@ -84,9 +84,9 @@
     var slide = getSlide(current);
     var sec   = slide ? slide.dataset.section : '';
     var isDark = slide ? slide.classList.contains('slide-section') ||
-                         slide.classList.contains('slide-cover') ||
-                         slide.classList.contains('slide-ending') ||
-                         slide.classList.contains('slide-quote') : false;
+                         slide.classList.contains('slide-impact') ||
+                         slide.classList.contains('slide-metric') ||
+                         slide.classList.contains('slide-ending') : false;
     nav.classList.toggle('on-dark', isDark);
     nav.querySelectorAll('.section-nav-item').forEach(function (el) {
       el.classList.toggle('current', el.dataset.section === sec);
