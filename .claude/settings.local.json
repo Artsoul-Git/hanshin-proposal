@@ -5,7 +5,9 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(gh api *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Get-Content *)"
     ]
   }
 }
