@@ -907,38 +907,13 @@ function toggleSection(id) {
 </pre>
 </div>
 
-<h3>ライモBiz カスタムアプリ（4本開発）</h3>
-
-<div class="app-card">
-  <div class="app-name">アプリ① 出退勤管理アプリ <span class="app-priority">第1段階 2か月目 開発</span></div>
-  <table style="margin-top:10px">
-  <tr><th>項目</th><th>仕様</th></tr>
-  <tr><td><strong>目的</strong></td><td>紙の出勤簿をゼロにし、利用者・スタッフの出退勤をスマホで30秒記録</td></tr>
-  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
-  <tr><td><strong>入力</strong></td><td>利用者名選択 → 出勤/退勤ボタン → 自動タイムスタンプ</td></tr>
-  <tr><td><strong>出力先</strong></td><td>Google Sheets「出退勤DB」に自動保存（GAS連携）</td></tr>
-  <tr><td><strong>月次連携</strong></td><td>Sheetsの関数で月次集計表を自動生成 → 国保連テンプレへ自動流し込み</td></tr>
-  <tr><td><strong>技術基盤</strong></td><td>ライモBiz（GAS-likeバックエンド）+ Google Sheets DB</td></tr>
-  </table>
-</div>
-
-<div class="app-card b">
-  <div class="app-name">アプリ② 記録入力アプリ（特記事項・サービス提供記録）<span class="app-priority b">第1段階 2か月目 開発</span></div>
-  <table style="margin-top:10px">
-  <tr><th>項目</th><th>仕様</th></tr>
-  <tr><td><strong>目的</strong></td><td>手書きメモ・夜間転記をゼロにする。現場でのその場記録を実現</td></tr>
-  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
-  <tr><td><strong>入力方式</strong></td><td>①スマホのマイクで音声入力 → テキスト自動変換、②テキスト直接入力（選択可）</td></tr>
-  <tr><td><strong>入力項目</strong></td><td>利用者名・記録日・支援員名・内容（音声/テキスト）・カテゴリ（特記/提供記録/相談）</td></tr>
-  <tr><td><strong>出力先</strong></td><td>Google Sheets「記録DB」に自動保存（日別・利用者別に索引化）</td></tr>
-  <tr><td><strong>AI連携</strong></td><td>AIマネージャーがGeminiで「〇〇さんの先月の記録を要約して」と照会可能</td></tr>
-  </table>
-</div>
+<h3>ライモBiz カスタムアプリ（4本開発）— 開発優先順</h3>
 
 <div class="app-card" style="border-left-color:#276749;">
-  <div class="app-name" style="color:#276749;">アプリ③ 利用者受入れフォームアプリ <span class="app-priority" style="background:#276749;">第1段階 1か月目 開発</span></div>
+  <div class="app-name" style="color:#276749;">アプリ③ 利用者受入れフォームアプリ <span class="app-priority" style="background:#276749;">第1段階 1か月目 開発【最優先】</span></div>
   <table style="margin-top:10px">
   <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>優先理由</strong></td><td>受入れ業務はすべての台帳データの起点。最初にデジタル化することで①②④の連携が機能する。技術難易度が低く早期に効果が出る</td></tr>
   <tr><td><strong>目的</strong></td><td>問い合わせ〜受入れ時の初回情報収集をアプリで完結。台帳への手入力・転記ゼロ</td></tr>
   <tr><td><strong>操作者</strong></td><td>AIマネージャーまたは支援員（スマホ/PC）— Google Workspaceアカウント不要</td></tr>
   <tr><td><strong>入力項目</strong></td><td>氏名・生年月日・障害種別・担当相談員・問い合わせ経路・見学日・体験日・書類受領状況チェック</td></tr>
@@ -948,16 +923,45 @@ function toggleSection(id) {
   </table>
 </div>
 
+<div class="app-card">
+  <div class="app-name">アプリ① 出退勤管理アプリ <span class="app-priority">第1段階 2か月目 開発</span></div>
+  <table style="margin-top:10px">
+  <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>優先理由</strong></td><td>4本中で最もシンプルな実装。毎日使われるため定着が早く、月次集計自動化で定量的な効果が直接確認できる</td></tr>
+  <tr><td><strong>目的</strong></td><td>紙の出勤簿をゼロにし、利用者・スタッフの出退勤をスマホで30秒記録</td></tr>
+  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
+  <tr><td><strong>入力</strong></td><td>利用者名選択 → 出勤/退勤ボタン → 自動タイムスタンプ</td></tr>
+  <tr><td><strong>出力先</strong></td><td>Google Sheets「出退勤DB」に自動保存（GAS連携）</td></tr>
+  <tr><td><strong>月次連携</strong></td><td>Sheetsの関数で月次集計表を自動生成 → 国保連テンプレへ自動流し込み</td></tr>
+  <tr><td><strong>技術基盤</strong></td><td>ライモBiz + Google Sheets DB</td></tr>
+  </table>
+</div>
+
+<div class="app-card b">
+  <div class="app-name">アプリ② 記録入力アプリ（特記事項・サービス提供記録）<span class="app-priority b">第1段階 2か月目 開発</span></div>
+  <table style="margin-top:10px">
+  <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>優先理由</strong></td><td>音声入力はスタッフへの習熟期間が必要なため③①より後。①のデータ蓄積が始まってから並行開発が効率的</td></tr>
+  <tr><td><strong>目的</strong></td><td>手書きメモ・夜間転記をゼロにする。現場でのその場記録を実現</td></tr>
+  <tr><td><strong>操作者</strong></td><td>支援員（スマホブラウザ）— Google Workspaceアカウント不要</td></tr>
+  <tr><td><strong>入力方式</strong></td><td>①スマホのマイクで音声入力 → テキスト自動変換、②テキスト直接入力（選択可）</td></tr>
+  <tr><td><strong>入力項目</strong></td><td>利用者名・記録日・支援員名・内容（音声/テキスト）・カテゴリ（特記/提供記録/相談）</td></tr>
+  <tr><td><strong>出力先</strong></td><td>Google Sheets「記録DB」に自動保存（日別・利用者別に索引化）</td></tr>
+  <tr><td><strong>AI連携</strong></td><td>AIマネージャーがGeminiで「〇〇さんの先月の記録を要約して」と照会可能</td></tr>
+  </table>
+</div>
+
 <div class="app-card c">
   <div class="app-name" style="color:#2B6CB0;">アプリ④ 面談予約・AI記録生成アプリ <span class="app-priority" style="background:#2B6CB0;">第1段階 2〜3か月目 開発</span></div>
   <table style="margin-top:10px">
   <tr><th>項目</th><th>仕様</th></tr>
+  <tr><td><strong>優先理由</strong></td><td>4本中で最も複雑（GAS＋Gemini API連携）。①②のデータ蓄積とスタッフの習熟が前提。Phase 0のMeet録音運用が安定してから着手</td></tr>
   <tr><td><strong>目的</strong></td><td>面談の予約から記録書類の自動生成・保存まで一気通貫で自動化。記録作成の属人作業をなくし、当日中の記録完了を実現する</td></tr>
   <tr><td><strong>操作者</strong></td><td>AIマネージャー（スマホ/PC）</td></tr>
-  <tr><td><strong>主な機能</strong></td><td>①利用者を選択し日時・タイトルを入力して予約ボタンを押すと、Googleカレンダーへ予定とMeet URLが自動登録。②面談後の文字起こし取得は2モードに対応：<strong>Mode A（手動）</strong>は支援員が字幕テキストをアプリ④に手動貼り付け → AI生成実行（追加費用なし・即日利用可）。<strong>Mode B（自動・推奨）</strong>はGASがMeet録音MP4を検知しGemini File APIで音声ファイルを直接処理。③GASが個人情報マスキング（氏名→プレースホルダー）後にGemini API（gemini-2.0-flash）で記録書類（相談支援記録・議事録・面接記録）の下書きをMarkdown生成。④専用WebUIで確認・編集後、保存とPDF出力まで完了</td></tr>
+  <tr><td><strong>主な機能</strong></td><td>①利用者を選択し日時・タイトルを入力して予約ボタンを押すと、Googleカレンダーへ予定とMeet URLが自動登録。②面談後の文字起こし取得は2モードに対応：<strong>Mode A（手動・即日利用可）</strong>は会議終了後にDriveへ自動保存された文字起こしDocsをアプリ④に手動貼り付け → AI生成実行。<strong>Mode B（自動・推奨）</strong>はGASがDriveのMeet録音ファイルを検知 → Gemini File APIで音声を文字起こし → GASがテキストに個人情報マスキング（氏名→プレースホルダー）を適用 → Gemini API（gemini-2.0-flash）で記録書類（相談支援記録・議事録・面接記録）の下書きをMarkdown生成。③専用WebUIで確認・編集後、保存とPDF出力まで完了</td></tr>
   <tr><td><strong>出力先</strong></td><td>Google Sheetsの面談履歴・利用者記録シート、Google Docs（記録書類PDF）、利用者個人フォルダ</td></tr>
-  <tr><td><strong>自動連携</strong></td><td>Googleカレンダー / Meet / Drive / Gmail（完了通知） / Gemini API gemini-2.0-flash（AI記録生成・個人情報マスキング処理）</td></tr>
-  <tr><td><strong>技術基盤</strong></td><td>ライモBizアプリ（予約UI）+ GAS（Drive監視・個人情報マスキング・Gemini API連携）+ Google Sheets DB</td></tr>
+  <tr><td><strong>自動連携</strong></td><td>Googleカレンダー / Meet / Drive / Gmail（完了通知） / Gemini API gemini-2.0-flash（AI記録生成）</td></tr>
+  <tr><td><strong>技術基盤</strong></td><td>ライモBizアプリ（予約UI）+ GAS（Drive監視・音声文字起こし・個人情報マスキング・Gemini API連携）+ Google Sheets DB</td></tr>
   </table>
 </div>
 <div style="background:#F7FAFC; border:1px dashed #CBD5E0; border-radius:6px; padding:10px 14px; margin-top:16px; font-size:12px; color:#718096;">※ アプリの機能仕様・開発優先度は、導入後の実運用状況やスタッフからのフィードバックを踏まえ、サポート期間中に担当者と協議のうえ随時見直し・改定を行います。</div>
@@ -969,9 +973,9 @@ function toggleSection(id) {
 
 <p>利用者台帳はすべての業務の起点です。受入れ段階からデジタルで一元管理することで、個別支援計画の自動下書き・月次集計・国保連書類の自動化がすべて繋がります。</p>
 
-<div class="warn" style="margin-top:0; margin-bottom:24px;">
-<span class="label">重要：Business Standard では Meet 文字起こしの自動 Docs 保存は利用不可</span>
-Business Standardでは字幕表示のみ（Docsへの自動保存はBusiness Plus以上が必要）。本システムはこの制約に対応するため2モードを用意します。<strong>Mode A（手動）</strong>：支援員が面談後に字幕テキストをアプリ④に手動貼り付け → AI生成実行（追加費用なし・即日利用可）。<strong>Mode B（自動・推奨）</strong>：GASがDriveのMeet録音MP4を検知 → Gemini File APIで音声ファイルを直接処理し、文字起こし+書類生成を同時実行（中間Docが不要）。個人情報は送信前にGASが自動マスキング処理します。
+<div class="ok" style="margin-top:0; margin-bottom:24px;">
+<span class="label">✅ Business Standard で Meet 文字起こしの自動 Docs 保存は利用可能</span>
+Business Standardでは、Meet終了後に文字起こしテキストがGoogle Drive（「Meetの録音と文字起こし」フォルダ）へGoogle Docsとして自動保存されます（日本語対応：2025年3月〜）。録音音声ファイルも同フォルダに保存されます。この機能を基盤として2モードで運用します。<strong>Mode A（手動・Phase 0から即日利用可）</strong>：会議終了後にDriveへ自動保存された文字起こしDocsをコピーしてGeminiに貼り付け → 記録下書きを生成（アプリ開発不要）。<strong>Mode B（自動・アプリ④完成後）</strong>：GASがDriveのMeet録音ファイルを検知 → Gemini File APIで音声を文字起こし → GASがテキストに個人情報マスキング（氏名→プレースホルダー）を適用 → Gemini APIで記録書類を自動生成。
 </div>
 <h3>利用者台帳（Google Sheets）の設計</h3>
 <table>
@@ -1204,7 +1208,7 @@ Business Standardでは字幕表示のみ（Docsへの自動保存はBusiness Pl
 <tr>
   <td><strong>第3回</strong></td>
   <td>ライモBizアプリ 操作研修</td>
-  <td>開発されたアプリ①②の操作方法・管理者設定・データ確認・トラブル対応。</td>
+  <td>開発されたアプリ③①②の操作方法・管理者設定・データ確認・トラブル対応。</td>
   <td>2時間</td>
 </tr>
 <tr>
@@ -2048,6 +2052,18 @@ Business Standardでは字幕表示のみ（Docsへの自動保存はBusiness Pl
     <span class="label">お問い合わせ</span>
     モニター価格は先着順・期間限定のご提供です。詳細・空き状況は上村（uemura@artsoul.jp）までお気軽にご連絡ください。
   </div>
+</div>
+
+<!-- 詳細ガイドへのリンク -->
+<div style="background:linear-gradient(135deg,#EBF8FF 0%,#F0FFF4 100%); border:2px solid #90CDF4; border-radius:14px; padding:28px 32px; margin:32px 0; text-align:center;">
+  <div style="font-size:11px; letter-spacing:3px; color:#2B6CB0; font-weight:700; margin-bottom:8px; text-transform:uppercase;">Step-by-Step Guide</div>
+  <div style="font-size:18px; font-weight:800; color:#1A365D; margin-bottom:8px;">AI活用 導入ガイド（操作手順マニュアル）</div>
+  <p style="font-size:14px; color:#4A5568; margin-bottom:20px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.75;">Phase 0〜3の各フェーズで「実際に何をどの順番で操作するか」を、スタッフ向けにまとめたステップバイステップ形式のマニュアルです。</p>
+  <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+    <a href="maru-setup-guide/index.html" style="display:inline-block; background:#1A56DB; color:white; text-decoration:none; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; box-shadow:0 3px 10px rgba(26,86,219,0.3);">📖 ガイド 総合インデックスへ →</a>
+    <a href="maru-setup-guide/01-phase0-gws.html" style="display:inline-block; background:#276749; color:white; text-decoration:none; padding:13px 28px; border-radius:8px; font-size:14px; font-weight:700; box-shadow:0 3px 10px rgba(39,103,73,0.3);">▶ まず Phase 0（GWS セットアップ）から始める →</a>
+  </div>
+  <p style="font-size:12px; color:#718096; margin-top:16px;">Phase 0：GWSセットアップ ／ Phase 1：受入れ・出退勤アプリ ／ Phase 2：音声記録 ／ Phase 3：AI記録自動生成</p>
 </div>
 
   <div style="text-align:center; padding:40px 0 20px; color:#718096; font-size:13px;">
