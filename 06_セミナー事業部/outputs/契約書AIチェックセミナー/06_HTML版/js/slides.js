@@ -6,12 +6,15 @@
 
   /* ===================== SLIDES ===================== */
 
+  /* --- COVER (slides 01–04) --- */
+
   function slide01() {
     return '<section class="slide slide-cover" data-section="cover" data-title="契約書AIチェックセミナー" data-notes="BGM流しながら受講者着席を待つ。開始前に画面共有・マイク確認。">' +
-      '<div class="slide-cover-inner">' +
-        '<div class="slide-cover-tag">AS株式会社 セミナー事業部</div>' +
-        '<div class="slide-cover-accent-bar"></div>' +
+      '<div class="slide-cover-bar">' +
+        '<div class="slide-cover-tag">有限会社アートソウル AI導入支援事業</div>' +
         '<h1 class="slide-cover-title">契約書AIチェックセミナー</h1>' +
+      '</div>' +
+      '<div class="slide-cover-body">' +
         '<p class="slide-cover-sub">AIを法務の一次確認に使う習慣をつくる 60分</p>' +
         '<div class="slide-cover-meta">2026.05 ｜ AIを使う前に知っておくこと</div>' +
       '</div>' +
@@ -19,6 +22,15 @@
   }
 
   function slide02() {
+    return '<section class="slide slide-impact" data-section="cover" data-title="サインする前の5分が、のちの5年を変える" data-notes="開幕の1枚。しばらく黙って見せる。「たった5分の確認で防げたことが、実は山ほどあります。今日はその5分の使い方を覚えて帰ってください。」">' +
+      '<div class="slide-content slide-content-center">' +
+        '<div class="s-impact-tag">TODAY</div>' +
+        '<p class="s-impact-main">サインする前の5分が、<br>のちの5年を変える。</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide03() {
     return '<section class="slide" data-section="cover" data-title="今日のゴールは「1つだけ」" data-notes="「今日は60分で進めていきます。後半に質問の時間も設けていますので、気になることは遠慮なく。始めに、今日の着地点をお伝えします。今日のセミナーが終わったとき、AIで契約書をすべて完璧にチェックできるようになる、という場ではありません。今日お持ち帰りいただきたいのは、1つだけです。怪しいかどうかを5分で洗い出す習慣とその道具。これだけを掴んでもらえれば、今日は十分です。」">' +
       H('今日のゴールは「1つだけ」') +
       '<div class="slide-content">' +
@@ -32,7 +44,7 @@
     '</section>';
   }
 
-  function slide03() {
+  function slide04() {
     return '<section class="slide" data-section="cover" data-title="本日の流れ（60分）" data-notes="全体像を最初に見せる。「前半20分で基礎知識、後半20分は実際に動くところを見ていただきます。残り20分は質問にお答えします。」">' +
       H('本日の流れ（60分）') +
       '<div class="slide-content">' +
@@ -40,15 +52,18 @@
           '<div class="s-step-row"><div class="s-step-num">①</div><div><div class="s-step-text"><strong>座学（20分）</strong>：AIを使う前に知っておくこと</div></div></div>' +
           '<div class="s-step-row"><div class="s-step-num">②</div><div><div class="s-step-text"><strong>実演①（10分）</strong>：業務委託契約書チェック【Claude】</div></div></div>' +
           '<div class="s-step-row"><div class="s-step-num">③</div><div><div class="s-step-text"><strong>実演②（10分）</strong>：FC加盟契約書チェック【Gemini】</div></div></div>' +
-          '<div class="s-step-row"><div class="s-step-num">④</div><div><div class="s-step-text"><strong>Q&amp;A＋次回誘導（20分）</strong></div></div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">④</div><div><div class="s-step-text"><strong>Q&amp;A＋まとめ（20分）</strong></div></div></div>' +
         '</div>' +
       '</div>' +
     '</section>';
   }
 
-  function slide04() {
+  /* --- PART 01: 座学 (slides 05–14) --- */
+
+  function slide05() {
     return '<section class="slide slide-section" data-section="part1" data-title="座学ブロック" data-notes="">' +
       '<div class="slide-content">' +
+        '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 01</div>' +
         '<h1 class="s-section-title">座学ブロック</h1>' +
         '<p class="s-section-lead">AIを使う前に知っておくこと（20分）</p>' +
@@ -56,23 +71,70 @@
     '</section>';
   }
 
-  function slide05() {
-    return '<section class="slide" data-section="part1" data-title="「まぁ大丈夫だろ」が招くリスク" data-notes="「少し、身近な話から入らせてください。普段の仕事で、契約書や利用規約をどのくらい確認していますか？おそらく多くの方は「ざっと目を通す」か「相手が出してきたものだから大丈夫だろう」と判断されているのではないかと思います。3つほど実際に起きたケースをお話しさせてください。」（各ケース1分程度で解説）">' +
-      H('「まぁ大丈夫だろ」が招くリスク') +
+  function slide06() {
+    return '<section class="slide" data-section="part1" data-title="ケース①：業務委託で損害賠償が青天井に" data-notes="「少し、身近な話から入らせてください。1つ目のケースです。普段の仕事で、契約書をどのくらい確認していますか？「相手が出してきたものだから大丈夫だろう」と判断されていることが多いのではないかと思います。」">' +
+      H('ケース①：損害賠償が「青天井」になった') +
       '<div class="slide-content">' +
-        '<ul class="s-list">' +
-          '<li class="s-list-head">ケース① 業務委託で損害賠償が青天井</li>' +
-          '<li class="s-list-sub">→「甲に生じた一切の損害を乙が賠償する」上限なし</li>' +
-          '<li class="s-list-head">ケース② NDAで業務範囲が実質制限</li>' +
-          '<li class="s-list-sub">→「業務を通じて知り得た一切の情報」が秘密情報に</li>' +
-          '<li class="s-list-head">ケース③ SaaS規約でデータがAI学習に利用されていた</li>' +
-          '<li class="s-list-sub">→「サービス改善・AI学習に利用する場合がある」</li>' +
+        '<div class="s-risk-list">' +
+          '<div class="s-risk-item">' +
+            '<div class="s-risk-header"><span class="s-risk-badge high">実際のケース</span><span class="s-risk-title">業務委託契約 / Webシステム開発</span></div>' +
+            '<div class="s-risk-body">' +
+              '「甲に生じた一切の損害を乙が賠償する」<br>上限の記載なし。作業ミスで300万円を請求された。' +
+              '<div class="s-risk-proposal">見るべき条項：損害賠償条項の「上限額」の有無</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">「普通はこういう書き方をしない」とは限らない</li>' +
+          '<li class="s-list-arrow">相手が出した書類だから大丈夫、ではない</li>' +
         '</ul>' +
       '</div>' +
     '</section>';
   }
 
-  function slide06() {
+  function slide07() {
+    return '<section class="slide" data-section="part1" data-title="ケース②：NDAで業務範囲が実質制限された" data-notes="「2つ目のケースです。秘密保持契約は守秘のためのもの、と思っていたら、業務の幅そのものが縛られていた、という話です。」">' +
+      H('ケース②：NDAで業務範囲が実質制限された') +
+      '<div class="slide-content">' +
+        '<div class="s-risk-list">' +
+          '<div class="s-risk-item">' +
+            '<div class="s-risk-header"><span class="s-risk-badge high">実際のケース</span><span class="s-risk-title">NDA（秘密保持契約）/ フリーランス</span></div>' +
+            '<div class="s-risk-body">' +
+              '「業務を通じて知り得た一切の情報」が秘密情報に。<br>同業他社の仕事を受けることができなくなった。' +
+              '<div class="s-risk-proposal">見るべき条項：「秘密情報の範囲」と「競業避止義務」の有無</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">「一切の情報」は広すぎる。交渉できたはず</li>' +
+          '<li class="s-list-arrow">NDAは守秘のためだけとは限らない</li>' +
+        '</ul>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide08() {
+    return '<section class="slide" data-section="part1" data-title="ケース③：SaaS規約でデータがAI学習に使われた" data-notes="「3つ目です。これは特に今、気をつけていただきたいケースです。ツールを使い始めてから気づくケースが増えています。」">' +
+      H('ケース③：SaaS規約でデータがAI学習に使われた') +
+      '<div class="slide-content">' +
+        '<div class="s-risk-list">' +
+          '<div class="s-risk-item">' +
+            '<div class="s-risk-header"><span class="s-risk-badge high">実際のケース</span><span class="s-risk-title">SaaS利用規約 / 業務ツール導入</span></div>' +
+            '<div class="s-risk-body">' +
+              '「サービス改善・AI学習に利用する場合がある」<br>入力した顧客情報・社内文書が学習データに使われていた。' +
+              '<div class="s-risk-proposal">見るべき条項：「データの利用目的」「AIトレーニング」への言及</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">利用規約の「改正」で後から追加されることもある</li>' +
+          '<li class="s-list-arrow">無料プランほどこの条項が含まれやすい</li>' +
+        '</ul>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide09() {
     return '<section class="slide slide-metric" data-section="part1" data-title="1〜3万円" data-notes="「どのケースも、サインする前に5〜10分、重要な箇所だけをAIで確認していれば、気づけた可能性が高いことです。問題が発生してから弁護士に相談する場合、初回の法律相談だけで1〜3万円。サイン前の一次確認が、実は一番安い法務コストです。今日はその方法を、実際に体験していただきます。」">' +
       '<div class="slide-content slide-content-center">' +
         '<p class="s-metric-lead">問題が起きてから弁護士に相談すると</p>' +
@@ -83,7 +145,7 @@
     '</section>';
   }
 
-  function slide07() {
+  function slide10() {
     return '<section class="slide" data-section="part1" data-title="AIの立ち位置" data-notes="「今日の話は「AIがあれば弁護士は不要」という話ではありません。重要な契約書は弁護士に確認していただくべきです。ただ現実として、毎月届くSaaSの利用規約、取引先から送られてくる業務委託契約、これを都度弁護士に相談するのはコストとスピードの面で難しい。AIをどう位置づけるかというと、弁護士に相談するかどうかを判断するための、一次確認の道具です。」">' +
       H('AIの立ち位置') +
       '<div class="slide-content">' +
@@ -113,7 +175,7 @@
     '</section>';
   }
 
-  function slide08() {
+  function slide11() {
     return '<section class="slide slide-quote" data-section="part1" data-title="AIは答えを出す機械ではなく…" data-notes="">' +
       '<div class="slide-content slide-content-center">' +
         '<blockquote class="s-quote">AIは答えを出す機械ではなく、<br>確認すべき問いを見つける道具。</blockquote>' +
@@ -121,8 +183,8 @@
     '</section>';
   }
 
-  function slide09() {
-    return '<section class="slide" data-section="part1" data-title="チェックすべき書類の全体地図" data-notes="「チェックすべき書類の全体像をお伝えします。全部を今日のうちに覚えていただかなくて構いません。「こういう地図がある」という感覚だけ持ってもらえれば十分で、詳細はあとでお渡しするプロンプトテンプレートに書いてあります。繰り返しになりますが、全部覚えなくていいです。後半のハンズオンで実際に動かしながら確認していきましょう。」">' +
+  function slide12() {
+    return '<section class="slide" data-section="part1" data-title="チェックすべき書類の全体地図" data-notes="「チェックすべき書類の全体像をお伝えします。全部を今日のうちに覚えていただかなくて構いません。「こういう地図がある」という感覚だけ持ってもらえれば十分です。詳細はあとでお渡しするプロンプトテンプレートに書いてあります。全部覚えなくていいです。後半のハンズオンで実際に動かしながら確認していきましょう。」">' +
       H('チェックすべき書類の全体地図') +
       '<div class="slide-content">' +
         '<ul class="s-list">' +
@@ -138,7 +200,7 @@
     '</section>';
   }
 
-  function slide10() {
+  function slide13() {
     return '<section class="slide" data-section="part1" data-title="AIを安全に使う 2つのルール" data-notes="「使い始める前に、2つだけ守っていただきたいことがあります。ルール1：機密情報は伏せてから入力する。ルール2：AIの指摘は必ず元の文書で確認する。AIは誤った情報を自信ありげに提示することがあります。これをハルシネーションと呼びます。」">' +
       H('AIを安全に使う 2つのルール') +
       '<div class="slide-content">' +
@@ -154,7 +216,7 @@
     '</section>';
   }
 
-  function slide11() {
+  function slide14() {
     return '<section class="slide" data-section="part1" data-title="安全で効率的な使い方の流れ" data-notes="「この4ステップが、安全で効率的な使い方です。この2つのルールを守っていただければ、あとは使いながら慣れていただけます。」">' +
       H('安全で効率的な使い方の流れ') +
       '<div class="slide-content">' +
@@ -168,9 +230,12 @@
     '</section>';
   }
 
-  function slide12() {
+  /* --- PART 02: 実演① Claude (slides 15–21) --- */
+
+  function slide15() {
     return '<section class="slide slide-section" data-section="part2" data-title="実演① 業務委託契約書チェック" data-notes="「座学はここまでです。ここからは実際に動かすところをお見せします。まず3点だけ確認させてください。」">' +
       '<div class="slide-content">' +
+        '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 02</div>' +
         '<h1 class="s-section-title">実演① 業務委託契約書チェック</h1>' +
         '<p class="s-section-lead">Claude を使って実際に動かします（10分）</p>' +
@@ -178,8 +243,8 @@
     '</section>';
   }
 
-  function slide13() {
-    return '<section class="slide" data-section="part2" data-title="実演を始める前に：状況確認" data-notes="「ここからは実際に動かす時間です。まず3点だけ確認させてください。」ヒアリング後「では今日は[ルートA/B/C]を中心に進めましょう。」">' +
+  function slide16() {
+    return '<section class="slide" data-section="part2" data-title="実演を始める前に：状況確認" data-notes="「まず3点だけ確認させてください。」ヒアリング後「では今日は[ルートA/B/C]を中心に進めましょう。」">' +
       H('実演を始める前に：状況確認') +
       '<div class="slide-content">' +
         '<ul class="s-list">' +
@@ -196,7 +261,7 @@
     '</section>';
   }
 
-  function slide14() {
+  function slide17() {
     return '<section class="slide" data-section="part2" data-title="Claudeへの書類の渡し方" data-notes="「今日はClaudeを使います。ChatGPTでも同じように動きます。まず最初に、契約書をAIに渡す方法をお見せします。プロンプトの内容が重要なので、ツールよりも「何を書くか」を見ていてください。」">' +
       H('Claudeへの書類の渡し方') +
       '<div class="slide-content">' +
@@ -211,7 +276,7 @@
     '</section>';
   }
 
-  function slide15() {
+  function slide18() {
     var prompt = 'あなたは経験豊富な日本の企業法務の専門家です。\n添付した契約書について、当社の立場から確認してください。\n\n【当社の立場】\n・受託側（Webシステム開発を請け負う中小企業）\n・相手方から提示された業務委託契約書のチェックが目的\n・条件交渉の余地はある\n\n【出力してほしい内容】\n1. 当社に不利な条項をリスクの高い順に（条項番号・理由・シナリオ）\n2. 相手方に提案すべき修正案（そのまま使える文言で）';
     return '<section class="slide" data-section="part2" data-title="実演入力：ルートA プロンプト" data-notes="プロンプトを入力して実演。「今回の状況をプロンプトに書きます。テンプレートをそのまま使いつつ、立場だけカスタマイズします。会社名・金額・日付はあらかじめマスキング済みのサンプルを使っています。」">' +
       H('実演入力：ルートA プロンプト') +
@@ -224,7 +289,7 @@
     '</section>';
   }
 
-  function slide16() {
+  function slide19() {
     return '<section class="slide" data-section="part2" data-title="AI出力例：ルートA" data-notes="※ このスライドは通信トラブル時の予備。通常はリアルタイムのAI出力を解説する。\n「AIが最初に挙げた条項を見てください。損害賠償の条項が先頭に来ていますね。\'一切の損害を賠償する\'という表現は、上限がないという意味です。修正案をそのまま相手に送るのではなく、交渉のたたき台として使います。」">' +
       H('AI出力例：ルートA') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
@@ -237,7 +302,7 @@
     '</section>';
   }
 
-  function slide17() {
+  function slide20() {
     return '<section class="slide" data-section="part2" data-title="AI出力の読み解き方（3つの着目点）" data-notes="「知財帰属の条項（第9条）も確認してみましょう。AIがこの条項への指摘を弱めにしか出していない場合があります。重大な条項でも、AIが強調しないことはあります。これがハルシネーション対策の習慣です。」">' +
       H('AI出力の読み解き方（3つの着目点）') +
       '<div class="slide-content">' +
@@ -254,9 +319,21 @@
     '</section>';
   }
 
-  function slide18() {
+  function slide21() {
+    return '<section class="slide slide-impact" data-section="part2" data-title="道具を使いこなすのに、完璧な知識はいらない" data-notes="PART02とPART03の橋渡し。「どうでしたか。難しかったですか？実際にやってみると、ツールより「何を書くか」の方がずっと大事だと分かります。次は、別のツールで別の書類を試してみましょう。」">' +
+      '<div class="slide-content slide-content-center">' +
+        '<div class="s-impact-tag">KEY INSIGHT</div>' +
+        '<p class="s-impact-main">道具を使いこなすのに、<br>完璧な知識はいらない。</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* --- PART 03: 実演② Gemini (slides 22–29) --- */
+
+  function slide22() {
     return '<section class="slide slide-section" data-section="part3" data-title="実演② FC加盟契約書チェック" data-notes="「もう1つの実演をお見せします。今度はGeminiを使います。」">' +
       '<div class="slide-content">' +
+        '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 03</div>' +
         '<h1 class="s-section-title">実演② FC加盟契約書チェック</h1>' +
         '<p class="s-section-lead">Gemini を使ってフランチャイズ契約を多角的にチェックします（10分）</p>' +
@@ -264,7 +341,7 @@
     '</section>';
   }
 
-  function slide19() {
+  function slide23() {
     return '<section class="slide" data-section="part3" data-title="実演② オリエンテーション" data-notes="「今日はキッチンカーでから揚げを販売するフランチャイズへの加盟を例に、AIを使った契約書の多角的なチェックをお見せします。今日の数字をそのまま覚えようとする必要はありません。ご自身の業界に置き換えながら聞いていただくと、より実感が持てると思います。」">' +
       H('実演② オリエンテーション') +
       '<div class="slide-content">' +
@@ -280,7 +357,7 @@
     '</section>';
   }
 
-  function slide20() {
+  function slide24() {
     return '<section class="slide" data-section="part3" data-title="Gemini：書類の渡し方" data-notes="「今日のサンプルはGoogleドキュメントに入れてあります。チャット欄にURLを貼り付けると、Geminiが自動的に文書を読み込みます。これだけです。」">' +
       H('Gemini：書類の渡し方') +
       '<div class="slide-content">' +
@@ -298,7 +375,7 @@
     '</section>';
   }
 
-  function slide21() {
+  function slide25() {
     var prompt = 'あなたは日本のフランチャイズ契約に精通した法務専門家です。\nFC加盟契約書について、加盟検討中の個人事業主の立場から確認してください。\n\n1. 加盟者に著しく不利な条項をリスクの大きい順に5つ\n   （条項番号・内容・シナリオを添えて）\n2. 業界標準と比較して「異常」と感じる条件があれば\n3. 中小小売商業振興法の法定開示書面チェック\n4. 締結前に確認・交渉を試みるべきことを優先度順に';
     return '<section class="slide" data-section="part3" data-title="Step 1：FC契約書 総合リスクチェック（プロンプト）" data-notes="プロンプトを入力して実演。">' +
       H('Step 1：FC契約書 総合リスクチェック（プロンプト）') +
@@ -311,8 +388,8 @@
     '</section>';
   }
 
-  function slide22() {
-    return '<section class="slide" data-section="part3" data-title="AI出力例：Step 1 リスクチェック" data-notes="※ このスライドは通信トラブル時の予備。\n「ロイヤルティが10%という数字が出てきていますね。業界平均は3〜7%とされているので、これは高い水準です。テリトリーの項目を見てください。\'参考区域\'となっています。これは、同じエリアに別の加盟者が入る可能性を本部が否定していない、ということです。」">' +
+  function slide26() {
+    return '<section class="slide" data-section="part3" data-title="AI出力例：Step 1 リスクチェック" data-notes="※ このスライドは通信トラブル時の予備。\n「ロイヤルティが10%という数字が出てきていますね。業界平均は3〜7%とされているので、これは高い水準です。テリトリーの項目を見てください。「参考区域」となっています。これは、同じエリアに別の加盟者が入る可能性を本部が否定していない、ということです。」">' +
       H('AI出力例：Step 1 リスクチェック') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
         '<div class="s-risk-list">' +
@@ -325,8 +402,8 @@
     '</section>';
   }
 
-  function slide23() {
-    return '<section class="slide" data-section="part3" data-title="AI出力例：Step 2 費用・収支検証" data-notes="※ このスライドは通信トラブル時の予備。\n「明示されている費用と、\'別途定める\'として金額が見えない費用が分かれて出てきていますね。契約書の加盟金300万円だけを見ていると、実際のスタートコストが全く見えない構造になっています。」">' +
+  function slide27() {
+    return '<section class="slide" data-section="part3" data-title="AI出力例：Step 2 費用・収支検証" data-notes="※ このスライドは通信トラブル時の予備。\n「明示されている費用と、「別途定める」として金額が見えない費用が分かれて出てきていますね。契約書の加盟金300万円だけを見ていると、実際のスタートコストが全く見えない構造になっています。」">' +
       H('AI出力例：Step 2 費用・収支検証') +
       '<div class="slide-content" style="padding-top:1.2cqw;">' +
         '<div class="s-risk-list">' +
@@ -338,7 +415,7 @@
     '</section>';
   }
 
-  function slide24() {
+  function slide28() {
     return '<section class="slide" data-section="part3" data-title="Step 3：FC本部の信用度・実態確認の方法" data-notes="「法人番号・登記情報の確認、国税庁の法人情報、日本フランチャイズ協会への登録有無、こういった具体的な確認先が出てきていますね。これらは無料でできます。FC本部に直接確認すべき質問として「現在の加盟店数と過去2年間の解約・退会数」は特に重要です。」">' +
       H('Step 3：FC本部の信用度・実態確認の方法') +
       '<div class="slide-content">' +
@@ -374,8 +451,8 @@
     '</section>';
   }
 
-  function slide25() {
-    return '<section class="slide" data-section="part3" data-title="Step 4：Gemで日常的に使えるエージェントを作る" data-notes="「Geminiには\'Gem\'という機能があります。今日やったFC契約チェックの流れを、一度Gemとして設定しておけば、次からは\'Gemを開いて書類を貼るだけ\'で同じ分析が自動的に動きます。」">' +
+  function slide29() {
+    return '<section class="slide" data-section="part3" data-title="Step 4：Gemで日常的に使えるエージェントを作る" data-notes="「Geminiには「Gem」という機能があります。今日やったFC契約チェックの流れを、一度Gemとして設定しておけば、次からは「Gemを開いて書類を貼るだけ」で同じ分析が自動的に動きます。」">' +
       H('Step 4：Gemで日常的に使えるエージェントを作る') +
       '<div class="slide-content">' +
         '<div class="s-callout"><strong>Gem とは：</strong>特定の目的に特化したAIエージェントを自分で作れる機能</div>' +
@@ -392,49 +469,105 @@
     '</section>';
   }
 
-  function slide26() {
-    return '<section class="slide slide-section" data-section="part4" data-title="Q&A ＋ 次回学習への誘導" data-notes="「ここからは質問の時間です。今日やったことへの疑問でも、日頃感じていたことでも何でも。」">' +
+  /* --- PART 04: Q&A ＋ まとめ (slides 30–40) --- */
+
+  function slide30() {
+    return '<section class="slide slide-section" data-section="part4" data-title="Q&A ＋ まとめ" data-notes="「ここからは質問の時間です。今日やったことへの疑問でも、日頃感じていたことでも何でも。」">' +
       '<div class="slide-content">' +
+        '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 04</div>' +
-        '<h1 class="s-section-title">Q&amp;A ＋ 次回学習への誘導</h1>' +
+        '<h1 class="s-section-title">Q&amp;A ＋ まとめ</h1>' +
         '<p class="s-section-lead">（20分）</p>' +
       '</div>' +
     '</section>';
   }
 
-  function slide27() {
-    return '<section class="slide" data-section="part4" data-title="よくある質問（前半）" data-notes="よく出る質問への回答。時間があれば個別質問を受ける。">' +
-      H('よくある質問（前半）') +
+  function slide31() {
+    return '<section class="slide" data-section="part4" data-title="Q：AIが間違えたらどうするんですか？" data-notes="よくある質問①。「これが一番多い質問です。結論から言うと、AIは間違えます。前提として、そういうものだと思って使ってください。」">' +
+      H('Q：AIが間違えたらどうするんですか？') +
       '<div class="slide-content">' +
-        '<ul class="s-list">' +
-          '<li class="s-list-q">Q：AIが間違えたらどうするんですか？</li>' +
-          '<li class="s-list-arrow">AIは間違えます。だから「元の文書で確認」が必須。AIに探させる→人間が確認する</li>' +
-          '<li class="s-list-q">Q：ChatGPTとClaudeどっちがいいですか？</li>' +
-          '<li class="s-list-arrow">どちらでも十分。長い文書はClaudeが安定している印象。有料版を1つ持つのがおすすめ</li>' +
-          '<li class="s-list-q">Q：無料版でもできますか？</li>' +
-          '<li class="s-list-arrow">できますが制限あり。月2,000〜3,000円の有料版があると業務でストレスなく使える</li>' +
+        '<div class="s-callout">' +
+          '<strong>A：間違えます。だから「元の文書で確認」が必須。</strong>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">AIに探させる → 人間が確認する、の2段階で使う</li>' +
+          '<li class="s-list-arrow">「第5条に書いてある」と言われたら、実際に第5条を開く</li>' +
+          '<li class="s-list-arrow">AIを信頼するのではなく、AIを道具として使う感覚</li>' +
+          '<li class="s-list-callout">ハルシネーションが怖い → だから今日ルール②を先に教えました</li>' +
         '</ul>' +
       '</div>' +
     '</section>';
   }
 
-  function slide28() {
-    return '<section class="slide" data-section="part4" data-title="よくある質問（後半）" data-notes="">' +
-      H('よくある質問（後半）') +
+  function slide32() {
+    return '<section class="slide" data-section="part4" data-title="Q：ChatGPTとClaudeどっちがいいですか？" data-notes="よくある質問②。">' +
+      H('Q：ChatGPTとClaudeどっちがいいですか？') +
       '<div class="slide-content">' +
-        '<ul class="s-list">' +
-          '<li class="s-list-q">Q：毎回プロンプトを一から書くんですか？</li>' +
-          '<li class="s-list-arrow">書きません。テンプレートをコピーして「立場」だけ変える。慣れれば1〜2分</li>' +
-          '<li class="s-list-q">Q：弁護士費用は削れますか？</li>' +
-          '<li class="s-list-arrow">AIで削れるのは「相談するかどうかを判断するまでの一次チェックコスト」。実際に問題があれば弁護士は必要</li>' +
-          '<li class="s-list-q">Q：社内の他の人にも使わせられますか？</li>' +
-          '<li class="s-list-arrow">できます。マスキングのルールと鵜呑み禁止のルールを共有してテンプレートを渡す</li>' +
+        '<div class="s-callout">' +
+          '<strong>A：どちらでも十分。長い文書はClaudeが安定している印象。</strong>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">ChatGPT（OpenAI）/ Claude（Anthropic）/ Gemini（Google）— どれも同等に使える</li>' +
+          '<li class="s-list-arrow">長い契約書・PDFの読み込みはClaudeが安定している</li>' +
+          '<li class="s-list-arrow">Googleドキュメントで管理している場合はGeminiが連携しやすい</li>' +
+          '<li class="s-list-callout">有料版を1つ持つのがおすすめ。月2,000〜3,000円で業務上のストレスがほぼなくなる</li>' +
         '</ul>' +
       '</div>' +
     '</section>';
   }
 
-  function slide29() {
+  function slide33() {
+    return '<section class="slide" data-section="part4" data-title="Q：無料版でもできますか？" data-notes="よくある質問③。">' +
+      H('Q：無料版でもできますか？') +
+      '<div class="slide-content">' +
+        '<div class="s-callout">' +
+          '<strong>A：できます。ただし制限があります。</strong>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">1回あたりのトークン上限が低い → 長い契約書は途中で打ち切られることがある</li>' +
+          '<li class="s-list-arrow">1日の利用回数制限がある → 業務中に使えなくなる</li>' +
+          '<li class="s-list-arrow">ファイルのアップロード非対応のプランもある</li>' +
+          '<li class="s-list-callout">まず無料で試す → 実務で使えそうなら有料版へ、の順番がおすすめ</li>' +
+        '</ul>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide34() {
+    return '<section class="slide" data-section="part4" data-title="Q：毎回プロンプトを一から書くんですか？" data-notes="よくある質問④。">' +
+      H('Q：毎回プロンプトを一から書くんですか？') +
+      '<div class="slide-content">' +
+        '<div class="s-callout">' +
+          '<strong>A：書きません。テンプレートをコピーして「立場」だけ変える。</strong>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">今日お渡しするプロンプトテンプレートをそのまま使う</li>' +
+          '<li class="s-list-arrow">変えるのは「当社の立場」の部分だけ → 慣れれば1〜2分</li>' +
+          '<li class="s-list-arrow">Gemのカスタムインストラクションにテンプレートをセットしておくと次からゼロ入力</li>' +
+          '<li class="s-list-callout">「毎回ゼロから書く」は続かない。テンプレートが習慣化のカギ</li>' +
+        '</ul>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide35() {
+    return '<section class="slide" data-section="part4" data-title="Q：弁護士費用は削れますか？" data-notes="よくある質問⑤。「これは正直に答えます。」">' +
+      H('Q：弁護士費用は削れますか？') +
+      '<div class="slide-content">' +
+        '<div class="s-callout">' +
+          '<strong>A：AIで削れるのは「相談するかどうかを判断するまでのコスト」。</strong>' +
+        '</div>' +
+        '<ul class="s-list" style="margin-top:1cqw;">' +
+          '<li class="s-list-arrow">実際に問題が発生すれば弁護士は必要。AIで代替はできない</li>' +
+          '<li class="s-list-arrow">「この条項は弁護士に確認すべきか？」を自分で判断できるようになる</li>' +
+          '<li class="s-list-arrow">相談するとき、内容が具体的になる → 相談時間が短縮 → コスト削減</li>' +
+          '<li class="s-list-callout">「弁護士不要」ではなく「無駄な相談ゼロ」が正確な表現</li>' +
+        '</ul>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide36() {
     return '<section class="slide" data-section="part4" data-title="今日のポイント 3つ" data-notes="「質問ありがとうございました。残り少ないので、今日やったことを1分で整理します。」">' +
       H('今日のポイント 3つ') +
       '<div class="slide-content">' +
@@ -447,7 +580,7 @@
     '</section>';
   }
 
-  function slide30() {
+  function slide37() {
     return '<section class="slide" data-section="part4" data-title="今日からできること・次のステップ" data-notes="「今日から1つだけやってみてください。手元にある書類、何でもいいです。昨日受け取った業務委託でも、今使っているSaaSの規約でも。今日覚えたプロンプトをそのまま使って、1回やってみる。たぶん30分もかからない。それだけでこのセミナーの元が取れます。」">' +
       H('今日からできること・次のステップ') +
       '<div class="slide-content">' +
@@ -464,7 +597,16 @@
     '</section>';
   }
 
-  function slide31() {
+  function slide38() {
+    return '<section class="slide slide-impact" data-section="part4" data-title="今日、1通だけ試してみて。" data-notes="「最後にもう1枚。難しく考えなくていいです。今日持ち帰ったプロンプトを開いて、手元にある書類を貼り付けるだけ。それだけです。」">' +
+      '<div class="slide-content slide-content-center">' +
+        '<div class="s-impact-tag">ACTION</div>' +
+        '<p class="s-impact-main">今日、1通だけ<br>試してみて。</p>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function slide39() {
     return '<section class="slide" data-section="part4" data-title="個別支援のご案内" data-notes="「最後に1点だけ。自社の書類に当てはめてもっと深くやりたい、社内に展開したい、AI導入全体の相談がしたい、という場合は、個別の支援メニューがあります。まず一度、無料の個別相談を使ってみてください。」">' +
       H('個別支援のご案内') +
       '<div class="slide-content">' +
@@ -479,7 +621,7 @@
     '</section>';
   }
 
-  function slide32() {
+  function slide40() {
     return '<section class="slide slide-ending" data-section="part4" data-title="今日から1通、試してみてください。" data-notes="エンディングスライド。「今日はここまでです。ありがとうございました。」">' +
       '<div class="slide-content slide-content-center">' +
         '<h1 class="s-ending-main">今日から1通、<br>試してみてください。</h1>' +
@@ -495,7 +637,8 @@
     slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08,
     slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16,
     slide17, slide18, slide19, slide20, slide21, slide22, slide23, slide24,
-    slide25, slide26, slide27, slide28, slide29, slide30, slide31, slide32
+    slide25, slide26, slide27, slide28, slide29, slide30, slide31, slide32,
+    slide33, slide34, slide35, slide36, slide37, slide38, slide39, slide40
   ];
 
   window.agendaItems = [
