@@ -7,7 +7,11 @@
       "Bash(gh api *)",
       "Bash(git commit *)",
       "PowerShell(Get-Item *)",
-      "PowerShell(Get-Content *)"
+      "PowerShell(Get-Content *)",
+      "Bash(powershell.exe -Command \"Get-ChildItem 'C:\\\\tmp\\\\manual_parts' -ErrorAction SilentlyContinue\")",
+      "PowerShell(Get-ChildItem *)",
+      "Bash(wc -l \"07_マニュアル/エージェント操作マニュアル.html\")",
+      "Bash(powershell -command \"\\(Get-Content '07_マニュアル\\\\エージェント操作マニュアル.html'\\).Count\")"
     ]
   }
 }
