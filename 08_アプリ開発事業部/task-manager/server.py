@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-タスク管理アプリ - ローカルサーバー
+タスク管理アプリ - ローカルサーバー v2 (SSE Live Sync)
 起動: python server.py
 アクセス: http://localhost:3456
 """
@@ -13,13 +13,38 @@ import http.server
 import json
 import os
 import uuid
+import queue
+import threading
+import socketserver
 from datetime import datetime
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse
 
 PORT = 3456
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "data", "tasks.json")
 INDEX_FILE = os.path.join(BASE_DIR, "index.html")
+
+# ─── SSE Live Broadcast ──────────────────────────────────────
+_subscribers = []
+_subs_lock   = threading.Lock()
+_data_lock   = threading.Lock()
+
+
+def _broadcast(payload=None):
+    msg = ("data: " + json.dumps(payload or {}, ensure_ascii=False) + "\n\n").encode()
+    with _subs_lock:
+        dead = []
+        for q in _subscribers:
+            try:
+                q.put_nowait(msg)
+            except queue.Full:
+                dead.append(q)
+        for q in dead:
+            _subscribers.remove(q)
+
+
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
 
 
 def now_iso():
@@ -27,14 +52,18 @@ def now_iso():
 
 
 def load_data():
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+    with _data_lock:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
 
 
 def save_data(data):
-    data["last_updated"] = now_iso()
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    ts = now_iso()
+    data["last_updated"] = ts
+    with _data_lock:
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    _broadcast({"type": "update", "ts": ts})
 
 
 class TaskHandler(http.server.BaseHTTPRequestHandler):
@@ -75,12 +104,71 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path.rstrip("/") or "/"
 
-        if path == "/" or path == "/index.html":
+        if path in ("/", "/index.html"):
             self.send_html(INDEX_FILE)
         elif path == "/api/tasks":
             self.send_json(200, load_data())
+        elif path == "/api/stats":
+            self._handle_stats()
+        elif path == "/api/events":
+            self._handle_sse()
         else:
             self.send_json(404, {"error": "Not found"})
+
+    def _handle_stats(self):
+        data = load_data()
+        projects = data.get("projects", [])
+        today = now_iso()[:10]
+        stats = {
+            "total_projects": len(projects),
+            "active": sum(1 for p in projects if p["status"] == "active"),
+            "completed": sum(1 for p in projects if p["status"] == "completed"),
+            "archived": sum(1 for p in projects if p["status"] == "archived"),
+            "total_tasks": 0, "done": 0, "in_progress": 0, "overdue": 0,
+        }
+        for p in projects:
+            ts = []
+            if p.get("big_task"):
+                ts.append(p["big_task"])
+            ts.extend(p.get("medium_tasks", []))
+            ts.extend(p.get("small_tasks", []))
+            for t in ts:
+                stats["total_tasks"] += 1
+                if t["status"] == "done":
+                    stats["done"] += 1
+                elif t["status"] == "in_progress":
+                    stats["in_progress"] += 1
+                if t.get("due_date") and t["due_date"] < today and t["status"] != "done":
+                    stats["overdue"] += 1
+        self.send_json(200, stats)
+
+    def _handle_sse(self):
+        q = queue.Queue(maxsize=20)
+        with _subs_lock:
+            _subscribers.append(q)
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Connection", "keep-alive")
+        self.end_headers()
+        try:
+            self.wfile.write(b": connected\n\n")
+            self.wfile.flush()
+            while True:
+                try:
+                    msg = q.get(timeout=25)
+                    self.wfile.write(msg)
+                    self.wfile.flush()
+                except queue.Empty:
+                    self.wfile.write(b": ping\n\n")
+                    self.wfile.flush()
+        except Exception:
+            pass
+        finally:
+            with _subs_lock:
+                if q in _subscribers:
+                    _subscribers.remove(q)
 
     def do_POST(self):
         parsed = urlparse(self.path)
@@ -139,7 +227,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 project["small_tasks"].append(task)
 
             project["updated_at"] = now_iso()
-            project["history"].append({"timestamp": now_iso(), "action": "タスク追加", "detail": f"{task['title']} を追加しました"})
+            project["history"].append({"timestamp": now_iso(), "action": "タスク追加",
+                                        "detail": f"{task['title']} を追加しました"})
             save_data(data)
             self.send_json(201, task)
 
@@ -152,7 +241,6 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
         body = self.read_body()
         data = load_data()
 
-        # PUT /api/projects/{id}
         if len(segments) == 4 and segments[2] == "projects":
             project_id = segments[3]
             project = next((p for p in data["projects"] if p["id"] == project_id), None)
@@ -169,14 +257,13 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             if "status" in body and body["status"] != old_status:
                 detail_parts.append(f"ステータスを「{old_status}」→「{body['status']}」に変更")
             if "name" in body:
-                detail_parts.append(f"名前を更新")
+                detail_parts.append("名前を更新")
             if detail_parts:
-                project["history"].append({"timestamp": now_iso(), "action": "更新", "detail": "、".join(detail_parts)})
-
+                project["history"].append({"timestamp": now_iso(), "action": "更新",
+                                            "detail": "、".join(detail_parts)})
             save_data(data)
             self.send_json(200, project)
 
-        # PUT /api/tasks/{task_id}
         elif len(segments) == 4 and segments[2] == "tasks":
             task_id = segments[3]
             found = False
@@ -186,12 +273,14 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         t = project[ttype]
                         if t and t["id"] == task_id:
                             old_status = t["status"]
-                            for key in ["title", "description", "status", "due_date", "mindmap_mmd", "roadmap_mmd", "related_links"]:
+                            for key in ["title", "description", "status", "due_date",
+                                        "mindmap_mmd", "roadmap_mmd", "related_links"]:
                                 if key in body:
                                     t[key] = body[key]
                             t["updated_at"] = now_iso()
                             if "status" in body and body["status"] != old_status:
-                                t["history"].append({"timestamp": now_iso(), "action": "ステータス変更", "detail": f"「{old_status}」→「{body['status']}」"})
+                                t["history"].append({"timestamp": now_iso(), "action": "ステータス変更",
+                                                     "detail": f"「{old_status}」→「{body['status']}」"})
                             project["updated_at"] = now_iso()
                             found = True
                             break
@@ -199,12 +288,14 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         for t in project[ttype]:
                             if t["id"] == task_id:
                                 old_status = t["status"]
-                                for key in ["title", "description", "status", "due_date", "mindmap_mmd", "roadmap_mmd", "related_links"]:
+                                for key in ["title", "description", "status", "due_date",
+                                            "mindmap_mmd", "roadmap_mmd", "related_links"]:
                                     if key in body:
                                         t[key] = body[key]
                                 t["updated_at"] = now_iso()
                                 if "status" in body and body["status"] != old_status:
-                                    t["history"].append({"timestamp": now_iso(), "action": "ステータス変更", "detail": f"「{old_status}」→「{body['status']}」"})
+                                    t["history"].append({"timestamp": now_iso(), "action": "ステータス変更",
+                                                         "detail": f"「{old_status}」→「{body['status']}」"})
                                 project["updated_at"] = now_iso()
                                 found = True
                                 break
@@ -222,7 +313,6 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
         segments = self.path.rstrip("/").split("/")
         data = load_data()
 
-        # DELETE /api/projects/{id}
         if len(segments) == 4 and segments[2] == "projects":
             project_id = segments[3]
             before = len(data["projects"])
@@ -232,7 +322,6 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             save_data(data)
             self.send_json(200, {"ok": True})
 
-        # DELETE /api/tasks/{task_id}
         elif len(segments) == 4 and segments[2] == "tasks":
             task_id = segments[3]
             found = False
@@ -258,8 +347,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    server = http.server.HTTPServer(("localhost", PORT), TaskHandler)
-    print(f"✅ タスク管理サーバー起動中")
+    server = ThreadingHTTPServer(("localhost", PORT), TaskHandler)
+    print(f"✅ Kai Tasks サーバー起動中 (v2 - Live Sync)")
     print(f"   → http://localhost:{PORT}")
     print(f"   データ: {DATA_FILE}")
     print(f"   停止: Ctrl+C")

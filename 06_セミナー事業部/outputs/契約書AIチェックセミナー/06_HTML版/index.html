@@ -29,6 +29,20 @@
     <button class="presenter-btn">🎤 プレゼンター</button>
     <button class="export-pdf">PDF出力</button>
     <button class="export-pptx">PPTX出力</button>
+    <button class="edit-mode-btn" id="edit-mode-btn">✏️ 編集</button>
+    <div class="edit-toolbar" id="edit-toolbar">
+      <div class="et-sep"></div>
+      <button class="et-btn" id="et-bold" title="太字"><b>B</b></button>
+      <button class="et-btn et-btn-italic" id="et-italic" title="斜体">I</button>
+      <button class="et-btn et-btn-underline" id="et-underline" title="下線">U</button>
+      <label class="et-color-wrap" title="文字色">
+        <span class="et-color-label">A</span>
+        <input type="color" id="et-color" value="#ffffff">
+      </label>
+      <div class="et-sep"></div>
+      <button class="et-btn et-btn-danger" id="et-reset-slide">リセット</button>
+      <span class="et-saved" id="et-saved"></span>
+    </div>
     <div class="zoom-group">
       <button class="zoom-out" title="縮小 (−)">－</button>
       <span class="zoom-level-display" id="zoom-display">100%</span>

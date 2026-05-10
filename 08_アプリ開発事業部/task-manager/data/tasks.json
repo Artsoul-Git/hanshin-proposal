@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T04:52:57",
+  "last_updated": "2026-05-11T04:58:47",
   "projects": [
     {
       "id": "sample-001",
@@ -200,7 +200,7 @@
       "goal": "2026/5/12までにセミナースライドと告知チラシを完成させる",
       "status": "active",
       "created_at": "2026-05-11T04:27:49",
-      "updated_at": "2026-05-11T04:29:34",
+      "updated_at": "2026-05-11T04:58:47",
       "memo": "",
       "big_task": {
         "id": "ceaa8348",
@@ -209,7 +209,7 @@
         "status": "todo",
         "due_date": null,
         "created_at": "2026-05-11T04:27:50",
-        "updated_at": "2026-05-11T04:29:34",
+        "updated_at": "2026-05-11T04:58:47",
         "mindmap_mmd": "mindmap\n  root((\"「2026/5/12までにセミナースライドと告知…\"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ",
         "roadmap_mmd": "graph LR\n  A([🎯 ゴール設定]) --> B[📋 計画]\n  B --> C[⚙️ 実行]\n  C --> D([✅ 完了])\n\n  B --> B1[要件整理]\n  B --> B2[リソース確認]\n  B --> B3[スケジュール確定]\n  B --> B4[スケジュール確定]\n\n  C --> C1[フェーズ10]\n  C --> C2[フェーズ2]\n  C --> C3[フェーズ3]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000",
         "related_links": [],
@@ -218,6 +218,21 @@
             "timestamp": "2026-05-11T04:27:50",
             "action": "作成",
             "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-11T04:58:37",
+            "action": "ステータス変更",
+            "detail": "「todo」→「in_progress」"
+          },
+          {
+            "timestamp": "2026-05-11T04:58:44",
+            "action": "ステータス変更",
+            "detail": "「in_progress」→「done」"
+          },
+          {
+            "timestamp": "2026-05-11T04:58:47",
+            "action": "ステータス変更",
+            "detail": "「done」→「todo」"
           }
         ]
       },
@@ -427,6 +442,16 @@
           "timestamp": "2026-05-11T04:27:51",
           "action": "タスク追加",
           "detail": "最終確認・完了報告 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:56:58",
+          "action": "更新",
+          "detail": "名前を更新"
+        },
+        {
+          "timestamp": "2026-05-11T04:57:00",
+          "action": "更新",
+          "detail": "名前を更新"
         }
       ]
     }

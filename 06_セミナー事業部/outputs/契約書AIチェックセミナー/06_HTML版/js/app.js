@@ -25,13 +25,33 @@
   var zoomResetBtn= document.querySelector('.zoom-reset');
   var zoomDisplay = document.getElementById('zoom-display');
 
+  var editModeBtn  = document.getElementById('edit-mode-btn');
+  var editToolbar  = document.getElementById('edit-toolbar');
+  var etBold       = document.getElementById('et-bold');
+  var etItalic     = document.getElementById('et-italic');
+  var etUnderline  = document.getElementById('et-underline');
+  var etColor      = document.getElementById('et-color');
+  var etResetSlide = document.getElementById('et-reset-slide');
+  var etSaved      = document.getElementById('et-saved');
+
+  /* ---------- Slide edits (localStorage) ---------- */
+  var slideEdits = {};
+  try { slideEdits = JSON.parse(localStorage.getItem('slideEdits') || '{}'); } catch (e) {}
+  var editMode        = false;
+  var editAutoSaveTimer = null;
+  var etSavedTimer    = null;
+  var etColorSavedRange = null;
+
   /* ---------- Render ---------- */
   function ensureRendered(index) {
     if (rendered.has(index) || index < 0 || index >= totalSlides) return;
     var html = factories[index]();
     var frag = document.createRange().createContextualFragment(html);
     var sec  = frag.querySelector('.slide');
-    if (sec) sec.dataset.index = index;
+    if (sec) {
+      sec.dataset.index = index;
+      if (slideEdits[index] !== undefined) sec.innerHTML = slideEdits[index];
+    }
     stage.appendChild(frag);
     rendered.add(index);
   }
@@ -43,6 +63,14 @@
   /* ---------- Navigate ---------- */
   function goTo(index) {
     if (index < 0 || index >= totalSlides) return;
+    /* In edit mode: save + deactivate current slide before switching */
+    if (editMode) {
+      var leaving = getSlide(current);
+      if (leaving && leaving.contentEditable === 'true') {
+        leaving.removeAttribute('contentEditable');
+        persistCurrentEdit(current, leaving);
+      }
+    }
     ensureRendered(index);
     ensureRendered(index + 1);
     var prev = getSlide(current);
@@ -50,6 +78,8 @@
     current = index;
     var next = getSlide(current);
     if (next) next.classList.add('active');
+    /* In edit mode: activate new slide */
+    if (editMode && next) next.contentEditable = 'true';
     updateHash();
     updateSectionNav();
     updateSidebar();
@@ -170,6 +200,15 @@
 
   /* ---------- Keyboard ---------- */
   document.addEventListener('keydown', function (e) {
+    if (editMode) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        var slide = getSlide(current);
+        if (slide) persistCurrentEdit(current, slide);
+      }
+      if (e.key === 'Escape') exitEditMode();
+      return; /* Arrow keys / Space navigate text, not slides */
+    }
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     switch (e.key) {
       case 'ArrowRight': case 'ArrowDown': case ' ':
@@ -189,12 +228,14 @@
   var touchX = 0;
   stage.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
   stage.addEventListener('touchend', function (e) {
+    if (editMode) return;
     var dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
   /* ---------- Click half-screen navigation (left=prev / right=next) ---------- */
   stage.addEventListener('click', function (e) {
+    if (editMode) return; /* contenteditable handles clicks */
     // インタラクティブ要素はスキップ
     var t = e.target;
     while (t && t !== stage) {
@@ -223,12 +264,23 @@
       if (t === sidebar || t === scriptPanel) return;
       t = t.parentElement;
     }
+    if (editMode) return; /* Don't navigate while editing */
     if (wheelLocked) return;
     if (e.deltaY > 0) { goTo(current + 1); }
     else if (e.deltaY < 0) { goTo(current - 1); }
     wheelLocked = true;
     setTimeout(function () { wheelLocked = false; }, 650);
   }, { passive: true });
+
+  /* Auto-save slide edits on input (500 ms debounce) */
+  stage.addEventListener('input', function () {
+    if (!editMode) return;
+    clearTimeout(editAutoSaveTimer);
+    editAutoSaveTimer = setTimeout(function () {
+      var slide = getSlide(current);
+      if (slide) persistCurrentEdit(current, slide);
+    }, 500);
+  });
 
   /* ---------- Script hover ---------- */
   if (scriptTrigger) {
@@ -307,6 +359,7 @@
         var slideEl = frag.querySelector('.slide');
         var slideNotes = '';
         if (slideEl) {
+          if (slideEdits[idx] !== undefined) slideEl.innerHTML = slideEdits[idx];
           slideEl.style.position      = 'absolute';
           slideEl.style.top           = '0';
           slideEl.style.left          = '0';
@@ -432,6 +485,98 @@
     presenterBtn.addEventListener('click', function () {
       window.open('presenter.html#' + (current + 1), 'presenter',
         'width=1280,height=800,menubar=no,toolbar=no,location=no');
+    });
+  }
+
+  /* ---------- Edit Mode ---------- */
+
+  function persistCurrentEdit(index, slide) {
+    slideEdits[index] = slide.innerHTML;
+    try { localStorage.setItem('slideEdits', JSON.stringify(slideEdits)); } catch (e) {}
+    showEtSaved('保存済');
+  }
+
+  function showEtSaved(msg) {
+    if (!etSaved) return;
+    etSaved.textContent = msg || '保存済';
+    etSaved.classList.add('show');
+    clearTimeout(etSavedTimer);
+    etSavedTimer = setTimeout(function () { etSaved.classList.remove('show'); }, 1800);
+  }
+
+  function enterEditMode() {
+    editMode = true;
+    document.body.classList.add('edit-mode');
+    if (editModeBtn) editModeBtn.classList.add('active');
+    if (editToolbar) editToolbar.classList.add('show');
+    var slide = getSlide(current);
+    if (slide) {
+      document.execCommand('styleWithCSS', false, true);
+      slide.contentEditable = 'true';
+      slide.focus();
+    }
+  }
+
+  function exitEditMode() {
+    var slide = getSlide(current);
+    if (slide && slide.contentEditable === 'true') {
+      slide.removeAttribute('contentEditable');
+      slide.blur();
+      persistCurrentEdit(current, slide);
+    }
+    editMode = false;
+    document.body.classList.remove('edit-mode');
+    if (editModeBtn) editModeBtn.classList.remove('active');
+    if (editToolbar) editToolbar.classList.remove('show');
+  }
+
+  if (editModeBtn) {
+    editModeBtn.addEventListener('click', function () {
+      editMode ? exitEditMode() : enterEditMode();
+    });
+  }
+
+  /* Save selection before toolbar steals focus */
+  if (editToolbar) {
+    editToolbar.addEventListener('mousedown', function () {
+      var sel = window.getSelection();
+      if (sel && sel.rangeCount > 0) etColorSavedRange = sel.getRangeAt(0).cloneRange();
+    });
+  }
+
+  function execEdit(cmd) {
+    var slide = getSlide(current);
+    if (slide) slide.focus();
+    document.execCommand(cmd);
+  }
+
+  if (etBold)      etBold.addEventListener('mousedown',      function (e) { e.preventDefault(); execEdit('bold'); });
+  if (etItalic)    etItalic.addEventListener('mousedown',    function (e) { e.preventDefault(); execEdit('italic'); });
+  if (etUnderline) etUnderline.addEventListener('mousedown', function (e) { e.preventDefault(); execEdit('underline'); });
+
+  if (etColor) {
+    etColor.addEventListener('input', function () {
+      if (etColorSavedRange) {
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(etColorSavedRange);
+      }
+      document.execCommand('foreColor', false, etColor.value);
+    });
+  }
+
+  if (etResetSlide) {
+    etResetSlide.addEventListener('click', function () {
+      if (!confirm('このスライドの編集を元に戻しますか？')) return;
+      delete slideEdits[current];
+      try { localStorage.setItem('slideEdits', JSON.stringify(slideEdits)); } catch (e) {}
+      var slide = getSlide(current);
+      if (!slide) return;
+      var origFrag = document.createRange().createContextualFragment(factories[current]());
+      var origEl   = origFrag.querySelector('.slide');
+      if (origEl) slide.innerHTML = origEl.innerHTML;
+      if (editMode) slide.contentEditable = 'true';
+      showEtSaved('リセット済');
     });
   }
 
