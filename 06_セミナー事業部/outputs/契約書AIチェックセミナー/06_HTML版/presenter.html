@@ -12,42 +12,68 @@
 </head>
 <body class="presenter-mode">
 
-  <div class="p-layout">
-    <!-- Left: current slide (large) -->
-    <div class="p-current-col">
+  <!-- ========== Main layout ========== -->
+  <div class="p-layout" id="p-layout">
+
+    <!-- Left: current slide (resizable) -->
+    <div class="p-current-col" id="p-current-col">
       <div class="p-col-label">現在のスライド</div>
       <div class="p-stage p-stage-current" id="p-stage-current"></div>
     </div>
 
+    <!-- Drag handle -->
+    <div class="p-splitter" id="p-splitter">
+      <div class="p-splitter-handle"></div>
+    </div>
+
     <!-- Right: next slide + notes + timer -->
-    <div class="p-side-col">
+    <div class="p-side-col" id="p-side-col">
       <div class="p-col-label">次のスライド</div>
       <div class="p-stage p-stage-next" id="p-stage-next">
-        <div class="p-stage-empty">最後のスライド</div>
+        <div class="p-stage-empty">（最後のスライド）</div>
       </div>
 
       <div class="p-notes-box">
-        <div class="p-notes-label">Talk Script</div>
+        <div class="p-notes-header">
+          <span class="p-notes-label">Talk Script</span>
+          <div class="p-fontsize-ctrl">
+            <button class="p-fontsize-btn" id="p-notes-smaller" title="文字を小さく">A−</button>
+            <span class="p-fontsize-val" id="p-fontsize-val">13</span>
+            <button class="p-fontsize-btn" id="p-notes-larger"  title="文字を大きく">A＋</button>
+          </div>
+        </div>
         <div class="p-notes-text" id="p-notes-text">（トークスクリプトなし）</div>
       </div>
 
       <div class="p-info-row">
         <div class="p-timer" id="p-timer">00:00</div>
-        <button class="p-btn" id="p-timer-toggle">▶ スタート</button>
-        <button class="p-btn p-btn-ghost" id="p-timer-reset">リセット</button>
+        <div class="p-timer-btns">
+          <button class="p-btn" id="p-timer-toggle">▶ スタート</button>
+          <button class="p-btn p-btn-ghost" id="p-timer-reset">リセット</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Bottom navigation bar -->
+  <!-- ========== Bottom nav bar ========== -->
   <div class="p-nav-bar">
-    <button class="p-nav-btn" id="p-prev">◀ 前へ</button>
+    <button class="p-nav-btn" id="p-prev" title="前へ (←)">
+      <span class="p-nav-arrow">&#9664;</span>
+      <span class="p-nav-label">前へ</span>
+    </button>
+
     <div class="p-slide-counter">
       <span id="p-current-num">1</span>
       <span class="p-counter-sep">/</span>
       <span id="p-total-num">1</span>
     </div>
-    <button class="p-nav-btn" id="p-next">次へ ▶</button>
+
+    <button class="p-nav-btn p-nav-btn-next" id="p-next" title="次へ (→)">
+      <span class="p-nav-label">次へ</span>
+      <span class="p-nav-arrow">&#9654;</span>
+    </button>
+
+    <div class="p-nav-hints">← → キーでも操作できます</div>
   </div>
 
   <script src="js/slides.js"></script>

@@ -1,5 +1,5 @@
 /* =============================================
-   Presenter Mode Layout
+   Presenter Mode — Canva-style layout
    ============================================= */
 
 .presenter-mode {
@@ -11,7 +11,7 @@
   width: 100vw;
 }
 
-/* ── Main layout ── */
+/* ── Main layout (fills all space above nav bar) ── */
 .p-layout {
   display: flex;
   flex: 1;
@@ -22,62 +22,96 @@
 /* ── Left: current slide ── */
 .p-current-col {
   flex: 0 0 63%;
+  min-width: 28%;
+  max-width: 80%;
   display: flex;
   flex-direction: column;
-  background: #000;
-  border-right: 2px solid #2a2a2a;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+/* ── Drag splitter ── */
+.p-splitter {
+  flex: 0 0 8px;
+  background: #1e1e1e;
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  position: relative;
+  z-index: 10;
+  user-select: none;
+}
+
+.p-splitter:hover { background: #6F911D; }
+.p-splitter.dragging { background: #6F911D; }
+
+.p-splitter-handle {
+  width: 2px;
+  height: 44px;
+  background: rgba(255,255,255,.18);
+  border-radius: 99px;
+  transition: background .15s;
+}
+
+.p-splitter:hover .p-splitter-handle,
+.p-splitter.dragging .p-splitter-handle {
+  background: rgba(255,255,255,.7);
 }
 
 /* ── Right: side panel ── */
 .p-side-col {
   flex: 1;
+  min-width: 18%;
   display: flex;
   flex-direction: column;
   background: #1a1a1a;
   overflow: hidden;
 }
 
-/* ── Column label ── */
+/* ── Column label strip ── */
 .p-col-label {
   font-size: 9px;
   font-weight: 700;
-  color: rgba(255,255,255,.3);
-  letter-spacing: .18em;
+  color: rgba(255,255,255,.28);
+  letter-spacing: .2em;
   text-transform: uppercase;
-  padding: 5px 12px;
-  background: #0a0a0a;
-  border-bottom: 1px solid #222;
+  padding: 4px 12px;
+  background: #080808;
+  border-bottom: 1px solid #202020;
   flex-shrink: 0;
 }
 
-/* ── Slide stages ── */
+/* ── Slide stage containers ── */
 .p-stage {
   position: relative;
   overflow: hidden;
   background: #111;
 }
 
-/* Current: fills all remaining height of left column */
+/* Current: fills all available height in left column */
 .p-stage-current {
   flex: 1;
   min-height: 0;
 }
 
-/* Next: fixed 16:9 aspect ratio in side column */
+/* Next: locks 16:9 aspect ratio */
 .p-stage-next {
   flex-shrink: 0;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-bottom: 1px solid #2a2a2a;
+  border-bottom: 1px solid #252525;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .p-stage-empty {
-  font-size: 11px;
-  color: rgba(255,255,255,.2);
+  font-size: 10px;
+  color: rgba(255,255,255,.15);
   font-weight: 400;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 /* Override .slide sizing inside presenter stages */
@@ -99,10 +133,19 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 10px 14px;
+  padding: 0;
   overflow: hidden;
-  border-bottom: 1px solid #2a2a2a;
+  border-bottom: 1px solid #252525;
   min-height: 0;
+}
+
+.p-notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 14px 5px;
+  flex-shrink: 0;
+  border-bottom: 1px solid #252525;
 }
 
 .p-notes-label {
@@ -111,37 +154,74 @@
   color: #6F911D;
   letter-spacing: .18em;
   text-transform: uppercase;
-  margin-bottom: 6px;
-  flex-shrink: 0;
+}
+
+/* ── Font size control ── */
+.p-fontsize-ctrl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.p-fontsize-btn {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #2a2a2a;
+  color: rgba(255,255,255,.6);
+  border: 1px solid #383838;
+  border-radius: 3px;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: background .12s, color .12s;
+  line-height: 1.4;
+}
+
+.p-fontsize-btn:hover { background: #6F911D; color: #fff; border-color: #6F911D; }
+
+.p-fontsize-val {
+  font-size: 9px;
+  color: rgba(255,255,255,.35);
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
 .p-notes-text {
   font-size: 13px;
-  line-height: 1.7;
-  color: rgba(255,255,255,.78);
+  line-height: 1.75;
+  color: rgba(255,255,255,.8);
   white-space: pre-wrap;
   overflow-y: auto;
   flex: 1;
   font-weight: 400;
   font-family: 'Noto Sans JP', sans-serif;
+  padding: 10px 14px;
 }
 
-/* ── Info row (timer + buttons) ── */
+/* ── Info row (timer) ── */
 .p-info-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   padding: 8px 14px;
   flex-shrink: 0;
 }
 
 .p-timer {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 700;
   color: #fff;
   font-variant-numeric: tabular-nums;
   letter-spacing: .04em;
-  flex: 1;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.p-timer-btns {
+  display: flex;
+  gap: 6px;
 }
 
 .p-btn {
@@ -161,53 +241,93 @@
 
 .p-btn.p-btn-ghost {
   background: #2a2a2a;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,.5);
 }
 
-.p-btn.p-btn-ghost:hover { background: #333; color: #fff; }
+.p-btn.p-btn-ghost:hover { background: #383838; color: #fff; }
 
-/* ── Bottom nav bar ── */
+/* ── Bottom navigation bar ── */
 .p-nav-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: #0a0a0a;
-  border-top: 2px solid #222;
-  padding: 8px 20px;
+  justify-content: center;
+  background: #080808;
+  border-top: 2px solid #1e1e1e;
+  padding: 0 24px;
   flex-shrink: 0;
-  height: 48px;
+  height: 56px;
+  gap: 16px;
+  position: relative;
 }
 
 .p-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   font-size: 13px;
   font-weight: 700;
   font-family: 'Noto Sans JP', sans-serif;
-  background: #2a2a2a;
-  color: rgba(255,255,255,.8);
-  border: 1px solid #444;
-  border-radius: 5px;
-  padding: 6px 18px;
+  background: #252525;
+  color: rgba(255,255,255,.75);
+  border: 1px solid #383838;
+  border-radius: 6px;
+  padding: 8px 20px;
   cursor: pointer;
-  transition: background .15s;
+  transition: background .15s, color .15s, transform .08s;
+  min-width: 100px;
+  justify-content: center;
 }
 
-.p-nav-btn:hover { background: #3a3a3a; color: #fff; }
+.p-nav-btn:hover {
+  background: #6F911D;
+  color: #fff;
+  border-color: #6F911D;
+}
+
+.p-nav-btn:active { transform: scale(.96); }
+.p-nav-btn:disabled { opacity: .3; pointer-events: none; }
+
+.p-nav-arrow {
+  font-size: 11px;
+}
 
 .p-slide-counter {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  color: rgba(255,255,255,.6);
+  color: rgba(255,255,255,.5);
   display: flex;
-  align-items: center;
-  gap: 6px;
+  align-items: baseline;
+  gap: 5px;
   font-variant-numeric: tabular-nums;
+  min-width: 90px;
+  justify-content: center;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 #p-current-num {
   color: #fff;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .p-counter-sep {
-  color: rgba(255,255,255,.3);
+  color: rgba(255,255,255,.25);
+  font-size: 16px;
+}
+
+.p-nav-hints {
+  position: absolute;
+  right: 20px;
+  font-size: 10px;
+  color: rgba(255,255,255,.2);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+
+/* ── Drag overlay (prevents iframe/select interference while dragging) ── */
+.p-drag-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  cursor: col-resize;
 }
