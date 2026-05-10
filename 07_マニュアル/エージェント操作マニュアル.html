@@ -188,6 +188,7 @@
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v2.2</td><td>2026-05-10</td><td>第21章「自動完了指示の最短フォーマット」追加。離席中ノーストップ実行のテンプレートと具体例。</td></tr>
 <tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。AI組織ゼロベース設計・ヒアリングシート生成・壁打ちモード対応。company-setup-manual.html 新設。</td></tr>
 <tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・project-intake（ブリーフィング型）・スターターパック・パイプライン・自己検証プロトコル・L1-L4自律レベル・フィードバックループ・経営管理フォルダ。マニュアル全面改訂・アコーディオン化。</td></tr>
 <tr><td>v1.2</td><td>2026-05-09</td><td>/publish-proposal スキル追加。第20章を新設。</td></tr>
@@ -240,6 +241,7 @@
     <li class="sub-item"><a href="#ch18">第18章　用語集</a></li>
     <li class="sub-item"><a href="#ch19">第19章　Claude Code 操作（起動・セッション再開・git管理）</a></li>
     <li class="sub-item"><a href="#ch20">第20章　提案書のURL公開（/publish-proposal）</a></li>
+    <li class="sub-item"><a href="#ch21">第21章　自動完了指示の最短フォーマット（離席・ノーストップ実行）</a></li>
   </ul>
 </div>
 
@@ -2202,11 +2204,94 @@ GitHub Pagesを更新して。最新の提案書は v{n} です。
 </div>
 </details>
 
+<!-- 第21章 -->
+<details id="ch21">
+<summary><span class="acc-num">21</span>自動完了指示の最短フォーマット（離席・ノーストップ実行）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+Kaiに「途中で確認なしに最後まで完走してほしい」とき専用のフォーマット。離席前にこのテンプレートをコピーして内容を書き換えるだけで、yes/no を一切押さずに作業が完了する。
+</div>
+
+<div class="ok">
+<span class="label">前提：自動承認設定が完了していること</span>
+<code>.claude/settings.local.json</code> の <code>permissions.allow</code> が <code>["Bash(*)", "PowerShell(*)", "Read(*)", "Write(*)", "Edit(*)", "Glob(*)", "Grep(*)", "WebSearch", "WebFetch(*)"]</code> のワイルドカード設定になっていること。<br>
+設定が古い（個別ルール形式）場合は Kai に「settings.local.jsonをワイルドカード形式に更新して」と頼めばよい。
+</div>
+
+<h3>最短テンプレート（コピー用）</h3>
+
+<div class="prompt-box">
+<span class="highlight">[作業内容をここに書く]</span><br><br>
+スコープ：<span class="highlight">D:\Google Antigravity\AS_AI導入支援事業_cc\</span> 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。
+</div>
+
+<div class="tip">
+<span class="label">ポイント</span>
+「スコープ」と「自律実行」の2行を付けるだけで OK。作業内容の詳細をどれだけ書いても機能する。スコープ行はKaiの安全弁（外部公開・削除など憲法上の要確認操作は自動的に除外される）。
+</div>
+
+<h3>具体例①　HTMLスライド改修（離席前に投げる）</h3>
+
+<div class="prompt-box">
+<span class="comment">＆ 'D:\Google Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\契約書AIチェックセミナー\契約書AIチェックセミナー_v2.pptx'</span><br>
+上記を <span class="highlight">kei_model.md</span> のデザインで全面改修して。スライド数は必要に応じて40枚前後に増やす。HTMLスライド（06_HTML版/js/slides.js）とPPTX両方を同時に生成。<br><br>
+スコープ：D:\Google Antigravity\AS_AI導入支援事業_cc\ 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。
+</div>
+
+<h3>具体例②　PPTX生成（python-pptxを使う作業）</h3>
+
+<div class="prompt-box">
+<span class="comment">＆ 'D:\Google Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\契約書AIチェックセミナー\06_HTML版\js\slides.js'</span><br>
+このHTMLスライド（40枚）を同フォルダに <span class="highlight">契約書AIチェックセミナー_kei_v1.pptx</span> として出力して。<br>
+kei_model のカラー（#6F911D, #FABE00, #333333）を再現。<br><br>
+スコープ：D:\Google Antigravity\AS_AI導入支援事業_cc\ 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。
+</div>
+
+<h3>具体例③　提案書アップデート（ドキュメント改訂）</h3>
+
+<div class="prompt-box">
+まる様の提案書を v11 に更新して。変更点：第3章の料金を月額98,000円→108,000円に変更。フッターの日付も今日付けに更新。<br><br>
+スコープ：D:\Google Antigravity\AS_AI導入支援事業_cc\ 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。
+</div>
+
+<h3>「自律実行」でも Kai が止まる操作（憲法による制約）</h3>
+
+<table>
+<tr><th>操作</th><th>なぜ止まるか</th><th>対処</th></tr>
+<tr><td>GitHub Pages への公開</td><td>外部への公開は憲法第3条で要確認</td><td>「公開まで含めてよい」と明示する</td></tr>
+<tr><td>ファイルの削除</td><td>旧バージョン含め削除は要確認</td><td>「旧ファイルの削除も含めてよい」と明示する</td></tr>
+<tr><td>クライアント情報の上書き変更</td><td>要件定義・クライアントデータの書き換えは要確認</td><td>変更内容を指示文に明記して承認を事前付与</td></tr>
+</table>
+
+<div class="warn">
+<span class="label">止まった場合の確認方法</span>
+離席から戻ったとき、Kai が途中で止まっていたら最後のメッセージを読む。「確認が必要な操作です」という記述があれば、その操作に対して「OK/進めて」と返信するだけで再開する。
+</div>
+
+<h3>作業内容の書き方チートシート</h3>
+
+<table>
+<tr><th>やりたいこと</th><th>指示の書き方例</th></tr>
+<tr><td>ファイル参照して作業</td><td><code>&amp; 'フルパス'</code> で始めて内容を書く</td></tr>
+<tr><td>複数ファイルを同時に変更</td><td>変更ファイルを箇条書きで列挙する</td></tr>
+<tr><td>新規ファイルを作成</td><td>「〇〇というファイルを〇〇フォルダに作成して」</td></tr>
+<tr><td>既存ファイルを更新</td><td>「〇〇の△△を□□に変更して」と差分だけ書く</td></tr>
+<tr><td>スクリプト実行</td><td>「Pythonスクリプトで〇〇を生成して」＋必要な仕様</td></tr>
+</table>
+
+</div>
+</details>
+
 <hr>
 
 <div class="ok">
 <span class="label">このマニュアルについて</span>
-最終更新：2026年5月9日 / バージョン：v2.0<br>
+最終更新：2026年5月10日 / バージョン：v2.2<br>
 更新・追記が必要な場合は <code>07_マニュアル\エージェント操作マニュアル.html</code> を直接編集してください。<br>
 エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。<br>
 Kai自律レベル更新は <code>01_経営管理\自律レベル記録.md</code> を参照してください。
