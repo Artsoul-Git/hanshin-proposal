@@ -173,22 +173,26 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
 
 /* ── Modal (wide: Mermaid) ── */
-.modal-wide { width: min(960px, 96vw); max-height: 88vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
-.wide-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.modal-wide { width: min(960px, 96vw); height: 88vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
+.wide-header { padding: 18px 24px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .wide-header h2 { font-size: 17px; font-weight: 700; }
 .wide-header .subtitle { font-size: 12px; color: var(--text2); margin-top: 4px; }
-.wide-body { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; }
-.wide-editor { border-right: 1px solid var(--border); display: flex; flex-direction: column; }
-.wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 10px 16px 6px; flex-shrink: 0; }
-.mmd-editor { flex: 1; background: var(--bg); color: var(--text); border: none; padding: 12px 16px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
-.wide-preview { display: flex; flex-direction: column; overflow: hidden; }
-.wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 10px 16px 6px; flex-shrink: 0; }
-.mmd-preview { flex: 1; overflow: auto; padding: 16px; display: flex; align-items: flex-start; justify-content: center; }
+/* min-height:0 がないとflexアイテムがshrinkできずフッターが画面外に出る */
+.wide-body { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; min-height: 0; }
+.wide-editor { border-right: 1px solid var(--border); display: flex; flex-direction: column; min-height: 0; }
+.wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 8px 16px 5px; flex-shrink: 0; }
+.mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 10px 14px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
+.wide-preview { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+.wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 8px 16px 5px; flex-shrink: 0; }
+.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 14px; display: flex; align-items: flex-start; justify-content: center; }
 .mmd-preview svg { max-width: 100%; height: auto; }
 .mmd-error { color: var(--red); font-size: 12px; padding: 16px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
-.wide-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.wide-footer-hint { font-size: 11px; color: var(--text2); }
-.wide-footer-actions { display: flex; gap: 8px; }
+.wide-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 10px; flex-wrap: wrap; background: var(--surface); border-radius: 0 0 16px 16px; }
+.wide-footer-left { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.wide-footer-right { display: flex; gap: 8px; flex-shrink: 0; }
+.tmpl-label { font-size: 11px; color: var(--text2); white-space: nowrap; }
+.btn-tmpl { padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.btn-tmpl:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 
 /* ── Links Modal ── */
 .modal-links { width: min(600px, 95vw); }
@@ -485,11 +489,13 @@ function openMindmapModal(taskId) {
       </div>
     </div>
     <div class="wide-footer">
-      <div class="wide-footer-hint">💡 Kaiに「このタスクをマインドマップ化して」と依頼すると自動生成できます</div>
-      <div class="wide-footer-actions">
-        <button class="btn btn-ghost btn-sm" onclick="resetMindmap('${taskId}')">リセット</button>
-        <button class="btn btn-ghost btn-sm" onclick="closeWide()">キャンセル</button>
-        <button class="btn btn-primary btn-sm" onclick="saveMindmap('${taskId}')">保存</button>
+      <div class="wide-footer-left">
+        <span class="tmpl-label">💡 Kaiに「このタスクをマインドマップ化して」と依頼すると自動生成できます</span>
+      </div>
+      <div class="wide-footer-right">
+        <button class="btn-tmpl" onclick="resetMindmap('${taskId}')">↩ リセット</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
+        <button class="btn btn-primary btn-sm" onclick="saveMindmap('${taskId}')">💾 保存</button>
       </div>
     </div>`;
   document.getElementById('wideOverlay').style.display = 'flex';
@@ -550,15 +556,15 @@ function openRoadmapModal(taskId) {
       </div>
     </div>
     <div class="wide-footer">
-      <div style="display:flex;gap:6px;align-items:center;">
-        <span style="font-size:11px;color:var(--text2);">テンプレート：</span>
-        <button class="btn btn-ghost btn-sm" onclick="insertTemplate('roadmap-flow')">フロー</button>
-        <button class="btn btn-ghost btn-sm" onclick="insertTemplate('roadmap-gantt')">ガント</button>
-        <button class="btn btn-ghost btn-sm" onclick="insertTemplate('roadmap-status')">状態遷移</button>
+      <div class="wide-footer-left">
+        <span class="tmpl-label">テンプレート：</span>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-flow')">🔀 フロー</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-gantt')">📅 ガント</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-status')">🔄 状態遷移</button>
       </div>
-      <div class="wide-footer-actions">
-        <button class="btn btn-ghost btn-sm" onclick="closeWide()">キャンセル</button>
-        <button class="btn btn-primary btn-sm" onclick="saveRoadmap('${taskId}')">保存</button>
+      <div class="wide-footer-right">
+        <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
+        <button class="btn btn-primary btn-sm" onclick="saveRoadmap('${taskId}')">💾 保存</button>
       </div>
     </div>`;
   document.getElementById('wideOverlay').style.display = 'flex';
@@ -790,6 +796,13 @@ function openNewProjectModal() {
     <div class="form-group"><label>プロジェクト名 *</label><input id="f-name" placeholder="例：コーデ就労支援 AI導入" autofocus></div>
     <div class="form-group"><label>ゴール（達成目標）</label><textarea id="f-goal" placeholder="例：2026年7月末までにAI活用率50%を達成する"></textarea></div>
     <div class="form-group"><label>メモ</label><textarea id="f-memo" placeholder="背景・補足など"></textarea></div>
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(108,99,255,0.1);border:1px solid rgba(108,99,255,0.3);border-radius:10px;margin-bottom:4px;">
+      <input type="checkbox" id="f-autogen" checked style="width:16px;height:16px;margin-top:1px;cursor:pointer;accent-color:var(--accent);">
+      <label for="f-autogen" style="font-size:13px;cursor:pointer;line-height:1.5;">
+        <span style="font-weight:700;color:var(--accent);">✨ タスクを自動生成する</span><br>
+        <span style="font-size:11px;color:var(--text2);">1大タスク・3中タスク・5小タスク＋ロードマップ・マインドマップを自動で初期化します</span>
+      </label>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
       <button class="btn btn-primary" onclick="createProject()">作成</button>
@@ -798,13 +811,99 @@ function openNewProjectModal() {
 
 async function createProject() {
   const name = document.getElementById('f-name').value.trim();
+  const goal = document.getElementById('f-goal').value.trim();
+  const autoGen = document.getElementById('f-autogen').checked;
   if (!name) { toast('プロジェクト名を入力してください','err'); return; }
+  closeModal();
   const r = await api('POST', '/projects', {
-    name, goal: document.getElementById('f-goal').value.trim(),
-    memo: document.getElementById('f-memo').value.trim()
+    name, goal, memo: document.getElementById('f-memo').value.trim()
   });
-  closeModal(); await loadData(); selectProject(r.id);
-  toast('プロジェクトを作成しました','ok');
+  if (autoGen) {
+    toast('タスクを自動生成中…','ok');
+    await autoGenerateTasks(r.id, name, goal);
+  }
+  await loadData(); selectProject(r.id);
+  toast(autoGen ? '✨ プロジェクトとタスクを自動生成しました' : 'プロジェクトを作成しました','ok');
+}
+
+// ── 自動タスク生成 ──
+async function autoGenerateTasks(pid, name, goal) {
+  const label = (goal || name);
+  const shortLabel = label.length > 28 ? label.slice(0,28) + '…' : label;
+  const bigTitle = goal ? `「${shortLabel}」を達成する` : `${shortLabel}を完了させる`;
+
+  // 大タスク
+  const bigR = await api('POST', `/projects/${pid}/tasks`, {
+    type: 'big',
+    title: bigTitle,
+    description: `このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。`,
+  });
+  if (bigR.id) {
+    await api('PUT', `/tasks/${bigR.id}`, {
+      roadmap_mmd: generateRoadmapCode(name, goal),
+      mindmap_mmd: generateMindmapCode(bigTitle),
+    });
+  }
+
+  // 中タスク（3つ）
+  const medTasks = [
+    ['現状把握・要件整理', '現在の状況を正確に把握し、達成に必要な要件を明確にする'],
+    ['計画立案・実行', '具体的なアクションプランを立て、確実に実行する'],
+    ['検証・改善・定着化', '結果を数値で確認し、改善サイクルを回して定着させる'],
+  ];
+  for (const [title, description] of medTasks) {
+    await api('POST', `/projects/${pid}/tasks`, { type: 'medium', title, description });
+  }
+
+  // 小タスク（5つ）
+  const smallTasks = [
+    ['キックオフ・関係者共有', 'プロジェクト開始を関係者に伝え、役割分担と協力体制を整える'],
+    ['ツール・リソースの準備', '作業に必要なツール・情報・人員・予算を事前に確保する'],
+    ['進捗確認・中間レビュー', '定期的に進捗を確認し、目標とのズレを早期に修正する'],
+    ['課題の洗い出しと対処', 'リスクや障害を早期に発見し、影響が出る前に手を打つ'],
+    ['最終確認・完了報告', '成果物・達成度を確認し、引き継ぎ・報告を行って完了とする'],
+  ];
+  for (const [title, description] of smallTasks) {
+    await api('POST', `/projects/${pid}/tasks`, { type: 'small', title, description });
+  }
+}
+
+function generateRoadmapCode(name, goal) {
+  const label = (goal || name);
+  const s = label.length > 22 ? label.slice(0,22) + '…' : label;
+  return `graph LR
+  A(["🎯 ${s}"]) --> B["📋 計画フェーズ"]
+  B --> C["⚙️ 実行フェーズ"]
+  C --> D(["✅ 完了・定着"])
+
+  B --> B1["現状把握"]
+  B --> B2["要件整理"]
+  B --> B3["リソース確保"]
+
+  C --> C1["フェーズ1: 着手"]
+  C --> C2["フェーズ2: 展開"]
+  C --> C3["フェーズ3: 仕上げ"]
+
+  style A fill:#6c63ff,color:#fff,stroke:#6c63ff
+  style D fill:#43e97b,color:#000,stroke:#43e97b`;
+}
+
+function generateMindmapCode(title) {
+  const s = title.length > 24 ? title.slice(0,24) + '…' : title;
+  return `mindmap
+  root(("${s}"))
+    計画
+      現状把握
+      要件整理
+      スケジュール確定
+    実行
+      フェーズ1
+      フェーズ2
+      フェーズ3
+    完了
+      検証・テスト
+      改善
+      定着化・引き継ぎ`;
 }
 
 function openEditProjectModal(pid) {
