@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プレゼンターモード — 契約書AIチェックセミナー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/presenter.css">
+</head>
+<body class="presenter-mode">
+
+  <div class="p-layout">
+    <!-- Left: current slide (large) -->
+    <div class="p-current-col">
+      <div class="p-col-label">現在のスライド</div>
+      <div class="p-stage p-stage-current" id="p-stage-current"></div>
+    </div>
+
+    <!-- Right: next slide + notes + timer -->
+    <div class="p-side-col">
+      <div class="p-col-label">次のスライド</div>
+      <div class="p-stage p-stage-next" id="p-stage-next">
+        <div class="p-stage-empty">最後のスライド</div>
+      </div>
+
+      <div class="p-notes-box">
+        <div class="p-notes-label">Talk Script</div>
+        <div class="p-notes-text" id="p-notes-text">（トークスクリプトなし）</div>
+      </div>
+
+      <div class="p-info-row">
+        <div class="p-timer" id="p-timer">00:00</div>
+        <button class="p-btn" id="p-timer-toggle">▶ スタート</button>
+        <button class="p-btn p-btn-ghost" id="p-timer-reset">リセット</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom navigation bar -->
+  <div class="p-nav-bar">
+    <button class="p-nav-btn" id="p-prev">◀ 前へ</button>
+    <div class="p-slide-counter">
+      <span id="p-current-num">1</span>
+      <span class="p-counter-sep">/</span>
+      <span id="p-total-num">1</span>
+    </div>
+    <button class="p-nav-btn" id="p-next">次へ ▶</button>
+  </div>
+
+  <script src="js/slides.js"></script>
+  <script src="js/presenter.js"></script>
+</body>
+</html>

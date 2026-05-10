@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T03:43:19",
+  "last_updated": "2026-05-11T03:50:26",
   "projects": [
     {
       "id": "sample-001",
@@ -8,7 +8,7 @@
       "goal": "タスク管理アプリを完成させて運用開始する",
       "status": "active",
       "created_at": "2026-05-11T00:00:00",
-      "updated_at": "2026-05-11T00:00:00",
+      "updated_at": "2026-05-11T03:50:26",
       "memo": "これはサンプルです。使い方を確認したら削除してください。",
       "big_task": {
         "id": "t-big-001",
@@ -47,15 +47,25 @@
           "id": "t-med-002",
           "title": "実際のプロジェクトを登録する",
           "description": "サンプルを参考に、実業務のプロジェクトを追加する",
-          "status": "todo",
+          "status": "done",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-11T00:00:00",
+          "updated_at": "2026-05-11T03:48:19",
           "history": [
             {
               "timestamp": "2026-05-11T00:00:00",
               "action": "作成",
               "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T03:48:18",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            },
+            {
+              "timestamp": "2026-05-11T03:48:19",
+              "action": "ステータス変更",
+              "detail": "「in_progress」→「done」"
             }
           ]
         },
@@ -81,21 +91,33 @@
           "id": "t-sm-001",
           "title": "ショートカットを作成する",
           "description": "デスクトップに server.py のショートカットを置く",
-          "status": "todo",
+          "status": "in_progress",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-11T00:00:00",
-          "history": []
+          "updated_at": "2026-05-11T03:48:49",
+          "history": [
+            {
+              "timestamp": "2026-05-11T03:48:49",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
         },
         {
           "id": "t-sm-002",
           "title": "サンプルプロジェクトを削除する",
           "description": "使い方を理解したらサンプルを消す",
-          "status": "todo",
+          "status": "in_progress",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-11T00:00:00",
-          "history": []
+          "updated_at": "2026-05-11T03:50:26",
+          "history": [
+            {
+              "timestamp": "2026-05-11T03:50:26",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
         },
         {
           "id": "t-sm-003",

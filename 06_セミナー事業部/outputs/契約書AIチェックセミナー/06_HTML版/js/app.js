@@ -54,6 +54,7 @@
     updateSectionNav();
     updateSidebar();
     updateScriptPanel();
+    if (!bcRemote && bc) bc.postMessage({ type: 'goto', index: current });
   }
 
   function updateHash() {
@@ -319,6 +320,20 @@
   function hideOverlay() { if (overlay) overlay.classList.remove('show'); }
   function setProgress(v) { if (fillBar) fillBar.style.width = Math.round(v * 100) + '%'; }
 
+  /* ---------- BroadcastChannel (presenter sync) ---------- */
+  var bc = null;
+  try { bc = new BroadcastChannel('slide-sync'); } catch (e) {}
+  var bcRemote = false;
+  if (bc) {
+    bc.onmessage = function (e) {
+      if (e.data && e.data.type === 'goto') {
+        bcRemote = true;
+        goTo(e.data.index);
+        bcRemote = false;
+      }
+    };
+  }
+
   /* ---------- Zoom ---------- */
   var zoomLevel  = 1.0;
   var ZOOM_STEP  = 0.1;
@@ -327,10 +342,8 @@
 
   function applyZoom(z) {
     zoomLevel = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z)) * 10) / 10;
-    stage.style.transform       = zoomLevel === 1 ? '' : 'scale(' + zoomLevel + ')';
-    stage.style.transformOrigin = 'center center';
+    document.documentElement.style.setProperty('--tz', zoomLevel);
     if (zoomDisplay) zoomDisplay.textContent = Math.round(zoomLevel * 100) + '%';
-    // ズームレベルをLocalStorageに保存
     try { localStorage.setItem('slideZoom', zoomLevel); } catch (e) {}
   }
 
@@ -370,6 +383,15 @@
     return [m[1], m[2], m[3]].map(function (v) {
       return ('0' + parseInt(v).toString(16)).slice(-2);
     }).join('').toUpperCase();
+  }
+
+  /* ---------- Presenter Mode ---------- */
+  var presenterBtn = document.querySelector('.presenter-btn');
+  if (presenterBtn) {
+    presenterBtn.addEventListener('click', function () {
+      window.open('presenter.html#' + (current + 1), 'presenter',
+        'width=1280,height=800,menubar=no,toolbar=no,location=no');
+    });
   }
 
   /* ---------- Init ---------- */
