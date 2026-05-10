@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T03:50:26",
+  "last_updated": "2026-05-11T04:06:38",
   "projects": [
     {
       "id": "sample-001",
@@ -8,7 +8,7 @@
       "goal": "タスク管理アプリを完成させて運用開始する",
       "status": "active",
       "created_at": "2026-05-11T00:00:00",
-      "updated_at": "2026-05-11T03:50:26",
+      "updated_at": "2026-05-11T04:06:38",
       "memo": "これはサンプルです。使い方を確認したら削除してください。",
       "big_task": {
         "id": "t-big-001",
@@ -17,12 +17,20 @@
         "status": "in_progress",
         "due_date": "2026-05-15",
         "created_at": "2026-05-11T00:00:00",
-        "updated_at": "2026-05-11T00:00:00",
+        "updated_at": "2026-05-11T04:06:38",
         "history": [
           {
             "timestamp": "2026-05-11T00:00:00",
             "action": "作成",
             "detail": "タスクを作成しました"
+          }
+        ],
+        "mindmap_mmd": "mindmap\n  root((test))",
+        "related_links": [
+          {
+            "title": "t",
+            "url": "http://x.com",
+            "description": "d"
           }
         ]
       },

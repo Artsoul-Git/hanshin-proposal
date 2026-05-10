@@ -122,6 +122,9 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 "due_date": body.get("due_date", None),
                 "created_at": now_iso(),
                 "updated_at": now_iso(),
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "related_links": [],
                 "history": [{"timestamp": now_iso(), "action": "作成", "detail": "タスクを作成しました"}]
             }
             if task_type == "big":
@@ -183,7 +186,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         t = project[ttype]
                         if t and t["id"] == task_id:
                             old_status = t["status"]
-                            for key in ["title", "description", "status", "due_date"]:
+                            for key in ["title", "description", "status", "due_date", "mindmap_mmd", "roadmap_mmd", "related_links"]:
                                 if key in body:
                                     t[key] = body[key]
                             t["updated_at"] = now_iso()
@@ -196,7 +199,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         for t in project[ttype]:
                             if t["id"] == task_id:
                                 old_status = t["status"]
-                                for key in ["title", "description", "status", "due_date"]:
+                                for key in ["title", "description", "status", "due_date", "mindmap_mmd", "roadmap_mmd", "related_links"]:
                                     if key in body:
                                         t[key] = body[key]
                                 t["updated_at"] = now_iso()
