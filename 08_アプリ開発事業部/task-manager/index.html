@@ -173,26 +173,40 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
 
 /* ── Modal (wide: Mermaid) ── */
-.modal-wide { width: min(960px, 96vw); height: 88vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
-.wide-header { padding: 18px 24px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.wide-header h2 { font-size: 17px; font-weight: 700; }
-.wide-header .subtitle { font-size: 12px; color: var(--text2); margin-top: 4px; }
-/* min-height:0 がないとflexアイテムがshrinkできずフッターが画面外に出る */
-.wide-body { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; min-height: 0; }
-.wide-editor { border-right: 1px solid var(--border); display: flex; flex-direction: column; min-height: 0; }
-.wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 8px 16px 5px; flex-shrink: 0; }
-.mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 10px 14px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
+.modal-wide { width: min(1220px, 98vw); height: 90vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
+.wide-header { padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wide-header-left h2 { font-size: 16px; font-weight: 700; }
+.wide-header-left .subtitle { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.wide-header-right { display: flex; gap: 6px; flex-shrink: 0; }
+/* 2カラム（mindmap用）/ 3カラム（roadmap用）*/
+.wide-body { display: grid; flex: 1; overflow: hidden; min-height: 0; }
+.wide-body-2col { grid-template-columns: 1fr 1fr; }
+.wide-body-3col { grid-template-columns: 210px 1fr 1fr; }
+.wide-editor { border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; min-height: 0; }
+.wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
+.mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 8px 12px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
 .wide-preview { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-.wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 8px 16px 5px; flex-shrink: 0; }
-.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 14px; display: flex; align-items: flex-start; justify-content: center; }
+.wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
+.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: var(--bg); }
 .mmd-preview svg { max-width: 100%; height: auto; }
-.mmd-error { color: var(--red); font-size: 12px; padding: 16px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
-.wide-footer { padding: 12px 20px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 10px; flex-wrap: wrap; background: var(--surface); border-radius: 0 0 16px 16px; }
-.wide-footer-left { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.wide-footer-right { display: flex; gap: 8px; flex-shrink: 0; }
-.tmpl-label { font-size: 11px; color: var(--text2); white-space: nowrap; }
-.btn-tmpl { padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+.mmd-error { color: var(--red); font-size: 11px; padding: 14px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
+.wide-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 10px; flex-wrap: wrap; background: var(--surface); border-radius: 0 0 16px 16px; }
+.wide-footer-left { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.wide-footer-right { display: flex; gap: 6px; flex-shrink: 0; }
+.tmpl-label { font-size: 10px; color: var(--text2); white-space: nowrap; }
+.btn-tmpl { padding: 4px 9px; font-size: 11px; font-weight: 600; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
 .btn-tmpl:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── AI Assistant Panel ── */
+.ai-panel { display: flex; flex-direction: column; gap: 6px; padding: 10px 10px; background: rgba(108,99,255,0.04); border-right: 1px solid var(--border); overflow: hidden; min-height: 0; }
+.ai-panel-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); flex-shrink: 0; }
+.ai-textarea { flex: 1; min-height: 0; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 7px 9px; font-size: 11px; font-family: inherit; line-height: 1.6; resize: none; outline: none; transition: border-color 0.15s; }
+.ai-textarea:focus { border-color: var(--accent); }
+.ai-sep { height: 1px; background: var(--border); flex-shrink: 0; }
+.btn-ai { flex-shrink: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.15s; text-align: center; width: 100%; }
+.btn-ai:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-ai-apply { background: rgba(108,99,255,0.12); color: var(--accent); border-color: rgba(108,99,255,0.35); }
+.btn-ai-apply:hover { background: var(--accent); color: #fff; }
 
 /* ── Links Modal ── */
 .modal-links { width: min(600px, 95vw); }
@@ -472,14 +486,20 @@ function taskCard(t, sizeClass, pid) {
 function openMindmapModal(taskId) {
   const t = findTask(taskId);
   const defaultCode = t.mindmap_mmd || defaultMindmapCode(t.title);
-  const wideEl = document.getElementById('wideContent');
-  wideEl.innerHTML = `
+  const titleEsc = esc(t.title);
+  document.getElementById('wideContent').innerHTML = `
     <div class="wide-header">
-      <h2>🧠 マインドマップ — ${esc(t.title)}</h2>
-      <div class="subtitle">タスクの細分化・関係性を可視化します。左のコードを編集するとプレビューが更新されます。</div>
+      <div class="wide-header-left">
+        <h2>🧠 マインドマップ — ${titleEsc}</h2>
+        <div class="subtitle">タスクの細分化・関係性を可視化。コードを編集するとリアルタイムでプレビューが更新されます。</div>
+      </div>
+      <div class="wide-header-right">
+        <button class="btn-tmpl" onclick="openA4Preview('mmdMindmapPreview','${titleEsc}')">🔍 A4拡大</button>
+        <button class="btn-tmpl" onclick="openA4Preview('mmdMindmapPreview','${titleEsc}',true)">🖨️ PDF出力</button>
+      </div>
     </div>
-    <div class="wide-body">
-      <div class="wide-editor">
+    <div class="wide-body wide-body-2col">
+      <div class="wide-editor" style="border-left:none;">
         <div class="wide-editor-label">Mermaid コード（mindmap）</div>
         <textarea class="mmd-editor" id="mmdMindmapEditor" spellcheck="false" oninput="previewMmd('mmdMindmapEditor','mmdMindmapPreview')">${esc(defaultCode)}</textarea>
       </div>
@@ -490,7 +510,7 @@ function openMindmapModal(taskId) {
     </div>
     <div class="wide-footer">
       <div class="wide-footer-left">
-        <span class="tmpl-label">💡 Kaiに「このタスクをマインドマップ化して」と依頼すると自動生成できます</span>
+        <span class="tmpl-label">💡 Kaiに「このタスクのマインドマップを作って」と依頼→返答をロードマップの「AIアシスト」で適用できます</span>
       </div>
       <div class="wide-footer-right">
         <button class="btn-tmpl" onclick="resetMindmap('${taskId}')">↩ リセット</button>
@@ -539,19 +559,34 @@ function defaultMindmapCode(title) {
 function openRoadmapModal(taskId) {
   const t = findTask(taskId);
   const defaultCode = t.roadmap_mmd || defaultRoadmapCode(t.title);
-  const wideEl = document.getElementById('wideContent');
-  wideEl.innerHTML = `
+  const titleEsc = esc(t.title);
+  document.getElementById('wideContent').innerHTML = `
     <div class="wide-header">
-      <h2>🗺️ ロードマップ — ${esc(t.title)}</h2>
-      <div class="subtitle">タスク達成までのステップをフロー図で表現します。graph LR / TD / gantt に切り替え可能です。</div>
+      <div class="wide-header-left">
+        <h2>🗺️ ロードマップ — ${titleEsc}</h2>
+        <div class="subtitle">graph LR / TD / gantt / stateDiagram-v2 に対応。テンプレートから選んで編集できます。</div>
+      </div>
+      <div class="wide-header-right">
+        <button class="btn-tmpl" onclick="openA4Preview('mmdRoadmapPreview','${titleEsc}')">🔍 A4拡大</button>
+        <button class="btn-tmpl" onclick="openA4Preview('mmdRoadmapPreview','${titleEsc}',true)">🖨️ PDF出力</button>
+      </div>
     </div>
-    <div class="wide-body">
+    <div class="wide-body wide-body-3col">
+      <div class="ai-panel">
+        <div class="ai-panel-section">🤖 Kaiへ指示</div>
+        <textarea class="ai-textarea" id="aiInstruction" placeholder="例：&#10;フェーズを5段階にして&#10;各フェーズに期間を追加して&#10;色をプロジェクトカラーに"></textarea>
+        <button class="btn-ai" onclick="copyAiPrompt('mmdRoadmapEditor')">📋 プロンプトをコピー</button>
+        <div class="ai-sep"></div>
+        <div class="ai-panel-section">📥 Kaiの返答を貼り付け</div>
+        <textarea class="ai-textarea" id="aiResponse" placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"></textarea>
+        <button class="btn-ai btn-ai-apply" onclick="applyAiCode('mmdRoadmapEditor','mmdRoadmapPreview')">✨ コードに適用</button>
+      </div>
       <div class="wide-editor">
-        <div class="wide-editor-label">Mermaid コード（graph / gantt）</div>
+        <div class="wide-editor-label">Mermaid コード</div>
         <textarea class="mmd-editor" id="mmdRoadmapEditor" spellcheck="false" oninput="previewMmd('mmdRoadmapEditor','mmdRoadmapPreview')">${esc(defaultCode)}</textarea>
       </div>
       <div class="wide-preview">
-        <div class="wide-preview-label">プレビュー</div>
+        <div class="wide-preview-label">プレビュー（リアルタイム）</div>
         <div class="mmd-preview" id="mmdRoadmapPreview"></div>
       </div>
     </div>
@@ -613,18 +648,128 @@ function insertTemplate(type) {
     振り返り         :c2, after c1, 3d`,
 
     'roadmap-status': `stateDiagram-v2
-  [*] --> 未着手
-  未着手 --> 計画中 : 開始
-  計画中 --> 実行中 : 承認
-  実行中 --> レビュー中 : 完成
-  レビュー中 --> 完了 : 承認
-  レビュー中 --> 実行中 : 差し戻し
-  完了 --> [*]`
+  [*] --> Todo
+  Todo --> Doing : 開始
+  Doing --> Review : 完成
+  Review --> Done : 承認
+  Review --> Doing : 差し戻し
+  Done --> [*]
+
+  Todo : 未着手
+  Doing : 進行中
+  Review : レビュー中
+  Done : 完了`
   };
   const editor = document.getElementById('mmdRoadmapEditor');
   if (editor) {
     editor.value = templates[type] || editor.value;
     previewMmd('mmdRoadmapEditor', 'mmdRoadmapPreview');
+  }
+}
+
+// ── A4拡大プレビュー / PDF出力 ──
+function openA4Preview(previewId, title, autoPrint = false) {
+  const previewEl = document.getElementById(previewId);
+  const svgEl = previewEl?.querySelector('svg');
+  if (!svgEl) { toast('先にプレビューを表示してから拡大してください', 'err'); return; }
+
+  // SVGをクローンして白背景・フォントを補強
+  const clone = svgEl.cloneNode(true);
+  clone.removeAttribute('style');
+  clone.style.cssText = 'max-width:100%;height:auto;';
+
+  const safeTitle = (title || 'ロードマップ').replace(/[<>"&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;','&':'&amp;'}[c]));
+  const win = window.open('', '_blank', 'width=1280,height=900,menubar=no,toolbar=no');
+  if (!win) { toast('ポップアップがブロックされました。ブラウザの設定を確認してください', 'err'); return; }
+
+  win.document.write(`<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>${safeTitle}</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #e8e8e8; font-family: 'Segoe UI', sans-serif; }
+  .toolbar { display: flex; align-items: center; gap: 10px; padding: 10px 20px; background: #1a1a24; color: #e8e8f0; position: sticky; top: 0; z-index: 10; }
+  .toolbar-title { font-size: 14px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tbtn { padding: 6px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+  .tbtn-print { background: #6c63ff; color: #fff; }
+  .tbtn-print:hover { background: #5a52e8; }
+  .tbtn-close { background: transparent; color: #8888aa; border: 1px solid #2e2e40; }
+  .tbtn-close:hover { background: #22222f; color: #e8e8f0; }
+  .page-wrap { display: flex; align-items: flex-start; justify-content: center; padding: 24px; min-height: calc(100vh - 52px); }
+  .a4-page { width: 297mm; min-height: 210mm; background: #fff; padding: 14mm 16mm; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,0.25); }
+  .a4-page svg { max-width: 100%; height: auto; display: block; }
+  @media print {
+    body { background: white; }
+    .toolbar { display: none !important; }
+    .page-wrap { padding: 0; min-height: 0; }
+    .a4-page { margin: 0; width: 100%; min-height: 0; box-shadow: none; padding: 8mm; }
+    @page { size: A4 landscape; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <span class="toolbar-title">🗺️ ${safeTitle}</span>
+  <button class="tbtn tbtn-print" onclick="window.print()">🖨️ PDF出力 / 印刷</button>
+  <button class="tbtn tbtn-close" onclick="window.close()">✕ 閉じる</button>
+</div>
+<div class="page-wrap">
+  <div class="a4-page">${clone.outerHTML}</div>
+</div>
+</body>
+</html>`);
+  win.document.close();
+  if (autoPrint) {
+    win.addEventListener('load', () => setTimeout(() => win.print(), 300));
+  }
+}
+
+// ── AIアシスト: プロンプトをコピー ──
+function copyAiPrompt(editorId) {
+  const code = document.getElementById(editorId)?.value?.trim() || '';
+  const instruction = document.getElementById('aiInstruction')?.value?.trim();
+  if (!instruction) { toast('Kaiへの指示を入力してください', 'err'); return; }
+
+  const prompt = `以下のMermaidダイアグラムを「${instruction}」に従って改修してください。\n改修後のMermaidコードのみを \`\`\`mermaid\n...\n\`\`\` 形式で返してください。\n\n現在のコード:\n\`\`\`mermaid\n${code}\n\`\`\``;
+
+  const fallback = () => {
+    const tmp = document.createElement('textarea');
+    tmp.value = prompt;
+    document.body.appendChild(tmp);
+    tmp.select();
+    document.execCommand('copy');
+    document.body.removeChild(tmp);
+    toast('プロンプトをコピーしました。Kaiのチャットに貼り付けてください', 'ok');
+  };
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(prompt).then(
+      () => toast('プロンプトをコピーしました。Kaiのチャットに貼り付けてください', 'ok'),
+      fallback
+    );
+  } else { fallback(); }
+}
+
+// ── AIアシスト: Kaiの返答からコードを抽出して適用 ──
+function applyAiCode(editorId, previewId) {
+  const response = document.getElementById('aiResponse')?.value?.trim();
+  if (!response) { toast('Kaiの返答を貼り付けてください', 'err'); return; }
+
+  // ```mermaid ... ``` または ``` ... ``` を抽出
+  const match = response.match(/```(?:mermaid)?\s*\n?([\s\S]+?)```/);
+  if (!match) {
+    toast('Mermaidコードブロック（```mermaid ... ```）が見つかりません', 'err');
+    return;
+  }
+  const extracted = match[1].trim();
+  const editor = document.getElementById(editorId);
+  if (editor) {
+    editor.value = extracted;
+    previewMmd(editorId, previewId);
+    document.getElementById('aiResponse').value = '';
+    toast('✨ Kaiのコードを適用しました', 'ok');
   }
 }
 
