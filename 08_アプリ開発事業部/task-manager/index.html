@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kai タスク管理</title>
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface2: #22222f;
+  --border: #2e2e40;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --green: #43e97b;
+  --yellow: #f9ca24;
+  --red: #ff6b6b;
+  --text: #e8e8f0;
+  --text2: #8888aa;
+  --big: #ff9f43;
+  --med: #54a0ff;
+  --small: #5f27cd;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; min-height: 100vh; }
+
+/* ── Layout ── */
+.app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 20px 16px; display: flex; flex-direction: column; gap: 16px; }
+.main { padding: 28px 32px; overflow-y: auto; }
+
+/* ── Sidebar ── */
+.logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: 1px; padding: 4px 0 12px; border-bottom: 1px solid var(--border); }
+.logo span { color: var(--text2); font-size: 12px; font-weight: 400; }
+
+.sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); padding: 4px 0; }
+
+.project-list { display: flex; flex-direction: column; gap: 4px; flex: 1; overflow-y: auto; }
+.project-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+.project-item:hover { background: var(--surface2); }
+.project-item.active { background: var(--surface2); border-color: var(--accent); }
+.project-item .proj-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.project-item .proj-meta { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.project-item .proj-status { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; }
+.project-item .proj-status.active { background: var(--green); }
+.project-item .proj-status.completed { background: var(--text2); }
+.project-item .proj-status.archived { background: var(--border); }
+
+.btn { display: flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #5a52e8; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--surface2); color: var(--text); }
+.btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+.btn-danger:hover { background: rgba(255,107,107,0.1); }
+.btn-success { background: var(--green); color: #000; }
+.btn-success:hover { background: #36d467; }
+
+/* ── Main header ── */
+.main-header { margin-bottom: 28px; }
+.main-header h1 { font-size: 22px; font-weight: 700; }
+.main-header .goal-text { margin-top: 8px; font-size: 14px; color: var(--text2); line-height: 1.6; }
+.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-left: 10px; }
+.status-badge.active { background: rgba(67,233,123,0.15); color: var(--green); }
+.status-badge.completed { background: rgba(136,136,170,0.15); color: var(--text2); }
+.status-badge.archived { background: rgba(46,46,64,0.5); color: var(--border); }
+
+.progress-bar-wrap { margin-top: 14px; }
+.progress-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-bottom: 5px; }
+.progress-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 99px; transition: width 0.4s; }
+
+.header-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+/* ── 1-3-5 Layout ── */
+.task-section { margin-bottom: 32px; }
+.task-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.task-section-title { display: flex; align-items: center; gap: 10px; }
+.task-badge { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+.task-badge.big { background: rgba(255,159,67,0.2); color: var(--big); }
+.task-badge.med { background: rgba(84,160,255,0.2); color: var(--med); }
+.task-badge.small { background: rgba(95,39,205,0.3); color: #a29bfe; }
+.task-section-name { font-size: 14px; font-weight: 700; }
+.task-count { font-size: 11px; color: var(--text2); }
+.section-divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+/* ── Task Cards ── */
+.task-cards { display: flex; flex-direction: column; gap: 10px; }
+
+.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: all 0.15s; position: relative; }
+.task-card:hover { border-color: var(--accent); }
+.task-card.done { opacity: 0.55; }
+.task-card.big { border-left: 3px solid var(--big); }
+.task-card.med { border-left: 3px solid var(--med); }
+.task-card.small { border-left: 3px solid #a29bfe; }
+
+.task-card-top { display: flex; align-items: flex-start; gap: 12px; }
+.task-checkbox { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); background: transparent; cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.task-checkbox.done { background: var(--green); border-color: var(--green); }
+.task-checkbox.in_progress { background: rgba(249,202,36,0.2); border-color: var(--yellow); }
+.task-checkbox svg { display: none; }
+.task-checkbox.done svg { display: block; }
+
+.task-info { flex: 1; }
+.task-title { font-size: 14px; font-weight: 600; line-height: 1.4; }
+.task-card.done .task-title { text-decoration: line-through; color: var(--text2); }
+.task-desc { font-size: 12px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+.task-meta { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.task-due { font-size: 11px; color: var(--text2); }
+.task-due.overdue { color: var(--red); }
+.task-status-pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+.task-status-pill.todo { background: rgba(136,136,170,0.15); color: var(--text2); }
+.task-status-pill.in_progress { background: rgba(249,202,36,0.15); color: var(--yellow); }
+.task-status-pill.done { background: rgba(67,233,123,0.15); color: var(--green); }
+
+.task-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.icon-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--text2); display: flex; align-items: center; justify-content: center; transition: all 0.15s; font-size: 12px; }
+.icon-btn:hover { background: var(--surface2); color: var(--text); }
+.icon-btn.del:hover { color: var(--red); border-color: var(--red); }
+
+.task-empty { padding: 16px; border: 2px dashed var(--border); border-radius: 12px; text-align: center; color: var(--text2); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.task-empty:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── History ── */
+.history-section { margin-top: 32px; }
+.history-section h3 { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 14px; letter-spacing: 0.5px; }
+.history-list { display: flex; flex-direction: column; gap: 0; }
+.history-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.history-item:last-child { border-bottom: none; }
+.history-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 4px; flex-shrink: 0; }
+.history-content { flex: 1; }
+.history-action { font-size: 12px; font-weight: 600; color: var(--text); }
+.history-detail { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.history-time { font-size: 10px; color: var(--border); margin-top: 2px; }
+
+/* ── Memo ── */
+.memo-section { margin-top: 24px; }
+.memo-section h3 { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 10px; }
+.memo-area { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 14px; font-size: 13px; line-height: 1.7; resize: vertical; min-height: 80px; font-family: inherit; transition: border-color 0.15s; }
+.memo-area:focus { outline: none; border-color: var(--accent); }
+.memo-save { margin-top: 8px; }
+
+/* ── Welcome Screen ── */
+.welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; text-align: center; gap: 16px; }
+.welcome h2 { font-size: 28px; font-weight: 700; color: var(--text2); }
+.welcome p { color: var(--text2); font-size: 14px; }
+
+/* ── Modal ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 28px 24px; width: 480px; max-width: 95vw; }
+.modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); padding: 9px 12px; font-size: 13px; font-family: inherit; transition: border-color 0.15s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+.form-group textarea { min-height: 60px; resize: vertical; line-height: 1.6; }
+.form-row { display: flex; gap: 10px; }
+.form-row .form-group { flex: 1; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+
+/* ── Toast ── */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 2000; transform: translateY(80px); opacity: 0; transition: all 0.3s; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.ok { border-color: var(--green); color: var(--green); }
+.toast.err { border-color: var(--red); color: var(--red); }
+
+/* ── Tabs ── */
+.tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 3px; margin-bottom: 24px; width: fit-content; }
+.tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text2); transition: all 0.15s; border: none; background: transparent; }
+.tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- サイドバー -->
+  <aside class="sidebar">
+    <div class="logo">Kai Tasks <span>by Kei</span></div>
+    <div class="sidebar-label">プロジェクト</div>
+    <div class="project-list" id="projectList"></div>
+    <button class="btn btn-primary" onclick="openNewProjectModal()">＋ 新規プロジェクト</button>
+  </aside>
+
+  <!-- メイン -->
+  <main class="main" id="mainContent">
+    <div class="welcome" id="welcomeScreen">
+      <h2>プロジェクトを選択</h2>
+      <p>左のリストからプロジェクトを選ぶか、<br>「＋ 新規プロジェクト」で始めてください</p>
+    </div>
+    <div id="projectDetail" style="display:none;"></div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+  <div class="modal" id="modalBox" onclick="event.stopPropagation()">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:3456/api';
+let state = { data: null, projectId: null, tab: 'tasks' };
+
+// ── データ取得 ──
+async function loadData() {
+  try {
+    const r = await fetch(`${API}/tasks`);
+    state.data = await r.json();
+    renderSidebar();
+    if (state.projectId) {
+      const p = state.data.projects.find(p => p.id === state.projectId);
+      p ? renderProject(p) : showWelcome();
+    }
+  } catch(e) {
+    toast('サーバーに接続できません。python server.py を起動してください', 'err');
+  }
+}
+
+// ── サイドバー ──
+function renderSidebar() {
+  const el = document.getElementById('projectList');
+  if (!state.data?.projects?.length) {
+    el.innerHTML = '<div style="color:var(--text2);font-size:12px;padding:8px;">プロジェクトなし</div>';
+    return;
+  }
+  el.innerHTML = state.data.projects.map(p => {
+    const tasks = getAllTasks(p);
+    const done = tasks.filter(t => t.status === 'done').length;
+    return `<div class="project-item ${p.id === state.projectId ? 'active' : ''}" onclick="selectProject('${p.id}')">
+      <div class="proj-name"><span class="proj-status ${p.status}"></span>${esc(p.name)}</div>
+      <div class="proj-meta">${done}/${tasks.length} 完了</div>
+    </div>`;
+  }).join('');
+}
+
+function selectProject(id) {
+  state.projectId = id;
+  state.tab = 'tasks';
+  const p = state.data.projects.find(p => p.id === id);
+  if (p) renderProject(p);
+  renderSidebar();
+}
+
+function showWelcome() {
+  state.projectId = null;
+  document.getElementById('welcomeScreen').style.display = 'flex';
+  document.getElementById('projectDetail').style.display = 'none';
+  renderSidebar();
+}
+
+// ── プロジェクト詳細 ──
+function getAllTasks(p) {
+  const tasks = [];
+  if (p.big_task) tasks.push(p.big_task);
+  tasks.push(...(p.medium_tasks || []));
+  tasks.push(...(p.small_tasks || []));
+  return tasks;
+}
+
+function renderProject(p) {
+  document.getElementById('welcomeScreen').style.display = 'none';
+  const el = document.getElementById('projectDetail');
+  el.style.display = 'block';
+
+  const tasks = getAllTasks(p);
+  const done = tasks.filter(t => t.status === 'done').length;
+  const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+
+  el.innerHTML = `
+    <div class="main-header">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <h1>${esc(p.name)}</h1>
+        <span class="status-badge ${p.status}">${statusLabel(p.status)}</span>
+      </div>
+      ${p.goal ? `<div class="goal-text">🎯 ${esc(p.goal)}</div>` : ''}
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-label"><span>進捗</span><span>${done} / ${tasks.length} タスク完了（${pct}%）</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openEditProjectModal('${p.id}')">✏️ 編集</button>
+        ${p.status !== 'completed' ? `<button class="btn btn-success btn-sm" onclick="markProjectDone('${p.id}')">✅ 完了</button>` : ''}
+        ${p.status !== 'archived' ? `<button class="btn btn-ghost btn-sm" onclick="archiveProject('${p.id}')">📁 アーカイブ</button>` : ''}
+        <button class="btn btn-danger btn-sm" onclick="deleteProject('${p.id}')">🗑️ 削除</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab ${state.tab === 'tasks' ? 'active' : ''}" onclick="switchTab('tasks','${p.id}')">タスク</button>
+      <button class="tab ${state.tab === 'history' ? 'active' : ''}" onclick="switchTab('history','${p.id}')">履歴</button>
+      <button class="tab ${state.tab === 'memo' ? 'active' : ''}" onclick="switchTab('memo','${p.id}')">メモ</button>
+    </div>
+
+    <div id="tabContent">${renderTabContent(p)}</div>
+  `;
+}
+
+function switchTab(tab, pid) {
+  state.tab = tab;
+  const p = state.data.projects.find(p => p.id === pid);
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.textContent === {tasks:'タスク',history:'履歴',memo:'メモ'}[tab]));
+  document.getElementById('tabContent').innerHTML = renderTabContent(p);
+}
+
+function renderTabContent(p) {
+  if (state.tab === 'history') return renderHistory(p);
+  if (state.tab === 'memo') return renderMemo(p);
+  return renderTasks(p);
+}
+
+function renderTasks(p) {
+  const bigHtml = p.big_task
+    ? taskCard(p.big_task, 'big')
+    : `<div class="task-empty" onclick="openAddTaskModal('${p.id}','big')">＋ 大タスクを追加（Must do）</div>`;
+
+  const medSlots = p.medium_tasks || [];
+  const medHtml = medSlots.map(t => taskCard(t, 'med')).join('') +
+    (medSlots.length < 3 ? `<div class="task-empty" onclick="openAddTaskModal('${p.id}','medium')">＋ 中タスクを追加（${medSlots.length}/3）</div>` : '');
+
+  const smallSlots = p.small_tasks || [];
+  const smallHtml = smallSlots.map(t => taskCard(t, 'small')).join('') +
+    (smallSlots.length < 5 ? `<div class="task-empty" onclick="openAddTaskModal('${p.id}','small')">＋ 小タスクを追加（${smallSlots.length}/5）</div>` : '');
+
+  return `
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge big">1</div>
+          <div>
+            <div class="task-section-name">大タスク（Must do）</div>
+            <div class="task-count">プロジェクト全体のゴールに直結する最重要タスク</div>
+          </div>
+        </div>
+      </div>
+      <div class="task-cards">${bigHtml}</div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge med">3</div>
+          <div>
+            <div class="task-section-name">中タスク（Should do）</div>
+            <div class="task-count">大タスクを支える重要タスク（最大3つ）</div>
+          </div>
+        </div>
+      </div>
+      <div class="task-cards">${medHtml}</div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge small">5</div>
+          <div>
+            <div class="task-section-name">小タスク（Nice to do）</div>
+            <div class="task-count">細かいアクション・サブタスク（最大5つ）</div>
+          </div>
+        </div>
+      </div>
+      <div class="task-cards">${smallHtml}</div>
+    </div>
+  `;
+}
+
+function taskCard(t, sizeClass) {
+  const isDone = t.status === 'done';
+  const isInProgress = t.status === 'in_progress';
+  const due = t.due_date ? `📅 ${t.due_date}${isOverdue(t.due_date) && !isDone ? ' ⚠️' : ''}` : '';
+  return `
+    <div class="task-card ${sizeClass} ${isDone ? 'done' : ''}">
+      <div class="task-card-top">
+        <div class="task-checkbox ${t.status}" onclick="cycleStatus('${t.id}')">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <polyline points="1.5,5 4,7.5 8.5,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="task-info">
+          <div class="task-title">${esc(t.title)}</div>
+          ${t.description ? `<div class="task-desc">${esc(t.description)}</div>` : ''}
+          <div class="task-meta">
+            <span class="task-status-pill ${t.status}">${taskStatusLabel(t.status)}</span>
+            ${due ? `<span class="task-due ${isOverdue(t.due_date) && !isDone ? 'overdue' : ''}">${due}</span>` : ''}
+          </div>
+        </div>
+        <div class="task-actions">
+          <button class="icon-btn" onclick="openEditTaskModal('${t.id}')" title="編集">✏️</button>
+          <button class="icon-btn del" onclick="deleteTask('${t.id}')" title="削除">🗑</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderHistory(p) {
+  const allHistory = [];
+  // プロジェクト履歴
+  (p.history || []).forEach(h => allHistory.push({...h, source: p.name}));
+  // タスク履歴
+  getAllTasks(p).forEach(t => {
+    (t.history || []).forEach(h => allHistory.push({...h, source: t.title}));
+  });
+  allHistory.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+
+  if (!allHistory.length) return '<div style="color:var(--text2);font-size:13px;padding:20px 0;">履歴なし</div>';
+  return `
+    <div class="history-section">
+      <div class="history-list">
+        ${allHistory.map(h => `
+          <div class="history-item">
+            <div class="history-dot"></div>
+            <div class="history-content">
+              <div class="history-action">${esc(h.action)}</div>
+              <div class="history-detail">${esc(h.detail)} — <em>${esc(h.source)}</em></div>
+              <div class="history-time">${h.timestamp}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderMemo(p) {
+  return `
+    <div class="memo-section">
+      <h3>メモ</h3>
+      <textarea class="memo-area" id="memoArea" placeholder="このプロジェクトに関するメモを自由に...">${esc(p.memo || '')}</textarea>
+      <div class="memo-save">
+        <button class="btn btn-primary btn-sm" onclick="saveMemo('${p.id}')">保存</button>
+      </div>
+    </div>`;
+}
+
+// ── ステータス ──
+function statusLabel(s) { return {active:'進行中', completed:'完了', archived:'アーカイブ'}[s] || s; }
+function taskStatusLabel(s) { return {todo:'未着手', in_progress:'進行中', done:'完了'}[s] || s; }
+function isOverdue(date) { return date && date < new Date().toISOString().slice(0,10); }
+
+async function cycleStatus(taskId) {
+  const task = findTask(taskId);
+  if (!task) return;
+  const next = {todo: 'in_progress', in_progress: 'done', done: 'todo'}[task.status];
+  await api('PUT', `/tasks/${taskId}`, {status: next});
+  await loadData();
+  const p = state.data.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+}
+
+function findTask(id) {
+  for (const p of state.data.projects) {
+    if (p.big_task?.id === id) return p.big_task;
+    for (const t of [...(p.medium_tasks||[]), ...(p.small_tasks||[])]) {
+      if (t.id === id) return t;
+    }
+  }
+  return null;
+}
+
+// ── API ──
+async function api(method, path, body) {
+  const r = await fetch(`${API}${path}`, {
+    method,
+    headers: {'Content-Type': 'application/json'},
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return r.json();
+}
+
+// ── モーダル ──
+function openModal(html) {
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modalOverlay')) {
+    document.getElementById('modalOverlay').style.display = 'none';
+  }
+}
+
+function openNewProjectModal() {
+  openModal(`
+    <h2>新規プロジェクト</h2>
+    <div class="form-group"><label>プロジェクト名 *</label><input id="f-name" placeholder="例：コーデ就労支援 AI導入" autofocus></div>
+    <div class="form-group"><label>ゴール（達成目標）</label><textarea id="f-goal" placeholder="例：2026年7月末までにAI活用率50%以上を達成する"></textarea></div>
+    <div class="form-group"><label>メモ</label><textarea id="f-memo" placeholder="背景・補足など"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="createProject()">作成</button>
+    </div>`);
+}
+
+async function createProject() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { toast('プロジェクト名を入力してください', 'err'); return; }
+  const r = await api('POST', '/projects', {
+    name,
+    goal: document.getElementById('f-goal').value.trim(),
+    memo: document.getElementById('f-memo').value.trim()
+  });
+  closeModal();
+  await loadData();
+  selectProject(r.id);
+  toast('プロジェクトを作成しました', 'ok');
+}
+
+function openEditProjectModal(pid) {
+  const p = state.data.projects.find(p => p.id === pid);
+  openModal(`
+    <h2>プロジェクト編集</h2>
+    <div class="form-group"><label>プロジェクト名</label><input id="f-name" value="${esc(p.name)}" autofocus></div>
+    <div class="form-group"><label>ゴール</label><textarea id="f-goal">${esc(p.goal || '')}</textarea></div>
+    <div class="form-group"><label>ステータス</label>
+      <select id="f-status">
+        <option value="active" ${p.status==='active'?'selected':''}>進行中</option>
+        <option value="completed" ${p.status==='completed'?'selected':''}>完了</option>
+        <option value="archived" ${p.status==='archived'?'selected':''}>アーカイブ</option>
+      </select></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="updateProject('${pid}')">保存</button>
+    </div>`);
+}
+
+async function updateProject(pid) {
+  await api('PUT', `/projects/${pid}`, {
+    name: document.getElementById('f-name').value.trim(),
+    goal: document.getElementById('f-goal').value.trim(),
+    status: document.getElementById('f-status').value,
+  });
+  closeModal();
+  await loadData();
+  const p = state.data.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('更新しました', 'ok');
+}
+
+async function markProjectDone(pid) {
+  await api('PUT', `/projects/${pid}`, {status: 'completed'});
+  await loadData();
+  const p = state.data.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('プロジェクトを完了しました！', 'ok');
+}
+
+async function archiveProject(pid) {
+  await api('PUT', `/projects/${pid}`, {status: 'archived'});
+  await loadData();
+  const p = state.data.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('アーカイブしました', 'ok');
+}
+
+async function deleteProject(pid) {
+  if (!confirm('このプロジェクトを削除しますか？（元に戻せません）')) return;
+  await api('DELETE', `/projects/${pid}`);
+  await loadData();
+  showWelcome();
+  toast('削除しました', 'ok');
+}
+
+function openAddTaskModal(pid, type) {
+  const labels = {big:'大タスク（Must do）', medium:'中タスク（Should do）', small:'小タスク（Nice to do）'};
+  openModal(`
+    <h2>タスク追加 — ${labels[type]}</h2>
+    <div class="form-group"><label>タイトル *</label><input id="f-title" placeholder="タスクのタイトル" autofocus></div>
+    <div class="form-group"><label>説明</label><textarea id="f-desc" placeholder="詳細・目的など"></textarea></div>
+    <div class="form-group"><label>期日</label><input id="f-due" type="date"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="addTask('${pid}','${type}')">追加</button>
+    </div>`);
+}
+
+async function addTask(pid, type) {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { toast('タイトルを入力してください', 'err'); return; }
+  const r = await api('POST', `/projects/${pid}/tasks`, {
+    type, title,
+    description: document.getElementById('f-desc').value.trim(),
+    due_date: document.getElementById('f-due').value || null,
+  });
+  if (r.error) { toast(r.error, 'err'); return; }
+  closeModal();
+  await loadData();
+  const p = state.data.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('タスクを追加しました', 'ok');
+}
+
+function openEditTaskModal(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  openModal(`
+    <h2>タスク編集</h2>
+    <div class="form-group"><label>タイトル</label><input id="f-title" value="${esc(t.title)}" autofocus></div>
+    <div class="form-group"><label>説明</label><textarea id="f-desc">${esc(t.description || '')}</textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>ステータス</label>
+        <select id="f-status">
+          <option value="todo" ${t.status==='todo'?'selected':''}>未着手</option>
+          <option value="in_progress" ${t.status==='in_progress'?'selected':''}>進行中</option>
+          <option value="done" ${t.status==='done'?'selected':''}>完了</option>
+        </select></div>
+      <div class="form-group"><label>期日</label><input id="f-due" type="date" value="${t.due_date||''}"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="updateTask('${taskId}')">保存</button>
+    </div>`);
+}
+
+async function updateTask(taskId) {
+  await api('PUT', `/tasks/${taskId}`, {
+    title: document.getElementById('f-title').value.trim(),
+    description: document.getElementById('f-desc').value.trim(),
+    status: document.getElementById('f-status').value,
+    due_date: document.getElementById('f-due').value || null,
+  });
+  closeModal();
+  await loadData();
+  const p = state.data.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('更新しました', 'ok');
+}
+
+async function deleteTask(taskId) {
+  if (!confirm('このタスクを削除しますか？')) return;
+  await api('DELETE', `/tasks/${taskId}`);
+  await loadData();
+  const p = state.data.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('削除しました', 'ok');
+}
+
+async function saveMemo(pid) {
+  const memo = document.getElementById('memoArea').value;
+  await api('PUT', `/projects/${pid}`, {memo});
+  await loadData();
+  toast('メモを保存しました', 'ok');
+}
+
+// ── Toast ──
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── Escape ──
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── キーボード ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// ── 起動 ──
+loadData();
+</script>
+</body>
+</html>
