@@ -887,17 +887,18 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px 12px;
-  max-width: 80vw;
-  background: rgba(255,255,255,.88);
+  max-width: 60vw;
+  background: rgba(255,255,255,.92);
   backdrop-filter: blur(8px);
   padding: 6px 16px;
   border-radius: 999px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+  transition: background .2s;
 }
 
 .section-nav-item {
   font-size: 11px;
-  color: #aaa;
+  color: #555;
   cursor: pointer;
   padding: 2px 4px;
   font-weight: 700;
@@ -912,7 +913,12 @@ body {
   font-weight: 700;
 }
 
-.section-nav.on-dark .section-nav-item { color: rgba(255,255,255,.5); }
+/* on-dark: ダーク背景スライドでは pill 自体を暗くする */
+.section-nav.on-dark {
+  background: rgba(20,20,20,.82);
+}
+.section-nav.on-dark .section-nav-item { color: rgba(255,255,255,.65); }
+.section-nav.on-dark .section-nav-item:hover { color: #fff; }
 .section-nav.on-dark .section-nav-item.current { color: #fff; font-weight: 700; }
 
 /* =============================================
@@ -1057,8 +1063,8 @@ body {
    ============================================= */
 .export-bar {
   position: fixed;
-  top: 14px;
-  left: 18px;
+  bottom: 14px;
+  right: 18px;
   display: flex;
   gap: 6px;
   z-index: 50;

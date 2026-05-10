@@ -188,6 +188,43 @@
     if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
+  /* ---------- Click half-screen navigation (left=prev / right=next) ---------- */
+  stage.addEventListener('click', function (e) {
+    // インタラクティブ要素はスキップ
+    var t = e.target;
+    while (t && t !== stage) {
+      var tag = t.tagName;
+      if (tag === 'BUTTON' || tag === 'A' || tag === 'INPUT' ||
+          tag === 'SELECT' || tag === 'TEXTAREA') return;
+      if (t.classList && (t.classList.contains('s-prompt-copy') ||
+          t.classList.contains('sidebar-toggle'))) return;
+      t = t.parentElement;
+    }
+    // サイドバー開いているときはスキップ
+    if (sidebar && sidebar.classList.contains('open')) return;
+    if (e.clientX < window.innerWidth / 2) {
+      goTo(current - 1);
+    } else {
+      goTo(current + 1);
+    }
+  });
+
+  /* ---------- Mouse wheel navigation ---------- */
+  var wheelLocked = false;
+  document.addEventListener('wheel', function (e) {
+    // サイドバー・スクリプトパネル内のスクロールは除外
+    var t = e.target;
+    while (t) {
+      if (t === sidebar || t === scriptPanel) return;
+      t = t.parentElement;
+    }
+    if (wheelLocked) return;
+    if (e.deltaY > 0) { goTo(current + 1); }
+    else if (e.deltaY < 0) { goTo(current - 1); }
+    wheelLocked = true;
+    setTimeout(function () { wheelLocked = false; }, 650);
+  }, { passive: true });
+
   /* ---------- Script hover ---------- */
   if (scriptTrigger) {
     scriptTrigger.addEventListener('mouseenter', function () {
