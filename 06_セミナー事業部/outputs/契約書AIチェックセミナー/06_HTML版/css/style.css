@@ -40,6 +40,7 @@ body {
 .slide-stage {
   position: fixed;
   inset: 0;
+  overflow: hidden;
 }
 
 /* =============================================
@@ -318,7 +319,7 @@ body {
 }
 
 .slide-h2 {
-  font-size: 2.8cqw;
+  font-size: 3.1cqw;
   font-weight: 700;
   color: var(--c-primary);
 }
@@ -342,9 +343,9 @@ body {
    TYPOGRAPHY
    ============================================= */
 .slide-h1 { font-size: 5.5cqw; font-weight: 700; color: var(--c-primary); }
-.slide-h3 { font-size: 2cqw; font-weight: 700; color: var(--c-primary); }
-.slide-body { font-size: 2cqw; line-height: 1.7; }
-.slide-caption { font-size: 1.3cqw; color: var(--c-text-sub); }
+.slide-h3 { font-size: 2.3cqw; font-weight: 700; color: var(--c-primary); }
+.slide-body { font-size: 2.3cqw; line-height: 1.7; }
+.slide-caption { font-size: 1.45cqw; color: var(--c-text-sub); }
 
 /* =============================================
    LIST STYLES
@@ -357,7 +358,7 @@ body {
 }
 
 .s-list li {
-  font-size: 1.75cqw;
+  font-size: 2.05cqw;
   line-height: 1.55;
   padding-left: 1.4cqw;
   position: relative;
@@ -376,14 +377,14 @@ body {
 .s-list li.s-list-head {
   font-weight: 700;
   color: var(--c-primary);
-  font-size: 1.85cqw;
+  font-size: 2.15cqw;
   margin-top: .5cqw;
 }
 
 .s-list li.s-list-head::before { content: none; }
 
 .s-list li.s-list-sub {
-  font-size: 1.5cqw;
+  font-size: 1.75cqw;
   color: var(--c-text-sub);
   padding-left: 2.2cqw;
 }
@@ -391,7 +392,7 @@ body {
 .s-list li.s-list-sub::before {
   content: '─';
   color: var(--c-primary-mid);
-  font-size: 1.2cqw;
+  font-size: 1.3cqw;
   top: .28cqw;
   left: .8cqw;
 }
@@ -410,21 +411,21 @@ body {
 
 .s-list li.s-list-arrow {
   color: var(--c-text-sub);
-  font-size: 1.55cqw;
+  font-size: 1.85cqw;
   padding-left: 1.8cqw;
 }
 
 .s-list li.s-list-arrow::before {
   content: '→';
   color: var(--c-accent);
-  font-size: 1.3cqw;
+  font-size: 1.5cqw;
   top: .25cqw;
 }
 
 .s-list li.s-list-q {
   font-weight: 700;
   color: var(--c-primary);
-  font-size: 1.75cqw;
+  font-size: 2.05cqw;
   margin-top: .7cqw;
 }
 
@@ -482,7 +483,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: .5cqw;
-  font-size: 1.1cqw;
+  font-size: 1.25cqw;
   font-weight: 700;
   letter-spacing: .05em;
   padding: .35cqw 1cqw;
@@ -500,7 +501,7 @@ body {
 }
 
 .s-compare-title {
-  font-size: 1.8cqw;
+  font-size: 2.1cqw;
   font-weight: 700;
   color: var(--c-text);
 }
@@ -515,7 +516,7 @@ body {
 }
 
 .s-compare-items li {
-  font-size: 1.5cqw;
+  font-size: 1.75cqw;
   line-height: 1.5;
   padding-left: 1.4cqw;
   position: relative;
@@ -585,14 +586,14 @@ body {
 }
 
 .s-flow-label {
-  font-size: 1.6cqw;
+  font-size: 1.9cqw;
   font-weight: 700;
   color: var(--c-primary);
   margin-bottom: .4cqw;
 }
 
 .s-flow-desc {
-  font-size: 1.25cqw;
+  font-size: 1.5cqw;
   color: var(--c-text-sub);
   line-height: 1.5;
 }
@@ -609,7 +610,7 @@ body {
   border-radius: 0 .6cqw .6cqw 0;
   padding: 1.2cqw 1.5cqw;
   font-family: 'Noto Sans JP', monospace;
-  font-size: 1.4cqw;
+  font-size: 1.65cqw;
   white-space: pre-wrap;
   line-height: 1.7;
   color: #334155;
@@ -626,7 +627,7 @@ body {
   border: none;
   border-radius: .3cqw;
   padding: .3cqw .8cqw;
-  font-size: 1.1cqw;
+  font-size: 1.3cqw;
   cursor: pointer;
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 700;
@@ -661,7 +662,7 @@ body {
 }
 
 .s-risk-badge {
-  font-size: .95cqw;
+  font-size: 1.1cqw;
   font-weight: 700;
   padding: .2cqw .75cqw;
   border-radius: 99px;
@@ -675,20 +676,20 @@ body {
 .s-risk-badge.info { background: var(--c-primary); }
 
 .s-risk-title {
-  font-size: 1.5cqw;
+  font-size: 1.75cqw;
   font-weight: 700;
   color: var(--c-text);
 }
 
 .s-risk-body {
   padding: .8cqw 1.2cqw;
-  font-size: 1.35cqw;
+  font-size: 1.6cqw;
   line-height: 1.55;
   color: var(--c-text);
 }
 
 .s-risk-sub {
-  font-size: 1.1cqw;
+  font-size: 1.3cqw;
   color: var(--c-text-sub);
   margin-top: .3cqw;
 }
@@ -698,7 +699,7 @@ body {
   border-left: .25cqw solid var(--c-primary);
   padding: .5cqw .8cqw;
   border-radius: 0 .3cqw .3cqw 0;
-  font-size: 1.2cqw;
+  font-size: 1.4cqw;
   color: var(--c-primary-dark);
   margin-top: .4cqw;
 }
@@ -723,20 +724,20 @@ body {
 }
 
 .s-route-label {
-  font-size: 1.1cqw;
+  font-size: 1.3cqw;
   font-weight: 700;
   color: var(--c-primary);
   letter-spacing: .08em;
 }
 
 .s-route-title {
-  font-size: 1.45cqw;
+  font-size: 1.7cqw;
   font-weight: 700;
   color: var(--c-text);
 }
 
 .s-route-desc {
-  font-size: 1.2cqw;
+  font-size: 1.45cqw;
   color: var(--c-text-sub);
   line-height: 1.5;
 }
@@ -750,7 +751,7 @@ body {
 }
 
 .s-card-items li {
-  font-size: 1.2cqw;
+  font-size: 1.4cqw;
   color: var(--c-text-sub);
   line-height: 1.55;
   padding-left: 1.2cqw;
@@ -800,13 +801,13 @@ body {
 }
 
 .s-step-text {
-  font-size: 1.55cqw;
+  font-size: 1.85cqw;
   line-height: 1.5;
   color: var(--c-text);
 }
 
 .s-step-sub {
-  font-size: 1.2cqw;
+  font-size: 1.45cqw;
   color: var(--c-text-sub);
   margin-top: .2cqw;
 }
@@ -819,7 +820,7 @@ body {
   border-left: .3cqw solid var(--c-accent);
   padding: .8cqw 1.2cqw;
   border-radius: 0 .5cqw .5cqw 0;
-  font-size: 1.5cqw;
+  font-size: 1.75cqw;
   color: var(--c-text);
   margin-top: .5cqw;
 }
@@ -862,13 +863,13 @@ body {
 .s-point-content {}
 
 .s-point-title {
-  font-size: 1.75cqw;
+  font-size: 2.05cqw;
   font-weight: 700;
   color: var(--c-primary);
 }
 
 .s-point-desc {
-  font-size: 1.4cqw;
+  font-size: 1.65cqw;
   color: var(--c-text-sub);
   margin-top: .25cqw;
   line-height: 1.5;
@@ -1085,6 +1086,46 @@ body {
 }
 
 .export-bar button:hover { background: var(--c-primary-pale); }
+
+.zoom-out,
+.zoom-in {
+  font-size: 15px !important;
+  padding: 3px 10px !important;
+  line-height: 1;
+  min-width: 28px;
+}
+
+.zoom-reset {
+  font-size: 10px !important;
+  padding: 5px 7px !important;
+  color: var(--c-text-sub) !important;
+  letter-spacing: .03em;
+}
+
+.zoom-level-display {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--c-text-sub);
+  background: rgba(255,255,255,.88);
+  border: 1px solid var(--c-line);
+  border-radius: 5px;
+  padding: 5px 7px;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+  user-select: none;
+  min-width: 36px;
+  text-align: center;
+}
+
+/* ズームボタン群と出力ボタン群を視覚的に区切る */
+.export-bar .zoom-group {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  padding-left: 8px;
+  border-left: 1px solid var(--c-line);
+  margin-left: 4px;
+}
 
 .export-overlay {
   position: fixed;

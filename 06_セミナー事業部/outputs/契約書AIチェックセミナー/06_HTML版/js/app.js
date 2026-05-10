@@ -16,10 +16,14 @@
   var scriptPanel  = document.querySelector('.script-panel');
   var scriptTrigger= document.querySelector('.script-trigger');
   var scriptText   = document.querySelector('.script-text');
-  var overlay  = document.querySelector('.export-overlay');
-  var fillBar  = document.querySelector('.export-progress-fill');
-  var pdfBtn   = document.querySelector('.export-pdf');
-  var pptxBtn  = document.querySelector('.export-pptx');
+  var overlay     = document.querySelector('.export-overlay');
+  var fillBar     = document.querySelector('.export-progress-fill');
+  var pdfBtn      = document.querySelector('.export-pdf');
+  var pptxBtn     = document.querySelector('.export-pptx');
+  var zoomInBtn   = document.querySelector('.zoom-in');
+  var zoomOutBtn  = document.querySelector('.zoom-out');
+  var zoomResetBtn= document.querySelector('.zoom-reset');
+  var zoomDisplay = document.getElementById('zoom-display');
 
   /* ---------- Render ---------- */
   function ensureRendered(index) {
@@ -314,6 +318,51 @@
   function showOverlay() { if (overlay) overlay.classList.add('show'); setProgress(0); }
   function hideOverlay() { if (overlay) overlay.classList.remove('show'); }
   function setProgress(v) { if (fillBar) fillBar.style.width = Math.round(v * 100) + '%'; }
+
+  /* ---------- Zoom ---------- */
+  var zoomLevel  = 1.0;
+  var ZOOM_STEP  = 0.1;
+  var ZOOM_MIN   = 0.6;
+  var ZOOM_MAX   = 1.8;
+
+  function applyZoom(z) {
+    zoomLevel = Math.round(Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z)) * 10) / 10;
+    stage.style.transform       = zoomLevel === 1 ? '' : 'scale(' + zoomLevel + ')';
+    stage.style.transformOrigin = 'center center';
+    if (zoomDisplay) zoomDisplay.textContent = Math.round(zoomLevel * 100) + '%';
+    // ズームレベルをLocalStorageに保存
+    try { localStorage.setItem('slideZoom', zoomLevel); } catch (e) {}
+  }
+
+  if (zoomInBtn)    zoomInBtn.addEventListener('click',    function () { applyZoom(zoomLevel + ZOOM_STEP); });
+  if (zoomOutBtn)   zoomOutBtn.addEventListener('click',   function () { applyZoom(zoomLevel - ZOOM_STEP); });
+  if (zoomResetBtn) zoomResetBtn.addEventListener('click', function () { applyZoom(1.0); });
+
+  /* Ctrl+ホイールで拡大縮小 */
+  document.addEventListener('wheel', function (e) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    applyZoom(zoomLevel + (e.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP));
+  }, { passive: false });
+
+  /* Ctrl +/- キー */
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=' || e.key === ';')) {
+      e.preventDefault(); applyZoom(zoomLevel + ZOOM_STEP);
+    }
+    if ((e.ctrlKey || e.metaKey) && (e.key === '-' || e.key === '_')) {
+      e.preventDefault(); applyZoom(zoomLevel - ZOOM_STEP);
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key === '0') {
+      e.preventDefault(); applyZoom(1.0);
+    }
+  });
+
+  /* 前回のズームレベルを復元 */
+  try {
+    var saved = parseFloat(localStorage.getItem('slideZoom'));
+    if (!isNaN(saved) && saved !== 1.0) applyZoom(saved);
+  } catch (e) {}
 
   function rgbToHex(rgb) {
     var m = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
