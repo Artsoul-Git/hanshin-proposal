@@ -15,31 +15,36 @@
   <!-- ========== Main layout ========== -->
   <div class="p-layout" id="p-layout">
 
-    <!-- Left: current slide (resizable) -->
+    <!-- Left: current slide (horizontally resizable) -->
     <div class="p-current-col" id="p-current-col">
       <div class="p-col-label">現在のスライド</div>
       <div class="p-stage p-stage-current" id="p-stage-current"></div>
     </div>
 
-    <!-- Drag handle -->
+    <!-- Horizontal drag handle (left ↔ right) -->
     <div class="p-splitter" id="p-splitter">
       <div class="p-splitter-handle"></div>
     </div>
 
-    <!-- Right: next slide + notes + timer -->
+    <!-- Right column (vertically divided by v-splitter) -->
     <div class="p-side-col" id="p-side-col">
       <div class="p-col-label">次のスライド</div>
       <div class="p-stage p-stage-next" id="p-stage-next">
         <div class="p-stage-empty">（最後のスライド）</div>
       </div>
 
-      <div class="p-notes-box">
+      <!-- Vertical drag handle (next slide ↕ notes) -->
+      <div class="p-v-splitter" id="p-v-splitter">
+        <div class="p-v-splitter-handle"></div>
+      </div>
+
+      <div class="p-notes-box" id="p-notes-box">
         <div class="p-notes-header">
           <span class="p-notes-label">Talk Script</span>
           <div class="p-fontsize-ctrl">
             <button class="p-fontsize-btn" id="p-notes-smaller" title="文字を小さく">A−</button>
             <span class="p-fontsize-val" id="p-fontsize-val">13</span>
-            <button class="p-fontsize-btn" id="p-notes-larger"  title="文字を大きく">A＋</button>
+            <button class="p-fontsize-btn" id="p-notes-larger" title="文字を大きく">A＋</button>
           </div>
         </div>
         <div class="p-notes-text" id="p-notes-text">（トークスクリプトなし）</div>

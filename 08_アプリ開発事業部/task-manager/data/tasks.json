@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T04:23:42",
+  "last_updated": "2026-05-11T04:29:34",
   "projects": [
     {
       "id": "sample-001",
@@ -169,9 +169,9 @@
       "id": "c9c17886",
       "name": "YZ_セミナースライド作成：リットリンク＆キャンバで作る無料のミニホームページ",
       "goal": "2026/5/12までにセミナースライドと告知チラシを完成させる",
-      "status": "active",
+      "status": "archived",
       "created_at": "2026-05-11T04:19:01",
-      "updated_at": "2026-05-11T04:19:01",
+      "updated_at": "2026-05-11T04:27:23",
       "memo": "",
       "big_task": null,
       "medium_tasks": [],
@@ -181,6 +181,252 @@
           "timestamp": "2026-05-11T04:19:01",
           "action": "作成",
           "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:08",
+          "action": "更新",
+          "detail": "名前を更新"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:23",
+          "action": "更新",
+          "detail": "ステータスを「active」→「archived」に変更"
+        }
+      ]
+    },
+    {
+      "id": "0ff621bf",
+      "name": "YZ_セミナースライド作成：リットリンク＆キャンバで作る無料のミニホームページ",
+      "goal": "2026/5/12までにセミナースライドと告知チラシを完成させる",
+      "status": "active",
+      "created_at": "2026-05-11T04:27:49",
+      "updated_at": "2026-05-11T04:29:34",
+      "memo": "",
+      "big_task": {
+        "id": "ceaa8348",
+        "title": "「2026/5/12までにセミナースライドと告知チラシを完…」を達成する",
+        "description": "このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。",
+        "status": "todo",
+        "due_date": null,
+        "created_at": "2026-05-11T04:27:50",
+        "updated_at": "2026-05-11T04:29:34",
+        "mindmap_mmd": "mindmap\n  root((\"「2026/5/12までにセミナースライドと告知…\"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ",
+        "roadmap_mmd": "graph LR\n  A([🎯 ゴール設定]) --> B[📋 計画]\n  B --> C[⚙️ 実行]\n  C --> D([✅ 完了])\n\n  B --> B1[要件整理]\n  B --> B2[リソース確認]\n  B --> B3[スケジュール確定]\n  B --> B4[スケジュール確定]\n\n  C --> C1[フェーズ10]\n  C --> C2[フェーズ2]\n  C --> C3[フェーズ3]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000",
+        "related_links": [],
+        "history": [
+          {
+            "timestamp": "2026-05-11T04:27:50",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "6d744825",
+          "title": "現状把握・要件整理",
+          "description": "現在の状況を正確に把握し、達成に必要な要件を明確にする",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:50",
+          "updated_at": "2026-05-11T04:27:50",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:50",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "ac093045",
+          "title": "計画立案・実行",
+          "description": "具体的なアクションプランを立て、確実に実行する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:50",
+          "updated_at": "2026-05-11T04:27:50",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:50",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "84ef8825",
+          "title": "検証・改善・定着化",
+          "description": "結果を数値で確認し、改善サイクルを回して定着させる",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:50",
+          "updated_at": "2026-05-11T04:27:50",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:50",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "c9f70b65",
+          "title": "キックオフ・関係者共有",
+          "description": "プロジェクト開始を関係者に伝え、役割分担と協力体制を整える",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:51",
+          "updated_at": "2026-05-11T04:27:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:51",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "9bfb647b",
+          "title": "ツール・リソースの準備",
+          "description": "作業に必要なツール・情報・人員・予算を事前に確保する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:51",
+          "updated_at": "2026-05-11T04:27:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:51",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "14638835",
+          "title": "進捗確認・中間レビュー",
+          "description": "定期的に進捗を確認し、目標とのズレを早期に修正する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:51",
+          "updated_at": "2026-05-11T04:27:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:51",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "fe321663",
+          "title": "課題の洗い出しと対処",
+          "description": "リスクや障害を早期に発見し、影響が出る前に手を打つ",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:51",
+          "updated_at": "2026-05-11T04:27:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:51",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "8f11e152",
+          "title": "最終確認・完了報告",
+          "description": "成果物・達成度を確認し、引き継ぎ・報告を行って完了とする",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-11T04:27:51",
+          "updated_at": "2026-05-11T04:27:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T04:27:51",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "2026-05-11T04:27:49",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:50",
+          "action": "タスク追加",
+          "detail": "「2026/5/12までにセミナースライドと告知チラシを完…」を達成する を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:50",
+          "action": "タスク追加",
+          "detail": "現状把握・要件整理 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:50",
+          "action": "タスク追加",
+          "detail": "計画立案・実行 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:50",
+          "action": "タスク追加",
+          "detail": "検証・改善・定着化 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:51",
+          "action": "タスク追加",
+          "detail": "キックオフ・関係者共有 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:51",
+          "action": "タスク追加",
+          "detail": "ツール・リソースの準備 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:51",
+          "action": "タスク追加",
+          "detail": "進捗確認・中間レビュー を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:51",
+          "action": "タスク追加",
+          "detail": "課題の洗い出しと対処 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T04:27:51",
+          "action": "タスク追加",
+          "detail": "最終確認・完了報告 を追加しました"
         }
       ]
     }

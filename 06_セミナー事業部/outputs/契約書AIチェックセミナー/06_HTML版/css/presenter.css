@@ -11,7 +11,7 @@
   width: 100vw;
 }
 
-/* ── Main layout (fills all space above nav bar) ── */
+/* ── Main layout ── */
 .p-layout {
   display: flex;
   flex: 1;
@@ -26,11 +26,11 @@
   max-width: 80%;
   display: flex;
   flex-direction: column;
-  background: #0a0a0a;
+  background: #080808;
   overflow: hidden;
 }
 
-/* ── Drag splitter ── */
+/* ── Horizontal splitter (left ↔ right) ── */
 .p-splitter {
   flex: 0 0 8px;
   background: #1e1e1e;
@@ -39,13 +39,12 @@
   align-items: center;
   justify-content: center;
   transition: background .15s;
-  position: relative;
   z-index: 10;
   user-select: none;
 }
 
-.p-splitter:hover { background: #6F911D; }
-.p-splitter.dragging { background: #6F911D; }
+.p-splitter:hover  { background: #6F911D; }
+.p-splitter.active { background: #6F911D; }
 
 .p-splitter-handle {
   width: 2px;
@@ -56,7 +55,7 @@
 }
 
 .p-splitter:hover .p-splitter-handle,
-.p-splitter.dragging .p-splitter-handle {
+.p-splitter.active .p-splitter-handle {
   background: rgba(255,255,255,.7);
 }
 
@@ -70,6 +69,36 @@
   overflow: hidden;
 }
 
+/* ── Vertical splitter (next slide ↕ notes) ── */
+.p-v-splitter {
+  flex-shrink: 0;
+  height: 8px;
+  background: #1e1e1e;
+  cursor: row-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+  z-index: 10;
+  user-select: none;
+}
+
+.p-v-splitter:hover  { background: #6F911D; }
+.p-v-splitter.active { background: #6F911D; }
+
+.p-v-splitter-handle {
+  width: 44px;
+  height: 2px;
+  background: rgba(255,255,255,.18);
+  border-radius: 99px;
+  transition: background .15s;
+}
+
+.p-v-splitter:hover .p-v-splitter-handle,
+.p-v-splitter.active .p-v-splitter-handle {
+  background: rgba(255,255,255,.7);
+}
+
 /* ── Column label strip ── */
 .p-col-label {
   font-size: 9px;
@@ -78,9 +107,10 @@
   letter-spacing: .2em;
   text-transform: uppercase;
   padding: 4px 12px;
-  background: #080808;
-  border-bottom: 1px solid #202020;
+  background: #060606;
+  border-bottom: 1px solid #1e1e1e;
   flex-shrink: 0;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 /* ── Slide stage containers ── */
@@ -90,21 +120,26 @@
   background: #111;
 }
 
-/* Current: fills all available height in left column */
+/* Current slide: flex-centered, fills available height */
 .p-stage-current {
   flex: 1;
   min-height: 0;
-}
-
-/* Next: locks 16:9 aspect ratio */
-.p-stage-next {
-  flex-shrink: 0;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-bottom: 1px solid #252525;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #0d0d0d;
+}
+
+/* Next slide: height controlled by vertical splitter */
+.p-stage-next {
+  flex-shrink: 0;
+  width: 100%;
+  /* height set by presenter.js */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  border-bottom: none; /* replaced by v-splitter */
 }
 
 .p-stage-empty {
@@ -114,18 +149,26 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-/* Override .slide sizing inside presenter stages */
+/*
+ * Override .slide sizing inside presenter stages.
+ * Use aspect-ratio + max constraints so the slide
+ * fills the container while maintaining 16:9.
+ * As the left column widens, the slide width grows
+ * and cqw-based font sizes scale up naturally.
+ */
 .p-stage .slide {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
   transform: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 16 / 9 !important;
   opacity: 1 !important;
   pointer-events: none !important;
+  flex: 0 0 auto !important;
 }
 
 /* ── Notes box ── */
@@ -133,9 +176,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0;
   overflow: hidden;
-  border-bottom: 1px solid #252525;
   min-height: 0;
 }
 
@@ -143,9 +184,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 14px 5px;
+  padding: 6px 14px 5px;
   flex-shrink: 0;
   border-bottom: 1px solid #252525;
+  background: #151515;
 }
 
 .p-notes-label {
@@ -154,6 +196,7 @@
   color: #6F911D;
   letter-spacing: .18em;
   text-transform: uppercase;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 /* ── Font size control ── */
@@ -167,9 +210,9 @@
   font-size: 10px;
   font-weight: 700;
   font-family: 'Noto Sans JP', sans-serif;
-  background: #2a2a2a;
-  color: rgba(255,255,255,.6);
-  border: 1px solid #383838;
+  background: #252525;
+  color: rgba(255,255,255,.55);
+  border: 1px solid #333;
   border-radius: 3px;
   padding: 2px 7px;
   cursor: pointer;
@@ -181,11 +224,12 @@
 
 .p-fontsize-val {
   font-size: 9px;
-  color: rgba(255,255,255,.35);
+  color: rgba(255,255,255,.3);
   font-weight: 700;
-  min-width: 18px;
+  min-width: 20px;
   text-align: center;
   font-variant-numeric: tabular-nums;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 .p-notes-text {
@@ -200,14 +244,15 @@
   padding: 10px 14px;
 }
 
-/* ── Info row (timer) ── */
+/* ── Timer / info row ── */
 .p-info-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
   padding: 8px 14px;
   flex-shrink: 0;
+  border-top: 1px solid #252525;
+  background: #141414;
 }
 
 .p-timer {
@@ -219,10 +264,7 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.p-timer-btns {
-  display: flex;
-  gap: 6px;
-}
+.p-timer-btns { display: flex; gap: 6px; }
 
 .p-btn {
   font-size: 11px;
@@ -278,18 +320,11 @@
   justify-content: center;
 }
 
-.p-nav-btn:hover {
-  background: #6F911D;
-  color: #fff;
-  border-color: #6F911D;
-}
-
+.p-nav-btn:hover  { background: #6F911D; color: #fff; border-color: #6F911D; }
 .p-nav-btn:active { transform: scale(.96); }
 .p-nav-btn:disabled { opacity: .3; pointer-events: none; }
 
-.p-nav-arrow {
-  font-size: 11px;
-}
+.p-nav-arrow { font-size: 11px; }
 
 .p-slide-counter {
   font-size: 18px;
@@ -304,30 +339,24 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-#p-current-num {
-  color: #fff;
-  font-size: 24px;
-}
-
-.p-counter-sep {
-  color: rgba(255,255,255,.25);
-  font-size: 16px;
-}
+#p-current-num { color: #fff; font-size: 24px; }
+.p-counter-sep { color: rgba(255,255,255,.25); font-size: 16px; }
 
 .p-nav-hints {
   position: absolute;
   right: 20px;
   font-size: 10px;
-  color: rgba(255,255,255,.2);
+  color: rgba(255,255,255,.18);
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 400;
-  letter-spacing: .04em;
 }
 
-/* ── Drag overlay (prevents iframe/select interference while dragging) ── */
+/* ── Drag overlay (prevents text selection / interference during drag) ── */
 .p-drag-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  cursor: col-resize;
 }
+
+.p-drag-overlay.h { cursor: col-resize; }
+.p-drag-overlay.v { cursor: row-resize; }

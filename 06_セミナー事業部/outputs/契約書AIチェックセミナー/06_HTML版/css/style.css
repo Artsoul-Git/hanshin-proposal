@@ -1156,17 +1156,32 @@ body {
 }
 
 /* =============================================
-   PRINT (PDF)
+   PRINT (PDF) — A4横 (297×210mm) カラー保持
    ============================================= */
 @media print {
+  @page { size: 297mm 210mm; margin: 0; }
+
+  /* 背景色・背景画像を必ず印刷する */
+  *, *::before, *::after {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
   body { background: #fff; overflow: visible; }
+
   .section-nav, .sidebar-toggle, .sidebar, .sidebar-backdrop,
-  .script-trigger, .script-panel, .export-bar, .export-overlay { display: none !important; }
-  .slide-stage { position: static; }
+  .script-trigger, .script-panel, .export-bar, .export-overlay {
+    display: none !important;
+  }
+
+  .slide-stage { position: static; overflow: visible; }
+
   .slide {
     position: relative !important;
-    top: auto !important; left: auto !important;
+    top: auto !important;
+    left: auto !important;
     transform: none !important;
+    /* 16:9 at A4 width (297mm). Vertically centered: (210-167)/2 ≈ 21.5mm */
     width: 297mm !important;
     height: 167mm !important;
     max-width: none !important;
@@ -1175,6 +1190,7 @@ body {
     pointer-events: auto !important;
     page-break-after: always;
     break-after: page;
-    margin: 0;
+    margin: 21.5mm 0 !important;
+    overflow: hidden;
   }
 }

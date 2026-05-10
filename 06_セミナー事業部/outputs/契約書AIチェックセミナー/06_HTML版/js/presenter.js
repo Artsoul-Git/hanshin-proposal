@@ -5,9 +5,12 @@
 
   var layout      = document.getElementById('p-layout');
   var currentCol  = document.getElementById('p-current-col');
+  var sideCol     = document.getElementById('p-side-col');
   var splitter    = document.getElementById('p-splitter');
+  var vSplitter   = document.getElementById('p-v-splitter');
   var stgCurrent  = document.getElementById('p-stage-current');
   var stgNext     = document.getElementById('p-stage-next');
+  var notesBox    = document.getElementById('p-notes-box');
   var notesText   = document.getElementById('p-notes-text');
   var timerEl     = document.getElementById('p-timer');
   var timerToggle = document.getElementById('p-timer-toggle');
@@ -99,8 +102,8 @@
 
   function applyNotesFontSize(size) {
     notesFontSize = Math.max(9, Math.min(28, size));
-    if (notesText)   notesText.style.fontSize = notesFontSize + 'px';
-    if (fontsizeVal) fontsizeVal.textContent   = notesFontSize;
+    if (notesText)   notesText.style.fontSize   = notesFontSize + 'px';
+    if (fontsizeVal) fontsizeVal.textContent     = notesFontSize;
     try { localStorage.setItem('presenterNotesFontSize', notesFontSize); } catch (e) {}
   }
 
@@ -113,63 +116,109 @@
   } catch (e) {}
 
   /* =============================================
-     Splitter drag (resizes left/right columns)
+     Generic splitter factory
+     — builds a drag handler that resizes two regions
      ============================================= */
-  var SPLIT_MIN = 28; // % minimum for left column
-  var SPLIT_MAX = 80; // % maximum for left column
-  var dragOverlay = null;
-
-  function getSplitPct() {
-    var basis = currentCol.style.flex;
-    var m = basis && basis.match(/(\d+(?:\.\d+)?)%/);
-    return m ? parseFloat(m[1]) : 63;
+  function makeDragOverlay(cursor) {
+    var el = document.createElement('div');
+    el.className = 'p-drag-overlay ' + cursor;
+    document.body.appendChild(el);
+    return el;
   }
 
-  function applySplit(pct) {
-    pct = Math.max(SPLIT_MIN, Math.min(SPLIT_MAX, pct));
+  /* =============================================
+     Horizontal splitter (left col width)
+     ============================================= */
+  var H_MIN = 28; // % of layout width
+  var H_MAX = 80;
+
+  function applyHSplit(pct) {
+    pct = Math.max(H_MIN, Math.min(H_MAX, pct));
     currentCol.style.flex = '0 0 ' + pct.toFixed(1) + '%';
-    try { localStorage.setItem('presenterSplit', pct.toFixed(1)); } catch (e) {}
+    try { localStorage.setItem('presenterHSplit', pct.toFixed(1)); } catch (e) {}
   }
 
   if (splitter) {
     splitter.addEventListener('mousedown', function (e) {
       e.preventDefault();
-      splitter.classList.add('dragging');
-
-      /* overlay blocks mouse events from slides/iframes during drag */
-      dragOverlay = document.createElement('div');
-      dragOverlay.className = 'p-drag-overlay';
-      document.body.appendChild(dragOverlay);
+      splitter.classList.add('active');
+      var overlay = makeDragOverlay('h');
 
       function onMove(ev) {
-        var rect  = layout.getBoundingClientRect();
-        var pct   = ((ev.clientX - rect.left) / rect.width) * 100;
-        applySplit(pct);
+        var rect = layout.getBoundingClientRect();
+        applyHSplit(((ev.clientX - rect.left) / rect.width) * 100);
       }
-
       function onUp() {
-        splitter.classList.remove('dragging');
-        if (dragOverlay) { dragOverlay.remove(); dragOverlay = null; }
+        splitter.classList.remove('active');
+        overlay.remove();
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup',   onUp);
       }
-
       document.addEventListener('mousemove', onMove);
       document.addEventListener('mouseup',   onUp);
     });
   }
 
-  /* restore saved split */
   try {
-    var savedSplit = parseFloat(localStorage.getItem('presenterSplit'));
-    if (!isNaN(savedSplit)) applySplit(savedSplit);
+    var hs = parseFloat(localStorage.getItem('presenterHSplit'));
+    if (!isNaN(hs)) applyHSplit(hs);
   } catch (e) {}
+
+  /* =============================================
+     Vertical splitter (next-slide panel height)
+     ============================================= */
+  var V_MIN_PX = 60;
+
+  function applyVSplit(px) {
+    var sideH     = sideCol ? sideCol.clientHeight : 600;
+    var infoH     = sideCol ? (sideCol.querySelector('.p-info-row') || {}).offsetHeight || 52 : 52;
+    var labelH    = sideCol ? (sideCol.querySelector('.p-col-label') || {}).offsetHeight || 18 : 18;
+    var vSplitH   = 8;
+    var headerH   = notesBox ? (notesBox.querySelector('.p-notes-header') || {}).offsetHeight || 30 : 30;
+    var maxPx     = sideH - infoH - labelH - vSplitH - headerH - 40;
+    px = Math.max(V_MIN_PX, Math.min(maxPx, px));
+    if (stgNext) stgNext.style.height = px + 'px';
+    try { localStorage.setItem('presenterVSplit', Math.round(px)); } catch (e) {}
+  }
+
+  /* Default: height that gives 16:9 based on current side column width */
+  function initVSplit() {
+    var w = sideCol ? sideCol.clientWidth : 400;
+    var defaultH = Math.round(w * 9 / 16);
+    try {
+      var saved = parseInt(localStorage.getItem('presenterVSplit'), 10);
+      applyVSplit(!isNaN(saved) ? saved : defaultH);
+    } catch (e) { applyVSplit(defaultH); }
+  }
+
+  if (vSplitter) {
+    vSplitter.addEventListener('mousedown', function (e) {
+      e.preventDefault();
+      vSplitter.classList.add('active');
+      var overlay = makeDragOverlay('v');
+
+      function onMove(ev) {
+        var sideRect = sideCol.getBoundingClientRect();
+        var labelH   = (sideCol.querySelector('.p-col-label') || {}).offsetHeight || 18;
+        var px = ev.clientY - sideRect.top - labelH;
+        applyVSplit(px);
+      }
+      function onUp() {
+        vSplitter.classList.remove('active');
+        overlay.remove();
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup',   onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup',   onUp);
+    });
+  }
 
   /* =============================================
      Timer
      ============================================= */
-  var timerSec     = 0;
-  var timerRunning = false;
+  var timerSec      = 0;
+  var timerRunning  = false;
   var timerInterval = null;
 
   function fmtTime(s) {
@@ -198,16 +247,21 @@
       clearInterval(timerInterval);
       timerRunning = false;
       timerSec = 0;
-      if (timerEl)     timerEl.textContent     = '00:00';
-      if (timerToggle) timerToggle.textContent  = '▶ スタート';
+      if (timerEl)     timerEl.textContent    = '00:00';
+      if (timerToggle) timerToggle.textContent = '▶ スタート';
     });
   }
 
   /* =============================================
-     Init — read slide index from URL hash
+     Init
      ============================================= */
   var h = location.hash.replace('#', '');
   var n = parseInt(h, 10);
   current = (!isNaN(n) && n >= 1 && n <= totalSlides) ? n - 1 : 0;
-  goTo(current);
+
+  /* Init vertical split after layout is painted */
+  requestAnimationFrame(function () {
+    initVSplit();
+    goTo(current);
+  });
 })();

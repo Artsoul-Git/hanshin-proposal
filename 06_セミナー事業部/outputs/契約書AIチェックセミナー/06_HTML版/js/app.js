@@ -267,52 +267,93 @@
     });
   }
 
-  /* ---------- Export: PPTX ---------- */
+  /* ---------- Export: PPTX (html2canvas visual capture) ---------- */
   if (pptxBtn) {
     pptxBtn.addEventListener('click', function () {
       if (typeof PptxGenJS === 'undefined') {
-        alert('pptxgenjs が読み込まれていません');
-        return;
+        alert('pptxgenjs が読み込まれていません'); return;
       }
+      if (typeof html2canvas === 'undefined') {
+        alert('html2canvas が読み込まれていません'); return;
+      }
+
       showOverlay();
-      for (var i = 0; i < totalSlides; i++) ensureRendered(i);
 
-      setTimeout(function () {
-        var pptx = new PptxGenJS();
-        pptx.layout = 'LAYOUT_WIDE';
-        var slides = stage.querySelectorAll('.slide');
+      /* Capture dimensions: 1600×900 (16:9) */
+      var CAP_W = 1600, CAP_H = 900;
 
-        slides.forEach(function (sl, i) {
-          var pSlide = pptx.addSlide();
-          var bg = window.getComputedStyle(sl).backgroundColor;
-          pSlide.background = { fill: rgbToHex(bg) || 'FFFFFF' };
-          var h2 = sl.querySelector('.slide-h2, .s-section-title, .slide-cover-title, .s-quote, .s-ending-main');
-          if (h2) {
-            pSlide.addText(h2.innerText || h2.textContent, {
-              x: 0.3, y: 0.3, w: 9.4, h: 1.0,
-              fontSize: 24, bold: true, color: '1a3c6e',
-              fontFace: 'Noto Sans JP', breakLine: true
+      var pptx = new PptxGenJS();
+      pptx.layout = 'LAYOUT_WIDE';
+
+      var idx = 0;
+
+      function captureNext() {
+        if (idx >= totalSlides) {
+          return pptx.writeFile({ fileName: '契約書AIチェックセミナー.pptx' }).then(hideOverlay);
+        }
+
+        /* Build a fixed-size off-screen container */
+        var wrap = document.createElement('div');
+        wrap.style.cssText =
+          'position:fixed;top:0;left:0;' +
+          'width:' + CAP_W + 'px;height:' + CAP_H + 'px;' +
+          'overflow:hidden;z-index:50;pointer-events:none;';
+        wrap.style.setProperty('--tz', '1'); /* always export at default zoom */
+        document.body.appendChild(wrap);
+
+        /* Render the slide into the wrapper */
+        var html = factories[idx]();
+        var frag = document.createRange().createContextualFragment(html);
+        var slideEl = frag.querySelector('.slide');
+        var slideNotes = '';
+        if (slideEl) {
+          slideEl.style.position      = 'absolute';
+          slideEl.style.top           = '0';
+          slideEl.style.left          = '0';
+          slideEl.style.width         = CAP_W + 'px';
+          slideEl.style.height        = CAP_H + 'px';
+          slideEl.style.maxWidth      = 'none';
+          slideEl.style.maxHeight     = 'none';
+          slideEl.style.opacity       = '1';
+          slideEl.style.transform     = 'none';
+          slideEl.style.pointerEvents = 'none';
+          slideEl.classList.add('active');
+          slideNotes = slideEl.dataset.notes || '';
+        }
+        wrap.appendChild(frag);
+
+        /* Give browser one frame to paint, then capture */
+        requestAnimationFrame(function () {
+          setTimeout(function () {
+            html2canvas(wrap, {
+              scale: 1,
+              useCORS: true,
+              allowTaint: true,
+              logging: false,
+              width: CAP_W,
+              height: CAP_H,
+              windowWidth: CAP_W,
+              windowHeight: CAP_H
+            }).then(function (canvas) {
+              document.body.removeChild(wrap);
+              var imgData = canvas.toDataURL('image/jpeg', 0.92);
+              var pSlide  = pptx.addSlide();
+              pSlide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
+              if (slideNotes) pSlide.addNotes(slideNotes);
+              idx++;
+              setProgress(idx / totalSlides);
+              captureNext();
+            }).catch(function () {
+              document.body.removeChild(wrap);
+              idx++;
+              setProgress(idx / totalSlides);
+              captureNext();
             });
-          }
-          var body = sl.querySelector('.s-list, .s-prompt-box, .s-risk-list, .slide-content');
-          if (body && body !== h2) {
-            var txt = (body.innerText || body.textContent).trim();
-            if (txt) {
-              pSlide.addText(txt, {
-                x: 0.3, y: 1.5, w: 9.4, h: 4.5,
-                fontSize: 14, color: '1e2735',
-                fontFace: 'Noto Sans JP', valign: 'top',
-                breakLine: true
-              });
-            }
-          }
-          var notes = sl.dataset.notes || '';
-          if (notes) pSlide.addNotes(notes);
-          setProgress((i + 1) / totalSlides);
+          }, 60);
         });
+      }
 
-        pptx.writeFile({ fileName: '契約書AIチェックセミナー.pptx' }).then(hideOverlay);
-      }, 100);
+      captureNext();
     });
   }
 
