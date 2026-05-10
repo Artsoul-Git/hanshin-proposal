@@ -35,6 +35,24 @@ Kai (Claude Code) が直接呼び出して使う内製ツール。
 """
 
 import sys, os, json, time, argparse, subprocess, urllib.request, urllib.error
+import io
+from datetime import datetime
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+
+# ─── ANSIカラー（Windows 10+ / Windows Terminal 対応）───────────
+if os.name == "nt":
+    try:
+        import ctypes
+        ctypes.windll.kernel32.SetConsoleMode(ctypes.windll.kernel32.GetStdHandle(-11), 7)
+    except Exception:
+        pass
+
+_USE_COLOR = sys.stdout.isatty() or os.environ.get("FORCE_COLOR")
+def _c(code): return f"\033[{code}m" if _USE_COLOR else ""
+GREEN  = _c("92"); YELLOW = _c("93"); RED    = _c("91")
+BLUE   = _c("94"); GRAY   = _c("90"); BOLD   = _c("1");  RESET  = _c("0")
 
 # ─────────────────────────────────────
 PORT        = 3456
@@ -297,6 +315,67 @@ def cmd_project_archive(a):
     _req("PUT", f"/projects/{a.project_id}", {"status": "archived"})
     print(f"[Kai Tasks] アーカイブ: {a.project_id}")
 
+def cmd_today(_a):
+    """今日のフォーカス: 進行中タスク + 期限切れタスク"""
+    data  = _req("GET", "/tasks")
+    today = datetime.now().strftime("%Y-%m-%d")
+    in_prog, overdue = [], []
+
+    for p in data.get("projects", []):
+        if p["status"] == "archived":
+            continue
+        for kind, t in _all_tasks(p):
+            if t["status"] == "in_progress":
+                in_prog.append((p["name"], kind, t))
+            elif t["status"] != "done" and t.get("due_date") and t["due_date"] < today:
+                overdue.append((p["name"], kind, t))
+
+    badge = {"big": "★", "med": "◆", "sm": "◇"}
+    print(f"\n{BOLD}[Kai Tasks] Today's Focus — {today}{RESET}\n")
+
+    print(f"  {YELLOW}{BOLD}進行中タスク:{RESET}")
+    if in_prog:
+        for pname, kind, t in in_prog:
+            print(f"    {GREEN}[>]{RESET} {BLUE}[{t['id']}]{RESET} {badge[kind]} {t['title']}")
+            print(f"         {GRAY}↳ {pname}{RESET}")
+    else:
+        print(f"    {GRAY}進行中のタスクなし{RESET}")
+
+    print()
+    print(f"  {RED}{BOLD}期限切れタスク:{RESET}")
+    if overdue:
+        for pname, kind, t in overdue:
+            print(f"    {RED}[!]{RESET} {BLUE}[{t['id']}]{RESET} {badge[kind]} {t['title']}  {GRAY}(期日: {t['due_date']}){RESET}")
+            print(f"         {GRAY}↳ {pname}{RESET}")
+    else:
+        print(f"    {GREEN}期限切れなし ✓{RESET}")
+
+    print()
+
+def cmd_log(a):
+    """最近の変更履歴を全プロジェクトから表示"""
+    data  = _req("GET", "/tasks")
+    limit = getattr(a, "limit", 15) or 15
+    all_h = []
+
+    for p in data.get("projects", []):
+        for h in (p.get("history") or []):
+            all_h.append({**h, "project": p["name"], "source": "プロジェクト"})
+        for _, t in _all_tasks(p):
+            for h in (t.get("history") or []):
+                all_h.append({**h, "project": p["name"], "source": t["title"]})
+
+    all_h.sort(key=lambda x: x["timestamp"], reverse=True)
+    recent = all_h[:limit]
+
+    print(f"\n{BOLD}[Kai Tasks] 変更履歴 — 最新{limit}件{RESET}\n")
+    for h in recent:
+        ts = h["timestamp"].replace("T", " ")
+        print(f"  {GRAY}{ts}{RESET}  {BLUE}[{h['project']}]{RESET}  {BOLD}{h['action']}{RESET} — {h['detail']}")
+        if h["source"] != "プロジェクト":
+            print(f"            {GRAY}↳ {h['source']}{RESET}")
+    print()
+
 # ── エントリーポイント ────────────────
 
 def main():
@@ -358,6 +437,11 @@ def main():
     c = sub.add_parser("project-archive")
     c.add_argument("project_id")
 
+    sub.add_parser("today")
+
+    c = sub.add_parser("log")
+    c.add_argument("--limit", type=int, default=15)
+
     args = p.parse_args()
 
     # ensure-server は常に最初に実行
@@ -385,6 +469,8 @@ def main():
         "find":            cmd_find,
         "project-done":    cmd_project_done,
         "project-archive": cmd_project_archive,
+        "today":           cmd_today,
+        "log":             cmd_log,
     }
     fn = dispatch.get(args.command)
     if fn:
