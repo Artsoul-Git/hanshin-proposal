@@ -43,4 +43,8 @@
 
 ## 記録
 
-（まだ記録なし。修正が入ったら追記します）
+### 2026-05-10 [スタイル] AskUserQuestion の選択肢ラベルは必ず日本語
+**状況：** 上村への確認ダイアログ（AskUserQuestion）で英語ラベルを使用した
+**修正前：** `label: "Copy button in HTML manual"` など英語
+**修正後：** `label: "HTMLマニュアルのコピーボタン"` など日本語
+**ルール：** AskUserQuestion を呼ぶ際、`label` / `description` / `question` はすべて日本語で書く。英語にする技術的理由はない。
