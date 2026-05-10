@@ -44,7 +44,8 @@
       "PowerShell(python -m pip show python-pptx 2>&1 | Select-Object -First 3)",
       "PowerShell(Test-Path *)",
       "Bash(Start-Process *)",
-      "PowerShell(Start-Process \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\07_マニュアル\\\\エージェント操作マニュアル.html\")"
+      "PowerShell(Start-Process \"D:\\\\Google Antigravity\\\\AS_AI導入支援事業_cc\\\\07_マニュアル\\\\エージェント操作マニュアル.html\")",
+      "Bash(python *)"
     ]
   }
 }
