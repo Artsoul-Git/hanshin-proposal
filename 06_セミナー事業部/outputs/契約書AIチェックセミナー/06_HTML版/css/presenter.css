@@ -120,13 +120,10 @@
   background: #111;
 }
 
-/* Current slide: flex-centered, fills available height */
+/* Current slide: fills available height */
 .p-stage-current {
   flex: 1;
   min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #0d0d0d;
 }
 
@@ -135,14 +132,14 @@
   flex-shrink: 0;
   width: 100%;
   /* height set by presenter.js */
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: #111;
-  border-bottom: none; /* replaced by v-splitter */
 }
 
 .p-stage-empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 10px;
   color: rgba(255,255,255,.15);
   font-weight: 400;
@@ -151,24 +148,21 @@
 
 /*
  * Override .slide sizing inside presenter stages.
- * Use aspect-ratio + max constraints so the slide
- * fills the container while maintaining 16:9.
- * As the left column widens, the slide width grows
- * and cqw-based font sizes scale up naturally.
+ * Keep absolute centering from style.css; width/height
+ * are set explicitly by fitSlide() in presenter.js so
+ * the slide maintains 16:9 within its container.
+ * cqw units then scale naturally with the computed width.
  */
 .p-stage .slide {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  transform: none !important;
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  aspect-ratio: 16 / 9 !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  max-width: none !important;
+  max-height: none !important;
   opacity: 1 !important;
   pointer-events: none !important;
-  flex: 0 0 auto !important;
+  /* width / height injected by presenter.js */
 }
 
 /* ── Notes box ── */

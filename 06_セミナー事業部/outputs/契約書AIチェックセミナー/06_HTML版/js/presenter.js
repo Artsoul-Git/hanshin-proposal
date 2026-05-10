@@ -42,6 +42,31 @@
   }
 
   /* =============================================
+     fitSlide — compute 16:9 size inside container
+     and apply to the slide element via inline style.
+     cqw units resolve from the computed pixel width.
+     ============================================= */
+  function fitSlide(stage) {
+    if (!stage) return;
+    var slide = stage.querySelector('.slide');
+    if (!slide) return;
+    var W = stage.clientWidth;
+    var H = stage.clientHeight;
+    if (!W || !H) return;
+    /* Largest 16:9 box that fits within W × H */
+    var w = W;
+    var h = Math.round(W * 9 / 16);
+    if (h > H) { h = H; w = Math.round(H * 16 / 9); }
+    slide.style.width  = w + 'px';
+    slide.style.height = h + 'px';
+  }
+
+  window.addEventListener('resize', function () {
+    fitSlide(stgCurrent);
+    fitSlide(stgNext);
+  });
+
+  /* =============================================
      Slide rendering
      ============================================= */
   function renderInto(container, index) {
@@ -51,14 +76,15 @@
       return null;
     }
     try {
-      var html = factories[index]();
-      var frag = document.createRange().createContextualFragment(html);
+      var html  = factories[index]();
+      var frag  = document.createRange().createContextualFragment(html);
       var slide = frag.querySelector('.slide');
       if (slide) {
         slide.dataset.index = index;
         slide.classList.add('active');
       }
       container.appendChild(frag);
+      fitSlide(container);          /* size immediately after insertion */
       return container.querySelector('.slide');
     } catch (e) { return null; }
   }
@@ -102,8 +128,8 @@
 
   function applyNotesFontSize(size) {
     notesFontSize = Math.max(9, Math.min(28, size));
-    if (notesText)   notesText.style.fontSize   = notesFontSize + 'px';
-    if (fontsizeVal) fontsizeVal.textContent     = notesFontSize;
+    if (notesText)   notesText.style.fontSize = notesFontSize + 'px';
+    if (fontsizeVal) fontsizeVal.textContent   = notesFontSize;
     try { localStorage.setItem('presenterNotesFontSize', notesFontSize); } catch (e) {}
   }
 
@@ -116,8 +142,7 @@
   } catch (e) {}
 
   /* =============================================
-     Generic splitter factory
-     — builds a drag handler that resizes two regions
+     Drag overlay helper
      ============================================= */
   function makeDragOverlay(cursor) {
     var el = document.createElement('div');
@@ -127,14 +152,16 @@
   }
 
   /* =============================================
-     Horizontal splitter (left col width)
+     Horizontal splitter (left column width)
      ============================================= */
-  var H_MIN = 28; // % of layout width
+  var H_MIN = 28;
   var H_MAX = 80;
 
   function applyHSplit(pct) {
     pct = Math.max(H_MIN, Math.min(H_MAX, pct));
     currentCol.style.flex = '0 0 ' + pct.toFixed(1) + '%';
+    /* Refit slide after layout recalculates */
+    requestAnimationFrame(function () { fitSlide(stgCurrent); });
     try { localStorage.setItem('presenterHSplit', pct.toFixed(1)); } catch (e) {}
   }
 
@@ -167,21 +194,21 @@
   /* =============================================
      Vertical splitter (next-slide panel height)
      ============================================= */
-  var V_MIN_PX = 60;
+  var V_MIN_PX = 40;
 
   function applyVSplit(px) {
-    var sideH     = sideCol ? sideCol.clientHeight : 600;
-    var infoH     = sideCol ? (sideCol.querySelector('.p-info-row') || {}).offsetHeight || 52 : 52;
-    var labelH    = sideCol ? (sideCol.querySelector('.p-col-label') || {}).offsetHeight || 18 : 18;
-    var vSplitH   = 8;
-    var headerH   = notesBox ? (notesBox.querySelector('.p-notes-header') || {}).offsetHeight || 30 : 30;
-    var maxPx     = sideH - infoH - labelH - vSplitH - headerH - 40;
-    px = Math.max(V_MIN_PX, Math.min(maxPx, px));
-    if (stgNext) stgNext.style.height = px + 'px';
+    if (!sideCol || !stgNext) return;
+    var labelH  = (sideCol.querySelector('.p-col-label')  || {}).offsetHeight || 18;
+    var infoH   = (sideCol.querySelector('.p-info-row')   || {}).offsetHeight || 52;
+    var vSplH   = 8;
+    var noteHdrH= notesBox ? (notesBox.querySelector('.p-notes-header') || {}).offsetHeight || 30 : 30;
+    var maxPx   = sideCol.clientHeight - labelH - infoH - vSplH - noteHdrH - 20;
+    px = Math.max(V_MIN_PX, Math.min(maxPx > V_MIN_PX ? maxPx : 9999, px));
+    stgNext.style.height = px + 'px';
+    requestAnimationFrame(function () { fitSlide(stgNext); });
     try { localStorage.setItem('presenterVSplit', Math.round(px)); } catch (e) {}
   }
 
-  /* Default: height that gives 16:9 based on current side column width */
   function initVSplit() {
     var w = sideCol ? sideCol.clientWidth : 400;
     var defaultH = Math.round(w * 9 / 16);
@@ -198,10 +225,10 @@
       var overlay = makeDragOverlay('v');
 
       function onMove(ev) {
+        if (!sideCol) return;
         var sideRect = sideCol.getBoundingClientRect();
         var labelH   = (sideCol.querySelector('.p-col-label') || {}).offsetHeight || 18;
-        var px = ev.clientY - sideRect.top - labelH;
-        applyVSplit(px);
+        applyVSplit(ev.clientY - sideRect.top - labelH);
       }
       function onUp() {
         vSplitter.classList.remove('active');
@@ -259,7 +286,7 @@
   var n = parseInt(h, 10);
   current = (!isNaN(n) && n >= 1 && n <= totalSlides) ? n - 1 : 0;
 
-  /* Init vertical split after layout is painted */
+  /* Wait for layout to paint before measuring containers */
   requestAnimationFrame(function () {
     initVSplit();
     goTo(current);
