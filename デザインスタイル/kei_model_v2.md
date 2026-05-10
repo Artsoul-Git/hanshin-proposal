@@ -281,6 +281,52 @@ def hdr(slide, title):
 
 ---
 
+## 11. QA自動チェックシステム（v2.1追加）
+
+### ビルド前に必ず実行する自動検証（verify_layout）
+
+```python
+def verify_layout(prs):
+    """保存前に全スライドのレイアウト問題を検出する"""
+    issues = []
+    for si, slide in enumerate(prs.slides, 1):
+        shapes = [sh for sh in slide.shapes if hasattr(sh, 'left')]
+        # オーバーフロー検出（スライド境界を越える）
+        for sh in shapes:
+            if sh.top + sh.height > SH + Cm(0.1):
+                issues.append(f'S{si:02d} OVERFLOW_BOTTOM')
+            if sh.left + sh.width > SW + Cm(0.5):
+                issues.append(f'S{si:02d} OVERFLOW_RIGHT')
+        # 非空テキスト同士のオーバーラップ検出
+        txt_sh = [sh for sh in shapes
+                  if sh.has_text_frame and sh.text_frame.text.strip() and sh.height < Cm(5)]
+        for i, a in enumerate(txt_sh):
+            for b in txt_sh[i+1:]:
+                y_ov = min(a.top+a.height, b.top+b.height) - max(a.top, b.top)
+                x_ov = min(a.left+a.width, b.left+b.width) - max(a.left, b.left)
+                if y_ov > Cm(0.2) and x_ov > Cm(0.5):
+                    issues.append(f'S{si:02d} OVERLAP "{a.text_frame.text[:20]}" <> "{b.text_frame.text[:20]}"')
+    return issues
+```
+
+### 3視点チェックリスト（毎回確認）
+
+| 視点 | チェック項目 |
+|------|------------|
+| **デザイナー視点** | カラーパレット#6F911D統一 / 最小フォント18pt / 要素の余白バランス |
+| **聴衆視点** | 遠席から28pt+で読める / 1スライド1メッセージ / 色でリスク伝達できている |
+| **プレゼンター視点** | 全スライドにノートスクリプト / 流れが論理的 / 話しやすい順序 |
+
+### 既知バグ集（実装時の注意）
+
+| バグパターン | 原因 | 修正方法 |
+|------------|------|---------|
+| `hdr()`内テキストがコンテンツ領域に食い込む | `h=HDR`でテキストボックス高さを固定していたため開始位置`ty`の分だけ下にはみ出す | `h = int(HDR - ty)` に変更 |
+| 横並びバッジ+テキストのX座標ミス | 「バッジ②左端+幅」ではなく「バッジ②左端」からテキストを開始していた | 各要素の右端を順番に積み上げて計算する |
+| `ev()`で確保したブロック高さが実際の内容を超える | フォント高さ推定値 `fsz*0.0432` はPowerPoint実描画より小さい | ブロック高さは実際の内容合計＋0.3cm の余裕を持つ |
+
+---
+
 ## 10. スライド構成テンプレート（60分セミナー標準）
 
 ```
