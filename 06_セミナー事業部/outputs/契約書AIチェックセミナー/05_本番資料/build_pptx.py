@@ -36,6 +36,12 @@ RISK_M  = RGBColor(0xE6, 0x7E, 0x22)
 DIM_W   = RGBColor(0xCC, 0xD9, 0xEA)
 MID_W   = RGBColor(0x80, 0x9D, 0xBF)
 
+BADGE_GRN = RGBColor(0x6F, 0x91, 0x1D)
+BADGE_DRK = RGBColor(0x33, 0x33, 0x33)
+BADGE_RED = RGBColor(0xC0, 0x39, 0x2B)
+TEXT_YEL  = RGBColor(0xFA, 0xBE, 0x00)
+BG_PALE   = RGBColor(0xE8, 0xF1, 0xD8)
+
 FONT = 'Meiryo'
 
 # ─── layout constants ────────────────────────────────────
@@ -134,7 +140,7 @@ def bullets(slide, lines_data, start_y, avail_h, max_items=7):
         return
 
     # Estimate heights
-    sizes = {0: 16, 1: 13, 2: 14}
+    sizes = {0: 16, 1: 13, 2: 14, 3: 16, 4: 16, 5: 16}
     total_pts = sum(sizes.get(lvl, 14) * 1.6 + 3 for _, lvl, _ in items)
     available_pts = avail_h / Pt(1)
     scale = min(1.0, available_pts / total_pts) if total_pts > 0 else 1.0
@@ -151,6 +157,30 @@ def bullets(slide, lines_data, start_y, avail_h, max_items=7):
             rect(slide, ML, y, Pt(4), item_h + Pt(4), fill=NAVY)
             txbox(slide, ML + Pt(10), y + Pt(2), CW - Pt(10), item_h,
                   text, size=sz, bold=True, color=NAVY)
+        elif level == 3: # ケース
+            badge_text, content_text = text
+            badge_w = Pt(90)
+            rect(slide, ML, y, badge_w, item_h + Pt(4), fill=BADGE_GRN)
+            txbox(slide, ML, y + Pt(2), badge_w, item_h, badge_text, size=sz, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+            content_w = CW - badge_w - Pt(10)
+            rect(slide, ML + badge_w + Pt(10), y, content_w, item_h + Pt(4), fill=BADGE_RED)
+            txbox(slide, ML + badge_w + Pt(15), y + Pt(2), content_w - Pt(5), item_h, "⚠ " + content_text, size=sz, bold=True, color=WHITE)
+        elif level == 4: # ルール
+            badge_text, content_text = text
+            badge_w = Pt(90)
+            badge_color = BADGE_DRK if '②' in badge_text else BADGE_GRN
+            text_color = TEXT_YEL if '②' in badge_text else NAVY
+            rect(slide, ML, y, badge_w, item_h + Pt(4), fill=badge_color)
+            txbox(slide, ML, y + Pt(2), badge_w, item_h, badge_text, size=sz, bold=True, color=WHITE, align=PP_ALIGN.CENTER)
+            txbox(slide, ML + badge_w + Pt(10), y + Pt(2), CW - badge_w - Pt(10), item_h, content_text, size=sz, bold=True, color=text_color)
+        elif level == 5: # 題材バナー
+            topic, tool = text
+            banner_h = item_h + Pt(10)
+            rect(slide, ML, y, CW, banner_h, fill=BG_PALE)
+            txbox(slide, ML + Pt(10), y + Pt(5), CW * 0.65, item_h, "★ 題材：" + topic, size=sz, bold=True, color=BADGE_GRN)
+            if tool:
+                txbox(slide, ML + CW * 0.65, y + Pt(5), CW * 0.35 - Pt(10), item_h, "｜ ツール：" + tool, size=sz, bold=True, color=BADGE_GRN)
+            y += Pt(10) # extra height for banner
         elif level == 0:
             txbox(slide, ML, y, Pt(10), item_h, '●', size=sz - 2, color=ORANGE)
             txbox(slide, ML + Pt(14), y, CW - Pt(14), item_h,
@@ -167,9 +197,11 @@ def parse_body(body_text):
     Parse body text into list of (text, level, is_callout).
     Lines starting with 　 (full-width space) or 2+ spaces → level 1
     Lines starting with ▶ → callout
+    ケースX, ルールX, 題材： → level 3, 4, 5
     Otherwise → level 0
     """
     result = []
+    import re
     for raw in body_text.split('\n'):
         if not raw.strip():
             continue
@@ -178,6 +210,31 @@ def parse_body(body_text):
             result.append((stripped[1:].strip(), 2, True))
         elif raw.startswith('　') or raw.startswith('  '):
             result.append((stripped.lstrip('→ ').strip(), 1, False))
+        elif stripped.startswith('ケース'):
+            m = re.match(r'^(ケース\d+)[:：]?\s*(.*)', stripped)
+            if m:
+                result.append(((m.group(1), m.group(2)), 3, False))
+            else:
+                result.append((stripped, 0, False))
+        elif stripped.startswith('ルール'):
+            m = re.match(r'^(ルール\d+)[:：]?\s*(.*)', stripped)
+            if m:
+                result.append(((m.group(1), m.group(2)), 4, False))
+            else:
+                result.append((stripped, 0, False))
+        elif stripped.startswith('題材：'):
+            m = re.match(r'^題材：\s*(.*)', stripped)
+            if m:
+                result.append(((m.group(1).strip(), ""), 5, False))
+            else:
+                result.append((stripped, 0, False))
+        elif stripped.startswith('ツール：'):
+            m = re.match(r'^ツール：\s*(.*)', stripped)
+            if m and result and result[-1][1] == 5:
+                prev_topic = result[-1][0][0]
+                result[-1] = ((prev_topic, m.group(1).strip()), 5, False)
+            else:
+                result.append((stripped, 0, False))
         else:
             result.append((stripped, 0, False))
     return result
@@ -475,7 +532,7 @@ def main():
         print(f"  {s.get('番号', '?'):>2}  {s.get('タイプ', '?'):<10}  {s.get('タイトル', s.get('メッセージ', ''))[:40]}")
 
     prs.save(out_path)
-    print(f'\n✓  {len(slides)} slides → {out_path}')
+    print(f'\n[OK] {len(slides)} slides -> {out_path}')
 
 
 if __name__ == '__main__':
