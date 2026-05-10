@@ -184,6 +184,12 @@
   background: #151515;
 }
 
+.p-notes-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .p-notes-label {
   font-size: 9px;
   font-weight: 700;
@@ -236,7 +242,49 @@
   font-weight: 400;
   font-family: 'Noto Sans JP', sans-serif;
   padding: 10px 14px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+  caret-color: #6F911D;
 }
+
+.p-notes-text::placeholder { color: rgba(255,255,255,.18); }
+.p-notes-text:focus { background: rgba(111,145,29,.04); }
+
+/* ── Save button ── */
+.p-save-btn {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #6F911D;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: background .12s;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.p-save-btn:hover { background: #5E791A; }
+
+/* ── Save indicator ("保存済") ── */
+.p-save-indicator {
+  font-size: 9px;
+  color: #6F911D;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+  opacity: 0;
+  transition: opacity .3s;
+  white-space: nowrap;
+}
+
+.p-save-indicator.show { opacity: 1; }
 
 /* ── Timer / info row ── */
 .p-info-row {

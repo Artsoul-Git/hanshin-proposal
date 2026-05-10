@@ -1,0 +1,396 @@
+#!/usr/bin/env python3
+"""
+kai-tasks-cli.py  ― Kai Tasks をコマンドラインから操作する
+Kai (Claude Code) が直接呼び出して使う内製ツール。
+
+使い方:
+  python kai-tasks-cli.py <command> [options]
+
+コマンド一覧:
+  ensure-server              サーバーが起動していなければ起動する
+  status                     全プロジェクトの進捗を表示
+  list                       プロジェクト一覧（ID付き）
+  open                       ブラウザで Kai Tasks を開く
+
+  create --name NAME --goal GOAL [--memo MEMO]
+                             プロジェクト作成 + 1-3-5 タスク自動生成
+  create-bare --name NAME --goal GOAL
+                             プロジェクトのみ作成（タスク未生成）
+  add-task PID --type TYPE --title TITLE [--desc DESC] [--due DATE]
+                             既存プロジェクトにタスク追加
+  set-roadmap TASK_ID --code MERMAID_CODE
+                             タスクにロードマップを設定
+  set-mindmap TASK_ID --code MERMAID_CODE
+                             タスクにマインドマップを設定
+
+  start-task TASK_ID         タスクを「進行中」に変更
+  done-task  TASK_ID         タスクを「完了」に変更
+  update-task TASK_ID [--status STATUS] [--title TITLE] [--desc DESC]
+                             タスクの任意フィールドを更新
+  project-done PROJECT_ID    プロジェクトを完了に変更
+  project-archive PROJECT_ID プロジェクトをアーカイブ
+
+  show PROJECT_ID            プロジェクト詳細を表示
+  find NAME                  プロジェクト名で検索してIDを返す
+"""
+
+import sys, os, json, time, argparse, subprocess, urllib.request, urllib.error
+
+# ─────────────────────────────────────
+PORT        = 3456
+BASE        = f"http://localhost:{PORT}/api"
+SERVER_PY   = os.path.join(os.path.dirname(os.path.abspath(__file__)), "server.py")
+# ─────────────────────────────────────
+
+def _req(method, path, body=None):
+    url  = BASE + path
+    data = json.dumps(body, ensure_ascii=False).encode("utf-8") if body else None
+    req  = urllib.request.Request(url, data=data, method=method)
+    req.add_header("Content-Type", "application/json; charset=utf-8")
+    with urllib.request.urlopen(req, timeout=10) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+def _is_running():
+    try:
+        urllib.request.urlopen(f"http://localhost:{PORT}/api/tasks", timeout=2)
+        return True
+    except:
+        return False
+
+def ensure_server(quiet=False):
+    if _is_running():
+        if not quiet:
+            print(f"[Kai Tasks] サーバー稼働中 → http://localhost:{PORT}")
+        return True
+    if not quiet:
+        print("[Kai Tasks] サーバーを起動します…")
+    flags = 0
+    if os.name == "nt":
+        flags = subprocess.CREATE_NO_WINDOW
+    subprocess.Popen(
+        [sys.executable, SERVER_PY],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        creationflags=flags,
+    )
+    for _ in range(16):
+        time.sleep(0.5)
+        if _is_running():
+            if not quiet:
+                print(f"[Kai Tasks] 起動完了 → http://localhost:{PORT}")
+            return True
+    print("[Kai Tasks] ERROR: サーバーの起動に失敗しました", file=sys.stderr)
+    return False
+
+# ── タスク生成ヘルパー ──────────────────
+
+def _roadmap_mmd(name, goal):
+    label = goal or name
+    s = (label[:22] + "…") if len(label) > 22 else label
+    return (
+        f'graph LR\n'
+        f'  A(["\U0001f3af {s}"]) --> B["\U0001f4cb 計画フェーズ"]\n'
+        f'  B --> C["⚙️ 実行フェーズ"]\n'
+        f'  C --> D(["✅ 完了・定着"])\n\n'
+        f'  B --> B1["現状把握"]\n'
+        f'  B --> B2["要件整理"]\n'
+        f'  B --> B3["リソース確保"]\n\n'
+        f'  C --> C1["フェーズ1: 着手"]\n'
+        f'  C --> C2["フェーズ2: 展開"]\n'
+        f'  C --> C3["フェーズ3: 仕上げ"]\n\n'
+        f'  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n'
+        f'  style D fill:#43e97b,color:#000,stroke:#43e97b'
+    )
+
+def _mindmap_mmd(title):
+    s = (title[:24] + "…") if len(title) > 24 else title
+    return (
+        f'mindmap\n'
+        f'  root(("{s}"))\n'
+        f'    計画\n'
+        f'      現状把握\n'
+        f'      要件整理\n'
+        f'      スケジュール確定\n'
+        f'    実行\n'
+        f'      フェーズ1\n'
+        f'      フェーズ2\n'
+        f'      フェーズ3\n'
+        f'    完了\n'
+        f'      検証・テスト\n'
+        f'      改善\n'
+        f'      定着化・引き継ぎ'
+    )
+
+def auto_generate_tasks(pid, name, goal):
+    label     = goal or name
+    short     = (label[:28] + "…") if len(label) > 28 else label
+    big_title = f"「{short}」を達成する" if goal else f"{short}を完了させる"
+
+    big = _req("POST", f"/projects/{pid}/tasks", {
+        "type": "big",
+        "title": big_title,
+        "description": "このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。",
+    })
+    if big.get("id"):
+        _req("PUT", f"/tasks/{big['id']}", {
+            "roadmap_mmd": _roadmap_mmd(name, goal),
+            "mindmap_mmd": _mindmap_mmd(big_title),
+        })
+
+    for title, desc in [
+        ("現状把握・要件整理",   "現在の状況を正確に把握し、達成に必要な要件を明確にする"),
+        ("計画立案・実行",       "具体的なアクションプランを立て、確実に実行する"),
+        ("検証・改善・定着化",   "結果を確認し、改善サイクルを回して定着させる"),
+    ]:
+        _req("POST", f"/projects/{pid}/tasks", {"type": "medium", "title": title, "description": desc})
+
+    for title, desc in [
+        ("キックオフ・関係者共有",   "プロジェクト開始を関係者に伝え、役割分担と協力体制を整える"),
+        ("ツール・リソースの準備",   "作業に必要なツール・情報・人員・予算を事前に確保する"),
+        ("進捗確認・中間レビュー",   "定期的に進捗を確認し、目標とのズレを早期に修正する"),
+        ("課題の洗い出しと対処",     "リスクや障害を早期に発見し、影響が出る前に手を打つ"),
+        ("最終確認・完了報告",       "成果物・達成度を確認し、引き継ぎ・報告を行って完了とする"),
+    ]:
+        _req("POST", f"/projects/{pid}/tasks", {"type": "small", "title": title, "description": desc})
+
+    return big
+
+# ── 表示ヘルパー ─────────────────────
+
+STATUS_ICON = {"todo": "[ ]", "in_progress": "[>]", "done": "[x]"}
+STATUS_JP   = {"todo": "未着手", "in_progress": "進行中", "done": "完了",
+               "active": "進行中", "completed": "完了", "archived": "アーカイブ"}
+
+def _pct(tasks):
+    if not tasks: return 0
+    return int(sum(1 for t in tasks if t["status"] == "done") / len(tasks) * 100)
+
+def _all_tasks(p):
+    tasks = []
+    if p.get("big_task"): tasks.append(("big", p["big_task"]))
+    for t in p.get("medium_tasks", []): tasks.append(("med", t))
+    for t in p.get("small_tasks",  []): tasks.append(("sm",  t))
+    return tasks
+
+def _print_project(p, verbose=False):
+    all_t  = _all_tasks(p)
+    done   = sum(1 for _, t in all_t if t["status"] == "done")
+    total  = len(all_t)
+    bar_n  = int(_pct([({"status": t["status"]}) for _, t in all_t]) / 10)
+    bar    = "█" * bar_n + "░" * (10 - bar_n)
+    print(f"\n  [{STATUS_JP.get(p['status'],'?')}] {p['name']}  (ID: {p['id']})")
+    if p.get("goal"):
+        print(f"  🎯 {p['goal']}")
+    print(f"  進捗: {bar} {done}/{total} ({_pct([t for _, t in all_t])}%)")
+    if verbose:
+        for kind, t in all_t:
+            icon  = STATUS_ICON.get(t["status"], "[ ]")
+            badge = {"big": "★", "med": "◆", "sm": "◇"}[kind]
+            print(f"    {badge} {icon} [{t['id']}] {t['title']}")
+
+# ── コマンド実装 ────────────────────
+
+def cmd_status(_a):
+    data = _req("GET", "/tasks")
+    projects = data.get("projects", [])
+    if not projects:
+        print("[Kai Tasks] プロジェクトなし")
+        return
+    print(f"[Kai Tasks] {len(projects)} プロジェクト")
+    for p in projects:
+        _print_project(p, verbose=True)
+    print()
+
+def cmd_list(_a):
+    data = _req("GET", "/tasks")
+    for p in data.get("projects", []):
+        all_t = _all_tasks(p)
+        done  = sum(1 for _, t in all_t if t["status"] == "done")
+        print(f"  {p['id']}  [{STATUS_JP.get(p['status'],'?')}] {p['name']}  {done}/{len(all_t)} 完了")
+
+def cmd_show(a):
+    data = _req("GET", "/tasks")
+    pid  = a.project_id
+    p    = next((x for x in data["projects"] if x["id"] == pid), None)
+    if not p:
+        print(f"ERROR: プロジェクト {pid} が見つかりません", file=sys.stderr)
+        sys.exit(1)
+    _print_project(p, verbose=True)
+    print()
+
+def cmd_find(a):
+    data = _req("GET", "/tasks")
+    kw   = a.name.lower()
+    hits = [p for p in data["projects"] if kw in p["name"].lower()]
+    if not hits:
+        print("見つかりません")
+    for p in hits:
+        print(f"  {p['id']}  {p['name']}")
+
+def cmd_open(_a):
+    import webbrowser
+    webbrowser.open(f"http://localhost:{PORT}")
+
+def cmd_create(a):
+    name = a.name
+    goal = getattr(a, "goal", "") or ""
+    memo = getattr(a, "memo", "") or ""
+    p    = _req("POST", "/projects", {"name": name, "goal": goal, "memo": memo})
+    pid  = p["id"]
+    big  = auto_generate_tasks(pid, name, goal)
+    print(f"[Kai Tasks] プロジェクト作成完了")
+    print(f"  プロジェクトID : {pid}")
+    print(f"  名前           : {name}")
+    if goal:
+        print(f"  ゴール         : {goal}")
+    print(f"  大タスクID     : {big.get('id','?')}")
+    print(f"  1-3-5 タスク   : 大1・中3・小5 生成済み")
+    print(f"  ロードマップ   : 自動生成済み")
+    print(f"  ブラウザ確認   : http://localhost:{PORT}")
+    return pid
+
+def cmd_create_bare(a):
+    p = _req("POST", "/projects", {"name": a.name, "goal": getattr(a, "goal", "") or "", "memo": getattr(a, "memo", "") or ""})
+    print(f"[Kai Tasks] プロジェクト作成: {p['id']}  {a.name}")
+    return p["id"]
+
+def cmd_add_task(a):
+    body = {"type": a.type, "title": a.title}
+    if getattr(a, "desc", None):  body["description"] = a.desc
+    if getattr(a, "due",  None):  body["due_date"]    = a.due
+    t = _req("POST", f"/projects/{a.project_id}/tasks", body)
+    print(f"[Kai Tasks] タスク追加: {t['id']}  [{a.type}] {a.title}")
+    return t["id"]
+
+def cmd_set_roadmap(a):
+    _req("PUT", f"/tasks/{a.task_id}", {"roadmap_mmd": a.code})
+    print(f"[Kai Tasks] ロードマップ設定: {a.task_id}")
+
+def cmd_set_mindmap(a):
+    _req("PUT", f"/tasks/{a.task_id}", {"mindmap_mmd": a.code})
+    print(f"[Kai Tasks] マインドマップ設定: {a.task_id}")
+
+def cmd_start_task(a):
+    _req("PUT", f"/tasks/{a.task_id}", {"status": "in_progress"})
+    print(f"[Kai Tasks] 進行中: {a.task_id}")
+
+def cmd_done_task(a):
+    _req("PUT", f"/tasks/{a.task_id}", {"status": "done"})
+    print(f"[Kai Tasks] 完了:   {a.task_id}")
+
+def cmd_update_task(a):
+    body = {}
+    if getattr(a, "status", None): body["status"]      = a.status
+    if getattr(a, "title",  None): body["title"]       = a.title
+    if getattr(a, "desc",   None): body["description"] = a.desc
+    if getattr(a, "due",    None): body["due_date"]    = a.due
+    if not body:
+        print("ERROR: 更新する項目がありません", file=sys.stderr); sys.exit(1)
+    _req("PUT", f"/tasks/{a.task_id}", body)
+    print(f"[Kai Tasks] タスク更新: {a.task_id}")
+
+def cmd_project_done(a):
+    _req("PUT", f"/projects/{a.project_id}", {"status": "completed"})
+    print(f"[Kai Tasks] プロジェクト完了: {a.project_id}")
+
+def cmd_project_archive(a):
+    _req("PUT", f"/projects/{a.project_id}", {"status": "archived"})
+    print(f"[Kai Tasks] アーカイブ: {a.project_id}")
+
+# ── エントリーポイント ────────────────
+
+def main():
+    p = argparse.ArgumentParser(description="Kai Tasks CLI")
+    sub = p.add_subparsers(dest="command")
+
+    sub.add_parser("ensure-server", aliases=["server"])
+    sub.add_parser("status")
+    sub.add_parser("list")
+    sub.add_parser("open")
+
+    c = sub.add_parser("create")
+    c.add_argument("--name", required=True)
+    c.add_argument("--goal", default="")
+    c.add_argument("--memo", default="")
+
+    c = sub.add_parser("create-bare")
+    c.add_argument("--name", required=True)
+    c.add_argument("--goal", default="")
+    c.add_argument("--memo", default="")
+
+    c = sub.add_parser("add-task")
+    c.add_argument("project_id")
+    c.add_argument("--type",  required=True, choices=["big","medium","small"])
+    c.add_argument("--title", required=True)
+    c.add_argument("--desc",  default="")
+    c.add_argument("--due",   default=None)
+
+    c = sub.add_parser("set-roadmap")
+    c.add_argument("task_id")
+    c.add_argument("--code", required=True)
+
+    c = sub.add_parser("set-mindmap")
+    c.add_argument("task_id")
+    c.add_argument("--code", required=True)
+
+    c = sub.add_parser("start-task")
+    c.add_argument("task_id")
+
+    c = sub.add_parser("done-task")
+    c.add_argument("task_id")
+
+    c = sub.add_parser("update-task")
+    c.add_argument("task_id")
+    c.add_argument("--status", choices=["todo","in_progress","done"])
+    c.add_argument("--title",  default=None)
+    c.add_argument("--desc",   default=None)
+    c.add_argument("--due",    default=None)
+
+    c = sub.add_parser("show")
+    c.add_argument("project_id")
+
+    c = sub.add_parser("find")
+    c.add_argument("name")
+
+    c = sub.add_parser("project-done")
+    c.add_argument("project_id")
+
+    c = sub.add_parser("project-archive")
+    c.add_argument("project_id")
+
+    args = p.parse_args()
+
+    # ensure-server は常に最初に実行
+    if args.command in (None, "ensure-server", "server"):
+        ok = ensure_server(quiet=(args.command not in ("ensure-server","server")))
+        if args.command in ("ensure-server","server"):
+            sys.exit(0 if ok else 1)
+    else:
+        if not ensure_server(quiet=True):
+            sys.exit(1)
+
+    dispatch = {
+        "status":          cmd_status,
+        "list":            cmd_list,
+        "open":            cmd_open,
+        "create":          cmd_create,
+        "create-bare":     cmd_create_bare,
+        "add-task":        cmd_add_task,
+        "set-roadmap":     cmd_set_roadmap,
+        "set-mindmap":     cmd_set_mindmap,
+        "start-task":      cmd_start_task,
+        "done-task":       cmd_done_task,
+        "update-task":     cmd_update_task,
+        "show":            cmd_show,
+        "find":            cmd_find,
+        "project-done":    cmd_project_done,
+        "project-archive": cmd_project_archive,
+    }
+    fn = dispatch.get(args.command)
+    if fn:
+        fn(args)
+    else:
+        p.print_help()
+
+if __name__ == "__main__":
+    main()

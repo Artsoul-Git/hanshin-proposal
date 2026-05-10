@@ -12,6 +12,8 @@
   var stgNext     = document.getElementById('p-stage-next');
   var notesBox    = document.getElementById('p-notes-box');
   var notesText   = document.getElementById('p-notes-text');
+  var saveBtn     = document.getElementById('p-save-btn');
+  var saveIndicator = document.getElementById('p-save-indicator');
   var timerEl     = document.getElementById('p-timer');
   var timerToggle = document.getElementById('p-timer-toggle');
   var timerReset  = document.getElementById('p-timer-reset');
@@ -22,6 +24,30 @@
   var notesSmallerBtn = document.getElementById('p-notes-smaller');
   var notesLargerBtn  = document.getElementById('p-notes-larger');
   var fontsizeVal     = document.getElementById('p-fontsize-val');
+
+  /* =============================================
+     Notes overrides — localStorage persistence
+     ============================================= */
+  var notesOverrides = {};
+  try {
+    var stored = localStorage.getItem('presenterNotes');
+    if (stored) notesOverrides = JSON.parse(stored);
+  } catch (e) {}
+
+  var autoSaveTimer = null;
+  var saveFlashTimer = null;
+
+  function saveNotes(index, text) {
+    notesOverrides[index] = text;
+    try { localStorage.setItem('presenterNotes', JSON.stringify(notesOverrides)); } catch (e) {}
+    /* Flash indicator */
+    if (saveIndicator) {
+      saveIndicator.textContent = '保存済';
+      saveIndicator.classList.add('show');
+      clearTimeout(saveFlashTimer);
+      saveFlashTimer = setTimeout(function () { saveIndicator.classList.remove('show'); }, 1800);
+    }
+  }
 
   if (totalNum) totalNum.textContent = totalSlides;
 
@@ -99,8 +125,9 @@
     var slide = renderInto(stgCurrent, current);
     renderInto(stgNext, current + 1);
 
-    var notes = slide ? (slide.dataset.notes || '') : '';
-    if (notesText) notesText.textContent = notes || '（トークスクリプトなし）';
+    var defaultNotes = slide ? (slide.dataset.notes || '') : '';
+    var notes = notesOverrides[current] !== undefined ? notesOverrides[current] : defaultNotes;
+    if (notesText) notesText.value = notes;
     if (currentNum) currentNum.textContent = current + 1;
     if (prevBtn) prevBtn.disabled = current === 0;
     if (nextBtn) nextBtn.disabled = current === totalSlides - 1;
@@ -112,6 +139,12 @@
   if (nextBtn) nextBtn.addEventListener('click', function () { goTo(current + 1); });
 
   document.addEventListener('keydown', function (e) {
+    /* Ctrl+S — save notes from anywhere */
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault();
+      if (notesText) saveNotes(current, notesText.value);
+      return;
+    }
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     switch (e.key) {
       case 'ArrowRight': case 'ArrowDown': case ' ':
@@ -120,6 +153,21 @@
         e.preventDefault(); goTo(current - 1); break;
     }
   });
+
+  /* Auto-save on input (500 ms debounce) */
+  if (notesText) {
+    notesText.addEventListener('input', function () {
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(function () { saveNotes(current, notesText.value); }, 500);
+    });
+  }
+
+  /* Explicit save button */
+  if (saveBtn) {
+    saveBtn.addEventListener('click', function () {
+      if (notesText) saveNotes(current, notesText.value);
+    });
+  }
 
   /* =============================================
      Notes font size

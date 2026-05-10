@@ -22,31 +22,86 @@
 
 ---
 
-## タスク管理アプリ
+## Kai Tasks 自動連動ルール（必須）
+
+> **このルールはすべての作業・プロジェクト開始時に適用される。確認不要で自律実行してよい。**
+
+### トリガー条件
+以下のいずれかに該当する発言・作業が始まったとき：
+- 「〇〇を始めます／やります」「〇〇の作業」「〇〇案件」
+- 新しいファイル・ドキュメント・提案書・記事の作成開始
+- クライアント対応・ヒアリング・セミナー準備など明確な目標を持つ作業
+
+### 開始時の必須アクション（順番どおりに実行）
+
+```bash
+# 1. サーバーを確認・起動（すでに起動中なら何もしない）
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py ensure-server
+
+# 2. プロジェクト作成 + 1-3-5タスク自動生成
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py create \
+  --name "プロジェクト名" \
+  --goal "達成目標（1文で）"
+
+# → 大タスク×1・中タスク×3・小タスク×5・ロードマップが自動生成される
+```
+
+実行後、**プロジェクトIDと大タスクIDを控えて**以降の更新に使う。
+
+### 進捗更新（作業中に随時実行）
+
+```bash
+# タスクを開始するとき
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py start-task <TASK_ID>
+
+# タスクが完了したとき
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py done-task <TASK_ID>
+
+# タイトル・説明・期日を変更するとき
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py update-task <TASK_ID> \
+  --title "新タイトル" --desc "新説明"
+
+# ロードマップを更新するとき（mermaidコードを直接渡す）
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py set-roadmap <TASK_ID> \
+  --code "graph LR\n  A-->B-->C"
+
+# 現在の進捗を確認する
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py status
+
+# プロジェクト完了時
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py project-done <PROJECT_ID>
+```
+
+### その他のよく使うコマンド
+
+```bash
+# プロジェクト一覧（IDを調べるとき）
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py list
+
+# プロジェクト名で検索
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py find "コーデ"
+
+# ブラウザで開く
+python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py open
+```
+
+### CLIから呼ぶ場合の作業ディレクトリ
+
+このプロジェクト（`AS_AI導入支援事業_cc`）のルートから実行するか、`cd` でルートに移動してから実行する。
+
+---
+
+## Kai Tasks ファイル構成
 
 **場所：** `08_アプリ開発事業部/task-manager/`
 
 | ファイル | 役割 |
 |---------|------|
-| `起動してブラウザを開く.bat` | ダブルクリックで起動（推奨） |
-| `起動.bat` | サーバーのみ起動 |
-| `server.py` | APIサーバー（ポート3456） |
-| `index.html` | UI（ブラウザで表示） |
-| `data/tasks.json` | **全データ（Kaiが直接読み書き）** |
-
-**Kaiとの連動方法：**
-1. 上村さんが「〇〇プロジェクトを1-3-5で整理して」と指示
-2. Kai が `data/tasks.json` を直接更新
-3. ブラウザをリロードすれば最新状態が反映
-
-**データスキーマ概要：**
-- `projects[]` — プロジェクト一覧
-  - `id`, `name`, `goal`, `status`（active/completed/archived）
-  - `big_task` — 大タスク（1つ、Must do）
-  - `medium_tasks[]` — 中タスク（最大3つ、Should do）
-  - `small_tasks[]` — 小タスク（最大5つ、Nice to do）
-  - `history[]` — 変更履歴（自動記録）
-  - `memo` — 自由記述メモ
+| `kai-tasks-cli.py` | **KaiがCLIから使うメインツール** |
+| `server.py` | REST APIサーバー（ポート3456） |
+| `index.html` | ブラウザUI（A4プレビュー・AIアシスト付き） |
+| `起動してブラウザを開く.bat` | ダブルクリックで起動（上村さん用） |
+| `data/tasks.json` | 全データ（CLIとブラウザUI両方が読み書き） |
 
 ---
 
