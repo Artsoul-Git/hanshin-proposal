@@ -1173,7 +1173,7 @@ function taskCard(t, sizeClass, pid) {
             ${due ? `<span class="task-due ${isOverdue(t.due_date)&&!isDone?'overdue':''}">${due}</span>` : ''}
             ${hasMmd ? `<span style="font-size:10px;color:#a29bfe;">🧠 あり</span>` : ''}
             ${hasRm  ? `<span style="font-size:10px;color:var(--med);">🗺️ あり</span>` : ''}
-            ${fileCount > 0 ? `<span style="font-size:10px;color:${missingFiles>0?'var(--red)':'var(--green)};">📦${missingFiles>0?` ⚠️${missingFiles}件消失`:` ${fileCount}件`}</span>` : ''}
+            ${fileCount > 0 ? '<span style="font-size:10px;color:'+(missingFiles>0?'var(--red)':'var(--green)')+';">📦'+(missingFiles>0?' ⚠️'+missingFiles+'件消失':' '+fileCount+'件')+'</span>' : ''}
           </div>
         </div>
         <div class="task-actions">
