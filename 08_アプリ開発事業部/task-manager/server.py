@@ -192,6 +192,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 "linked_projects": [],
                 "initial_mindmap_mmd": "",
                 "tags": body.get("tags", []),
+                "session_logs": [],
                 "history": [{"timestamp": now_iso(), "action": "作成", "detail": "プロジェクトを作成しました"}]
             }
             data["projects"].append(project)
@@ -217,6 +218,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 "mindmap_mmd": "",
                 "roadmap_mmd": "",
                 "related_links": [],
+                "output_files": [],
                 "history": [{"timestamp": now_iso(), "action": "作成", "detail": "タスクを作成しました"}]
             }
             if task_type == "big":
@@ -275,6 +277,33 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             save_data(data)
             self.send_json(200, {"ok": True})
 
+        elif path.startswith("/api/projects/") and path.endswith("/logs"):
+            project_id = path.split("/")[3]
+            data = load_data()
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            if "session_logs" not in project:
+                project["session_logs"] = []
+            log = {
+                "id": str(uuid.uuid4())[:8],
+                "timestamp": now_iso(),
+                "type": body.get("type", "note"),
+                "summary": body.get("summary", ""),
+                "detail": body.get("detail", ""),
+            }
+            project["session_logs"].append(log)
+            project["updated_at"] = now_iso()
+            project["history"].append({"timestamp": now_iso(), "action": "ログ追加",
+                                        "detail": f"[{log['type']}] {log['summary']}"})
+            save_data(data)
+            self.send_json(201, log)
+
+        elif path == "/api/files/check":
+            paths = body.get("paths", [])
+            results = {p: os.path.exists(p) for p in paths}
+            self.send_json(200, results)
+
         else:
             self.send_json(404, {"error": "Not found"})
 
@@ -291,7 +320,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 return self.send_json(404, {"error": "Project not found"})
 
             old_status = project["status"]
-            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags"]:
+            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags", "session_logs"]:
                 if key in body:
                     project[key] = body[key]
             project["updated_at"] = now_iso()
@@ -317,7 +346,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         if t and t["id"] == task_id:
                             old_status = t["status"]
                             for key in ["title", "description", "status", "due_date",
-                                        "mindmap_mmd", "roadmap_mmd", "related_links"]:
+                                        "mindmap_mmd", "roadmap_mmd", "related_links", "output_files"]:
                                 if key in body:
                                     t[key] = body[key]
                             t["updated_at"] = now_iso()

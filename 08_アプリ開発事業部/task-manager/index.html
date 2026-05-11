@@ -435,6 +435,40 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .tdp-history-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 4px; flex-shrink: 0; }
 .task-title-link { cursor: pointer; transition: color .15s; }
 .task-title-link:hover { color: var(--accent); text-decoration: underline; }
+
+/* ── Output Files Panel ── */
+.file-list { display: flex; flex-direction: column; gap: 0; }
+.file-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.file-item:last-child { border-bottom: none; }
+.file-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.file-dot.ok { background: var(--green); }
+.file-dot.missing { background: var(--red); animation: pulse 1.5s infinite; }
+.file-dot.unchecked { background: var(--border); }
+.file-info { flex: 1; min-width: 0; }
+.file-label { font-weight: 600; line-height: 1.3; }
+.file-path { font-family: monospace; font-size: 10px; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
+.file-missing-alert { font-size: 10px; color: var(--red); font-weight: 700; margin-top: 2px; }
+.file-del-btn { flex-shrink: 0; background: none; border: none; color: var(--text2); cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
+.file-del-btn:hover { color: var(--red); }
+
+/* ── Activity Log Tab ── */
+.act-log-list { display: flex; flex-direction: column; gap: 0; }
+.act-log-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.act-log-item:last-child { border-bottom: none; }
+.act-log-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.act-log-type-instruction .act-log-icon { background: rgba(108,99,255,.18); }
+.act-log-type-decision .act-log-icon { background: rgba(67,233,123,.18); }
+.act-log-type-output .act-log-icon { background: rgba(84,160,255,.18); }
+.act-log-type-note .act-log-icon { background: rgba(136,136,170,.1); }
+.act-log-body { flex: 1; min-width: 0; }
+.act-log-summary { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.act-log-detail { font-size: 11px; color: var(--text2); margin-top: 3px; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+.act-log-meta { font-size: 10px; color: var(--text2); margin-top: 4px; }
+.act-log-type-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 1px 5px; border-radius: 4px; margin-right: 5px; }
+.act-log-type-instruction .act-log-type-badge { background: rgba(108,99,255,.25); color: var(--accent); }
+.act-log-type-decision .act-log-type-badge { background: rgba(67,233,123,.2); color: var(--green); }
+.act-log-type-output .act-log-type-badge { background: rgba(84,160,255,.2); color: var(--med); }
+.act-log-type-note .act-log-type-badge { background: rgba(136,136,170,.15); color: var(--text2); }
 </style>
 </head>
 <body>
@@ -479,7 +513,7 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 
 <!-- kbd hint -->
 <div class="kbd-hint" id="kbdHint">
-  <kbd>/</kbd> 検索 &nbsp; <kbd>N</kbd> 新規 &nbsp; <kbd>G</kbd> グラフ &nbsp; <kbd>K</kbd> カンバン &nbsp; <kbd>T</kbd> タスク &nbsp; <kbd>P</kbd> ピボット &nbsp; <kbd>D</kbd> ダッシュボード &nbsp; <kbd>Esc</kbd> 閉じる
+  <kbd>/</kbd> 検索 &nbsp; <kbd>N</kbd> 新規 &nbsp; <kbd>G</kbd> グラフ &nbsp; <kbd>K</kbd> カンバン &nbsp; <kbd>T</kbd> タスク &nbsp; <kbd>P</kbd> ピボット &nbsp; <kbd>L</kbd> 活動ログ &nbsp; <kbd>D</kbd> ダッシュボード &nbsp; <kbd>Esc</kbd> 閉じる
 </div>
 
 <!-- 通常モーダル -->
@@ -1031,6 +1065,7 @@ function renderProject(p) {
       <button class="tab ${state.tab==='tasks'?'active':''}" onclick="switchTab('tasks','${p.id}')">タスク</button>
       <button class="tab ${state.tab==='kanban'?'active':''}" onclick="switchTab('kanban','${p.id}')">カンバン</button>
       <button class="tab ${state.tab==='pivots'?'active':''}" onclick="switchTab('pivots','${p.id}')">🔄 思考遷移${(p.pivots||[]).length>0?` <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.pivots||[]).length}</span>`:''}</button>
+      <button class="tab ${state.tab==='logs'?'active':''}" onclick="switchTab('logs','${p.id}')">📋 活動ログ${(p.session_logs||[]).length>0?` <span style="font-size:10px;background:var(--med);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.session_logs||[]).length}</span>`:''}</button>
       <button class="tab ${state.tab==='history'?'active':''}" onclick="switchTab('history','${p.id}')">履歴</button>
       <button class="tab ${state.tab==='memo'?'active':''}" onclick="switchTab('memo','${p.id}')">メモ</button>
     </div>
@@ -1051,6 +1086,7 @@ function renderTabContent(p) {
   if (state.tab === 'history') return renderHistory(p);
   if (state.tab === 'memo')    return renderMemo(p);
   if (state.tab === 'pivots')  return renderPivots(p);
+  if (state.tab === 'logs')    return renderActivityLog(p);
   return renderTasks(p);
 }
 
@@ -1108,6 +1144,8 @@ function taskCard(t, sizeClass, pid) {
   const links = t.related_links || [];
   const hasMmd = !!(t.mindmap_mmd);
   const hasRm  = !!(t.roadmap_mmd);
+  const fileCount = (t.output_files || []).length;
+  const missingFiles = (t.output_files || []).filter(f => f.status === 'missing').length;
   const linksHtml = links.length
     ? `<div class="task-links">${links.slice(0,3).map(l =>
         `<a class="task-link-item" href="${esc(l.url)}" target="_blank" rel="noopener">
@@ -1135,6 +1173,7 @@ function taskCard(t, sizeClass, pid) {
             ${due ? `<span class="task-due ${isOverdue(t.due_date)&&!isDone?'overdue':''}">${due}</span>` : ''}
             ${hasMmd ? `<span style="font-size:10px;color:#a29bfe;">🧠 あり</span>` : ''}
             ${hasRm  ? `<span style="font-size:10px;color:var(--med);">🗺️ あり</span>` : ''}
+            ${fileCount > 0 ? `<span style="font-size:10px;color:${missingFiles>0?'var(--red)':'var(--green)};">📦${missingFiles>0?` ⚠️${missingFiles}件消失`:` ${fileCount}件`}</span>` : ''}
           </div>
         </div>
         <div class="task-actions">
@@ -2009,6 +2048,7 @@ document.addEventListener('keydown', e => {
     else if (e.key === 't' || e.key === 'T') switchTab('tasks',   state.projectId);
     else if (e.key === 'h' || e.key === 'H') switchTab('history', state.projectId);
     else if (e.key === 'p' || e.key === 'P') switchTab('pivots',  state.projectId);
+    else if (e.key === 'l' || e.key === 'L') switchTab('logs',    state.projectId);
   }
   // Show hint briefly
   clearTimeout(kbdHintTimer);
@@ -2165,11 +2205,98 @@ function closeAiFocus(apply) {
 }
 
 // ══════════════════════════════════════════════
+//  Activity Log (session_logs)
+// ══════════════════════════════════════════════
+function renderActivityLog(p) {
+  const logs = (p.session_logs || []).slice().sort((a,b) => b.timestamp.localeCompare(a.timestamp));
+  const typeIcon = { instruction: '📝', decision: '✅', output: '📦', note: '💬' };
+  const typeLabel = { instruction: '指示', decision: '決定', output: '成果物', note: 'メモ' };
+
+  const logsHtml = logs.length ? logs.map(l => `
+    <div class="act-log-item act-log-type-${esc(l.type)}">
+      <div class="act-log-icon">${typeIcon[l.type] || '📌'}</div>
+      <div class="act-log-body">
+        <div class="act-log-summary">
+          <span class="act-log-type-badge">${typeLabel[l.type] || l.type}</span>${esc(l.summary)}
+        </div>
+        ${l.detail ? `<div class="act-log-detail">${esc(l.detail)}</div>` : ''}
+        <div class="act-log-meta">${l.timestamp.replace('T',' ')} · ${timeAgo(l.timestamp)}</div>
+      </div>
+      <button class="file-del-btn" onclick="deleteActivityLog('${p.id}','${l.id}')" title="削除">✕</button>
+    </div>`).join('') :
+    `<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">
+      活動ログがありません<br>
+      <div style="font-size:11px;margin-top:8px;">CLIから: <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;">log-action PROJECT_ID --type instruction --summary "指示内容"</code></div>
+    </div>`;
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <h2 style="font-size:16px;font-weight:700;">📋 活動ログ</h2>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px;">上村の指示・Kaiの決定・成果物・メモを時系列で記録</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openAddLogModal('${p.id}')">＋ ログを追加</button>
+    </div>
+    <div class="act-log-list">${logsHtml}</div>`;
+}
+
+function openAddLogModal(pid) {
+  const html = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📋 活動ログを追加</div>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">種別</label>
+    <select id="logType" class="form-input" style="margin-bottom:10px;">
+      <option value="instruction">📝 指示（上村からの指示内容）</option>
+      <option value="decision">✅ 決定（Kaiが行った判断・決定）</option>
+      <option value="output">📦 成果物（作成したファイル・成果）</option>
+      <option value="note">💬 メモ（その他のメモ）</option>
+    </select>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">概要 <span style="color:var(--red)">*</span></label>
+    <input id="logSummary" class="form-input" placeholder="1行で要約" style="margin-bottom:10px;">
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">詳細（省略可）</label>
+    <textarea id="logDetail" class="form-input" rows="3" placeholder="詳細な内容・ファイルパス・コマンドなど" style="resize:vertical;margin-bottom:14px;"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="addActivityLog('${pid}')">追加</button>
+    </div>`;
+  openModal(html);
+}
+
+async function addActivityLog(pid) {
+  const type = document.getElementById('logType')?.value || 'note';
+  const summary = document.getElementById('logSummary')?.value.trim();
+  const detail = document.getElementById('logDetail')?.value.trim() || '';
+  if (!summary) { toast('概要を入力してください', 'err'); return; }
+  await api('POST', `/projects/${pid}/logs`, { type, summary, detail });
+  await loadData(true);
+  closeModal();
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (p && state.tab === 'logs') {
+    document.getElementById('tabContent').innerHTML = renderActivityLog(p);
+  }
+  toast('ログを追加しました', 'ok');
+}
+
+async function deleteActivityLog(pid, logId) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+  const updated = (p.session_logs || []).filter(l => l.id !== logId);
+  await api('PUT', `/projects/${pid}`, { session_logs: updated });
+  await loadData(true);
+  const pp = state.data?.projects.find(x => x.id === pid);
+  if (pp && state.tab === 'logs') {
+    document.getElementById('tabContent').innerHTML = renderActivityLog(pp);
+  }
+  toast('削除しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
 //  Task Dashboard
 // ══════════════════════════════════════════════
 function openTaskDashboard(taskId) {
+  const overlay = document.getElementById('taskDashOverlay');
+  overlay.dataset.taskId = taskId;
   renderTaskDashboard(taskId);
-  document.getElementById('taskDashOverlay').style.display = 'flex';
+  overlay.style.display = 'flex';
 }
 
 function closeTaskDash() {
@@ -2254,6 +2381,15 @@ function renderTaskDashboard(taskId) {
           <div class="tdp-body" style="max-height:180px;overflow-y:auto;">${histHtml}</div>
         </div>
       </div>
+      <div class="tdp tdp-full" id="tdFiles">
+        <div class="tdp-head">📦 成果物ファイル（${(t.output_files||[]).length}件）
+          <div style="display:flex;gap:6px;">
+            <button class="btn-tmpl" onclick="checkTaskFiles('${taskId}')">🔍 存在確認</button>
+            <button class="btn-tmpl" onclick="openAddFileModal('${taskId}')">＋ 追加</button>
+          </div>
+        </div>
+        <div class="tdp-body" id="tdFilesBody">${renderFilesHtml(t.output_files||[])}</div>
+      </div>
     </div>
     <div class="task-dash-foot">
       <button class="btn btn-primary btn-sm" onclick="cycleDashStatus('${taskId}')">${cycleLabel[t.status]}</button>
@@ -2280,6 +2416,89 @@ function renderTaskDashboard(taskId) {
       } catch(e) { el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`; }
     }
   }, 50);
+}
+
+// ── Output Files helpers ──
+function renderFilesHtml(files) {
+  if (!files || !files.length) {
+    return `<div style="color:var(--text2);font-size:12px;">成果物ファイルなし — 「＋ 追加」または CLIの <code>attach-file</code> で登録できます</div>`;
+  }
+  return `<div class="file-list">${files.map((f, i) => `
+    <div class="file-item">
+      <div class="file-dot ${f.status||'unchecked'}" title="${f.status==='ok'?'正常':'消失の可能性あり'}"></div>
+      <div class="file-info">
+        <div class="file-label">${esc(f.label||f.path)}</div>
+        <div class="file-path" title="${esc(f.path)}">${esc(f.path)}</div>
+        ${f.status==='missing'?`<div class="file-missing-alert">⚠️ ファイルが見つかりません（移動・削除の可能性）</div>`:''}
+        ${f.status==='unchecked'?`<div style="font-size:10px;color:var(--text2);">未確認 — 「🔍 存在確認」でチェック</div>`:''}
+      </div>
+      <button class="file-del-btn" onclick="removeOutputFile(event.currentTarget)" data-index="${i}" title="削除">✕</button>
+    </div>`).join('')}</div>`;
+}
+
+function openAddFileModal(taskId) {
+  const html = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📦 成果物ファイルを追加</div>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">ファイルパス <span style="color:var(--red)">*</span></label>
+    <input id="addFilePath" class="form-input" placeholder="例: D:\\Google Antigravity\\...\\report.html" style="margin-bottom:10px;font-family:monospace;font-size:12px;">
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">ラベル（省略可）</label>
+    <input id="addFileLabel" class="form-input" placeholder="ファイルの分かりやすい名前" style="margin-bottom:14px;">
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="addOutputFile('${taskId}')">追加</button>
+    </div>`;
+  openModal(html);
+}
+
+async function addOutputFile(taskId) {
+  const path = document.getElementById('addFilePath')?.value.trim();
+  if (!path) { toast('ファイルパスを入力してください', 'err'); return; }
+  const label = document.getElementById('addFileLabel')?.value.trim() || path.split(/[\\/]/).pop();
+  const t = findTask(taskId);
+  if (!t) return;
+  const files = [...(t.output_files || []), {
+    id: Math.random().toString(36).slice(2, 10),
+    path, label, added_at: new Date().toISOString().slice(0, 19), status: 'unchecked'
+  }];
+  await api('PUT', `/tasks/${taskId}`, { output_files: files });
+  await loadData(true);
+  closeModal();
+  renderTaskDashboard(taskId);
+  toast('ファイルを追加しました', 'ok');
+}
+
+async function removeOutputFile(btn) {
+  const idx = parseInt(btn.dataset.index, 10);
+  const overlay = document.getElementById('taskDashOverlay');
+  const taskId = overlay?.dataset.taskId;
+  if (!taskId) return;
+  const t = findTask(taskId);
+  if (!t) return;
+  const files = (t.output_files || []).filter((_, i) => i !== idx);
+  await api('PUT', `/tasks/${taskId}`, { output_files: files });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  toast('削除しました', 'ok');
+}
+
+async function checkTaskFiles(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  const files = t.output_files || [];
+  if (!files.length) { toast('追跡ファイルがありません', 'err'); return; }
+  toast('確認中…', 'ok');
+  const paths = files.map(f => f.path);
+  const results = await api('POST', '/files/check', { paths });
+  let missingCount = 0;
+  const updated = files.map(f => {
+    const exists = results[f.path];
+    if (!exists) missingCount++;
+    return { ...f, status: exists ? 'ok' : 'missing' };
+  });
+  await api('PUT', `/tasks/${taskId}`, { output_files: updated });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  toast(missingCount > 0 ? `⚠️ ${missingCount}件が見つかりません` : '✅ すべて正常', missingCount > 0 ? 'err' : 'ok');
 }
 
 function openTdMmd(elId, title) {

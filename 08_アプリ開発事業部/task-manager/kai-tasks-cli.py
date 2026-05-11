@@ -392,6 +392,87 @@ def cmd_init_mindmap(a):
                 return
     print("ERROR: タスクが見つからないか、マインドマップが未設定です", file=sys.stderr)
 
+def cmd_attach_file(a):
+    """タスクに成果物ファイルを紐付ける"""
+    import uuid as _uuid
+    data = _req("GET", "/tasks")
+    t = None
+    for p in data.get("projects", []):
+        for _, task in _all_tasks(p):
+            if task["id"] == a.task_id:
+                t = task
+                break
+        if t:
+            break
+    if not t:
+        print(f"ERROR: タスク {a.task_id} が見つかりません", file=sys.stderr)
+        sys.exit(1)
+
+    abs_path = os.path.abspath(a.path)
+    files = t.get("output_files", [])
+    if any(f["path"] == abs_path for f in files):
+        print(f"[Kai Tasks] 既に登録済み: {abs_path}")
+        return
+    exists = os.path.exists(abs_path)
+    files.append({
+        "id": str(_uuid.uuid4())[:8],
+        "path": abs_path,
+        "label": a.label or os.path.basename(abs_path),
+        "added_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "status": "ok" if exists else "missing",
+    })
+    _req("PUT", f"/tasks/{a.task_id}", {"output_files": files})
+    status_icon = f"{GREEN}✅{RESET}" if exists else f"{RED}⚠️ ファイルが見つかりません{RESET}"
+    print(f"\n{BOLD}[Kai Tasks] ファイル紐付け {status_icon}{RESET}")
+    print(f"  タスク: {a.task_id}")
+    print(f"  パス  : {abs_path}")
+    print(f"  ラベル: {a.label or os.path.basename(abs_path)}\n")
+
+def cmd_check_files(a):
+    """全タスク（または指定プロジェクト）の成果物ファイルの存在確認"""
+    data = _req("GET", "/tasks")
+    pid_filter = getattr(a, "project_id", None)
+    ok_list, missing_list = [], []
+
+    for p in data.get("projects", []):
+        if pid_filter and p["id"] != pid_filter:
+            continue
+        for _, t in _all_tasks(p):
+            for f in t.get("output_files", []):
+                exists = os.path.exists(f["path"])
+                entry  = (p["name"], t["title"], f["label"], f["path"], f["id"])
+                (ok_list if exists else missing_list).append(entry)
+
+    print(f"\n{BOLD}[Kai Tasks] ファイル存在確認{RESET}\n")
+    print(f"  {GREEN}✅ 正常: {len(ok_list)} 件{RESET}")
+    print(f"  {RED}⚠️  消失: {len(missing_list)} 件{RESET}\n")
+
+    if missing_list:
+        print(f"  {RED}{BOLD}消失ファイル:{RESET}")
+        for pname, tname, label, path, _ in missing_list:
+            print(f"    {RED}⚠️{RESET}  {BOLD}{label}{RESET}")
+            print(f"         {GRAY}パス: {path}{RESET}")
+            print(f"         {GRAY}↳ {pname} / {tname}{RESET}")
+        print()
+    else:
+        print(f"  {GREEN}すべてのファイルが正常に存在しています ✓{RESET}\n")
+
+def cmd_log_action(a):
+    """プロジェクトに上村の指示・Kaiの活動を記録する"""
+    body = {
+        "type": a.type,
+        "summary": a.summary,
+        "detail": getattr(a, "detail", "") or "",
+    }
+    result = _req("POST", f"/projects/{a.project_id}/logs", body)
+    icons = {"instruction": "📝", "decision": "✅", "output": "📦", "note": "💬"}
+    icon = icons.get(a.type, "📌")
+    print(f"\n{BOLD}[Kai Tasks] ログ記録 [{result.get('id','?')}]{RESET}")
+    print(f"  {icon} [{a.type}] {a.summary}")
+    if body["detail"]:
+        print(f"  {GRAY}{body['detail']}{RESET}")
+    print()
+
 def cmd_log(a):
     """最近の変更履歴を全プロジェクトから表示"""
     data  = _req("GET", "/tasks")
@@ -501,6 +582,20 @@ def main():
     c = sub.add_parser("init-mindmap")
     c.add_argument("task_id")
 
+    c = sub.add_parser("attach-file")
+    c.add_argument("task_id")
+    c.add_argument("--path", required=True)
+    c.add_argument("--label", default="")
+
+    c = sub.add_parser("check-files")
+    c.add_argument("--project-id", dest="project_id", default=None)
+
+    c = sub.add_parser("log-action")
+    c.add_argument("project_id")
+    c.add_argument("--type", choices=["instruction","decision","output","note"], default="note")
+    c.add_argument("--summary", required=True)
+    c.add_argument("--detail", default="")
+
     args = p.parse_args()
 
     # ensure-server は常に最初に実行
@@ -534,6 +629,9 @@ def main():
         "link":            cmd_link,
         "unlink":          cmd_unlink,
         "init-mindmap":    cmd_init_mindmap,
+        "attach-file":     cmd_attach_file,
+        "check-files":     cmd_check_files,
+        "log-action":      cmd_log_action,
     }
     fn = dispatch.get(args.command)
     if fn:
