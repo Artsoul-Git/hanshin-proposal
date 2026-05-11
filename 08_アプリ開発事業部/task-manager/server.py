@@ -188,6 +188,10 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 "big_task": None,
                 "medium_tasks": [],
                 "small_tasks": [],
+                "pivots": [],
+                "linked_projects": [],
+                "initial_mindmap_mmd": "",
+                "tags": body.get("tags", []),
                 "history": [{"timestamp": now_iso(), "action": "作成", "detail": "プロジェクトを作成しました"}]
             }
             data["projects"].append(project)
@@ -232,6 +236,45 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             save_data(data)
             self.send_json(201, task)
 
+        elif path.startswith("/api/projects/") and path.endswith("/pivots"):
+            project_id = path.split("/")[3]
+            data = load_data()
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            if "pivots" not in project:
+                project["pivots"] = []
+            pivot = {
+                "id": str(uuid.uuid4())[:8],
+                "timestamp": now_iso(),
+                "type": body.get("type", "strategic"),
+                "from": body.get("from", ""),
+                "to": body.get("to", ""),
+                "reason": body.get("reason", ""),
+                "impact": body.get("impact", "medium"),
+            }
+            project["pivots"].append(pivot)
+            project["updated_at"] = now_iso()
+            project["history"].append({"timestamp": now_iso(), "action": "ピボット記録",
+                                        "detail": f"{pivot['from']} → {pivot['to']}"})
+            save_data(data)
+            self.send_json(201, pivot)
+
+        elif path.startswith("/api/projects/") and path.endswith("/links"):
+            project_id = path.split("/")[3]
+            data = load_data()
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            if "linked_projects" not in project:
+                project["linked_projects"] = []
+            target_id = body.get("target_id", "")
+            if target_id and target_id not in project["linked_projects"]:
+                project["linked_projects"].append(target_id)
+            project["updated_at"] = now_iso()
+            save_data(data)
+            self.send_json(200, {"ok": True})
+
         else:
             self.send_json(404, {"error": "Not found"})
 
@@ -248,7 +291,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 return self.send_json(404, {"error": "Project not found"})
 
             old_status = project["status"]
-            for key in ["name", "goal", "status", "memo"]:
+            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags"]:
                 if key in body:
                     project[key] = body[key]
             project["updated_at"] = now_iso()
@@ -313,7 +356,32 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
         segments = self.path.rstrip("/").split("/")
         data = load_data()
 
-        if len(segments) == 4 and segments[2] == "projects":
+        if len(segments) == 6 and segments[2] == "projects" and segments[4] == "pivots":
+            project_id = segments[3]
+            pivot_id   = segments[5]
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            before = len(project.get("pivots", []))
+            project["pivots"] = [pv for pv in project.get("pivots", []) if pv["id"] != pivot_id]
+            if len(project["pivots"]) == before:
+                return self.send_json(404, {"error": "Pivot not found"})
+            project["updated_at"] = now_iso()
+            save_data(data)
+            self.send_json(200, {"ok": True})
+
+        elif len(segments) == 6 and segments[2] == "projects" and segments[4] == "links":
+            project_id = segments[3]
+            target_id  = segments[5]
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            project["linked_projects"] = [lid for lid in project.get("linked_projects", []) if lid != target_id]
+            project["updated_at"] = now_iso()
+            save_data(data)
+            self.send_json(200, {"ok": True})
+
+        elif len(segments) == 4 and segments[2] == "projects":
             project_id = segments[3]
             before = len(data["projects"])
             data["projects"] = [p for p in data["projects"] if p["id"] != project_id]

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T04:58:47",
+  "last_updated": "2026-05-11T13:40:57",
   "projects": [
     {
       "id": "sample-001",
@@ -454,6 +454,327 @@
           "detail": "名前を更新"
         }
       ]
+    },
+    {
+      "id": "bf934946",
+      "name": "Kai Tasks 最強化プロジェクト",
+      "goal": "タスク管理アプリをSSEリアルタイム同期・カンバン・思考可視化を備えた最強プロジェクト管理ツールに進化させる",
+      "status": "active",
+      "created_at": "2026-05-11T13:33:37",
+      "updated_at": "2026-05-11T13:40:57",
+      "memo": "",
+      "big_task": {
+        "id": "5646e3ba",
+        "title": "Kai Tasksを最強プロジェクト管理ツールに進化させる",
+        "description": "このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。",
+        "status": "todo",
+        "due_date": null,
+        "created_at": "2026-05-11T13:33:41",
+        "updated_at": "2026-05-11T13:40:46",
+        "mindmap_mmd": "mindmap\n  root((\"Kai Projects\"))\n    リアルタイム同期\n      SSE基盤\n        ThreadingServer\n        25秒pingキープアライブ\n      ライブインジケーター\n        緑点滅ドット\n        LIVE / OFF表示\n    プロジェクト可視化\n      ダッシュボード\n        統計カード4枚\n        進行中プロジェクト\n        期限切れ一覧\n      カンバンボード\n        ドラッグ&ドロップ\n        3カラム\n      思考遷移\n        ピボット記録\n        状態遷移図\n        マインドマップ比較\n      グラフビュー\n        プロジェクト間リンク\n        パターン分析\n    CLI強化\n      today コマンド\n      log コマンド\n      pivot コマンド\n      ANSIカラー\n    Obsidian的機能\n      双方向リンク\n      パターン分析\n      知識グラフ",
+        "roadmap_mmd": "graph LR\n  A([\"🎯 タスク管理アプリ（旧）\"]) -->|Phase 1| B[\"🔧 サーバー刷新\\nSSE + Threading\"]\n  B -->|Phase 2| C[\"🎨 フロントエンド\\n大改造\"]\n  C -->|Phase 3| D[\"⌨️ CLI強化\\nANSI + today/log\"]\n  D -->|Phase 4| E[\"🧠 思考可視化\\nPivot記録\"]\n  E -->|Phase 5| F[\"🔗 プロジェクト\\nグラフビュー\"]\n  F -->|Phase 6| G([\"🚀 Kai Projects\\nObsidian的進化\"])\n\n  style A fill:#555,color:#fff,stroke:#555\n  style B fill:#43e97b,color:#000,stroke:#43e97b\n  style C fill:#43e97b,color:#000,stroke:#43e97b\n  style D fill:#43e97b,color:#000,stroke:#43e97b\n  style E fill:#f9ca24,color:#000,stroke:#f9ca24\n  style F fill:#f9ca24,color:#000,stroke:#f9ca24\n  style G fill:#6c63ff,color:#fff,stroke:#6c63ff",
+        "related_links": [],
+        "history": [
+          {
+            "timestamp": "2026-05-11T13:33:41",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "9c3f1aa2",
+          "title": "サーバー刷新（SSE + ThreadingHTTPServer）",
+          "description": "シングルスレッドから ThreadingMixIn へ転換、SSEエンドポイント追加、スレッドセーフなJSON読み書き実装",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:45",
+          "updated_at": "2026-05-11T13:34:34",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:45",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:34:34",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "e0538b29",
+          "title": "フロントエンド大改造（ダッシュボード・カンバン・ライブ同期）",
+          "description": "ウェルカム画面→統計ダッシュボード、カンバンドラッグ&ドロップ、SSEライブインジケーター、サイドバー検索、Kaiフィード実装",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:47",
+          "updated_at": "2026-05-11T13:34:39",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:47",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:34:39",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "52ecdc14",
+          "title": "CLI強化＋思考可視化機能追加",
+          "description": "ANSIカラーCLI（today/log）実装。さらにピボット記録・プロジェクトグラフ・パターン分析追加中",
+          "status": "in_progress",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:50",
+          "updated_at": "2026-05-11T13:34:43",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:50",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:34:43",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "aa2056de",
+          "title": "SSEエンドポイントとThreadingServer実装",
+          "description": "UnicodeEncodeError修正も含む。Windows cp932問題をio.TextIOWrapperで解決",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:52",
+          "updated_at": "2026-05-11T13:34:56",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:52",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:34:56",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "98097555",
+          "title": "カンバン（ドラッグ&ドロップ）実装",
+          "description": "HTML5 drag and drop API + ondragover/ondrop ハンドラ + .drag-over スタイル",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:54",
+          "updated_at": "2026-05-11T13:35:01",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:54",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:35:01",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "36b78f14",
+          "title": "サイドバー検索 + Kaiフィード実装",
+          "description": "f キーでサーチフォーカス、全タスク全文検索、Kaiフィード（最新5件履歴）実装",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:56",
+          "updated_at": "2026-05-11T13:35:05",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:56",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:35:05",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "c0c94102",
+          "title": "ANSIカラーCLI（today / log コマンド）実装",
+          "description": "ANSI escape code + ctypes.windll.kernel32 でWindows Terminal対応、UTF-8 stdout ラッパー追加",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-11T13:33:58",
+          "updated_at": "2026-05-11T13:35:09",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:33:58",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:35:09",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "343548fc",
+          "title": "思考遷移タブ + プロジェクトグラフ追加",
+          "description": "ピボット記録機能・状態遷移図（Mermaid）・プロジェクト間リンク・パターン分析ダッシュボード実装",
+          "status": "in_progress",
+          "due_date": null,
+          "created_at": "2026-05-11T13:34:00",
+          "updated_at": "2026-05-11T13:35:14",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "history": [
+            {
+              "timestamp": "2026-05-11T13:34:00",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-11T13:35:14",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "2026-05-11T13:33:37",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:41",
+          "action": "タスク追加",
+          "detail": "「タスク管理アプリをSSEリアルタイム同期・カンバン・思考…」を達成する を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:45",
+          "action": "タスク追加",
+          "detail": "現状把握・要件整理 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:47",
+          "action": "タスク追加",
+          "detail": "計画立案・実行 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:50",
+          "action": "タスク追加",
+          "detail": "検証・改善・定着化 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:52",
+          "action": "タスク追加",
+          "detail": "キックオフ・関係者共有 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:54",
+          "action": "タスク追加",
+          "detail": "ツール・リソースの準備 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:56",
+          "action": "タスク追加",
+          "detail": "進捗確認・中間レビュー を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:33:58",
+          "action": "タスク追加",
+          "detail": "課題の洗い出しと対処 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:34:00",
+          "action": "タスク追加",
+          "detail": "最終確認・完了報告 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-11T13:40:04",
+          "action": "ピボット記録",
+          "detail": "シングルスレッドHTTPServer → ThreadingHTTPServer + SSEエンドポイント"
+        },
+        {
+          "timestamp": "2026-05-11T13:40:15",
+          "action": "ピボット記録",
+          "detail": "静的タスク管理UI（ページリロード） → SSEリアルタイム同期 + カンバン + Kaiフィード"
+        },
+        {
+          "timestamp": "2026-05-11T13:40:19",
+          "action": "ピボット記録",
+          "detail": "タスク管理ツール（Kai Tasks） → プロジェクト管理 + 思考可視化（Kai Projects）"
+        }
+      ],
+      "pivots": [
+        {
+          "id": "79608366",
+          "timestamp": "2026-05-11T13:40:04",
+          "type": "technical",
+          "from": "シングルスレッドHTTPServer",
+          "to": "ThreadingHTTPServer + SSEエンドポイント",
+          "reason": "SSEの長時間接続が通常リクエストをブロックするため",
+          "impact": "high"
+        },
+        {
+          "id": "497236b4",
+          "timestamp": "2026-05-11T13:40:15",
+          "type": "conceptual",
+          "from": "静的タスク管理UI（ページリロード）",
+          "to": "SSEリアルタイム同期 + カンバン + Kaiフィード",
+          "reason": "ブラウザとCLIの操作が即時に双方向同期されるべき",
+          "impact": "high"
+        },
+        {
+          "id": "cf5e8dc9",
+          "timestamp": "2026-05-11T13:40:19",
+          "type": "conceptual",
+          "from": "タスク管理ツール（Kai Tasks）",
+          "to": "プロジェクト管理 + 思考可視化（Kai Projects）",
+          "reason": "タスクは手段。プロジェクトの思考の流れ・転換点こそが本質的な管理対象",
+          "impact": "high"
+        }
+      ],
+      "initial_mindmap_mmd": "mindmap\n  root((\"Kai Tasks 最強化\"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ"
     }
   ]
 }

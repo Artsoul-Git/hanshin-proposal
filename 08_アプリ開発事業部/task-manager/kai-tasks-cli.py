@@ -352,6 +352,46 @@ def cmd_today(_a):
 
     print()
 
+def cmd_pivot(a):
+    """プロジェクトに思考転換（ピボット）を記録する"""
+    body = {
+        "type":   a.type,
+        "from":   getattr(a, "from_", "") or "",
+        "to":     a.to,
+        "reason": getattr(a, "reason", "") or "",
+        "impact": getattr(a, "impact", "medium") or "medium",
+    }
+    result = _req("POST", f"/projects/{a.project_id}/pivots", body)
+    pid = result.get("id", "?")
+    print(f"\n{BOLD}[Kai Tasks] ピボット記録 [{pid}]{RESET}")
+    print(f"  {GRAY}元の方向:{RESET} {body['from']}")
+    print(f"  {YELLOW}▶{RESET}  {GREEN}{BOLD}{body['to']}{RESET}")
+    if body["reason"]:
+        print(f"  {GRAY}理由:{RESET} {body['reason']}")
+    print(f"  {GRAY}影響度:{RESET} {body['impact']}\n")
+
+def cmd_link(a):
+    """プロジェクト間をリンクする"""
+    _req("POST", f"/projects/{a.project_id}/links", {"target_id": a.target_id})
+    print(f"[Kai Tasks] リンク設定: {a.project_id} → {a.target_id}")
+
+def cmd_unlink(a):
+    """プロジェクト間のリンクを解除する"""
+    _req("DELETE", f"/projects/{a.project_id}/links/{a.target_id}")
+    print(f"[Kai Tasks] リンク解除: {a.project_id} → {a.target_id}")
+
+def cmd_init_mindmap(a):
+    """現在のマインドマップをプロジェクトの「初期マインドマップ」として保存する（転換前スナップショット）"""
+    data = _req("GET", "/tasks")
+    # Find project containing this task
+    for p in data.get("projects", []):
+        for _, t in _all_tasks(p):
+            if t["id"] == a.task_id and t.get("mindmap_mmd"):
+                _req("PUT", f"/projects/{p['id']}", {"initial_mindmap_mmd": t["mindmap_mmd"]})
+                print(f"[Kai Tasks] 初期マインドマップを保存しました (プロジェクト: {p['name']})")
+                return
+    print("ERROR: タスクが見つからないか、マインドマップが未設定です", file=sys.stderr)
+
 def cmd_log(a):
     """最近の変更履歴を全プロジェクトから表示"""
     data  = _req("GET", "/tasks")
@@ -442,6 +482,25 @@ def main():
     c = sub.add_parser("log")
     c.add_argument("--limit", type=int, default=15)
 
+    c = sub.add_parser("pivot")
+    c.add_argument("project_id")
+    c.add_argument("--type", choices=["strategic","technical","scope","conceptual"], default="strategic")
+    c.add_argument("--from", dest="from_", default="", metavar="FROM")
+    c.add_argument("--to", required=True)
+    c.add_argument("--reason", default="")
+    c.add_argument("--impact", choices=["high","medium","low"], default="medium")
+
+    c = sub.add_parser("link")
+    c.add_argument("project_id")
+    c.add_argument("target_id")
+
+    c = sub.add_parser("unlink")
+    c.add_argument("project_id")
+    c.add_argument("target_id")
+
+    c = sub.add_parser("init-mindmap")
+    c.add_argument("task_id")
+
     args = p.parse_args()
 
     # ensure-server は常に最初に実行
@@ -471,6 +530,10 @@ def main():
         "project-archive": cmd_project_archive,
         "today":           cmd_today,
         "log":             cmd_log,
+        "pivot":           cmd_pivot,
+        "link":            cmd_link,
+        "unlink":          cmd_unlink,
+        "init-mindmap":    cmd_init_mindmap,
     }
     fn = dispatch.get(args.command)
     if fn:

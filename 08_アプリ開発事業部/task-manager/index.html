@@ -326,6 +326,63 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Pivot / Thinking Transition ── */
+.pivot-timeline { position: relative; padding-left: 26px; }
+.pivot-timeline::before { content: ''; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.pivot-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; position: relative; transition: border-color .15s; }
+.pivot-card:hover { border-color: var(--accent); }
+.pivot-card::before { content: ''; position: absolute; left: -22px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.pivot-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.pivot-type-badge { display: inline-flex; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; margin-bottom: 7px; letter-spacing: .3px; }
+.pivot-type-badge.strategic  { background: rgba(108,99,255,.2); color: var(--accent); }
+.pivot-type-badge.technical  { background: rgba(84,160,255,.2); color: var(--med); }
+.pivot-type-badge.scope      { background: rgba(249,202,36,.2); color: var(--yellow); }
+.pivot-type-badge.conceptual { background: rgba(67,233,123,.2); color: var(--green); }
+.pivot-from-to { display: flex; align-items: center; gap: 8px; margin: 5px 0 6px; flex-wrap: wrap; }
+.pivot-from { font-size: 12px; color: var(--text2); background: var(--surface2); padding: 3px 9px; border-radius: 6px; }
+.pivot-arrow { color: var(--accent); font-size: 16px; flex-shrink: 0; }
+.pivot-to { font-size: 12px; font-weight: 600; color: var(--text); background: rgba(108,99,255,.1); padding: 3px 9px; border-radius: 6px; border: 1px solid rgba(108,99,255,.3); }
+.pivot-reason { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+.pivot-time { font-size: 10px; color: var(--border); margin-top: 5px; }
+.pivot-impact { font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 99px; }
+.pivot-impact.high   { background: rgba(255,107,107,.2); color: var(--red); }
+.pivot-impact.medium { background: rgba(249,202,36,.2); color: var(--yellow); }
+.pivot-impact.low    { background: rgba(136,136,170,.2); color: var(--text2); }
+.pivot-empty { text-align: center; padding: 32px 16px; border: 2px dashed var(--border); border-radius: 12px; color: var(--text2); }
+.pivot-empty p { font-size: 13px; margin-bottom: 12px; }
+.pivot-diagram-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: auto; padding: 16px; margin-bottom: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+.pivot-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.pivot-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.pivot-compare-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.pivot-compare-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 12px 6px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.pivot-compare-mmd { padding: 12px; min-height: 90px; overflow: auto; display: flex; align-items: center; justify-content: center; }
+
+/* ── Graph View ── */
+.graph-view { padding: 0 0 40px; }
+.graph-view h1 { font-size: 26px; font-weight: 800; }
+.graph-desc { color: var(--text2); font-size: 13px; margin-top: 6px; margin-bottom: 22px; }
+.graph-mmd-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 18px; min-height: 180px; overflow: auto; display: flex; align-items: center; justify-content: center; }
+.graph-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.graph-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+.graph-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.graph-proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 20px; }
+.graph-proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: border-color .15s; }
+.graph-proj-card:hover { border-color: var(--accent); }
+.graph-proj-card-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.graph-proj-card-meta { font-size: 10px; color: var(--text2); margin-top: 4px; }
+.graph-link-tag { font-size: 10px; color: var(--accent); background: rgba(108,99,255,.1); border: 1px solid rgba(108,99,255,.2); border-radius: 99px; padding: 1px 7px; margin-right: 4px; }
+
+/* ── Global Tabs ── */
+.global-tab-bar { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 3px; margin-bottom: 26px; width: fit-content; }
+
+/* ── Pattern Stats ── */
+.pattern-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.pattern-item:last-child { border-bottom: none; }
+.pattern-label { font-size: 12px; color: var(--text2); flex: 1; }
+.pattern-value { font-size: 13px; font-weight: 700; }
+.pattern-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.pattern-bar-fill { height: 100%; border-radius: 99px; }
 </style>
 </head>
 <body>
@@ -333,7 +390,7 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
   <aside class="sidebar">
     <!-- Logo + Live -->
     <div class="logo-row">
-      <div class="logo">Kai Tasks <span>by Kei</span></div>
+      <div class="logo" onclick="showDashboard()" style="cursor:pointer;">Kai Projects <span>by Kei</span></div>
       <div class="live-indicator">
         <div class="live-dot" id="liveDot"></div>
         <span id="liveText">--</span>
@@ -370,7 +427,7 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 
 <!-- kbd hint -->
 <div class="kbd-hint" id="kbdHint">
-  <kbd>/</kbd> 検索 &nbsp; <kbd>N</kbd> 新規 &nbsp; <kbd>K</kbd> カンバン &nbsp; <kbd>T</kbd> タスク &nbsp; <kbd>D</kbd> ダッシュボード &nbsp; <kbd>Esc</kbd> 閉じる
+  <kbd>/</kbd> 検索 &nbsp; <kbd>N</kbd> 新規 &nbsp; <kbd>G</kbd> グラフ &nbsp; <kbd>K</kbd> カンバン &nbsp; <kbd>T</kbd> タスク &nbsp; <kbd>P</kbd> ピボット &nbsp; <kbd>D</kbd> ダッシュボード &nbsp; <kbd>Esc</kbd> 閉じる
 </div>
 
 <!-- 通常モーダル -->
@@ -400,7 +457,7 @@ mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose',
 let mmdSeq = 0;
 
 const API = 'http://localhost:3456/api';
-let state = { data: null, projectId: null, tab: 'tasks', searchQuery: '', _draggingId: null };
+let state = { data: null, projectId: null, tab: 'tasks', globalTab: 'dashboard', searchQuery: '', _draggingId: null };
 
 // ══════════════════════════════════════════════
 //  SSE Live Sync
@@ -580,11 +637,21 @@ function timeAgo(isoStr) {
 // ══════════════════════════════════════════════
 //  Dashboard
 // ══════════════════════════════════════════════
-function showDashboard() {
+async function showDashboard(tab) {
   state.projectId = null;
+  if (tab) state.globalTab = tab;
   const ws = document.getElementById('welcomeScreen');
   ws.style.display = 'block';
-  ws.innerHTML = state.data ? renderDashboard() : '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--text2);">読み込み中…</div>';
+  if (state.data) {
+    if (state.globalTab === 'graph') {
+      ws.innerHTML = await renderGraphView();
+      setTimeout(() => renderGraphMmd(), 50);
+    } else {
+      ws.innerHTML = renderDashboard();
+    }
+  } else {
+    ws.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--text2);">読み込み中…</div>';
+  }
   document.getElementById('projectDetail').style.display = 'none';
   renderSidebar();
 }
@@ -613,11 +680,21 @@ function renderDashboard() {
     .sort((a, b) => b.updated_at.localeCompare(a.updated_at));
   const recent = getRecentHistory(8);
 
+  // Pattern analysis
+  const allPivots = projects.flatMap(p => p.pivots || []);
+  const pivotTypes = { strategic: 0, technical: 0, scope: 0, conceptual: 0 };
+  for (const pv of allPivots) { if (pv.type in pivotTypes) pivotTypes[pv.type]++; }
+  const topPivotProject = [...projects].sort((a, b) => (b.pivots||[]).length - (a.pivots||[]).length)[0];
+
   return `
   <div class="dashboard">
+    <div class="global-tab-bar">
+      <button class="tab ${state.globalTab==='dashboard'?'active':''}" onclick="showDashboard('dashboard')">📊 ダッシュボード</button>
+      <button class="tab ${state.globalTab==='graph'?'active':''}" onclick="showDashboard('graph')">🔗 グラフビュー</button>
+    </div>
     <div class="dash-hero">
       <h1>📊 ダッシュボード</h1>
-      <p>全プロジェクトの進行状況 — Claude Code リアルタイム連動</p>
+      <p>全プロジェクトの進行状況 — Claude Code リアルタイム連動 · 思考転換 ${allPivots.length} 件記録済み</p>
     </div>
 
     <div class="dash-stats">
@@ -671,17 +748,149 @@ function renderDashboard() {
         </div>` : ''}
       </div>
 
-      <div class="dash-panel">
-        <div class="dash-panel-title">Kai 更新履歴</div>
-        ${recent.length ? recent.map(h => `
-          <div class="dash-feed-item" onclick="selectProject('${h.projectId}')">
-            <div class="dash-feed-project">${esc(h.projectName)}</div>
-            <div class="dash-feed-action">${esc(h.action)} — ${esc(h.detail.slice(0,55))}${h.detail.length>55?'…':''}</div>
-            <div class="dash-feed-time">${timeAgo(h.timestamp)} · ${h.timestamp.replace('T',' ')}</div>
-          </div>`).join('') : '<div class="dash-empty">変更履歴なし</div>'}
+      <div>
+        <div class="dash-panel">
+          <div class="dash-panel-title">Kai 更新履歴</div>
+          ${recent.length ? recent.map(h => `
+            <div class="dash-feed-item" onclick="selectProject('${h.projectId}')">
+              <div class="dash-feed-project">${esc(h.projectName)}</div>
+              <div class="dash-feed-action">${esc(h.action)} — ${esc(h.detail.slice(0,55))}${h.detail.length>55?'…':''}</div>
+              <div class="dash-feed-time">${timeAgo(h.timestamp)} · ${h.timestamp.replace('T',' ')}</div>
+            </div>`).join('') : '<div class="dash-empty">変更履歴なし</div>'}
+        </div>
+        ${allPivots.length > 0 ? `
+        <div class="dash-panel" style="margin-top:14px;">
+          <div class="dash-panel-title">🧠 パターン分析 — ピボット傾向</div>
+          <div style="margin-bottom:10px;">
+            ${[['strategic','方針転換',allPivots.filter(p=>p.type==='strategic').length,'#6c63ff'],
+               ['technical','技術転換',allPivots.filter(p=>p.type==='technical').length,'#54a0ff'],
+               ['scope','スコープ',allPivots.filter(p=>p.type==='scope').length,'#f9ca24'],
+               ['conceptual','概念転換',allPivots.filter(p=>p.type==='conceptual').length,'#43e97b']]
+              .map(([type,label,count,color]) => {
+                const pct = allPivots.length ? Math.round(count/allPivots.length*100) : 0;
+                return `<div class="pattern-item">
+                  <span class="pattern-label">${label}</span>
+                  <div class="pattern-bar-wrap"><div class="pattern-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+                  <span class="pattern-value" style="color:${color};">${count}</span>
+                </div>`;
+              }).join('')}
+          </div>
+          ${topPivotProject && (topPivotProject.pivots||[]).length > 0 ? `
+          <div style="font-size:11px;color:var(--text2);padding-top:8px;border-top:1px solid var(--border);">
+            最多ピボット: <span style="color:var(--text);font-weight:600;">${esc(topPivotProject.name)}</span>
+            （${(topPivotProject.pivots||[]).length} 件）
+          </div>` : ''}
+        </div>` : ''}
       </div>
     </div>
   </div>`;
+}
+
+// ══════════════════════════════════════════════
+//  Graph View
+// ══════════════════════════════════════════════
+async function renderGraphView() {
+  const projects = state.data?.projects || [];
+  const tabBar = `
+    <div class="global-tab-bar">
+      <button class="tab" onclick="showDashboard('dashboard')">📊 ダッシュボード</button>
+      <button class="tab active" onclick="showDashboard('graph')">🔗 グラフビュー</button>
+    </div>`;
+
+  if (!projects.length) {
+    return tabBar + '<div class="graph-view"><p style="color:var(--text2)">プロジェクトなし</p></div>';
+  }
+
+  const idMap = {};
+  projects.forEach((p, i) => { idMap[p.id] = `N${i}`; });
+
+  let mmd = 'graph LR\n';
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const label  = esc(p.name.slice(0, 18)) + (p.name.length > 18 ? '…' : '');
+    const pcts   = (() => { const ts = getAllTasks(p); const d = ts.filter(t=>t.status==='done').length; return ts.length ? Math.round(d/ts.length*100) : 0; })();
+    mmd += `  ${nodeId}(["${label}\\n${pcts}%"])\n`;
+    for (const lid of (p.linked_projects || [])) {
+      if (idMap[lid]) mmd += `  ${nodeId} --> ${idMap[lid]}\n`;
+    }
+  }
+  // Colors by status
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const fill   = p.status === 'active' ? '#6c63ff' : p.status === 'completed' ? '#43e97b' : '#444';
+    const color  = p.status === 'completed' ? '#000' : '#fff';
+    mmd += `  style ${nodeId} fill:${fill},color:${color},stroke:${fill}\n`;
+  }
+
+  const projCards = projects.map(p => {
+    const links = (p.linked_projects||[]).map(lid => {
+      const lp = projects.find(x => x.id === lid);
+      return lp ? `<span class="graph-link-tag">→ ${esc(lp.name.slice(0,12))}</span>` : '';
+    }).join('');
+    const pvCount = (p.pivots||[]).length;
+    return `<div class="graph-proj-card" onclick="selectProject('${p.id}')">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span class="proj-dot ${p.status}" style="flex-shrink:0;"></span>
+        <div class="graph-proj-card-name">${esc(p.name)}</div>
+      </div>
+      <div class="graph-proj-card-meta">
+        ${pvCount > 0 ? `🔄 ピボット ${pvCount} 件 &nbsp;` : ''}
+        ${links || '<span style="color:var(--border);font-size:10px;">リンクなし</span>'}
+      </div>
+    </div>`;
+  }).join('');
+
+  return tabBar + `
+  <div class="graph-view">
+    <h1>🔗 プロジェクトグラフ</h1>
+    <p class="graph-desc">プロジェクト間の関係と思考の転換点を可視化。ノードをクリックしてプロジェクトを開く。</p>
+    <div class="graph-legend">
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#6c63ff;"></div>進行中</div>
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#43e97b;"></div>完了</div>
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#444;"></div>アーカイブ</div>
+    </div>
+    <div class="graph-mmd-wrap" id="graphMmdWrap">
+      <div style="color:var(--text2);font-size:12px;">レンダリング中…</div>
+    </div>
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:10px;">プロジェクト一覧</div>
+    <div class="graph-proj-grid">${projCards}</div>
+  </div>`;
+}
+
+async function renderGraphMmd() {
+  const ws = document.getElementById('welcomeScreen');
+  if (!ws || state.projectId) return;
+  const wrap = document.getElementById('graphMmdWrap');
+  if (!wrap) return;
+  const projects = state.data?.projects || [];
+  const idMap = {};
+  projects.forEach((p, i) => { idMap[p.id] = `N${i}`; });
+
+  let mmd = 'graph LR\n';
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const label  = p.name.slice(0, 18) + (p.name.length > 18 ? '…' : '');
+    const pcts   = (() => { const ts = getAllTasks(p); const d = ts.filter(t=>t.status==='done').length; return ts.length ? Math.round(d/ts.length*100) : 0; })();
+    mmd += `  ${nodeId}(["${label}\\n${pcts}%"])\n`;
+    for (const lid of (p.linked_projects || [])) {
+      if (idMap[lid]) mmd += `  ${nodeId} --> ${idMap[lid]}\n`;
+    }
+  }
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const fill   = p.status === 'active' ? '#6c63ff' : p.status === 'completed' ? '#43e97b' : '#444';
+    const color  = p.status === 'completed' ? '#000' : '#fff';
+    mmd += `  style ${nodeId} fill:${fill},color:${color},stroke:${fill}\n`;
+  }
+
+  try {
+    const id = `graph-${++mmdSeq}`;
+    const { svg } = await mermaid.render(id, mmd);
+    wrap.innerHTML = svg;
+    wrap.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+  } catch(e) {
+    wrap.innerHTML = `<div class="mmd-error">グラフ描画エラー: ${e.message || e}</div>`;
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -731,26 +940,27 @@ function renderProject(p) {
     <div class="tabs">
       <button class="tab ${state.tab==='tasks'?'active':''}" onclick="switchTab('tasks','${p.id}')">タスク</button>
       <button class="tab ${state.tab==='kanban'?'active':''}" onclick="switchTab('kanban','${p.id}')">カンバン</button>
+      <button class="tab ${state.tab==='pivots'?'active':''}" onclick="switchTab('pivots','${p.id}')">🔄 思考遷移${(p.pivots||[]).length>0?` <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.pivots||[]).length}</span>`:''}</button>
       <button class="tab ${state.tab==='history'?'active':''}" onclick="switchTab('history','${p.id}')">履歴</button>
       <button class="tab ${state.tab==='memo'?'active':''}" onclick="switchTab('memo','${p.id}')">メモ</button>
     </div>
     <div id="tabContent">${renderTabContent(p)}</div>`;
+  if (state.tab === 'pivots') {
+    setTimeout(() => { renderPivotDiagram(p); renderPivotCompare(p); }, 80);
+  }
 }
 
 function switchTab(tab, pid) {
   state.tab = tab;
   const p = state.data.projects.find(p => p.id === pid);
-  document.querySelectorAll('.tab').forEach(t => {
-    const map = { tasks: 'タスク', kanban: 'カンバン', history: '履歴', memo: 'メモ' };
-    t.classList.toggle('active', t.textContent === map[tab]);
-  });
-  document.getElementById('tabContent').innerHTML = renderTabContent(p);
+  renderProject(p);
 }
 
 function renderTabContent(p) {
-  if (state.tab === 'kanban') return renderKanban(p);
+  if (state.tab === 'kanban')  return renderKanban(p);
   if (state.tab === 'history') return renderHistory(p);
-  if (state.tab === 'memo') return renderMemo(p);
+  if (state.tab === 'memo')    return renderMemo(p);
+  if (state.tab === 'pivots')  return renderPivots(p);
   return renderTasks(p);
 }
 
@@ -1439,6 +1649,196 @@ async function deleteTask(taskId) {
 }
 
 // ══════════════════════════════════════════════
+//  Pivots (Thinking Transition)
+// ══════════════════════════════════════════════
+function renderPivots(p) {
+  const pivots = (p.pivots || []).slice().sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  const typeLabel = { strategic:'方針転換', technical:'技術転換', scope:'スコープ変更', conceptual:'概念転換' };
+  const impactLabel = { high:'影響大', medium:'影響中', low:'影響小' };
+
+  const diagramHtml = `
+    <div class="pivot-section-title">🗺️ 思考遷移図 <span style="font-weight:400;color:var(--border);font-size:10px;">自動生成 — ピボットを追加するとリアルタイム更新</span></div>
+    <div class="pivot-diagram-wrap" id="pivotDiagramWrap">
+      ${pivots.length === 0
+        ? `<span style="color:var(--text2);font-size:12px;">ピボットを記録すると思考遷移図が表示されます</span>`
+        : `<span style="color:var(--text2);font-size:12px;">レンダリング中…</span>`}
+    </div>`;
+
+  // Initial vs current mindmap comparison
+  const initialMmd = p.initial_mindmap_mmd;
+  const bigTaskMmd = p.big_task?.mindmap_mmd;
+  const compareHtml = (initialMmd && bigTaskMmd && initialMmd !== bigTaskMmd) ? `
+    <div class="pivot-section-title" style="margin-top:4px;">🧠 マインドマップの変遷 <span style="font-weight:400;color:var(--border);font-size:10px;">初期 vs 現在</span></div>
+    <div class="pivot-compare">
+      <div class="pivot-compare-panel">
+        <div class="pivot-compare-label">🌱 初期マインドマップ</div>
+        <div class="pivot-compare-mmd" id="pivotInitMmd"><span style="color:var(--text2);font-size:11px;">レンダリング中…</span></div>
+      </div>
+      <div class="pivot-compare-panel">
+        <div class="pivot-compare-label">✨ 現在のマインドマップ</div>
+        <div class="pivot-compare-mmd" id="pivotCurrMmd"><span style="color:var(--text2);font-size:11px;">レンダリング中…</span></div>
+      </div>
+    </div>` : '';
+
+  const pivotListHtml = pivots.length
+    ? `<div class="pivot-timeline">${pivots.map((pv, i) => `
+        <div class="pivot-card">
+          <div class="pivot-card-top">
+            <div>
+              <span class="pivot-type-badge ${pv.type}">${typeLabel[pv.type] || pv.type}</span>
+              ${i === 0 ? '<span style="font-size:10px;color:var(--accent);margin-left:6px;">← 最初の転換点</span>' : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+              <span class="pivot-impact ${pv.impact}">${impactLabel[pv.impact] || pv.impact}</span>
+              <button class="icon-btn del btn-sm" style="width:22px;height:22px;font-size:11px;" onclick="deletePivot('${p.id}','${pv.id}')" title="削除">🗑</button>
+            </div>
+          </div>
+          ${pv.from ? `<div class="pivot-from-to">
+            <span class="pivot-from">${esc(pv.from)}</span>
+            <span class="pivot-arrow">→</span>
+            <span class="pivot-to">${esc(pv.to)}</span>
+          </div>` : `<div style="margin:6px 0;font-size:13px;font-weight:600;color:var(--accent);">→ ${esc(pv.to)}</div>`}
+          ${pv.reason ? `<div class="pivot-reason">💬 ${esc(pv.reason)}</div>` : ''}
+          <div class="pivot-time">${pv.timestamp.replace('T',' ')}</div>
+        </div>`).join('')}
+      </div>`
+    : `<div class="pivot-empty">
+        <p>まだ思考転換が記録されていません</p>
+        <p style="font-size:11px;margin-top:4px;">方針転換・技術的判断・スコープ変更などをここに記録すると<br>プロジェクトの思考の流れが可視化されます</p>
+      </div>`;
+
+  return `
+    ${diagramHtml}
+    ${compareHtml}
+    <div class="pivot-section-title" style="margin-top:${compareHtml?'4px':'0'};">📋 ピボット記録 <span style="font-weight:400;font-size:10px;color:var(--border);">${pivots.length} 件</span></div>
+    ${pivotListHtml}
+    <div style="margin-top:16px;">
+      <button class="btn btn-primary btn-sm" onclick="openAddPivotModal('${p.id}')">＋ 思考転換を記録</button>
+      ${!initialMmd && bigTaskMmd ? `<button class="btn btn-ghost btn-sm" style="margin-left:8px;" onclick="saveInitialMindmap('${p.id}')">📸 現在のマインドマップを初期として保存</button>` : ''}
+    </div>`;
+}
+
+async function renderPivotDiagram(p) {
+  const wrap = document.getElementById('pivotDiagramWrap');
+  if (!wrap) return;
+  const pivots = (p.pivots || []).slice().sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  if (!pivots.length) return;
+
+  const initLabel = pivots[0].from || p.name.slice(0, 18);
+  let mmd = 'graph LR\n';
+  mmd += `  N_init(["🌱 ${initLabel.slice(0,20)}"])\n`;
+  let prev = 'N_init';
+  pivots.forEach((pv, i) => {
+    const nid = `N${i}`;
+    const label = pv.to.slice(0, 20);
+    const edge  = pv.reason ? pv.reason.slice(0, 16) : (pv.type === 'strategic' ? '方針転換' : pv.type === 'technical' ? '技術転換' : pv.type === 'scope' ? 'スコープ変更' : '概念転換');
+    mmd += `  ${nid}(["${label}"])\n`;
+    mmd += `  ${prev} -->|"${edge}"| ${nid}\n`;
+    prev = nid;
+  });
+  mmd += `  style N_init fill:#444,color:#fff,stroke:#444\n`;
+  pivots.forEach((_, i) => {
+    const color = i === pivots.length - 1 ? '#43e97b' : '#6c63ff';
+    const text  = i === pivots.length - 1 ? '#000' : '#fff';
+    mmd += `  style N${i} fill:${color},color:${text},stroke:${color}\n`;
+  });
+
+  try {
+    const id = `pivot-${++mmdSeq}`;
+    const { svg } = await mermaid.render(id, mmd);
+    wrap.innerHTML = svg;
+    wrap.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+  } catch(e) {
+    wrap.innerHTML = `<div class="mmd-error">描画エラー: ${e.message}</div>`;
+  }
+}
+
+async function renderPivotCompare(p) {
+  const initialMmd = p.initial_mindmap_mmd;
+  const bigTaskMmd = p.big_task?.mindmap_mmd;
+  if (!initialMmd || !bigTaskMmd || initialMmd === bigTaskMmd) return;
+
+  for (const [elId, code] of [['pivotInitMmd', initialMmd], ['pivotCurrMmd', bigTaskMmd]]) {
+    const el = document.getElementById(elId);
+    if (!el) continue;
+    try {
+      const id = `pmc-${++mmdSeq}`;
+      const { svg } = await mermaid.render(id, code);
+      el.innerHTML = svg;
+      el.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+    } catch(e) {
+      el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`;
+    }
+  }
+}
+
+function openAddPivotModal(pid) {
+  openModal(`
+    <h2>🔄 思考転換を記録</h2>
+    <div class="form-group">
+      <label>転換タイプ</label>
+      <select id="pv-type">
+        <option value="strategic">方針転換 — プロジェクトの方向性が変わった</option>
+        <option value="technical">技術転換 — 実装アプローチが変わった</option>
+        <option value="scope">スコープ変更 — 範囲・規模が変わった</option>
+        <option value="conceptual">概念転換 — 考え方・フレームが変わった</option>
+      </select>
+    </div>
+    <div class="form-group"><label>転換前の状態（元の方向）</label><input id="pv-from" placeholder="例：シングルスレッドサーバー" autofocus></div>
+    <div class="form-group"><label>転換後の状態（新しい方向）*</label><input id="pv-to" placeholder="例：ThreadingHTTPServer + SSE"></div>
+    <div class="form-group"><label>転換の理由</label><textarea id="pv-reason" placeholder="例：SSEの長時間接続が通常リクエストをブロックするため" style="min-height:60px;"></textarea></div>
+    <div class="form-group">
+      <label>影響度</label>
+      <select id="pv-impact">
+        <option value="high">大 — プロジェクト全体に影響</option>
+        <option value="medium" selected>中 — 一部に影響</option>
+        <option value="low">小 — 軽微な変更</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="addPivot('${pid}')">記録する</button>
+    </div>`);
+}
+
+async function addPivot(pid) {
+  const to = document.getElementById('pv-to').value.trim();
+  if (!to) { toast('転換後の状態を入力してください', 'err'); return; }
+  closeModal();
+  await api('POST', `/projects/${pid}/pivots`, {
+    type:   document.getElementById('pv-type').value,
+    from:   document.getElementById('pv-from').value.trim(),
+    to,
+    reason: document.getElementById('pv-reason').value.trim(),
+    impact: document.getElementById('pv-impact').value,
+  });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) { renderProject(p); setTimeout(() => { renderPivotDiagram(p); renderPivotCompare(p); }, 100); }
+  toast('思考転換を記録しました', 'ok');
+}
+
+async function deletePivot(pid, pivotId) {
+  if (!confirm('このピボット記録を削除しますか？')) return;
+  await api('DELETE', `/projects/${pid}/pivots/${pivotId}`);
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('削除しました', 'ok');
+}
+
+async function saveInitialMindmap(pid) {
+  const p = state.data?.projects.find(p => p.id === pid);
+  const mmd = p?.big_task?.mindmap_mmd;
+  if (!mmd) { toast('大タスクのマインドマップが未設定です', 'err'); return; }
+  await api('PUT', `/projects/${pid}`, { initial_mindmap_mmd: mmd });
+  await loadData(true);
+  const updated = state.data?.projects.find(p => p.id === pid);
+  if (updated) renderProject(updated);
+  toast('初期マインドマップを保存しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
 //  History / Memo
 // ══════════════════════════════════════════════
 function renderHistory(p) {
@@ -1501,11 +1901,13 @@ document.addEventListener('keydown', e => {
     document.getElementById('searchInput').focus();
   }
   else if (e.key === 'n' || e.key === 'N') { openNewProjectModal(); }
-  else if (e.key === 'd' || e.key === 'D') { showDashboard(); }
+  else if (e.key === 'd' || e.key === 'D') { showDashboard('dashboard'); }
+  else if (e.key === 'g' || e.key === 'G') { showDashboard('graph'); }
   else if (state.projectId) {
-    if (e.key === 'k' || e.key === 'K') switchTab('kanban', state.projectId);
-    else if (e.key === 't' || e.key === 'T') switchTab('tasks', state.projectId);
+    if      (e.key === 'k' || e.key === 'K') switchTab('kanban',  state.projectId);
+    else if (e.key === 't' || e.key === 'T') switchTab('tasks',   state.projectId);
     else if (e.key === 'h' || e.key === 'H') switchTab('history', state.projectId);
+    else if (e.key === 'p' || e.key === 'P') switchTab('pivots',  state.projectId);
   }
   // Show hint briefly
   clearTimeout(kbdHintTimer);
