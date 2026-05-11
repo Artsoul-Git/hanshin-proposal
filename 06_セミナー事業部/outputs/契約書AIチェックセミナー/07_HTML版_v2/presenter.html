@@ -14,6 +14,75 @@
 </head>
 <body class="presenter-mode">
 
+  <!-- ========== Password gate ========== -->
+  <div id="pwd-gate" style="
+    display:none; position:fixed; inset:0; background:#0a0a0a;
+    z-index:9999; align-items:center; justify-content:center;
+    flex-direction:column; gap:20px; font-family:'Noto Sans JP',sans-serif;">
+    <div style="color:#6F911D;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase">
+      Presenter Access
+    </div>
+    <div style="font-size:18px;font-weight:700;color:rgba(255,255,255,.85)">
+      契約書AIチェックセミナー
+    </div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <input id="pwd-input" type="password" placeholder="パスワード" autocomplete="current-password"
+        style="background:#161616;border:1px solid #2a2a2a;border-radius:6px;
+               padding:10px 16px;font-size:14px;color:#fff;font-family:'Noto Sans JP',sans-serif;
+               outline:none;width:220px;" />
+      <button id="pwd-submit"
+        style="background:#6F911D;color:#fff;border:none;border-radius:6px;
+               padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;
+               font-family:'Noto Sans JP',sans-serif;">入室</button>
+    </div>
+    <div id="pwd-error" style="font-size:12px;color:#e05555;font-weight:700;min-height:1.4em"></div>
+  </div>
+
+  <script>
+    (function () {
+      var PWD_KEY     = 'presenterPwd';
+      var SESSION_KEY = 'presenterAuthed';
+
+      if (sessionStorage.getItem(SESSION_KEY) === '1') return;
+
+      var gate   = document.getElementById('pwd-gate');
+      var input  = document.getElementById('pwd-input');
+      var submit = document.getElementById('pwd-submit');
+      var errEl  = document.getElementById('pwd-error');
+
+      gate.style.display = 'flex';
+
+      var correct = localStorage.getItem(PWD_KEY);
+      if (!correct) {
+        input.disabled = true;
+        submit.disabled = true;
+        errEl.style.color = '#e0a020';
+        errEl.textContent = 'パスワード未設定です。先に admin.html で設定してください。';
+        setTimeout(function () { input.focus(); }, 50);
+        return;
+      }
+
+      function tryAuth() {
+        var entered = input.value;
+        if (entered === correct) {
+          sessionStorage.setItem(SESSION_KEY, '1');
+          gate.style.display = 'none';
+        } else {
+          errEl.textContent = 'パスワードが違います';
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      submit.addEventListener('click', tryAuth);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') tryAuth();
+        errEl.textContent = '';
+      });
+      setTimeout(function () { input.focus(); }, 50);
+    })();
+  </script>
+
   <!-- ========== Operator toolbar ========== -->
   <div class="p-toolbar" id="p-toolbar">
     <button class="p-tool-btn p-menu-btn" id="p-sidebar-toggle" title="目次">☰ 目次</button>
