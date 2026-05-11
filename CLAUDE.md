@@ -18,6 +18,7 @@
 | `/ai-news-digest` | AIニュースダイジェスト生成 |
 | `/company-setup` | AI組織をゼロベース設計・構築（業種・業態問わず対応） |
 | `/fact-check` | 成果物のファクト・エビデンス・法的リスクを独立検証（法務部） |
+| `/seminar-slide` | テーマを投げるとヒアリング→slides.js生成→GitHub Pages公開まで一気通貫で仕上げる |
 | `/persona-review` | ターゲットペルソナ視点で「伝わるか」を検証・改善（ペルソナ品質部） |
 
 ---

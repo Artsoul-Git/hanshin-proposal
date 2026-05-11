@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seminar Slide Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- JSZip for PPTX extraction -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <!-- PDF.js for PDF extraction -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0d;
+      color: rgba(255,255,255,.85);
+      font-family: 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-header {
+      width: 100%;
+      max-width: 720px;
+      margin-bottom: 36px;
+    }
+    .page-header .tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6F911D;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255,255,255,.92);
+    }
+    .page-header p {
+      font-size: 13px;
+      color: rgba(255,255,255,.4);
+      margin-top: 6px;
+    }
+
+    .section {
+      width: 100%;
+      max-width: 720px;
+      background: #161616;
+      border: 1px solid #252525;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #6F911D;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .step-num {
+      display: inline-block;
+      background: #6F911D;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 1px 7px;
+      margin-right: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-grid.full { grid-template-columns: 1fr; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,.5);
+      letter-spacing: .05em;
+    }
+    .form-input, .form-textarea, .form-select {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-size: 13px;
+      color: rgba(255,255,255,.85);
+      font-family: 'Noto Sans JP', sans-serif;
+      outline: none;
+      transition: border-color .15s;
+      width: 100%;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: #6F911D; }
+    .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+    .form-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,.28);
+      margin-top: 2px;
+    }
+
+    .slug-preview {
+      font-size: 11px;
+      color: #6F911D;
+      margin-top: 4px;
+      font-family: monospace;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-primary { background: #6F911D; color: #fff; }
+    .btn-primary:hover { background: #5e7a18; }
+    .btn-ghost { background: #252525; color: rgba(255,255,255,.65); border: 1px solid #333; }
+    .btn-ghost:hover { background: #303030; color: #fff; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+    .output-box {
+      background: #0a0a0a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,.7);
+      font-family: monospace;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-top: 16px;
+      min-height: 80px;
+    }
+
+    .feedback {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 11px;
+      color: #6F911D;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .feedback.show { opacity: 1; }
+
+    .drop-zone {
+      border: 2px dashed #2a2a2a;
+      border-radius: 8px;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      margin-bottom: 12px;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: #6F911D;
+      background: rgba(111,145,29,.06);
+    }
+    .drop-zone input[type=file] { display: none; }
+    .drop-zone p { font-size: 13px; color: rgba(255,255,255,.4); }
+    .drop-zone p strong { color: rgba(255,255,255,.7); }
+
+    .url-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .url-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,.4);
+      min-width: 80px;
+    }
+    .url-value {
+      font-size: 12px;
+      color: #6F911D;
+      font-family: monospace;
+      word-break: break-all;
+    }
+
+    .cmd-block {
+      background: #0a0a0a;
+      border: 1px solid #1e1e1e;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-family: monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+      line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 720px;
+      height: 1px;
+      background: #1a1a1a;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <div class="tag">Artsoul AI</div>
+    <h1>Seminar Slide Builder</h1>
+    <p>テーマを入力 → Kaiへの依頼プロンプトを生成 → デプロイコマンドを確認</p>
+  </div>
+
+  <!-- STEP 1: セミナー情報 -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">1</span>セミナー情報</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label">セミナータイトル *</label>
+        <input type="text" class="form-input" id="title" placeholder="採用担当者向けAI活用セミナー">
+      </div>
+      <div class="form-field">
+        <label class="form-label">GitHubスラッグ *</label>
+        <input type="text" class="form-input" id="slug" placeholder="sales-ai-seminar">
+        <div class="slug-preview" id="slug-preview"></div>
+        <div class="form-hint">英数字・ハイフンのみ。空欄で自動生成。</div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">ターゲット受講者 *</label>
+        <input type="text" class="form-input" id="target" placeholder="中小企業の経営者・採用担当 10〜20名">
+      </div>
+      <div class="form-field">
+        <label class="form-label">所要時間（分）*</label>
+        <input type="number" class="form-input" id="duration" placeholder="60" value="60">
+      </div>
+      <div class="form-field">
+        <label class="form-label">スライド枚数目安</label>
+        <input type="number" class="form-input" id="slide-count" placeholder="30">
+        <div class="form-hint">空欄でおまかせ</div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">テンプレート</label>
+        <select class="form-select" id="template">
+          <option value="kawai-dark-v1">kawai-dark-v1（デフォルト）</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid full" style="margin-top:14px;">
+      <div class="form-field">
+        <label class="form-label">核心メッセージ *</label>
+        <input type="text" class="form-input" id="message" placeholder="AIで採用コストを半分にできる">
+      </div>
+      <div class="form-field">
+        <label class="form-label">パート構成（おまかせの場合は空欄）</label>
+        <input type="text" class="form-input" id="structure" placeholder="座学20分→実演20分→Q&A20分">
+      </div>
+      <div class="form-field">
+        <label class="form-label">盛り込みたいポイント・コンテンツ（箇条書き可）</label>
+        <textarea class="form-textarea" id="points" placeholder="・AI活用のメリット3選&#10;・実際のツール紹介&#10;・よくある失敗パターン"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: 既存資料から補助（任意） -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">2</span>既存資料からテキスト抽出（任意）</div>
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept=".pptx,.pdf">
+      <p><strong>PDFまたはPPTXをドロップ</strong>、またはクリックして選択</p>
+      <p style="margin-top:6px;font-size:12px;">テキストを抽出してKaiへの依頼に添付します</p>
+    </div>
+    <textarea class="form-textarea" id="extracted-text" placeholder="抽出テキストがここに表示されます。手動でも入力できます。" style="min-height:120px;"></textarea>
+  </div>
+
+  <!-- STEP 3: Kaiへの依頼プロンプト -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">3</span>Kaiへの依頼プロンプト</div>
+    <div class="btn-row" style="margin-top:0;margin-bottom:0;">
+      <button class="btn btn-primary" onclick="generatePrompt()">プロンプト生成</button>
+      <button class="btn btn-ghost" onclick="copyPrompt()">コピー<span class="feedback" id="copy-fb">コピーしました</span></button>
+    </div>
+    <div class="output-box" id="prompt-output">← 上のボタンを押すとプロンプトが生成されます</div>
+  </div>
+
+  <!-- STEP 4: CLIコマンド -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">4</span>プロジェクト生成コマンド</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:14px;">Kaiがslides.jsを生成した後、以下を実行してプロジェクトフォルダを作成します。</p>
+    <div class="cmd-block" id="new-cmd">← Step 1 を入力すると自動生成されます</div>
+    <button class="btn btn-ghost" onclick="copyCmd('new-cmd', 'cmd-fb1')">コピー<span class="feedback" id="cmd-fb1">コピーしました</span></button>
+  </div>
+
+  <!-- STEP 5: デプロイ -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">5</span>GitHubデプロイコマンド</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:14px;">プロジェクトフォルダに cd してから実行します。</p>
+    <div class="cmd-block" id="deploy-cmd">← Step 1 を入力すると自動生成されます</div>
+    <button class="btn btn-ghost" onclick="copyCmd('deploy-cmd', 'cmd-fb2')">コピー<span class="feedback" id="cmd-fb2">コピーしました</span></button>
+
+    <div style="margin-top:20px;">
+      <div class="url-row">
+        <span class="url-label">受講者URL</span>
+        <span class="url-value" id="url-viewer">（スラッグを入力すると表示）</span>
+      </div>
+      <div class="url-row">
+        <span class="url-label">管理画面</span>
+        <span class="url-value" id="url-admin">（スラッグを入力すると表示）</span>
+      </div>
+      <div class="url-row">
+        <span class="url-label">プレゼンター</span>
+        <span class="url-value" id="url-presenter">（スラッグを入力すると表示）</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // PDF.js worker
+    if (typeof pdfjsLib !== 'undefined') {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+    }
+
+    /* ---- Auto-slug from title ---- */
+    document.getElementById('title').addEventListener('input', function () {
+      var slug = document.getElementById('slug').value.trim();
+      if (!slug) autoFillSlug();
+      updateOutputs();
+    });
+
+    document.getElementById('slug').addEventListener('input', updateOutputs);
+
+    function autoFillSlug() {
+      var title = document.getElementById('title').value.trim();
+      var slug = title
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .substring(0, 40);
+      document.getElementById('slug').value = slug;
+      updateOutputs();
+    }
+
+    function getSlug() {
+      var slug = document.getElementById('slug').value.trim();
+      if (!slug) {
+        autoFillSlug();
+        slug = document.getElementById('slug').value.trim();
+      }
+      return slug || 'my-seminar';
+    }
+
+    function updateOutputs() {
+      var slug     = getSlug();
+      var title    = document.getElementById('title').value.trim() || 'セミナータイトル';
+      var template = document.getElementById('template').value;
+      var projPath = 'D:\\Google Antigravity\\AS_AI導入支援事業_cc\\08_アプリ開発事業部\\slide-builder\\projects\\' + slug;
+
+      document.getElementById('slug-preview').textContent =
+        slug ? 'スラッグ: ' + slug : '';
+
+      var newCmd = 'cd "D:\\Google Antigravity\\AS_AI導入支援事業_cc"\n' +
+        'python 08_アプリ開発事業部\\slide-builder\\new-seminar.py \\\n' +
+        '  --slug "' + slug + '" \\\n' +
+        '  --title "' + title + '" \\\n' +
+        '  --template "' + template + '"';
+      document.getElementById('new-cmd').textContent = newCmd;
+
+      var deployCmd =
+        'cd "' + projPath + '"\n' +
+        'git init\n' +
+        'git config user.email "uemura@artsoul.jp"\n' +
+        'git config user.name "Kei Uemura"\n' +
+        'git add .\n' +
+        'git commit -m "初期公開: ' + title + '"\n' +
+        'gh repo create Artsoul-Git/' + slug + ' --public --description "' + title + '"\n' +
+        'git remote add origin https://github.com/Artsoul-Git/' + slug + '.git\n' +
+        'git push -u origin master\n' +
+        'git checkout -b gh-pages\n' +
+        'git push origin gh-pages\n' +
+        'git checkout master';
+      document.getElementById('deploy-cmd').textContent = deployCmd;
+
+      var base = 'https://artsoul-git.github.io/' + slug + '/';
+      document.getElementById('url-viewer').textContent    = base + 'viewer.html';
+      document.getElementById('url-admin').textContent     = base + 'admin.html';
+      document.getElementById('url-presenter').textContent = base + 'presenter.html';
+    }
+
+    /* ---- Prompt generation ---- */
+    function generatePrompt() {
+      var title     = document.getElementById('title').value.trim();
+      var slug      = getSlug();
+      var target    = document.getElementById('target').value.trim();
+      var duration  = document.getElementById('duration').value.trim();
+      var slideCount = document.getElementById('slide-count').value.trim();
+      var message   = document.getElementById('message').value.trim();
+      var structure = document.getElementById('structure').value.trim();
+      var points    = document.getElementById('points').value.trim();
+      var extracted = document.getElementById('extracted-text').value.trim();
+      var template  = document.getElementById('template').value;
+
+      if (!title) { alert('セミナータイトルを入力してください'); return; }
+
+      var lines = [
+        '/seminar-slide',
+        '',
+        '以下の情報でセミナースライドを作ってください。',
+        '',
+        '1. セミナータイトル: ' + (title || '（未入力）'),
+        '2. ターゲット受講者: ' + (target || '（未入力）'),
+        '3. 所要時間: ' + (duration ? duration + '分' : '（未入力）'),
+        '4. 核心メッセージ: ' + (message || '（未入力）'),
+        '5. パート構成: ' + (structure || 'おまかせ'),
+        '6. スライド枚数: ' + (slideCount ? slideCount + '枚' : 'おまかせ'),
+        '7. 盛り込みたいポイント:\n' + (points ? points.split('\n').map(function(l){return '   ' + l}).join('\n') : '   おまかせ'),
+        '8. GitHubスラッグ: ' + slug,
+        '9. テンプレート: ' + template,
+      ];
+
+      if (extracted) {
+        lines.push('');
+        lines.push('--- 既存資料（参考テキスト）---');
+        lines.push(extracted.substring(0, 3000));
+        if (extracted.length > 3000) lines.push('（以下省略）');
+        lines.push('--- ここまで ---');
+      }
+
+      document.getElementById('prompt-output').textContent = lines.join('\n');
+      updateOutputs();
+    }
+
+    function copyPrompt() {
+      var text = document.getElementById('prompt-output').textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        showFeedback('copy-fb');
+      }).catch(function () {
+        prompt('コピーしてください:', text);
+      });
+    }
+
+    function copyCmd(id, fbId) {
+      var text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(function () {
+        showFeedback(fbId);
+      }).catch(function () {
+        prompt('コピーしてください:', text);
+      });
+    }
+
+    function showFeedback(id) {
+      var el = document.getElementById(id);
+      el.classList.add('show');
+      setTimeout(function () { el.classList.remove('show'); }, 2000);
+    }
+
+    /* ---- File upload / drag & drop ---- */
+    var dropZone  = document.getElementById('drop-zone');
+    var fileInput = document.getElementById('file-input');
+
+    dropZone.addEventListener('click', function () { fileInput.click(); });
+    dropZone.addEventListener('dragover', function (e) {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', function () {
+      dropZone.classList.remove('drag-over');
+    });
+    dropZone.addEventListener('drop', function (e) {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      var file = e.dataTransfer.files[0];
+      if (file) handleFile(file);
+    });
+    fileInput.addEventListener('change', function () {
+      if (fileInput.files[0]) handleFile(fileInput.files[0]);
+    });
+
+    function handleFile(file) {
+      var name = file.name.toLowerCase();
+      if (name.endsWith('.pptx')) extractPptx(file);
+      else if (name.endsWith('.pdf')) extractPdf(file);
+      else alert('PPTXまたはPDFファイルを選択してください');
+    }
+
+    /* PPTX text extraction via JSZip */
+    async function extractPptx(file) {
+      try {
+        var ab  = await file.arrayBuffer();
+        var zip = await JSZip.loadAsync(ab);
+        var slideKeys = Object.keys(zip.files)
+          .filter(function (k) { return /^ppt\/slides\/slide\d+\.xml$/.test(k); })
+          .sort(function (a, b) {
+            return parseInt(a.match(/\d+/)[0]) - parseInt(b.match(/\d+/)[0]);
+          });
+
+        var result = 'PPTX抽出テキスト: ' + file.name + '\n\n';
+        for (var i = 0; i < slideKeys.length; i++) {
+          var xml = await zip.files[slideKeys[i]].async('text');
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(xml, 'application/xml');
+          var textNodes = doc.querySelectorAll('t');
+          var slideText = Array.from(textNodes).map(function (t) { return t.textContent; }).join(' ').replace(/\s+/g, ' ').trim();
+          if (slideText) result += '--- スライド ' + (i + 1) + ' ---\n' + slideText + '\n\n';
+        }
+        document.getElementById('extracted-text').value = result;
+      } catch (e) {
+        alert('PPTX抽出エラー: ' + e.message);
+      }
+    }
+
+    /* PDF text extraction via PDF.js */
+    async function extractPdf(file) {
+      if (typeof pdfjsLib === 'undefined') {
+        alert('PDF.jsの読み込みに失敗しました。インターネット接続を確認してください。');
+        return;
+      }
+      try {
+        var ab  = await file.arrayBuffer();
+        var pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+        var result = 'PDF抽出テキスト: ' + file.name + '\n\n';
+        for (var i = 1; i <= pdf.numPages; i++) {
+          var page    = await pdf.getPage(i);
+          var content = await page.getTextContent();
+          var text    = content.items.map(function (item) { return item.str; }).join(' ').trim();
+          if (text) result += '--- ページ ' + i + ' ---\n' + text + '\n\n';
+        }
+        document.getElementById('extracted-text').value = result;
+      } catch (e) {
+        alert('PDF抽出エラー: ' + e.message);
+      }
+    }
+
+    /* ---- Init ---- */
+    updateOutputs();
+  </script>
+</body>
+</html>
