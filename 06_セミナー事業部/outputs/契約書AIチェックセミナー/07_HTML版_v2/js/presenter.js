@@ -26,14 +26,23 @@
   var fontsizeVal     = document.getElementById('p-fontsize-val');
 
   /* Toolbar */
-  var exportPdfBtn  = document.getElementById('p-export-pdf');
-  var exportPptxBtn = document.getElementById('p-export-pptx');
-  var zoomInBtn     = document.getElementById('p-zoom-in');
-  var zoomOutBtn    = document.getElementById('p-zoom-out');
-  var zoomResetBtn  = document.getElementById('p-zoom-reset');
-  var zoomDisplay   = document.getElementById('p-zoom-display');
-  var exportOverlay = document.getElementById('p-export-overlay');
-  var exportFill    = document.getElementById('p-export-fill');
+  var exportPdfBtn    = document.getElementById('p-export-pdf');
+  var exportPptxBtn   = document.getElementById('p-export-pptx');
+  var zoomInBtn       = document.getElementById('p-zoom-in');
+  var zoomOutBtn      = document.getElementById('p-zoom-out');
+  var zoomResetBtn    = document.getElementById('p-zoom-reset');
+  var zoomDisplay     = document.getElementById('p-zoom-display');
+  var exportOverlay   = document.getElementById('p-export-overlay');
+  var exportFill      = document.getElementById('p-export-fill');
+  var sidebarToggle   = document.getElementById('p-sidebar-toggle');
+  var sidebarBackdrop = document.getElementById('p-sidebar-backdrop');
+  var sidebar         = document.getElementById('p-sidebar');
+  var sidebarList     = document.getElementById('p-sidebar-list');
+
+  /* Page badge */
+  var pageCur = document.getElementById('p-page-cur');
+  var pageTot = document.getElementById('p-page-tot');
+  if (pageTot) pageTot.textContent = totalSlides;
 
   /* =============================================
      Notify main window when presenter closes
@@ -173,6 +182,16 @@
     if (currentNum) currentNum.textContent = current + 1;
     if (prevBtn) prevBtn.disabled = current === 0;
     if (nextBtn) nextBtn.disabled = current === totalSlides - 1;
+
+    /* ページバッジ更新 */
+    if (pageCur) pageCur.textContent = current + 1;
+
+    /* サイドバーのカレント更新 */
+    if (sidebarList) {
+      sidebarList.querySelectorAll('.p-sidebar-item').forEach(function (el) {
+        el.classList.toggle('current', parseInt(el.dataset.index, 10) === current);
+      });
+    }
 
     if (!bcRemote && bc) bc.postMessage({ type: 'goto', index: current });
   }
@@ -497,6 +516,53 @@
   }
 
   /* =============================================
+     Sidebar (slide list)
+     ============================================= */
+  function getTitleFromFactory(fn, i) {
+    try {
+      var html = fn();
+      var m = html.match(/data-title="([^"]+)"/);
+      if (m) return m[1];
+      var m2 = html.match(/class="slide-h2[^"]*">([^<]+)</);
+      if (m2) return m2[1];
+      var m3 = html.match(/class="s-section-title[^"]*">([^<]+)</);
+      if (m3) return m3[1];
+    } catch (e) {}
+    return 'スライド ' + (i + 1);
+  }
+
+  function buildSidebar() {
+    if (!sidebarList) return;
+    factories.forEach(function (fn, i) {
+      var el  = document.createElement('div');
+      el.className    = 'p-sidebar-item';
+      el.dataset.index = i;
+      var num = document.createElement('span');
+      num.className   = 'p-sidebar-num';
+      num.textContent = String(i + 1).padStart(2, '0');
+      var lbl = document.createElement('span');
+      lbl.textContent = getTitleFromFactory(fn, i);
+      el.appendChild(num);
+      el.appendChild(lbl);
+      el.addEventListener('click', function () { goTo(i); closeSidebar(); });
+      sidebarList.appendChild(el);
+    });
+  }
+
+  function openSidebar() {
+    if (sidebar)         sidebar.classList.add('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.add('open');
+  }
+
+  function closeSidebar() {
+    if (sidebar)         sidebar.classList.remove('open');
+    if (sidebarBackdrop) sidebarBackdrop.classList.remove('open');
+  }
+
+  if (sidebarToggle)   sidebarToggle.addEventListener('click',   function () { sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+  if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+  /* =============================================
      Init
      ============================================= */
   var h = location.hash.replace('#', '');
@@ -512,6 +578,8 @@
       stgCurrent.classList.toggle('zoomed', presenterZoom > 1.0);
     }
   } catch (e) {}
+
+  buildSidebar();
 
   requestAnimationFrame(function () {
     initVSplit();

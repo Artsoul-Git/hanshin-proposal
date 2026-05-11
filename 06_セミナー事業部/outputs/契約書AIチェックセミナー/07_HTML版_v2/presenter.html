@@ -16,6 +16,8 @@
 
   <!-- ========== Operator toolbar ========== -->
   <div class="p-toolbar" id="p-toolbar">
+    <button class="p-tool-btn p-menu-btn" id="p-sidebar-toggle" title="目次">☰ 目次</button>
+    <div class="p-tool-sep"></div>
     <button class="p-tool-btn" id="p-export-pdf">PDF出力</button>
     <button class="p-tool-btn" id="p-export-pptx">PPTX出力</button>
     <div class="p-tool-sep"></div>
@@ -25,6 +27,13 @@
     <button class="p-tool-btn p-zoom-reset-btn" id="p-zoom-reset" title="ズームリセット">リセット</button>
   </div>
 
+  <!-- ========== Sidebar (slide list) ========== -->
+  <div class="p-sidebar-backdrop" id="p-sidebar-backdrop"></div>
+  <aside class="p-sidebar" id="p-sidebar">
+    <div class="p-sidebar-title">目次</div>
+    <div class="p-sidebar-list" id="p-sidebar-list"></div>
+  </aside>
+
   <!-- ========== Main layout ========== -->
   <div class="p-layout" id="p-layout">
 
@@ -32,6 +41,10 @@
     <div class="p-current-col" id="p-current-col">
       <div class="p-col-label">現在のスライド</div>
       <div class="p-stage p-stage-current" id="p-stage-current"></div>
+      <!-- Page number badge (bottom-right of slide area) -->
+      <div class="p-page-badge" id="p-page-badge">
+        <span id="p-page-cur">1</span><span class="p-page-sep">/</span><span id="p-page-tot">1</span>
+      </div>
     </div>
 
     <!-- Horizontal drag handle (left ↔ right) -->
