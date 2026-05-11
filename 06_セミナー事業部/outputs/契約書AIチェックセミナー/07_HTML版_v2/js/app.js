@@ -414,6 +414,35 @@
   function hideOverlay() { if (overlay) overlay.classList.remove('show'); }
   function setProgress(v) { if (fillBar) fillBar.style.width = Math.round(v * 100) + '%'; }
 
+  /* ---------- Laser pointer (presenter → audience) ---------- */
+  var laserDot = null;
+
+  function showLaser(rx, ry) {
+    var slide = getSlide(current);
+    if (!slide) { hideLaser(); return; }
+    var rect = slide.getBoundingClientRect();
+    var x = rect.left + rx * rect.width;
+    var y = rect.top  + ry * rect.height;
+    if (!laserDot) {
+      laserDot = document.createElement('div');
+      laserDot.id = 'laser-dot';
+      laserDot.style.cssText = [
+        'position:fixed', 'border-radius:50%', 'pointer-events:none', 'z-index:9999',
+        'width:18px', 'height:18px', 'transform:translate(-50%,-50%)',
+        'background:radial-gradient(circle,rgba(255,0,0,.92) 20%,rgba(255,80,80,.5) 60%,transparent 100%)',
+        'box-shadow:0 0 8px 3px rgba(255,0,0,.55)', 'display:none'
+      ].join(';');
+      document.body.appendChild(laserDot);
+    }
+    laserDot.style.left = Math.round(x) + 'px';
+    laserDot.style.top  = Math.round(y) + 'px';
+    laserDot.style.display = 'block';
+  }
+
+  function hideLaser() {
+    if (laserDot) laserDot.style.display = 'none';
+  }
+
   /* ---------- BroadcastChannel (presenter sync) ---------- */
   var bc = null;
   try { bc = new BroadcastChannel('slide-sync'); } catch (e) {}
@@ -429,6 +458,10 @@
       if (e.data.type === 'presenter-closed') {
         document.body.classList.remove('presenter-active');
       }
+      if (e.data.type === 'sidebar-open')  { openSidebar(); }
+      if (e.data.type === 'sidebar-close') { closeSidebar(); }
+      if (e.data.type === 'laser')         { showLaser(e.data.x, e.data.y); }
+      if (e.data.type === 'laser-off')     { hideLaser(); }
     };
   }
 
@@ -512,7 +545,7 @@
   function enterEditMode() {
     editMode = true;
     document.body.classList.add('edit-mode');
-    if (editModeBtn) editModeBtn.classList.add('active');
+    if (editModeBtn) { editModeBtn.classList.add('active'); editModeBtn.textContent = '保存'; }
     if (editToolbar) editToolbar.classList.add('show');
     var slide = getSlide(current);
     if (slide) {
@@ -531,7 +564,7 @@
     }
     editMode = false;
     document.body.classList.remove('edit-mode');
-    if (editModeBtn) editModeBtn.classList.remove('active');
+    if (editModeBtn) { editModeBtn.classList.remove('active'); editModeBtn.textContent = '✏️ 編集'; }
     if (editToolbar) editToolbar.classList.remove('show');
   }
 

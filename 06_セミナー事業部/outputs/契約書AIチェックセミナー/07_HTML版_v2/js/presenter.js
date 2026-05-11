@@ -552,15 +552,39 @@
   function openSidebar() {
     if (sidebar)         sidebar.classList.add('open');
     if (sidebarBackdrop) sidebarBackdrop.classList.add('open');
+    if (!bcRemote && bc) bc.postMessage({ type: 'sidebar-open' });
   }
 
   function closeSidebar() {
     if (sidebar)         sidebar.classList.remove('open');
     if (sidebarBackdrop) sidebarBackdrop.classList.remove('open');
+    if (!bcRemote && bc) bc.postMessage({ type: 'sidebar-close' });
   }
 
   if (sidebarToggle)   sidebarToggle.addEventListener('click',   function () { sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
   if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+  /* =============================================
+     Laser pointer — send mouse position to main window
+     ============================================= */
+  var laserOffTimer = null;
+
+  stgCurrent.addEventListener('mousemove', function (e) {
+    if (!bc) return;
+    var slide = stgCurrent.querySelector('.slide');
+    if (!slide) return;
+    var rect = slide.getBoundingClientRect();
+    var rx = (e.clientX - rect.left) / rect.width;
+    var ry = (e.clientY - rect.top)  / rect.height;
+    bc.postMessage({ type: 'laser', x: rx, y: ry });
+    clearTimeout(laserOffTimer);
+    laserOffTimer = setTimeout(function () { if (bc) bc.postMessage({ type: 'laser-off' }); }, 2000);
+  });
+
+  stgCurrent.addEventListener('mouseleave', function () {
+    clearTimeout(laserOffTimer);
+    if (bc) bc.postMessage({ type: 'laser-off' });
+  });
 
   /* =============================================
      Init

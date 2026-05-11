@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
 
   function H(title) {
     return '<header class="slide-header"><h2 class="slide-h2">' + title + '</h2></header>';
@@ -15,7 +15,7 @@
         '<h1 class="slide-cover-title">契約書AIチェックセミナー</h1>' +
       '</div>' +
       '<div class="slide-cover-body">' +
-        '<p class="slide-cover-sub">AIを法務の一次確認に使う習慣をつくる 60分</p>' +
+        '<p class="slide-cover-sub">AIを法務の一次確認に使う習慣をつくる</p>' +
         '<div class="slide-cover-meta">2026.05 ｜ AIを使う前に知っておくこと</div>' +
       '</div>' +
     '</section>';
@@ -45,14 +45,14 @@
   }
 
   function slide04() {
-    return '<section class="slide" data-section="cover" data-title="本日の流れ（60分）" data-notes="全体像を最初に見せる。前半20分で基礎知識、後半20分は実際に動くところを見ていただきます。残り20分は質問にお答えします。">' +
-      H('本日の流れ（60分）') +
+    return '<section class="slide" data-section="cover" data-title="本日の流れ" data-notes="全体像を最初に見せる。前半20分で基礎知識、後半20分は実際に動くところを見ていただきます。残り20分は質問にお答えします。">' +
+      H('本日の流れ') +
       '<div class="slide-content">' +
         '<div class="s-steps">' +
-          '<div class="s-step-row"><div class="s-step-num">①</div><div><div class="s-step-text"><strong>座学（20分）</strong>：AIを使う前に知っておくこと</div></div></div>' +
-          '<div class="s-step-row"><div class="s-step-num">②</div><div><div class="s-step-text"><strong>実演①（10分）</strong>：業務委託契約書チェック【Claude】</div></div></div>' +
-          '<div class="s-step-row"><div class="s-step-num">③</div><div><div class="s-step-text"><strong>実演②（10分）</strong>：FC加盟契約書チェック【Gemini】</div></div></div>' +
-          '<div class="s-step-row"><div class="s-step-num">④</div><div><div class="s-step-text"><strong>Q&amp;A＋まとめ（20分）</strong></div></div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">①</div><div><div class="s-step-text"><strong>座学</strong>：AIを使う前に知っておくこと</div></div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">②</div><div><div class="s-step-text"><strong>実演①</strong>：業務委託契約書チェック【Claude】</div></div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">③</div><div><div class="s-step-text"><strong>実演②</strong>：FC加盟契約書チェック【Gemini】</div></div></div>' +
+          '<div class="s-step-row"><div class="s-step-num">④</div><div><div class="s-step-text"><strong>Q&amp;A＋まとめ</strong></div></div></div>' +
         '</div>' +
       '</div>' +
     '</section>';
@@ -66,7 +66,7 @@
         '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 01</div>' +
         '<h1 class="s-section-title">座学ブロック</h1>' +
-        '<p class="s-section-lead">AIを使う前に知っておくこと（20分）</p>' +
+        '<p class="s-section-lead">AIを使う前に知っておくこと</p>' +
       '</div>' +
     '</section>';
   }
@@ -238,7 +238,7 @@
         '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 02</div>' +
         '<h1 class="s-section-title">実演① 業務委託契約書チェック</h1>' +
-        '<p class="s-section-lead">Claude を使って実際に動かします（10分）</p>' +
+        '<p class="s-section-lead">Claude を使って実際に動かします</p>' +
       '</div>' +
     '</section>';
   }
@@ -336,7 +336,7 @@
         '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 03</div>' +
         '<h1 class="s-section-title">実演② FC加盟契約書チェック</h1>' +
-        '<p class="s-section-lead">Gemini を使ってフランチャイズ契約を多角的にチェックします（10分）</p>' +
+        '<p class="s-section-lead">Gemini を使ってフランチャイズ契約を多角的にチェックします</p>' +
       '</div>' +
     '</section>';
   }
@@ -477,7 +477,6 @@
         '<div class="s-section-accent-bar"></div>' +
         '<div class="s-section-chapter">PART 04</div>' +
         '<h1 class="s-section-title">Q&amp;A ＋ まとめ</h1>' +
-        '<p class="s-section-lead">（20分）</p>' +
       '</div>' +
     '</section>';
   }
