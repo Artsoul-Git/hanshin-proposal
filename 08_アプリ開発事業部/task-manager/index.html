@@ -1282,6 +1282,7 @@ async function onKanbanDrop(e, toStatus) {
   let data;
   try { data = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(_) { return; }
   if (!data.taskId || data.status === toStatus) return;
+  captureSnapshotForTask(data.taskId, 'カンバン移動');
   await api('PUT', `/tasks/${data.taskId}`, { status: toStatus });
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === state.projectId);
@@ -1335,6 +1336,7 @@ function openMindmapModal(taskId) {
 
 async function saveMindmap(taskId) {
   const code = document.getElementById('mmdMindmapEditor').value.trim();
+  captureSnapshotForTask(taskId, 'マインドマップ保存');
   await api('PUT', `/tasks/${taskId}`, { mindmap_mmd: code });
   closeWide(); await loadData(true);
   const p = state.data?.projects.find(p => p.id === state.projectId);
@@ -1410,6 +1412,7 @@ function openRoadmapModal(taskId) {
 
 async function saveRoadmap(taskId) {
   const code = document.getElementById('mmdRoadmapEditor').value.trim();
+  captureSnapshotForTask(taskId, 'ロードマップ保存');
   await api('PUT', `/tasks/${taskId}`, { roadmap_mmd: code });
   closeWide(); await loadData(true);
   const p = state.data?.projects.find(p => p.id === state.projectId);
@@ -1553,6 +1556,7 @@ async function addLink(taskId) {
   if (!url) { toast('URLを入力してください', 'err'); return; }
   const t = findTask(taskId);
   const links = [...(t.related_links||[]), { title: title||url, url, description: desc }];
+  captureSnapshotForTask(taskId, 'リンク追加');
   await api('PUT', `/tasks/${taskId}`, { related_links: links });
   await loadData(true);
   renderLinksModal(taskId, findTask(taskId).related_links || []);
@@ -1564,6 +1568,7 @@ async function addLink(taskId) {
 
 async function removeLink(taskId, idx) {
   if (!confirm('このリンクを削除しますか？')) return;
+  captureSnapshotForTask(taskId, 'リンク削除');
   const t = findTask(taskId);
   const links = (t.related_links||[]).filter((_, i) => i !== idx);
   await api('PUT', `/tasks/${taskId}`, { related_links: links });
@@ -1585,6 +1590,7 @@ function isOverdue(date) { return date && date < new Date().toISOString().slice(
 async function cycleStatus(taskId) {
   const task = findTask(taskId);
   if (!task) return;
+  captureSnapshotForTask(taskId, 'ステータス変更');
   const next = { todo:'in_progress', in_progress:'done', done:'todo' }[task.status];
   await api('PUT', `/tasks/${taskId}`, { status: next });
   await loadData(true);
@@ -1712,6 +1718,7 @@ function openEditProjectModal(pid) {
 }
 
 async function updateProject(pid) {
+  captureSnapshot(pid, 'プロジェクト編集');
   await api('PUT', `/projects/${pid}`, { name: document.getElementById('f-name').value.trim(), goal: document.getElementById('f-goal').value.trim(), status: document.getElementById('f-status').value });
   closeModal(); await loadData(true);
   const p = state.data?.projects.find(p => p.id === pid);
@@ -1720,6 +1727,7 @@ async function updateProject(pid) {
 }
 
 async function markProjectDone(pid) {
+  captureSnapshot(pid, 'プロジェクト完了');
   await api('PUT', `/projects/${pid}`, { status:'completed' });
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === pid);
@@ -1728,6 +1736,7 @@ async function markProjectDone(pid) {
 }
 
 async function archiveProject(pid) {
+  captureSnapshot(pid, 'アーカイブ');
   await api('PUT', `/projects/${pid}`, { status:'archived' });
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === pid);
@@ -1737,6 +1746,7 @@ async function archiveProject(pid) {
 
 async function deleteProject(pid) {
   if (!confirm('このプロジェクトを削除しますか？（元に戻せません）')) return;
+  captureSnapshot(pid, 'プロジェクト削除');
   await api('DELETE', `/projects/${pid}`);
   await loadData(); showDashboard();
   toast('削除しました', 'ok');
@@ -1761,6 +1771,7 @@ function openAddTaskModal(pid, type) {
 async function addTask(pid, type) {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { toast('タイトルを入力してください', 'err'); return; }
+  captureSnapshot(pid, 'タスク追加');
   const r = await api('POST', `/projects/${pid}/tasks`, { type, title, description: document.getElementById('f-desc').value.trim(), due_date: document.getElementById('f-due').value || null });
   if (r.error) { toast(r.error, 'err'); return; }
   closeModal(); await loadData(true);
@@ -1792,6 +1803,7 @@ function openEditTaskModal(taskId) {
 }
 
 async function updateTask(taskId) {
+  captureSnapshotForTask(taskId, 'タスク編集');
   await api('PUT', `/tasks/${taskId}`, { title: document.getElementById('f-title').value.trim(), description: document.getElementById('f-desc').value.trim(), status: document.getElementById('f-status').value, due_date: document.getElementById('f-due').value || null });
   closeModal(); await loadData(true);
   const p = state.data?.projects.find(p => p.id === state.projectId);
@@ -1801,6 +1813,7 @@ async function updateTask(taskId) {
 
 async function deleteTask(taskId) {
   if (!confirm('このタスクを削除しますか？')) return;
+  captureSnapshotForTask(taskId, 'タスク削除');
   await api('DELETE', `/tasks/${taskId}`);
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === state.projectId);
@@ -1964,6 +1977,7 @@ function openAddPivotModal(pid) {
 async function addPivot(pid) {
   const to = document.getElementById('pv-to').value.trim();
   if (!to) { toast('転換後の状態を入力してください', 'err'); return; }
+  captureSnapshot(pid, 'ピボット追加');
   closeModal();
   await api('POST', `/projects/${pid}/pivots`, {
     type:   document.getElementById('pv-type').value,
@@ -1980,6 +1994,7 @@ async function addPivot(pid) {
 
 async function deletePivot(pid, pivotId) {
   if (!confirm('このピボット記録を削除しますか？')) return;
+  captureSnapshot(pid, 'ピボット削除');
   await api('DELETE', `/projects/${pid}/pivots/${pivotId}`);
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === pid);
@@ -1991,6 +2006,7 @@ async function saveInitialMindmap(pid) {
   const p = state.data?.projects.find(p => p.id === pid);
   const mmd = p?.big_task?.mindmap_mmd;
   if (!mmd) { toast('大タスクのマインドマップが未設定です', 'err'); return; }
+  captureSnapshot(pid, '初期マインドマップ保存');
   await api('PUT', `/projects/${pid}`, { initial_mindmap_mmd: mmd });
   await loadData(true);
   const updated = state.data?.projects.find(p => p.id === pid);
@@ -2028,9 +2044,71 @@ function renderMemo(p) {
 
 async function saveMemo(pid) {
   const memo = document.getElementById('memoArea').value;
+  captureSnapshot(pid, 'メモ保存');
   await api('PUT', `/projects/${pid}`, { memo });
   await loadData(true);
   toast('メモを保存しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Undo System
+// ══════════════════════════════════════════════
+const UNDO_MAX = 3;
+const _undoStack = [];
+
+function _findProjectForTask(taskId) {
+  return (state.data?.projects || []).find(p =>
+    p.big_task?.id === taskId ||
+    (p.medium_tasks||[]).some(t => t.id === taskId) ||
+    (p.small_tasks||[]).some(t => t.id === taskId));
+}
+
+function captureSnapshot(projectId, label) {
+  const p = (state.data?.projects || []).find(x => x.id === projectId);
+  if (!p) return;
+  _undoStack.push({ label, projectId, snapshot: JSON.parse(JSON.stringify(p)) });
+  if (_undoStack.length > UNDO_MAX) _undoStack.shift();
+  renderUndoBar();
+}
+
+function captureSnapshotForTask(taskId, label) {
+  const p = _findProjectForTask(taskId);
+  if (p) captureSnapshot(p.id, label);
+}
+
+async function doUndo(idx) {
+  if (!_undoStack.length || idx < 0 || idx >= _undoStack.length) return;
+  const { label, projectId, snapshot } = _undoStack[idx];
+  _undoStack.splice(idx);
+  await api('POST', `/projects/${projectId}/restore`, { snapshot });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === projectId);
+  if (state.projectId === projectId) {
+    if (p) renderProject(p);
+    else { state.projectId = null; showDashboard(); }
+  }
+  renderSidebar();
+  renderUndoBar();
+  toast(`↩ "${label}" を元に戻しました`, 'ok');
+}
+
+function clearUndoStack() {
+  _undoStack.length = 0;
+  renderUndoBar();
+}
+
+function renderUndoBar() {
+  const bar = document.getElementById('undoBar');
+  const itemsEl = document.getElementById('undoItems');
+  if (!bar || !itemsEl) return;
+  if (!_undoStack.length) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  const stepNames = ['1つ前', '2つ前', '3つ前'];
+  const reversed = [..._undoStack].reverse();
+  itemsEl.innerHTML = reversed.map((item, ri) => {
+    const idx = _undoStack.length - 1 - ri;
+    return `<button class="undo-item ${ri===0?'undo-latest':''}" onclick="doUndo(${idx})" title="${esc(item.label)} を元に戻す">${stepNames[ri]}: ${esc(item.label)}</button>`;
+  }).join('');
 }
 
 // ══════════════════════════════════════════════
@@ -2056,6 +2134,7 @@ document.addEventListener('keydown', e => {
     return;
   }
   if (e.key === 'Escape') { closeAllModals(); clearSearch(); }
+  else if (e.ctrlKey && e.key === 'z') { e.preventDefault(); if (_undoStack.length) doUndo(_undoStack.length - 1); return; }
   else if (e.key === '/' || (e.key === 'f' && !e.ctrlKey && !e.metaKey)) {
     e.preventDefault();
     document.getElementById('searchInput').focus();
@@ -2286,6 +2365,7 @@ async function addActivityLog(pid) {
   const summary = document.getElementById('logSummary')?.value.trim();
   const detail = document.getElementById('logDetail')?.value.trim() || '';
   if (!summary) { toast('概要を入力してください', 'err'); return; }
+  captureSnapshot(pid, '活動ログ追加');
   await api('POST', `/projects/${pid}/logs`, { type, summary, detail });
   await loadData(true);
   closeModal();
@@ -2299,6 +2379,7 @@ async function addActivityLog(pid) {
 async function deleteActivityLog(pid, logId) {
   const p = state.data?.projects.find(x => x.id === pid);
   if (!p) return;
+  captureSnapshot(pid, '活動ログ削除');
   const updated = (p.session_logs || []).filter(l => l.id !== logId);
   await api('PUT', `/projects/${pid}`, { session_logs: updated });
   await loadData(true);
@@ -2480,6 +2561,7 @@ async function addOutputFile(taskId) {
     id: Math.random().toString(36).slice(2, 10),
     path, label, added_at: new Date().toISOString().slice(0, 19), status: 'unchecked'
   }];
+  captureSnapshotForTask(taskId, 'ファイル追加');
   await api('PUT', `/tasks/${taskId}`, { output_files: files });
   await loadData(true);
   closeModal();
@@ -2494,6 +2576,7 @@ async function removeOutputFile(btn) {
   if (!taskId) return;
   const t = findTask(taskId);
   if (!t) return;
+  captureSnapshotForTask(taskId, 'ファイル削除');
   const files = (t.output_files || []).filter((_, i) => i !== idx);
   await api('PUT', `/tasks/${taskId}`, { output_files: files });
   await loadData(true);
@@ -2530,6 +2613,7 @@ function openTdMmd(elId, title) {
 async function cycleDashStatus(taskId) {
   const t = findTask(taskId);
   if (!t) return;
+  captureSnapshotForTask(taskId, 'ステータス変更');
   const next = { todo:'in_progress', in_progress:'done', done:'todo' }[t.status];
   await api('PUT', `/tasks/${taskId}`, { status: next });
   await loadData(true);
