@@ -2080,7 +2080,8 @@ async function doUndo(idx) {
   if (!_undoStack.length || idx < 0 || idx >= _undoStack.length) return;
   const { label, projectId, snapshot } = _undoStack[idx];
   _undoStack.splice(idx);
-  await api('POST', `/projects/${projectId}/restore`, { snapshot });
+  const r = await api('POST', `/projects/${projectId}/restore`, { snapshot });
+  if (r.error) { toast(`↩ 失敗: ${r.error}（サーバーを再起動してください）`, 'err'); renderUndoBar(); return; }
   await loadData(true);
   const p = state.data?.projects.find(p => p.id === projectId);
   if (state.projectId === projectId) {

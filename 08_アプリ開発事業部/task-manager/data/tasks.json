@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-11T15:53:00",
+  "last_updated": "2026-05-11T17:52:37",
   "projects": [
     {
       "id": "sample-001",
@@ -461,7 +461,7 @@
       "goal": "タスク管理アプリをSSEリアルタイム同期・カンバン・思考可視化を備えた最強プロジェクト管理ツールに進化させる",
       "status": "active",
       "created_at": "2026-05-11T13:33:37",
-      "updated_at": "2026-05-11T15:53:00",
+      "updated_at": "2026-05-11T17:52:37",
       "memo": "",
       "big_task": {
         "id": "5646e3ba",
@@ -470,7 +470,7 @@
         "status": "todo",
         "due_date": null,
         "created_at": "2026-05-11T13:33:41",
-        "updated_at": "2026-05-11T15:24:18",
+        "updated_at": "2026-05-11T17:52:37",
         "mindmap_mmd": "mindmap\n  root((\"Kai Projects\"))\n    リアルタイム同期\n      SSE基盤\n        ThreadingServer\n        25秒pingキープアライブ\n      ライブインジケーター\n        緑点滅ドット\n        LIVE / OFF表示\n    プロジェクト可視化\n      ダッシュボード\n        統計カード4枚\n        進行中プロジェクト\n        期限切れ一覧\n      カンバンボード\n        ドラッグ&ドロップ\n        3カラム\n      思考遷移\n        ピボット記録\n        状態遷移図\n        マインドマップ比較\n      グラフビュー\n        プロジェクト間リンク\n        パターン分析\n    CLI強化\n      today コマンド\n      log コマンド\n      pivot コマンド\n      ANSIカラー\n    Obsidian的機能\n      双方向リンク\n      パターン分析\n      知識グラフ",
         "roadmap_mmd": "graph LR\n  A([\"🎯 タスク管理アプリ（旧）\"]) -->|Phase 1| B[\"🔧 サーバー刷新\\nSSE + Threading\"]\n  B -->|Phase 2| C[\"🎨 フロントエンド\\n大改造\"]\n  C -->|Phase 3| D[\"⌨️ CLI強化\\nANSI + today/log\"]\n  D -->|Phase 4| E[\"🧠 思考可視化\\nPivot記録\"]\n  E -->|Phase 5| F[\"🔗 プロジェクト\\nグラフビュー\"]\n  F -->|Phase 6| G([\"🚀 Kai Projects\\nObsidian的進化\"])\n\n  style A fill:#555,color:#fff,stroke:#555\n  style B fill:#43e97b,color:#000,stroke:#43e97b\n  style C fill:#43e97b,color:#000,stroke:#43e97b\n  style D fill:#43e97b,color:#000,stroke:#43e97b\n  style E fill:#f9ca24,color:#000,stroke:#f9ca24\n  style F fill:#f9ca24,color:#000,stroke:#f9ca24\n  style G fill:#6c63ff,color:#fff,stroke:#6c63ff",
         "related_links": [],
