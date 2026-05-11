@@ -38,6 +38,7 @@
   var sidebarBackdrop = document.getElementById('p-sidebar-backdrop');
   var sidebar         = document.getElementById('p-sidebar');
   var sidebarList     = document.getElementById('p-sidebar-list');
+  var fullscreenBtn   = document.getElementById('p-fullscreen-btn');
 
   /* Page badge */
   var pageCur = document.getElementById('p-page-cur');
@@ -211,6 +212,9 @@
         e.preventDefault(); goTo(current + 1); break;
       case 'ArrowLeft': case 'ArrowUp':
         e.preventDefault(); goTo(current - 1); break;
+      case 'f': case 'F':
+        document.body.classList.contains('slide-fullscreen') ? exitFullscreen() : enterFullscreen();
+        break;
     }
   });
 
@@ -585,6 +589,50 @@
     clearTimeout(laserOffTimer);
     if (bc) bc.postMessage({ type: 'laser-off' });
   });
+
+  /* =============================================
+     Fullscreen (current slide fills display)
+     ============================================= */
+  function enterFullscreen() {
+    document.body.classList.add('slide-fullscreen');
+    var el = document.documentElement;
+    try {
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    } catch (e) {}
+    if (fullscreenBtn) fullscreenBtn.textContent = '⛶ 解除';
+    requestAnimationFrame(function () { fitSlide(stgCurrent, presenterZoom); });
+  }
+
+  function exitFullscreen() {
+    document.body.classList.remove('slide-fullscreen');
+    try {
+      if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen();
+      else if (document.webkitExitFullscreen && document.webkitFullscreenElement) document.webkitExitFullscreen();
+    } catch (e) {}
+    if (fullscreenBtn) fullscreenBtn.textContent = '⛶ 全画面';
+    requestAnimationFrame(function () { fitSlide(stgCurrent, presenterZoom); });
+  }
+
+  document.addEventListener('fullscreenchange', function () {
+    var isFs = !!document.fullscreenElement;
+    document.body.classList.toggle('slide-fullscreen', isFs);
+    if (fullscreenBtn) fullscreenBtn.textContent = isFs ? '⛶ 解除' : '⛶ 全画面';
+    requestAnimationFrame(function () { fitSlide(stgCurrent, presenterZoom); });
+  });
+
+  document.addEventListener('webkitfullscreenchange', function () {
+    var isFs = !!document.webkitFullscreenElement;
+    document.body.classList.toggle('slide-fullscreen', isFs);
+    if (fullscreenBtn) fullscreenBtn.textContent = isFs ? '⛶ 解除' : '⛶ 全画面';
+    requestAnimationFrame(function () { fitSlide(stgCurrent, presenterZoom); });
+  });
+
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', function () {
+      document.body.classList.contains('slide-fullscreen') ? exitFullscreen() : enterFullscreen();
+    });
+  }
 
   /* =============================================
      Init
