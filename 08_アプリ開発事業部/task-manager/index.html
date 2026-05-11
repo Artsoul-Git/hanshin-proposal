@@ -436,6 +436,18 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .task-title-link { cursor: pointer; transition: color .15s; }
 .task-title-link:hover { color: var(--accent); text-decoration: underline; }
 
+/* ── Undo Bar ── */
+#undoBar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; padding: 7px 8px 7px 14px; display: none; align-items: center; gap: 8px; z-index: 8500; box-shadow: 0 6px 28px rgba(108,99,255,.35); white-space: nowrap; max-width: 92vw; }
+#undoBar .undo-label { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: .3px; flex-shrink: 0; }
+#undoBar .undo-items { display: flex; gap: 5px; overflow: hidden; }
+.undo-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 11px; font-size: 11px; cursor: pointer; color: var(--text); transition: all .15s; flex-shrink: 0; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.undo-item:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.undo-item.undo-latest { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.undo-item.undo-latest:hover { background: var(--accent); color: #fff; }
+#undoBar .undo-kbd { font-size: 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; color: var(--text2); flex-shrink: 0; }
+#undoBar .undo-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 14px; padding: 2px 4px; margin-left: 2px; flex-shrink: 0; line-height: 1; }
+#undoBar .undo-close:hover { color: var(--red); }
+
 /* ── Output Files Panel ── */
 .file-list { display: flex; flex-direction: column; gap: 0; }
 .file-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
@@ -510,6 +522,14 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Undo Bar -->
+<div id="undoBar">
+  <span class="undo-label">↩ 元に戻す</span>
+  <div class="undo-items" id="undoItems"></div>
+  <kbd class="undo-kbd">Ctrl+Z</kbd>
+  <button class="undo-close" onclick="clearUndoStack()" title="閉じる">✕</button>
+</div>
 
 <!-- kbd hint -->
 <div class="kbd-hint" id="kbdHint">

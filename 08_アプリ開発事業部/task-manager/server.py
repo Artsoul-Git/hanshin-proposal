@@ -299,6 +299,20 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             save_data(data)
             self.send_json(201, log)
 
+        elif path.startswith("/api/projects/") and path.endswith("/restore"):
+            project_id = path.split("/")[3]
+            data = load_data()
+            snapshot = body.get("snapshot")
+            if not snapshot:
+                return self.send_json(400, {"error": "snapshot required"})
+            idx = next((i for i, p in enumerate(data["projects"]) if p["id"] == project_id), None)
+            if idx is not None:
+                data["projects"][idx] = snapshot
+            else:
+                data["projects"].append(snapshot)
+            save_data(data)
+            self.send_json(200, snapshot)
+
         elif path == "/api/files/check":
             paths = body.get("paths", [])
             results = {p: os.path.exists(p) for p in paths}

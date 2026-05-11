@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プレゼンターモード — 契約書AIチェックセミナー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/presenter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="presenter-mode">
+
+  <!-- ========== Operator toolbar ========== -->
+  <div class="p-toolbar" id="p-toolbar">
+    <button class="p-tool-btn" id="p-export-pdf">PDF出力</button>
+    <button class="p-tool-btn" id="p-export-pptx">PPTX出力</button>
+    <div class="p-tool-sep"></div>
+    <button class="p-tool-btn p-zoom-btn" id="p-zoom-out" title="縮小">－</button>
+    <span class="p-zoom-display" id="p-zoom-display">100%</span>
+    <button class="p-tool-btn p-zoom-btn" id="p-zoom-in" title="拡大">＋</button>
+    <button class="p-tool-btn p-zoom-reset-btn" id="p-zoom-reset" title="ズームリセット">リセット</button>
+  </div>
+
+  <!-- ========== Main layout ========== -->
+  <div class="p-layout" id="p-layout">
+
+    <!-- Left: current slide (horizontally resizable) -->
+    <div class="p-current-col" id="p-current-col">
+      <div class="p-col-label">現在のスライド</div>
+      <div class="p-stage p-stage-current" id="p-stage-current"></div>
+    </div>
+
+    <!-- Horizontal drag handle (left ↔ right) -->
+    <div class="p-splitter" id="p-splitter">
+      <div class="p-splitter-handle"></div>
+    </div>
+
+    <!-- Right column (vertically divided by v-splitter) -->
+    <div class="p-side-col" id="p-side-col">
+      <div class="p-col-label">次のスライド</div>
+      <div class="p-stage p-stage-next" id="p-stage-next">
+        <div class="p-stage-empty">（最後のスライド）</div>
+      </div>
+
+      <!-- Vertical drag handle (next slide ↕ notes) -->
+      <div class="p-v-splitter" id="p-v-splitter">
+        <div class="p-v-splitter-handle"></div>
+      </div>
+
+      <div class="p-notes-box" id="p-notes-box">
+        <div class="p-notes-header">
+          <span class="p-notes-label">Talk Script</span>
+          <div class="p-notes-header-right">
+            <span class="p-save-indicator" id="p-save-indicator"></span>
+            <div class="p-fontsize-ctrl">
+              <button class="p-fontsize-btn" id="p-notes-smaller" title="文字を小さく">A−</button>
+              <span class="p-fontsize-val" id="p-fontsize-val">13</span>
+              <button class="p-fontsize-btn" id="p-notes-larger" title="文字を大きく">A＋</button>
+            </div>
+            <button class="p-save-btn" id="p-save-btn" title="保存 (Ctrl+S)">保存</button>
+          </div>
+        </div>
+        <textarea class="p-notes-text" id="p-notes-text" placeholder="トークスクリプトを入力…"></textarea>
+      </div>
+
+      <div class="p-info-row">
+        <div class="p-timer" id="p-timer">00:00</div>
+        <div class="p-timer-btns">
+          <button class="p-btn" id="p-timer-toggle">▶ スタート</button>
+          <button class="p-btn p-btn-ghost" id="p-timer-reset">リセット</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Bottom nav bar ========== -->
+  <div class="p-nav-bar">
+    <button class="p-nav-btn" id="p-prev" title="前へ (←)">
+      <span class="p-nav-arrow">&#9664;</span>
+      <span class="p-nav-label">前へ</span>
+    </button>
+
+    <div class="p-slide-counter">
+      <span id="p-current-num">1</span>
+      <span class="p-counter-sep">/</span>
+      <span id="p-total-num">1</span>
+    </div>
+
+    <button class="p-nav-btn p-nav-btn-next" id="p-next" title="次へ (→)">
+      <span class="p-nav-label">次へ</span>
+      <span class="p-nav-arrow">&#9654;</span>
+    </button>
+
+    <div class="p-nav-hints">← → キーでも操作できます</div>
+  </div>
+
+  <!-- ========== Export overlay ========== -->
+  <div class="p-export-overlay" id="p-export-overlay">
+    <div class="p-export-overlay-inner">
+      <div class="p-export-overlay-label">エクスポート中…</div>
+      <div class="p-export-progress-bar"><div class="p-export-progress-fill" id="p-export-fill"></div></div>
+    </div>
+  </div>
+
+  <script src="js/slides.js"></script>
+  <script src="js/presenter.js"></script>
+</body>
+</html>
