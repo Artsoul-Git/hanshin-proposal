@@ -265,6 +265,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 
 /* ── Modal (wide: Mermaid) ── */
 .modal-wide { width: min(1220px, 98vw); height: 90vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
+/* CRITICAL: wideContent must participate in flex chain */
+.modal-wide > div { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
 .wide-header { padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .wide-header-left h2 { font-size: 16px; font-weight: 700; }
 .wide-header-left .subtitle { font-size: 11px; color: var(--text2); margin-top: 3px; }
@@ -277,8 +279,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 8px 12px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
 .wide-preview { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
 .wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
-.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: var(--bg); }
-.mmd-preview svg { max-width: 100%; height: auto; }
+.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: var(--bg); position: relative; cursor: zoom-in; }
+.mmd-preview svg { max-width: 100%; height: auto; display: block; pointer-events: none; }
+.mmd-preview-hint { position: absolute; bottom: 8px; right: 8px; font-size: 10px; color: var(--text2); background: rgba(15,15,19,.7); padding: 2px 7px; border-radius: 99px; pointer-events: none; }
 .mmd-error { color: var(--red); font-size: 11px; padding: 14px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
 .wide-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 10px; flex-wrap: wrap; background: var(--surface); border-radius: 0 0 16px 16px; }
 .wide-footer-left { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
@@ -383,6 +386,55 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .pattern-value { font-size: 13px; font-weight: 700; }
 .pattern-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
 .pattern-bar-fill { height: 100%; border-radius: 99px; }
+
+/* ── Mermaid Zoom Popup ── */
+#mmdZoomOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.93); z-index: 5000; display: flex; flex-direction: column; }
+.mmd-zoom-toolbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.mmd-zoom-title { font-size: 13px; font-weight: 700; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+#mmdZoomCanvas { flex: 1; overflow: hidden; position: relative; cursor: grab; background: #090910; user-select: none; }
+#mmdZoomCanvas.dragging { cursor: grabbing; }
+#mmdZoomInner { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+#mmdZoomInner svg { display: block; }
+.zbtn { padding: 5px 13px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 600; transition: all .15s; white-space: nowrap; }
+.zbtn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.zbtn.pdf { background: rgba(67,233,123,.12); border-color: rgba(67,233,123,.4); color: var(--green); }
+.zbtn.pdf:hover { background: var(--green); color: #000; border-color: var(--green); }
+.zbtn.close { border-color: var(--red); color: var(--red); }
+.zbtn.close:hover { background: var(--red); color: #fff; }
+#mmdZoomScaleDisplay { font-size: 11px; color: var(--text2); min-width: 42px; text-align: center; font-family: monospace; }
+
+/* ── AI Input Focus Overlay ── */
+#aiFocusOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+.ai-focus-box { background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; width: min(720px, 94vw); display: flex; flex-direction: column; box-shadow: 0 8px 40px rgba(108,99,255,.25); }
+.ai-focus-head { padding: 14px 18px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.ai-focus-head h3 { font-size: 14px; font-weight: 700; color: var(--accent); }
+.ai-focus-body { padding: 14px 18px; }
+.ai-focus-ta { width: 100%; height: 220px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 10px 12px; font-size: 13px; font-family: inherit; line-height: 1.7; resize: vertical; outline: none; transition: border-color .15s; }
+.ai-focus-ta:focus { border-color: var(--accent); }
+.ai-focus-foot { padding: 10px 18px 14px; display: flex; gap: 8px; justify-content: flex-end; flex-shrink: 0; border-top: 1px solid var(--border); }
+
+/* ── Task Dashboard ── */
+#taskDashOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 3500; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.task-dash-box { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; width: min(1100px, 96vw); max-height: 91vh; overflow: hidden; display: flex; flex-direction: column; }
+.task-dash-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.task-dash-title-row { display: flex; align-items: flex-start; gap: 12px; }
+.task-dash-title { font-size: 19px; font-weight: 800; line-height: 1.35; flex: 1; }
+.task-dash-meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.task-dash-desc { font-size: 13px; color: var(--text2); margin-top: 8px; line-height: 1.6; }
+.task-dash-body { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px; }
+.task-dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.tdp { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.tdp-head { padding: 8px 14px 7px; border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); display: flex; align-items: center; justify-content: space-between; }
+.tdp-body { padding: 10px 14px; min-height: 80px; }
+.tdp-mmd { min-height: 110px; max-height: 280px; overflow: auto; display: flex; align-items: center; justify-content: center; cursor: zoom-in; padding: 10px; }
+.tdp-mmd svg { max-width: 100%; height: auto; display: block; }
+.tdp-full { grid-column: 1 / -1; }
+.task-dash-foot { display: flex; gap: 8px; padding: 12px 22px; border-top: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; align-items: center; background: var(--surface); border-radius: 0 0 18px 18px; }
+.tdp-history-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.tdp-history-item:last-child { border-bottom: none; }
+.tdp-history-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 4px; flex-shrink: 0; }
+.task-title-link { cursor: pointer; transition: color .15s; }
+.task-title-link:hover { color: var(--accent); text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -448,6 +500,44 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 <div class="modal-overlay" id="linksOverlay" style="display:none;" onclick="closeLinks(event)">
   <div class="modal modal-links" id="linksBox" onclick="event.stopPropagation()">
     <div id="linksContent"></div>
+  </div>
+</div>
+
+<!-- Mermaid Zoom Overlay -->
+<div id="mmdZoomOverlay" style="display:none;" onclick="if(event.target===this||event.target.id==='mmdZoomOverlay')closeMmdPopup()">
+  <div class="mmd-zoom-toolbar">
+    <span class="mmd-zoom-title" id="mmdZoomTitle"></span>
+    <span id="mmdZoomScaleDisplay">100%</span>
+    <button class="zbtn" onclick="mmdZoomFit()" title="全体表示">⊞ Fit</button>
+    <button class="zbtn" onclick="mmdZoomIn()">＋</button>
+    <button class="zbtn" onclick="mmdZoomOut()">－</button>
+    <button class="zbtn pdf" onclick="printMmdPopup()">🖨️ PDF出力</button>
+    <button class="zbtn close" onclick="closeMmdPopup()">✕ 閉じる</button>
+  </div>
+  <div id="mmdZoomCanvas"><div id="mmdZoomInner"></div></div>
+</div>
+
+<!-- AI Input Focus Overlay -->
+<div id="aiFocusOverlay" style="display:none;" onclick="if(event.target===this)closeAiFocus(false)">
+  <div class="ai-focus-box">
+    <div class="ai-focus-head">
+      <h3 id="aiFocusTitle">入力</h3>
+      <button class="icon-btn" onclick="closeAiFocus(false)" title="閉じる">✕</button>
+    </div>
+    <div class="ai-focus-body">
+      <textarea class="ai-focus-ta" id="aiFocusTa" placeholder=""></textarea>
+    </div>
+    <div class="ai-focus-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeAiFocus(false)">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="closeAiFocus(true)">✅ 適用</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Dashboard Overlay -->
+<div id="taskDashOverlay" style="display:none;" onclick="if(event.target===this)closeTaskDash()">
+  <div class="task-dash-box">
+    <div id="taskDashContent"></div>
   </div>
 </div>
 
@@ -1038,7 +1128,7 @@ function taskCard(t, sizeClass, pid) {
           </svg>
         </div>
         <div class="task-info">
-          <div class="task-title">${esc(t.title)}</div>
+          <div class="task-title task-title-link" onclick="openTaskDashboard('${t.id}')">${esc(t.title)}</div>
           ${t.description ? `<div class="task-desc">${esc(t.description)}</div>` : ''}
           <div class="task-meta">
             <span class="task-status-pill ${t.status}">${taskStatusLabel(t.status)}</span>
@@ -1107,7 +1197,7 @@ function kanbanCard(t) {
           <button class="icon-btn btn-sm" style="width:24px;height:24px;font-size:11px;" onclick="openEditTaskModal('${t.id}')" title="編集">✏️</button>
         </div>
       </div>
-      <div class="kanban-card-title ${isDone?'done':''}">${esc(t.title)}</div>
+      <div class="kanban-card-title ${isDone?'done':''} task-title-link" onclick="openTaskDashboard('${t.id}')">${esc(t.title)}</div>
       ${due ? `<div class="kanban-card-due ${isOverdue(t.due_date)&&!isDone?'overdue':''}">${due}</div>` : ''}
       <div class="kanban-card-footer">
         <div class="task-checkbox ${t.status}" onclick="cycleStatus('${t.id}')" style="width:18px;height:18px;border-radius:5px;">
@@ -1154,11 +1244,10 @@ function openMindmapModal(taskId) {
     <div class="wide-header">
       <div class="wide-header-left">
         <h2>🧠 マインドマップ — ${titleEsc}</h2>
-        <div class="subtitle">タスクの細分化・関係性を可視化。コードを編集するとリアルタイムでプレビューが更新されます。</div>
+        <div class="subtitle">タスクの細分化・関係性を可視化。プレビューをクリックで拡大ズーム。</div>
       </div>
       <div class="wide-header-right">
-        <button class="btn-tmpl" onclick="openA4Preview('mmdMindmapPreview','${titleEsc}')">🔍 A4拡大</button>
-        <button class="btn-tmpl" onclick="openA4Preview('mmdMindmapPreview','${titleEsc}',true)">🖨️ PDF出力</button>
+        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')">🔍 拡大表示</button>
       </div>
     </div>
     <div class="wide-body wide-body-2col">
@@ -1167,13 +1256,13 @@ function openMindmapModal(taskId) {
         <textarea class="mmd-editor" id="mmdMindmapEditor" spellcheck="false" oninput="previewMmd('mmdMindmapEditor','mmdMindmapPreview')">${esc(defaultCode)}</textarea>
       </div>
       <div class="wide-preview">
-        <div class="wide-preview-label">プレビュー</div>
-        <div class="mmd-preview" id="mmdMindmapPreview"></div>
+        <div class="wide-preview-label">プレビュー <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
+        <div class="mmd-preview" id="mmdMindmapPreview" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')"></div>
       </div>
     </div>
     <div class="wide-footer">
       <div class="wide-footer-left">
-        <span class="tmpl-label">💡 Kaiに「このタスクのマインドマップを作って」と依頼→ロードマップのAIアシストで適用</span>
+        <span class="tmpl-label">💡 Kaiに「このタスクのマインドマップを作って」と依頼 → ロードマップのAIアシストで適用</span>
       </div>
       <div class="wide-footer-right">
         <button class="btn-tmpl" onclick="resetMindmap('${taskId}')">↩ リセット</button>
@@ -1215,21 +1304,24 @@ function openRoadmapModal(taskId) {
     <div class="wide-header">
       <div class="wide-header-left">
         <h2>🗺️ ロードマップ — ${titleEsc}</h2>
-        <div class="subtitle">graph LR / TD / gantt / stateDiagram-v2 に対応。テンプレートから選んで編集できます。</div>
+        <div class="subtitle">graph LR / TD / gantt / stateDiagram-v2 に対応。テンプレートから選んで編集、プレビューをクリックで拡大。</div>
       </div>
       <div class="wide-header-right">
-        <button class="btn-tmpl" onclick="openA4Preview('mmdRoadmapPreview','${titleEsc}')">🔍 A4拡大</button>
-        <button class="btn-tmpl" onclick="openA4Preview('mmdRoadmapPreview','${titleEsc}',true)">🖨️ PDF出力</button>
+        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')">🔍 拡大表示</button>
       </div>
     </div>
     <div class="wide-body wide-body-3col">
       <div class="ai-panel">
         <div class="ai-panel-section">🤖 Kaiへ指示</div>
-        <textarea class="ai-textarea" id="aiInstruction" placeholder="例：&#10;フェーズを5段階にして&#10;各フェーズに期間を追加して&#10;色をプロジェクトカラーに"></textarea>
+        <textarea class="ai-textarea" id="aiInstruction"
+          placeholder="例：&#10;フェーズを5段階にして&#10;各フェーズに期間を追加して"
+          onfocus="openAiFocus('aiInstruction','🤖 Kaiへの指示')"></textarea>
         <button class="btn-ai" onclick="copyAiPrompt('mmdRoadmapEditor')">📋 プロンプトをコピー</button>
         <div class="ai-sep"></div>
         <div class="ai-panel-section">📥 Kaiの返答を貼り付け</div>
-        <textarea class="ai-textarea" id="aiResponse" placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"></textarea>
+        <textarea class="ai-textarea" id="aiResponse"
+          placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"
+          onfocus="openAiFocus('aiResponse','📥 Kaiの返答を貼り付け')"></textarea>
         <button class="btn-ai btn-ai-apply" onclick="applyAiCode('mmdRoadmapEditor','mmdRoadmapPreview')">✨ コードに適用</button>
       </div>
       <div class="wide-editor">
@@ -1237,8 +1329,8 @@ function openRoadmapModal(taskId) {
         <textarea class="mmd-editor" id="mmdRoadmapEditor" spellcheck="false" oninput="previewMmd('mmdRoadmapEditor','mmdRoadmapPreview')">${esc(defaultCode)}</textarea>
       </div>
       <div class="wide-preview">
-        <div class="wide-preview-label">プレビュー（リアルタイム）</div>
-        <div class="mmd-preview" id="mmdRoadmapPreview"></div>
+        <div class="wide-preview-label">プレビュー（リアルタイム） <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
+        <div class="mmd-preview" id="mmdRoadmapPreview" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')"></div>
       </div>
     </div>
     <div class="wide-footer">
@@ -1340,8 +1432,17 @@ function previewMmd(editorId, previewId) {
     try {
       const id = `mmd-${++mmdSeq}`;
       const { svg } = await mermaid.render(id, code);
-      container.innerHTML = svg;
-      container.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+      container.innerHTML = svg + '<div class="mmd-preview-hint">クリックで拡大</div>';
+      const svgEl = container.querySelector('svg');
+      if (svgEl) {
+        // Preserve viewBox for PDF, remove fixed size so CSS controls display
+        const w = svgEl.getAttribute('width');
+        const h = svgEl.getAttribute('height');
+        if (w && h && !svgEl.getAttribute('viewBox')) {
+          svgEl.setAttribute('viewBox', `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
+        }
+        svgEl.setAttribute('style', 'max-width:100%;width:100%;height:auto;display:block;');
+      }
     } catch(e) {
       container.innerHTML = `<div class="mmd-error">構文エラー:\n${e.message || e}</div>`;
     }
@@ -1917,10 +2018,294 @@ document.addEventListener('keydown', e => {
 });
 
 // ══════════════════════════════════════════════
+//  Mermaid Zoom Popup
+// ══════════════════════════════════════════════
+let _zoom = { scale: 1, tx: 0, ty: 0, drag: false, lastX: 0, lastY: 0, natW: 800, natH: 600 };
+let _zoomSvg = null;
+
+function openMmdPopupFromPreview(previewId, title) {
+  const svgEl = document.getElementById(previewId)?.querySelector('svg');
+  if (!svgEl) { toast('先にプレビューを表示してください', 'err'); return; }
+  openMmdPopup(svgEl, title);
+}
+
+function openMmdPopup(svgEl, title) {
+  const overlay = document.getElementById('mmdZoomOverlay');
+  const inner   = document.getElementById('mmdZoomInner');
+  document.getElementById('mmdZoomTitle').textContent = title || '';
+
+  const clone = svgEl.cloneNode(true);
+  // Read natural dimensions
+  const vb = clone.getAttribute('viewBox');
+  if (vb) {
+    const p = vb.trim().split(/[\s,]+/);
+    _zoom.natW = parseFloat(p[2]) || 800;
+    _zoom.natH = parseFloat(p[3]) || 600;
+  } else {
+    _zoom.natW = parseFloat(clone.getAttribute('width'))  || 800;
+    _zoom.natH = parseFloat(clone.getAttribute('height')) || 600;
+  }
+  clone.setAttribute('width',  _zoom.natW);
+  clone.setAttribute('height', _zoom.natH);
+  clone.style.cssText = 'display:block;';
+  inner.innerHTML = '';
+  inner.appendChild(clone);
+  _zoomSvg = clone;
+
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => mmdZoomFit());
+}
+
+function closeMmdPopup() {
+  document.getElementById('mmdZoomOverlay').style.display = 'none';
+}
+
+function _applyZoom() {
+  const inner = document.getElementById('mmdZoomInner');
+  if (inner) inner.style.transform = `translate(${_zoom.tx}px,${_zoom.ty}px) scale(${_zoom.scale})`;
+  const d = document.getElementById('mmdZoomScaleDisplay');
+  if (d) d.textContent = Math.round(_zoom.scale * 100) + '%';
+}
+
+function mmdZoomFit() {
+  const canvas = document.getElementById('mmdZoomCanvas');
+  if (!canvas) return;
+  const cw = canvas.clientWidth, ch = canvas.clientHeight;
+  _zoom.scale = Math.min(cw / _zoom.natW, ch / _zoom.natH) * 0.92;
+  _zoom.tx = (cw - _zoom.natW * _zoom.scale) / 2;
+  _zoom.ty = (ch - _zoom.natH * _zoom.scale) / 2;
+  _applyZoom();
+}
+function mmdZoomIn()  { _zoom.scale = Math.min(_zoom.scale * 1.25, 12); _applyZoom(); }
+function mmdZoomOut() { _zoom.scale = Math.max(_zoom.scale / 1.25, 0.04); _applyZoom(); }
+
+function printMmdPopup() {
+  if (!_zoomSvg) return;
+  const clone = _zoomSvg.cloneNode(true);
+  clone.setAttribute('style', 'max-width:100%;height:auto;display:block;');
+  const landscape = _zoom.natW > _zoom.natH;
+  const ps = landscape ? 'A4 landscape' : 'A4 portrait';
+  const pw = landscape ? '297mm' : '210mm';
+  const ph = landscape ? '210mm' : '297mm';
+  const title = document.getElementById('mmdZoomTitle').textContent;
+  const safeTitle = title.replace(/[<>"&]/g, c=>({'<':'&lt;','>':'&gt;','"':'&quot;','&':'&amp;'}[c]));
+  const win = window.open('', '_blank', 'width=1280,height=900,menubar=no,toolbar=no');
+  if (!win) { toast('ポップアップがブロックされています', 'err'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>${safeTitle}</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#e8e8e8;font-family:'Segoe UI',sans-serif}
+.tb{display:flex;align-items:center;gap:10px;padding:10px 20px;background:#1a1a24;color:#e8e8f0;position:sticky;top:0;z-index:10}
+.tb-t{font-size:14px;font-weight:600;flex:1}.tbtn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600}
+.tbtn-p{background:#6c63ff;color:#fff}.tbtn-c{background:transparent;color:#8888aa;border:1px solid #2e2e40}
+.pw{display:flex;align-items:flex-start;justify-content:center;padding:24px;min-height:calc(100vh - 52px)}
+.a4{width:${pw};min-height:${ph};background:#fff;padding:12mm;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.a4 svg{max-width:100%;height:auto;display:block}
+@media print{body{background:white}.tb{display:none!important}.pw{padding:0;min-height:0}.a4{margin:0;width:100%;min-height:0;box-shadow:none;padding:8mm}@page{size:${ps};margin:0}}</style>
+</head><body>
+<div class="tb"><span class="tb-t">${safeTitle}</span>
+<button class="tbtn tbtn-p" onclick="window.print()">🖨️ PDF出力</button>
+<button class="tbtn tbtn-c" onclick="window.close()">✕</button></div>
+<div class="pw"><div class="a4">${clone.outerHTML}</div></div></body></html>`);
+  win.document.close();
+}
+
+function _initZoomEvents() {
+  const canvas = document.getElementById('mmdZoomCanvas');
+  if (!canvas) return;
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+    const f = e.deltaY < 0 ? 1.15 : 0.87;
+    const ns = Math.max(0.04, Math.min(12, _zoom.scale * f));
+    _zoom.tx = cx - (cx - _zoom.tx) * (ns / _zoom.scale);
+    _zoom.ty = cy - (cy - _zoom.ty) * (ns / _zoom.scale);
+    _zoom.scale = ns;
+    _applyZoom();
+  }, { passive: false });
+  canvas.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    _zoom.drag = true; _zoom.lastX = e.clientX; _zoom.lastY = e.clientY;
+    canvas.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!_zoom.drag) return;
+    _zoom.tx += e.clientX - _zoom.lastX; _zoom.ty += e.clientY - _zoom.lastY;
+    _zoom.lastX = e.clientX; _zoom.lastY = e.clientY;
+    _applyZoom();
+  });
+  window.addEventListener('mouseup', () => {
+    if (_zoom.drag) { _zoom.drag = false; canvas.classList.remove('dragging'); }
+  });
+}
+
+// ══════════════════════════════════════════════
+//  AI Input Focus Overlay
+// ══════════════════════════════════════════════
+let _aiFocusTarget = null;
+
+function openAiFocus(targetId, title) {
+  _aiFocusTarget = targetId;
+  const ta = document.getElementById(targetId);
+  const focusTa = document.getElementById('aiFocusTa');
+  document.getElementById('aiFocusTitle').textContent = title || '入力';
+  focusTa.value = ta ? ta.value : '';
+  focusTa.placeholder = ta ? ta.placeholder : '';
+  document.getElementById('aiFocusOverlay').style.display = 'flex';
+  setTimeout(() => { focusTa.focus(); focusTa.selectionStart = focusTa.value.length; }, 80);
+}
+
+function closeAiFocus(apply) {
+  if (apply && _aiFocusTarget) {
+    const src = document.getElementById('aiFocusTa');
+    const dst = document.getElementById(_aiFocusTarget);
+    if (src && dst) dst.value = src.value;
+  }
+  document.getElementById('aiFocusOverlay').style.display = 'none';
+  _aiFocusTarget = null;
+}
+
+// ══════════════════════════════════════════════
+//  Task Dashboard
+// ══════════════════════════════════════════════
+function openTaskDashboard(taskId) {
+  renderTaskDashboard(taskId);
+  document.getElementById('taskDashOverlay').style.display = 'flex';
+}
+
+function closeTaskDash() {
+  document.getElementById('taskDashOverlay').style.display = 'none';
+}
+
+function renderTaskDashboard(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  const p = (state.data?.projects || []).find(proj =>
+    proj.big_task?.id === taskId ||
+    (proj.medium_tasks||[]).some(x=>x.id===taskId) ||
+    (proj.small_tasks||[]).some(x=>x.id===taskId));
+  const sizeClass = p?.big_task?.id === taskId ? 'big' : (p?.medium_tasks||[]).some(x=>x.id===taskId) ? 'med' : 'small';
+  const sizeName = { big:'★ 大タスク', med:'◆ 中タスク', small:'◇ 小タスク' }[sizeClass];
+  const today = new Date().toISOString().slice(0,10);
+  const overdue = t.due_date && t.due_date < today && t.status !== 'done';
+  const links = t.related_links || [];
+  const history = (t.history || []).slice().sort((a,b)=>b.timestamp.localeCompare(a.timestamp)).slice(0,8);
+
+  const linksHtml = links.length ? links.map(l =>
+    `<div class="task-link-item" style="margin-bottom:5px;">
+      <span class="task-link-icon">🔗</span>
+      <div class="task-link-info">
+        <a class="task-link-title" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title||l.url)}</a>
+        ${l.description?`<div class="task-link-desc">${esc(l.description)}</div>`:''}
+      </div></div>`).join('') : '<div style="color:var(--text2);font-size:12px;">リンクなし</div>';
+
+  const histHtml = history.length ? history.map(h =>
+    `<div class="tdp-history-item">
+      <div class="tdp-history-dot"></div>
+      <div><div style="font-size:12px;font-weight:600;">${esc(h.action)}</div>
+      <div style="font-size:11px;color:var(--text2);">${esc(h.detail)} · ${h.timestamp.replace('T',' ')}</div></div>
+    </div>`).join('') : '<div style="color:var(--text2);font-size:12px;">履歴なし</div>';
+
+  const cycleNext = { todo:'in_progress', in_progress:'done', done:'todo' };
+  const cycleLabel = { todo:'▶ 開始', in_progress:'✅ 完了', done:'↩ 戻す' };
+
+  document.getElementById('taskDashContent').innerHTML = `
+    <div class="task-dash-head">
+      <div class="task-dash-title-row">
+        <span class="task-badge ${sizeClass}" style="flex-shrink:0;">${{big:'1',med:'3',small:'5'}[sizeClass]}</span>
+        <div>
+          <div class="task-dash-title">${esc(t.title)}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">${sizeName}${p?' · '+esc(p.name):''}</div>
+        </div>
+      </div>
+      <div class="task-dash-meta">
+        <span class="task-status-pill ${t.status}">${taskStatusLabel(t.status)}</span>
+        ${t.due_date?`<span class="task-due ${overdue?'overdue':''}">📅 ${t.due_date}${overdue?' ⚠️':''}</span>`:''}
+        ${t.mindmap_mmd?'<span style="font-size:11px;color:#a29bfe;">🧠 マインドマップあり</span>':''}
+        ${t.roadmap_mmd?'<span style="font-size:11px;color:var(--med);">🗺️ ロードマップあり</span>':''}
+      </div>
+      ${t.description?`<div class="task-dash-desc">${esc(t.description)}</div>`:''}
+    </div>
+    <div class="task-dash-body">
+      <div class="task-dash-grid">
+        <div class="tdp">
+          <div class="tdp-head">🧠 マインドマップ
+            <button class="btn-tmpl" onclick="closeTaskDash();openMindmapModal('${taskId}')">✏️ 編集</button>
+          </div>
+          <div class="tdp-mmd" id="tdMindmap" onclick="openTdMmd('tdMindmap','🧠 ${esc(t.title)}')">
+            ${t.mindmap_mmd?'<span style="color:var(--text2);font-size:11px;">レンダリング中…</span>':'<span style="color:var(--text2);font-size:12px;">未設定 — 編集ボタンから追加</span>'}
+          </div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">🗺️ ロードマップ
+            <button class="btn-tmpl" onclick="closeTaskDash();openRoadmapModal('${taskId}')">✏️ 編集</button>
+          </div>
+          <div class="tdp-mmd" id="tdRoadmap" onclick="openTdMmd('tdRoadmap','🗺️ ${esc(t.title)}')">
+            ${t.roadmap_mmd?'<span style="color:var(--text2);font-size:11px;">レンダリング中…</span>':'<span style="color:var(--text2);font-size:12px;">未設定 — 編集ボタンから追加</span>'}
+          </div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">🔗 関連リンク（${links.length}件）
+            <button class="btn-tmpl" onclick="closeTaskDash();openLinksModal('${taskId}')">＋ 管理</button>
+          </div>
+          <div class="tdp-body">${linksHtml}</div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">📋 変更履歴</div>
+          <div class="tdp-body" style="max-height:180px;overflow-y:auto;">${histHtml}</div>
+        </div>
+      </div>
+    </div>
+    <div class="task-dash-foot">
+      <button class="btn btn-primary btn-sm" onclick="cycleDashStatus('${taskId}')">${cycleLabel[t.status]}</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openEditTaskModal('${taskId}')">✏️ タスク編集</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openMindmapModal('${taskId}')">🧠 マインドマップ</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openRoadmapModal('${taskId}')">🗺️ ロードマップ</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openLinksModal('${taskId}')">🔗 リンク</button>
+      <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="closeTaskDash()">閉じる</button>
+    </div>`;
+
+  // Render mermaid after DOM update
+  setTimeout(async () => {
+    for (const [elId, code] of [['tdMindmap', t.mindmap_mmd], ['tdRoadmap', t.roadmap_mmd]]) {
+      if (!code) continue;
+      const el = document.getElementById(elId);
+      if (!el) continue;
+      try {
+        const id = `td-${++mmdSeq}`;
+        const { svg } = await mermaid.render(id, code);
+        el.innerHTML = svg + '<div class="mmd-preview-hint" style="position:absolute;bottom:6px;right:6px;">クリックで拡大</div>';
+        const s = el.querySelector('svg');
+        if (s) s.style.cssText = 'max-width:100%;height:auto;display:block;';
+        el.style.position = 'relative';
+      } catch(e) { el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`; }
+    }
+  }, 50);
+}
+
+function openTdMmd(elId, title) {
+  const svgEl = document.getElementById(elId)?.querySelector('svg');
+  if (!svgEl) return;
+  openMmdPopup(svgEl, title);
+}
+
+async function cycleDashStatus(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  const next = { todo:'in_progress', in_progress:'done', done:'todo' }[t.status];
+  await api('PUT', `/tasks/${taskId}`, { status: next });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) { const tc = document.getElementById('tabContent'); if (tc) tc.innerHTML = renderTabContent(p); }
+  toast(`→ ${taskStatusLabel(next)}`, 'ok');
+}
+
+// ══════════════════════════════════════════════
 //  Init
 // ══════════════════════════════════════════════
 loadData();
 setupSSE();
+_initZoomEvents();
 </script>
 </body>
 </html>
