@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>セミナースライドビルダー 完全ガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif;
+    line-height: 1.8;
+    color: #2D3748;
+    background: #FAFBFC;
+    padding: 40px 20px;
+  }
+  .container { max-width: 960px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+  .cover { text-align: center; padding: 80px 0 60px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; }
+  .cover h1 { font-size: 34px; color: #1A365D; margin-bottom: 16px; line-height: 1.4; }
+  .cover .sub { font-size: 20px; color: #6F911D; font-weight: bold; margin-bottom: 40px; }
+  .cover .meta { color: #718096; font-size: 14px; line-height: 2; }
+  .cover .tag { display: inline-block; background: #6F911D; color: white; font-size: 12px; font-weight: bold; padding: 4px 14px; border-radius: 20px; margin-bottom: 20px; letter-spacing: .1em; }
+  h2 { font-size: 26px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #6F911D; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h2 .num { display: inline-block; background: #1A365D; color: white; padding: 6px 16px; border-radius: 6px; font-size: 16px; margin-right: 12px; vertical-align: middle; }
+  h3 { font-size: 20px; color: #2D3748; margin: 30px 0 12px; padding-left: 16px; border-left: 6px solid #6F911D; line-height: 1.5; }
+  h4 { font-size: 16px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+  p { margin: 12px 0; }
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #6F911D; }
+  .tip .label { font-weight: bold; color: #276749; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .ok { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+  .info { background: #FFFAF0; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #ED8936; }
+  .info .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 14px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas", "SF Mono", monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 25px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-family: "Consolas", "SF Mono", monospace; font-size: 13px; line-height: 1.7; position: relative; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 28px; margin: 12px 0; }
+  li { margin: 7px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  .step { background: #EDF2F7; padding: 22px 28px; border-radius: 8px; margin: 16px 0; border-top: 4px solid #1A365D; }
+  .step-num { display: inline-block; background: #6F911D; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: bold; margin-right: 10px; font-size: 15px; }
+  .toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #6F911D; }
+  .toc .sub-item { padding-left: 20px; font-size: 14px; color: #4A5568; }
+  .prompt-box { background: #1A202C; color: #E2E8F0; padding: 38px 26px 22px; border-radius: 8px; margin: 18px 0; font-family: "Consolas", "SF Mono", monospace; font-size: 13px; line-height: 1.8; position: relative; white-space: pre-wrap; }
+  .prompt-box .comment { color: #718096; }
+  .prompt-box .highlight { color: #F6AD55; }
+  .copy-btn {
+    position: absolute; top: 8px; right: 10px;
+    background: rgba(255,255,255,0.12); color: #CBD5E0;
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 4px;
+    padding: 3px 11px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif;
+    cursor: pointer; transition: all 0.15s; white-space: nowrap; z-index: 1;
+  }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+  .copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .badge-green { background: #F0FFF4; color: #276749; }
+  .badge-blue { background: #EBF8FF; color: #2B6CB0; }
+  .badge-orange { background: #FFFAF0; color: #C05621; }
+  .badge-gray { background: #EDF2F7; color: #4A5568; }
+  .badge-red { background: #FFF5F5; color: #C53030; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 50px 0; }
+  .file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+  .url-card { background: #F0FFF4; border: 2px solid #68D391; border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+  .url-card .url-role { font-size: 12px; font-weight: bold; color: #276749; margin-bottom: 6px; }
+  .url-card .url-val { font-family: monospace; font-size: 14px; color: #1A365D; word-break: break-all; }
+  .url-card .url-desc { font-size: 12px; color: #718096; margin-top: 6px; }
+  .page-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 18px 22px; margin: 12px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .page-card .pc-icon { font-size: 28px; min-width: 40px; text-align: center; }
+  .page-card .pc-name { font-size: 16px; font-weight: bold; color: #1A365D; }
+  .page-card .pc-file { font-family: monospace; font-size: 12px; color: #6F911D; }
+  .page-card .pc-desc { font-size: 13px; color: #4A5568; margin-top: 6px; }
+  .page-card.public { border-left: 6px solid #38A169; }
+  .page-card.protected { border-left: 6px solid #ED8936; }
+  .page-card.local { border-left: 6px solid #718096; }
+  .flow-row { display: flex; gap: 0; align-items: center; margin: 20px 0; flex-wrap: wrap; }
+  .flow-box { background: #EDF2F7; border: 2px solid #1A365D; border-radius: 8px; padding: 12px 18px; text-align: center; font-size: 13px; font-weight: bold; color: #1A365D; min-width: 100px; }
+  .flow-box.green { background: #F0FFF4; border-color: #6F911D; color: #276749; }
+  .flow-box.orange { background: #FFFAF0; border-color: #ED8936; color: #C05621; }
+  .flow-arrow { color: #6F911D; font-size: 22px; margin: 0 8px; }
+  .skill-box { background: #1A202C; color: #E2E8F0; border-radius: 8px; padding: 16px 22px; margin: 16px 0; font-family: monospace; }
+  .skill-cmd { color: #F6AD55; font-size: 18px; font-weight: bold; }
+  .skill-desc { color: #68D391; font-size: 13px; margin-top: 6px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .two-col-box { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 20px; }
+  .two-col-box h4 { margin-top: 0; color: #1A365D; }
+  .num-badge { display: inline-flex; align-items: center; justify-content: center; background: #1A365D; color: white; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; font-weight: bold; margin-right: 8px; flex-shrink: 0; }
+  details { border: 2px solid #E2E8F0; border-radius: 10px; margin: 12px 0; overflow: hidden; }
+  details > summary { background: #EDF2F7; padding: 18px 24px; cursor: pointer; font-size: 17px; font-weight: bold; color: #1A365D; list-style: none; display: flex; align-items: center; gap: 12px; user-select: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary .acc-arrow { margin-left: auto; color: #6F911D; font-size: 18px; }
+  details[open] > summary { background: #1A365D; color: white; }
+  details[open] > summary .acc-arrow { color: #6F911D; }
+  .acc-num { background: #6F911D; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .acc-content { padding: 28px 32px; }
+  .part-header { background: #1A365D; color: white; padding: 16px 24px; border-radius: 10px; margin: 40px 0 16px; font-size: 20px; font-weight: bold; letter-spacing: 0.05em; }
+  .part-header span { color: #A6BE54; }
+  .changelog th { background: #2D3748; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 表紙 -->
+<div class="cover">
+  <div class="tag">Artsoul AI Tools</div>
+  <h1>セミナースライドビルダー<br>完全ガイド</h1>
+  <div class="sub">テーマを投げるだけで、本番稼働するスライドシステムができる</div>
+  <div class="meta">
+    2026年5月 発行<br>
+    対象：上村桂右<br>
+    バージョン：v1.0<br>
+    関連：エージェント操作マニュアル v2.4 PART 6
+  </div>
+</div>
+
+<!-- 変更履歴 -->
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v1.0</td><td>2026-05-12</td><td>初版作成。スライドビルダー・/seminar-slideスキル・kawai-dark-v1テンプレート完成に合わせて作成。</td></tr>
+</table>
+
+<hr>
+
+<!-- 目次 -->
+<div class="toc">
+  <h3>もくじ</h3>
+  <ul>
+    <li><a href="#overview">1. このシステムでできること</a></li>
+    <li><a href="#pages">2. 5種類のページの役割</a></li>
+    <li><a href="#skill">3. /seminar-slide スキル — 全自動でスライドを作る</a></li>
+    <li class="sub-item"><a href="#skill-how">3-1. 基本の使い方</a></li>
+    <li class="sub-item"><a href="#skill-interview">3-2. ヒアリング内容</a></li>
+    <li class="sub-item"><a href="#skill-output">3-3. 生成されるもの</a></li>
+    <li><a href="#builder">4. スライドビルダー アプリ（index.html）</a></li>
+    <li class="sub-item"><a href="#builder-step1">4-1. セミナー情報を入力する</a></li>
+    <li class="sub-item"><a href="#builder-step2">4-2. PDF/PPTXからテキストを抽出する</a></li>
+    <li class="sub-item"><a href="#builder-step3">4-3. Kaiへの依頼プロンプトを生成する</a></li>
+    <li class="sub-item"><a href="#builder-step4">4-4. デプロイコマンドを確認する</a></li>
+    <li><a href="#cli">5. new-seminar.py CLIツール</a></li>
+    <li><a href="#template">6. テンプレート管理（kawai-dark-v1）</a></li>
+    <li class="sub-item"><a href="#template-spec">6-1. デザイン仕様</a></li>
+    <li class="sub-item"><a href="#template-brush">6-2. ブラッシュアップ方法</a></li>
+    <li class="sub-item"><a href="#template-new">6-3. 新テンプレートを追加する</a></li>
+    <li><a href="#deploy">7. GitHub Pages デプロイ手順</a></li>
+    <li class="sub-item"><a href="#deploy-new">7-1. 新規デプロイ</a></li>
+    <li class="sub-item"><a href="#deploy-update">7-2. スライドを更新する</a></li>
+    <li><a href="#operation">8. セミナー当日の操作</a></li>
+    <li><a href="#password">9. パスワードのしくみ</a></li>
+    <li><a href="#naming">10. ファイル・フォルダ名ルール</a></li>
+    <li><a href="#trouble">11. トラブルシューティング</a></li>
+    <li><a href="#slides-js">12. slides.js の書き方リファレンス</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ===== 1. このシステムでできること ===== -->
+<h2 id="overview"><span class="num">1</span>このシステムでできること</h2>
+
+<div class="lead">
+セミナーテーマを Kai に投げると、受講者に共有できる Web スライドシステムが丸ごと出来上がります。PDF や PowerPoint の代わりに、ブラウザで動くリアルタイムのスライドを GitHub Pages で公開します。
+</div>
+
+<h3>全体像</h3>
+<div class="flow-row">
+  <div class="flow-box">/seminar-slide<br><small>スキル起動</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">ヒアリング<br><small>8問</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box green">slides.js<br><small>自動生成</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box orange">GitHub Pages<br><small>公開</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box green">URL共有<br><small>完成</small></div>
+</div>
+
+<h3>何が作られるか</h3>
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>受講者向けURL</h4>
+    <p>エクスポート・編集機能なし。閲覧専用。URLを知っている全員が見られる。</p>
+  </div>
+  <div class="two-col-box">
+    <h4>プレゼンター画面</h4>
+    <p>現在スライド＋次スライド＋トークスクリプト＋タイマー。パスワード保護。レーザーポインタ・全画面連動。</p>
+  </div>
+  <div class="two-col-box">
+    <h4>管理画面</h4>
+    <p>共有URLの確認・コピー、パスワード設定。</p>
+  </div>
+  <div class="two-col-box">
+    <h4>フル操作画面</h4>
+    <p>スライド編集・PDF出力・PPTX出力。発表者自身の手元用。</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== 2. 5種類のページ ===== -->
+<h2 id="pages"><span class="num">2</span>5種類のページの役割</h2>
+
+<div class="page-card public">
+  <div class="pc-icon">👁</div>
+  <div>
+    <div class="pc-name">viewer.html <span class="badge badge-green">公開</span></div>
+    <div class="pc-file">受講者用 — URLを共有する唯一のファイル</div>
+    <div class="pc-desc">閲覧専用。エクスポート・編集機能なし。GitHub Pagesで公開済み。URLを知っている人全員が見られる。</div>
+  </div>
+</div>
+
+<div class="page-card protected">
+  <div class="pc-icon">🎤</div>
+  <div>
+    <div class="pc-name">presenter.html <span class="badge badge-orange">パスワード保護</span></div>
+    <div class="pc-file">プレゼンター専用画面</div>
+    <div class="pc-desc">現在スライド・次スライド・トークスクリプト・タイマーを同時表示。admin.htmlで設定したパスワードが必要。レーザーポインタ・受講者画面の全画面切替に対応。</div>
+  </div>
+</div>
+
+<div class="page-card protected">
+  <div class="pc-icon">⚙️</div>
+  <div>
+    <div class="pc-name">admin.html <span class="badge badge-orange">設定画面</span></div>
+    <div class="pc-file">管理画面 — 初回に必ず開く</div>
+    <div class="pc-desc">受講者向けURLのコピー、プレゼンターパスワードの設定。GitHubで公開されているが、URLを知っている人だけが開ける。</div>
+  </div>
+</div>
+
+<div class="page-card protected">
+  <div class="pc-icon">🖥️</div>
+  <div>
+    <div class="pc-name">index.html <span class="badge badge-blue">フル機能</span></div>
+    <div class="pc-file">フル操作画面（発表者手元用）</div>
+    <div class="pc-desc">スライド閲覧・編集・PDF出力・PPTX出力。全機能が使える。受講者に渡さない。</div>
+  </div>
+</div>
+
+<div class="page-card local">
+  <div class="pc-icon">🔒</div>
+  <div>
+    <div class="pc-name">manual.html <span class="badge badge-gray">ローカル専用</span></div>
+    <div class="pc-file">初期パスワード記載 — .gitignore で除外</div>
+    <div class="pc-desc">GitHubには絶対アップされない。初期パスワード・システム概要・運用手順を記載。パスワードを変更したらここにメモする。</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== 3. /seminar-slide スキル ===== -->
+<h2 id="skill"><span class="num">3</span>/seminar-slide スキル — 全自動でスライドを作る</h2>
+
+<div class="skill-box">
+  <div class="skill-cmd">/seminar-slide</div>
+  <div class="skill-desc">ヒアリング → slides.js生成 → プロジェクト生成 → GitHub Pages公開 まで一気通貫で実行する</div>
+</div>
+
+<h3 id="skill-how">3-1. 基本の使い方</h3>
+
+<div class="step">
+  <span class="step-num">1</span> <strong>Claude Code で入力する</strong><br>
+  <code>/seminar-slide</code> と打つだけ。スキルが自動で起動します。
+</div>
+
+<div class="step">
+  <span class="step-num">2</span> <strong>Kai のヒアリングに答える</strong><br>
+  最大8問を1回でまとめて聞かれます。箇条書きで答えればOK。「おまかせ」も可。
+</div>
+
+<div class="step">
+  <span class="step-num">3</span> <strong>ブリーフィングを確認して承認</strong><br>
+  Kai が内容をまとめて「これで進めます。よいですか？」と確認します。「OK」で実行開始。
+</div>
+
+<div class="step">
+  <span class="step-num">4</span> <strong>自動で完成</strong><br>
+  slides.js 生成 → プロジェクトフォルダ作成 → GitHub へ push → Pages 有効化 → URL通知
+</div>
+
+<h3 id="skill-interview">3-2. ヒアリング内容（8問）</h3>
+
+<table>
+<tr><th>#</th><th>質問内容</th><th>回答例</th></tr>
+<tr><td>1</td><td>セミナータイトル</td><td>採用担当者向けAI活用セミナー</td></tr>
+<tr><td>2</td><td>ターゲット受講者</td><td>中小企業の採用担当・経営者 10〜20名</td></tr>
+<tr><td>3</td><td>所要時間</td><td>60分</td></tr>
+<tr><td>4</td><td>セミナーの核心メッセージ</td><td>AIで採用コストを半分にできる</td></tr>
+<tr><td>5</td><td>パート構成</td><td>座学20分→実演20分→Q&A20分、または「おまかせ」</td></tr>
+<tr><td>6</td><td>スライド枚数の目安</td><td>30枚、または「おまかせ」</td></tr>
+<tr><td>7</td><td>盛り込みたいポイント</td><td>・失敗事例3つ ・おすすめツール ・実際のプロンプト</td></tr>
+<tr><td>8</td><td>GitHubスラッグ</td><td>sales-ai-seminar、または「おまかせ」</td></tr>
+</table>
+
+<h3 id="skill-output">3-3. 生成されるもの</h3>
+
+<div class="ok">
+<span class="label">スキル完了後に手に入るもの</span>
+<ul>
+  <li><strong>受講者URL:</strong> <code>https://artsoul-git.github.io/{スラッグ}/viewer.html</code></li>
+  <li><strong>管理画面:</strong> <code>https://artsoul-git.github.io/{スラッグ}/admin.html</code></li>
+  <li><strong>プレゼンター:</strong> <code>https://artsoul-git.github.io/{スラッグ}/presenter.html</code></li>
+  <li><strong>ローカルフォルダ:</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\projects\{スラッグ}\</span></li>
+</ul>
+</div>
+
+<div class="warn">
+<span class="label">初回のみ必須作業</span>
+スキル完了後、<strong>admin.html を開いてパスワードを設定する</strong>ことを忘れずに。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span>（ローカルのみ）を参照。
+</div>
+
+<hr>
+
+<!-- ===== 4. スライドビルダー アプリ ===== -->
+<h2 id="builder"><span class="num">4</span>スライドビルダー アプリ（index.html）</h2>
+
+<div class="lead">
+/seminar-slide スキルを使わず手動で作業したい場合、または既存の PowerPoint・PDF のコンテンツをもとにスライドを作る場合に使います。
+</div>
+
+<p><strong>場所：</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\index.html</span> をブラウザで直接開く</p>
+
+<h3 id="builder-step1">4-1. Step 1: セミナー情報を入力する</h3>
+
+<table>
+<tr><th>項目</th><th>説明</th></tr>
+<tr><td>セミナータイトル</td><td>入力すると GitHubスラッグが自動生成される</td></tr>
+<tr><td>GitHubスラッグ</td><td>英数字・ハイフンのみ。これがGitHubリポジトリ名・URLになる</td></tr>
+<tr><td>ターゲット受講者</td><td>Kaiへの依頼プロンプトに含まれる</td></tr>
+<tr><td>所要時間</td><td>分単位で入力</td></tr>
+<tr><td>スライド枚数</td><td>空欄でおまかせ</td></tr>
+<tr><td>テンプレート</td><td>kawai-dark-v1（現在唯一のテンプレート）</td></tr>
+<tr><td>核心メッセージ</td><td>セミナーで伝える最重要の1文</td></tr>
+<tr><td>パート構成</td><td>空欄でおまかせ</td></tr>
+<tr><td>盛り込みたいポイント</td><td>箇条書きで入力。Kaiへの依頼に含まれる</td></tr>
+</table>
+
+<h3 id="builder-step2">4-2. Step 2: PDF/PPTX からテキストを抽出する（任意）</h3>
+
+<p>既存の資料がある場合、ここにドロップするとテキストが抽出されます。Kaiへの依頼プロンプトに自動で添付されます。</p>
+
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>PPTX の場合</h4>
+    <p>各スライドのテキストを「--- スライド N ---」区切りで抽出。JSZip を使ってブラウザ内で処理。</p>
+  </div>
+  <div class="two-col-box">
+    <h4>PDF の場合</h4>
+    <p>各ページのテキストを「--- ページ N ---」区切りで抽出。PDF.js を使用。</p>
+  </div>
+</div>
+
+<div class="tip">
+<span class="label">抽出テキストの活用</span>
+既存の PowerPoint の内容をもとにスライドを作りたいとき、テキストを抽出して Kai に渡すと、そのコンテンツを再構成したスライドを作ってくれます。デザインや構成はゼロから kawai-dark-v1 スタイルで作り直されます。
+</div>
+
+<h3 id="builder-step3">4-3. Step 3: Kaiへの依頼プロンプトを生成する</h3>
+
+<p>「プロンプト生成」ボタンを押すと、入力内容が自動的に Kai への依頼文に変換されます。「コピー」ボタンで Claude Code に貼り付けるだけです。</p>
+
+<div class="prompt-box"><span class="highlight">/seminar-slide</span>
+
+以下の情報でセミナースライドを作ってください。
+
+1. セミナータイトル: 採用担当者向けAI活用セミナー
+2. ターゲット受講者: 中小企業の採用担当 10〜20名
+3. 所要時間: 60分
+4. 核心メッセージ: AIで採用コストを半分にできる
+5. パート構成: おまかせ
+6. スライド枚数: 30枚
+7. 盛り込みたいポイント:
+   ・失敗事例3つ
+   ・おすすめツール
+8. GitHubスラッグ: sales-ai-seminar
+9. テンプレート: kawai-dark-v1</div>
+
+<h3 id="builder-step4">4-4. Step 4 & 5: コマンドを確認してデプロイ</h3>
+
+<p>アプリが自動生成するコマンドをコピーして、PowerShell で順番に実行するだけです。</p>
+
+<div class="tip">
+<span class="label">コマンドは自動計算される</span>
+入力したスラッグ・タイトルから、new-seminar.py コマンドと git デプロイコマンドが自動生成されます。コピーして貼り付けるだけでOK。
+</div>
+
+<hr>
+
+<!-- ===== 5. CLI ===== -->
+<h2 id="cli"><span class="num">5</span>new-seminar.py CLIツール</h2>
+
+<div class="lead">
+テンプレートから新しいスライドプロジェクトのフォルダを1コマンドで生成するツール。Kai が /seminar-slide スキルを実行するとき内部で呼ぶほか、手動でも使えます。
+</div>
+
+<h3>基本コマンド</h3>
+
+<div class="prompt-box"><span class="comment"># 新規スライドセットを生成（最低限）</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py <span class="highlight">--slug</span> "my-seminar" <span class="highlight">--title</span> "マイセミナー"
+
+<span class="comment"># テンプレートを指定する場合</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py --slug "my-seminar" --title "マイセミナー" <span class="highlight">--template</span> kawai-dark-v1
+
+<span class="comment"># 利用可能なテンプレートを確認</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py <span class="highlight">--list-templates</span></div>
+
+<h3>生成されるもの</h3>
+
+<p>コマンド実行後、以下のフォルダが作られます：</p>
+
+<div class="prompt-box">08_アプリ開発事業部\slide-builder\projects\my-seminar\
+├── css\
+│   ├── style.css        ← kawai-dark-v1 のデザイン
+│   └── presenter.css
+├── js\
+│   ├── app.js           ← ビューアロジック
+│   ├── presenter.js     ← プレゼンターロジック
+│   └── slides.js        ← ← ← ここに Kai がコンテンツを書く
+├── viewer.html
+├── presenter.html
+├── admin.html
+├── index.html
+└── manual.html          ← ローカル専用（パスワード記載）</div>
+
+<div class="tip">
+<span class="label">slides.js だけ触ればいい</span>
+CSS・JS・HTML は全部テンプレートのコピー。毎回変えるのは <code>js/slides.js</code> だけです。Kai が自動生成するか、手で書くかのどちらか。
+</div>
+
+<hr>
+
+<!-- ===== 6. テンプレート管理 ===== -->
+<h2 id="template"><span class="num">6</span>テンプレート管理（kawai-dark-v1）</h2>
+
+<h3 id="template-spec">6-1. デザイン仕様</h3>
+
+<p><strong>場所：</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\templates\kawai-dark-v1\</span></p>
+
+<table>
+<tr><th>項目</th><th>値</th></tr>
+<tr><td>プライマリカラー</td><td><code>#6F911D</code>（オリーブグリーン）</td></tr>
+<tr><td>アクセントカラー</td><td><code>#FABE00</code>（イエロー）/ <code>#38B6FF</code>（ブルー）</td></tr>
+<tr><td>スライド背景</td><td><code>#ffffff</code></td></tr>
+<tr><td>ボディ背景</td><td><code>#111</code>（黒）</td></tr>
+<tr><td>フォント</td><td>Noto Sans JP / Hiragino Sans / Meiryo</td></tr>
+<tr><td>リスク高</td><td><code>#c0392b</code></td></tr>
+<tr><td>リスク中</td><td><code>#e67e22</code></td></tr>
+<tr><td>リスク低</td><td><code>#27ae60</code></td></tr>
+</table>
+
+<div class="tip">
+<span class="label">詳細仕様は template-spec.md を参照</span>
+<span class="file-path">templates\kawai-dark-v1\template-spec.md</span> に全スライドタイプ・コンポーネントのHTML例が記載されています。
+</div>
+
+<h3>スライドタイプ一覧</h3>
+
+<table>
+<tr><th>タイプ</th><th>クラス</th><th>用途</th></tr>
+<tr><td>タイトルスライド</td><td><code>slide-cover</code></td><td>冒頭のタイトルページ。ロゴ・日付・キャッチコピー。</td></tr>
+<tr><td>インパクト</td><td><code>slide-impact</code></td><td>大きな一言。「今日伝えたいこと」など。</td></tr>
+<tr><td>セクション区切り</td><td><code>slide-section</code></td><td>PART 01 / PART 02 などの区切り。</td></tr>
+<tr><td>数字強調</td><td><code>slide-metric</code></td><td>コスト・割合・年月など数字を大きく見せる。</td></tr>
+<tr><td>引用・格言</td><td><code>slide-quote</code></td><td>名言・定義・格言を中央に大きく表示。</td></tr>
+<tr><td>標準スライド</td><td>（クラスなし）</td><td>H() ヘッダー + コンテンツ。最も多く使う。</td></tr>
+</table>
+
+<h3>コンテンツコンポーネント一覧</h3>
+
+<table>
+<tr><th>クラス</th><th>用途</th></tr>
+<tr><td><code>.s-list</code></td><td>箇条書き。<code>.s-list-callout</code>（重要）/ <code>.s-list-arrow</code>（通常）/ <code>.s-list-head</code>（見出し）/ <code>.s-list-sub</code>（補足）</td></tr>
+<tr><td><code>.s-steps</code></td><td>手順ステップ。<code>.s-step-row</code>（行）→ <code>.s-step-num</code>①②③ + <code>.s-step-text</code></td></tr>
+<tr><td><code>.s-risk-list</code></td><td>リスク表。バッジ色：<code>high</code>（赤）/ <code>medium</code>（橙）/ <code>low</code>（緑）</td></tr>
+<tr><td><code>.s-compare</code></td><td>2列比較。カラム色：<code>positive</code>（緑）/ <code>neutral</code>（灰）/ <code>negative</code>（赤）</td></tr>
+<tr><td><code>.slide-content-center</code></td><td>コンテンツを縦横中央に配置</td></tr>
+</table>
+
+<h3 id="template-brush">6-2. ブラッシュアップ方法</h3>
+
+<div class="step">
+  <span class="step-num">1</span> <strong>CSS変数を変えるだけでカラースキームが変わる</strong><br>
+  <span class="file-path">templates\kawai-dark-v1\css\style.css</span> の <code>:root</code> セクションの変数値を変更。
+</div>
+
+<div class="step">
+  <span class="step-num">2</span> <strong>template-spec.md のバージョン履歴を更新</strong><br>
+  変更内容と日付を記録する（例: v1.1 2026-06-01 フォントサイズ調整）。
+</div>
+
+<div class="step">
+  <span class="step-num">3</span> <strong>既存プロジェクトには影響しない</strong><br>
+  各プロジェクトはテンプレートの独立コピーを持つので、テンプレートを変えても過去のスライドは変わらない。次回 new-seminar.py を実行したときから新デザインが使われる。
+</div>
+
+<h3 id="template-new">6-3. 新テンプレートを追加する</h3>
+
+<div class="prompt-box"><span class="comment"># 例: light-blue-v1 という新テンプレートを作る</span>
+<span class="highlight">1.</span> templates\kawai-dark-v1\ をまるごとコピー → templates\light-blue-v1\
+<span class="highlight">2.</span> css\style.css の CSS変数を新しいカラーに変更
+<span class="highlight">3.</span> template-spec.md を更新（名前・バージョン・カラー表）
+<span class="highlight">4.</span> 次回 new-seminar.py --template light-blue-v1 で指定できる</div>
+
+<hr>
+
+<!-- ===== 7. デプロイ手順 ===== -->
+<h2 id="deploy"><span class="num">7</span>GitHub Pages デプロイ手順</h2>
+
+<h3 id="deploy-new">7-1. 新規デプロイ（/seminar-slide スキルが自動でやること）</h3>
+
+<div class="prompt-box"><span class="comment"># プロジェクトフォルダに移動</span>
+cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\{スラッグ}"
+
+<span class="comment"># Gitリポジトリ初期化</span>
+git init
+git config user.email "uemura@artsoul.jp"
+git config user.name "Kei Uemura"
+git add .
+git commit -m "初期公開: {タイトル}"
+
+<span class="comment"># GitHubリポジトリ作成 → push</span>
+gh repo create Artsoul-Git/{スラッグ} --public --description "{タイトル}"
+git remote add origin https://github.com/Artsoul-Git/{スラッグ}.git
+git push -u origin master
+
+<span class="comment"># gh-pagesブランチ作成（GitHub PagesはここからビルドされるURLになる）</span>
+git checkout -b gh-pages
+git push origin gh-pages
+git checkout master</div>
+
+<p>1〜2分後、以下のURLでアクセスできるようになります：</p>
+
+<div class="url-card">
+  <div class="url-role">受講者URL（共有する）</div>
+  <div class="url-val">https://artsoul-git.github.io/{スラッグ}/viewer.html</div>
+</div>
+
+<h3 id="deploy-update">7-2. スライドを更新する（公開後に修正したいとき）</h3>
+
+<div class="prompt-box"><span class="comment"># slides.js を修正後、以下を実行</span>
+cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\{スラッグ}"
+
+<span class="comment"># masterブランチで変更をコミット</span>
+git add js\slides.js
+git commit -m "スライド更新: {修正内容}"
+git push origin master
+
+<span class="comment"># gh-pagesにも反映</span>
+git checkout gh-pages
+git merge master
+git push origin gh-pages
+git checkout master</div>
+
+<div class="tip">
+<span class="label">Kai に「更新して」と言えばOK</span>
+Kai に「{スラッグ} のスライドを更新して。〇〇を修正して」と伝えれば、Kai が slides.js を修正して push まで自動でやってくれます。
+</div>
+
+<hr>
+
+<!-- ===== 8. 当日の操作 ===== -->
+<h2 id="operation"><span class="num">8</span>セミナー当日の操作</h2>
+
+<h3>事前確認（前日までに）</h3>
+
+<div class="step">
+  <span class="step-num">1</span> <strong>admin.html でパスワードを確認・設定</strong><br>
+  プレゼンターPCのブラウザで <code>admin.html</code> を開き、パスワードが設定済みであることを確認。
+</div>
+
+<div class="step">
+  <span class="step-num">2</span> <strong>viewer.html の URL を受講者に共有</strong><br>
+  admin.html の「URLをコピー」ボタンから共有。QRコード化してスライドに載せてもOK。
+</div>
+
+<div class="step">
+  <span class="step-num">3</span> <strong>プレゼンターPCで presenter.html を開いておく</strong><br>
+  パスワードを入力してログイン。タイマー・トークスクリプトを確認。
+</div>
+
+<h3>当日の操作（presenter.html）</h3>
+
+<table>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>スライドを進める</td><td>→キー / 画面右下「次へ」ボタン</td></tr>
+<tr><td>スライドを戻す</td><td>←キー / 画面右下「前へ」ボタン</td></tr>
+<tr><td>目次を開く</td><td>左上「☰ 目次」ボタン（受講者画面にも連動して開く）</td></tr>
+<tr><td>受講者画面を全画面にする</td><td>ツールバー「⛶ 全画面」/ Fキー</td></tr>
+<tr><td>レーザーポインタ</td><td>プレゼンター画面の現在スライドエリアにマウスを移動（受講者画面に赤点が出る）</td></tr>
+<tr><td>タイマーをスタート</td><td>右側「▶ スタート」ボタン</td></tr>
+<tr><td>PDF出力</td><td>ツールバー「PDF出力」</td></tr>
+<tr><td>PPTX出力</td><td>ツールバー「PPTX出力」</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">2画面運用</span>
+サブディスプレイ（受講者に見せる）に viewer.html または index.html を全画面表示し、メインディスプレイ（手元）で presenter.html を操作するのが理想の使い方です。
+</div>
+
+<hr>
+
+<!-- ===== 9. パスワードのしくみ ===== -->
+<h2 id="password"><span class="num">9</span>パスワードのしくみ</h2>
+
+<div class="lead">
+パスワードはブラウザの localStorage に保存される。ソースコードには一切書かれていない。だから GitHub に公開してもパスワードは漏れない。
+</div>
+
+<h3>仕組みを3行で</h3>
+
+<ol>
+  <li><strong>admin.html でパスワードを設定</strong> → そのPCのブラウザの localStorage に保存</li>
+  <li><strong>presenter.html を開く</strong> → localStorage からパスワードを取り出して照合</li>
+  <li><strong>別のPCでは</strong> → そのPCにパスワードが保存されていないので入れない。再度 admin.html で設定が必要。</li>
+</ol>
+
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>パスワードを変えたいとき</h4>
+    <p>admin.html を開いて新しいパスワードを入力 → 「設定・変更」。次に presenter.html を開いたときから新パスワードが有効。</p>
+  </div>
+  <div class="two-col-box">
+    <h4>別デバイスで presenter.html を使いたいとき</h4>
+    <p>そのデバイスのブラウザで admin.html を開いてパスワードを設定する。何度でも同じパスワードを設定してOK。</p>
+  </div>
+</div>
+
+<div class="warn">
+<span class="label">ブラウザのキャッシュをクリアすると</span>
+localStorage もクリアされる。presenter.html が開けなくなったら admin.html で再設定する。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span> に記載。
+</div>
+
+<hr>
+
+<!-- ===== 10. ファイル・フォルダ名ルール ===== -->
+<h2 id="naming"><span class="num">10</span>ファイル・フォルダ名ルール</h2>
+
+<div class="warn">
+<span class="label">GitHub Pages では日本語ファイル名が使えない</span>
+URLエンコードされて汚くなり、リンクが壊れることがある。英数字・ハイフンのみで命名すること。
+</div>
+
+<table>
+<tr><th>対象</th><th>ルール</th><th>OK例</th><th>NG例</th></tr>
+<tr><td>GitHubスラッグ（リポジトリ名）</td><td>英数字 + ハイフン、小文字、先頭は英字</td><td><code>sales-ai-seminar</code></td><td><code>採用AI研修</code></td></tr>
+<tr><td>プロジェクトフォルダ名</td><td>スラッグと同じ</td><td><code>projects/sales-ai-seminar/</code></td><td><code>projects/採用AI/</code></td></tr>
+<tr><td>JS/CSS ファイル名</td><td>英数字 + ハイフン + ドット</td><td><code>slides.js</code></td><td><code>スライド.js</code></td></tr>
+<tr><td>テンプレート名</td><td>英数字 + ハイフン + バージョン</td><td><code>kawai-dark-v1</code></td><td><code>ダークv1</code></td></tr>
+</table>
+
+<h3>スラッグ命名のコツ</h3>
+
+<ul>
+  <li>テーマ＋対象＋seminar の組み合わせが分かりやすい</li>
+  <li>例：<code>keiyaku-ai-check</code> / <code>sales-ai-seminar</code> / <code>hr-ai-intro</code></li>
+  <li>同じ名前のリポジトリは作れない。年や枝番をつける：<code>keiyaku-ai-2026</code></li>
+</ul>
+
+<hr>
+
+<!-- ===== 11. トラブルシューティング ===== -->
+<h2 id="trouble"><span class="num">11</span>トラブルシューティング</h2>
+
+<details>
+<summary><span class="acc-num">Q</span>presenter.html が開けない（パスワードが効かない）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<p><strong>原因：</strong>このブラウザの localStorage にパスワードが保存されていない。</p>
+<p><strong>対処：</strong>admin.html を開いて「プレゼンターパスワード」欄に初期パスワードを入力して「設定・変更」。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span> を参照。</p>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">Q</span>GitHub Pages の URL を開くと 404 になる<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<p><strong>原因①：</strong>GitHub Pages がまだビルド中（push後1〜2分かかる）。</p>
+<p><strong>対処①：</strong>2分待ってから再度アクセス。</p>
+<p><strong>原因②：</strong>gh-pages ブランチが存在しない。</p>
+<p><strong>対処②：</strong>以下を実行：</p>
+<div class="prompt-box">git checkout -b gh-pages
+git push origin gh-pages
+git checkout master</div>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">Q</span>レーザーポインタが受講者画面に表示されない<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<p><strong>原因：</strong>presenter.html と viewer.html（または index.html）が別ブラウザタブ・別ウィンドウで開かれていない。BroadcastChannel は同一ブラウザ内のタブ間でのみ動作します。</p>
+<p><strong>対処：</strong>受講者画面（viewer.html）を同じPCの同じブラウザで別タブ・別ウィンドウで開く。別のPCで開いている場合は動作しません（同じデバイスのみ有効）。</p>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">Q</span>スライドを更新したのに URL を開くと古いまま<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<p><strong>原因①：</strong>gh-pages ブランチに反映していない。</p>
+<p><strong>対処①：</strong>以下を実行：</p>
+<div class="prompt-box">git checkout gh-pages
+git merge master
+git push origin gh-pages
+git checkout master</div>
+<p><strong>原因②：</strong>ブラウザのキャッシュ。</p>
+<p><strong>対処②：</strong>Ctrl+Shift+R（強制リロード）。</p>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">Q</span>slides.js で文字が表示されない・レイアウトが崩れる<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<p><strong>原因：</strong>slides.js の JavaScript 構文エラー。特に <code>data-notes</code> 内のシングルクォート（<code>'</code>）のエスケープ漏れ。</p>
+<p><strong>対処：</strong>ブラウザの開発者ツール（F12）→ Console タブでエラーを確認。<code>data-notes</code> 内のシングルクォートを <code>&#39;</code> に置換する。</p>
+<div class="prompt-box"><span class="comment">// NG: シングルクォートがエスケープされていない</span>
+data-notes="今日はAIについて学んでいただけます。"
+
+<span class="comment">// OK: 文字参照でエスケープ</span>
+data-notes="今日はAI&#39;s活用法を学んでいただけます。"</div>
+</div>
+</details>
+
+<hr>
+
+<!-- ===== 12. slides.js リファレンス ===== -->
+<h2 id="slides-js"><span class="num">12</span>slides.js の書き方リファレンス</h2>
+
+<h3>基本構造</h3>
+
+<div class="prompt-box">(function () {
+
+  function H(title) {
+    return &#39;&lt;header class="slide-header"&gt;&lt;h2 class="slide-h2"&gt;&#39; + title + &#39;&lt;/h2&gt;&lt;/header&gt;&#39;;
+  }
+
+  function slide01() {
+    return &#39;&lt;section class="slide slide-cover"
+      data-section="cover"
+      data-title="タイトル"
+      data-notes="トークスクリプト。&#39;シングルクォート&#39;は&#39;&amp;#39;でエスケープ"&gt;
+      &lt;!-- スライドコンテンツ --&gt;
+    &lt;/section&gt;&#39;;
+  }
+
+  <span class="comment">/* ... 他のスライド関数 ... */</span>
+
+  window.SLIDES = [slide01, slide02, ...];
+
+})();</div>
+
+<h3>必須ルール（Kai も守る、手書きも守る）</h3>
+
+<ol>
+  <li>全体を IIFE（即時実行関数）で包む</li>
+  <li><code>H()</code> ヘルパーを冒頭で定義</li>
+  <li>各スライドは <code>slideNN()</code> 関数（ゼロ埋め2桁）</li>
+  <li>全スライドに <code>data-section</code> / <code>data-title</code> / <code>data-notes</code> を設定</li>
+  <li><code>data-notes</code> 内の <code>'</code> は <code>&amp;#39;</code> でエスケープ</li>
+  <li>時間表記（60分・20分）をスライド本文に書かない</li>
+  <li>最後に <code>window.SLIDES = [slide01, slide02, ...];</code> で配列を登録</li>
+</ol>
+
+<h3>スライドタイプ別 HTML テンプレート</h3>
+
+<details>
+<summary><span class="acc-num">→</span>slide-cover（タイトルスライド）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="prompt-box">&#39;&lt;section class="slide slide-cover" data-section="cover" data-title="タイトル" data-notes=""&gt;&#39; +
+  &#39;&lt;div class="slide-cover-bar"&gt;&#39; +
+    &#39;&lt;div class="slide-cover-tag"&gt;有限会社アートソウル AI導入支援事業&lt;/div&gt;&#39; +
+    &#39;&lt;h1 class="slide-cover-title"&gt;セミナータイトル&lt;/h1&gt;&#39; +
+  &#39;&lt;/div&gt;&#39; +
+  &#39;&lt;div class="slide-cover-body"&gt;&#39; +
+    &#39;&lt;p class="slide-cover-sub"&gt;サブタイトル&lt;/p&gt;&#39; +
+    &#39;&lt;div class="slide-cover-meta"&gt;YYYY.MM ｜ 開催情報&lt;/div&gt;&#39; +
+  &#39;&lt;/div&gt;&#39; +
+&#39;&lt;/section&gt;&#39;</div>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">→</span>slide-section（セクション区切り）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="prompt-box">&#39;&lt;section class="slide slide-section" data-section="part1" data-title="パート名" data-notes=""&gt;&#39; +
+  &#39;&lt;div class="slide-content"&gt;&#39; +
+    &#39;&lt;div class="s-section-accent-bar"&gt;&lt;/div&gt;&#39; +
+    &#39;&lt;div class="s-section-chapter"&gt;PART 01&lt;/div&gt;&#39; +
+    &#39;&lt;h1 class="s-section-title"&gt;パートタイトル&lt;/h1&gt;&#39; +
+    &#39;&lt;p class="s-section-lead"&gt;サブタイトル&lt;/p&gt;&#39; +
+  &#39;&lt;/div&gt;&#39; +
+&#39;&lt;/section&gt;&#39;</div>
+</div>
+</details>
+
+<details>
+<summary><span class="acc-num">→</span>標準スライド（H() + 箇条書き）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="prompt-box">&#39;&lt;section class="slide" data-section="part1" data-title="タイトル" data-notes="スクリプト"&gt;&#39; +
+  H(&#39;スライドタイトル&#39;) +
+  &#39;&lt;div class="slide-content"&gt;&#39; +
+    &#39;&lt;ul class="s-list"&gt;&#39; +
+      &#39;&lt;li class="s-list-callout"&gt;重要ポイント&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-arrow"&gt;通常項目&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-head"&gt;見出し項目&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-sub"&gt;→ 補足説明&lt;/li&gt;&#39; +
+    &#39;&lt;/ul&gt;&#39; +
+  &#39;&lt;/div&gt;&#39; +
+&#39;&lt;/section&gt;&#39;</div>
+</div>
+</details>
+
+<hr>
+
+<div class="ok">
+<span class="label">このガイドについて</span>
+最終更新：2026年5月12日 / バージョン：v1.0<br>
+場所：<span class="file-path">07_マニュアル\スライドビルダー完全ガイド.html</span><br>
+関連：<span class="file-path">07_マニュアル\エージェント操作マニュアル.html</span> PART 6<br>
+テンプレート仕様：<span class="file-path">08_アプリ開発事業部\slide-builder\templates\kawai-dark-v1\template-spec.md</span>
+</div>
+
+</div>
+<script>
+(function() {
+  function addCopyBtn(el) {
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'コピー';
+    el.appendChild(btn);
+    btn.addEventListener('click', function() {
+      var clone = el.cloneNode(true);
+      clone.querySelectorAll('.copy-btn').forEach(function(b) { b.remove(); });
+      var text = clone.innerText.trim();
+      var ok = function() {
+        btn.textContent = 'コピー済み ✓';
+        btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok).catch(function() { fallback(text); ok(); });
+      } else { fallback(text); ok(); }
+    });
+  }
+  function fallback(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.prompt-box').forEach(addCopyBtn);
+})();
+</script>
+</body>
+</html>

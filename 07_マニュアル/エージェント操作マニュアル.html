@@ -190,13 +190,14 @@
   <div class="meta">
     2026年5月 発行<br>
     対象：上村桂右・案件担当者<br>
-    バージョン：v2.0
+    バージョン：v2.4
   </div>
 </div>
 
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
 <tr><td>v2.2</td><td>2026-05-10</td><td>第21章「自動完了指示の最短フォーマット」追加。離席中ノーストップ実行のテンプレートと具体例。</td></tr>
 <tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。AI組織ゼロベース設計・ヒアリングシート生成・壁打ちモード対応。company-setup-manual.html 新設。</td></tr>
@@ -226,6 +227,7 @@
     <li class="sub-item"><a href="#sk-beginner">/beginner-guide — 初心者向けガイド</a></li>
     <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
     <li class="sub-item"><a href="#sk-setup">/company-setup — AI組織ゼロベース設計</a></li>
+    <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
     <li><strong>PART 2: クライアント案件フロー</strong></li>
     <li class="sub-item"><a href="#ch1">第1章　このマニュアルで何ができるようになるか</a></li>
     <li class="sub-item"><a href="#ch2">第2章　準備するもの</a></li>
@@ -255,6 +257,10 @@
     <li><strong>PART 5: Kai Tasks プロジェクト管理</strong></li>
     <li class="sub-item"><a href="#ch22">第22章　Kai Tasksアプリの使い方（ブラウザUI）</a></li>
     <li class="sub-item"><a href="#ch23">第23章　Kaiにテーマを渡してプロジェクトを自動生成する</a></li>
+    <li><strong>PART 6: セミナースライドビルダー</strong></li>
+    <li class="sub-item"><a href="#ch24">第24章　/seminar-slide スキル — 全自動でスライドを作る</a></li>
+    <li class="sub-item"><a href="#ch25">第25章　スライドビルダーアプリの使い方（index.html）</a></li>
+    <li class="sub-item"><a href="#ch26">第26章　テンプレート管理とブラッシュアップ</a></li>
   </ul>
 </div>
 
@@ -949,6 +955,49 @@ GitHub Pagesを更新して。最新の提案書は v{n} です。
 <div class="tip">
   <span class="label">Kai's Point</span>
   /sme-ai-proposal との違い：提案書を「作る」のが sme-ai-proposal、組織そのものを「構築する」のが company-setup。採用されたクライアントには company-setup で即日運用体制を整えられます。
+</div>
+
+</div>
+</details>
+
+<!-- /seminar-slide -->
+<details id="sk-seminar">
+<summary><span class="acc-num">SK</span>/seminar-slide — セミナースライド全自動作成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="agent-card" style="border-left-color:#6F911D">
+  <div class="agent-name">/seminar-slide</div>
+  <div class="agent-phase">セミナースライドをゼロから作りたい時 / 既存コンテンツをスライド化したい時</div>
+  <p>テーマ・ターゲット・所要時間などをヒアリングし、<strong>ブラウザで動作するWebスライドシステム一式</strong>を生成して GitHub Pages で公開するまでを一気通貫で実行します。受講者向けURL・プレゼンター画面・管理画面を分離したセキュアな設計です。</p>
+</div>
+
+<h3>基本の使い方</h3>
+<div class="prompt-box">/seminar-slide</div>
+<p>入力するだけでヒアリングが始まります。テーマのみ先に伝えてもOKです：</p>
+<div class="prompt-box">/seminar-slide 採用担当者向けAI活用セミナーを作りたい</div>
+
+<h3>完了後に得られるもの</h3>
+<table>
+  <tr><th>成果物</th><th>説明</th></tr>
+  <tr><td>受講者URL</td><td><code>https://artsoul-git.github.io/{スラッグ}/viewer.html</code> — これを受講者に共有</td></tr>
+  <tr><td>管理画面</td><td><code>admin.html</code> — パスワード設定・URL確認</td></tr>
+  <tr><td>プレゼンター画面</td><td><code>presenter.html</code> — 次スライド表示・タイマー・レーザーポインタ</td></tr>
+  <tr><td>フル操作画面</td><td><code>index.html</code> — PDF/PPTX出力・スライド編集</td></tr>
+  <tr><td>ローカルフォルダ</td><td><code>08_アプリ開発事業部\slide-builder\projects\{スラッグ}\</code></td></tr>
+</table>
+
+<h3>完全マニュアル</h3>
+<div class="file-card">
+  <div class="file-icon">📗</div>
+  <div>
+    <span class="file-path">07_マニュアル/スライドビルダー完全ガイド.html</span>
+    <div class="file-desc">スライドビルダー完全ガイド（システム概要・全ページの役割・テンプレート管理・デプロイ手順・当日操作・トラブルシューティング・slides.js書き方リファレンス）</div>
+  </div>
+</div>
+
+<div class="tip">
+  <span class="label">初回のみ必須</span>
+  スキル完了後、<strong>admin.html を開いてプレゼンターパスワードを設定する</strong>ことを忘れずに。初期パスワードはローカルの <code>manual.html</code>（GitHubには非公開）に記載。
 </div>
 
 </div>
@@ -2475,9 +2524,159 @@ Kaiが「構成設計」タスクを進行中にして、ヒアリング→ス�
 
 <hr>
 
+<hr>
+
+<!-- ===== PART 6: セミナースライドビルダー ===== -->
+<div class="part-header">PART <span>6</span>　セミナースライドビルダー</div>
+
+<!-- 第24章 -->
+<details id="ch24">
+<summary><span class="acc-num">24</span>/seminar-slide スキル — 全自動でスライドを作る<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+テーマを一言投げると、Kai がヒアリング（最大8問）→ slides.js 生成 → GitHub Pages デプロイまでを自動実行します。完了後すぐに受講者に共有できるURLが手に入ります。
+</div>
+
+<h3>起動方法（2パターン）</h3>
+
+<h4>パターン①　コマンドだけ打つ</h4>
+<div class="prompt-box">/seminar-slide</div>
+<p>起動後にKaiから8問まとめてヒアリングされます。</p>
+
+<h4>パターン②　テーマを添えて起動</h4>
+<div class="prompt-box">/seminar-slide 採用担当者向けAI活用セミナーを作りたい。対象は中小企業の採用担当。60分。</div>
+<p>情報が揃っていればヒアリングを省略してブリーフィング確認→実行まで進みます。</p>
+
+<h3>ヒアリング8問（まとめて聞かれる）</h3>
+<table>
+<tr><th>#</th><th>質問</th><th>「おまかせ」可</th></tr>
+<tr><td>1</td><td>セミナータイトル</td><td>×</td></tr>
+<tr><td>2</td><td>ターゲット受講者</td><td>×</td></tr>
+<tr><td>3</td><td>所要時間</td><td>×</td></tr>
+<tr><td>4</td><td>核心メッセージ（1文）</td><td>×</td></tr>
+<tr><td>5</td><td>パート構成</td><td>○</td></tr>
+<tr><td>6</td><td>スライド枚数目安</td><td>○</td></tr>
+<tr><td>7</td><td>盛り込みたいポイント</td><td>○</td></tr>
+<tr><td>8</td><td>GitHubスラッグ</td><td>○（自動生成）</td></tr>
+</table>
+
+<h3>自動実行される流れ</h3>
+<div class="ok">
+<span class="label">Kaiが自動でやること（確認不要）</span>
+<ol>
+  <li>slides.js 生成（全スライド・トークスクリプト付き）</li>
+  <li><code>new-seminar.py</code> を実行してプロジェクトフォルダを作成</li>
+  <li>slides.js をフォルダに書き込み</li>
+  <li>GitHub に新規リポジトリを作成して push</li>
+  <li>GitHub Pages（gh-pages ブランチ）を有効化</li>
+  <li>受講者URL・管理画面URL・プレゼンターURL を報告</li>
+</ol>
+</div>
+
+<div class="warn">
+<span class="label">完了後に上村がやること（1回だけ）</span>
+admin.html を開いてプレゼンターパスワードを設定する。初期パスワードはローカルの <code>projects\{スラッグ}\manual.html</code> を参照。
+</div>
+
+</div>
+</details>
+
+<!-- 第25章 -->
+<details id="ch25">
+<summary><span class="acc-num">25</span>スライドビルダーアプリの使い方（index.html）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+/seminar-slide スキルを使わず手動で作業したいとき、または既存の PowerPoint・PDF のコンテンツをもとにスライドを作るときに使います。ブラウザで直接開くだけ。サーバー不要。
+</div>
+
+<h3>起動方法</h3>
+<div class="step">
+<span class="step-num">1</span> <strong>ファイルを開く</strong><br>
+<span class="file-path">08_アプリ開発事業部\slide-builder\index.html</span> をダブルクリック（またはブラウザにドロップ）
+</div>
+
+<h3>5ステップの操作フロー</h3>
+<table>
+<tr><th>Step</th><th>操作</th><th>内容</th></tr>
+<tr><td>1</td><td>セミナー情報を入力</td><td>タイトル・ターゲット・時間・核心メッセージ・スラッグ（自動生成も可）</td></tr>
+<tr><td>2</td><td>既存資料のテキスト抽出（任意）</td><td>PDFまたはPPTXをドロップ → テキスト自動抽出 → プロンプトに添付</td></tr>
+<tr><td>3</td><td>プロンプト生成 → Kai に渡す</td><td>「プロンプト生成」ボタン → コピーして Claude Code に貼り付け</td></tr>
+<tr><td>4</td><td>プロジェクト生成コマンドを実行</td><td>自動表示されたコマンドをコピーして PowerShell で実行</td></tr>
+<tr><td>5</td><td>デプロイコマンドを実行</td><td>自動表示された git コマンドを実行 → URL 確認</td></tr>
+</table>
+
+<h3>PDF/PPTX テキスト抽出機能</h3>
+<p>既存の資料がある場合、ここにドロップすると各スライド（PPTX）・各ページ（PDF）のテキストを抽出して、Kai への依頼プロンプトに自動添付します。Kai がそのコンテンツをもとに kawai-dark-v1 スタイルでスライドを再構成します。</p>
+
+<div class="tip">
+<span class="label">コマンドはすべて自動計算</span>
+スラッグ・タイトルを入力するだけで、new-seminar.py コマンドと git デプロイコマンドが自動計算されて表示されます。コピー&ペーストするだけでOK。
+</div>
+
+</div>
+</details>
+
+<!-- 第26章 -->
+<details id="ch26">
+<summary><span class="acc-num">26</span>テンプレート管理とブラッシュアップ<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+現在のデザイン（黒背景・グリーンアクセント）を「kawai-dark-v1」として管理しています。CSS変数を変えるだけでカラースキームを変更でき、新しいテンプレートも簡単に追加できます。
+</div>
+
+<h3>テンプレートの場所</h3>
+<div class="file-card">
+  <div class="file-icon">🎨</div>
+  <div>
+    <span class="file-path">08_アプリ開発事業部\slide-builder\templates\kawai-dark-v1\</span>
+    <div class="file-desc">黒背景グリーンアクセント。Noto Sans JP。CSS変数でカラー管理。</div>
+  </div>
+</div>
+<div class="file-card">
+  <div class="file-icon">📋</div>
+  <div>
+    <span class="file-path">templates\kawai-dark-v1\template-spec.md</span>
+    <div class="file-desc">デザイン仕様書。カラートークン・全スライドタイプ・コンポーネントのHTML例。ブラッシュアップ時はバージョン履歴を更新。</div>
+  </div>
+</div>
+
+<h3>カラースキームの変更（ブラッシュアップ）</h3>
+
+<div class="step">
+<span class="step-num">1</span> <strong>style.css の CSS変数を変更</strong><br>
+<span class="file-path">templates\kawai-dark-v1\css\style.css</span> の <code>:root</code> セクションを編集。<br>
+主要変数：<code>--c-primary: #6F911D</code>（グリーン）/ <code>--c-accent: #FABE00</code>（イエロー）
+</div>
+
+<div class="step">
+<span class="step-num">2</span> <strong>template-spec.md のバージョン履歴を更新</strong><br>
+変更内容・日付を記録する。
+</div>
+
+<div class="tip">
+<span class="label">既存プロジェクトには影響しない</span>
+各プロジェクトはテンプレートの独立コピーを持つ。テンプレートを変えても過去のスライドは変わらない。次回 <code>new-seminar.py</code> を実行したときから新デザインが適用される。
+</div>
+
+<h3>全体マニュアル</h3>
+
+<div class="file-card">
+  <div class="file-icon">📗</div>
+  <div>
+    <span class="file-path">07_マニュアル/スライドビルダー完全ガイド.html</span>
+    <div class="file-desc">完全ガイド。システム概要・5種類のページの役割・当日操作・パスワードの仕組み・トラブルシューティング・slides.js 書き方リファレンス全網羅。</div>
+  </div>
+</div>
+
+</div>
+</details>
+
 <div class="ok">
 <span class="label">このマニュアルについて</span>
-最終更新：2026年5月12日 / バージョン：v2.3<br>
+最終更新：2026年5月12日 / バージョン：v2.4<br>
 更新・追記が必要な場合は <code>07_マニュアル\エージェント操作マニュアル.html</code> を直接編集してください。<br>
 エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。<br>
 Kai自律レベル更新は <code>01_経営管理\自律レベル記録.md</code> を参照してください。
