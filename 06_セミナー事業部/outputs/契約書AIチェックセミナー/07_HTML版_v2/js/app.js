@@ -414,6 +414,43 @@
   function hideOverlay() { if (overlay) overlay.classList.remove('show'); }
   function setProgress(v) { if (fillBar) fillBar.style.width = Math.round(v * 100) + '%'; }
 
+  /* ---------- Fullscreen (triggered by presenter) ---------- */
+  var fsPrompt = null;
+
+  function showFullscreenPrompt() {
+    if (fsPrompt) return;
+    fsPrompt = document.createElement('div');
+    fsPrompt.style.cssText = [
+      'position:fixed', 'inset:0', 'background:rgba(0,0,0,.82)',
+      'z-index:99999', 'display:flex', 'flex-direction:column',
+      'align-items:center', 'justify-content:center', 'cursor:pointer',
+      'font-family:"Noto Sans JP",sans-serif'
+    ].join(';');
+    fsPrompt.innerHTML =
+      '<div style="color:#fff;font-size:22px;font-weight:700;pointer-events:none">クリックして全画面</div>' +
+      '<div style="color:rgba(255,255,255,.45);font-size:12px;margin-top:10px;pointer-events:none">Esc で終了</div>';
+    fsPrompt.addEventListener('click', function () {
+      document.documentElement.requestFullscreen().catch(function () {});
+      fsPrompt.remove(); fsPrompt = null;
+    });
+    document.body.appendChild(fsPrompt);
+  }
+
+  function toggleAudienceFullscreen() {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      var p = document.documentElement.requestFullscreen();
+      if (p && typeof p.catch === 'function') {
+        p.catch(function () { showFullscreenPrompt(); });
+      }
+    }
+  }
+
+  document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement && fsPrompt) { fsPrompt.remove(); fsPrompt = null; }
+  });
+
   /* ---------- Laser pointer (presenter → audience) ---------- */
   var laserDot = null;
 
@@ -460,8 +497,9 @@
       }
       if (e.data.type === 'sidebar-open')  { openSidebar(); }
       if (e.data.type === 'sidebar-close') { closeSidebar(); }
-      if (e.data.type === 'laser')         { showLaser(e.data.x, e.data.y); }
-      if (e.data.type === 'laser-off')     { hideLaser(); }
+      if (e.data.type === 'laser')            { showLaser(e.data.x, e.data.y); }
+      if (e.data.type === 'laser-off')        { hideLaser(); }
+      if (e.data.type === 'fullscreen-toggle') { toggleAudienceFullscreen(); }
     };
   }
 

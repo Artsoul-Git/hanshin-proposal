@@ -591,31 +591,3 @@
 }
 .p-page-sep { margin: 0 2px; color: rgba(255,255,255,.15); }
 
-/* ── Fullscreen presentation mode ── */
-body.slide-fullscreen .p-toolbar,
-body.slide-fullscreen .p-splitter,
-body.slide-fullscreen .p-side-col,
-body.slide-fullscreen .p-nav-bar,
-body.slide-fullscreen .p-current-col > .p-col-label {
-  display: none !important;
-}
-
-body.slide-fullscreen .p-sidebar-backdrop,
-body.slide-fullscreen .p-sidebar {
-  display: none !important;
-}
-
-body.slide-fullscreen .p-current-col {
-  flex: 1 1 100% !important;
-  max-width: 100% !important;
-  background: #000 !important;
-}
-
-body.slide-fullscreen .p-stage-current {
-  background: #000 !important;
-}
-
-body.slide-fullscreen .p-page-badge {
-  font-size: 13px;
-  opacity: 0.5;
-}
