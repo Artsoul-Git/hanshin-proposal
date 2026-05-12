@@ -66,6 +66,7 @@ description: オーナー（上村）からの自然言語の依頼を受け取�
 | 依頼の内容 | ルーティング先 |
 |-----------|--------------|
 | 提案書を新規作成 | Knowledge確認 → `/sme-ai-proposal` |
+| 断片メモ・走り書きから提案書を作りたい | メモ診断モード → `/sme-ai-proposal` |
 | 提案書を修正・更新 | 既存HTML確認 → `/sme-ai-proposal`（修正モード） |
 | 提案書を公開・URL送付 | `/publish-proposal` |
 | Brain記事を書く | 参考記事確認 → `/write-brain-article` |
