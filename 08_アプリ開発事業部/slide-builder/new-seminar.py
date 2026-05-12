@@ -66,7 +66,7 @@ def generate_image_slides_js(title: str, image_names: list) -> str:
         lines.append(f"    '</section>';")
         lines.append(f"  }}\n")
 
-    lines.append(f"  window.SLIDES = [{', '.join(funcs)}];\n")
+    lines.append(f"  window.slideFactories = [{', '.join(funcs)}];\n")
     lines.append("})();\n")
     return "\n".join(lines)
 
@@ -173,7 +173,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None,
 
   /* ===================== REGISTER ===================== */
 
-  window.SLIDES = [slide01];
+  window.slideFactories = [slide01];
 
 }})();
 """,
