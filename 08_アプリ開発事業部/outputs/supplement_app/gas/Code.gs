@@ -14,7 +14,9 @@ function doGet(e) {
       case 'openReport':    return Reports.markOpened(token);
       case 'getContent':    return ContentManager.getContent(token);
       case 'getBiorhythm':  return Records.getBiorhythm(token);
-      case 'getUsers':      return Admin.getUsers(token);
+      case 'getUsers':        return Admin.getUsers(token);
+      case 'getContentAdmin': return ContentManager.getAllContent(token);
+      case 'getTestimonials': return Testimonials.getAll(token);
       default:
         return jsonErr('unknown action: ' + action);
     }
@@ -36,9 +38,13 @@ function doPost(e) {
       case 'login':           return Auth.login(token);
       case 'setupProfile':    return Auth.setupProfile(token, body);
       case 'saveDailyLog':    return Records.saveLog(token, body);
-      case 'createUser':      return Admin.createUser(token, body);
-      case 'generateReports': return Reports.generateAll(token);
-      case 'approveTestimonial': return Testimonials.approve(token, body);
+      case 'createUser':        return Admin.createUser(token, body);
+      case 'generateReports':   return Reports.generateAll(token);
+      case 'approveTestimonial':return Testimonials.approve(token, body);
+      case 'submitTestimonial': return Testimonials.submit(token, body);
+      case 'addContent':        return ContentManager.addContent(token, body);
+      case 'updateContent':     return ContentManager.updateContent(token, body);
+      case 'deleteContent':     return ContentManager.deleteContent(token, body);
       default:
         return jsonErr('unknown action: ' + action);
     }
