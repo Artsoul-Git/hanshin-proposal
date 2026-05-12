@@ -203,6 +203,22 @@ slideXX: まとめ      核心メッセージの再提示
 
 ---
 
+### STEP 3.5: ペルソナレビュー（任意・推奨）
+
+slides.js 生成後、プロジェクト作成の前に実行できる品質確認ステップ。
+
+上村から「ペルソナ視点で確認して」または「Q&A準備したい」と言われた場合、
+もしくは Kai が構成の説得力に不安を感じた場合に実行する。
+
+```
+→ /persona-review を実行
+  （rules/skills/persona-review.md 参照）
+```
+
+レポートを見て修正が必要であれば slides.js を修正してから STEP 4 へ進む。
+
+---
+
 ### STEP 4: プロジェクト生成
 
 slides.js を生成したら、以下を実行する。
@@ -283,6 +299,7 @@ CTA         : 〇〇
 - **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/template-spec.md`
 - **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/js/slides-template.js`
 - **トークスクリプト設計:** `rules/seminar-talkscript-guide.md`
+- **ペルソナ評価・Q&A想定:** `rules/skills/persona-review.md`
 
 ---
 
