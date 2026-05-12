@@ -106,6 +106,6 @@
     /* ここにスライド関数を追加 */
   ];
 
-  window.SLIDES = slides;
+  window.slideFactories = slides;
 
 })();

@@ -50,87 +50,146 @@ header h1 { font-size: 15px; font-weight: 600; color: #58a6ff; white-space: nowr
 .btn.danger:hover { background: #8a2828; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.file-name {
-  font-size: 12px; color: #8b949e;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px;
-}
+.file-name { font-size: 12px; color: #8b949e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
 #duration-display { font-size: 12px; color: #484f58; font-family: 'Courier New', monospace; white-space: nowrap; }
 
-/* Drop zone */
+/* ── Welcome / Terms screen ────────────────────────────────── */
+#welcome {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+
+.welcome-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 14px;
+  padding: 36px 40px;
+  max-width: 620px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-logo { font-size: 44px; line-height: 1; }
+.app-title { font-size: 22px; font-weight: 700; color: #e6edf3; }
+.app-desc  { font-size: 13px; color: #8b949e; text-align: center; line-height: 1.6; }
+
+.policy-box {
+  width: 100%;
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.policy-title {
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8b949e;
+  letter-spacing: 0.04em;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+.policy-items { padding: 4px 0; }
+.policy-item {
+  display: flex;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #1a1f29;
+  align-items: flex-start;
+}
+.policy-item:last-child { border-bottom: none; }
+.pi-icon { font-size: 16px; flex-shrink: 0; padding-top: 1px; }
+.pi-text { font-size: 12px; line-height: 1.65; color: #8b949e; }
+.pi-text strong { color: #c9d1d9; font-weight: 600; display: block; margin-bottom: 2px; }
+.pi-note { font-size: 11px; color: #484f58; margin-top: 3px; }
+
+.agree-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.agree-wrap .btn { padding: 10px 36px; font-size: 14px; font-weight: 600; width: 100%; max-width: 280px; }
+.agree-note { font-size: 11px; color: #484f58; text-align: center; line-height: 1.5; }
+
+/* ── Drop zone ─────────────────────────────────────────────── */
 #drop-zone {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 10px;
-  cursor: pointer; transition: background 0.15s;
+  flex: 1;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 #drop-zone.drag-over { background: rgba(88,166,255,0.05); }
-#drop-zone .drop-icon { font-size: 52px; line-height: 1; }
-#drop-zone .drop-main { font-size: 18px; color: #c9d1d9; font-weight: 500; }
-#drop-zone .drop-sub { font-size: 13px; color: #8b949e; }
-#drop-zone .drop-formats { font-size: 11px; color: #484f58; margin-top: 6px; }
+#drop-zone .drop-icon { font-size: 44px; line-height: 1; }
+#drop-zone .drop-main { font-size: 17px; color: #c9d1d9; font-weight: 500; }
+#drop-zone .drop-sub  { font-size: 13px; color: #8b949e; }
+#drop-zone .drop-formats { font-size: 11px; color: #484f58; margin-top: 4px; }
 #drop-zone .drop-dashed {
-  border: 2px dashed #30363d; border-radius: 14px; padding: 48px 80px;
+  border: 2px dashed #30363d; border-radius: 14px; padding: 44px 80px;
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   transition: border-color 0.15s;
 }
 #drop-zone.drag-over .drop-dashed { border-color: #58a6ff; }
+.policy-link { font-size: 11px; color: #484f58; margin-top: 8px; }
+.policy-link a { color: #484f58; text-decoration: underline; cursor: pointer; }
+.policy-link a:hover { color: #8b949e; }
 
-/* Editor */
+/* ── Editor ────────────────────────────────────────────────── */
 #editor { flex: 1; display: none; flex-direction: column; overflow: hidden; min-height: 0; }
 
-/* Waveform */
 .waveform-wrap { flex: 1; min-height: 0; position: relative; background: #0d1117; overflow: hidden; }
 #waveform { display: block; width: 100%; height: 100%; cursor: crosshair; }
 
-/* Timeline strip */
-.timeline-strip {
-  height: 22px; background: #0d1117;
-  border-top: 1px solid #21262d; flex-shrink: 0; overflow: hidden;
-}
+.timeline-strip { height: 22px; background: #0d1117; border-top: 1px solid #21262d; flex-shrink: 0; overflow: hidden; }
 #timeline-canvas { display: block; width: 100%; height: 100%; }
 
-/* Controls bar */
+/* ── Controls ──────────────────────────────────────────────── */
 .controls {
   background: #161b22; border-top: 1px solid #30363d;
-  padding: 10px 16px; display: flex; align-items: center;
+  padding: 9px 16px; display: flex; align-items: center;
   gap: 10px; flex-shrink: 0; flex-wrap: wrap;
 }
 .playhead-time { font-family: 'Courier New', monospace; font-size: 13px; color: #f0e03a; min-width: 70px; }
-.sep { width: 1px; height: 22px; background: #30363d; flex-shrink: 0; }
+.sep { width: 1px; height: 20px; background: #30363d; flex-shrink: 0; }
 .trim-inputs { display: flex; align-items: center; gap: 6px; font-size: 12px; }
 .trim-inputs label { color: #8b949e; white-space: nowrap; }
 .trim-input {
   background: #21262d; border: 1px solid #30363d; border-radius: 4px;
-  color: #c9d1d9; padding: 3px 7px; width: 92px;
+  color: #c9d1d9; padding: 3px 7px; width: 90px;
   font-family: 'Courier New', monospace; font-size: 12px;
 }
 .trim-input:focus { outline: none; border-color: #58a6ff; }
 .zoom-wrap { display: flex; align-items: center; gap: 5px; }
 .zoom-btn {
-  width: 26px; height: 26px; border-radius: 4px; border: 1px solid #30363d;
+  width: 24px; height: 24px; border-radius: 4px; border: 1px solid #30363d;
   background: #21262d; color: #c9d1d9; cursor: pointer;
-  font-size: 15px; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; display: flex; align-items: center; justify-content: center;
 }
 .zoom-btn:hover { background: #30363d; }
-#zoom-label { font-size: 11px; color: #8b949e; min-width: 32px; text-align: center; }
+#zoom-label { font-size: 11px; color: #8b949e; min-width: 30px; text-align: center; }
 .spacer { flex: 1; min-width: 0; }
 .trim-len { font-size: 11px; color: #484f58; font-family: 'Courier New', monospace; white-space: nowrap; }
 kbd { background: #21262d; border: 1px solid #30363d; border-radius: 3px; padding: 1px 4px; font-size: 10px; font-family: monospace; }
-.shortcuts { font-size: 11px; color: #484f58; white-space: nowrap; }
+.shortcuts { font-size: 11px; color: #3a3f4b; white-space: nowrap; }
 
-/* Export area */
 .export-wrap { display: flex; align-items: center; gap: 6px; }
 .format-select {
   background: #21262d; border: 1px solid #30363d; border-radius: 6px;
-  color: #c9d1d9; padding: 5px 8px; font-size: 12px; cursor: pointer;
+  color: #c9d1d9; padding: 4px 24px 4px 8px; font-size: 12px; cursor: pointer;
   appearance: none; -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b949e'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 8px center;
-  padding-right: 24px;
 }
 .format-select:focus { outline: none; border-color: #58a6ff; }
 .format-select option { background: #21262d; }
 
-/* Loading overlay */
+/* ── Loading overlay ───────────────────────────────────────── */
 #loading {
   display: none; position: fixed; inset: 0;
   background: rgba(0,0,0,0.65);
@@ -138,38 +197,128 @@ kbd { background: #21262d; border: 1px solid #30363d; border-radius: 3px; paddin
   flex-direction: column; gap: 12px; z-index: 100;
 }
 #loading .spinner {
-  width: 40px; height: 40px;
+  width: 36px; height: 36px;
   border: 3px solid #30363d; border-top-color: #58a6ff;
   border-radius: 50%; animation: spin 0.7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-#loading p { color: #8b949e; font-size: 14px; font-family: 'Courier New', monospace; }
-#progress-bar-wrap {
-  display: none; width: 240px; height: 4px;
-  background: #30363d; border-radius: 2px; overflow: hidden;
-}
+#loading p { color: #8b949e; font-size: 13px; font-family: 'Courier New', monospace; }
+#progress-bar-wrap { display: none; width: 220px; height: 3px; background: #30363d; border-radius: 2px; overflow: hidden; }
 #progress-bar { height: 100%; background: #58a6ff; width: 0%; transition: width 0.2s; }
+
+/* ── Policy modal ──────────────────────────────────────────── */
+#policy-modal {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  align-items: center; justify-content: center;
+  z-index: 200; padding: 16px;
+}
+#policy-modal .modal-card {
+  background: #161b22; border: 1px solid #30363d; border-radius: 12px;
+  padding: 28px 32px; max-width: 580px; width: 100%;
+  max-height: 80vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 16px;
+}
+#policy-modal h3 { font-size: 15px; color: #e6edf3; }
+#policy-modal .close-btn { align-self: flex-end; }
 </style>
 </head>
 <body>
 
 <header>
   <h1>🎵 音源トリミング</h1>
-  <button class="btn" id="open-btn">ファイルを開く</button>
+  <button class="btn" id="open-btn" style="display:none">ファイルを開く</button>
   <input type="file" id="file-input" accept="audio/*" style="display:none">
   <span class="file-name" id="file-name"></span>
   <span id="duration-display"></span>
 </header>
 
-<div id="drop-zone">
-  <div class="drop-dashed">
-    <div class="drop-icon">🎧</div>
-    <div class="drop-main">MP3・WAV・M4A などをここにドロップ</div>
-    <div class="drop-sub">または「ファイルを開く」をクリック</div>
-    <div class="drop-formats">対応形式：MP3 / WAV / M4A / OGG / FLAC / AAC など（ブラウザ依存）</div>
+<!-- ── Welcome / Terms ──────────────────────────────────────── -->
+<div id="welcome">
+  <div class="welcome-card">
+    <div class="app-logo">🎵</div>
+    <div class="app-title">音源トリミング</div>
+    <div class="app-desc">
+      ブラウザだけで動くオーディオトリミングツール<br>
+      MP3・WAV・M4A など主要形式に対応 ／ 無料・広告なし
+    </div>
+
+    <div class="policy-box">
+      <div class="policy-title">セキュリティ・利用ポリシー</div>
+      <div class="policy-items">
+
+        <div class="policy-item">
+          <span class="pi-icon">🔒</span>
+          <div class="pi-text">
+            <strong>完全ローカル処理 — 音声データは外部に出ません</strong>
+            アップロードした音声ファイルはすべてブラウザ内のみで処理されます。
+            外部サーバーへの音声データ送信は一切行いません。
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <span class="pi-icon">📡</span>
+          <div class="pi-text">
+            <strong>外部通信について</strong>
+            通常の使用中は外部通信は発生しません。<br>
+            MP3形式で書き出す場合のみ、エンコーダライブラリ（lamejs）を
+            Cloudflare CDN から取得します。<br>
+            <span class="pi-note">※ 取得するのはコードのみです。音声データは送信されません。</span>
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <span class="pi-icon">💰</span>
+          <div class="pi-text">
+            <strong>完全無料・API コストゼロ</strong>
+            外部 API は使用していません。GitHub Pages による静的配信のため
+            サーバー運用コストも発生しません。
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <span class="pi-icon">📊</span>
+          <div class="pi-text">
+            <strong>ログ・トラッキングなし</strong>
+            個人情報の収集・行動トラッキングは行いません。
+            GitHub Pages の標準アクセスログ（匿名統計）のみが記録されます。
+          </div>
+        </div>
+
+        <div class="policy-item">
+          <span class="pi-icon">⚖️</span>
+          <div class="pi-text">
+            <strong>免責事項</strong>
+            著作権で保護されたコンテンツの取り扱いはご自身の責任で行ってください。
+            本ツールの使用によって生じた損害について開発者は責任を負いません。
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="agree-wrap">
+      <button class="btn primary" id="agree-btn">同意して使用する</button>
+      <div class="agree-note">
+        「同意して使用する」をクリック、またはファイルをドロップすることで<br>
+        上記ポリシーに同意したものとみなします。
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- ── Drop zone ─────────────────────────────────────────────── -->
+<div id="drop-zone">
+  <div class="drop-dashed">
+    <div class="drop-icon">🎧</div>
+    <div class="drop-main">ファイルをここにドロップ</div>
+    <div class="drop-sub">または「ファイルを開く」をクリック</div>
+    <div class="drop-formats">MP3 / WAV / M4A / OGG / FLAC / AAC など（ブラウザ依存）</div>
+  </div>
+  <div class="policy-link"><a id="reopen-policy">利用ポリシーを確認する</a></div>
+</div>
+
+<!-- ── Editor ────────────────────────────────────────────────── -->
 <div id="editor">
   <div class="waveform-wrap" id="waveform-wrap">
     <canvas id="waveform"></canvas>
@@ -221,55 +370,68 @@ kbd { background: #21262d; border: 1px solid #30363d; border-radius: 3px; paddin
   </div>
 </div>
 
+<!-- ── Loading overlay ─────────────────────────────────────── -->
 <div id="loading">
   <div class="spinner"></div>
   <p id="loading-msg">読み込み中...</p>
   <div id="progress-bar-wrap"><div id="progress-bar"></div></div>
-  <button class="btn danger" id="cancel-btn" style="display:none">キャンセル</button>
+  <button class="btn danger" id="cancel-btn" style="display:none; margin-top:4px;">キャンセル</button>
+</div>
+
+<!-- ── Policy modal (re-show from drop zone) ──────────────── -->
+<div id="policy-modal">
+  <div class="modal-card">
+    <h3>セキュリティ・利用ポリシー</h3>
+    <div class="policy-box" style="margin-top:4px;">
+      <div class="policy-items">
+        <div class="policy-item"><span class="pi-icon">🔒</span><div class="pi-text"><strong>完全ローカル処理</strong>音声ファイルはブラウザ内のみで処理。外部サーバーへの送信はありません。</div></div>
+        <div class="policy-item"><span class="pi-icon">📡</span><div class="pi-text"><strong>外部通信</strong>MP3書き出し時のみ lamejs を CDN から取得します（音声データは送信されません）。</div></div>
+        <div class="policy-item"><span class="pi-icon">💰</span><div class="pi-text"><strong>完全無料・API不使用</strong>GitHub Pages 静的配信。運用コストゼロ。</div></div>
+        <div class="policy-item"><span class="pi-icon">📊</span><div class="pi-text"><strong>トラッキングなし</strong>個人情報収集・行動追跡は行いません。</div></div>
+        <div class="policy-item"><span class="pi-icon">⚖️</span><div class="pi-text"><strong>免責</strong>著作権コンテンツの取り扱いはご自身の責任で。利用による損害に開発者は責任を負いません。</div></div>
+      </div>
+    </div>
+    <button class="btn close-btn" id="close-policy-btn">閉じる</button>
+  </div>
 </div>
 
 <script>
 // ─── Constants ────────────────────────────────────────────────
 const HANDLE_HIT = 12;
-const PAD = 36; // px padding on each side so handles at audio edges are graspable
+const PAD = 36;
+const WAVE_AMP_RATIO = 0.28; // waveform uses 28% of half-channel height → compact look
+
 const COLORS = {
   bg:              '#0d1117',
-  padZone:         'rgba(0,0,0,0.28)',
-  padEdge:         '#1e2433',
-  waveOff:         '#1d3a5c',
+  padZone:         'rgba(0,0,0,0.22)',
+  padEdge:         '#1c2130',
+  waveOff:         '#1e3d60',
   waveOn:          '#4a9eff',
-  maskFill:        'rgba(0,0,0,0.52)',
-  handleLine:      '#ff6b6b',
-  handleLineHover: '#ff9c7a',
-  handleFill:      '#ff6b6b',
-  handleFillHover: '#ff9070',
+  maskFill:        'rgba(0,0,0,0.48)',
+  handleLine:      '#e05a5a',
+  handleLineHover: '#ff8c69',
+  handleFill:      '#c84a4a',
+  handleFillHover: '#e06040',
   playhead:        '#f0e03a',
   timeline:        '#161b22',
-  timelineText:    '#5c6370',
-  timelineTick:    '#2a2d40',
+  timelineText:    '#4a5060',
+  timelineTick:    '#22283a',
 };
 
 // ─── State ────────────────────────────────────────────────────
 const AC = window.AudioContext || window.webkitAudioContext;
-let audioCtx  = null;
-let audioBuf  = null;
-let fileName  = '';
-let peakData  = null;
-
-let trimStart = 0, trimEnd = 0;
-let zoom = 1, scrollSec = 0;
-
-let playSource  = null, isPlaying = false;
-let playStartAt = 0, playFrom = 0, playTo = 0;
-let animId      = null, headTime = 0;
-
-let drag = null, hoverHandle = null;
-let cancelEncode = false;
+let audioCtx = null, audioBuf = null, fileName = '', peakData = null;
+let trimStart = 0, trimEnd = 0, zoom = 1, scrollSec = 0;
+let playSource = null, isPlaying = false, playStartAt = 0, playFrom = 0, playTo = 0;
+let animId = null, headTime = 0;
+let drag = null, hoverHandle = null, cancelEncode = false;
 
 // ─── DOM ──────────────────────────────────────────────────────
+const welcomeEl   = document.getElementById('welcome');
 const dropZone    = document.getElementById('drop-zone');
 const editorEl    = document.getElementById('editor');
 const fileInput   = document.getElementById('file-input');
+const openBtn     = document.getElementById('open-btn');
 const waveCanvas  = document.getElementById('waveform');
 const wrapEl      = document.getElementById('waveform-wrap');
 const tlCanvas    = document.getElementById('timeline-canvas');
@@ -278,6 +440,7 @@ const loadingMsg  = document.getElementById('loading-msg');
 const progressWrap= document.getElementById('progress-bar-wrap');
 const progressBar = document.getElementById('progress-bar');
 const cancelBtn   = document.getElementById('cancel-btn');
+const policyModal = document.getElementById('policy-modal');
 
 const playBtn      = document.getElementById('play-btn');
 const playTrimBtn  = document.getElementById('play-trim-btn');
@@ -299,8 +462,35 @@ const wCtx = waveCanvas.getContext('2d');
 const tCtx = tlCanvas.getContext('2d');
 const dpr  = window.devicePixelRatio || 1;
 
+// ─── Welcome / Agreement ──────────────────────────────────────
+function showDropZone() {
+  welcomeEl.style.display = 'none';
+  dropZone.style.display  = 'flex';
+  openBtn.style.display   = 'block';
+}
+
+document.getElementById('agree-btn').addEventListener('click', showDropZone);
+
+// Also allow drop directly on welcome screen
+welcomeEl.addEventListener('dragover', e => { e.preventDefault(); });
+welcomeEl.addEventListener('drop', e => {
+  e.preventDefault();
+  showDropZone();
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+
+document.getElementById('reopen-policy').addEventListener('click', () => {
+  policyModal.style.display = 'flex';
+});
+document.getElementById('close-policy-btn').addEventListener('click', () => {
+  policyModal.style.display = 'none';
+});
+policyModal.addEventListener('click', e => {
+  if (e.target === policyModal) policyModal.style.display = 'none';
+});
+
 // ─── File loading ─────────────────────────────────────────────
-document.getElementById('open-btn').addEventListener('click', () => fileInput.click());
+openBtn.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', e => e.target.files[0] && loadFile(e.target.files[0]));
 
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
@@ -310,7 +500,9 @@ dropZone.addEventListener('drop', e => {
   dropZone.classList.remove('drag-over');
   if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
 });
-dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('click', e => {
+  if (e.target.id !== 'reopen-policy') fileInput.click();
+});
 
 async function loadFile(file) {
   showLoading('デコード中...');
@@ -336,6 +528,7 @@ async function loadFile(file) {
   durationEl.textContent = '全長 ' + fmtTime(audioBuf.duration);
 
   dropZone.style.display = 'none';
+  openBtn.style.display  = 'none';
   editorEl.style.display = 'flex';
 
   resizeCanvases();
@@ -358,36 +551,30 @@ function hideLoading() {
 
 // ─── Peaks ────────────────────────────────────────────────────
 function computePeaks(buf, resolution) {
-  const ch = buf.numberOfChannels;
-  const totalSamples = buf.length;
-  const numBuckets = Math.ceil(totalSamples / resolution);
+  const ch = buf.numberOfChannels, total = buf.length;
+  const numBuckets = Math.ceil(total / resolution);
   const channels = [];
   for (let c = 0; c < ch; c++) {
     const data = buf.getChannelData(c);
-    const mins = new Float32Array(numBuckets);
-    const maxs = new Float32Array(numBuckets);
+    const mins = new Float32Array(numBuckets), maxs = new Float32Array(numBuckets);
     for (let i = 0; i < numBuckets; i++) {
-      const s = i * resolution;
-      const e = Math.min(s + resolution, totalSamples);
+      const s = i * resolution, e = Math.min(s + resolution, total);
       let mn = 0, mx = 0;
-      for (let j = s; j < e; j++) {
-        if (data[j] < mn) mn = data[j];
-        if (data[j] > mx) mx = data[j];
-      }
+      for (let j = s; j < e; j++) { if (data[j] < mn) mn = data[j]; if (data[j] > mx) mx = data[j]; }
       mins[i] = mn; maxs[i] = mx;
     }
     channels.push({ mins, maxs });
   }
-  return { channels, resolution, totalSamples };
+  return { channels, resolution };
 }
 
-// ─── Canvas / Coord helpers ───────────────────────────────────
+// ─── Canvas / Coords ──────────────────────────────────────────
 function resizeCanvases() {
   const wr = wrapEl.getBoundingClientRect();
   waveCanvas.width  = wr.width * dpr;  waveCanvas.height = wr.height * dpr;
   waveCanvas.style.width  = wr.width + 'px'; waveCanvas.style.height = wr.height + 'px';
   const tr = tlCanvas.parentElement.getBoundingClientRect();
-  tlCanvas.width  = tr.width * dpr;   tlCanvas.height = tr.height * dpr;
+  tlCanvas.width  = tr.width * dpr;  tlCanvas.height = tr.height * dpr;
   tlCanvas.style.width  = tr.width + 'px'; tlCanvas.style.height = tr.height + 'px';
 }
 new ResizeObserver(() => { if (audioBuf) { resizeCanvases(); draw(); } }).observe(wrapEl);
@@ -397,8 +584,6 @@ function wH() { return waveCanvas.height / dpr; }
 function availW() { return wW() - PAD * 2; }
 function dur() { return audioBuf ? audioBuf.duration : 0; }
 function viewDur() { return dur() / zoom; }
-
-// Coordinate system: PAD px on each side are always blank margin
 function secToX(sec) { return PAD + ((sec - scrollSec) / viewDur()) * availW(); }
 function xToSec(x)   { return scrollSec + ((x - PAD) / availW()) * viewDur(); }
 function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
@@ -409,17 +594,13 @@ function draw() { drawWave(); drawTimeline(); }
 
 function drawWave() {
   if (!audioBuf || !peakData) return;
-  const w = wW(), h = wH();
-  const aW = availW();
-
-  wCtx.save();
-  wCtx.scale(dpr, dpr);
+  const w = wW(), h = wH(), aW = availW();
+  wCtx.save(); wCtx.scale(dpr, dpr);
 
   // Background
   wCtx.fillStyle = COLORS.bg;
   wCtx.fillRect(0, 0, w, h);
 
-  // ── Waveform (only in [PAD, w-PAD]) ──
   const numCh = audioBuf.numberOfChannels;
   const chH = h / numCh;
   const sampleRate = audioBuf.sampleRate;
@@ -430,21 +611,22 @@ function drawWave() {
   for (let c = 0; c < numCh; c++) {
     const { mins, maxs } = peakData.channels[c];
     const yCenter = chH * c + chH / 2;
-    const amp = chH / 2 - 6;
+    const amp = chH * WAVE_AMP_RATIO; // compact amplitude
+
+    // Subtle center line
+    wCtx.strokeStyle = '#1a2030'; wCtx.lineWidth = 1;
+    wCtx.beginPath(); wCtx.moveTo(PAD, yCenter); wCtx.lineTo(w - PAD, yCenter); wCtx.stroke();
 
     for (let lpx = 0; lpx < aW; lpx++) {
       const px = PAD + lpx;
       const sSample = startSample + lpx * samplesPerPx;
       const eSample = sSample + samplesPerPx;
-      const b0 = Math.floor(sSample / resolution);
-      const b1 = Math.ceil(eSample / resolution);
-
+      const b0 = Math.floor(sSample / resolution), b1 = Math.ceil(eSample / resolution);
       let mn = 0, mx = 0;
       for (let b = b0; b <= b1 && b < maxs.length; b++) {
         if (mins[b] < mn) mn = mins[b];
         if (maxs[b] > mx) mx = maxs[b];
       }
-
       const sec = xToSec(px);
       const inTrim = sec >= trimStart && sec <= trimEnd;
       wCtx.fillStyle = inTrim ? COLORS.waveOn : COLORS.waveOff;
@@ -453,45 +635,38 @@ function drawWave() {
       wCtx.fillRect(px, yTop, 1, barH);
     }
 
-    // Channel separator
     if (c < numCh - 1) {
-      wCtx.strokeStyle = '#1e2433'; wCtx.lineWidth = 1;
-      wCtx.beginPath();
-      wCtx.moveTo(PAD, chH * (c + 1)); wCtx.lineTo(w - PAD, chH * (c + 1));
-      wCtx.stroke();
+      wCtx.strokeStyle = '#191f2e'; wCtx.lineWidth = 1;
+      wCtx.beginPath(); wCtx.moveTo(PAD, chH * (c + 1)); wCtx.lineTo(w - PAD, chH * (c + 1)); wCtx.stroke();
     }
   }
 
-  // ── Dim mask outside selection (within waveform area only) ──
+  // Mask outside selection
   const x1 = clamp(secToX(trimStart), PAD, w - PAD);
   const x2 = clamp(secToX(trimEnd),   PAD, w - PAD);
   wCtx.fillStyle = COLORS.maskFill;
-  if (x1 > PAD)        wCtx.fillRect(PAD, 0, x1 - PAD, h);
-  if (x2 < w - PAD)    wCtx.fillRect(x2, 0, (w - PAD) - x2, h);
+  if (x1 > PAD)     wCtx.fillRect(PAD, 0, x1 - PAD, h);
+  if (x2 < w - PAD) wCtx.fillRect(x2, 0, (w - PAD) - x2, h);
 
-  // ── Pad zone overlay (subtle dark edges) ──
+  // Pad zones
   wCtx.fillStyle = COLORS.padZone;
   wCtx.fillRect(0, 0, PAD, h);
   wCtx.fillRect(w - PAD, 0, PAD, h);
-
-  // Thin edge lines to hint the waveform boundary
   wCtx.strokeStyle = COLORS.padEdge; wCtx.lineWidth = 1;
   wCtx.beginPath(); wCtx.moveTo(PAD, 0); wCtx.lineTo(PAD, h); wCtx.stroke();
   wCtx.beginPath(); wCtx.moveTo(w - PAD, 0); wCtx.lineTo(w - PAD, h); wCtx.stroke();
 
-  // ── Handles ──
+  // Handles
   drawHandle(secToX(trimStart), 'start', w, h);
   drawHandle(secToX(trimEnd),   'end',   w, h);
 
-  // ── Playhead ──
+  // Playhead
   const phx = secToX(headTime);
   if (phx >= PAD && phx <= w - PAD) {
     wCtx.strokeStyle = COLORS.playhead; wCtx.lineWidth = 1.5;
     wCtx.beginPath(); wCtx.moveTo(phx, 0); wCtx.lineTo(phx, h); wCtx.stroke();
     wCtx.fillStyle = COLORS.playhead;
-    wCtx.beginPath();
-    wCtx.moveTo(phx - 6, 0); wCtx.lineTo(phx + 6, 0); wCtx.lineTo(phx, 10);
-    wCtx.closePath(); wCtx.fill();
+    wCtx.beginPath(); wCtx.moveTo(phx - 6, 0); wCtx.lineTo(phx + 6, 0); wCtx.lineTo(phx, 10); wCtx.closePath(); wCtx.fill();
   }
 
   wCtx.restore();
@@ -503,22 +678,21 @@ function drawHandle(px, type, w, h) {
   const lineColor = isHover ? COLORS.handleLineHover : COLORS.handleLine;
   const fillColor = isHover ? COLORS.handleFillHover : COLORS.handleFill;
 
-  wCtx.strokeStyle = lineColor; wCtx.lineWidth = isHover ? 2.5 : 2;
+  wCtx.strokeStyle = lineColor; wCtx.lineWidth = isHover ? 2 : 1.5;
+  wCtx.setLineDash([4, 3]);
   wCtx.beginPath(); wCtx.moveTo(px, 0); wCtx.lineTo(px, h); wCtx.stroke();
+  wCtx.setLineDash([]);
 
-  // Grip
-  const gh = 48, gw = 14;
-  const gx = type === 'start' ? px - gw + 2 : px - 2;
+  const gh = 40, gw = 12;
+  const gx = type === 'start' ? px - gw + 1 : px - 1;
   const gy = h / 2 - gh / 2;
   wCtx.fillStyle = fillColor;
   roundRect(wCtx, gx, gy, gw, gh, 4); wCtx.fill();
 
-  // Arrow text
-  wCtx.fillStyle = 'rgba(255,255,255,0.9)';
-  wCtx.font = '11px sans-serif';
+  wCtx.fillStyle = 'rgba(255,255,255,0.85)';
+  wCtx.font = '9px sans-serif';
   wCtx.textAlign = 'center'; wCtx.textBaseline = 'middle';
-  const tx = px + (type === 'start' ? -gw / 2 + 3 : gw / 2 - 3);
-  wCtx.fillText(type === 'start' ? '◀' : '▶', tx, h / 2);
+  wCtx.fillText(type === 'start' ? '◀' : '▶', px + (type === 'start' ? -gw/2 + 1 : gw/2 - 1), h / 2);
 }
 
 function roundRect(ctx, x, y, w, h, r) {
@@ -544,8 +718,7 @@ function drawTimeline() {
 
   const startTick = Math.floor(scrollSec / interval) * interval;
   tCtx.fillStyle = COLORS.timelineText;
-  tCtx.font = "10px 'Courier New'";
-  tCtx.textBaseline = 'middle';
+  tCtx.font = "10px 'Courier New'"; tCtx.textBaseline = 'middle';
 
   for (let t = startTick; t <= scrollSec + vd + interval; t = +(t + interval).toFixed(10)) {
     const x = secToX(t);
@@ -558,7 +731,7 @@ function drawTimeline() {
   tCtx.restore();
 }
 
-// ─── Mouse interaction ────────────────────────────────────────
+// ─── Mouse ────────────────────────────────────────────────────
 function getHandle(x) {
   const x1 = secToX(trimStart), x2 = secToX(trimEnd);
   if (Math.abs(x - x1) < HANDLE_HIT) return 'start';
@@ -570,29 +743,19 @@ function getHandle(x) {
 waveCanvas.addEventListener('mousedown', e => {
   if (!audioBuf) return;
   const rect = waveCanvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const sec = xToSec(x);
+  const x = e.clientX - rect.left, sec = xToSec(x);
   const handle = getHandle(x);
-
-  if (handle === 'start') {
-    drag = { type: 'start' };
-  } else if (handle === 'end') {
-    drag = { type: 'end' };
-  } else if (handle === 'region') {
-    drag = { type: 'region', startX: x, origStart: trimStart, origEnd: trimEnd };
-  } else {
-    trimStart = clampSec(sec); trimEnd = clampSec(sec);
-    drag = { type: 'new', startSec: sec };
-  }
+  if (handle === 'start') drag = { type: 'start' };
+  else if (handle === 'end') drag = { type: 'end' };
+  else if (handle === 'region') drag = { type: 'region', startX: x, origStart: trimStart, origEnd: trimEnd };
+  else { trimStart = clampSec(sec); trimEnd = clampSec(sec); drag = { type: 'new', startSec: sec }; }
   updateInputs(); draw(); e.preventDefault();
 });
 
 waveCanvas.addEventListener('mousemove', e => {
   if (!audioBuf) return;
   const rect = waveCanvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const sec = xToSec(x);
-
+  const x = e.clientX - rect.left, sec = xToSec(x);
   if (drag) {
     switch (drag.type) {
       case 'start':
@@ -606,8 +769,7 @@ waveCanvas.addEventListener('mousemove', e => {
       case 'region': {
         const ds = (x - drag.startX) / availW() * viewDur();
         const len = drag.origEnd - drag.origStart;
-        let ns = clampSec(drag.origStart + ds);
-        let ne = ns + len;
+        let ns = clampSec(drag.origStart + ds), ne = ns + len;
         if (ne > dur()) { ne = dur(); ns = ne - len; }
         trimStart = ns; trimEnd = ne;
         break;
@@ -621,7 +783,6 @@ waveCanvas.addEventListener('mousemove', e => {
     }
     updateInputs(); draw(); return;
   }
-
   const prev = hoverHandle;
   hoverHandle = getHandle(x);
   if (hoverHandle === 'start' || hoverHandle === 'end') waveCanvas.style.cursor = 'ew-resize';
@@ -637,15 +798,12 @@ waveCanvas.addEventListener('wheel', e => {
   if (!audioBuf) return;
   if (e.ctrlKey || e.metaKey) {
     const rect = waveCanvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const pivot = xToSec(x);
-    const factor = e.deltaY > 0 ? 0.75 : 1.33;
-    zoom = clamp(zoom * factor, 1, 500);
+    const x = e.clientX - rect.left, pivot = xToSec(x);
+    zoom = clamp(zoom * (e.deltaY > 0 ? 0.75 : 1.33), 1, 500);
     scrollSec = clamp(pivot - (x - PAD) / availW() * viewDur(), 0, Math.max(0, dur() - viewDur()));
     updateZoomLabel();
   } else {
-    const delta = (e.deltaY !== 0 ? e.deltaY : e.deltaX) / availW() * viewDur();
-    scrollSec = clamp(scrollSec + delta, 0, Math.max(0, dur() - viewDur()));
+    scrollSec = clamp(scrollSec + (e.deltaY !== 0 ? e.deltaY : e.deltaX) / availW() * viewDur(), 0, Math.max(0, dur() - viewDur()));
   }
   draw();
 }, { passive: false });
@@ -656,7 +814,6 @@ function startPlayback(from, to) {
   stopPlayback();
   if (!audioCtx) audioCtx = new AC();
   if (audioCtx.state === 'suspended') audioCtx.resume();
-
   playSource = audioCtx.createBufferSource();
   playSource.buffer = audioBuf;
   playSource.connect(audioCtx.destination);
@@ -664,59 +821,48 @@ function startPlayback(from, to) {
   playSource.onended = () => {
     if (isPlaying) { isPlaying = false; headTime = to; playBtn.textContent = '▶ 再生'; updateTimeDisplay(); draw(); }
   };
-
-  isPlaying = true; playStartAt = audioCtx.currentTime;
-  playFrom = from; playTo = to; headTime = from;
+  isPlaying = true; playStartAt = audioCtx.currentTime; playFrom = from; playTo = to; headTime = from;
   playBtn.textContent = '⏸ 一時停止';
-
   function animate() {
     if (!isPlaying) return;
     headTime = Math.min(playFrom + (audioCtx.currentTime - playStartAt), playTo);
     updateTimeDisplay();
     if (zoom > 1) {
       const margin = viewDur() * 0.08;
-      if (headTime < scrollSec + margin)
-        scrollSec = clamp(headTime - margin, 0, dur() - viewDur());
-      else if (headTime > scrollSec + viewDur() - margin)
-        scrollSec = clamp(headTime - viewDur() + margin, 0, dur() - viewDur());
+      if (headTime < scrollSec + margin) scrollSec = clamp(headTime - margin, 0, dur() - viewDur());
+      else if (headTime > scrollSec + viewDur() - margin) scrollSec = clamp(headTime - viewDur() + margin, 0, dur() - viewDur());
     }
-    draw();
-    animId = requestAnimationFrame(animate);
+    draw(); animId = requestAnimationFrame(animate);
   }
   animId = requestAnimationFrame(animate);
 }
-
 function stopPlayback() {
   if (playSource) { try { playSource.stop(); } catch(e) {} playSource = null; }
   isPlaying = false;
   if (animId) { cancelAnimationFrame(animId); animId = null; }
   playBtn.textContent = '▶ 再生';
 }
-
 playBtn.addEventListener('click', () => {
   if (isPlaying) { const p = headTime; stopPlayback(); headTime = p; draw(); }
-  else { startPlayback(headTime >= dur() - 0.01 ? 0 : headTime, dur()); }
+  else startPlayback(headTime >= dur() - 0.01 ? 0 : headTime, dur());
 });
 playTrimBtn.addEventListener('click', () => { stopPlayback(); headTime = trimStart; startPlayback(trimStart, trimEnd); });
 stopBtn.addEventListener('click', () => { stopPlayback(); headTime = 0; updateTimeDisplay(); draw(); });
 
-// ─── Time helpers ─────────────────────────────────────────────
+// ─── Time ─────────────────────────────────────────────────────
 function fmtTime(sec) {
   if (!isFinite(sec) || sec < 0) sec = 0;
   return `${Math.floor(sec / 60)}:${(sec % 60).toFixed(3).padStart(6, '0')}`;
 }
 function parseFmtTime(str) {
-  str = str.trim();
-  const p = str.split(':');
+  str = str.trim(); const p = str.split(':');
   return p.length === 2 ? parseFloat(p[0]) * 60 + parseFloat(p[1]) : parseFloat(str);
 }
 function updateTimeDisplay() { playheadTime.textContent = fmtTime(headTime); }
 function updateInputs() {
-  startInput.value = fmtTime(trimStart);
-  endInput.value   = fmtTime(trimEnd);
+  startInput.value = fmtTime(trimStart); endInput.value = fmtTime(trimEnd);
   trimLenEl.textContent = '[' + fmtTime(trimEnd - trimStart) + ']';
 }
-
 startInput.addEventListener('change', () => {
   const t = parseFmtTime(startInput.value);
   if (!isNaN(t)) { trimStart = clampSec(t); if (trimStart > trimEnd) trimEnd = trimStart; updateInputs(); draw(); }
@@ -731,16 +877,12 @@ function updateZoomLabel() {
   zoomLabel.textContent = zoom >= 10 ? '×' + Math.round(zoom) : '×' + zoom.toFixed(1).replace(/\.0$/, '');
 }
 zoomInBtn.addEventListener('click', () => {
-  const c = scrollSec + viewDur() / 2;
-  zoom = clamp(zoom * 1.5, 1, 500);
-  scrollSec = clamp(c - viewDur() / 2, 0, Math.max(0, dur() - viewDur()));
-  updateZoomLabel(); draw();
+  const c = scrollSec + viewDur() / 2; zoom = clamp(zoom * 1.5, 1, 500);
+  scrollSec = clamp(c - viewDur() / 2, 0, Math.max(0, dur() - viewDur())); updateZoomLabel(); draw();
 });
 zoomOutBtn.addEventListener('click', () => {
-  const c = scrollSec + viewDur() / 2;
-  zoom = clamp(zoom / 1.5, 1, 500);
-  scrollSec = clamp(c - viewDur() / 2, 0, Math.max(0, dur() - viewDur()));
-  updateZoomLabel(); draw();
+  const c = scrollSec + viewDur() / 2; zoom = clamp(zoom / 1.5, 1, 500);
+  scrollSec = clamp(c - viewDur() / 2, 0, Math.max(0, dur() - viewDur())); updateZoomLabel(); draw();
 });
 selAllBtn.addEventListener('click', () => { trimStart = 0; trimEnd = dur(); updateInputs(); draw(); });
 
@@ -756,53 +898,38 @@ cancelBtn.addEventListener('click', () => { cancelEncode = true; });
 
 exportBtn.addEventListener('click', async () => {
   if (!audioBuf) return;
-  const segLen = trimEnd - trimStart;
-  if (segLen <= 0) { alert('トリム範囲が空です。\n波形をドラッグして範囲を選択してください。'); return; }
-
+  if (trimEnd - trimStart <= 0) { alert('トリム範囲が空です。波形をドラッグして範囲を選択してください。'); return; }
   const fmt = formatSelect.value;
   try {
-    if (fmt === 'wav')  await exportWAV();
+    if      (fmt === 'wav')  await exportWAV();
     else if (fmt === 'mp3')  await exportMP3();
     else if (fmt === 'webm') await exportMediaRecorder('audio/webm;codecs=opus', 'webm');
     else if (fmt === 'ogg')  await exportMediaRecorder('audio/ogg;codecs=opus', 'ogg');
-  } catch(e) {
-    hideLoading();
-    alert('書き出し失敗: ' + e.message);
-  }
+  } catch(e) { hideLoading(); alert('書き出し失敗: ' + e.message); }
 });
 
-// ── WAV ──────────────────────────────────────────────────────
 async function exportWAV() {
-  showLoading('WAVエンコード中...');
+  showLoading('WAV エンコード中...');
   await new Promise(r => setTimeout(r, 30));
-
-  const startSmp = Math.floor(trimStart * audioBuf.sampleRate);
-  const endSmp   = Math.floor(trimEnd   * audioBuf.sampleRate);
-  const length   = endSmp - startSmp;
-  const numCh    = audioBuf.numberOfChannels;
-  const sr       = audioBuf.sampleRate;
-
-  const interleaved = new Float32Array(length * numCh);
+  const s = Math.floor(trimStart * audioBuf.sampleRate), e = Math.floor(trimEnd * audioBuf.sampleRate);
+  const len = e - s, numCh = audioBuf.numberOfChannels, sr = audioBuf.sampleRate;
+  const interleaved = new Float32Array(len * numCh);
   for (let c = 0; c < numCh; c++) {
     const ch = audioBuf.getChannelData(c);
-    for (let i = 0; i < length; i++) interleaved[i * numCh + c] = ch[startSmp + i] ?? 0;
+    for (let i = 0; i < len; i++) interleaved[i * numCh + c] = ch[s + i] ?? 0;
   }
-
-  const wavBuf = encodeWAV(interleaved, sr, numCh);
-  downloadBlob(new Blob([wavBuf], { type: 'audio/wav' }), 'wav');
+  downloadBlob(new Blob([encodeWAV(interleaved, sr, numCh)], { type: 'audio/wav' }), 'wav');
   hideLoading();
 }
 
-function encodeWAV(interleaved, sampleRate, numChannels) {
-  const dataLen = interleaved.length * 2;
-  const buf = new ArrayBuffer(44 + dataLen);
-  const v = new DataView(buf);
+function encodeWAV(interleaved, sr, numCh) {
+  const dLen = interleaved.length * 2, buf = new ArrayBuffer(44 + dLen), v = new DataView(buf);
   const ws = (off, s) => { for (let i = 0; i < s.length; i++) v.setUint8(off + i, s.charCodeAt(i)); };
-  ws(0, 'RIFF'); v.setUint32(4, 36 + dataLen, true); ws(8, 'WAVE'); ws(12, 'fmt ');
-  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, numChannels, true);
-  v.setUint32(24, sampleRate, true); v.setUint32(28, sampleRate * numChannels * 2, true);
-  v.setUint16(32, numChannels * 2, true); v.setUint16(34, 16, true);
-  ws(36, 'data'); v.setUint32(40, dataLen, true);
+  ws(0,'RIFF'); v.setUint32(4,36+dLen,true); ws(8,'WAVE'); ws(12,'fmt ');
+  v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,numCh,true);
+  v.setUint32(24,sr,true); v.setUint32(28,sr*numCh*2,true);
+  v.setUint16(32,numCh*2,true); v.setUint16(34,16,true);
+  ws(36,'data'); v.setUint32(40,dLen,true);
   let off = 44;
   for (let i = 0; i < interleaved.length; i++, off += 2) {
     const s = Math.max(-1, Math.min(1, interleaved[i]));
@@ -811,45 +938,28 @@ function encodeWAV(interleaved, sampleRate, numChannels) {
   return buf;
 }
 
-// ── MP3 (lamejs) ──────────────────────────────────────────────
 async function exportMP3() {
-  showLoading('MP3エンコーダを読み込み中...');
+  showLoading('MP3 エンコーダを読み込み中...');
   await loadLamejs();
-
-  showLoading('MP3エンコード中...');
+  showLoading('MP3 エンコード中...');
   await new Promise(r => setTimeout(r, 10));
-
-  const startSmp = Math.floor(trimStart * audioBuf.sampleRate);
-  const endSmp   = Math.floor(trimEnd   * audioBuf.sampleRate);
-  const numSamples = endSmp - startSmp;
-  const numCh = Math.min(audioBuf.numberOfChannels, 2);
-  const sr    = audioBuf.sampleRate;
-
+  const s = Math.floor(trimStart * audioBuf.sampleRate), e = Math.floor(trimEnd * audioBuf.sampleRate);
+  const n = e - s, numCh = Math.min(audioBuf.numberOfChannels, 2), sr = audioBuf.sampleRate;
   const toI16 = arr => {
-    const out = new Int16Array(arr.length);
-    for (let i = 0; i < arr.length; i++) {
-      const s = Math.max(-1, Math.min(1, arr[i]));
-      out[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-    }
-    return out;
+    const o = new Int16Array(arr.length);
+    for (let i = 0; i < arr.length; i++) { const v = Math.max(-1, Math.min(1, arr[i])); o[i] = v < 0 ? v * 0x8000 : v * 0x7FFF; }
+    return o;
   };
-
-  const left  = toI16(audioBuf.getChannelData(0).slice(startSmp, endSmp));
-  const right = numCh > 1 ? toI16(audioBuf.getChannelData(1).slice(startSmp, endSmp)) : null;
-
-  const encoder = new lamejs.Mp3Encoder(numCh, sr, 128);
+  const left = toI16(audioBuf.getChannelData(0).slice(s, e));
+  const right = numCh > 1 ? toI16(audioBuf.getChannelData(1).slice(s, e)) : null;
+  const enc = new lamejs.Mp3Encoder(numCh, sr, 128);
   const chunks = [];
-  const CHUNK = 1152;
-
-  for (let i = 0; i < numSamples; i += CHUNK) {
-    const lc = left.subarray(i, i + CHUNK);
-    const rc = right ? right.subarray(i, i + CHUNK) : lc;
-    const buf = numCh > 1 ? encoder.encodeBuffer(lc, rc) : encoder.encodeBuffer(lc);
+  for (let i = 0; i < n; i += 1152) {
+    const lc = left.subarray(i, i + 1152), rc = right ? right.subarray(i, i + 1152) : lc;
+    const buf = numCh > 1 ? enc.encodeBuffer(lc, rc) : enc.encodeBuffer(lc);
     if (buf.length > 0) chunks.push(new Uint8Array(buf));
   }
-  const tail = encoder.flush();
-  if (tail.length > 0) chunks.push(new Uint8Array(tail));
-
+  const tail = enc.flush(); if (tail.length > 0) chunks.push(new Uint8Array(tail));
   downloadBlob(new Blob(chunks, { type: 'audio/mpeg' }), 'mp3');
   hideLoading();
 }
@@ -860,26 +970,18 @@ function loadLamejs() {
     const s = document.createElement('script');
     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.min.js';
     s.onload = resolve;
-    s.onerror = () => reject(new Error('MP3エンコーダの読み込みに失敗。\nインターネット接続を確認してください。'));
+    s.onerror = () => reject(new Error('MP3エンコーダの読み込みに失敗。インターネット接続を確認してください。'));
     document.head.appendChild(s);
   });
 }
 
-// ── WebM / OGG (MediaRecorder) ────────────────────────────────
 async function exportMediaRecorder(preferredMime, ext) {
-  // Find a supported mime type
   const candidates = ext === 'ogg'
     ? ['audio/ogg;codecs=opus', 'audio/ogg;codecs=vorbis', 'audio/ogg']
     : ['audio/webm;codecs=opus', 'audio/webm;codecs=vorbis', 'audio/webm'];
-
   let mimeType = null;
-  for (const m of [preferredMime, ...candidates]) {
-    if (MediaRecorder.isTypeSupported(m)) { mimeType = m; break; }
-  }
-  if (!mimeType) {
-    alert(`このブラウザは ${ext.toUpperCase()} 形式のエンコードに対応していません。\nWAV または MP3 をお試しください。`);
-    return;
-  }
+  for (const m of [preferredMime, ...candidates]) { if (MediaRecorder.isTypeSupported(m)) { mimeType = m; break; } }
+  if (!mimeType) { alert(`このブラウザは ${ext.toUpperCase()} エンコードに対応していません。\nWAV または MP3 をお試しください。`); return; }
 
   const segLen = trimEnd - trimStart;
   cancelEncode = false;
@@ -888,61 +990,44 @@ async function exportMediaRecorder(preferredMime, ext) {
   await new Promise(r => setTimeout(r, 30));
 
   const tmpCtx = new AC();
-  const src    = tmpCtx.createBufferSource();
-  src.buffer   = audioBuf;
-  const dest   = tmpCtx.createMediaStreamDestination();
-  src.connect(dest);
-
+  const src = tmpCtx.createBufferSource(); src.buffer = audioBuf;
+  const dest = tmpCtx.createMediaStreamDestination(); src.connect(dest);
   const recorder = new MediaRecorder(dest.stream, { mimeType, audioBitsPerSecond: 128000 });
   const chunks = [];
   recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
   const result = await new Promise(resolve => {
     recorder.onstop = () => resolve('done');
-    recorder.start(200);
-    src.start(0, trimStart, segLen);
-
+    recorder.start(200); src.start(0, trimStart, segLen);
     const t0 = Date.now();
     const tick = setInterval(() => {
       if (cancelEncode) {
         clearInterval(tick);
         try { recorder.stop(); src.stop(); } catch(e) {}
-        tmpCtx.close();
-        resolve('cancelled');
-        return;
+        tmpCtx.close(); resolve('cancelled'); return;
       }
       const elapsed = (Date.now() - t0) / 1000;
-      const pct = Math.min(100, (elapsed / segLen) * 100);
       loadingMsg.textContent = `${ext.toUpperCase()} エンコード中... ${elapsed.toFixed(1)} / ${segLen.toFixed(1)}秒`;
-      progressBar.style.width = pct + '%';
+      progressBar.style.width = Math.min(100, (elapsed / segLen) * 100) + '%';
     }, 200);
-
     setTimeout(() => {
       clearInterval(tick);
-      if (!cancelEncode) {
-        try { recorder.stop(); src.stop(); } catch(e) {}
-        tmpCtx.close();
-      }
+      if (!cancelEncode) { try { recorder.stop(); src.stop(); } catch(e) {} tmpCtx.close(); }
     }, segLen * 1000 + 600);
   });
 
   hideLoading();
   if (result === 'cancelled') return;
-
   downloadBlob(new Blob(chunks, { type: mimeType }), ext);
 }
 
-// ─── Download helper ──────────────────────────────────────────
 function downloadBlob(blob, ext) {
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
+  const url = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = url;
   const base = fileName.replace(/\.[^/.]+$/, '');
-  const ts   = fmtTime(trimStart).replace(':', 'm').replace('.', 's');
-  const te   = fmtTime(trimEnd).replace(':', 'm').replace('.', 's');
-  a.download = `${base}_${ts}-${te}.${ext}`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const ts = fmtTime(trimStart).replace(':', 'm').replace('.', 's');
+  const te = fmtTime(trimEnd).replace(':', 'm').replace('.', 's');
+  a.download = `${base}_${ts}-${te}.${ext}`; a.click(); URL.revokeObjectURL(url);
 }
 
 // ─── Init ─────────────────────────────────────────────────────

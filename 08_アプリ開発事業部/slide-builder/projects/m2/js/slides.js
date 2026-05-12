@@ -161,7 +161,7 @@
 
   /* ===================== REGISTER ===================== */
 
-  window.SLIDES = [
+  window.slideFactories = [
     slide01, slide02, slide03,
     slide04, slide05, slide06, slide07,
     slide08, slide09, slide10, slide11,
