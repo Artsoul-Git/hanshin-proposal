@@ -209,6 +209,8 @@ gh api repos/Artsoul-Git/<repo-name> --method DELETE
 | アプリ名 | リポジトリ名 | 公開URL | 公開日 | 状態 |
 |---------|------------|--------|--------|------|
 | 音源トリミング | `audio-trimmer` | `https://artsoul-git.github.io/audio-trimmer/` | 2026-05-12 | 公開中 |
+| もらったプロンプトを使い倒そう！（kawai版） | `morai-prompt` | `https://artsoul-git.github.io/morai-prompt/viewer.html` | 2026-05-13 | 公開中 |
+| もらったプロンプトを使い倒そう！（画像版） | `m2` | `https://artsoul-git.github.io/m2/viewer.html` | 2026-05-13 | 公開中 |
 
 ---
 
@@ -252,8 +254,60 @@ git push -u origin main
 
 ---
 
+---
+
+## 9. セミナースライドの公開（専用フロー）
+
+セミナースライドは通常アプリとは異なる公開フローを使う。
+`_publish-staging/` を経由せず、プロジェクトフォルダを直接 git リポジトリとして公開する。
+
+### 公開フロー（`/seminar-slide` スキル内 STEP 5 に記載）
+
+```powershell
+$slug = "seminar-slug-here"
+$projDir = "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
+
+Set-Location $projDir
+git init
+git config user.email "uemura@artsoul.jp"
+git config user.name "Kei Uemura"
+git add .
+git commit -m "初期公開: $slug"
+
+gh repo create "Artsoul-Git/$slug" --public --description "{タイトル}"
+git remote add origin "https://github.com/Artsoul-Git/$slug.git"
+git push -u origin master
+git checkout -b gh-pages
+git push origin gh-pages
+git checkout master
+```
+
+### 公開後の移動
+
+GitHub デプロイ後、ローカルのプロジェクトフォルダを移動する：
+
+```powershell
+Move-Item `
+  "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug" `
+  "D:\Google Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\$slug"
+```
+
+### セミナーの公開URL パターン
+
+| URL | 用途 |
+|-----|------|
+| `https://artsoul-git.github.io/{slug}/viewer.html` | 受講者用（閲覧のみ） |
+| `https://artsoul-git.github.io/{slug}/presenter.html` | プレゼンターモード（パスワード） |
+| `https://artsoul-git.github.io/{slug}/admin.html` | パスワード設定・管理 |
+| `https://artsoul-git.github.io/{slug}/index.html` | 編集・PDF/PPTX出力 |
+
+> **注意：** セミナー公開は必ずオーナー（上村）の確認後に実行すること（CONSTITUTION.md §3）
+
+---
+
 ## 改訂履歴
 
 | 日付 | 変更内容 |
 |------|---------|
+| 2026-05-13 | §9 セミナースライド専用フロー追加。公開済み一覧に morai-prompt・m2 を追記 |
 | 2026-05-12 | 初版作成。音源トリミング公開を初適用 |
