@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サプリ継続サポートアプリ 要件定義書 v1.0</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif; background: #F7FAFC; color: #2D3748; line-height: 1.7; font-size: 13px; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+
+.page-header { background: linear-gradient(135deg, #1A365D 0%, #2C7A7B 100%); border-radius: 14px; padding: 32px; margin-bottom: 28px; color: white; }
+.page-header h1 { font-size: 22px; font-weight: bold; margin-bottom: 6px; }
+.page-header .sub { font-size: 13px; opacity: 0.85; margin-bottom: 14px; }
+.page-header .meta { display: flex; gap: 24px; font-size: 11px; opacity: 0.75; flex-wrap: wrap; }
+.version-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 3px 12px; font-size: 11px; margin-left: 10px; }
+
+.toc { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 20px 28px; margin-bottom: 20px; }
+.toc-title { font-size: 13px; font-weight: bold; color: #2C7A7B; margin-bottom: 12px; border-bottom: 2px solid #2C7A7B; padding-bottom: 6px; }
+.toc ol { padding-left: 20px; }
+.toc li { font-size: 12px; margin-bottom: 4px; color: #4A5568; }
+.toc a { color: #2C7A7B; text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+
+.section { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 26px 30px; margin-bottom: 20px; }
+.section-title { font-size: 15px; font-weight: bold; color: #1A365D; border-left: 5px solid #2C7A7B; padding-left: 12px; margin-bottom: 18px; }
+.section-sub { font-size: 13px; font-weight: bold; color: #2C7A7B; margin: 20px 0 10px; border-bottom: 1px dashed #BEE3F8; padding-bottom: 4px; }
+.section-sub2 { font-size: 12px; font-weight: bold; color: #4A5568; margin: 14px 0 6px; }
+p { font-size: 12px; color: #4A5568; margin-bottom: 8px; line-height: 1.8; }
+
+table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 16px; }
+th { background: #2C7A7B; color: white; padding: 8px 10px; text-align: left; font-weight: bold; }
+td { padding: 8px 10px; border-bottom: 1px solid #E2E8F0; vertical-align: top; line-height: 1.6; }
+tr:nth-child(even) td { background: #F7FAFC; }
+
+.badge { display: inline-block; font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.badge-blue { background: #BEE3F8; color: #1A365D; }
+.badge-green { background: #C6F6D5; color: #22543D; }
+.badge-red { background: #FED7D7; color: #742A2A; }
+.badge-yellow { background: #FEFCBF; color: #744210; }
+.badge-gray { background: #E2E8F0; color: #4A5568; }
+.badge-purple { background: #E9D8FD; color: #553C9A; }
+.badge-teal { background: #B2F5EA; color: #234E52; }
+
+.mark-ok { color: #38A169; font-weight: bold; }
+.mark-ng { color: #E53E3E; font-weight: bold; }
+.mark-tri { color: #D69E2E; font-weight: bold; }
+
+.info { background: #EBF8FF; border: 1px solid #BEE3F8; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #2B6CB0; margin: 12px 0; }
+.warn { background: #FFFAF0; border: 1px solid #F6AD55; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #C05621; margin: 12px 0; }
+.success { background: #F0FFF4; border: 1px solid #9AE6B4; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #276749; margin: 12px 0; }
+.note { background: #FAF5FF; border: 1px solid #D6BCFA; border-radius: 8px; padding: 12px 14px; font-size: 11px; color: #553C9A; margin: 12px 0; }
+
+ul, ol { padding-left: 18px; margin-bottom: 10px; }
+li { font-size: 12px; color: #4A5568; margin-bottom: 4px; line-height: 1.7; }
+
+.phase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 16px 0; }
+.phase-card { border-radius: 10px; padding: 16px 14px; border: 2px solid; }
+.phase-card .pnum { font-size: 10px; font-weight: bold; margin-bottom: 6px; }
+.phase-card .ptitle { font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+.phase-card .pperiod { font-size: 10px; opacity: 0.8; margin-bottom: 8px; }
+.phase-card ul { font-size: 10px; padding-left: 14px; }
+.phase-card.p0 { border-color: #A0AEC0; background: #F7FAFC; }
+.phase-card.p0 .pnum { color: #718096; }
+.phase-card.p0 .ptitle { color: #2D3748; }
+.phase-card.p1 { border-color: #63B3ED; background: #EBF8FF; }
+.phase-card.p1 .pnum { color: #2B6CB0; }
+.phase-card.p1 .ptitle { color: #1A365D; }
+.phase-card.p2 { border-color: #68D391; background: #F0FFF4; }
+.phase-card.p2 .pnum { color: #276749; }
+.phase-card.p2 .ptitle { color: #1C4532; }
+.phase-card.p3 { border-color: #F6AD55; background: #FFFAF0; }
+.phase-card.p3 .pnum { color: #C05621; }
+.phase-card.p3 .ptitle { color: #7B341E; }
+
+.arch-box { background: #1A202C; border-radius: 10px; padding: 20px; margin: 16px 0; color: #E2E8F0; font-family: 'Consolas', 'Monaco', monospace; font-size: 11px; line-height: 2; }
+.arch-box .layer { color: #68D391; font-weight: bold; }
+.arch-box .item { color: #63B3ED; }
+.arch-box .note { color: #F6AD55; }
+.arch-box .arrow { color: #B794F4; }
+
+.cost-table td:last-child { font-weight: bold; }
+.cost-total { background: #F0FFF4 !important; }
+.cost-total td { color: #22543D; font-weight: bold; font-size: 12px; }
+
+.screen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+.screen-card { border: 1px solid #E2E8F0; border-radius: 8px; padding: 14px; }
+.screen-card .sc-label { font-size: 10px; font-weight: bold; margin-bottom: 4px; }
+.screen-card .sc-title { font-size: 12px; font-weight: bold; color: #1A365D; margin-bottom: 6px; }
+.screen-card ul { font-size: 10px; padding-left: 14px; }
+
+.flow-box { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.flow-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.flow-num { background: #2C7A7B; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; flex-shrink: 0; margin-top: 1px; }
+.flow-content { font-size: 11px; color: #4A5568; flex: 1; }
+.flow-arrow { text-align: center; color: #2C7A7B; font-size: 18px; margin: 2px 0 2px 10px; }
+
+.open-items { background: #FFF5F5; border: 1px solid #FC8181; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.open-item { display: flex; gap: 10px; margin-bottom: 8px; align-items: flex-start; }
+.open-item .oi-num { color: #E53E3E; font-weight: bold; font-size: 11px; flex-shrink: 0; }
+.open-item .oi-text { font-size: 11px; color: #4A5568; }
+
+@media (max-width: 600px) {
+  .phase-grid { grid-template-columns: 1fr 1fr; }
+  .screen-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ヘッダー -->
+  <div class="page-header">
+    <h1>サプリ継続サポートアプリ 要件定義書 <span class="version-badge">v1.0</span></h1>
+    <div class="sub">ダイエットサプリ販売事業 ／ 顧客LTV向上 × バックエンド商品導線 × ファン化</div>
+    <div class="meta">
+      <span>作成：有限会社アートソウル　上村桂右 / Kai</span>
+      <span>作成日：2026年5月13日</span>
+      <span>ステータス：初稿 — 未決定事項あり（末尾参照）</span>
+    </div>
+  </div>
+
+  <!-- 目次 -->
+  <div class="toc">
+    <div class="toc-title">目次</div>
+    <ol>
+      <li><a href="#s1">プロジェクト概要と目的</a></li>
+      <li><a href="#s2">ステークホルダーと利用者定義</a></li>
+      <li><a href="#s3">ビジネス要件・KPI</a></li>
+      <li><a href="#s4">システムアーキテクチャ</a></li>
+      <li><a href="#s5">機能要件（顧客向け）</a></li>
+      <li><a href="#s6">機能要件（管理者向け）</a></li>
+      <li><a href="#s7">体験談収集・クーポン送信フロー</a></li>
+      <li><a href="#s8">データモデル（Sheets設計）</a></li>
+      <li><a href="#s9">画面一覧</a></li>
+      <li><a href="#s10">外部連携詳細</a></li>
+      <li><a href="#s11">開発フェーズ</a></li>
+      <li><a href="#s12">コスト試算</a></li>
+      <li><a href="#s13">リスクと対策</a></li>
+      <li><a href="#s14">未決定事項・確認事項</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. プロジェクト概要 -->
+  <div class="section" id="s1">
+    <div class="section-title">1. プロジェクト概要と目的</div>
+    <p>ダイエットサプリ購入者が日々の記録を継続しやすい環境を提供するWebアプリ。単なる記録ツールにとどまらず、顧客との関係を深め、バックエンド商品（遺伝子検査ライフコンサルティング）への導線と、スポーツジムノウハウのコンテンツ発信によるファン化を中核とする販売促進アプリ。</p>
+
+    <div class="section-sub">3つのビジネス目的</div>
+    <table>
+      <tr><th>目的</th><th>具体的な価値</th></tr>
+      <tr><td><span class="badge badge-green">① 継続率向上</span></td><td>AIバイオリズムレポートで「今は増加期だから大丈夫」と伝え、サプリをやめない理由を作る。LTVを最大化する。</td></tr>
+      <tr><td><span class="badge badge-purple">② バックエンド導線</span></td><td>会員ページ内で遺伝子検査ライフコンサルティングを自然に訴求。データに基づく「あなたに合った提案」文脈で提示。</td></tr>
+      <tr><td><span class="badge badge-teal">③ ファン化・コミュニティ</span></td><td>スポーツジムのノウハウをブログ・コンテンツで発信。アプリ→ブログ→SNSのファン導線を構築する。</td></tr>
+    </table>
+
+    <div class="section-sub">開発方針</div>
+    <ul>
+      <li>バイブコーディング（Claude Codeと対話しながらノーコード寄りで開発）</li>
+      <li>外注なし、社内2名 + AI で保守運用できるシンプルな構成を最優先</li>
+      <li>初期コストほぼゼロ → 100人規模から始めて1000人に拡大しても構成変更不要</li>
+      <li>Googleエコシステムを最大活用（すでに GWS Business Standard 契約済み）</li>
+    </ul>
+  </div>
+
+  <!-- 2. ステークホルダー -->
+  <div class="section" id="s2">
+    <div class="section-title">2. ステークホルダーと利用者定義</div>
+    <table>
+      <tr><th>種別</th><th>人数</th><th>端末</th><th>主な操作</th></tr>
+      <tr><td><span class="badge badge-blue">顧客</span></td><td>現在100人 → 1年内1000人</td><td>スマホ（Web UI）</td><td>日次記録入力、レポート閲覧、コンテンツ閲覧、体験談投稿</td></tr>
+      <tr><td><span class="badge badge-green">管理者</span></td><td>2名（従業員）</td><td>PC（Web UI）</td><td>顧客管理、コンテンツ登録、体験談承認、クーポン発行、統計確認</td></tr>
+      <tr><td><span class="badge badge-gray">オーナー</span></td><td>1名（上村）</td><td>PCまたはスマホ</td><td>全機能 ＋ 設定変更、AIプロンプト調整</td></tr>
+    </table>
+
+    <div class="info">ℹ️ 顧客はアプリのアカウントを自分で作るのではなく、<strong>サプリ購入後にオーナー/管理者が発行した招待メール経由</strong>でアプリに入る（なりすまし防止 ＋ 非会員閲覧ゼロ）。</div>
+  </div>
+
+  <!-- 3. ビジネス要件・KPI -->
+  <div class="section" id="s3">
+    <div class="section-title">3. ビジネス要件・KPI</div>
+    <table>
+      <tr><th>KPI</th><th>目標値</th><th>計測方法</th></tr>
+      <tr><td>サプリ継続率</td><td>3ヶ月継続率 70%以上（現状比）</td><td>会員ステータス × 購買データ</td></tr>
+      <tr><td>週次レポート開封率</td><td>50%以上</td><td>Sheets ログ（URL踏んだか）</td></tr>
+      <tr><td>バックエンド商品問い合わせ率</td><td>月間アクティブ会員の5%</td><td>遺伝子検査問い合わせフォーム経由</td></tr>
+      <tr><td>体験談収集数</td><td>月10件以上</td><td>Sheets 体験談シート</td></tr>
+      <tr><td>アプリ日次記録率</td><td>週4回以上の記録をする会員60%</td><td>daily_log シート集計</td></tr>
+    </table>
+  </div>
+
+  <!-- 4. システムアーキテクチャ -->
+  <div class="section" id="s4">
+    <div class="section-title">4. システムアーキテクチャ</div>
+
+    <div class="section-sub">採用技術スタック</div>
+    <table>
+      <tr><th>レイヤー</th><th>技術</th><th>選定理由</th><th>コスト</th></tr>
+      <tr><td>フロントエンド</td><td>HTML / CSS / JavaScript (Vanilla)<br>Bootstrap 5 (CDN)</td><td>バイブコーディング最適。ビルドツール不要。スマホ対応CSS込み。</td><td>無料</td></tr>
+      <tr><td>ホスティング</td><td>GitHub Pages</td><td>無料・HTTPS自動・git pushで即公開。すでに実績あり（音源トリミング等）。</td><td>無料</td></tr>
+      <tr><td>バックエンドAPI</td><td>Google Apps Script (GAS) Web App</td><td>サーバー管理不要。Sheets・Gmail・LINE APIすべて呼べる。GWSの範囲内。</td><td>無料</td></tr>
+      <tr><td>データベース</td><td>Google Sheets</td><td>視覚的に確認・編集できる。GWSで利用中。1000人規模で十分。</td><td>GWSに含む</td></tr>
+      <tr><td>AI（レポート生成）</td><td>Gemini 1.5 Flash API</td><td>無料枠1500リクエスト/日。1000人×週1回=143回/日で余裕あり。</td><td>無料（当面）</td></tr>
+      <tr><td>メール送信</td><td>GAS MailApp (Gmail)</td><td>GASから直接送信。GWSアカウントは1500通/日の上限。</td><td>無料</td></tr>
+      <tr><td>LINE通知</td><td>LINE Messaging API</td><td>体験談通知・クーポン送信。無料枠1000通/月。</td><td>無料〜¥5,500/月</td></tr>
+    </table>
+
+    <div class="section-sub">構成図</div>
+    <div class="arch-box">
+<span class="layer">═══ フロントエンド（GitHub Pages） ═══════════════════════════════════</span>
+<span class="item">  顧客向けSPA</span>           <span class="note">index.html + app.js + style.css</span>
+<span class="item">  管理者画面</span>             <span class="note">admin/index.html（パスワード保護）</span>
+<span class="arrow">         │ fetch() HTTP POST/GET（JSON）</span>
+<span class="arrow">         ↓↑</span>
+<span class="layer">═══ バックエンドAPI（GAS Web App） ══════════════════════════════════════</span>
+<span class="item">  doGet()  / doPost()</span>    <span class="note">ルーティング、認証チェック</span>
+<span class="item">  auth.gs</span>                <span class="note">トークン検証・セッション管理</span>
+<span class="item">  records.gs</span>             <span class="note">日次記録の保存・取得</span>
+<span class="item">  reports.gs</span>             <span class="note">週次レポート生成（Gemini API呼び出し）</span>
+<span class="item">  content.gs</span>             <span class="note">ブログ・Tips・広告データ取得</span>
+<span class="item">  testimonials.gs</span>        <span class="note">体験談承認・クーポン送信</span>
+<span class="item">  notify.gs</span>              <span class="note">メール・LINE送信</span>
+<span class="arrow">         │                    │                  │</span>
+<span class="arrow">         ↓                    ↓                  ↓</span>
+<span class="layer">═══ データ層 ════════ ═══ 外部AI ════ ═══ 通知 ══════════════════════════</span>
+<span class="item">  Google Sheets</span>          <span class="item">Gemini API</span>       <span class="item">Gmail（GAS MailApp）</span>
+<span class="note">  6シート構成</span>            <span class="note">Flash 1.5</span>        <span class="item">LINE Messaging API</span>
+    </div>
+
+    <div class="success">✅ このスタックの強み：サーバー管理ゼロ・DBバックアップ不要（Sheets自動保存）・全部Googleアカウントで管理できる・Claude Codeで誰でも修正できる</div>
+    <div class="warn">⚠️ 制約：GAS実行時間6分制限（バッチ処理を分割対応）/ Sheets同時アクセス制限（通常運用では問題なし）/ Gemini APIのみ（Claude/GPT切り替えはDify導入後）</div>
+  </div>
+
+  <!-- 5. 機能要件（顧客向け） -->
+  <div class="section" id="s5">
+    <div class="section-title">5. 機能要件（顧客向け）</div>
+
+    <div class="section-sub">F01 ログイン（トークンURL認証）</div>
+    <p>顧客はパスワード不要。管理者が発行した招待メール内のURLをクリックするだけでログインできる。URLには一意のトークンが含まれ、GASがSheetsで照合してセッションを確立する。</p>
+    <ul>
+      <li>トークン形式：UUID v4（例：<code>?t=550e8400-e29b-41d4-a716-446655440000</code>）</li>
+      <li>セッションはlocalStorage保存（ブラウザを閉じても維持）</li>
+      <li>再ログインは週次レポートメールのURLから自動再認証</li>
+      <li>不正トークン → エラーページ表示</li>
+    </ul>
+
+    <div class="section-sub">F02 初期設定（オンボーディング）</div>
+    <ul>
+      <li>名前（表示名）</li>
+      <li>現在の体重（kg）</li>
+      <li>目標体重（kg）</li>
+      <li>サプリ服用開始日</li>
+      <li>生年月日（バイオリズム計算用）</li>
+      <li>ダイエットの目的（健康維持 / 体型維持 / 減量 / 筋量増加）</li>
+      <li>現在の運動習慣（週の運動日数）</li>
+    </ul>
+
+    <div class="section-sub">F03 日次記録</div>
+    <ul>
+      <li>体重（kg）</li>
+      <li>気分（1〜5段階スライダー）</li>
+      <li>体調（1〜5段階スライダー）</li>
+      <li>サプリ服用（飲んだ / 飲んでいない）</li>
+      <li>ひとことメモ（任意、100文字以内）</li>
+      <li>記録済みの日はカレンダーにチェックマーク表示</li>
+      <li>連続記録日数を表示（モチベーション維持）</li>
+    </ul>
+
+    <div class="section-sub">F04 週次AIレポート</div>
+    <ul>
+      <li>毎週日曜夜にGASが自動生成してメール送信</li>
+      <li>内容：先週の記録サマリー（体重推移・服用率）、AIコメント、バイオリズム情報、来週のアドバイス</li>
+      <li>メール内のURLをクリックすると会員ページのレポートタブが開く</li>
+      <li>レポートはアプリ内でいつでも過去分も閲覧可能</li>
+    </ul>
+
+    <div class="section-sub">F05 コンテンツ閲覧（ブログ・Tips・プロモーション）</div>
+    <ul>
+      <li>管理者が登録したコンテンツをカテゴリ別に表示</li>
+      <li>カテゴリ：健康Tips / ジムノウハウ / 体験談 / 特別提案（遺伝子検査等）</li>
+      <li>各コンテンツは冒頭抜粋のみ表示 → 「続きを読む」でブログ/外部URL誘導</li>
+      <li>「特別提案」バナーは週次レポートページにも固定表示</li>
+    </ul>
+
+    <div class="section-sub">F06 体験談投稿フロー</div>
+    <p>詳細は「7. 体験談収集・クーポン送信フロー」参照。アプリからLINEへ誘導し、Googleフォームで収集する。</p>
+
+    <div class="section-sub">F07 マイページ</div>
+    <ul>
+      <li>体重推移グラフ（Chart.js使用）</li>
+      <li>服用率の週次推移</li>
+      <li>サプリ開始からの日数・記録日数</li>
+      <li>プロフィール編集（目標体重・生活習慣の更新）</li>
+    </ul>
+  </div>
+
+  <!-- 6. 機能要件（管理者向け） -->
+  <div class="section" id="s6">
+    <div class="section-title">6. 機能要件（管理者向け）</div>
+
+    <div class="info">ℹ️ 管理者画面は <code>同じGitHub Pages内の /admin/</code> に設置。管理者パスワード（環境変数管理）でアクセス制御。</div>
+
+    <div class="section-sub">A01 顧客管理</div>
+    <ul>
+      <li>顧客一覧（名前・メール・登録日・最終記録日・継続日数・ステータス）</li>
+      <li>顧客詳細（記録履歴・レポート履歴・購入履歴メモ）</li>
+      <li>新規顧客登録 → 招待メール自動送信（トークン生成・Sheets登録・Gmail送信）</li>
+      <li>顧客ステータス変更（アクティブ / 休止 / 退会）</li>
+    </ul>
+
+    <div class="section-sub">A02 コンテンツ管理</div>
+    <ul>
+      <li>記事・Tipsの新規登録（タイトル・抜粋・外部URL・カテゴリ・公開期間）</li>
+      <li>記事の編集・非表示</li>
+      <li>表示順の変更</li>
+      <li>「特別提案」バナーの登録・管理</li>
+    </ul>
+
+    <div class="section-sub">A03 体験談承認</div>
+    <ul>
+      <li>未承認の体験談一覧表示</li>
+      <li>承認 → アプリの体験談ページに掲載</li>
+      <li>クーポン送信ボタン → LINEでクーポンコード自動送信</li>
+      <li>却下（理由入力任意）</li>
+    </ul>
+
+    <div class="section-sub">A04 統計・ダッシュボード</div>
+    <ul>
+      <li>アクティブ会員数・週次記録率・平均服用率</li>
+      <li>体験談収集数（月次）</li>
+      <li>週次レポートURL開封数</li>
+      <li>Looker Studio連携用データエクスポート（CSV）</li>
+    </ul>
+
+    <div class="section-sub">A05 レポート管理</div>
+    <ul>
+      <li>今週の生成済みレポートプレビュー（送信前確認）</li>
+      <li>手動送信（個別・全員）</li>
+      <li>送信ログ確認</li>
+      <li>Geminiプロンプト設定画面（表現の柔らかさ調整）</li>
+    </ul>
+  </div>
+
+  <!-- 7. 体験談フロー -->
+  <div class="section" id="s7">
+    <div class="section-title">7. 体験談収集・クーポン送信フロー</div>
+
+    <div class="flow-box">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-content"><strong>顧客がアプリ内「体験談を書く」ボタンをタップ</strong><br>→ LINEの友達追加URLへ誘導（公式アカウントQRコードまたはリンク）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-content"><strong>LINE公式アカウントに友達追加</strong><br>→ 自動応答でGoogleフォームのURLを送信（「体験談フォームはこちら」）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-content"><strong>顧客がGoogleフォームを記入・送信</strong><br>項目：名前（表示用）・サプリ服用期間・体験内容・公開許可チェック・会員ID</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-content"><strong>Googleフォーム → スプレッドシートに自動記録</strong><br>→ フォーム回答シートのonFormSubmitトリガー発火</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-content"><strong>GASトリガー → 管理者LINEに通知</strong><br>「新しい体験談が届きました。管理画面で確認してください。」+ 管理URLリンク</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-content"><strong>管理者が管理画面で体験談を確認・承認</strong><br>→ アプリの体験談ページに掲載（匿名化して表示）</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-num">7</div>
+        <div class="flow-content"><strong>管理者が「クーポン送信」ボタンをクリック</strong><br>→ GASがクーポンコードを生成 → LINE Messaging APIで顧客へ送信<br>「体験談ありがとうございました！感謝の気持ちに割引クーポンをお送りします 🎁」</div>
+      </div>
+    </div>
+
+    <div class="warn">⚠️ 前提：LINE公式アカウント（LINE Official Account Manager）が必要。未取得の場合は取得から始める（無料プランあり）。また体験談フォームとSheetsはGAS側のスクリプトとは別のフォームとして作成する。</div>
+  </div>
+
+  <!-- 8. データモデル -->
+  <div class="section" id="s8">
+    <div class="section-title">8. データモデル（Google Sheets 設計）</div>
+    <p>1つのGoogleスプレッドシートに以下6シートを作成する。</p>
+
+    <div class="section-sub">シート① users（会員マスター）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>user_id</td><td>文字列</td><td>一意ID（例：USR001）</td></tr>
+      <tr><td>email</td><td>文字列</td><td>連絡先メールアドレス</td></tr>
+      <tr><td>name</td><td>文字列</td><td>氏名</td></tr>
+      <tr><td>display_name</td><td>文字列</td><td>アプリ表示名</td></tr>
+      <tr><td>token</td><td>文字列</td><td>UUID v4（ログイン認証用）</td></tr>
+      <tr><td>line_user_id</td><td>文字列</td><td>LINE UserID（取得できた場合）</td></tr>
+      <tr><td>birthdate</td><td>日付</td><td>生年月日（バイオリズム計算用）</td></tr>
+      <tr><td>start_date</td><td>日付</td><td>サプリ服用開始日</td></tr>
+      <tr><td>initial_weight</td><td>数値</td><td>初期体重(kg)</td></tr>
+      <tr><td>goal_weight</td><td>数値</td><td>目標体重(kg)</td></tr>
+      <tr><td>purpose</td><td>文字列</td><td>ダイエット目的</td></tr>
+      <tr><td>exercise_days</td><td>数値</td><td>週の運動日数</td></tr>
+      <tr><td>status</td><td>文字列</td><td>active / paused / churned</td></tr>
+      <tr><td>joined_at</td><td>日時</td><td>登録日時</td></tr>
+      <tr><td>last_record_at</td><td>日時</td><td>最終記録日時（自動更新）</td></tr>
+    </table>
+
+    <div class="section-sub">シート② daily_log（日次記録）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>log_id</td><td>文字列</td><td>一意ID</td></tr>
+      <tr><td>user_id</td><td>文字列</td><td>usersのuser_idと紐づく</td></tr>
+      <tr><td>date</td><td>日付</td><td>記録日（YYYY-MM-DD）</td></tr>
+      <tr><td>weight</td><td>数値</td><td>体重(kg)</td></tr>
+      <tr><td>mood</td><td>数値</td><td>気分 1〜5</td></tr>
+      <tr><td>condition</td><td>数値</td><td>体調 1〜5</td></tr>
+      <tr><td>taken</td><td>真偽値</td><td>サプリ服用 TRUE/FALSE</td></tr>
+      <tr><td>memo</td><td>文字列</td><td>ひとことメモ（最大100文字）</td></tr>
+      <tr><td>created_at</td><td>日時</td><td>記録日時</td></tr>
+    </table>
+
+    <div class="section-sub">シート③ weekly_reports（週次レポート）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>report_id</td><td>文字列</td><td>一意ID</td></tr>
+      <tr><td>user_id</td><td>文字列</td><td>対象会員</td></tr>
+      <tr><td>week_start</td><td>日付</td><td>対象週の月曜日</td></tr>
+      <tr><td>report_text</td><td>文字列</td><td>Gemini生成のレポート本文（HTML or テキスト）</td></tr>
+      <tr><td>biorhythm_info</td><td>文字列</td><td>バイオリズム状態テキスト</td></tr>
+      <tr><td>sent_at</td><td>日時</td><td>メール送信日時</td></tr>
+      <tr><td>opened_at</td><td>日時</td><td>URLクリック日時（空=未開封）</td></tr>
+    </table>
+
+    <div class="section-sub">シート④ content（コンテンツ管理）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>content_id</td><td>文字列</td><td>一意ID</td></tr>
+      <tr><td>type</td><td>文字列</td><td>tip / blog / promo / testimonial</td></tr>
+      <tr><td>category</td><td>文字列</td><td>健康Tips / ジムノウハウ / 遺伝子検査 / 体験談</td></tr>
+      <tr><td>title</td><td>文字列</td><td>記事タイトル</td></tr>
+      <tr><td>excerpt</td><td>文字列</td><td>アプリ内表示の抜粋文（200文字以内）</td></tr>
+      <tr><td>external_url</td><td>URL</td><td>続きを読む先のURL（ブログ等）</td></tr>
+      <tr><td>image_url</td><td>URL</td><td>サムネイル画像URL（任意）</td></tr>
+      <tr><td>display_order</td><td>数値</td><td>表示順（小さいほど上）</td></tr>
+      <tr><td>active</td><td>真偽値</td><td>表示/非表示</td></tr>
+      <tr><td>display_start</td><td>日付</td><td>表示開始日（任意）</td></tr>
+      <tr><td>display_end</td><td>日付</td><td>表示終了日（任意）</td></tr>
+    </table>
+
+    <div class="section-sub">シート⑤ testimonials（体験談）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>testimonial_id</td><td>文字列</td><td>一意ID</td></tr>
+      <tr><td>user_id</td><td>文字列</td><td>投稿者（Googleフォームの会員ID入力から紐づけ）</td></tr>
+      <tr><td>display_name</td><td>文字列</td><td>公開表示名（例：Aさん 30代女性）</td></tr>
+      <tr><td>duration</td><td>文字列</td><td>服用期間（3ヶ月など）</td></tr>
+      <tr><td>content</td><td>文字列</td><td>体験談本文</td></tr>
+      <tr><td>status</td><td>文字列</td><td>pending / approved / rejected</td></tr>
+      <tr><td>submitted_at</td><td>日時</td><td>フォーム送信日時</td></tr>
+      <tr><td>approved_at</td><td>日時</td><td>承認日時</td></tr>
+      <tr><td>coupon_code</td><td>文字列</td><td>発行したクーポンコード</td></tr>
+      <tr><td>coupon_sent_at</td><td>日時</td><td>クーポン送信日時</td></tr>
+    </table>
+
+    <div class="section-sub">シート⑥ coupons（クーポン管理）</div>
+    <table>
+      <tr><th>列名</th><th>型</th><th>説明</th></tr>
+      <tr><td>coupon_id</td><td>文字列</td><td>一意ID</td></tr>
+      <tr><td>user_id</td><td>文字列</td><td>発行対象</td></tr>
+      <tr><td>code</td><td>文字列</td><td>クーポンコード（例：THANKS-A1B2）</td></tr>
+      <tr><td>type</td><td>文字列</td><td>testimonial / campaign</td></tr>
+      <tr><td>discount</td><td>文字列</td><td>割引内容（例：10%OFF）</td></tr>
+      <tr><td>status</td><td>文字列</td><td>sent / used / expired</td></tr>
+      <tr><td>expires_at</td><td>日付</td><td>有効期限</td></tr>
+      <tr><td>sent_at</td><td>日時</td><td>LINE送信日時</td></tr>
+
+    </table>
+
+    <div class="info">ℹ️ 1000人 × 365日 = 約36万行（daily_log）。Sheetsの上限は1000万セルなので数年間は問題なし。年1回古いデータをアーカイブシートに移動すると長期運用でもスムーズ。</div>
+  </div>
+
+  <!-- 9. 画面一覧 -->
+  <div class="section" id="s9">
+    <div class="section-title">9. 画面一覧</div>
+
+    <div class="section-sub">顧客向け画面（スマホ最適化）</div>
+    <div class="screen-grid">
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">ホーム / ダッシュボード</div>
+        <ul>
+          <li>今日の記録ボタン（大）</li>
+          <li>連続記録日数バッジ</li>
+          <li>最新レポートへのリンク</li>
+          <li>今週のコンテンツピックアップ</li>
+          <li>バイオリズム今日の状態</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">日次記録フォーム</div>
+        <ul>
+          <li>体重入力（数値）</li>
+          <li>気分スライダー（1-5）</li>
+          <li>体調スライダー（1-5）</li>
+          <li>サプリ服用トグル</li>
+          <li>メモ入力（任意）</li>
+          <li>保存ボタン</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">週次レポート</div>
+        <ul>
+          <li>今週の体重推移グラフ</li>
+          <li>服用率 / 気分・体調平均</li>
+          <li>AIコメント（Gemini生成）</li>
+          <li>バイオリズム解説</li>
+          <li>来週へのアドバイス</li>
+          <li>特別提案バナー</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">コンテンツ一覧</div>
+        <ul>
+          <li>カテゴリタブ</li>
+          <li>カード形式で記事一覧</li>
+          <li>タップで抜粋表示</li>
+          <li>「続きを読む」で外部ブログへ</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">マイページ</div>
+        <ul>
+          <li>体重推移グラフ（1ヶ月）</li>
+          <li>サプリ服用カレンダー</li>
+          <li>開始からの統計</li>
+          <li>プロフィール編集</li>
+          <li>体験談を書くボタン</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-blue">顧客</span></div>
+        <div class="sc-title">体験談ページ</div>
+        <ul>
+          <li>承認済み体験談一覧</li>
+          <li>「私も書く」ボタン（LINE誘導）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-sub">管理者向け画面（PCメイン）</div>
+    <div class="screen-grid">
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-green">管理者</span></div>
+        <div class="sc-title">管理ダッシュボード</div>
+        <ul>
+          <li>KPIサマリー（会員数・記録率・服用率）</li>
+          <li>未承認体験談アラート</li>
+          <li>今週のレポート送信状況</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-green">管理者</span></div>
+        <div class="sc-title">顧客管理</div>
+        <ul>
+          <li>顧客一覧テーブル（検索・並び替え）</li>
+          <li>新規登録・招待メール送信</li>
+          <li>顧客詳細モーダル</li>
+          <li>ステータス変更</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-green">管理者</span></div>
+        <div class="sc-title">体験談承認</div>
+        <ul>
+          <li>未承認一覧</li>
+          <li>承認・却下ボタン</li>
+          <li>クーポン送信ボタン</li>
+          <li>承認済み一覧</li>
+        </ul>
+      </div>
+      <div class="screen-card">
+        <div class="sc-label"><span class="badge badge-green">管理者</span></div>
+        <div class="sc-title">コンテンツ管理</div>
+        <ul>
+          <li>記事・Tips登録フォーム</li>
+          <li>一覧・編集・非表示</li>
+          <li>表示順ドラッグ操作</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. 外部連携 -->
+  <div class="section" id="s10">
+    <div class="section-title">10. 外部連携詳細</div>
+    <table>
+      <tr><th>サービス</th><th>用途</th><th>設定・取得が必要なもの</th><th>無料枠</th></tr>
+      <tr><td><strong>Gemini API</strong><br>(Google AI Studio)</td><td>週次レポート文章生成</td><td>Google AI Studio でAPIキー発行<br>GASの スクリプトプロパティに保存</td><td>Flash 1.5: 1500req/日<br>（1000人週1=143回）</td></tr>
+      <tr><td><strong>Gmail</strong><br>(GAS MailApp)</td><td>招待メール・週次レポートURL送信</td><td>GWSアカウントで自動利用可</td><td>1500通/日（GWSアカウント）</td></tr>
+      <tr><td><strong>LINE Messaging API</strong><br>(LINE公式アカウント)</td><td>体験談通知・クーポン送信<br>Googleフォームの誘導</td><td>LINE Official Account Manager で公式アカウント作成<br>Channel Access Token 発行<br>Webhook URL = GAS doPost URL</td><td>フリープラン：1000通/月<br>ライトプラン：¥5,500/月で15,000通</td></tr>
+      <tr><td><strong>Google Forms</strong><br>+ Sheets連携</td><td>体験談収集フォーム</td><td>Googleフォーム作成<br>回答シートのonFormSubmitトリガー設定</td><td>無料</td></tr>
+      <tr><td><strong>GitHub Pages</strong></td><td>フロントエンドホスティング</td><td>GitHubリポジトリ作成<br>Pages設定（mainブランチ）</td><td>無料（パブリックリポジトリ）</td></tr>
+    </table>
+
+    <div class="section-sub">Geminiプロンプト設計方針（柔らかい日本語）</div>
+    <div style="background:#1A202C; border-radius:8px; padding:16px; font-family:monospace; font-size:11px; line-height:1.8; color:#E2E8F0; margin:10px 0;">
+あなたは寄り添う健康アドバイザーです。<br>
+以下のルールで週次レポートを書いてください：<br>
+- 友達に話しかけるような温かみのある日本語で<br>
+- 「〜ですね」「〜してみませんか？」など提案型の表現を使う<br>
+- 体重が増加していても「増加期は誰にでもある」と励ます<br>
+- 絵文字を1〜2個だけ自然に使う<br>
+- 200文字程度にまとめる（長すぎない）<br>
+- 「バイオリズム的に今週は〇〇期です」を必ず含める<br>
+- 断定・説教・比較表現は絶対に使わない
+    </div>
+  </div>
+
+  <!-- 11. 開発フェーズ -->
+  <div class="section" id="s11">
+    <div class="section-title">11. 開発フェーズ</div>
+
+    <div class="phase-grid">
+      <div class="phase-card p0">
+        <div class="pnum">Phase 0</div>
+        <div class="ptitle">環境構築</div>
+        <div class="pperiod">〜1週間</div>
+        <ul>
+          <li>GitHubリポジトリ作成</li>
+          <li>Sheetsの6シート作成</li>
+          <li>GAS初期デプロイ</li>
+          <li>Gemini APIキー取得</li>
+          <li>フロントHTMLシェル</li>
+        </ul>
+      </div>
+      <div class="phase-card p1">
+        <div class="pnum">Phase 1</div>
+        <div class="ptitle">記録基盤</div>
+        <div class="pperiod">〜2週間</div>
+        <ul>
+          <li>招待メール送信</li>
+          <li>トークンログイン</li>
+          <li>初期設定フォーム</li>
+          <li>日次記録入力・保存</li>
+          <li>ホーム画面表示</li>
+        </ul>
+      </div>
+      <div class="phase-card p2">
+        <div class="pnum">Phase 2</div>
+        <div class="ptitle">AIレポート</div>
+        <div class="pperiod">〜2週間</div>
+        <ul>
+          <li>Gemini週次レポート生成</li>
+          <li>Gmail自動送信</li>
+          <li>レポートページ表示</li>
+          <li>マイページグラフ</li>
+          <li>管理者ダッシュボード基本</li>
+        </ul>
+      </div>
+      <div class="phase-card p3">
+        <div class="pnum">Phase 3</div>
+        <div class="ptitle">エンゲージメント</div>
+        <div class="pperiod">〜1ヶ月</div>
+        <ul>
+          <li>コンテンツ管理・表示</li>
+          <li>体験談フロー全体</li>
+          <li>LINE連携</li>
+          <li>クーポン発行・送信</li>
+          <li>統計・CSV出力</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">💡 Phase 1完了で実際の顧客（テストユーザー数名）に使ってもらい、フィードバックを取りながら Phase 2 以降を進めることを推奨。早期に実データが入ることで改善点が見つかりやすい。</div>
+  </div>
+
+  <!-- 12. コスト試算 -->
+  <div class="section" id="s12">
+    <div class="section-title">12. コスト試算</div>
+
+    <table class="cost-table">
+      <tr><th>サービス</th><th>Phase 1-2<br>（〜100人）</th><th>Phase 3<br>（〜500人）</th><th>Scale<br>（〜1000人）</th></tr>
+      <tr><td>GitHub Pages（フロントホスティング）</td><td>¥0</td><td>¥0</td><td>¥0</td></tr>
+      <tr><td>GAS + Google Sheets</td><td>¥0（GWSに含む）</td><td>¥0</td><td>¥0</td></tr>
+      <tr><td>Gemini API（Flash 1.5）</td><td>¥0（無料枠内）</td><td>¥0（無料枠内）</td><td>¥0（無料枠内）</td></tr>
+      <tr><td>Gmail送信</td><td>¥0</td><td>¥0</td><td>¥0</td></tr>
+      <tr><td>LINE Messaging API</td><td>¥0（〜1000通/月）</td><td>¥5,500（ライト）</td><td>¥5,500〜¥15,000</td></tr>
+      <tr class="cost-total"><td><strong>合計/月</strong></td><td><strong>¥0</strong></td><td><strong>¥5,500</strong></td><td><strong>¥5,500〜¥15,000</strong></td></tr>
+    </table>
+
+    <div class="success">✅ Phase 1-2は完全無料で運用可能。Phase 3以降もLINEの費用のみ。1000人規模でも月¥15,000以下という超低コスト構成。</div>
+  </div>
+
+  <!-- 13. リスクと対策 -->
+  <div class="section" id="s13">
+    <div class="section-title">13. リスクと対策</div>
+    <table>
+      <tr><th>リスク</th><th>影響度</th><th>対策</th></tr>
+      <tr><td>GAS実行時間6分制限（週次バッチ処理）</td><td><span class="badge badge-yellow">中</span></td><td>1回の実行で50人分ずつ処理し、継続トリガーで次の50人を処理するバッチ分割設計</td></tr>
+      <tr><td>Sheetsの同時アクセス競合</td><td><span class="badge badge-green">低</span></td><td>LockServiceで排他制御。100〜1000人程度では実問題にならない</td></tr>
+      <tr><td>トークン漏洩によるなりすまし</td><td><span class="badge badge-yellow">中</span></td><td>HTTPS限定・定期トークンローテーション（3ヶ月毎）・異常アクセス検知ログ</td></tr>
+      <tr><td>Gemini API無料枠超過</td><td><span class="badge badge-green">低</span></td><td>1000人×週1=143req/日。上限1500まで余裕あり。超過時はFlash 1.5に課金（安価）</td></tr>
+      <tr><td>LINE無料枠超過（月1000通）</td><td><span class="badge badge-green">低</span></td><td>Phase 3開始まで時間があるので、その時点でライトプランに切り替え</td></tr>
+      <tr><td>GitHub Pages → カスタムドメイン対応</td><td><span class="badge badge-green">低</span></td><td>必要になったらカスタムドメイン設定。無料SSL対応。</td></tr>
+      <tr><td>スケールアウト（1000人超）</td><td><span class="badge badge-yellow">中</span></td><td>その段階でSupabase等への移行を検討。現設計はデータ構造を変えずに移行できる。</td></tr>
+    </table>
+  </div>
+
+  <!-- 14. 未決定事項 -->
+  <div class="section" id="s14">
+    <div class="section-title">14. 未決定事項・確認事項</div>
+    <div class="open-items">
+      <div class="open-item">
+        <div class="oi-num">OI-01</div>
+        <div class="oi-text"><strong>アプリ名・ドメイン</strong>：アプリの正式名称とURLを決める必要あり（例：supplement-support.artsoul.jp）</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-02</div>
+        <div class="oi-text"><strong>LINE公式アカウントの有無</strong>：既存アカウントがあるか、新規作成が必要か。体験談フローはLINEに依存している。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-03</div>
+        <div class="oi-text"><strong>バイオリズムの計算ロジック</strong>：生年月日から身体（23日）・感情（28日）・知性（33日）の3波を計算する標準ロジックを使うか、独自の演出にするか。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-04</div>
+        <div class="oi-text"><strong>顧客登録フロー</strong>：サプリ購入後に管理者が手動でアカウントを作る運用か、購入フォーム（Stores等）と連携して自動化するか。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-05</div>
+        <div class="oi-text"><strong>ブログの場所</strong>：アプリ内コンテンツへ誘導する「ブログ」はどこに置くか（note / WordPress / はてなブログ / アメブロ等）。URLが確定したらcontentシートのexternal_urlに入れる。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-06</div>
+        <div class="oi-text"><strong>遺伝子検査サービスの申し込みURL・連携方法</strong>：会員ページの「特別提案」バナーがどこに遷移するか。専用フォームか、既存購入ページか。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-07</div>
+        <div class="oi-text"><strong>クーポンコードの利用確認方法</strong>：クーポンコードを顧客が使ったかどうかをどのシステムで管理するか（決済システム側か、手動入力か）。</div>
+      </div>
+      <div class="open-item">
+        <div class="oi-num">OI-08</div>
+        <div class="oi-text"><strong>プライバシーポリシー・利用規約</strong>：個人情報（体重・体調）を収集するため、最低限のプライバシーポリシーページが必要。別途作成要。</div>
+      </div>
+    </div>
+
+    <div class="warn">⚠️ OI-01〜OI-03はPhase 0着手前に確定が必要。OI-04〜OI-08はPhase 2以降に確定すれば開発には影響しない。</div>
+  </div>
+
+  <div style="text-align:center; color:#718096; font-size:11px; margin-top:30px; padding-top:20px; border-top:1px solid #E2E8F0;">
+    サプリ継続サポートアプリ 要件定義書 v1.0 ／ 有限会社アートソウル ／ 作成：Kai（2026-05-13）
+  </div>
+
+</div>
+</body>
+</html>
