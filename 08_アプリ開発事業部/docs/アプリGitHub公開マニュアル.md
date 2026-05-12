@@ -211,6 +211,7 @@ gh api repos/Artsoul-Git/<repo-name> --method DELETE
 | 音源トリミング | `audio-trimmer` | `https://artsoul-git.github.io/audio-trimmer/` | 2026-05-12 | 公開中 |
 | もらったプロンプトを使い倒そう！（kawai版） | `morai-prompt` | `https://artsoul-git.github.io/morai-prompt/viewer.html` | 2026-05-13 | 公開中 |
 | もらったプロンプトを使い倒そう！（画像版） | `m2` | `https://artsoul-git.github.io/m2/viewer.html` | 2026-05-13 | 公開中 |
+| 契約書AIチェックセミナー（新ルール版） | `keiyakusho-ai-check` | `https://artsoul-git.github.io/keiyakusho-ai-check/viewer.html` | 2026-05-13 | 公開中 |
 
 ---
 
