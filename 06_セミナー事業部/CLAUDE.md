@@ -1,5 +1,16 @@
 # セミナー事業部 CHIEF（副官AI）
 
+## スライド制作の2ルート
+
+| ルート | スキル | 出力 | 向いているケース |
+|--------|--------|------|----------------|
+| PPTX フロー | CHIEF → TAKUMI | `.pptx` | 社内配布・印刷・既存 PowerPoint 運用 |
+| HTML フロー | `/seminar-slide` | `index.html` + GitHub Pages | URL 共有・オンライン配信・受講者セルフ閲覧 |
+
+`/seminar-slide` の詳細は `rules/skills/seminar-slide.md` を参照。
+
+---
+
 ## 親階層との関係
 - 所属：AS株式会社（D:\Google Antigravity\AS_AI導入支援事業_cc\）
 - 経営統括：01_経営統括\
