@@ -5,7 +5,7 @@ new-seminar.py — スライドビルダー CLI
 使い方:
   python new-seminar.py --slug my-seminar --title "マイセミナー"
   python new-seminar.py --slug my-seminar --title "マイセミナー" --template kawai-dark-v1
-  python new-seminar.py --slug my-slides --title "プレゼン" --images "C:\path\to\images"
+  python new-seminar.py --slug my-slides --title "プレゼン" --images "C:\\path\\to\\images"
   python new-seminar.py --list-templates
 
 生成先:
@@ -103,7 +103,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None)
         if not img_files:
             print(f"エラー: 対応画像ファイル（{', '.join(IMAGE_EXTS)}）が見つかりません: {images_dir}")
             sys.exit(1)
-        print(f"📷 画像ファイル {len(img_files)} 枚を検出しました。")
+        print(f"[OK] 画像ファイル {len(img_files)} 枚を検出しました。")
 
     # Copy template
     shutil.copytree(tpl_dir, out_dir)
@@ -125,7 +125,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None)
             generate_image_slides_js(title, [f.name for f in img_files]),
             encoding="utf-8"
         )
-        print(f"🖼  {len(img_files)} 枚の画像を img/ にコピーし、slides.js を生成しました。")
+        print(f"[IMG] {len(img_files)} 枚の画像を img/ にコピーし、slides.js を生成しました。")
     else:
         # Create empty slides.js
         slides_js.write_text(
@@ -178,7 +178,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None)
         html_file.write_text(text, encoding="utf-8")
 
     print(f"""
-✅ プロジェクト作成完了
+[DONE] プロジェクト作成完了
 ──────────────────────────────
 スラッグ     : {slug}
 タイトル     : {title}
