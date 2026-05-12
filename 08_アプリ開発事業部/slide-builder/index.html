@@ -290,6 +290,57 @@
     <textarea class="form-textarea" id="extracted-text" placeholder="抽出テキストがここに表示されます。手動でも入力できます。" style="min-height:120px;"></textarea>
   </div>
 
+  <!-- STEP 2.5: 画像モード（任意） -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">画像</span>画像モード — 連番画像からスライド生成（任意）</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:20px;">
+      PPTXでなく連番の画像ファイル（PNG・JPGなど）がある場合はこちら。<br>
+      Step 3のプロンプト生成は不要です。Step 4のコマンドに自動的に反映されます。
+    </p>
+
+    <!-- 方法A: CLIパス指定 -->
+    <div style="margin-bottom:20px;">
+      <div class="form-label" style="margin-bottom:8px;">方法A — CLIで一括処理（推奨）</div>
+      <p style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;">
+        画像フォルダの絶対パスを入力 → Step 4のコマンドに <code style="color:#6F911D;">--images</code> が追加されます。<br>
+        ファイル名は自動でナチュラルソート（slide001.png, slide002.png … または 1.png, 2.png, 10.png など）。
+      </p>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input type="text" class="form-input" id="images-path"
+          placeholder="C:\Users\kei\Pictures\seminar-images"
+          style="flex:1;font-family:monospace;font-size:12px;"
+          oninput="updateOutputs()">
+        <button class="btn btn-ghost" onclick="clearImagesPath()">クリア</button>
+      </div>
+    </div>
+
+    <!-- 方法B: ブラウザで選択 -->
+    <div>
+      <div class="form-label" style="margin-bottom:8px;">方法B — ブラウザで選択して slides.js をダウンロード</div>
+      <p style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;">
+        ブラウザからフォルダや複数ファイルを選択 → 自動でソートして slides.js を生成します。<br>
+        ダウンロードした slides.js を <code style="color:#6F911D;">projects/{slug}/js/</code> に、画像を <code style="color:#6F911D;">projects/{slug}/img/</code> に置いてください。
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+        <label class="btn btn-ghost" style="cursor:pointer;">
+          フォルダを選択
+          <input type="file" id="img-folder-input" webkitdirectory accept="image/*" style="display:none;" onchange="handleImageFiles(this.files)">
+        </label>
+        <label class="btn btn-ghost" style="cursor:pointer;">
+          複数ファイルを選択
+          <input type="file" id="img-multi-input" multiple accept="image/*" style="display:none;" onchange="handleImageFiles(this.files)">
+        </label>
+        <button class="btn btn-primary" id="dl-slides-btn" onclick="downloadSlidesJs()" style="display:none;">
+          slides.js をダウンロード
+        </button>
+      </div>
+      <div id="img-list" style="display:none;">
+        <div class="form-label" style="margin-bottom:6px;">検出した画像 (<span id="img-count">0</span>枚)</div>
+        <div class="output-box" id="img-list-box" style="min-height:60px;max-height:160px;overflow-y:auto;font-size:11px;"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- STEP 3: Kaiへの依頼プロンプト -->
   <div class="section">
     <div class="section-title"><span class="step-num">3</span>Kaiへの依頼プロンプト</div>
@@ -368,20 +419,85 @@
       return slug || 'my-seminar';
     }
 
+    /* ---- Image folder support ---- */
+    var _sortedImageNames = [];
+    var _slidesJsContent  = '';
+
+    function naturalKey(name) {
+      return name.replace(/(\d+)/g, function (m, n) { return n.padStart(10, '0'); });
+    }
+
+    function handleImageFiles(fileList) {
+      var files = Array.from(fileList).filter(function (f) {
+        return /\.(png|jpe?g|gif|webp|bmp)$/i.test(f.name);
+      });
+      if (!files.length) { alert('対応画像が見つかりません（PNG/JPG/GIF/WEBP/BMP）'); return; }
+      files.sort(function (a, b) {
+        return naturalKey(a.name) < naturalKey(b.name) ? -1 : naturalKey(a.name) > naturalKey(b.name) ? 1 : 0;
+      });
+      _sortedImageNames = files.map(function (f) { return f.name; });
+
+      var title = document.getElementById('title').value.trim() || 'セミナー';
+      _slidesJsContent = generateImageSlidesJs(title, _sortedImageNames);
+
+      document.getElementById('img-count').textContent = files.length;
+      document.getElementById('img-list-box').textContent = _sortedImageNames.join('\n');
+      document.getElementById('img-list').style.display = 'block';
+      document.getElementById('dl-slides-btn').style.display = 'inline-flex';
+    }
+
+    function generateImageSlidesJs(title, names) {
+      var lines = ['(function () {\n'];
+      var funcs = [];
+      names.forEach(function (name, i) {
+        var fn  = 'slide' + String(i + 1).padStart(2, '0');
+        var num = i + 1;
+        funcs.push(fn);
+        lines.push('  function ' + fn + '() {');
+        lines.push("    return '<section class=\"slide\" data-section=\"slides\" data-title=\"スライド" + num + "\" data-notes=\"\">' +");
+        lines.push("      '<div style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000;\">' +");
+        lines.push("        '<img src=\"img/" + name + "\" style=\"max-width:100%;max-height:100%;object-fit:contain;\" alt=\"スライド" + num + "\">' +");
+        lines.push("      '</div>' +");
+        lines.push("    '</section>';");
+        lines.push('  }\n');
+      });
+      lines.push('  window.SLIDES = [' + funcs.join(', ') + '];\n');
+      lines.push('})();\n');
+      return lines.join('\n');
+    }
+
+    function downloadSlidesJs() {
+      if (!_slidesJsContent) return;
+      var slug  = getSlug();
+      var blob  = new Blob([_slidesJsContent], { type: 'text/javascript' });
+      var a     = document.createElement('a');
+      a.href    = URL.createObjectURL(blob);
+      a.download = 'slides.js';
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function clearImagesPath() {
+      document.getElementById('images-path').value = '';
+      updateOutputs();
+    }
+
     function updateOutputs() {
-      var slug     = getSlug();
-      var title    = document.getElementById('title').value.trim() || 'セミナータイトル';
-      var template = document.getElementById('template').value;
-      var projPath = 'D:\\Google Antigravity\\AS_AI導入支援事業_cc\\08_アプリ開発事業部\\slide-builder\\projects\\' + slug;
+      var slug      = getSlug();
+      var title     = document.getElementById('title').value.trim() || 'セミナータイトル';
+      var template  = document.getElementById('template').value;
+      var imgPath   = document.getElementById('images-path').value.trim();
+      var projPath  = 'D:\\Google Antigravity\\AS_AI導入支援事業_cc\\08_アプリ開発事業部\\slide-builder\\projects\\' + slug;
 
       document.getElementById('slug-preview').textContent =
         slug ? 'スラッグ: ' + slug : '';
 
       var newCmd = 'cd "D:\\Google Antigravity\\AS_AI導入支援事業_cc"\n' +
-        'python 08_アプリ開発事業部\\slide-builder\\new-seminar.py \\\n' +
-        '  --slug "' + slug + '" \\\n' +
-        '  --title "' + title + '" \\\n' +
-        '  --template "' + template + '"';
+        'python 08_アプリ開発事業部\\slide-builder\\new-seminar.py `\n' +
+        '  --slug "' + slug + '" `\n' +
+        '  --title "' + title + '" `\n' +
+        '  --template "' + template + '"' +
+        (imgPath ? ' `\n  --images "' + imgPath + '"' : '');
       document.getElementById('new-cmd').textContent = newCmd;
 
       var deployCmd =

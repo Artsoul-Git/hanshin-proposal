@@ -5,6 +5,7 @@ new-seminar.py — スライドビルダー CLI
 使い方:
   python new-seminar.py --slug my-seminar --title "マイセミナー"
   python new-seminar.py --slug my-seminar --title "マイセミナー" --template kawai-dark-v1
+  python new-seminar.py --slug my-slides --title "プレゼン" --images "C:\path\to\images"
   python new-seminar.py --list-templates
 
 生成先:
@@ -12,6 +13,7 @@ new-seminar.py — スライドビルダー CLI
 """
 
 import argparse
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -21,6 +23,11 @@ TEMPLATES_DIR = SCRIPT_DIR / "templates"
 PROJECTS_DIR  = SCRIPT_DIR / "projects"
 
 SLUG_RULE = "英数字とハイフンのみ（例: sales-ai-seminar）"
+IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.bmp'}
+
+
+def natural_key(path: Path):
+    return [int(c) if c.isdigit() else c.lower() for c in re.split(r'(\d+)', path.name)]
 
 
 def list_templates():
@@ -45,7 +52,26 @@ def validate_slug(slug: str) -> bool:
     return bool(re.match(r'^[a-z0-9][a-z0-9\-]*[a-z0-9]$', slug))
 
 
-def create_seminar(slug: str, title: str, template: str):
+def generate_image_slides_js(title: str, image_names: list) -> str:
+    lines = ["(function () {\n"]
+    funcs = []
+    for i, name in enumerate(image_names, 1):
+        fn = f"slide{i:02d}"
+        funcs.append(fn)
+        lines.append(f"  function {fn}() {{")
+        lines.append(f"    return '<section class=\"slide\" data-section=\"slides\" data-title=\"スライド{i}\" data-notes=\"\">' +")
+        lines.append(f"      '<div style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000;\">' +")
+        lines.append(f"        '<img src=\"img/{name}\" style=\"max-width:100%;max-height:100%;object-fit:contain;\" alt=\"スライド{i}\">' +")
+        lines.append(f"      '</div>' +")
+        lines.append(f"    '</section>';")
+        lines.append(f"  }}\n")
+
+    lines.append(f"  window.SLIDES = [{', '.join(funcs)}];\n")
+    lines.append("})();\n")
+    return "\n".join(lines)
+
+
+def create_seminar(slug: str, title: str, template: str, images_dir: str = None):
     tpl_dir  = TEMPLATES_DIR / template
     out_dir  = PROJECTS_DIR / slug
 
@@ -63,6 +89,22 @@ def create_seminar(slug: str, title: str, template: str):
         print(f"エラー: '{out_dir}' はすでに存在します。別のスラッグを指定してください。")
         sys.exit(1)
 
+    # Validate images dir if specified
+    img_files = []
+    if images_dir:
+        img_path = Path(images_dir)
+        if not img_path.exists() or not img_path.is_dir():
+            print(f"エラー: 画像フォルダが見つかりません: {images_dir}")
+            sys.exit(1)
+        img_files = sorted(
+            [f for f in img_path.iterdir() if f.suffix.lower() in IMAGE_EXTS],
+            key=natural_key
+        )
+        if not img_files:
+            print(f"エラー: 対応画像ファイル（{', '.join(IMAGE_EXTS)}）が見つかりません: {images_dir}")
+            sys.exit(1)
+        print(f"📷 画像ファイル {len(img_files)} 枚を検出しました。")
+
     # Copy template
     shutil.copytree(tpl_dir, out_dir)
 
@@ -72,9 +114,21 @@ def create_seminar(slug: str, title: str, template: str):
         if target.exists():
             target.unlink()
 
-    # Create empty slides.js
+    # Handle image mode
     slides_js = out_dir / "js" / "slides.js"
-    slides_js.write_text(
+    if img_files:
+        img_out = out_dir / "img"
+        img_out.mkdir()
+        for f in img_files:
+            shutil.copy2(f, img_out / f.name)
+        slides_js.write_text(
+            generate_image_slides_js(title, [f.name for f in img_files]),
+            encoding="utf-8"
+        )
+        print(f"🖼  {len(img_files)} 枚の画像を img/ にコピーし、slides.js を生成しました。")
+    else:
+        # Create empty slides.js
+        slides_js.write_text(
         f"""(function () {{
 
   function H(title) {{
@@ -162,6 +216,7 @@ def main():
     parser.add_argument("--slug",     help=f"GitHubスラッグ（{SLUG_RULE}）")
     parser.add_argument("--title",    help="セミナータイトル")
     parser.add_argument("--template", default="kawai-dark-v1", help="テンプレート名（デフォルト: kawai-dark-v1）")
+    parser.add_argument("--images",   help="画像フォルダのパス（連番画像からスライドを自動生成）")
     parser.add_argument("--list-templates", action="store_true", help="利用可能なテンプレートを表示")
 
     args = parser.parse_args()
@@ -175,7 +230,7 @@ def main():
         print("\nエラー: --slug と --title は必須です。")
         sys.exit(1)
 
-    create_seminar(args.slug, args.title, args.template)
+    create_seminar(args.slug, args.title, args.template, args.images)
 
 
 if __name__ == "__main__":
