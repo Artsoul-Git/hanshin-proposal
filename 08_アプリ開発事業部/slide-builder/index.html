@@ -341,6 +341,46 @@
     </div>
   </div>
 
+  <!-- STEP 挿絵: 挿絵ファイル管理（任意） -->
+  <div class="section">
+    <div class="section-title"><span class="step-num">挿絵</span>挿絵ファイル管理（任意）</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:16px;">
+      スライドに埋め込む挿絵・アイコン・図解画像はここで管理します。<br>
+      選択したファイルは <code style="color:#6F911D;">projects/{slug}/img/</code> に置いてください。
+    </p>
+
+    <!-- CLIで一括コピー -->
+    <div style="margin-bottom:20px;">
+      <div class="form-label" style="margin-bottom:8px;">方法A — CLIで挿絵フォルダごとコピー（初回作成時）</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input type="text" class="form-input" id="assets-path"
+          placeholder="C:\Users\kei\Pictures\illustrations"
+          style="flex:1;font-family:monospace;font-size:12px;"
+          oninput="updateOutputs()">
+        <button class="btn btn-ghost" onclick="clearAssetsPath()">クリア</button>
+      </div>
+      <p style="font-size:11px;color:rgba(255,255,255,.3);margin-top:6px;">
+        Step 4のコマンドに <code style="color:#6F911D;">--assets</code> が追加されます。slides.js は変更されません。
+      </p>
+    </div>
+
+    <!-- ブラウザで選択してスニペット生成 -->
+    <div>
+      <div class="form-label" style="margin-bottom:8px;">方法B — ブラウザで選択して &lt;img&gt; スニペットを取得</div>
+      <p style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;">
+        挿絵ファイルを選ぶと、slides.js に貼り付けられる <code style="color:#6F911D;">&lt;img&gt;</code> スニペットを生成します。
+      </p>
+      <label class="btn btn-ghost" style="cursor:pointer;">
+        挿絵ファイルを選択（複数可）
+        <input type="file" id="asset-files-input" multiple accept="image/*" style="display:none;" onchange="handleAssetFiles(this.files)">
+      </label>
+      <div id="asset-snippets" style="display:none;margin-top:14px;">
+        <div class="form-label" style="margin-bottom:8px;">生成された &lt;img&gt; スニペット（slides.js に貼り付けて使用）</div>
+        <div id="asset-snippet-list"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- STEP 3: Kaiへの依頼プロンプト -->
   <div class="section">
     <div class="section-title"><span class="step-num">3</span>Kaiへの依頼プロンプト</div>
@@ -482,12 +522,65 @@
       updateOutputs();
     }
 
+    function clearAssetsPath() {
+      document.getElementById('assets-path').value = '';
+      updateOutputs();
+    }
+
+    function handleAssetFiles(fileList) {
+      var files = Array.from(fileList).filter(function (f) {
+        return /\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(f.name);
+      });
+      if (!files.length) { alert('対応画像が見つかりません'); return; }
+      files.sort(function (a, b) {
+        return naturalKey(a.name) < naturalKey(b.name) ? -1 : 1;
+      });
+
+      var listEl = document.getElementById('asset-snippet-list');
+      listEl.innerHTML = '';
+
+      files.forEach(function (f) {
+        var snippet = '<img src="img/' + f.name + '" style="width:auto;height:160px;object-fit:contain;" alt="' + f.name.replace(/\.[^.]+$/, '') + '">';
+        var row = document.createElement('div');
+        row.style.cssText = 'margin-bottom:10px;';
+        row.innerHTML =
+          '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:4px;">' + f.name + '</div>' +
+          '<div style="display:flex;gap:8px;align-items:center;">' +
+            '<code style="flex:1;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:4px;padding:6px 10px;font-size:11px;color:#6F911D;word-break:break-all;">' +
+              escHtml(snippet) +
+            '</code>' +
+            '<button class="btn btn-ghost" style="font-size:11px;padding:6px 12px;flex-shrink:0;" onclick="copySnippet(this, \'' + escAttr(snippet) + '\')">' +
+              'コピー' +
+            '</button>' +
+          '</div>';
+        listEl.appendChild(row);
+      });
+
+      document.getElementById('asset-snippets').style.display = 'block';
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function escAttr(s) {
+      return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    }
+
+    function copySnippet(btn, text) {
+      navigator.clipboard.writeText(text).then(function () {
+        var orig = btn.textContent;
+        btn.textContent = 'コピー完了';
+        setTimeout(function () { btn.textContent = orig; }, 1500);
+      });
+    }
+
     function updateOutputs() {
       var slug      = getSlug();
       var title     = document.getElementById('title').value.trim() || 'セミナータイトル';
       var template  = document.getElementById('template').value;
-      var imgPath   = document.getElementById('images-path').value.trim();
-      var projPath  = 'D:\\Google Antigravity\\AS_AI導入支援事業_cc\\08_アプリ開発事業部\\slide-builder\\projects\\' + slug;
+      var imgPath    = document.getElementById('images-path').value.trim();
+      var assetsPath = document.getElementById('assets-path').value.trim();
+      var projPath   = 'D:\\Google Antigravity\\AS_AI導入支援事業_cc\\08_アプリ開発事業部\\slide-builder\\projects\\' + slug;
 
       document.getElementById('slug-preview').textContent =
         slug ? 'スラッグ: ' + slug : '';
@@ -497,7 +590,8 @@
         '  --slug "' + slug + '" `\n' +
         '  --title "' + title + '" `\n' +
         '  --template "' + template + '"' +
-        (imgPath ? ' `\n  --images "' + imgPath + '"' : '');
+        (imgPath    ? ' `\n  --images "' + imgPath    + '"' : '') +
+        (assetsPath ? ' `\n  --assets "' + assetsPath + '"' : '');
       document.getElementById('new-cmd').textContent = newCmd;
 
       var deployCmd =

@@ -71,7 +71,26 @@ def generate_image_slides_js(title: str, image_names: list) -> str:
     return "\n".join(lines)
 
 
-def create_seminar(slug: str, title: str, template: str, images_dir: str = None):
+def copy_assets(assets_dir: str, img_out: Path) -> int:
+    asset_path = Path(assets_dir)
+    if not asset_path.exists() or not asset_path.is_dir():
+        print(f"[WARN] 挿絵フォルダが見つかりません: {assets_dir}")
+        return 0
+    files = [f for f in asset_path.iterdir() if f.suffix.lower() in IMAGE_EXTS]
+    count = 0
+    for f in sorted(files, key=natural_key):
+        dst = img_out / f.name
+        if dst.exists():
+            print(f"[SKIP] 同名ファイルが既に存在: {f.name}")
+        else:
+            shutil.copy2(f, dst)
+            count += 1
+    if count:
+        print(f"[ASSET] {count} 枚の挿絵を img/ にコピーしました。")
+    return count
+
+
+def create_seminar(slug: str, title: str, template: str, images_dir: str = None, assets_dir: str = None):
     tpl_dir  = TEMPLATES_DIR / template
     out_dir  = PROJECTS_DIR / slug
 
@@ -116,8 +135,8 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None)
 
     # Handle image mode
     slides_js = out_dir / "js" / "slides.js"
+    img_out = out_dir / "img"
     if img_files:
-        img_out = out_dir / "img"
         img_out.mkdir()
         for f in img_files:
             shutil.copy2(f, img_out / f.name)
@@ -160,6 +179,11 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None)
 """,
         encoding="utf-8"
     )
+
+    # Copy assets (illustration files)
+    if assets_dir:
+        img_out.mkdir(exist_ok=True)
+        copy_assets(assets_dir, img_out)
 
     # Create manual.html (local only — matching the template's design)
     manual_src = SCRIPT_DIR.parent.parent / "06_セミナー事業部" / "outputs" / "契約書AIチェックセミナー" / "07_HTML版_v2" / "manual.html"
@@ -217,6 +241,7 @@ def main():
     parser.add_argument("--title",    help="セミナータイトル")
     parser.add_argument("--template", default="kawai-dark-v1", help="テンプレート名（デフォルト: kawai-dark-v1）")
     parser.add_argument("--images",   help="画像フォルダのパス（連番画像からスライドを自動生成）")
+    parser.add_argument("--assets",   help="挿絵フォルダのパス（img/ にコピーのみ。slides.js は変更しない）")
     parser.add_argument("--list-templates", action="store_true", help="利用可能なテンプレートを表示")
 
     args = parser.parse_args()
@@ -230,7 +255,7 @@ def main():
         print("\nエラー: --slug と --title は必須です。")
         sys.exit(1)
 
-    create_seminar(args.slug, args.title, args.template, args.images)
+    create_seminar(args.slug, args.title, args.template, args.images, args.assets)
 
 
 if __name__ == "__main__":
