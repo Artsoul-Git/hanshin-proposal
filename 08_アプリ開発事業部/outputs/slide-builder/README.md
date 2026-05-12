@@ -7,7 +7,7 @@
 ## 全体構成
 
 ```
-slide-builder/
+08_アプリ開発事業部/outputs/slide-builder/   ← ツール本体（ここ）
 ├── index.html              ← ブラウザ補助ツール（プロンプト生成・コマンド確認）
 ├── new-seminar.py          ← CLI: テンプレートから新規プロジェクト生成
 ├── templates/              ← デザインテンプレート
@@ -16,8 +16,13 @@ slide-builder/
 │       ├── js/             ← ロジック（app.js, presenter.js, slides-template.js）
 │       ├── *.html          ← 各ページテンプレート
 │       └── template-spec.md ← デザイン仕様書
-├── projects/               ← 生成済みプロジェクト（git管理外 or 個別repo）
+├── projects/               ← 作業中ステージング（完成後は06_セミナー事業部に移動）
 └── README.md               ← このファイル
+
+06_セミナー事業部/outputs/                   ← セミナー成果物（GitHub Pages公開済み）
+├── 契約書AIチェックセミナー/
+├── morai-prompt/           ← もらったプロンプトを使い倒そう！
+└── m2/                     ← 同セミナー 画像版
 ```
 
 ---
@@ -49,21 +54,21 @@ Kai がヒアリング → slides.js 生成 → GitHub デプロイまで自動�
 **ステップ3: プロジェクトフォルダを生成**
 
 ```powershell
-python 08_アプリ開発事業部/slide-builder/new-seminar.py `
+python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py `
   --slug "my-seminar" `
   --title "マイセミナー"
 ```
 
-生成先: `projects/my-seminar/`
+生成先（ステージング）: `outputs/slide-builder/projects/my-seminar/`
 
 **ステップ4: slides.js を配置**
 
-Kai が生成した slides.js を `projects/my-seminar/js/slides.js` に保存。
+Kai が生成した slides.js を `outputs/slide-builder/projects/my-seminar/js/slides.js` に保存。
 
 **ステップ5: GitHub にデプロイ**
 
 ```powershell
-cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\my-seminar"
+cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\my-seminar"
 git init
 git config user.email "uemura@artsoul.jp"
 git config user.name "Kei Uemura"
@@ -75,10 +80,19 @@ git push -u origin master
 git checkout -b gh-pages && git push origin gh-pages && git checkout master
 ```
 
+**ステップ5.5: 成果物をセミナー事業部に移動**
+
+GitHub デプロイ完了後、ステージングから正規の保存場所へ移動する。
+
+```powershell
+Move-Item "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\my-seminar" `
+          "D:\Google Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\my-seminar"
+```
+
 **ステップ6: 初回設定**
 
 1. `https://artsoul-git.github.io/my-seminar/admin.html` を開く
-2. パスワードを設定（初期パスワードは `projects/my-seminar/manual.html` を参照）
+2. パスワードを設定（初期パスワードは `06_セミナー事業部/outputs/my-seminar/manual.html` を参照）
 3. 受講者用URLをコピーして共有
 
 ---
@@ -140,11 +154,14 @@ GitHub Pages で正常に動くよう、以下のルールを守ること。
 
 ```powershell
 # テンプレート一覧を確認
-python 08_アプリ開発事業部/slide-builder/new-seminar.py --list-templates
+python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py --list-templates
 
 # ヘルプ
-python 08_アプリ開発事業部/slide-builder/new-seminar.py --help
+python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py --help
 
-# プロジェクト一覧
-ls 08_アプリ開発事業部/slide-builder/projects/
+# 作業中プロジェクト一覧（ステージング）
+ls 08_アプリ開発事業部/outputs/slide-builder/projects/
+
+# 完成済みセミナー一覧
+ls 06_セミナー事業部/outputs/
 ```

@@ -123,12 +123,12 @@ slides.js を生成したら、以下を実行する。
 
 ```bash
 # 1. テンプレートから新規プロジェクトを作成
-python 08_アプリ開発事業部/slide-builder/new-seminar.py \
+python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py \
   --slug "{スラッグ}" \
   --title "{タイトル}"
 
 # 2. slides.js を書き込む
-# Write ツールで 08_アプリ開発事業部/slide-builder/projects/{スラッグ}/js/slides.js に書き込む
+# Write ツールで 08_アプリ開発事業部/outputs/slide-builder/projects/{スラッグ}/js/slides.js に書き込む
 ```
 
 ---
@@ -137,7 +137,7 @@ python 08_アプリ開発事業部/slide-builder/new-seminar.py \
 
 ```bash
 $slug = "{スラッグ}"
-$projDir = "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\$slug"
+$projDir = "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
 
 cd $projDir
 git init
@@ -153,6 +153,22 @@ git checkout -b gh-pages
 git push origin gh-pages
 git checkout master
 ```
+
+---
+
+### STEP 5.5: 成果物をセミナー事業部に移動
+
+GitHub デプロイ完了後、ステージングからセミナー事業部の outputs へ移動する。
+
+```powershell
+$slug = "{スラッグ}"
+$staging = "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
+$seminar = "D:\Google Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\$slug"
+
+Move-Item $staging $seminar
+```
+
+移動後の確認先: `06_セミナー事業部/outputs/{スラッグ}/`
 
 ---
 
@@ -175,9 +191,9 @@ git checkout master
 
 ## テンプレート参照先
 
-- **テンプレートファイル:** `08_アプリ開発事業部/slide-builder/templates/kawai-dark-v1/`
-- **デザイン仕様:** `08_アプリ開発事業部/slide-builder/templates/kawai-dark-v1/template-spec.md`
-- **slides.js 骨格:** `08_アプリ開発事業部/slide-builder/templates/kawai-dark-v1/js/slides-template.js`
+- **テンプレートファイル:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/`
+- **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/template-spec.md`
+- **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/js/slides-template.js`
 
 ---
 

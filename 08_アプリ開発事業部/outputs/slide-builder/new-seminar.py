@@ -8,8 +8,10 @@ new-seminar.py — スライドビルダー CLI
   python new-seminar.py --slug my-slides --title "プレゼン" --images "C:\\path\\to\\images"
   python new-seminar.py --list-templates
 
-生成先:
-  08_アプリ開発事業部/slide-builder/projects/{slug}/
+生成先（ステージング）:
+  08_アプリ開発事業部/outputs/slide-builder/projects/{slug}/
+完成後の保存先:
+  06_セミナー事業部/outputs/{slug}/  ← GitHub デプロイ後に移動すること
 """
 
 import argparse
@@ -186,7 +188,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None,
         copy_assets(assets_dir, img_out)
 
     # Create manual.html (local only — matching the template's design)
-    manual_src = SCRIPT_DIR.parent.parent / "06_セミナー事業部" / "outputs" / "契約書AIチェックセミナー" / "07_HTML版_v2" / "manual.html"
+    manual_src = SCRIPT_DIR.parent.parent.parent / "06_セミナー事業部" / "outputs" / "契約書AIチェックセミナー" / "07_HTML版_v2" / "manual.html"
     manual_dst = out_dir / "manual.html"
     if manual_src.exists():
         content = manual_src.read_text(encoding="utf-8")
