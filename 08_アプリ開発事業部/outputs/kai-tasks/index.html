@@ -1,0 +1,2635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kai Tasks</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface2: #22222f;
+  --border: #2e2e40;
+  --accent: #6c63ff;
+  --green: #43e97b;
+  --yellow: #f9ca24;
+  --red: #ff6b6b;
+  --orange: #ff9f43;
+  --text: #e8e8f0;
+  --text2: #8888aa;
+  --big: #ff9f43;
+  --med: #54a0ff;
+  --small: #a29bfe;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; min-height: 100vh; }
+
+/* ── Layout ── */
+.app { display: grid; grid-template-columns: 268px 1fr; min-height: 100vh; }
+.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 16px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+.main { padding: 28px 32px; overflow-y: auto; min-height: 100vh; }
+
+/* ── Logo + Live ── */
+.logo-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 0 10px; border-bottom: 1px solid var(--border); }
+.logo { font-size: 17px; font-weight: 700; color: var(--accent); letter-spacing: 1px; }
+.logo span { color: var(--text2); font-size: 11px; font-weight: 400; margin-left: 4px; }
+.live-indicator { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; color: var(--text2); letter-spacing: 0.5px; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); transition: background 0.4s; }
+.live-dot.connected { background: var(--green); animation: pulse 2s infinite; }
+.live-dot.error { background: var(--red); }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ── Search ── */
+.search-wrap { position: relative; }
+.search-input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 7px 10px 7px 30px; font-size: 12px; font-family: inherit; transition: border-color .15s; outline: none; }
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text2); }
+.search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--text2); pointer-events: none; }
+.search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text2); cursor: pointer; display: none; background: none; border: none; padding: 2px; }
+
+/* ── Sidebar labels ── */
+.sidebar-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text2); padding: 2px 0; }
+.project-list { display: flex; flex-direction: column; gap: 3px; flex: 1; overflow-y: auto; min-height: 40px; }
+.project-item { padding: 8px 10px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+.project-item:hover { background: var(--surface2); }
+.project-item.active { background: var(--surface2); border-color: var(--accent); }
+.proj-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 5px; }
+.proj-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.proj-dot.active { background: var(--green); }
+.proj-dot.completed { background: var(--text2); }
+.proj-dot.archived { background: var(--border); }
+.proj-meta { font-size: 10px; color: var(--text2); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+.proj-mini-bar { flex: 1; height: 3px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.proj-mini-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width .3s; }
+.proj-search-match { font-size: 10px; color: var(--accent); margin-top: 2px; }
+
+/* ── Kai Feed ── */
+.kai-feed { border-top: 1px solid var(--border); padding-top: 8px; }
+.feed-list { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+.feed-item { padding: 6px 8px; background: var(--bg); border-radius: 6px; border: 1px solid var(--border); cursor: pointer; transition: border-color .15s; }
+.feed-item:hover { border-color: var(--accent); }
+.feed-project { font-size: 10px; font-weight: 700; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.feed-action { font-size: 11px; color: var(--text); margin-top: 2px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.feed-time { font-size: 10px; color: var(--text2); margin-top: 2px; }
+.feed-empty { font-size: 11px; color: var(--text2); padding: 4px 0; }
+.feed-new { animation: feedFlash .6s; }
+@keyframes feedFlash { 0%{background:rgba(108,99,255,.25)} 100%{background:var(--bg)} }
+
+/* ── Buttons ── */
+.btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+.btn-primary { background: var(--accent); color: #fff; justify-content: center; }
+.btn-primary:hover { background: #5a52e8; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-ghost { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--surface2); color: var(--text); }
+.btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+.btn-danger:hover { background: rgba(255,107,107,0.1); }
+.btn-success { background: var(--green); color: #000; }
+.btn-success:hover { background: #36d467; }
+
+/* ── Dashboard ── */
+.dashboard { padding: 0 0 40px; }
+.dash-hero { margin-bottom: 28px; }
+.dash-hero h1 { font-size: 26px; font-weight: 800; }
+.dash-hero p { color: var(--text2); font-size: 13px; margin-top: 6px; }
+.dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: border-color .15s; }
+.stat-card:hover { border-color: var(--accent); }
+.stat-card.warn { border-color: rgba(255,107,107,.4); }
+.stat-num { font-size: 32px; font-weight: 800; line-height: 1; }
+.stat-num.green { color: var(--green); }
+.stat-num.yellow { color: var(--yellow); }
+.stat-num.red { color: var(--red); }
+.stat-label { font-size: 11px; color: var(--text2); margin-top: 6px; font-weight: 600; letter-spacing: .5px; }
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.dash-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.dash-panel-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); margin-bottom: 14px; }
+.active-proj-item { padding: 10px 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid transparent; transition: border-color .15s; }
+.active-proj-item:hover { border-color: var(--accent); }
+.active-proj-name { font-size: 13px; font-weight: 600; }
+.active-proj-goal { font-size: 11px; color: var(--text2); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.active-proj-bar-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.active-proj-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.active-proj-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 99px; transition: width .4s; }
+.active-proj-pct { font-size: 11px; color: var(--text2); min-width: 28px; text-align: right; }
+.active-proj-counts { font-size: 10px; color: var(--text2); margin-top: 3px; }
+.dash-feed-item { padding: 8px 10px; background: var(--surface2); border-radius: 8px; margin-bottom: 6px; cursor: pointer; border: 1px solid transparent; transition: border-color .15s; }
+.dash-feed-item:hover { border-color: var(--accent); }
+.dash-feed-project { font-size: 10px; font-weight: 700; color: var(--accent); }
+.dash-feed-action { font-size: 12px; color: var(--text); margin-top: 2px; line-height: 1.4; }
+.dash-feed-time { font-size: 10px; color: var(--text2); margin-top: 3px; }
+.dash-empty { color: var(--text2); font-size: 12px; padding: 8px 0; }
+.dash-overdue-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; background: rgba(255,107,107,.08); border: 1px solid rgba(255,107,107,.2); border-radius: 8px; margin-bottom: 6px; cursor: pointer; }
+.dash-overdue-item:hover { border-color: var(--red); }
+.overdue-task-name { font-size: 12px; }
+.overdue-task-proj { font-size: 10px; color: var(--text2); }
+.overdue-badge { font-size: 10px; color: var(--red); font-weight: 700; }
+
+/* ── Main header ── */
+.main-header { margin-bottom: 24px; }
+.main-header h1 { font-size: 21px; font-weight: 700; }
+.goal-text { margin-top: 6px; font-size: 13px; color: var(--text2); line-height: 1.6; }
+.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-left: 10px; }
+.status-badge.active { background: rgba(67,233,123,.15); color: var(--green); }
+.status-badge.completed { background: rgba(136,136,170,.15); color: var(--text2); }
+.status-badge.archived { background: rgba(46,46,64,.5); color: var(--border); }
+.progress-bar-wrap { margin-top: 12px; }
+.progress-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-bottom: 5px; }
+.progress-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 99px; transition: width .4s; }
+.header-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+/* ── Tabs ── */
+.tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 3px; margin-bottom: 22px; width: fit-content; }
+.tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text2); transition: all .15s; border: none; background: transparent; }
+.tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+
+/* ── 1-3-5 ── */
+.task-section { margin-bottom: 28px; }
+.task-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.task-section-title { display: flex; align-items: center; gap: 10px; }
+.task-badge { width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+.task-badge.big { background: rgba(255,159,67,.2); color: var(--big); }
+.task-badge.med { background: rgba(84,160,255,.2); color: var(--med); }
+.task-badge.small { background: rgba(162,155,254,.2); color: var(--small); }
+.task-section-name { font-size: 13px; font-weight: 700; }
+.task-count { font-size: 11px; color: var(--text2); }
+.section-divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* ── Task Cards ── */
+.task-cards { display: flex; flex-direction: column; gap: 8px; }
+.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; transition: border-color .15s; position: relative; }
+.task-card:hover { border-color: var(--accent); }
+.task-card.done { opacity: .55; }
+.task-card.big { border-left: 3px solid var(--big); }
+.task-card.med { border-left: 3px solid var(--med); }
+.task-card.small { border-left: 3px solid var(--small); }
+.task-card-top { display: flex; align-items: flex-start; gap: 10px; }
+.task-checkbox { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--border); background: transparent; cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+.task-checkbox.done { background: var(--green); border-color: var(--green); }
+.task-checkbox.in_progress { background: rgba(249,202,36,.2); border-color: var(--yellow); }
+.task-checkbox svg { display: none; }
+.task-checkbox.done svg { display: block; }
+.task-info { flex: 1; min-width: 0; }
+.task-title { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.task-card.done .task-title { text-decoration: line-through; color: var(--text2); }
+.task-desc { font-size: 11px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+.task-meta { display: flex; align-items: center; gap: 8px; margin-top: 7px; flex-wrap: wrap; }
+.task-due { font-size: 11px; color: var(--text2); }
+.task-due.overdue { color: var(--red); }
+.task-status-pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+.task-status-pill.todo { background: rgba(136,136,170,.15); color: var(--text2); }
+.task-status-pill.in_progress { background: rgba(249,202,36,.15); color: var(--yellow); }
+.task-status-pill.done { background: rgba(67,233,123,.15); color: var(--green); }
+.task-actions { display: flex; gap: 4px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.icon-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--text2); display: flex; align-items: center; justify-content: center; transition: all .15s; font-size: 13px; }
+.icon-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--text2); }
+.icon-btn.del:hover { color: var(--red); border-color: var(--red); }
+.icon-btn.mindmap:hover { color: #a29bfe; border-color: #a29bfe; }
+.icon-btn.roadmap:hover { color: var(--med); border-color: var(--med); }
+.icon-btn.links:hover { color: var(--green); border-color: var(--green); }
+.has-badge { position: relative; }
+.has-badge::after { content: attr(data-count); position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff; font-size: 9px; font-weight: 700; border-radius: 99px; padding: 1px 4px; min-width: 14px; text-align: center; line-height: 12px; }
+.task-links { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
+.task-link-item { display: flex; align-items: center; gap: 8px; padding: 5px 8px; background: var(--surface2); border-radius: 6px; text-decoration: none; transition: background .15s; }
+.task-link-item:hover { background: var(--border); }
+.task-link-icon { font-size: 11px; flex-shrink: 0; }
+.task-link-info { flex: 1; min-width: 0; }
+.task-link-title { font-size: 12px; font-weight: 600; color: var(--accent); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-link-desc { font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.task-empty { padding: 14px; border: 2px dashed var(--border); border-radius: 10px; text-align: center; color: var(--text2); font-size: 12px; cursor: pointer; transition: all .15s; }
+.task-empty:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Kanban ── */
+.kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.kanban-col { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; min-height: 200px; transition: border-color .15s; }
+.kanban-col.drag-over { border-color: var(--accent); background: rgba(108,99,255,.06); }
+.kanban-col-header { padding: 12px 14px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.kanban-col-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; }
+.kanban-col-title.todo { color: var(--text2); }
+.kanban-col-title.in_progress { color: var(--yellow); }
+.kanban-col-title.done { color: var(--green); }
+.kanban-count { font-size: 12px; font-weight: 700; background: var(--surface2); border: 1px solid var(--border); border-radius: 99px; padding: 1px 8px; color: var(--text2); }
+.kanban-cards { flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+.kanban-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; cursor: grab; transition: all .15s; position: relative; }
+.kanban-card:active { cursor: grabbing; }
+.kanban-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(108,99,255,.15); }
+.kanban-card.big { border-left: 3px solid var(--big); }
+.kanban-card.med { border-left: 3px solid var(--med); }
+.kanban-card.small { border-left: 3px solid var(--small); }
+.kanban-card.dragging { opacity: .4; }
+.kanban-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.kanban-card-type { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: var(--surface); }
+.kanban-card-type.big { color: var(--big); }
+.kanban-card-type.med { color: var(--med); }
+.kanban-card-type.small { color: var(--small); }
+.kanban-card-actions { display: flex; gap: 3px; }
+.kanban-card-title { font-size: 12px; font-weight: 600; line-height: 1.4; margin-bottom: 8px; }
+.kanban-card-title.done { text-decoration: line-through; opacity: .6; }
+.kanban-card-due { font-size: 10px; color: var(--text2); margin-top: 4px; }
+.kanban-card-due.overdue { color: var(--red); }
+.kanban-card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.kanban-empty { padding: 20px; text-align: center; color: var(--text2); font-size: 11px; border: 2px dashed var(--border); border-radius: 8px; }
+
+/* ── History / Memo ── */
+.history-section { margin-top: 8px; }
+.history-list { display: flex; flex-direction: column; }
+.history-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.history-item:last-child { border-bottom: none; }
+.history-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 4px; flex-shrink: 0; }
+.history-content { flex: 1; }
+.history-action { font-size: 12px; font-weight: 600; }
+.history-detail { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.history-time { font-size: 10px; color: var(--border); margin-top: 2px; }
+.memo-section { margin-top: 8px; }
+.memo-section h3 { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 10px; }
+.memo-area { width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 14px; font-size: 13px; line-height: 1.7; resize: vertical; min-height: 80px; font-family: inherit; transition: border-color .15s; }
+.memo-area:focus { outline: none; border-color: var(--accent); }
+
+/* ── Modal (small) ── */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 22px; width: 480px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+.modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 18px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); padding: 9px 12px; font-size: 13px; font-family: inherit; transition: border-color .15s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+.form-group textarea { min-height: 60px; resize: vertical; line-height: 1.6; }
+.form-row { display: flex; gap: 10px; }
+.form-row .form-group { flex: 1; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+
+/* ── Modal (wide: Mermaid) ── */
+.modal-wide { width: min(1220px, 98vw); height: 90vh; overflow: hidden; display: flex; flex-direction: column; padding: 0; }
+/* CRITICAL: wideContent must participate in flex chain */
+.modal-wide > div { flex: 1; display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.wide-header { padding: 14px 20px 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wide-header-left h2 { font-size: 16px; font-weight: 700; }
+.wide-header-left .subtitle { font-size: 11px; color: var(--text2); margin-top: 3px; }
+.wide-header-right { display: flex; gap: 6px; flex-shrink: 0; }
+.wide-body { display: grid; flex: 1; overflow: hidden; min-height: 0; }
+.wide-body-2col { grid-template-columns: 1fr 1fr; }
+.wide-body-3col { grid-template-columns: 210px 1fr 1fr; }
+.wide-editor { border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; min-height: 0; }
+.wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
+.mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 8px 12px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
+.wide-preview { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+.wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
+.mmd-preview { flex: 1; min-height: 0; overflow: auto; padding: 12px; display: flex; align-items: flex-start; justify-content: center; background: var(--bg); position: relative; cursor: zoom-in; }
+.mmd-preview svg { max-width: 100%; height: auto; display: block; pointer-events: none; }
+.mmd-preview-hint { position: absolute; bottom: 8px; right: 8px; font-size: 10px; color: var(--text2); background: rgba(15,15,19,.7); padding: 2px 7px; border-radius: 99px; pointer-events: none; }
+.mmd-error { color: var(--red); font-size: 11px; padding: 14px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
+.wide-footer { padding: 10px 16px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; gap: 10px; flex-wrap: wrap; background: var(--surface); border-radius: 0 0 16px 16px; }
+.wide-footer-left { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.wide-footer-right { display: flex; gap: 6px; flex-shrink: 0; }
+.tmpl-label { font-size: 10px; color: var(--text2); white-space: nowrap; }
+.btn-tmpl { padding: 4px 9px; font-size: 11px; font-weight: 600; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; transition: all .15s; white-space: nowrap; }
+.btn-tmpl:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── AI Panel ── */
+.ai-panel { display: flex; flex-direction: column; gap: 6px; padding: 10px; background: rgba(108,99,255,.04); border-right: 1px solid var(--border); overflow: hidden; min-height: 0; }
+.ai-panel-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); flex-shrink: 0; }
+.ai-textarea { flex: 1; min-height: 0; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 7px 9px; font-size: 11px; font-family: inherit; line-height: 1.6; resize: none; outline: none; transition: border-color .15s; }
+.ai-textarea:focus { border-color: var(--accent); }
+.ai-sep { height: 1px; background: var(--border); flex-shrink: 0; }
+.btn-ai { flex-shrink: 0; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer; font-size: 11px; font-weight: 600; transition: all .15s; text-align: center; width: 100%; }
+.btn-ai:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-ai-apply { background: rgba(108,99,255,.12); color: var(--accent); border-color: rgba(108,99,255,.35); }
+.btn-ai-apply:hover { background: var(--accent); color: #fff; }
+
+/* ── Links Modal ── */
+.modal-links { width: min(600px, 95vw); }
+.link-card { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--border); }
+.link-card-body { flex: 1; min-width: 0; }
+.link-card-title { font-size: 13px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.link-card-title:hover { text-decoration: underline; }
+.link-card-url { font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.link-card-desc { font-size: 12px; color: var(--text); margin-top: 4px; line-height: 1.5; }
+.link-add-form { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 14px; }
+.link-add-form h4 { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+.link-list-label { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 8px; }
+.link-empty { text-align: center; color: var(--text2); font-size: 13px; padding: 20px; }
+
+/* ── Keyboard hints ── */
+.kbd-hint { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 10px; color: var(--text2); letter-spacing: .5px; z-index: 100; pointer-events: none; opacity: 0; transition: opacity .3s; }
+.kbd-hint.show { opacity: 1; }
+kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size: 10px; font-family: monospace; color: var(--text); }
+
+/* ── Toast ── */
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; font-size: 13px; font-weight: 600; z-index: 2000; transform: translateY(80px); opacity: 0; transition: all .3s; max-width: 360px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.ok { border-color: var(--green); color: var(--green); }
+.toast.err { border-color: var(--red); color: var(--red); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Pivot / Thinking Transition ── */
+.pivot-timeline { position: relative; padding-left: 26px; }
+.pivot-timeline::before { content: ''; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.pivot-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; position: relative; transition: border-color .15s; }
+.pivot-card:hover { border-color: var(--accent); }
+.pivot-card::before { content: ''; position: absolute; left: -22px; top: 18px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.pivot-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.pivot-type-badge { display: inline-flex; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; margin-bottom: 7px; letter-spacing: .3px; }
+.pivot-type-badge.strategic  { background: rgba(108,99,255,.2); color: var(--accent); }
+.pivot-type-badge.technical  { background: rgba(84,160,255,.2); color: var(--med); }
+.pivot-type-badge.scope      { background: rgba(249,202,36,.2); color: var(--yellow); }
+.pivot-type-badge.conceptual { background: rgba(67,233,123,.2); color: var(--green); }
+.pivot-from-to { display: flex; align-items: center; gap: 8px; margin: 5px 0 6px; flex-wrap: wrap; }
+.pivot-from { font-size: 12px; color: var(--text2); background: var(--surface2); padding: 3px 9px; border-radius: 6px; }
+.pivot-arrow { color: var(--accent); font-size: 16px; flex-shrink: 0; }
+.pivot-to { font-size: 12px; font-weight: 600; color: var(--text); background: rgba(108,99,255,.1); padding: 3px 9px; border-radius: 6px; border: 1px solid rgba(108,99,255,.3); }
+.pivot-reason { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.5; }
+.pivot-time { font-size: 10px; color: var(--border); margin-top: 5px; }
+.pivot-impact { font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 99px; }
+.pivot-impact.high   { background: rgba(255,107,107,.2); color: var(--red); }
+.pivot-impact.medium { background: rgba(249,202,36,.2); color: var(--yellow); }
+.pivot-impact.low    { background: rgba(136,136,170,.2); color: var(--text2); }
+.pivot-empty { text-align: center; padding: 32px 16px; border: 2px dashed var(--border); border-radius: 12px; color: var(--text2); }
+.pivot-empty p { font-size: 13px; margin-bottom: 12px; }
+.pivot-diagram-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: auto; padding: 16px; margin-bottom: 20px; min-height: 100px; display: flex; align-items: center; justify-content: center; }
+.pivot-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.pivot-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.pivot-compare-panel { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.pivot-compare-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 12px 6px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.pivot-compare-mmd { padding: 12px; min-height: 90px; overflow: auto; display: flex; align-items: center; justify-content: center; }
+
+/* ── Graph View ── */
+.graph-view { padding: 0 0 40px; }
+.graph-view h1 { font-size: 26px; font-weight: 800; }
+.graph-desc { color: var(--text2); font-size: 13px; margin-top: 6px; margin-bottom: 22px; }
+.graph-mmd-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 18px; min-height: 180px; overflow: auto; display: flex; align-items: center; justify-content: center; }
+.graph-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.graph-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+.graph-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.graph-proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 20px; }
+.graph-proj-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: border-color .15s; }
+.graph-proj-card:hover { border-color: var(--accent); }
+.graph-proj-card-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.graph-proj-card-meta { font-size: 10px; color: var(--text2); margin-top: 4px; }
+.graph-link-tag { font-size: 10px; color: var(--accent); background: rgba(108,99,255,.1); border: 1px solid rgba(108,99,255,.2); border-radius: 99px; padding: 1px 7px; margin-right: 4px; }
+
+/* ── Global Tabs ── */
+.global-tab-bar { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 3px; margin-bottom: 26px; width: fit-content; }
+
+/* ── Pattern Stats ── */
+.pattern-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.pattern-item:last-child { border-bottom: none; }
+.pattern-label { font-size: 12px; color: var(--text2); flex: 1; }
+.pattern-value { font-size: 13px; font-weight: 700; }
+.pattern-bar-wrap { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.pattern-bar-fill { height: 100%; border-radius: 99px; }
+
+/* ── Mermaid Zoom Popup ── */
+#mmdZoomOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.93); z-index: 5000; display: flex; flex-direction: column; }
+.mmd-zoom-toolbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.mmd-zoom-title { font-size: 13px; font-weight: 700; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+#mmdZoomCanvas { flex: 1; overflow: hidden; position: relative; cursor: grab; background: #090910; user-select: none; }
+#mmdZoomCanvas.dragging { cursor: grabbing; }
+#mmdZoomInner { position: absolute; top: 0; left: 0; transform-origin: 0 0; }
+#mmdZoomInner svg { display: block; }
+.zbtn { padding: 5px 13px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 600; transition: all .15s; white-space: nowrap; }
+.zbtn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.zbtn.pdf { background: rgba(67,233,123,.12); border-color: rgba(67,233,123,.4); color: var(--green); }
+.zbtn.pdf:hover { background: var(--green); color: #000; border-color: var(--green); }
+.zbtn.close { border-color: var(--red); color: var(--red); }
+.zbtn.close:hover { background: var(--red); color: #fff; }
+#mmdZoomScaleDisplay { font-size: 11px; color: var(--text2); min-width: 42px; text-align: center; font-family: monospace; }
+
+/* ── AI Input Focus Overlay ── */
+#aiFocusOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+.ai-focus-box { background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; width: min(720px, 94vw); display: flex; flex-direction: column; box-shadow: 0 8px 40px rgba(108,99,255,.25); }
+.ai-focus-head { padding: 14px 18px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.ai-focus-head h3 { font-size: 14px; font-weight: 700; color: var(--accent); }
+.ai-focus-body { padding: 14px 18px; }
+.ai-focus-ta { width: 100%; height: 220px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 10px 12px; font-size: 13px; font-family: inherit; line-height: 1.7; resize: vertical; outline: none; transition: border-color .15s; }
+.ai-focus-ta:focus { border-color: var(--accent); }
+.ai-focus-foot { padding: 10px 18px 14px; display: flex; gap: 8px; justify-content: flex-end; flex-shrink: 0; border-top: 1px solid var(--border); }
+
+/* ── Task Dashboard ── */
+#taskDashOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); z-index: 3500; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.task-dash-box { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; width: min(1100px, 96vw); max-height: 91vh; overflow: hidden; display: flex; flex-direction: column; }
+.task-dash-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.task-dash-title-row { display: flex; align-items: flex-start; gap: 12px; }
+.task-dash-title { font-size: 19px; font-weight: 800; line-height: 1.35; flex: 1; }
+.task-dash-meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.task-dash-desc { font-size: 13px; color: var(--text2); margin-top: 8px; line-height: 1.6; }
+.task-dash-body { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 22px; }
+.task-dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.tdp { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.tdp-head { padding: 8px 14px 7px; border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); display: flex; align-items: center; justify-content: space-between; }
+.tdp-body { padding: 10px 14px; min-height: 80px; }
+.tdp-mmd { min-height: 110px; max-height: 280px; overflow: auto; display: flex; align-items: center; justify-content: center; cursor: zoom-in; padding: 10px; }
+.tdp-mmd svg { max-width: 100%; height: auto; display: block; }
+.tdp-full { grid-column: 1 / -1; }
+.task-dash-foot { display: flex; gap: 8px; padding: 12px 22px; border-top: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; align-items: center; background: var(--surface); border-radius: 0 0 18px 18px; }
+.tdp-history-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.tdp-history-item:last-child { border-bottom: none; }
+.tdp-history-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 4px; flex-shrink: 0; }
+.task-title-link { cursor: pointer; transition: color .15s; }
+.task-title-link:hover { color: var(--accent); text-decoration: underline; }
+
+/* ── Undo Bar ── */
+#undoBar { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; padding: 7px 8px 7px 14px; display: none; align-items: center; gap: 8px; z-index: 8500; box-shadow: 0 6px 28px rgba(108,99,255,.35); white-space: nowrap; max-width: 92vw; }
+#undoBar .undo-label { font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: .3px; flex-shrink: 0; }
+#undoBar .undo-items { display: flex; gap: 5px; overflow: hidden; }
+.undo-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 11px; font-size: 11px; cursor: pointer; color: var(--text); transition: all .15s; flex-shrink: 0; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.undo-item:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+.undo-item.undo-latest { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.undo-item.undo-latest:hover { background: var(--accent); color: #fff; }
+#undoBar .undo-kbd { font-size: 9px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; color: var(--text2); flex-shrink: 0; }
+#undoBar .undo-close { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 14px; padding: 2px 4px; margin-left: 2px; flex-shrink: 0; line-height: 1; }
+#undoBar .undo-close:hover { color: var(--red); }
+
+/* ── Output Files Panel ── */
+.file-list { display: flex; flex-direction: column; gap: 0; }
+.file-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.file-item:last-child { border-bottom: none; }
+.file-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+.file-dot.ok { background: var(--green); }
+.file-dot.missing { background: var(--red); animation: pulse 1.5s infinite; }
+.file-dot.unchecked { background: var(--border); }
+.file-info { flex: 1; min-width: 0; }
+.file-label { font-weight: 600; line-height: 1.3; }
+.file-path { font-family: monospace; font-size: 10px; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-top: 2px; }
+.file-missing-alert { font-size: 10px; color: var(--red); font-weight: 700; margin-top: 2px; }
+.file-del-btn { flex-shrink: 0; background: none; border: none; color: var(--text2); cursor: pointer; font-size: 12px; padding: 0 2px; line-height: 1; }
+.file-del-btn:hover { color: var(--red); }
+
+/* ── Activity Log Tab ── */
+.act-log-list { display: flex; flex-direction: column; gap: 0; }
+.act-log-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.act-log-item:last-child { border-bottom: none; }
+.act-log-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.act-log-type-instruction .act-log-icon { background: rgba(108,99,255,.18); }
+.act-log-type-decision .act-log-icon { background: rgba(67,233,123,.18); }
+.act-log-type-output .act-log-icon { background: rgba(84,160,255,.18); }
+.act-log-type-note .act-log-icon { background: rgba(136,136,170,.1); }
+.act-log-body { flex: 1; min-width: 0; }
+.act-log-summary { font-size: 13px; font-weight: 600; line-height: 1.4; }
+.act-log-detail { font-size: 11px; color: var(--text2); margin-top: 3px; line-height: 1.5; white-space: pre-wrap; word-break: break-all; }
+.act-log-meta { font-size: 10px; color: var(--text2); margin-top: 4px; }
+.act-log-type-badge { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 1px 5px; border-radius: 4px; margin-right: 5px; }
+.act-log-type-instruction .act-log-type-badge { background: rgba(108,99,255,.25); color: var(--accent); }
+.act-log-type-decision .act-log-type-badge { background: rgba(67,233,123,.2); color: var(--green); }
+.act-log-type-output .act-log-type-badge { background: rgba(84,160,255,.2); color: var(--med); }
+.act-log-type-note .act-log-type-badge { background: rgba(136,136,170,.15); color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <!-- Logo + Live -->
+    <div class="logo-row">
+      <div class="logo" onclick="showDashboard()" style="cursor:pointer;">Kai Projects <span>by Kei</span></div>
+      <div class="live-indicator">
+        <div class="live-dot" id="liveDot"></div>
+        <span id="liveText">--</span>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="検索 ( / )" oninput="handleSearch(this.value)" autocomplete="off">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+    </div>
+
+    <div class="sidebar-label">プロジェクト</div>
+    <div class="project-list" id="projectList"></div>
+
+    <!-- Kai Feed -->
+    <div class="kai-feed">
+      <div class="sidebar-label">Kai 更新履歴</div>
+      <div class="feed-list" id="kaiFeed"><div class="feed-empty">まだ更新なし</div></div>
+    </div>
+
+    <button class="btn btn-primary" onclick="openNewProjectModal()">＋ 新規プロジェクト</button>
+  </aside>
+
+  <main class="main">
+    <div id="welcomeScreen"></div>
+    <div id="projectDetail" style="display:none;"></div>
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Undo Bar -->
+<div id="undoBar">
+  <span class="undo-label">↩ 元に戻す</span>
+  <div class="undo-items" id="undoItems"></div>
+  <kbd class="undo-kbd">Ctrl+Z</kbd>
+  <button class="undo-close" onclick="clearUndoStack()" title="閉じる">✕</button>
+</div>
+
+<!-- kbd hint -->
+<div class="kbd-hint" id="kbdHint">
+  <kbd>/</kbd> 検索 &nbsp; <kbd>N</kbd> 新規 &nbsp; <kbd>G</kbd> グラフ &nbsp; <kbd>K</kbd> カンバン &nbsp; <kbd>T</kbd> タスク &nbsp; <kbd>P</kbd> ピボット &nbsp; <kbd>L</kbd> 活動ログ &nbsp; <kbd>D</kbd> ダッシュボード &nbsp; <kbd>Esc</kbd> 閉じる
+</div>
+
+<!-- 通常モーダル -->
+<div class="modal-overlay" id="modalOverlay" style="display:none;" onclick="closeModal(event)">
+  <div class="modal" id="modalBox" onclick="event.stopPropagation()">
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ワイドモーダル -->
+<div class="modal-overlay" id="wideOverlay" style="display:none;" onclick="closeWide(event)">
+  <div class="modal modal-wide" id="wideBox" onclick="event.stopPropagation()">
+    <div id="wideContent"></div>
+  </div>
+</div>
+
+<!-- リンクモーダル -->
+<div class="modal-overlay" id="linksOverlay" style="display:none;" onclick="closeLinks(event)">
+  <div class="modal modal-links" id="linksBox" onclick="event.stopPropagation()">
+    <div id="linksContent"></div>
+  </div>
+</div>
+
+<!-- Mermaid Zoom Overlay -->
+<div id="mmdZoomOverlay" style="display:none;" onclick="if(event.target===this||event.target.id==='mmdZoomOverlay')closeMmdPopup()">
+  <div class="mmd-zoom-toolbar">
+    <span class="mmd-zoom-title" id="mmdZoomTitle"></span>
+    <span id="mmdZoomScaleDisplay">100%</span>
+    <button class="zbtn" onclick="mmdZoomFit()" title="全体表示">⊞ Fit</button>
+    <button class="zbtn" onclick="mmdZoomIn()">＋</button>
+    <button class="zbtn" onclick="mmdZoomOut()">－</button>
+    <button class="zbtn pdf" onclick="printMmdPopup()">🖨️ PDF出力</button>
+    <button class="zbtn close" onclick="closeMmdPopup()">✕ 閉じる</button>
+  </div>
+  <div id="mmdZoomCanvas"><div id="mmdZoomInner"></div></div>
+</div>
+
+<!-- AI Input Focus Overlay -->
+<div id="aiFocusOverlay" style="display:none;" onclick="if(event.target===this)closeAiFocus(false)">
+  <div class="ai-focus-box">
+    <div class="ai-focus-head">
+      <h3 id="aiFocusTitle">入力</h3>
+      <button class="icon-btn" onclick="closeAiFocus(false)" title="閉じる">✕</button>
+    </div>
+    <div class="ai-focus-body">
+      <textarea class="ai-focus-ta" id="aiFocusTa" placeholder=""></textarea>
+    </div>
+    <div class="ai-focus-foot">
+      <button class="btn btn-ghost btn-sm" onclick="closeAiFocus(false)">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="closeAiFocus(true)">✅ 適用</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Dashboard Overlay -->
+<div id="taskDashOverlay" style="display:none;" onclick="if(event.target===this)closeTaskDash()">
+  <div class="task-dash-box">
+    <div id="taskDashContent"></div>
+  </div>
+</div>
+
+<script>
+mermaid.initialize({ startOnLoad: false, theme: 'dark', securityLevel: 'loose',
+  mindmap: { padding: 16, curve: 'linear' } });
+let mmdSeq = 0;
+
+const API = 'http://localhost:3456/api';
+let state = { data: null, projectId: null, tab: 'tasks', globalTab: 'dashboard', searchQuery: '', _draggingId: null };
+
+// ══════════════════════════════════════════════
+//  SSE Live Sync
+// ══════════════════════════════════════════════
+function setupSSE() {
+  let es;
+  function connect() {
+    try { es = new EventSource(`${API}/events`); } catch(e) { return; }
+    es.onopen = () => {
+      document.getElementById('liveDot').className = 'live-dot connected';
+      document.getElementById('liveText').textContent = 'LIVE';
+    };
+    es.onmessage = async (e) => {
+      try {
+        const payload = JSON.parse(e.data);
+        if (payload.type === 'update') {
+          const lastUpdated = state.data?.last_updated;
+          if (!lastUpdated || payload.ts > lastUpdated) {
+            await loadData(true);
+          }
+        }
+      } catch(_) {}
+    };
+    es.onerror = () => {
+      document.getElementById('liveDot').className = 'live-dot error';
+      document.getElementById('liveText').textContent = 'OFF';
+      es.close();
+      setTimeout(connect, 4000);
+    };
+  }
+  connect();
+}
+
+// ══════════════════════════════════════════════
+//  Data
+// ══════════════════════════════════════════════
+async function loadData(silent = false) {
+  try {
+    const r = await fetch(`${API}/tasks`);
+    state.data = await r.json();
+    renderSidebar();
+    renderKaiFeed();
+    if (state.projectId) {
+      const p = state.data.projects.find(p => p.id === state.projectId);
+      if (p) {
+        if (!silent) renderProject(p);
+        else         softRefreshProject(p);
+      } else {
+        showDashboard();
+      }
+    } else {
+      showDashboard();
+    }
+  } catch(e) {
+    if (!silent) toast('サーバーに接続できません。起動.bat を実行してください', 'err');
+    document.getElementById('liveDot').className = 'live-dot error';
+  }
+}
+
+function softRefreshProject(p) {
+  // SSE triggered: re-render content without losing scroll position
+  const detail = document.getElementById('projectDetail');
+  if (detail.style.display === 'none') return;
+  // Update progress bar
+  const tasks = getAllTasks(p);
+  const done = tasks.filter(t => t.status === 'done').length;
+  const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+  const fill = detail.querySelector('.progress-bar-fill');
+  const label = detail.querySelector('.progress-bar-label span:last-child');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = `${done} / ${tasks.length} タスク完了（${pct}%）`;
+  // Re-render tab content
+  const tabContent = document.getElementById('tabContent');
+  if (tabContent) tabContent.innerHTML = renderTabContent(p);
+}
+
+// ══════════════════════════════════════════════
+//  Sidebar
+// ══════════════════════════════════════════════
+function renderSidebar() {
+  const el = document.getElementById('projectList');
+  const q = state.searchQuery;
+  let projects = state.data?.projects || [];
+
+  if (q) {
+    projects = projects
+      .map(p => {
+        const nameMatch = p.name.toLowerCase().includes(q) || (p.goal||'').toLowerCase().includes(q);
+        const matchedTasks = getAllTasks(p).filter(t =>
+          t.title.toLowerCase().includes(q) || (t.description||'').toLowerCase().includes(q));
+        return { ...p, _nameMatch: nameMatch, _matchedTasks: matchedTasks };
+      })
+      .filter(p => p._nameMatch || p._matchedTasks?.length > 0);
+  }
+
+  if (!projects.length) {
+    el.innerHTML = `<div style="color:var(--text2);font-size:12px;padding:8px;">${q ? '一致なし' : 'プロジェクトなし'}</div>`;
+    return;
+  }
+
+  el.innerHTML = projects.map(p => {
+    const tasks = getAllTasks(p);
+    const done = tasks.filter(t => t.status === 'done').length;
+    const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+    const matchInfo = q && p._matchedTasks?.length ? `<div class="proj-search-match">タスク ${p._matchedTasks.length} 件一致</div>` : '';
+    return `<div class="project-item ${p.id === state.projectId ? 'active' : ''}" onclick="selectProject('${p.id}')">
+      <div class="proj-name"><span class="proj-dot ${p.status}"></span>${esc(p.name)}</div>
+      <div class="proj-meta">
+        <span>${done}/${tasks.length}</span>
+        <div class="proj-mini-bar"><div class="proj-mini-fill" style="width:${pct}%"></div></div>
+        <span>${pct}%</span>
+      </div>
+      ${matchInfo}
+    </div>`;
+  }).join('');
+}
+
+function handleSearch(q) {
+  state.searchQuery = q.toLowerCase().trim();
+  document.getElementById('searchClear').style.display = q ? 'block' : 'none';
+  renderSidebar();
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  state.searchQuery = '';
+  document.getElementById('searchClear').style.display = 'none';
+  renderSidebar();
+}
+
+// ══════════════════════════════════════════════
+//  Kai Feed (sidebar)
+// ══════════════════════════════════════════════
+let _lastFeedTs = '';
+
+function renderKaiFeed() {
+  const feed = document.getElementById('kaiFeed');
+  const recent = getRecentHistory(5);
+  if (!recent.length) {
+    feed.innerHTML = '<div class="feed-empty">まだ更新なし</div>';
+    return;
+  }
+  const newTs = recent[0]?.timestamp || '';
+  const isNew = newTs !== _lastFeedTs;
+  _lastFeedTs = newTs;
+
+  feed.innerHTML = recent.map((h, i) => `
+    <div class="feed-item ${i === 0 && isNew ? 'feed-new' : ''}" onclick="selectProject('${h.projectId}')">
+      <div class="feed-project">${esc(h.projectName)}</div>
+      <div class="feed-action">${esc(h.action)} — ${esc(h.detail.slice(0, 40))}${h.detail.length > 40 ? '…' : ''}</div>
+      <div class="feed-time">${timeAgo(h.timestamp)}</div>
+    </div>`).join('');
+}
+
+function getRecentHistory(n) {
+  const all = [];
+  for (const p of (state.data?.projects || [])) {
+    for (const h of (p.history || []))
+      all.push({ ...h, projectId: p.id, projectName: p.name });
+    for (const t of getAllTasks(p))
+      for (const h of (t.history || []))
+        all.push({ ...h, projectId: p.id, projectName: p.name });
+  }
+  return all.sort((a, b) => b.timestamp.localeCompare(a.timestamp)).slice(0, n);
+}
+
+function timeAgo(isoStr) {
+  const diff = Date.now() - new Date(isoStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'たった今';
+  if (mins < 60) return `${mins}分前`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}時間前`;
+  return `${Math.floor(hours / 24)}日前`;
+}
+
+// ══════════════════════════════════════════════
+//  Dashboard
+// ══════════════════════════════════════════════
+async function showDashboard(tab) {
+  state.projectId = null;
+  if (tab) state.globalTab = tab;
+  const ws = document.getElementById('welcomeScreen');
+  ws.style.display = 'block';
+  if (state.data) {
+    if (state.globalTab === 'graph') {
+      ws.innerHTML = await renderGraphView();
+      setTimeout(() => renderGraphMmd(), 50);
+    } else {
+      ws.innerHTML = renderDashboard();
+    }
+  } else {
+    ws.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--text2);">読み込み中…</div>';
+  }
+  document.getElementById('projectDetail').style.display = 'none';
+  renderSidebar();
+}
+
+function renderDashboard() {
+  const projects = state.data?.projects || [];
+  const today = new Date().toISOString().slice(0, 10);
+
+  let total = 0, done = 0, inProg = 0, overdue = 0;
+  const overdueList = [];
+
+  for (const p of projects) {
+    for (const t of getAllTasks(p)) {
+      total++;
+      if (t.status === 'done') done++;
+      else if (t.status === 'in_progress') inProg++;
+      if (t.due_date && t.due_date < today && t.status !== 'done') {
+        overdue++;
+        overdueList.push({ t, pName: p.name, pid: p.id });
+      }
+    }
+  }
+
+  const pct = total ? Math.round(done / total * 100) : 0;
+  const active = projects.filter(p => p.status === 'active')
+    .sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+  const recent = getRecentHistory(8);
+
+  // Pattern analysis
+  const allPivots = projects.flatMap(p => p.pivots || []);
+  const pivotTypes = { strategic: 0, technical: 0, scope: 0, conceptual: 0 };
+  for (const pv of allPivots) { if (pv.type in pivotTypes) pivotTypes[pv.type]++; }
+  const topPivotProject = [...projects].sort((a, b) => (b.pivots||[]).length - (a.pivots||[]).length)[0];
+
+  return `
+  <div class="dashboard">
+    <div class="global-tab-bar">
+      <button class="tab ${state.globalTab==='dashboard'?'active':''}" onclick="showDashboard('dashboard')">📊 ダッシュボード</button>
+      <button class="tab ${state.globalTab==='graph'?'active':''}" onclick="showDashboard('graph')">🔗 グラフビュー</button>
+    </div>
+    <div class="dash-hero">
+      <h1>📊 ダッシュボード</h1>
+      <p>全プロジェクトの進行状況 — Claude Code リアルタイム連動 · 思考転換 ${allPivots.length} 件記録済み</p>
+    </div>
+
+    <div class="dash-stats">
+      <div class="stat-card">
+        <div class="stat-num">${active.length}</div>
+        <div class="stat-label">進行中プロジェクト / 計${projects.length}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num yellow">${inProg}</div>
+        <div class="stat-label">作業中タスク</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num green">${done}<span style="font-size:18px;color:var(--text2)">/${total}</span></div>
+        <div class="stat-label">完了タスク（${pct}%）</div>
+      </div>
+      <div class="stat-card ${overdue > 0 ? 'warn' : ''}">
+        <div class="stat-num ${overdue > 0 ? 'red' : ''}">${overdue}</div>
+        <div class="stat-label">期限切れタスク</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <div class="dash-panel">
+          <div class="dash-panel-title">進行中プロジェクト</div>
+          ${active.length ? active.map(p => {
+            const ts = getAllTasks(p);
+            const d = ts.filter(t => t.status === 'done').length;
+            const pc = ts.length ? Math.round(d / ts.length * 100) : 0;
+            const ip = ts.filter(t => t.status === 'in_progress').length;
+            return `<div class="active-proj-item" onclick="selectProject('${p.id}')">
+              <div class="active-proj-name">${esc(p.name)}</div>
+              ${p.goal ? `<div class="active-proj-goal">${esc(p.goal.slice(0,52))}${p.goal.length>52?'…':''}</div>` : ''}
+              <div class="active-proj-bar-row">
+                <div class="active-proj-bar-wrap"><div class="active-proj-bar-fill" style="width:${pc}%"></div></div>
+                <span class="active-proj-pct">${pc}%</span>
+              </div>
+              <div class="active-proj-counts">${d}/${ts.length}完了 ${ip>0?`· ${ip}作業中`:''}${ts.filter(t=>t.due_date&&t.due_date<today&&t.status!=='done').length>0?` · <span style="color:var(--red)">期限切れあり</span>`:''}</div>
+            </div>`;
+          }).join('') : '<div class="dash-empty">進行中のプロジェクトはありません<br><button class="btn btn-primary btn-sm" style="margin-top:12px;" onclick="openNewProjectModal()">＋ 新規作成</button></div>'}
+        </div>
+        ${overdueList.length ? `
+        <div class="dash-panel" style="margin-top:14px;">
+          <div class="dash-panel-title" style="color:var(--red)">⚠️ 期限切れタスク</div>
+          ${overdueList.slice(0,5).map(({t,pName,pid}) => `
+            <div class="dash-overdue-item" onclick="selectProject('${pid}')">
+              <div><div class="overdue-task-name">${esc(t.title)}</div><div class="overdue-task-proj">${esc(pName)}</div></div>
+              <span class="overdue-badge">📅 ${t.due_date}</span>
+            </div>`).join('')}
+          ${overdueList.length > 5 ? `<div style="font-size:11px;color:var(--text2);padding:4px;">他 ${overdueList.length-5} 件…</div>` : ''}
+        </div>` : ''}
+      </div>
+
+      <div>
+        <div class="dash-panel">
+          <div class="dash-panel-title">Kai 更新履歴</div>
+          ${recent.length ? recent.map(h => `
+            <div class="dash-feed-item" onclick="selectProject('${h.projectId}')">
+              <div class="dash-feed-project">${esc(h.projectName)}</div>
+              <div class="dash-feed-action">${esc(h.action)} — ${esc(h.detail.slice(0,55))}${h.detail.length>55?'…':''}</div>
+              <div class="dash-feed-time">${timeAgo(h.timestamp)} · ${h.timestamp.replace('T',' ')}</div>
+            </div>`).join('') : '<div class="dash-empty">変更履歴なし</div>'}
+        </div>
+        ${allPivots.length > 0 ? `
+        <div class="dash-panel" style="margin-top:14px;">
+          <div class="dash-panel-title">🧠 パターン分析 — ピボット傾向</div>
+          <div style="margin-bottom:10px;">
+            ${[['strategic','方針転換',allPivots.filter(p=>p.type==='strategic').length,'#6c63ff'],
+               ['technical','技術転換',allPivots.filter(p=>p.type==='technical').length,'#54a0ff'],
+               ['scope','スコープ',allPivots.filter(p=>p.type==='scope').length,'#f9ca24'],
+               ['conceptual','概念転換',allPivots.filter(p=>p.type==='conceptual').length,'#43e97b']]
+              .map(([type,label,count,color]) => {
+                const pct = allPivots.length ? Math.round(count/allPivots.length*100) : 0;
+                return `<div class="pattern-item">
+                  <span class="pattern-label">${label}</span>
+                  <div class="pattern-bar-wrap"><div class="pattern-bar-fill" style="width:${pct}%;background:${color};"></div></div>
+                  <span class="pattern-value" style="color:${color};">${count}</span>
+                </div>`;
+              }).join('')}
+          </div>
+          ${topPivotProject && (topPivotProject.pivots||[]).length > 0 ? `
+          <div style="font-size:11px;color:var(--text2);padding-top:8px;border-top:1px solid var(--border);">
+            最多ピボット: <span style="color:var(--text);font-weight:600;">${esc(topPivotProject.name)}</span>
+            （${(topPivotProject.pivots||[]).length} 件）
+          </div>` : ''}
+        </div>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════
+//  Graph View
+// ══════════════════════════════════════════════
+async function renderGraphView() {
+  const projects = state.data?.projects || [];
+  const tabBar = `
+    <div class="global-tab-bar">
+      <button class="tab" onclick="showDashboard('dashboard')">📊 ダッシュボード</button>
+      <button class="tab active" onclick="showDashboard('graph')">🔗 グラフビュー</button>
+    </div>`;
+
+  if (!projects.length) {
+    return tabBar + '<div class="graph-view"><p style="color:var(--text2)">プロジェクトなし</p></div>';
+  }
+
+  const idMap = {};
+  projects.forEach((p, i) => { idMap[p.id] = `N${i}`; });
+
+  let mmd = 'graph LR\n';
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const label  = esc(p.name.slice(0, 18)) + (p.name.length > 18 ? '…' : '');
+    const pcts   = (() => { const ts = getAllTasks(p); const d = ts.filter(t=>t.status==='done').length; return ts.length ? Math.round(d/ts.length*100) : 0; })();
+    mmd += `  ${nodeId}(["${label}\\n${pcts}%"])\n`;
+    for (const lid of (p.linked_projects || [])) {
+      if (idMap[lid]) mmd += `  ${nodeId} --> ${idMap[lid]}\n`;
+    }
+  }
+  // Colors by status
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const fill   = p.status === 'active' ? '#6c63ff' : p.status === 'completed' ? '#43e97b' : '#444';
+    const color  = p.status === 'completed' ? '#000' : '#fff';
+    mmd += `  style ${nodeId} fill:${fill},color:${color},stroke:${fill}\n`;
+  }
+
+  const projCards = projects.map(p => {
+    const links = (p.linked_projects||[]).map(lid => {
+      const lp = projects.find(x => x.id === lid);
+      return lp ? `<span class="graph-link-tag">→ ${esc(lp.name.slice(0,12))}</span>` : '';
+    }).join('');
+    const pvCount = (p.pivots||[]).length;
+    return `<div class="graph-proj-card" onclick="selectProject('${p.id}')">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+        <span class="proj-dot ${p.status}" style="flex-shrink:0;"></span>
+        <div class="graph-proj-card-name">${esc(p.name)}</div>
+      </div>
+      <div class="graph-proj-card-meta">
+        ${pvCount > 0 ? `🔄 ピボット ${pvCount} 件 &nbsp;` : ''}
+        ${links || '<span style="color:var(--border);font-size:10px;">リンクなし</span>'}
+      </div>
+    </div>`;
+  }).join('');
+
+  return tabBar + `
+  <div class="graph-view">
+    <h1>🔗 プロジェクトグラフ</h1>
+    <p class="graph-desc">プロジェクト間の関係と思考の転換点を可視化。ノードをクリックしてプロジェクトを開く。</p>
+    <div class="graph-legend">
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#6c63ff;"></div>進行中</div>
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#43e97b;"></div>完了</div>
+      <div class="graph-legend-item"><div class="graph-legend-dot" style="background:#444;"></div>アーカイブ</div>
+    </div>
+    <div class="graph-mmd-wrap" id="graphMmdWrap">
+      <div style="color:var(--text2);font-size:12px;">レンダリング中…</div>
+    </div>
+    <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:10px;">プロジェクト一覧</div>
+    <div class="graph-proj-grid">${projCards}</div>
+  </div>`;
+}
+
+async function renderGraphMmd() {
+  const ws = document.getElementById('welcomeScreen');
+  if (!ws || state.projectId) return;
+  const wrap = document.getElementById('graphMmdWrap');
+  if (!wrap) return;
+  const projects = state.data?.projects || [];
+  const idMap = {};
+  projects.forEach((p, i) => { idMap[p.id] = `N${i}`; });
+
+  let mmd = 'graph LR\n';
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const label  = p.name.slice(0, 18) + (p.name.length > 18 ? '…' : '');
+    const pcts   = (() => { const ts = getAllTasks(p); const d = ts.filter(t=>t.status==='done').length; return ts.length ? Math.round(d/ts.length*100) : 0; })();
+    mmd += `  ${nodeId}(["${label}\\n${pcts}%"])\n`;
+    for (const lid of (p.linked_projects || [])) {
+      if (idMap[lid]) mmd += `  ${nodeId} --> ${idMap[lid]}\n`;
+    }
+  }
+  for (const p of projects) {
+    const nodeId = idMap[p.id];
+    const fill   = p.status === 'active' ? '#6c63ff' : p.status === 'completed' ? '#43e97b' : '#444';
+    const color  = p.status === 'completed' ? '#000' : '#fff';
+    mmd += `  style ${nodeId} fill:${fill},color:${color},stroke:${fill}\n`;
+  }
+
+  try {
+    const id = `graph-${++mmdSeq}`;
+    const { svg } = await mermaid.render(id, mmd);
+    wrap.innerHTML = svg;
+    wrap.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+  } catch(e) {
+    wrap.innerHTML = `<div class="mmd-error">グラフ描画エラー: ${e.message || e}</div>`;
+  }
+}
+
+// ══════════════════════════════════════════════
+//  Project select / render
+// ══════════════════════════════════════════════
+function selectProject(id) {
+  state.projectId = id; state.tab = 'tasks';
+  const p = state.data.projects.find(p => p.id === id);
+  if (p) renderProject(p);
+  renderSidebar();
+}
+
+function getAllTasks(p) {
+  const ts = [];
+  if (p.big_task) ts.push(p.big_task);
+  ts.push(...(p.medium_tasks || []));
+  ts.push(...(p.small_tasks || []));
+  return ts;
+}
+
+function renderProject(p) {
+  document.getElementById('welcomeScreen').style.display = 'none';
+  const el = document.getElementById('projectDetail');
+  el.style.display = 'block';
+  const tasks = getAllTasks(p);
+  const done = tasks.filter(t => t.status === 'done').length;
+  const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+
+  el.innerHTML = `
+    <div class="main-header">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <h1>${esc(p.name)}</h1>
+        <span class="status-badge ${p.status}">${statusLabel(p.status)}</span>
+      </div>
+      ${p.goal ? `<div class="goal-text">🎯 ${esc(p.goal)}</div>` : ''}
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-label"><span>進捗</span><span>${done} / ${tasks.length} タスク完了（${pct}%）</span></div>
+        <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openEditProjectModal('${p.id}')">✏️ 編集</button>
+        ${p.status !== 'completed' ? `<button class="btn btn-success btn-sm" onclick="markProjectDone('${p.id}')">✅ 完了</button>` : ''}
+        ${p.status !== 'archived' ? `<button class="btn btn-ghost btn-sm" onclick="archiveProject('${p.id}')">📁 アーカイブ</button>` : ''}
+        <button class="btn btn-danger btn-sm" onclick="deleteProject('${p.id}')">🗑️ 削除</button>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab ${state.tab==='tasks'?'active':''}" onclick="switchTab('tasks','${p.id}')">タスク</button>
+      <button class="tab ${state.tab==='kanban'?'active':''}" onclick="switchTab('kanban','${p.id}')">カンバン</button>
+      <button class="tab ${state.tab==='pivots'?'active':''}" onclick="switchTab('pivots','${p.id}')">🔄 思考遷移${(p.pivots||[]).length>0?` <span style="font-size:10px;background:var(--accent);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.pivots||[]).length}</span>`:''}</button>
+      <button class="tab ${state.tab==='logs'?'active':''}" onclick="switchTab('logs','${p.id}')">📋 活動ログ${(p.session_logs||[]).length>0?` <span style="font-size:10px;background:var(--med);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.session_logs||[]).length}</span>`:''}</button>
+      <button class="tab ${state.tab==='history'?'active':''}" onclick="switchTab('history','${p.id}')">履歴</button>
+      <button class="tab ${state.tab==='memo'?'active':''}" onclick="switchTab('memo','${p.id}')">メモ</button>
+    </div>
+    <div id="tabContent">${renderTabContent(p)}</div>`;
+  if (state.tab === 'pivots') {
+    setTimeout(() => { renderPivotDiagram(p); renderPivotCompare(p); }, 80);
+  }
+}
+
+function switchTab(tab, pid) {
+  state.tab = tab;
+  const p = state.data.projects.find(p => p.id === pid);
+  renderProject(p);
+}
+
+function renderTabContent(p) {
+  if (state.tab === 'kanban')  return renderKanban(p);
+  if (state.tab === 'history') return renderHistory(p);
+  if (state.tab === 'memo')    return renderMemo(p);
+  if (state.tab === 'pivots')  return renderPivots(p);
+  if (state.tab === 'logs')    return renderActivityLog(p);
+  return renderTasks(p);
+}
+
+// ══════════════════════════════════════════════
+//  Tasks (list view)
+// ══════════════════════════════════════════════
+function renderTasks(p) {
+  const bigHtml = p.big_task
+    ? taskCard(p.big_task, 'big', p.id)
+    : `<div class="task-empty" onclick="openAddTaskModal('${p.id}','big')">＋ 大タスクを追加（Must do）</div>`;
+
+  const med = p.medium_tasks || [];
+  const medHtml = med.map(t => taskCard(t, 'med', p.id)).join('') +
+    (med.length < 3 ? `<div class="task-empty" onclick="openAddTaskModal('${p.id}','medium')">＋ 中タスクを追加（${med.length}/3）</div>` : '');
+
+  const sm = p.small_tasks || [];
+  const smHtml = sm.map(t => taskCard(t, 'small', p.id)).join('') +
+    (sm.length < 5 ? `<div class="task-empty" onclick="openAddTaskModal('${p.id}','small')">＋ 小タスクを追加（${sm.length}/5）</div>` : '');
+
+  return `
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge big">1</div>
+          <div><div class="task-section-name">大タスク（Must do）</div><div class="task-count">プロジェクト全体のゴール</div></div>
+        </div>
+      </div>
+      <div class="task-cards">${bigHtml}</div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge med">3</div>
+          <div><div class="task-section-name">中タスク（Should do）</div><div class="task-count">大タスクを支える重要タスク（最大3つ）</div></div>
+        </div>
+      </div>
+      <div class="task-cards">${medHtml}</div>
+    </div>
+    <div class="section-divider"></div>
+    <div class="task-section">
+      <div class="task-section-header">
+        <div class="task-section-title">
+          <div class="task-badge small">5</div>
+          <div><div class="task-section-name">小タスク（Nice to do）</div><div class="task-count">細かいアクション（最大5つ）</div></div>
+        </div>
+      </div>
+      <div class="task-cards">${smHtml}</div>
+    </div>`;
+}
+
+function taskCard(t, sizeClass, pid) {
+  const isDone = t.status === 'done';
+  const due = t.due_date ? `📅 ${t.due_date}${isOverdue(t.due_date) && !isDone ? ' ⚠️' : ''}` : '';
+  const links = t.related_links || [];
+  const hasMmd = !!(t.mindmap_mmd);
+  const hasRm  = !!(t.roadmap_mmd);
+  const fileCount = (t.output_files || []).length;
+  const missingFiles = (t.output_files || []).filter(f => f.status === 'missing').length;
+  const linksHtml = links.length
+    ? `<div class="task-links">${links.slice(0,3).map(l =>
+        `<a class="task-link-item" href="${esc(l.url)}" target="_blank" rel="noopener">
+          <span class="task-link-icon">🔗</span>
+          <div class="task-link-info">
+            <div class="task-link-title">${esc(l.title||l.url)}</div>
+            ${l.description ? `<div class="task-link-desc">${esc(l.description)}</div>` : ''}
+          </div></a>`).join('')}
+        ${links.length > 3 ? `<div style="font-size:11px;color:var(--text2);padding:2px 8px;">他 ${links.length-3} 件…</div>` : ''}
+      </div>` : '';
+
+  return `
+    <div class="task-card ${sizeClass} ${isDone ? 'done' : ''}">
+      <div class="task-card-top">
+        <div class="task-checkbox ${t.status}" onclick="cycleStatus('${t.id}')">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <polyline points="1.5,5 4,7.5 8.5,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="task-info">
+          <div class="task-title task-title-link" onclick="openTaskDashboard('${t.id}')">${esc(t.title)}</div>
+          ${t.description ? `<div class="task-desc">${esc(t.description)}</div>` : ''}
+          <div class="task-meta">
+            <span class="task-status-pill ${t.status}">${taskStatusLabel(t.status)}</span>
+            ${due ? `<span class="task-due ${isOverdue(t.due_date)&&!isDone?'overdue':''}">${due}</span>` : ''}
+            ${hasMmd ? `<span style="font-size:10px;color:#a29bfe;">🧠 あり</span>` : ''}
+            ${hasRm  ? `<span style="font-size:10px;color:var(--med);">🗺️ あり</span>` : ''}
+            ${fileCount > 0 ? '<span style="font-size:10px;color:'+(missingFiles>0?'var(--red)':'var(--green)')+';">📦'+(missingFiles>0?' ⚠️'+missingFiles+'件消失':' '+fileCount+'件')+'</span>' : ''}
+          </div>
+        </div>
+        <div class="task-actions">
+          <button class="icon-btn mindmap ${hasMmd?'has-badge':''}" ${hasMmd?'data-count="1"':''} onclick="openMindmapModal('${t.id}')" title="マインドマップ">🧠</button>
+          <button class="icon-btn roadmap ${hasRm?'has-badge':''}" ${hasRm?'data-count="1"':''} onclick="openRoadmapModal('${t.id}')" title="ロードマップ">🗺️</button>
+          <button class="icon-btn links ${links.length?'has-badge':''}" ${links.length?`data-count="${links.length}"`:''} onclick="openLinksModal('${t.id}')" title="関連リンク">🔗</button>
+          <button class="icon-btn" onclick="openEditTaskModal('${t.id}')" title="編集">✏️</button>
+          <button class="icon-btn del" onclick="deleteTask('${t.id}')" title="削除">🗑</button>
+        </div>
+      </div>
+      ${linksHtml}
+    </div>`;
+}
+
+// ══════════════════════════════════════════════
+//  Kanban
+// ══════════════════════════════════════════════
+function renderKanban(p) {
+  const all = [];
+  if (p.big_task) all.push({ ...p.big_task, _type: 'big' });
+  (p.medium_tasks||[]).forEach(t => all.push({ ...t, _type: 'med' }));
+  (p.small_tasks||[]).forEach(t => all.push({ ...t, _type: 'small' }));
+
+  const cols = [
+    { status: 'todo',        label: '未着手',   cls: 'todo' },
+    { status: 'in_progress', label: '進行中',   cls: 'in_progress' },
+    { status: 'done',        label: '完了',     cls: 'done' },
+  ];
+
+  return `<div class="kanban">${cols.map(col => {
+    const cards = all.filter(t => t.status === col.status);
+    return `<div class="kanban-col"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="onKanbanDrop(event,'${col.status}')">
+      <div class="kanban-col-header">
+        <span class="kanban-col-title ${col.cls}">${col.label}</span>
+        <span class="kanban-count">${cards.length}</span>
+      </div>
+      <div class="kanban-cards">
+        ${cards.map(t => kanbanCard(t)).join('') ||
+          `<div class="kanban-empty">${col.status === 'in_progress' ? 'ここにドロップ' : '—'}</div>`}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function kanbanCard(t) {
+  const isDone = t.status === 'done';
+  const due = t.due_date ? `📅 ${t.due_date}${isOverdue(t.due_date)&&!isDone?' ⚠️':''}` : '';
+  const typeLabel = { big: '★ 大', med: '◆ 中', small: '◇ 小' }[t._type];
+  return `
+    <div class="kanban-card ${t._type} ${isDone?'done':''}"
+         draggable="true"
+         ondragstart="onKanbanDragStart(event,'${t.id}','${t.status}')"
+         ondragend="this.classList.remove('dragging')">
+      <div class="kanban-card-header">
+        <span class="kanban-card-type ${t._type}">${typeLabel}</span>
+        <div class="kanban-card-actions">
+          <button class="icon-btn btn-sm" style="width:24px;height:24px;font-size:11px;" onclick="openEditTaskModal('${t.id}')" title="編集">✏️</button>
+        </div>
+      </div>
+      <div class="kanban-card-title ${isDone?'done':''} task-title-link" onclick="openTaskDashboard('${t.id}')">${esc(t.title)}</div>
+      ${due ? `<div class="kanban-card-due ${isOverdue(t.due_date)&&!isDone?'overdue':''}">${due}</div>` : ''}
+      <div class="kanban-card-footer">
+        <div class="task-checkbox ${t.status}" onclick="cycleStatus('${t.id}')" style="width:18px;height:18px;border-radius:5px;">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+            <polyline points="1.5,5 4,7.5 8.5,2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span style="font-size:10px;color:var(--text2);">${taskStatusLabel(t.status)}</span>
+      </div>
+    </div>`;
+}
+
+function onKanbanDragStart(e, taskId, status) {
+  e.dataTransfer.setData('text/plain', JSON.stringify({ taskId, status }));
+  e.dataTransfer.effectAllowed = 'move';
+  state._draggingId = taskId;
+  setTimeout(() => e.target.classList.add('dragging'), 0);
+}
+
+async function onKanbanDrop(e, toStatus) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  let data;
+  try { data = JSON.parse(e.dataTransfer.getData('text/plain')); } catch(_) { return; }
+  if (!data.taskId || data.status === toStatus) return;
+  captureSnapshotForTask(data.taskId, 'カンバン移動');
+  await api('PUT', `/tasks/${data.taskId}`, { status: toStatus });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) {
+    const tc = document.getElementById('tabContent');
+    if (tc) tc.innerHTML = renderKanban(p);
+  }
+  toast(`→ ${taskStatusLabel(toStatus)}に移動しました`, 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Mindmap modal
+// ══════════════════════════════════════════════
+function openMindmapModal(taskId) {
+  const t = findTask(taskId);
+  const defaultCode = t.mindmap_mmd || defaultMindmapCode(t.title);
+  const titleEsc = esc(t.title);
+  document.getElementById('wideContent').innerHTML = `
+    <div class="wide-header">
+      <div class="wide-header-left">
+        <h2>🧠 マインドマップ — ${titleEsc}</h2>
+        <div class="subtitle">タスクの細分化・関係性を可視化。プレビューをクリックで拡大ズーム。</div>
+      </div>
+      <div class="wide-header-right">
+        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')">🔍 拡大表示</button>
+      </div>
+    </div>
+    <div class="wide-body wide-body-2col">
+      <div class="wide-editor" style="border-left:none;">
+        <div class="wide-editor-label">Mermaid コード（mindmap）</div>
+        <textarea class="mmd-editor" id="mmdMindmapEditor" spellcheck="false" oninput="previewMmd('mmdMindmapEditor','mmdMindmapPreview')">${esc(defaultCode)}</textarea>
+      </div>
+      <div class="wide-preview">
+        <div class="wide-preview-label">プレビュー <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
+        <div class="mmd-preview" id="mmdMindmapPreview" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')"></div>
+      </div>
+    </div>
+    <div class="wide-footer">
+      <div class="wide-footer-left">
+        <span class="tmpl-label">💡 Kaiに「このタスクのマインドマップを作って」と依頼 → ロードマップのAIアシストで適用</span>
+      </div>
+      <div class="wide-footer-right">
+        <button class="btn-tmpl" onclick="resetMindmap('${taskId}')">↩ リセット</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
+        <button class="btn btn-primary btn-sm" onclick="saveMindmap('${taskId}')">💾 保存</button>
+      </div>
+    </div>`;
+  document.getElementById('wideOverlay').style.display = 'flex';
+  previewMmd('mmdMindmapEditor', 'mmdMindmapPreview');
+}
+
+async function saveMindmap(taskId) {
+  const code = document.getElementById('mmdMindmapEditor').value.trim();
+  captureSnapshotForTask(taskId, 'マインドマップ保存');
+  await api('PUT', `/tasks/${taskId}`, { mindmap_mmd: code });
+  closeWide(); await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('マインドマップを保存しました', 'ok');
+}
+
+function resetMindmap(taskId) {
+  const t = findTask(taskId);
+  document.getElementById('mmdMindmapEditor').value = defaultMindmapCode(t.title);
+  previewMmd('mmdMindmapEditor', 'mmdMindmapPreview');
+}
+
+function defaultMindmapCode(title) {
+  return `mindmap\n  root((${title}))\n    計画フェーズ\n      要件整理\n      スケジュール確定\n      関係者調整\n    実行フェーズ\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了・検証\n      テスト\n      レビュー\n      振り返り`;
+}
+
+// ══════════════════════════════════════════════
+//  Roadmap modal
+// ══════════════════════════════════════════════
+function openRoadmapModal(taskId) {
+  const t = findTask(taskId);
+  const defaultCode = t.roadmap_mmd || defaultRoadmapCode(t.title);
+  const titleEsc = esc(t.title);
+  document.getElementById('wideContent').innerHTML = `
+    <div class="wide-header">
+      <div class="wide-header-left">
+        <h2>🗺️ ロードマップ — ${titleEsc}</h2>
+        <div class="subtitle">graph LR / TD / gantt / stateDiagram-v2 に対応。テンプレートから選んで編集、プレビューをクリックで拡大。</div>
+      </div>
+      <div class="wide-header-right">
+        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')">🔍 拡大表示</button>
+      </div>
+    </div>
+    <div class="wide-body wide-body-3col">
+      <div class="ai-panel">
+        <div class="ai-panel-section">🤖 Kaiへ指示</div>
+        <textarea class="ai-textarea" id="aiInstruction"
+          placeholder="例：&#10;フェーズを5段階にして&#10;各フェーズに期間を追加して"
+          onfocus="openAiFocus('aiInstruction','🤖 Kaiへの指示')"></textarea>
+        <button class="btn-ai" onclick="copyAiPrompt('mmdRoadmapEditor')">📋 プロンプトをコピー</button>
+        <div class="ai-sep"></div>
+        <div class="ai-panel-section">📥 Kaiの返答を貼り付け</div>
+        <textarea class="ai-textarea" id="aiResponse"
+          placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"
+          onfocus="openAiFocus('aiResponse','📥 Kaiの返答を貼り付け')"></textarea>
+        <button class="btn-ai btn-ai-apply" onclick="applyAiCode('mmdRoadmapEditor','mmdRoadmapPreview')">✨ コードに適用</button>
+      </div>
+      <div class="wide-editor">
+        <div class="wide-editor-label">Mermaid コード</div>
+        <textarea class="mmd-editor" id="mmdRoadmapEditor" spellcheck="false" oninput="previewMmd('mmdRoadmapEditor','mmdRoadmapPreview')">${esc(defaultCode)}</textarea>
+      </div>
+      <div class="wide-preview">
+        <div class="wide-preview-label">プレビュー（リアルタイム） <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
+        <div class="mmd-preview" id="mmdRoadmapPreview" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')"></div>
+      </div>
+    </div>
+    <div class="wide-footer">
+      <div class="wide-footer-left">
+        <span class="tmpl-label">テンプレート：</span>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-flow')">🔀 フロー</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-gantt')">📅 ガント</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-status')">🔄 状態遷移</button>
+      </div>
+      <div class="wide-footer-right">
+        <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
+        <button class="btn btn-primary btn-sm" onclick="saveRoadmap('${taskId}')">💾 保存</button>
+      </div>
+    </div>`;
+  document.getElementById('wideOverlay').style.display = 'flex';
+  previewMmd('mmdRoadmapEditor', 'mmdRoadmapPreview');
+}
+
+async function saveRoadmap(taskId) {
+  const code = document.getElementById('mmdRoadmapEditor').value.trim();
+  captureSnapshotForTask(taskId, 'ロードマップ保存');
+  await api('PUT', `/tasks/${taskId}`, { roadmap_mmd: code });
+  closeWide(); await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('ロードマップを保存しました', 'ok');
+}
+
+function insertTemplate(type) {
+  const templates = {
+    'roadmap-flow': `graph LR\n  A([🎯 ゴール設定]) --> B[📋 計画]\n  B --> C[⚙️ 実行]\n  C --> D([✅ 完了])\n\n  B --> B1[要件整理]\n  B --> B2[リソース確認]\n  B --> B3[スケジュール確定]\n\n  C --> C1[フェーズ1]\n  C --> C2[フェーズ2]\n  C --> C3[フェーズ3]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000`,
+    'roadmap-gantt': `gantt\n  title タスクロードマップ\n  dateFormat YYYY-MM-DD\n  section 計画\n    要件整理         :a1, 2026-05-01, 7d\n    スケジュール確定  :a2, after a1, 3d\n  section 実行\n    フェーズ1        :b1, after a2, 14d\n    フェーズ2        :b2, after b1, 14d\n  section 完了\n    テスト・レビュー  :c1, after b2, 7d\n    振り返り         :c2, after c1, 3d`,
+    'roadmap-status': `stateDiagram-v2\n  [*] --> Todo\n  Todo --> Doing : 開始\n  Doing --> Review : 完成\n  Review --> Done : 承認\n  Review --> Doing : 差し戻し\n  Done --> [*]\n\n  Todo : 未着手\n  Doing : 進行中\n  Review : レビュー中\n  Done : 完了`
+  };
+  const editor = document.getElementById('mmdRoadmapEditor');
+  if (editor) { editor.value = templates[type] || editor.value; previewMmd('mmdRoadmapEditor','mmdRoadmapPreview'); }
+}
+
+function openA4Preview(previewId, title, autoPrint = false) {
+  const svgEl = document.getElementById(previewId)?.querySelector('svg');
+  if (!svgEl) { toast('先にプレビューを表示してから拡大してください', 'err'); return; }
+  const clone = svgEl.cloneNode(true);
+  clone.removeAttribute('style');
+  clone.style.cssText = 'max-width:100%;height:auto;';
+  const safeTitle = (title||'').replace(/[<>"&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;','&':'&amp;'}[c]));
+  const win = window.open('', '_blank', 'width=1280,height=900,menubar=no,toolbar=no');
+  if (!win) { toast('ポップアップがブロックされています', 'err'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>${safeTitle}</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#e8e8e8;font-family:'Segoe UI',sans-serif}
+.toolbar{display:flex;align-items:center;gap:10px;padding:10px 20px;background:#1a1a24;color:#e8e8f0;position:sticky;top:0;z-index:10}
+.toolbar-title{font-size:14px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tbtn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600}
+.tbtn-print{background:#6c63ff;color:#fff}.tbtn-print:hover{background:#5a52e8}
+.tbtn-close{background:transparent;color:#8888aa;border:1px solid #2e2e40}.tbtn-close:hover{background:#22222f;color:#e8e8f0}
+.page-wrap{display:flex;align-items:flex-start;justify-content:center;padding:24px;min-height:calc(100vh - 52px)}
+.a4-page{width:297mm;min-height:210mm;background:#fff;padding:14mm 16mm;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.a4-page svg{max-width:100%;height:auto;display:block}
+@media print{body{background:white}.toolbar{display:none!important}.page-wrap{padding:0;min-height:0}
+.a4-page{margin:0;width:100%;min-height:0;box-shadow:none;padding:8mm}@page{size:A4 landscape;margin:0}}</style>
+</head><body>
+<div class="toolbar"><span class="toolbar-title">🗺️ ${safeTitle}</span>
+<button class="tbtn tbtn-print" onclick="window.print()">🖨️ PDF出力 / 印刷</button>
+<button class="tbtn tbtn-close" onclick="window.close()">✕ 閉じる</button></div>
+<div class="page-wrap"><div class="a4-page">${clone.outerHTML}</div></div></body></html>`);
+  win.document.close();
+  if (autoPrint) win.addEventListener('load', () => setTimeout(() => win.print(), 300));
+}
+
+function copyAiPrompt(editorId) {
+  const code = document.getElementById(editorId)?.value?.trim() || '';
+  const instruction = document.getElementById('aiInstruction')?.value?.trim();
+  if (!instruction) { toast('Kaiへの指示を入力してください', 'err'); return; }
+  const prompt = `以下のMermaidダイアグラムを「${instruction}」に従って改修してください。\n改修後のMermaidコードのみを \`\`\`mermaid\n...\n\`\`\` 形式で返してください。\n\n現在のコード:\n\`\`\`mermaid\n${code}\n\`\`\``;
+  const fallback = () => { const tmp = document.createElement('textarea'); tmp.value = prompt; document.body.appendChild(tmp); tmp.select(); document.execCommand('copy'); document.body.removeChild(tmp); };
+  if (navigator.clipboard) navigator.clipboard.writeText(prompt).then(() => {}, fallback);
+  else fallback();
+  toast('プロンプトをコピーしました。Kaiのチャットに貼り付けてください', 'ok');
+}
+
+function applyAiCode(editorId, previewId) {
+  const response = document.getElementById('aiResponse')?.value?.trim();
+  if (!response) { toast('Kaiの返答を貼り付けてください', 'err'); return; }
+  const match = response.match(/```(?:mermaid)?\s*\n?([\s\S]+?)```/);
+  if (!match) { toast('Mermaidコードブロックが見つかりません', 'err'); return; }
+  const editor = document.getElementById(editorId);
+  if (editor) { editor.value = match[1].trim(); previewMmd(editorId, previewId); document.getElementById('aiResponse').value = ''; toast('✨ Kaiのコードを適用しました', 'ok'); }
+}
+
+function defaultRoadmapCode(title) {
+  return `graph LR\n  A(["🎯 ${title}"]) --> B[計画]\n  B --> C[実行]\n  C --> D(["✅ 完了"])\n\n  B --> B1[要件整理]\n  B --> B2[スケジュール]\n  C --> C1[フェーズ1]\n  C --> C2[フェーズ2]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000`;
+}
+
+let previewDebounce = null;
+function previewMmd(editorId, previewId) {
+  clearTimeout(previewDebounce);
+  previewDebounce = setTimeout(async () => {
+    const code = document.getElementById(editorId)?.value?.trim();
+    const container = document.getElementById(previewId);
+    if (!code || !container) return;
+    try {
+      const id = `mmd-${++mmdSeq}`;
+      const { svg } = await mermaid.render(id, code);
+      container.innerHTML = svg + '<div class="mmd-preview-hint">クリックで拡大</div>';
+      const svgEl = container.querySelector('svg');
+      if (svgEl) {
+        // Preserve viewBox for PDF, remove fixed size so CSS controls display
+        const w = svgEl.getAttribute('width');
+        const h = svgEl.getAttribute('height');
+        if (w && h && !svgEl.getAttribute('viewBox')) {
+          svgEl.setAttribute('viewBox', `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
+        }
+        svgEl.setAttribute('style', 'max-width:100%;width:100%;height:auto;display:block;');
+      }
+    } catch(e) {
+      container.innerHTML = `<div class="mmd-error">構文エラー:\n${e.message || e}</div>`;
+    }
+  }, 400);
+}
+
+// ══════════════════════════════════════════════
+//  Links modal
+// ══════════════════════════════════════════════
+function openLinksModal(taskId) {
+  const t = findTask(taskId);
+  renderLinksModal(taskId, t.related_links || []);
+  document.getElementById('linksOverlay').style.display = 'flex';
+}
+
+function renderLinksModal(taskId, links) {
+  const listHtml = links.length
+    ? links.map((l, i) => `
+      <div class="link-card">
+        <div class="link-card-body">
+          <a class="link-card-title" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title||l.url)}</a>
+          <div class="link-card-url">${esc(l.url)}</div>
+          ${l.description ? `<div class="link-card-desc">${esc(l.description)}</div>` : ''}
+        </div>
+        <button class="icon-btn del btn-sm" onclick="removeLink('${taskId}',${i})" title="削除">🗑</button>
+      </div>`).join('')
+    : '<div class="link-empty">関連リンクはまだありません</div>';
+
+  document.getElementById('linksContent').innerHTML = `
+    <h2 style="font-size:17px;font-weight:700;margin-bottom:16px;">🔗 関連リンク — <span style="color:var(--text2);font-size:13px;">${esc(findTask(taskId).title)}</span></h2>
+    <div class="link-add-form">
+      <h4>新しいリンクを追加</h4>
+      <div class="form-group" style="margin-bottom:8px;"><label>タイトル</label><input id="l-title" placeholder="例：コーデ就労支援_要件定義" /></div>
+      <div class="form-group" style="margin-bottom:8px;"><label>URL</label><input id="l-url" placeholder="https://..." type="url" /></div>
+      <div class="form-group" style="margin-bottom:10px;"><label>概要</label><textarea id="l-desc" placeholder="この業務との関連など" style="min-height:48px;"></textarea></div>
+      <button class="btn btn-primary btn-sm" onclick="addLink('${taskId}')">＋ 追加</button>
+    </div>
+    <div class="link-list-label">登録済み（${links.length}件）</div>
+    <div id="linkList">${listHtml}</div>
+    <div class="modal-actions" style="margin-top:14px;">
+      <button class="btn btn-ghost" onclick="closeLinks()">閉じる</button>
+    </div>`;
+}
+
+async function addLink(taskId) {
+  const title = document.getElementById('l-title').value.trim();
+  const url   = document.getElementById('l-url').value.trim();
+  const desc  = document.getElementById('l-desc').value.trim();
+  if (!url) { toast('URLを入力してください', 'err'); return; }
+  const t = findTask(taskId);
+  const links = [...(t.related_links||[]), { title: title||url, url, description: desc }];
+  captureSnapshotForTask(taskId, 'リンク追加');
+  await api('PUT', `/tasks/${taskId}`, { related_links: links });
+  await loadData(true);
+  renderLinksModal(taskId, findTask(taskId).related_links || []);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('リンクを追加しました', 'ok');
+  document.getElementById('linksOverlay').style.display = 'flex';
+}
+
+async function removeLink(taskId, idx) {
+  if (!confirm('このリンクを削除しますか？')) return;
+  captureSnapshotForTask(taskId, 'リンク削除');
+  const t = findTask(taskId);
+  const links = (t.related_links||[]).filter((_, i) => i !== idx);
+  await api('PUT', `/tasks/${taskId}`, { related_links: links });
+  await loadData(true);
+  renderLinksModal(taskId, findTask(taskId).related_links || []);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('削除しました', 'ok');
+  document.getElementById('linksOverlay').style.display = 'flex';
+}
+
+// ══════════════════════════════════════════════
+//  Status helpers
+// ══════════════════════════════════════════════
+function statusLabel(s) { return { active:'進行中', completed:'完了', archived:'アーカイブ' }[s] || s; }
+function taskStatusLabel(s) { return { todo:'未着手', in_progress:'進行中', done:'完了' }[s] || s; }
+function isOverdue(date) { return date && date < new Date().toISOString().slice(0,10); }
+
+async function cycleStatus(taskId) {
+  const task = findTask(taskId);
+  if (!task) return;
+  captureSnapshotForTask(taskId, 'ステータス変更');
+  const next = { todo:'in_progress', in_progress:'done', done:'todo' }[task.status];
+  await api('PUT', `/tasks/${taskId}`, { status: next });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) {
+    const tc = document.getElementById('tabContent');
+    if (tc) tc.innerHTML = renderTabContent(p);
+  }
+}
+
+function findTask(id) {
+  for (const p of (state.data?.projects || [])) {
+    if (p.big_task?.id === id) return p.big_task;
+    for (const t of [...(p.medium_tasks||[]), ...(p.small_tasks||[])])
+      if (t.id === id) return t;
+  }
+  return null;
+}
+
+// ══════════════════════════════════════════════
+//  API helper
+// ══════════════════════════════════════════════
+async function api(method, path, body) {
+  const r = await fetch(`${API}${path}`, {
+    method, headers: { 'Content-Type':'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return r.json();
+}
+
+// ══════════════════════════════════════════════
+//  Modal helpers
+// ══════════════════════════════════════════════
+function openModal(html) { document.getElementById('modalContent').innerHTML = html; document.getElementById('modalOverlay').style.display = 'flex'; }
+function closeModal(e) { if (!e || e.target === document.getElementById('modalOverlay')) document.getElementById('modalOverlay').style.display = 'none'; }
+function closeWide(e) { if (!e || e.target === document.getElementById('wideOverlay')) document.getElementById('wideOverlay').style.display = 'none'; }
+function closeLinks(e) { if (!e || e.target === document.getElementById('linksOverlay')) document.getElementById('linksOverlay').style.display = 'none'; }
+function closeAllModals() { closeModal(); closeWide(); closeLinks(); }
+
+// ══════════════════════════════════════════════
+//  Project CRUD
+// ══════════════════════════════════════════════
+function openNewProjectModal() {
+  openModal(`
+    <h2>新規プロジェクト</h2>
+    <div class="form-group"><label>プロジェクト名 *</label><input id="f-name" placeholder="例：コーデ就労支援 AI導入" autofocus></div>
+    <div class="form-group"><label>ゴール（達成目標）</label><textarea id="f-goal" placeholder="例：2026年7月末までにAI活用率50%を達成する"></textarea></div>
+    <div class="form-group"><label>メモ</label><textarea id="f-memo" placeholder="背景・補足など"></textarea></div>
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:10px;margin-bottom:4px;">
+      <input type="checkbox" id="f-autogen" checked style="width:16px;height:16px;margin-top:1px;cursor:pointer;accent-color:var(--accent);">
+      <label for="f-autogen" style="font-size:13px;cursor:pointer;line-height:1.5;">
+        <span style="font-weight:700;color:var(--accent);">✨ タスクを自動生成する</span><br>
+        <span style="font-size:11px;color:var(--text2);">大1・中3・小5タスク＋ロードマップ・マインドマップを自動生成します</span>
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="createProject()">作成</button>
+    </div>`);
+}
+
+async function createProject() {
+  const name = document.getElementById('f-name').value.trim();
+  const goal = document.getElementById('f-goal').value.trim();
+  const autoGen = document.getElementById('f-autogen').checked;
+  if (!name) { toast('プロジェクト名を入力してください', 'err'); return; }
+  closeModal();
+  const r = await api('POST', '/projects', { name, goal, memo: document.getElementById('f-memo').value.trim() });
+  if (autoGen) {
+    toast('タスクを自動生成中…', 'ok');
+    await autoGenerateTasks(r.id, name, goal);
+  }
+  await loadData();
+  selectProject(r.id);
+  toast(autoGen ? '✨ プロジェクトとタスクを自動生成しました' : 'プロジェクトを作成しました', 'ok');
+}
+
+async function autoGenerateTasks(pid, name, goal) {
+  const label = goal || name;
+  const short = label.length > 28 ? label.slice(0,28) + '…' : label;
+  const bigTitle = goal ? `「${short}」を達成する` : `${short}を完了させる`;
+  const bigR = await api('POST', `/projects/${pid}/tasks`, { type:'big', title:bigTitle, description:'このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。' });
+  if (bigR.id) await api('PUT', `/tasks/${bigR.id}`, { roadmap_mmd: generateRoadmapCode(name, goal), mindmap_mmd: generateMindmapCode(bigTitle) });
+  for (const [title, description] of [
+    ['現状把握・要件整理','現在の状況を正確に把握し、達成に必要な要件を明確にする'],
+    ['計画立案・実行','具体的なアクションプランを立て、確実に実行する'],
+    ['検証・改善・定着化','結果を数値で確認し、改善サイクルを回して定着させる'],
+  ]) await api('POST', `/projects/${pid}/tasks`, { type:'medium', title, description });
+  for (const [title, description] of [
+    ['キックオフ・関係者共有','プロジェクト開始を関係者に伝え、役割分担と協力体制を整える'],
+    ['ツール・リソースの準備','作業に必要なツール・情報・人員・予算を事前に確保する'],
+    ['進捗確認・中間レビュー','定期的に進捗を確認し、目標とのズレを早期に修正する'],
+    ['課題の洗い出しと対処','リスクや障害を早期に発見し、影響が出る前に手を打つ'],
+    ['最終確認・完了報告','成果物・達成度を確認し、引き継ぎ・報告を行って完了とする'],
+  ]) await api('POST', `/projects/${pid}/tasks`, { type:'small', title, description });
+}
+
+function generateRoadmapCode(name, goal) {
+  const label = goal || name;
+  const s = label.length > 22 ? label.slice(0,22) + '…' : label;
+  return `graph LR\n  A(["🎯 ${s}"]) --> B["📋 計画フェーズ"]\n  B --> C["⚙️ 実行フェーズ"]\n  C --> D(["✅ 完了・定着"])\n\n  B --> B1["現状把握"]\n  B --> B2["要件整理"]\n  B --> B3["リソース確保"]\n\n  C --> C1["フェーズ1: 着手"]\n  C --> C2["フェーズ2: 展開"]\n  C --> C3["フェーズ3: 仕上げ"]\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style D fill:#43e97b,color:#000,stroke:#43e97b`;
+}
+
+function generateMindmapCode(title) {
+  const s = title.length > 24 ? title.slice(0,24) + '…' : title;
+  return `mindmap\n  root(("${s}"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ`;
+}
+
+function openEditProjectModal(pid) {
+  const p = state.data.projects.find(p => p.id === pid);
+  openModal(`
+    <h2>プロジェクト編集</h2>
+    <div class="form-group"><label>プロジェクト名</label><input id="f-name" value="${esc(p.name)}" autofocus></div>
+    <div class="form-group"><label>ゴール</label><textarea id="f-goal">${esc(p.goal||'')}</textarea></div>
+    <div class="form-group"><label>ステータス</label>
+      <select id="f-status">
+        <option value="active" ${p.status==='active'?'selected':''}>進行中</option>
+        <option value="completed" ${p.status==='completed'?'selected':''}>完了</option>
+        <option value="archived" ${p.status==='archived'?'selected':''}>アーカイブ</option>
+      </select></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="updateProject('${pid}')">保存</button>
+    </div>`);
+}
+
+async function updateProject(pid) {
+  captureSnapshot(pid, 'プロジェクト編集');
+  await api('PUT', `/projects/${pid}`, { name: document.getElementById('f-name').value.trim(), goal: document.getElementById('f-goal').value.trim(), status: document.getElementById('f-status').value });
+  closeModal(); await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('更新しました', 'ok');
+}
+
+async function markProjectDone(pid) {
+  captureSnapshot(pid, 'プロジェクト完了');
+  await api('PUT', `/projects/${pid}`, { status:'completed' });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p); else showDashboard();
+  toast('プロジェクトを完了しました！', 'ok');
+}
+
+async function archiveProject(pid) {
+  captureSnapshot(pid, 'アーカイブ');
+  await api('PUT', `/projects/${pid}`, { status:'archived' });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('アーカイブしました', 'ok');
+}
+
+async function deleteProject(pid) {
+  if (!confirm('このプロジェクトを削除しますか？（元に戻せません）')) return;
+  captureSnapshot(pid, 'プロジェクト削除');
+  await api('DELETE', `/projects/${pid}`);
+  await loadData(); showDashboard();
+  toast('削除しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Task CRUD
+// ══════════════════════════════════════════════
+function openAddTaskModal(pid, type) {
+  const labels = { big:'大タスク（Must do）', medium:'中タスク（Should do）', small:'小タスク（Nice to do）' };
+  openModal(`
+    <h2>タスク追加 — ${labels[type]}</h2>
+    <div class="form-group"><label>タイトル *</label><input id="f-title" placeholder="タスクのタイトル" autofocus></div>
+    <div class="form-group"><label>説明</label><textarea id="f-desc" placeholder="詳細・目的など"></textarea></div>
+    <div class="form-group"><label>期日</label><input id="f-due" type="date"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="addTask('${pid}','${type}')">追加</button>
+    </div>`);
+}
+
+async function addTask(pid, type) {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { toast('タイトルを入力してください', 'err'); return; }
+  captureSnapshot(pid, 'タスク追加');
+  const r = await api('POST', `/projects/${pid}/tasks`, { type, title, description: document.getElementById('f-desc').value.trim(), due_date: document.getElementById('f-due').value || null });
+  if (r.error) { toast(r.error, 'err'); return; }
+  closeModal(); await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('タスクを追加しました', 'ok');
+}
+
+function openEditTaskModal(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  openModal(`
+    <h2>タスク編集</h2>
+    <div class="form-group"><label>タイトル</label><input id="f-title" value="${esc(t.title)}" autofocus></div>
+    <div class="form-group"><label>説明</label><textarea id="f-desc">${esc(t.description||'')}</textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>ステータス</label>
+        <select id="f-status">
+          <option value="todo" ${t.status==='todo'?'selected':''}>未着手</option>
+          <option value="in_progress" ${t.status==='in_progress'?'selected':''}>進行中</option>
+          <option value="done" ${t.status==='done'?'selected':''}>完了</option>
+        </select></div>
+      <div class="form-group"><label>期日</label><input id="f-due" type="date" value="${t.due_date||''}"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="updateTask('${taskId}')">保存</button>
+    </div>`);
+}
+
+async function updateTask(taskId) {
+  captureSnapshotForTask(taskId, 'タスク編集');
+  await api('PUT', `/tasks/${taskId}`, { title: document.getElementById('f-title').value.trim(), description: document.getElementById('f-desc').value.trim(), status: document.getElementById('f-status').value, due_date: document.getElementById('f-due').value || null });
+  closeModal(); await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('更新しました', 'ok');
+}
+
+async function deleteTask(taskId) {
+  if (!confirm('このタスクを削除しますか？')) return;
+  captureSnapshotForTask(taskId, 'タスク削除');
+  await api('DELETE', `/tasks/${taskId}`);
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) renderProject(p);
+  toast('削除しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Pivots (Thinking Transition)
+// ══════════════════════════════════════════════
+function renderPivots(p) {
+  const pivots = (p.pivots || []).slice().sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  const typeLabel = { strategic:'方針転換', technical:'技術転換', scope:'スコープ変更', conceptual:'概念転換' };
+  const impactLabel = { high:'影響大', medium:'影響中', low:'影響小' };
+
+  const diagramHtml = `
+    <div class="pivot-section-title">🗺️ 思考遷移図 <span style="font-weight:400;color:var(--border);font-size:10px;">自動生成 — ピボットを追加するとリアルタイム更新</span></div>
+    <div class="pivot-diagram-wrap" id="pivotDiagramWrap">
+      ${pivots.length === 0
+        ? `<span style="color:var(--text2);font-size:12px;">ピボットを記録すると思考遷移図が表示されます</span>`
+        : `<span style="color:var(--text2);font-size:12px;">レンダリング中…</span>`}
+    </div>`;
+
+  // Initial vs current mindmap comparison
+  const initialMmd = p.initial_mindmap_mmd;
+  const bigTaskMmd = p.big_task?.mindmap_mmd;
+  const compareHtml = (initialMmd && bigTaskMmd && initialMmd !== bigTaskMmd) ? `
+    <div class="pivot-section-title" style="margin-top:4px;">🧠 マインドマップの変遷 <span style="font-weight:400;color:var(--border);font-size:10px;">初期 vs 現在</span></div>
+    <div class="pivot-compare">
+      <div class="pivot-compare-panel">
+        <div class="pivot-compare-label">🌱 初期マインドマップ</div>
+        <div class="pivot-compare-mmd" id="pivotInitMmd"><span style="color:var(--text2);font-size:11px;">レンダリング中…</span></div>
+      </div>
+      <div class="pivot-compare-panel">
+        <div class="pivot-compare-label">✨ 現在のマインドマップ</div>
+        <div class="pivot-compare-mmd" id="pivotCurrMmd"><span style="color:var(--text2);font-size:11px;">レンダリング中…</span></div>
+      </div>
+    </div>` : '';
+
+  const pivotListHtml = pivots.length
+    ? `<div class="pivot-timeline">${pivots.map((pv, i) => `
+        <div class="pivot-card">
+          <div class="pivot-card-top">
+            <div>
+              <span class="pivot-type-badge ${pv.type}">${typeLabel[pv.type] || pv.type}</span>
+              ${i === 0 ? '<span style="font-size:10px;color:var(--accent);margin-left:6px;">← 最初の転換点</span>' : ''}
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+              <span class="pivot-impact ${pv.impact}">${impactLabel[pv.impact] || pv.impact}</span>
+              <button class="icon-btn del btn-sm" style="width:22px;height:22px;font-size:11px;" onclick="deletePivot('${p.id}','${pv.id}')" title="削除">🗑</button>
+            </div>
+          </div>
+          ${pv.from ? `<div class="pivot-from-to">
+            <span class="pivot-from">${esc(pv.from)}</span>
+            <span class="pivot-arrow">→</span>
+            <span class="pivot-to">${esc(pv.to)}</span>
+          </div>` : `<div style="margin:6px 0;font-size:13px;font-weight:600;color:var(--accent);">→ ${esc(pv.to)}</div>`}
+          ${pv.reason ? `<div class="pivot-reason">💬 ${esc(pv.reason)}</div>` : ''}
+          <div class="pivot-time">${pv.timestamp.replace('T',' ')}</div>
+        </div>`).join('')}
+      </div>`
+    : `<div class="pivot-empty">
+        <p>まだ思考転換が記録されていません</p>
+        <p style="font-size:11px;margin-top:4px;">方針転換・技術的判断・スコープ変更などをここに記録すると<br>プロジェクトの思考の流れが可視化されます</p>
+      </div>`;
+
+  return `
+    ${diagramHtml}
+    ${compareHtml}
+    <div class="pivot-section-title" style="margin-top:${compareHtml?'4px':'0'};">📋 ピボット記録 <span style="font-weight:400;font-size:10px;color:var(--border);">${pivots.length} 件</span></div>
+    ${pivotListHtml}
+    <div style="margin-top:16px;">
+      <button class="btn btn-primary btn-sm" onclick="openAddPivotModal('${p.id}')">＋ 思考転換を記録</button>
+      ${!initialMmd && bigTaskMmd ? `<button class="btn btn-ghost btn-sm" style="margin-left:8px;" onclick="saveInitialMindmap('${p.id}')">📸 現在のマインドマップを初期として保存</button>` : ''}
+    </div>`;
+}
+
+async function renderPivotDiagram(p) {
+  const wrap = document.getElementById('pivotDiagramWrap');
+  if (!wrap) return;
+  const pivots = (p.pivots || []).slice().sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+  if (!pivots.length) return;
+
+  const initLabel = pivots[0].from || p.name.slice(0, 18);
+  let mmd = 'graph LR\n';
+  mmd += `  N_init(["🌱 ${initLabel.slice(0,20)}"])\n`;
+  let prev = 'N_init';
+  pivots.forEach((pv, i) => {
+    const nid = `N${i}`;
+    const label = pv.to.slice(0, 20);
+    const edge  = pv.reason ? pv.reason.slice(0, 16) : (pv.type === 'strategic' ? '方針転換' : pv.type === 'technical' ? '技術転換' : pv.type === 'scope' ? 'スコープ変更' : '概念転換');
+    mmd += `  ${nid}(["${label}"])\n`;
+    mmd += `  ${prev} -->|"${edge}"| ${nid}\n`;
+    prev = nid;
+  });
+  mmd += `  style N_init fill:#444,color:#fff,stroke:#444\n`;
+  pivots.forEach((_, i) => {
+    const color = i === pivots.length - 1 ? '#43e97b' : '#6c63ff';
+    const text  = i === pivots.length - 1 ? '#000' : '#fff';
+    mmd += `  style N${i} fill:${color},color:${text},stroke:${color}\n`;
+  });
+
+  try {
+    const id = `pivot-${++mmdSeq}`;
+    const { svg } = await mermaid.render(id, mmd);
+    wrap.innerHTML = svg;
+    wrap.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+  } catch(e) {
+    wrap.innerHTML = `<div class="mmd-error">描画エラー: ${e.message}</div>`;
+  }
+}
+
+async function renderPivotCompare(p) {
+  const initialMmd = p.initial_mindmap_mmd;
+  const bigTaskMmd = p.big_task?.mindmap_mmd;
+  if (!initialMmd || !bigTaskMmd || initialMmd === bigTaskMmd) return;
+
+  for (const [elId, code] of [['pivotInitMmd', initialMmd], ['pivotCurrMmd', bigTaskMmd]]) {
+    const el = document.getElementById(elId);
+    if (!el) continue;
+    try {
+      const id = `pmc-${++mmdSeq}`;
+      const { svg } = await mermaid.render(id, code);
+      el.innerHTML = svg;
+      el.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+    } catch(e) {
+      el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`;
+    }
+  }
+}
+
+function openAddPivotModal(pid) {
+  openModal(`
+    <h2>🔄 思考転換を記録</h2>
+    <div class="form-group">
+      <label>転換タイプ</label>
+      <select id="pv-type">
+        <option value="strategic">方針転換 — プロジェクトの方向性が変わった</option>
+        <option value="technical">技術転換 — 実装アプローチが変わった</option>
+        <option value="scope">スコープ変更 — 範囲・規模が変わった</option>
+        <option value="conceptual">概念転換 — 考え方・フレームが変わった</option>
+      </select>
+    </div>
+    <div class="form-group"><label>転換前の状態（元の方向）</label><input id="pv-from" placeholder="例：シングルスレッドサーバー" autofocus></div>
+    <div class="form-group"><label>転換後の状態（新しい方向）*</label><input id="pv-to" placeholder="例：ThreadingHTTPServer + SSE"></div>
+    <div class="form-group"><label>転換の理由</label><textarea id="pv-reason" placeholder="例：SSEの長時間接続が通常リクエストをブロックするため" style="min-height:60px;"></textarea></div>
+    <div class="form-group">
+      <label>影響度</label>
+      <select id="pv-impact">
+        <option value="high">大 — プロジェクト全体に影響</option>
+        <option value="medium" selected>中 — 一部に影響</option>
+        <option value="low">小 — 軽微な変更</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="addPivot('${pid}')">記録する</button>
+    </div>`);
+}
+
+async function addPivot(pid) {
+  const to = document.getElementById('pv-to').value.trim();
+  if (!to) { toast('転換後の状態を入力してください', 'err'); return; }
+  captureSnapshot(pid, 'ピボット追加');
+  closeModal();
+  await api('POST', `/projects/${pid}/pivots`, {
+    type:   document.getElementById('pv-type').value,
+    from:   document.getElementById('pv-from').value.trim(),
+    to,
+    reason: document.getElementById('pv-reason').value.trim(),
+    impact: document.getElementById('pv-impact').value,
+  });
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) { renderProject(p); setTimeout(() => { renderPivotDiagram(p); renderPivotCompare(p); }, 100); }
+  toast('思考転換を記録しました', 'ok');
+}
+
+async function deletePivot(pid, pivotId) {
+  if (!confirm('このピボット記録を削除しますか？')) return;
+  captureSnapshot(pid, 'ピボット削除');
+  await api('DELETE', `/projects/${pid}/pivots/${pivotId}`);
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === pid);
+  if (p) renderProject(p);
+  toast('削除しました', 'ok');
+}
+
+async function saveInitialMindmap(pid) {
+  const p = state.data?.projects.find(p => p.id === pid);
+  const mmd = p?.big_task?.mindmap_mmd;
+  if (!mmd) { toast('大タスクのマインドマップが未設定です', 'err'); return; }
+  captureSnapshot(pid, '初期マインドマップ保存');
+  await api('PUT', `/projects/${pid}`, { initial_mindmap_mmd: mmd });
+  await loadData(true);
+  const updated = state.data?.projects.find(p => p.id === pid);
+  if (updated) renderProject(updated);
+  toast('初期マインドマップを保存しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  History / Memo
+// ══════════════════════════════════════════════
+function renderHistory(p) {
+  const all = [];
+  (p.history||[]).forEach(h => all.push({ ...h, source: p.name }));
+  getAllTasks(p).forEach(t => (t.history||[]).forEach(h => all.push({ ...h, source: t.title })));
+  all.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  if (!all.length) return '<div style="color:var(--text2);font-size:13px;padding:20px 0;">履歴なし</div>';
+  return `<div class="history-section"><div class="history-list">${all.map(h => `
+    <div class="history-item">
+      <div class="history-dot"></div>
+      <div class="history-content">
+        <div class="history-action">${esc(h.action)}</div>
+        <div class="history-detail">${esc(h.detail)} — <em>${esc(h.source)}</em></div>
+        <div class="history-time">${h.timestamp}</div>
+      </div>
+    </div>`).join('')}</div></div>`;
+}
+
+function renderMemo(p) {
+  return `<div class="memo-section">
+    <h3>メモ</h3>
+    <textarea class="memo-area" id="memoArea" placeholder="このプロジェクトに関するメモを自由に...">${esc(p.memo||'')}</textarea>
+    <div style="margin-top:8px;"><button class="btn btn-primary btn-sm" onclick="saveMemo('${p.id}')">保存</button></div>
+  </div>`;
+}
+
+async function saveMemo(pid) {
+  const memo = document.getElementById('memoArea').value;
+  captureSnapshot(pid, 'メモ保存');
+  await api('PUT', `/projects/${pid}`, { memo });
+  await loadData(true);
+  toast('メモを保存しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Undo System
+// ══════════════════════════════════════════════
+const UNDO_MAX = 3;
+const _undoStack = [];
+
+function _findProjectForTask(taskId) {
+  return (state.data?.projects || []).find(p =>
+    p.big_task?.id === taskId ||
+    (p.medium_tasks||[]).some(t => t.id === taskId) ||
+    (p.small_tasks||[]).some(t => t.id === taskId));
+}
+
+function captureSnapshot(projectId, label) {
+  const p = (state.data?.projects || []).find(x => x.id === projectId);
+  if (!p) return;
+  _undoStack.push({ label, projectId, snapshot: JSON.parse(JSON.stringify(p)) });
+  if (_undoStack.length > UNDO_MAX) _undoStack.shift();
+  renderUndoBar();
+}
+
+function captureSnapshotForTask(taskId, label) {
+  const p = _findProjectForTask(taskId);
+  if (p) captureSnapshot(p.id, label);
+}
+
+async function doUndo(idx) {
+  if (!_undoStack.length || idx < 0 || idx >= _undoStack.length) return;
+  const { label, projectId, snapshot } = _undoStack[idx];
+  _undoStack.splice(idx);
+  const r = await api('POST', `/projects/${projectId}/restore`, { snapshot });
+  if (r.error) { toast(`↩ 失敗: ${r.error}（サーバーを再起動してください）`, 'err'); renderUndoBar(); return; }
+  await loadData(true);
+  const p = state.data?.projects.find(p => p.id === projectId);
+  if (state.projectId === projectId) {
+    if (p) renderProject(p);
+    else { state.projectId = null; showDashboard(); }
+  }
+  renderSidebar();
+  renderUndoBar();
+  toast(`↩ "${label}" を元に戻しました`, 'ok');
+}
+
+function clearUndoStack() {
+  _undoStack.length = 0;
+  renderUndoBar();
+}
+
+function renderUndoBar() {
+  const bar = document.getElementById('undoBar');
+  const itemsEl = document.getElementById('undoItems');
+  if (!bar || !itemsEl) return;
+  if (!_undoStack.length) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  const stepNames = ['1つ前', '2つ前', '3つ前'];
+  const reversed = [..._undoStack].reverse();
+  itemsEl.innerHTML = reversed.map((item, ri) => {
+    const idx = _undoStack.length - 1 - ri;
+    return `<button class="undo-item ${ri===0?'undo-latest':''}" onclick="doUndo(${idx})" title="${esc(item.label)} を元に戻す">${stepNames[ri]}: ${esc(item.label)}</button>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  Toast / helpers
+// ══════════════════════════════════════════════
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ══════════════════════════════════════════════
+//  Keyboard shortcuts
+// ══════════════════════════════════════════════
+let kbdHintTimer;
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) {
+    if (e.key === 'Escape') { e.target.blur(); closeAllModals(); }
+    return;
+  }
+  if (e.key === 'Escape') { closeAllModals(); clearSearch(); }
+  else if (e.ctrlKey && e.key === 'z') { e.preventDefault(); if (_undoStack.length) doUndo(_undoStack.length - 1); return; }
+  else if (e.key === '/' || (e.key === 'f' && !e.ctrlKey && !e.metaKey)) {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+  else if (e.key === 'n' || e.key === 'N') { openNewProjectModal(); }
+  else if (e.key === 'd' || e.key === 'D') { showDashboard('dashboard'); }
+  else if (e.key === 'g' || e.key === 'G') { showDashboard('graph'); }
+  else if (state.projectId) {
+    if      (e.key === 'k' || e.key === 'K') switchTab('kanban',  state.projectId);
+    else if (e.key === 't' || e.key === 'T') switchTab('tasks',   state.projectId);
+    else if (e.key === 'h' || e.key === 'H') switchTab('history', state.projectId);
+    else if (e.key === 'p' || e.key === 'P') switchTab('pivots',  state.projectId);
+    else if (e.key === 'l' || e.key === 'L') switchTab('logs',    state.projectId);
+  }
+  // Show hint briefly
+  clearTimeout(kbdHintTimer);
+  const hint = document.getElementById('kbdHint');
+  hint.classList.add('show');
+  kbdHintTimer = setTimeout(() => hint.classList.remove('show'), 2500);
+});
+
+// ══════════════════════════════════════════════
+//  Mermaid Zoom Popup
+// ══════════════════════════════════════════════
+let _zoom = { scale: 1, tx: 0, ty: 0, drag: false, lastX: 0, lastY: 0, natW: 800, natH: 600 };
+let _zoomSvg = null;
+
+function openMmdPopupFromPreview(previewId, title) {
+  const svgEl = document.getElementById(previewId)?.querySelector('svg');
+  if (!svgEl) { toast('先にプレビューを表示してください', 'err'); return; }
+  openMmdPopup(svgEl, title);
+}
+
+function openMmdPopup(svgEl, title) {
+  const overlay = document.getElementById('mmdZoomOverlay');
+  const inner   = document.getElementById('mmdZoomInner');
+  document.getElementById('mmdZoomTitle').textContent = title || '';
+
+  const clone = svgEl.cloneNode(true);
+  // Read natural dimensions
+  const vb = clone.getAttribute('viewBox');
+  if (vb) {
+    const p = vb.trim().split(/[\s,]+/);
+    _zoom.natW = parseFloat(p[2]) || 800;
+    _zoom.natH = parseFloat(p[3]) || 600;
+  } else {
+    _zoom.natW = parseFloat(clone.getAttribute('width'))  || 800;
+    _zoom.natH = parseFloat(clone.getAttribute('height')) || 600;
+  }
+  clone.setAttribute('width',  _zoom.natW);
+  clone.setAttribute('height', _zoom.natH);
+  clone.style.cssText = 'display:block;';
+  inner.innerHTML = '';
+  inner.appendChild(clone);
+  _zoomSvg = clone;
+
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => mmdZoomFit());
+}
+
+function closeMmdPopup() {
+  document.getElementById('mmdZoomOverlay').style.display = 'none';
+}
+
+function _applyZoom() {
+  const inner = document.getElementById('mmdZoomInner');
+  if (inner) inner.style.transform = `translate(${_zoom.tx}px,${_zoom.ty}px) scale(${_zoom.scale})`;
+  const d = document.getElementById('mmdZoomScaleDisplay');
+  if (d) d.textContent = Math.round(_zoom.scale * 100) + '%';
+}
+
+function mmdZoomFit() {
+  const canvas = document.getElementById('mmdZoomCanvas');
+  if (!canvas) return;
+  const cw = canvas.clientWidth, ch = canvas.clientHeight;
+  _zoom.scale = Math.min(cw / _zoom.natW, ch / _zoom.natH) * 0.92;
+  _zoom.tx = (cw - _zoom.natW * _zoom.scale) / 2;
+  _zoom.ty = (ch - _zoom.natH * _zoom.scale) / 2;
+  _applyZoom();
+}
+function mmdZoomIn()  { _zoom.scale = Math.min(_zoom.scale * 1.25, 12); _applyZoom(); }
+function mmdZoomOut() { _zoom.scale = Math.max(_zoom.scale / 1.25, 0.04); _applyZoom(); }
+
+function printMmdPopup() {
+  if (!_zoomSvg) return;
+  const clone = _zoomSvg.cloneNode(true);
+  clone.setAttribute('style', 'max-width:100%;height:auto;display:block;');
+  const landscape = _zoom.natW > _zoom.natH;
+  const ps = landscape ? 'A4 landscape' : 'A4 portrait';
+  const pw = landscape ? '297mm' : '210mm';
+  const ph = landscape ? '210mm' : '297mm';
+  const title = document.getElementById('mmdZoomTitle').textContent;
+  const safeTitle = title.replace(/[<>"&]/g, c=>({'<':'&lt;','>':'&gt;','"':'&quot;','&':'&amp;'}[c]));
+  const win = window.open('', '_blank', 'width=1280,height=900,menubar=no,toolbar=no');
+  if (!win) { toast('ポップアップがブロックされています', 'err'); return; }
+  win.document.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>${safeTitle}</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#e8e8e8;font-family:'Segoe UI',sans-serif}
+.tb{display:flex;align-items:center;gap:10px;padding:10px 20px;background:#1a1a24;color:#e8e8f0;position:sticky;top:0;z-index:10}
+.tb-t{font-size:14px;font-weight:600;flex:1}.tbtn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:13px;font-weight:600}
+.tbtn-p{background:#6c63ff;color:#fff}.tbtn-c{background:transparent;color:#8888aa;border:1px solid #2e2e40}
+.pw{display:flex;align-items:flex-start;justify-content:center;padding:24px;min-height:calc(100vh - 52px)}
+.a4{width:${pw};min-height:${ph};background:#fff;padding:12mm;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.a4 svg{max-width:100%;height:auto;display:block}
+@media print{body{background:white}.tb{display:none!important}.pw{padding:0;min-height:0}.a4{margin:0;width:100%;min-height:0;box-shadow:none;padding:8mm}@page{size:${ps};margin:0}}</style>
+</head><body>
+<div class="tb"><span class="tb-t">${safeTitle}</span>
+<button class="tbtn tbtn-p" onclick="window.print()">🖨️ PDF出力</button>
+<button class="tbtn tbtn-c" onclick="window.close()">✕</button></div>
+<div class="pw"><div class="a4">${clone.outerHTML}</div></div></body></html>`);
+  win.document.close();
+}
+
+function _initZoomEvents() {
+  const canvas = document.getElementById('mmdZoomCanvas');
+  if (!canvas) return;
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const cx = e.clientX - rect.left, cy = e.clientY - rect.top;
+    const f = e.deltaY < 0 ? 1.15 : 0.87;
+    const ns = Math.max(0.04, Math.min(12, _zoom.scale * f));
+    _zoom.tx = cx - (cx - _zoom.tx) * (ns / _zoom.scale);
+    _zoom.ty = cy - (cy - _zoom.ty) * (ns / _zoom.scale);
+    _zoom.scale = ns;
+    _applyZoom();
+  }, { passive: false });
+  canvas.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    _zoom.drag = true; _zoom.lastX = e.clientX; _zoom.lastY = e.clientY;
+    canvas.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!_zoom.drag) return;
+    _zoom.tx += e.clientX - _zoom.lastX; _zoom.ty += e.clientY - _zoom.lastY;
+    _zoom.lastX = e.clientX; _zoom.lastY = e.clientY;
+    _applyZoom();
+  });
+  window.addEventListener('mouseup', () => {
+    if (_zoom.drag) { _zoom.drag = false; canvas.classList.remove('dragging'); }
+  });
+}
+
+// ══════════════════════════════════════════════
+//  AI Input Focus Overlay
+// ══════════════════════════════════════════════
+let _aiFocusTarget = null;
+
+function openAiFocus(targetId, title) {
+  _aiFocusTarget = targetId;
+  const ta = document.getElementById(targetId);
+  const focusTa = document.getElementById('aiFocusTa');
+  document.getElementById('aiFocusTitle').textContent = title || '入力';
+  focusTa.value = ta ? ta.value : '';
+  focusTa.placeholder = ta ? ta.placeholder : '';
+  document.getElementById('aiFocusOverlay').style.display = 'flex';
+  setTimeout(() => { focusTa.focus(); focusTa.selectionStart = focusTa.value.length; }, 80);
+}
+
+function closeAiFocus(apply) {
+  if (apply && _aiFocusTarget) {
+    const src = document.getElementById('aiFocusTa');
+    const dst = document.getElementById(_aiFocusTarget);
+    if (src && dst) dst.value = src.value;
+  }
+  document.getElementById('aiFocusOverlay').style.display = 'none';
+  _aiFocusTarget = null;
+}
+
+// ══════════════════════════════════════════════
+//  Activity Log (session_logs)
+// ══════════════════════════════════════════════
+function renderActivityLog(p) {
+  const logs = (p.session_logs || []).slice().sort((a,b) => b.timestamp.localeCompare(a.timestamp));
+  const typeIcon = { instruction: '📝', decision: '✅', output: '📦', note: '💬' };
+  const typeLabel = { instruction: '指示', decision: '決定', output: '成果物', note: 'メモ' };
+
+  const logsHtml = logs.length ? logs.map(l => `
+    <div class="act-log-item act-log-type-${esc(l.type)}">
+      <div class="act-log-icon">${typeIcon[l.type] || '📌'}</div>
+      <div class="act-log-body">
+        <div class="act-log-summary">
+          <span class="act-log-type-badge">${typeLabel[l.type] || l.type}</span>${esc(l.summary)}
+        </div>
+        ${l.detail ? `<div class="act-log-detail">${esc(l.detail)}</div>` : ''}
+        <div class="act-log-meta">${l.timestamp.replace('T',' ')} · ${timeAgo(l.timestamp)}</div>
+      </div>
+      <button class="file-del-btn" onclick="deleteActivityLog('${p.id}','${l.id}')" title="削除">✕</button>
+    </div>`).join('') :
+    `<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">
+      活動ログがありません<br>
+      <div style="font-size:11px;margin-top:8px;">CLIから: <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;">log-action PROJECT_ID --type instruction --summary "指示内容"</code></div>
+    </div>`;
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <h2 style="font-size:16px;font-weight:700;">📋 活動ログ</h2>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px;">上村の指示・Kaiの決定・成果物・メモを時系列で記録</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openAddLogModal('${p.id}')">＋ ログを追加</button>
+    </div>
+    <div class="act-log-list">${logsHtml}</div>`;
+}
+
+function openAddLogModal(pid) {
+  const html = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📋 活動ログを追加</div>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">種別</label>
+    <select id="logType" class="form-input" style="margin-bottom:10px;">
+      <option value="instruction">📝 指示（上村からの指示内容）</option>
+      <option value="decision">✅ 決定（Kaiが行った判断・決定）</option>
+      <option value="output">📦 成果物（作成したファイル・成果）</option>
+      <option value="note">💬 メモ（その他のメモ）</option>
+    </select>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">概要 <span style="color:var(--red)">*</span></label>
+    <input id="logSummary" class="form-input" placeholder="1行で要約" style="margin-bottom:10px;">
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">詳細（省略可）</label>
+    <textarea id="logDetail" class="form-input" rows="3" placeholder="詳細な内容・ファイルパス・コマンドなど" style="resize:vertical;margin-bottom:14px;"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="addActivityLog('${pid}')">追加</button>
+    </div>`;
+  openModal(html);
+}
+
+async function addActivityLog(pid) {
+  const type = document.getElementById('logType')?.value || 'note';
+  const summary = document.getElementById('logSummary')?.value.trim();
+  const detail = document.getElementById('logDetail')?.value.trim() || '';
+  if (!summary) { toast('概要を入力してください', 'err'); return; }
+  captureSnapshot(pid, '活動ログ追加');
+  await api('POST', `/projects/${pid}/logs`, { type, summary, detail });
+  await loadData(true);
+  closeModal();
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (p && state.tab === 'logs') {
+    document.getElementById('tabContent').innerHTML = renderActivityLog(p);
+  }
+  toast('ログを追加しました', 'ok');
+}
+
+async function deleteActivityLog(pid, logId) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+  captureSnapshot(pid, '活動ログ削除');
+  const updated = (p.session_logs || []).filter(l => l.id !== logId);
+  await api('PUT', `/projects/${pid}`, { session_logs: updated });
+  await loadData(true);
+  const pp = state.data?.projects.find(x => x.id === pid);
+  if (pp && state.tab === 'logs') {
+    document.getElementById('tabContent').innerHTML = renderActivityLog(pp);
+  }
+  toast('削除しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Task Dashboard
+// ══════════════════════════════════════════════
+function openTaskDashboard(taskId) {
+  const overlay = document.getElementById('taskDashOverlay');
+  overlay.dataset.taskId = taskId;
+  renderTaskDashboard(taskId);
+  overlay.style.display = 'flex';
+}
+
+function closeTaskDash() {
+  document.getElementById('taskDashOverlay').style.display = 'none';
+}
+
+function renderTaskDashboard(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  const p = (state.data?.projects || []).find(proj =>
+    proj.big_task?.id === taskId ||
+    (proj.medium_tasks||[]).some(x=>x.id===taskId) ||
+    (proj.small_tasks||[]).some(x=>x.id===taskId));
+  const sizeClass = p?.big_task?.id === taskId ? 'big' : (p?.medium_tasks||[]).some(x=>x.id===taskId) ? 'med' : 'small';
+  const sizeName = { big:'★ 大タスク', med:'◆ 中タスク', small:'◇ 小タスク' }[sizeClass];
+  const today = new Date().toISOString().slice(0,10);
+  const overdue = t.due_date && t.due_date < today && t.status !== 'done';
+  const links = t.related_links || [];
+  const history = (t.history || []).slice().sort((a,b)=>b.timestamp.localeCompare(a.timestamp)).slice(0,8);
+
+  const linksHtml = links.length ? links.map(l =>
+    `<div class="task-link-item" style="margin-bottom:5px;">
+      <span class="task-link-icon">🔗</span>
+      <div class="task-link-info">
+        <a class="task-link-title" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title||l.url)}</a>
+        ${l.description?`<div class="task-link-desc">${esc(l.description)}</div>`:''}
+      </div></div>`).join('') : '<div style="color:var(--text2);font-size:12px;">リンクなし</div>';
+
+  const histHtml = history.length ? history.map(h =>
+    `<div class="tdp-history-item">
+      <div class="tdp-history-dot"></div>
+      <div><div style="font-size:12px;font-weight:600;">${esc(h.action)}</div>
+      <div style="font-size:11px;color:var(--text2);">${esc(h.detail)} · ${h.timestamp.replace('T',' ')}</div></div>
+    </div>`).join('') : '<div style="color:var(--text2);font-size:12px;">履歴なし</div>';
+
+  const cycleNext = { todo:'in_progress', in_progress:'done', done:'todo' };
+  const cycleLabel = { todo:'▶ 開始', in_progress:'✅ 完了', done:'↩ 戻す' };
+
+  document.getElementById('taskDashContent').innerHTML = `
+    <div class="task-dash-head">
+      <div class="task-dash-title-row">
+        <span class="task-badge ${sizeClass}" style="flex-shrink:0;">${{big:'1',med:'3',small:'5'}[sizeClass]}</span>
+        <div>
+          <div class="task-dash-title">${esc(t.title)}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:3px;">${sizeName}${p?' · '+esc(p.name):''}</div>
+        </div>
+      </div>
+      <div class="task-dash-meta">
+        <span class="task-status-pill ${t.status}">${taskStatusLabel(t.status)}</span>
+        ${t.due_date?`<span class="task-due ${overdue?'overdue':''}">📅 ${t.due_date}${overdue?' ⚠️':''}</span>`:''}
+        ${t.mindmap_mmd?'<span style="font-size:11px;color:#a29bfe;">🧠 マインドマップあり</span>':''}
+        ${t.roadmap_mmd?'<span style="font-size:11px;color:var(--med);">🗺️ ロードマップあり</span>':''}
+      </div>
+      ${t.description?`<div class="task-dash-desc">${esc(t.description)}</div>`:''}
+    </div>
+    <div class="task-dash-body">
+      <div class="task-dash-grid">
+        <div class="tdp">
+          <div class="tdp-head">🧠 マインドマップ
+            <button class="btn-tmpl" onclick="closeTaskDash();openMindmapModal('${taskId}')">✏️ 編集</button>
+          </div>
+          <div class="tdp-mmd" id="tdMindmap" onclick="openTdMmd('tdMindmap','🧠 ${esc(t.title)}')">
+            ${t.mindmap_mmd?'<span style="color:var(--text2);font-size:11px;">レンダリング中…</span>':'<span style="color:var(--text2);font-size:12px;">未設定 — 編集ボタンから追加</span>'}
+          </div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">🗺️ ロードマップ
+            <button class="btn-tmpl" onclick="closeTaskDash();openRoadmapModal('${taskId}')">✏️ 編集</button>
+          </div>
+          <div class="tdp-mmd" id="tdRoadmap" onclick="openTdMmd('tdRoadmap','🗺️ ${esc(t.title)}')">
+            ${t.roadmap_mmd?'<span style="color:var(--text2);font-size:11px;">レンダリング中…</span>':'<span style="color:var(--text2);font-size:12px;">未設定 — 編集ボタンから追加</span>'}
+          </div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">🔗 関連リンク（${links.length}件）
+            <button class="btn-tmpl" onclick="closeTaskDash();openLinksModal('${taskId}')">＋ 管理</button>
+          </div>
+          <div class="tdp-body">${linksHtml}</div>
+        </div>
+        <div class="tdp">
+          <div class="tdp-head">📋 変更履歴</div>
+          <div class="tdp-body" style="max-height:180px;overflow-y:auto;">${histHtml}</div>
+        </div>
+      </div>
+      <div class="tdp tdp-full" id="tdFiles">
+        <div class="tdp-head">📦 成果物ファイル（${(t.output_files||[]).length}件）
+          <div style="display:flex;gap:6px;">
+            <button class="btn-tmpl" onclick="checkTaskFiles('${taskId}')">🔍 存在確認</button>
+            <button class="btn-tmpl" onclick="openAddFileModal('${taskId}')">＋ 追加</button>
+          </div>
+        </div>
+        <div class="tdp-body" id="tdFilesBody">${renderFilesHtml(t.output_files||[])}</div>
+      </div>
+    </div>
+    <div class="task-dash-foot">
+      <button class="btn btn-primary btn-sm" onclick="cycleDashStatus('${taskId}')">${cycleLabel[t.status]}</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openEditTaskModal('${taskId}')">✏️ タスク編集</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openMindmapModal('${taskId}')">🧠 マインドマップ</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openRoadmapModal('${taskId}')">🗺️ ロードマップ</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeTaskDash();openLinksModal('${taskId}')">🔗 リンク</button>
+      <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="closeTaskDash()">閉じる</button>
+    </div>`;
+
+  // Render mermaid after DOM update
+  setTimeout(async () => {
+    for (const [elId, code] of [['tdMindmap', t.mindmap_mmd], ['tdRoadmap', t.roadmap_mmd]]) {
+      if (!code) continue;
+      const el = document.getElementById(elId);
+      if (!el) continue;
+      try {
+        const id = `td-${++mmdSeq}`;
+        const { svg } = await mermaid.render(id, code);
+        el.innerHTML = svg + '<div class="mmd-preview-hint" style="position:absolute;bottom:6px;right:6px;">クリックで拡大</div>';
+        const s = el.querySelector('svg');
+        if (s) s.style.cssText = 'max-width:100%;height:auto;display:block;';
+        el.style.position = 'relative';
+      } catch(e) { el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`; }
+    }
+  }, 50);
+}
+
+// ── Output Files helpers ──
+function renderFilesHtml(files) {
+  if (!files || !files.length) {
+    return `<div style="color:var(--text2);font-size:12px;">成果物ファイルなし — 「＋ 追加」または CLIの <code>attach-file</code> で登録できます</div>`;
+  }
+  return `<div class="file-list">${files.map((f, i) => `
+    <div class="file-item">
+      <div class="file-dot ${f.status||'unchecked'}" title="${f.status==='ok'?'正常':'消失の可能性あり'}"></div>
+      <div class="file-info">
+        <div class="file-label">${esc(f.label||f.path)}</div>
+        <div class="file-path" title="${esc(f.path)}">${esc(f.path)}</div>
+        ${f.status==='missing'?`<div class="file-missing-alert">⚠️ ファイルが見つかりません（移動・削除の可能性）</div>`:''}
+        ${f.status==='unchecked'?`<div style="font-size:10px;color:var(--text2);">未確認 — 「🔍 存在確認」でチェック</div>`:''}
+      </div>
+      <button class="file-del-btn" onclick="removeOutputFile(event.currentTarget)" data-index="${i}" title="削除">✕</button>
+    </div>`).join('')}</div>`;
+}
+
+function openAddFileModal(taskId) {
+  const html = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📦 成果物ファイルを追加</div>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">ファイルパス <span style="color:var(--red)">*</span></label>
+    <input id="addFilePath" class="form-input" placeholder="例: D:\\Google Antigravity\\...\\report.html" style="margin-bottom:10px;font-family:monospace;font-size:12px;">
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">ラベル（省略可）</label>
+    <input id="addFileLabel" class="form-input" placeholder="ファイルの分かりやすい名前" style="margin-bottom:14px;">
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="addOutputFile('${taskId}')">追加</button>
+    </div>`;
+  openModal(html);
+}
+
+async function addOutputFile(taskId) {
+  const path = document.getElementById('addFilePath')?.value.trim();
+  if (!path) { toast('ファイルパスを入力してください', 'err'); return; }
+  const label = document.getElementById('addFileLabel')?.value.trim() || path.split(/[\\/]/).pop();
+  const t = findTask(taskId);
+  if (!t) return;
+  const files = [...(t.output_files || []), {
+    id: Math.random().toString(36).slice(2, 10),
+    path, label, added_at: new Date().toISOString().slice(0, 19), status: 'unchecked'
+  }];
+  captureSnapshotForTask(taskId, 'ファイル追加');
+  await api('PUT', `/tasks/${taskId}`, { output_files: files });
+  await loadData(true);
+  closeModal();
+  renderTaskDashboard(taskId);
+  toast('ファイルを追加しました', 'ok');
+}
+
+async function removeOutputFile(btn) {
+  const idx = parseInt(btn.dataset.index, 10);
+  const overlay = document.getElementById('taskDashOverlay');
+  const taskId = overlay?.dataset.taskId;
+  if (!taskId) return;
+  const t = findTask(taskId);
+  if (!t) return;
+  captureSnapshotForTask(taskId, 'ファイル削除');
+  const files = (t.output_files || []).filter((_, i) => i !== idx);
+  await api('PUT', `/tasks/${taskId}`, { output_files: files });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  toast('削除しました', 'ok');
+}
+
+async function checkTaskFiles(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  const files = t.output_files || [];
+  if (!files.length) { toast('追跡ファイルがありません', 'err'); return; }
+  toast('確認中…', 'ok');
+  const paths = files.map(f => f.path);
+  const results = await api('POST', '/files/check', { paths });
+  let missingCount = 0;
+  const updated = files.map(f => {
+    const exists = results[f.path];
+    if (!exists) missingCount++;
+    return { ...f, status: exists ? 'ok' : 'missing' };
+  });
+  await api('PUT', `/tasks/${taskId}`, { output_files: updated });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  toast(missingCount > 0 ? `⚠️ ${missingCount}件が見つかりません` : '✅ すべて正常', missingCount > 0 ? 'err' : 'ok');
+}
+
+function openTdMmd(elId, title) {
+  const svgEl = document.getElementById(elId)?.querySelector('svg');
+  if (!svgEl) return;
+  openMmdPopup(svgEl, title);
+}
+
+async function cycleDashStatus(taskId) {
+  const t = findTask(taskId);
+  if (!t) return;
+  captureSnapshotForTask(taskId, 'ステータス変更');
+  const next = { todo:'in_progress', in_progress:'done', done:'todo' }[t.status];
+  await api('PUT', `/tasks/${taskId}`, { status: next });
+  await loadData(true);
+  renderTaskDashboard(taskId);
+  const p = state.data?.projects.find(p => p.id === state.projectId);
+  if (p) { const tc = document.getElementById('tabContent'); if (tc) tc.innerHTML = renderTabContent(p); }
+  toast(`→ ${taskStatusLabel(next)}`, 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Init
+// ══════════════════════════════════════════════
+loadData();
+setupSSE();
+_initZoomEvents();
+</script>
+</body>
+</html>

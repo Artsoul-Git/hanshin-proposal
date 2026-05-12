@@ -52,10 +52,10 @@
 
 ```bash
 # 1. サーバーを確認・起動（すでに起動中なら何もしない）
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py ensure-server
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server
 
 # 2. プロジェクト作成 + 1-3-5タスク自動生成
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py create \
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py create \
   --name "プロジェクト名" \
   --goal "達成目標（1文で）"
 
@@ -68,37 +68,37 @@ python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py create \
 
 ```bash
 # タスクを開始するとき
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py start-task <TASK_ID>
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py start-task <TASK_ID>
 
 # タスクが完了したとき
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py done-task <TASK_ID>
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py done-task <TASK_ID>
 
 # タイトル・説明・期日を変更するとき
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py update-task <TASK_ID> \
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py update-task <TASK_ID> \
   --title "新タイトル" --desc "新説明"
 
 # ロードマップを更新するとき（mermaidコードを直接渡す）
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py set-roadmap <TASK_ID> \
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py set-roadmap <TASK_ID> \
   --code "graph LR\n  A-->B-->C"
 
 # 現在の進捗を確認する
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py status
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py status
 
 # プロジェクト完了時
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py project-done <PROJECT_ID>
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py project-done <PROJECT_ID>
 ```
 
 ### その他のよく使うコマンド
 
 ```bash
 # プロジェクト一覧（IDを調べるとき）
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py list
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py list
 
 # プロジェクト名で検索
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py find "コーデ"
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py find "コーデ"
 
 # ブラウザで開く
-python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py open
+python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py open
 ```
 
 ### CLIから呼ぶ場合の作業ディレクトリ
@@ -109,14 +109,14 @@ python 08_アプリ開発事業部/task-manager/kai-tasks-cli.py open
 
 ## Kai Tasks ファイル構成
 
-**場所：** `08_アプリ開発事業部/task-manager/`
+**場所：** `08_アプリ開発事業部/outputs/kai-tasks/`
 
 | ファイル | 役割 |
 |---------|------|
 | `kai-tasks-cli.py` | **KaiがCLIから使うメインツール** |
 | `server.py` | REST APIサーバー（ポート3456） |
 | `index.html` | ブラウザUI（A4プレビュー・AIアシスト付き） |
-| `起動してブラウザを開く.bat` | ダブルクリックで起動（上村さん用） |
+| `起動してブラウザを開く.vbs` | ダブルクリックで起動（上村さん用） |
 | `data/tasks.json` | 全データ（CLIとブラウザUI両方が読み書き） |
 
 ---
