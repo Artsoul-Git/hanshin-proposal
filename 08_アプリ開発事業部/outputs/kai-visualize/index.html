@@ -348,7 +348,7 @@ function _pendingFor(type, ti) {
 
 function _pendingBox(type, ti, context) {
   const pending = _pendingFor(type, ti);
-  const label = {4q:'4象限マトリクス', flow:'フロー図', gantt:'ガントチャート'}[type];
+  const label = {'4q':'4象限マトリクス', flow:'フロー図', gantt:'ガントチャート'}[type];
   const promptText = `「${context||TH[ti].n}」の${label}を生成してください [ID:${pending?.id||'...'}]`;
   if (pending) {
     return `<div class="pending-box">
