@@ -132,6 +132,7 @@ body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-heig
 </style>
 </head>
 <body>
+<div id="err-box" style="display:none;background:#c62828;color:white;padding:12px 16px;border-radius:8px;margin:12px;font-size:13px;font-family:monospace"></div>
 <div id="app">
 
   <!-- Header -->
@@ -198,9 +199,23 @@ body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-heig
 </div>
 
 <script>
-mermaid.initialize({startOnLoad:false,theme:'default',
-  flowchart:{curve:'basis'},
-  gantt:{barHeight:26,barGap:6,fontSize:13}});
+/* ─ エラー可視化（デバッグ用） ─ */
+window.onerror = function(msg, src, line) {
+  const b = document.getElementById('err-box');
+  if (b) { b.textContent = '⚠ JS Error: ' + msg + ' (line ' + line + ')'; b.style.display = 'block'; }
+};
+
+/* ─ Mermaid 遅延初期化（CDN 未ロード時にクラッシュしないため） ─ */
+let _mmdReady = false;
+function initMermaid() {
+  if (_mmdReady) return;
+  if (typeof mermaid === 'undefined') { console.warn('Mermaid not available'); return; }
+  try {
+    mermaid.initialize({startOnLoad:false, theme:'default',
+      flowchart:{curve:'basis'}, gantt:{barHeight:26, barGap:6, fontSize:13}});
+    _mmdReady = true;
+  } catch(e) { console.warn('Mermaid init failed', e); }
+}
 
 /* ═══ DATA (マンダラ静的データ) ═══ */
 const TH=[
@@ -232,7 +247,9 @@ let _flowSrc = '', _ganttSrc = '';
 
 async function initServer() {
   try {
-    const r = await fetch(`${API}/state`, {signal: AbortSignal.timeout(2000)});
+    const ctrl = new AbortController();
+    setTimeout(() => ctrl.abort(), 2000);
+    const r = await fetch(`${API}/state`, {signal: ctrl.signal});
     STATE = await r.json();
     ONLINE = true;
     document.getElementById('srv-badge').className = 'srv-badge srv-ok';
@@ -426,6 +443,7 @@ function renderGantt(ti) {
 
 /* ═══ MERMAID DYNAMIC RENDER ═══ */
 function renderMermaidView(containerId, code) {
+  initMermaid();
   const container = document.getElementById(containerId);
   const box = document.createElement('div');
   box.className = 'chart-box';
@@ -435,7 +453,9 @@ function renderMermaidView(containerId, code) {
   box.appendChild(pre);
   container.innerHTML = '';
   container.appendChild(box);
-  requestAnimationFrame(() => mermaid.run({nodes: [pre]}));
+  if (_mmdReady) {
+    requestAnimationFrame(() => mermaid.run({nodes: [pre]}));
+  }
 }
 
 /* ═══ MANDALA BUILD ═══ */
