@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>顧客開拓 4象限マトリクス</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #eef0f4; padding: 24px; }
+.card { background: white; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.1); max-width: 960px; margin: 0 auto; padding: 32px; }
+h1 { font-size: 20px; color: #1a1a1a; margin-bottom: 4px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 28px; }
+
+/* ── 軸ラベル込みのレイアウト ── */
+.matrix-wrap {
+  display: grid;
+  grid-template-areas:
+    ".         x-title  ."
+    "y-title   matrix   y-low"
+    ".         x-low    .";
+  grid-template-columns: 28px 1fr 28px;
+  grid-template-rows: 28px 1fr 28px;
+  gap: 0;
+  height: 520px;
+}
+.y-title {
+  grid-area: y-title; writing-mode: vertical-rl; transform: rotate(180deg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: bold; color: #444;
+}
+.y-low {
+  grid-area: y-low; writing-mode: vertical-rl;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #888;
+}
+.x-title {
+  grid-area: x-title; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: bold; color: #444;
+}
+.x-low {
+  grid-area: x-low; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: #888;
+}
+.matrix {
+  grid-area: matrix;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  border: 2.5px solid #555;
+  position: relative;
+}
+/* 中央十字線 */
+.matrix::before {
+  content: ''; position: absolute;
+  left: 50%; top: 0; bottom: 0; width: 2px; background: #999; z-index: 1;
+}
+.matrix::after {
+  content: ''; position: absolute;
+  top: 50%; left: 0; right: 0; height: 2px; background: #999; z-index: 1;
+}
+/* 象限 */
+.quadrant {
+  padding: 14px 14px 10px;
+  display: flex; flex-direction: column; gap: 8px;
+  position: relative; overflow: hidden;
+}
+.q-header {
+  font-size: 11px; font-weight: bold; opacity: .75;
+  position: absolute; top: 8px; right: 10px; line-height: 1;
+}
+.q1 { background: #fce4e4; } /* 高インパクト・低コスト */
+.q2 { background: #e8f0fe; } /* 高インパクト・高コスト */
+.q3 { background: #f0fdf4; } /* 低インパクト・低コスト */
+.q4 { background: #f9f9f9; } /* 低インパクト・高コスト */
+
+/* カード */
+.item {
+  background: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  border-left: 3px solid transparent;
+  cursor: default;
+  transition: transform .12s, box-shadow .12s;
+}
+.item:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,.15); }
+.q1 .item { border-left-color: #e53935; }
+.q2 .item { border-left-color: #1e88e5; }
+.q3 .item { border-left-color: #43a047; }
+.q4 .item { border-left-color: #9e9e9e; }
+.item-tag { font-size: 10px; color: #888; margin-top: 2px; }
+
+/* 凡例 */
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #444; }
+.legend-badge {
+  padding: 3px 9px; border-radius: 12px; font-size: 11px; font-weight: bold;
+}
+
+/* ツールバー */
+.toolbar { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
+.toolbar button { padding: 9px 18px; border: 1px solid #ddd; border-radius: 7px; cursor: pointer; font-size: 13px; background: #f8f9fa; font-family: inherit; transition: background .15s; }
+.toolbar button:hover { background: #e2e6ea; }
+.next-hint { font-size: 12px; color: #888; }
+
+/* 分析コメント */
+.analysis { background: #f8f9fa; border-radius: 8px; padding: 16px 20px; margin-top: 24px; font-size: 13px; line-height: 1.7; color: #333; }
+.analysis h3 { font-size: 14px; margin-bottom: 8px; color: #1a1a1a; }
+.analysis ul { padding-left: 18px; }
+.analysis li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>顧客開拓　4象限マトリクス</h1>
+  <div class="meta">
+    テーマ1「顧客開拓」の8タスクを優先度整理　｜　作成日：2026-05-14<br>
+    Y軸：期待インパクト（高→低）　X軸：実施コスト・難易度（低→高）
+  </div>
+
+  <div class="matrix-wrap">
+    <div class="y-title">↑ 期待インパクト 高</div>
+    <div class="x-title">← 実施コスト・難易度 低</div>
+
+    <div class="matrix">
+      <!-- Q1: 高インパクト・低コスト = 今すぐ着手 -->
+      <div class="quadrant q1">
+        <div class="q-header">🔴 今すぐ着手</div>
+        <div class="item">
+          ターゲット業種の絞り込み
+          <div class="item-tag">方向性が決まれば全活動が効率化。時間だけで完結</div>
+        </div>
+        <div class="item">
+          問い合わせページ最適化
+          <div class="item-tag">LP・CTA改善は低コストで成約率に直結</div>
+        </div>
+        <div class="item">
+          無料診断メニュー作成
+          <div class="item-tag">Kaiで即設計可能。集客フックとして効果大</div>
+        </div>
+      </div>
+
+      <!-- Q2: 高インパクト・高コスト = 計画的推進 -->
+      <div class="quadrant q2">
+        <div class="q-header">🔵 計画的推進</div>
+        <div class="item">
+          リード獲得フロー設計
+          <div class="item-tag">流入→ナーチャリング→商談の仕組み化。1〜2ヶ月で設計</div>
+        </div>
+        <div class="item">
+          紹介・口コミの仕組み化
+          <div class="item-tag">既存顧客から次の顧客へ。制度設計とコミュニケーション設計が必要</div>
+        </div>
+        <div class="item">
+          商談→成約率の改善
+          <div class="item-tag">トークスクリプト・提案書品質の継続改善</div>
+        </div>
+      </div>
+
+      <!-- Q3: 低インパクト・低コスト = 余力でやる -->
+      <div class="quadrant q3">
+        <div class="q-header">🟢 余力でやる</div>
+        <div class="item">
+          月次アプローチ件数管理
+          <div class="item-tag">KPI管理ツール整備。効果は間接的だが習慣として有効</div>
+        </div>
+      </div>
+
+      <!-- Q4: 低インパクト・高コスト = 保留・見直し -->
+      <div class="quadrant q4">
+        <div class="q-header">⚪ 保留・見直し</div>
+        <div class="item">
+          SNS露出増加
+          <div class="item-tag">継続投稿コストが高い割に即効性が低め。戦略を再設計してから着手</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="y-low">低 ↓</div>
+    <div class="x-low">高 →</div>
+  </div>
+
+  <!-- 凡例 -->
+  <div class="legend">
+    <div class="legend-item"><span class="legend-badge" style="background:#fce4e4;color:#c62828">🔴 今すぐ着手</span>高インパクト・低コスト（Quick Win）</div>
+    <div class="legend-item"><span class="legend-badge" style="background:#e8f0fe;color:#1565c0">🔵 計画的推進</span>高インパクト・高コスト（Strategic）</div>
+    <div class="legend-item"><span class="legend-badge" style="background:#f0fdf4;color:#2e7d32">🟢 余力でやる</span>低インパクト・低コスト（Fill-in）</div>
+    <div class="legend-item"><span class="legend-badge" style="background:#f9f9f9;color:#666">⚪ 保留・見直し</span>低インパクト・高コスト（Reconsider）</div>
+  </div>
+
+  <!-- 分析コメント -->
+  <div class="analysis">
+    <h3>📌 Kaiの分析コメント</h3>
+    <ul>
+      <li><strong>最優先の一手：</strong>「ターゲット業種の絞り込み」を先にやる。ここが決まらないと他の全活動（LP・メルマガ・診断メニュー）がぼやける。</li>
+      <li><strong>並行着手：</strong>「問い合わせページ最適化」と「無料診断メニュー作成」はKaiで即設計できるため、ターゲット絞り込みと同時進行が可能。</li>
+      <li><strong>SNSは保留：</strong>コンテンツ投稿を増やす前に「何を・誰に・なぜ」を明確化してから着手する方が費用対効果が高い。</li>
+      <li><strong>次のアクション：</strong>「今すぐ着手」3件の実行プロセスをフロー図で設計しますか？</li>
+    </ul>
+  </div>
+
+  <div class="toolbar">
+    <button onclick="copySVG()">📋 SVGをコピー</button>
+    <span class="next-hint">▶ 次のステップ：着手する課題を選んでフロー図へ（例：「ターゲット業種絞り込みのフローを作って」）</span>
+  </div>
+</div>
+
+<svg id="svg-source" style="display:none"><!-- SVGエクスポート用 --></svg>
+
+<script>
+function copySVG() {
+  const data = `顧客開拓 4象限マトリクス（テキストデータ）
+Y軸：期待インパクト　X軸：実施コスト・難易度
+
+【今すぐ着手（高インパクト・低コスト）】
+- ターゲット業種の絞り込み
+- 問い合わせページ最適化
+- 無料診断メニュー作成
+
+【計画的推進（高インパクト・高コスト）】
+- リード獲得フロー設計
+- 紹介・口コミの仕組み化
+- 商談→成約率の改善
+
+【余力でやる（低インパクト・低コスト）】
+- 月次アプローチ件数管理
+
+【保留・見直し（低インパクト・高コスト）】
+- SNS露出増加`;
+
+  navigator.clipboard.writeText(data).then(() => {
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = '✅ コピーしました';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = data;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+</script>
+</body>
+</html>
