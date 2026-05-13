@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ターゲット業種の絞り込み フロー図</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #eef0f4; padding: 24px; }
+.card { background: white; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.1); max-width: 900px; margin: 0 auto; padding: 32px; }
+h1 { font-size: 20px; color: #1a1a1a; margin-bottom: 4px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 28px; }
+.chart-area {
+  background: #fafafa; border-radius: 10px;
+  border: 1px solid #eee; padding: 24px;
+  overflow: auto; display: flex; justify-content: center;
+}
+.mermaid { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; }
+
+/* ステップ説明 */
+.steps { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.step {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 12px 16px; border-radius: 8px; background: #f8f9fa;
+  border-left: 4px solid #ccc; font-size: 13px; line-height: 1.6;
+}
+.step.action  { border-left-color: #1565c0; }
+.step.check   { border-left-color: #e65100; }
+.step.tool    { border-left-color: #6a1b9a; }
+.step.output  { border-left-color: #2e7d32; }
+.step-num { font-weight: bold; font-size: 13px; color: #888; min-width: 28px; }
+.step-body strong { color: #1a1a1a; }
+.step-tag {
+  font-size: 10px; font-weight: bold; padding: 2px 7px;
+  border-radius: 10px; margin-left: 6px; vertical-align: middle;
+}
+.tag-action { background: #e8f0fe; color: #1565c0; }
+.tag-check  { background: #fff3e0; color: #e65100; }
+.tag-tool   { background: #f3e5f5; color: #6a1b9a; }
+.tag-output { background: #e8f5e9; color: #2e7d32; }
+
+/* ツールバー */
+.toolbar { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
+.toolbar button { padding: 9px 18px; border: 1px solid #ddd; border-radius: 7px; cursor: pointer; font-size: 13px; background: #f8f9fa; font-family: inherit; transition: background .15s; }
+.toolbar button:hover { background: #e2e6ea; }
+.next-hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>ターゲット業種の絞り込み　フロー図</h1>
+  <div class="meta">顧客開拓 → 今すぐ着手タスク　｜　作成日：2026-05-14</div>
+
+  <div class="chart-area">
+    <div class="mermaid">
+flowchart TD
+  A([🚀 ターゲット業種絞り込み 開始])
+  A --> B[STEP1: 過去の受注・問い合わせを棚卸し\n業種・規模・成約結果・刺さった課題を一覧化]
+  B --> C{受注・商談実績が\n3件以上ある？}
+  C -->|Yes| D[STEP2: 得意パターンを抽出\n成約率が高い業種・課題タイプ・Kaiが最大活用できた領域を特定]
+  C -->|No 実績が少ない| E[仮説ベースで\nターゲット候補を3〜5業種リストアップ\n例：障害福祉・士業・製造・建設・クリニック]
+  D --> F
+  E --> F[STEP3: /research で市場調査\n市場規模・AI導入ニーズ・競合コンサルの参入状況・補助金有無を確認]
+  F --> G[STEP4: 業種スコアリング\n3軸で数値評価 ①受注可能性 ②市場成長性 ③競合の少なさ]
+  G --> H[STEP5: 上位2〜3業種に絞り込む\nスコア上位 + 直感の掛け合わせでOK]
+  H --> I{絞り込んだ業種で\n3ヶ月以内にテスト受注\nできる見込みがある？}
+  I -->|Yes| J[STEP6: 業種別ペルソナ・典型課題を定義\n意思決定者・反対勢力・購買動機・課題の深さを整理]
+  I -->|No 見込みが薄い| F
+  J --> K[STEP7: LP・提案書・集客メッセージに反映\n/marketing でUSP再設計 → /sme-ai-proposal で業種別提案書]
+  K --> L([✅ ターゲット業種確定\n四半期ごとに見直し・スコアを再評価])
+
+  style A fill:#1565c0,color:white,stroke:none
+  style L fill:#2e7d32,color:white,stroke:none
+  style C fill:#e65100,color:white,stroke:none
+  style I fill:#e65100,color:white,stroke:none
+  style F fill:#6a1b9a,color:white,stroke:none
+    </div>
+  </div>
+
+  <!-- ステップ解説 -->
+  <div class="steps">
+    <div class="step action">
+      <span class="step-num">STEP1</span>
+      <div class="step-body">
+        <strong>過去の受注・問い合わせを棚卸し</strong><span class="step-tag tag-action">アクション</span><br>
+        Notionやスプレッドシートに業種・規模・成約有無・刺さった課題・提案でうまくいったこと/いかなかったことを一覧化する。
+      </div>
+    </div>
+    <div class="step check">
+      <span class="step-num">分岐</span>
+      <div class="step-body">
+        <strong>実績が3件以上あるか？</strong><span class="step-tag tag-check">判断</span><br>
+        あれば実績から得意パターンを抽出。なければ「仮説ベース」で業種候補をリストアップして調査へ。
+      </div>
+    </div>
+    <div class="step tool">
+      <span class="step-num">STEP3</span>
+      <div class="step-body">
+        <strong>/research で市場調査</strong><span class="step-tag tag-tool">Kaiスキル連携</span><br>
+        候補業種の市場規模・AI導入率・競合コンサルの数・補助金（IT導入補助金等）の活用可能性を調査する。
+      </div>
+    </div>
+    <div class="step action">
+      <span class="step-num">STEP4</span>
+      <div class="step-body">
+        <strong>業種スコアリング（3軸評価）</strong><span class="step-tag tag-action">アクション</span><br>
+        ①受注可能性（自社の強みが活きるか）②市場の成長性・AI需要 ③競合の少なさ　各5点満点で評価し合計点でランク付け。
+      </div>
+    </div>
+    <div class="step check">
+      <span class="step-num">分岐</span>
+      <div class="step-body">
+        <strong>3ヶ月以内にテスト受注できる見込みがあるか？</strong><span class="step-tag tag-check">判断</span><br>
+        「知人にいる」「セミナーで接点がある」「紹介のルートがある」のいずれかがあればYes。なければ調査に戻り業種を変える。
+      </div>
+    </div>
+    <div class="step action">
+      <span class="step-num">STEP6</span>
+      <div class="step-body">
+        <strong>業種別ペルソナ・典型課題を定義</strong><span class="step-tag tag-action">アクション</span><br>
+        「どんな規模の・どんな役職の人が・何に困って・何をきっかけに問い合わせるか」を1枚でまとめる。/stakeholder も活用。
+      </div>
+    </div>
+    <div class="step output">
+      <span class="step-num">STEP7</span>
+      <div class="step-body">
+        <strong>LP・提案書・メッセージに反映</strong><span class="step-tag tag-output">アウトプット</span><br>
+        /marketing でUSPを業種特化に再設計 → /sme-ai-proposal で業種別提案書テンプレを作成。
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <button onclick="copyMermaid()">📋 Mermaidコードをコピー</button>
+    <span class="next-hint">▶ 次のステップ：このフローをガントチャートにしてスケジュール化しますか？</span>
+  </div>
+</div>
+
+<pre id="mermaid-source" style="display:none">flowchart TD
+  A([🚀 ターゲット業種絞り込み 開始])
+  A --> B[STEP1: 過去の受注・問い合わせを棚卸し\n業種・規模・成約結果・刺さった課題を一覧化]
+  B --> C{受注・商談実績が\n3件以上ある？}
+  C -->|Yes| D[STEP2: 得意パターンを抽出\n成約率が高い業種・課題タイプを特定]
+  C -->|No| E[仮説ベースで\nターゲット候補を3〜5業種リストアップ]
+  D --> F
+  E --> F[STEP3: /research で市場調査\n市場規模・AI導入ニーズ・競合・補助金を確認]
+  F --> G[STEP4: 業種スコアリング\n3軸評価 ①受注可能性 ②市場成長性 ③競合の少なさ]
+  G --> H[STEP5: 上位2〜3業種に絞り込む]
+  H --> I{3ヶ月以内にテスト受注\nできる見込みがある？}
+  I -->|Yes| J[STEP6: 業種別ペルソナ・典型課題を定義]
+  I -->|No| F
+  J --> K[STEP7: LP・提案書・集客メッセージに反映]
+  K --> L([✅ ターゲット業種確定・四半期ごとに見直し])
+
+  style A fill:#1565c0,color:white,stroke:none
+  style L fill:#2e7d32,color:white,stroke:none
+  style C fill:#e65100,color:white,stroke:none
+  style I fill:#e65100,color:white,stroke:none
+  style F fill:#6a1b9a,color:white,stroke:none</pre>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'default',
+  flowchart: { htmlLabels: true, curve: 'basis' },
+  themeVariables: { fontSize: '14px' }
+});
+
+function copyMermaid() {
+  const code = document.getElementById('mermaid-source').textContent.trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = '✅ コピーしました';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+</script>
+</body>
+</html>
