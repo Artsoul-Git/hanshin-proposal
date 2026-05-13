@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI導入支援事業の2026年戦略　マンダラチャート</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #eef0f4; padding: 24px; }
+.card { background: white; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.1); max-width: 1100px; margin: 0 auto; padding: 32px; }
+h1 { font-size: 20px; color: #1a1a1a; margin-bottom: 4px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 28px; }
+.mandala { display: grid; grid-template-columns: repeat(9, 1fr); gap: 3px; width: 100%; }
+.cell {
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; font-size: 10px; line-height: 1.35;
+  border-radius: 5px; padding: 5px 3px; min-height: 68px;
+  transition: transform .15s, box-shadow .15s; cursor: default;
+  white-space: pre-line; word-break: break-all;
+}
+.cell:hover { transform: scale(1.07); box-shadow: 0 4px 14px rgba(0,0,0,.22); z-index: 10; position: relative; }
+.c-center  { background: #1565c0; color: white; font-weight: bold; font-size: 11px; }
+.c-theme   { font-weight: bold; color: white; font-size: 10px; }
+.c-task    { font-size: 10px; color: #333; border: 1px solid transparent; }
+.c-empty   { background: transparent !important; pointer-events: none; }
+.legend { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #444; }
+.legend-dot { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+.toolbar { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
+.toolbar button {
+  padding: 9px 18px; border: 1px solid #ddd; border-radius: 7px;
+  cursor: pointer; font-size: 13px; background: #f8f9fa;
+  transition: background .15s; font-family: inherit;
+}
+.toolbar button:hover { background: #e2e6ea; }
+.next-hint { font-size: 12px; color: #888; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>AI導入支援事業の2026年戦略　マンダラチャート</h1>
+  <div class="meta">作成日：2026-05-14　｜　中心目標：AI導入支援事業で2026年の戦略を具体化する</div>
+
+  <div class="mandala" id="mandala"></div>
+  <div class="legend" id="legend"></div>
+
+  <div class="toolbar">
+    <button onclick="copyData()">📋 データをコピー（JSON）</button>
+    <span class="next-hint">▶ 次のステップ：深掘りしたいテーマ番号をKaiに伝えて4象限マトリクスへ</span>
+  </div>
+</div>
+
+<pre id="chart-json" style="display:none"></pre>
+
+<script>
+const CENTER_TEXT = 'AI導入支援\n事業2026年\n戦略';
+
+const themes = [
+  { id:1, name:'顧客開拓',       color:'#c62828', bg:'#ffebee', borderColor:'#ef9a9a' },
+  { id:2, name:'提案品質向上',   color:'#2e7d32', bg:'#e8f5e9', borderColor:'#a5d6a7' },
+  { id:3, name:'収益・財務設計', color:'#e65100', bg:'#fff3e0', borderColor:'#ffcc80' },
+  { id:4, name:'マーケティング', color:'#0277bd', bg:'#e1f5fe', borderColor:'#81d4fa' },
+  { id:5, name:'セミナー事業',   color:'#6a1b9a', bg:'#f3e5f5', borderColor:'#ce93d8' },
+  { id:6, name:'パートナー連携', color:'#00695c', bg:'#e0f2f1', borderColor:'#80cbc4' },
+  { id:7, name:'業務効率化',     color:'#1565c0', bg:'#e3f2fd', borderColor:'#90caf9' },
+  { id:8, name:'人材・組織体制', color:'#4e342e', bg:'#efebe9', borderColor:'#bcaaa4' },
+];
+
+const tasks = [
+  // 1: 顧客開拓
+  ['ターゲット業種\n絞り込み','リード獲得\nフロー設計','紹介・口コミ\n仕組み化','問い合わせ\nページ最適化','SNS露出\n増加','無料診断\nメニュー作成','月次アプローチ\n件数管理','商談→成約率\n改善'],
+  // 2: 提案品質向上
+  ['スキルセット\n拡充','ケーススタディ\n蓄積','提案書テンプレ\n改善','実績事例\nドキュメント化','Kai精度\n継続評価','業種別ノウハウ\n整備','ファクトチェック\n徹底','フィードバック\n収集'],
+  // 3: 収益・財務設計
+  ['月次収益\n目標設定','料金体系\n見直し','収益源の\n多角化','損益\nシミュレーション','CF計画\nの立案','投資計画\nの策定','粗利率\nの改善','年間売上\nKPI分解'],
+  // 4: マーケティング
+  ['LP設計\n最適化','コンテンツ\nマーケ','メルマガ\nリスト構築','SEO/SNS\n戦略','無料セミナー\n告知','事例コンテンツ\n発信','USP\n明確化','広告運用\n検討'],
+  // 5: セミナー事業
+  ['セミナー\nテーマ計画','参加者\n目標管理','セミナー後\nフォロー','動画\nコンテンツ化','スライド\n品質向上','アーカイブ\n運用','有料セミナー\n展開','コラボ\nセミナー'],
+  // 6: パートナー連携
+  ['税理士・社労士\n連携','中小企業\n診断士連携','差別化\nポジション','紹介ネット\nワーク構築','アライアンス\n条件設計','共同提案\nの仕組み','補助金\n情報提供','商工会・\n金融機関'],
+  // 7: 業務効率化
+  ['Kai作業フロー\n最適化','テンプレート\n整備','ファイル管理\n徹底','定型業務\nの自動化','作業時間\nの計測','外注可能\n業務整理','ツール\n棚卸し','週次レビュー\n習慣化'],
+  // 8: 人材・組織体制
+  ['上村スキル\n強化計画','外注スタッフ\n活用検討','Kaiとの\n役割分担','業務委託先\n選定基準','自社ナレッジ\n整備','学習・インプット\n計画','健康・\n稼働管理','3年後の\n組織像設計'],
+];
+
+// 9x9 grid — null = empty
+const GRID = Array.from({length:9}, () => Array(9).fill(null));
+
+// Center
+GRID[4][4] = { type:'center', text: CENTER_TEXT };
+
+// Central 3x3: theme positions (clockwise from top-left)
+const centerPos = [[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+themes.forEach((t, i) => {
+  const [r,c] = centerPos[i];
+  GRID[r][c] = { type:'theme', ti: i, text: t.name };
+});
+
+// Outer 3x3 blocks: [block_row_start, block_col_start]
+const blockOrigins = [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+// Clockwise offsets within a 3x3 block (excluding center)
+const offsets = [[0,0],[0,1],[0,2],[1,2],[2,2],[2,1],[2,0],[1,0]];
+themes.forEach((t, i) => {
+  const [br, bc] = blockOrigins[i];
+  // Center of outer block = theme repeat
+  GRID[br+1][bc+1] = { type:'theme-outer', ti: i, text: t.name };
+  // 8 surrounding tasks
+  offsets.forEach(([dr, dc], j) => {
+    GRID[br+dr][bc+dc] = { type:'task', ti: i, text: tasks[i][j] };
+  });
+});
+
+// Render grid
+const mandalaEl = document.getElementById('mandala');
+for (let r = 0; r < 9; r++) {
+  for (let c = 0; c < 9; c++) {
+    const cell = GRID[r][c];
+    const div = document.createElement('div');
+    div.className = 'cell';
+    if (!cell) {
+      div.classList.add('c-empty');
+      div.style.background = '#f5f5f5';
+      div.style.opacity = '0.3';
+    } else if (cell.type === 'center') {
+      div.classList.add('c-center');
+      div.textContent = cell.text;
+    } else if (cell.type === 'theme' || cell.type === 'theme-outer') {
+      const t = themes[cell.ti];
+      div.classList.add('c-theme');
+      div.style.background = t.color;
+      div.textContent = cell.type === 'theme' ? `${cell.ti+1}. ${cell.text}` : cell.text;
+      div.title = `テーマ${cell.ti+1}: ${t.name}`;
+    } else {
+      const t = themes[cell.ti];
+      div.classList.add('c-task');
+      div.style.background = t.bg;
+      div.style.borderColor = t.borderColor;
+      div.textContent = cell.text;
+      div.title = `[${t.name}] ${cell.text.replace(/\n/g,' ')}`;
+    }
+    mandalaEl.appendChild(div);
+  }
+}
+
+// Legend
+const legendEl = document.getElementById('legend');
+themes.forEach((t, i) => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${t.color}"></div><span>${i+1}. ${t.name}</span>`;
+  legendEl.appendChild(item);
+});
+
+// JSON data for copy
+const jsonData = {
+  center: 'AI導入支援事業2026年戦略',
+  themes: themes.map((t, i) => ({
+    id: t.id,
+    name: t.name,
+    tasks: tasks[i].map(s => s.replace(/\n/g,' '))
+  }))
+};
+document.getElementById('chart-json').textContent = JSON.stringify(jsonData, null, 2);
+
+function copyData() {
+  const code = document.getElementById('chart-json').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = '✅ コピーしました';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+</script>
+</body>
+</html>
