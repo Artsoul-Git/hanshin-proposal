@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kai Visualize</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-height:100vh}
+#app{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ── Header ── */
+.hdr{background:white;border-radius:12px;padding:16px 22px;margin-bottom:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);display:flex;align-items:center;gap:16px}
+.hdr-title{font-size:15px;font-weight:bold;color:#1a1a1a;flex:1}
+.bc{display:flex;align-items:center;gap:0;flex-wrap:wrap;font-size:13px}
+.bc-btn{color:#1565c0;cursor:pointer;padding:3px 8px;border-radius:6px;transition:background .15s;white-space:nowrap}
+.bc-btn:hover{background:#e8f0fe}
+.bc-btn.cur{color:#444;cursor:default;font-weight:bold}
+.bc-btn.cur:hover{background:transparent}
+.bc-sep{color:#bbb;padding:0 2px}
+
+/* ── Status badges ── */
+.srv-badge{font-size:11px;padding:3px 9px;border-radius:12px;font-weight:bold;white-space:nowrap}
+.srv-ok{background:#e8f5e9;color:#2e7d32}
+.srv-ng{background:#fce4e4;color:#c62828}
+
+/* ── View transitions ── */
+.view{display:none}
+.view.active{display:block;animation:fadeUp .2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Card ── */
+.card{background:white;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.08);padding:28px}
+.card-title{font-size:18px;font-weight:bold;color:#1a1a1a;margin-bottom:4px}
+.card-meta{font-size:13px;color:#888;margin-bottom:22px}
+
+/* ── Toolbar ── */
+.toolbar{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid #eee;padding-top:16px}
+.btn{padding:8px 16px;border:1px solid #ddd;border-radius:7px;cursor:pointer;font-size:13px;
+  background:#f8f9fa;font-family:inherit;transition:background .15s}
+.btn:hover{background:#e2e6ea}
+.btn-primary{background:#1565c0;color:white;border-color:#1565c0}
+.btn-primary:hover{background:#0d47a1}
+.hint{font-size:12px;color:#888}
+
+/* ══ MANDALA ══ */
+.mandala{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.cell{display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:10px;line-height:1.35;border-radius:5px;padding:5px 3px;min-height:64px;
+  white-space:pre-line;word-break:break-all;transition:transform .12s,box-shadow .12s}
+.clickable{cursor:pointer;position:relative}
+.clickable:hover{transform:scale(1.07);box-shadow:0 4px 14px rgba(0,0,0,.22);z-index:10}
+.clickable:hover::after{content:'▶';position:absolute;bottom:3px;right:4px;font-size:9px;opacity:.5}
+.c-center{background:#1565c0;color:white;font-weight:bold;font-size:11px}
+.c-theme{font-weight:bold;color:white;font-size:10px}
+.c-task{font-size:10px;color:#333}
+.c-empty{background:#f5f5f5;opacity:.2;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#444;
+  cursor:pointer;padding:3px 8px;border-radius:14px;transition:background .15s}
+.leg-item:hover{background:#f0f0f0}
+.leg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.mandala-tip{margin-top:8px;font-size:12px;color:#999;text-align:center}
+
+/* ══ GENERATE STATE ══ */
+.gen-box{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 24px;gap:18px;text-align:center;min-height:300px}
+.gen-box h3{font-size:16px;color:#333}
+.gen-box p{font-size:13px;color:#777;max-width:380px;line-height:1.7}
+.btn-gen{background:linear-gradient(135deg,#1565c0,#6a1b9a);color:white;border:none;
+  padding:14px 32px;border-radius:10px;font-size:14px;cursor:pointer;font-family:inherit;
+  transition:opacity .15s;box-shadow:0 3px 14px rgba(21,101,192,.35)}
+.btn-gen:hover{opacity:.88}
+.btn-gen:disabled{opacity:.4;cursor:default}
+
+/* ── Pending / Spinner ── */
+.pending-box{display:flex;flex-direction:column;align-items:center;
+  padding:48px 24px;gap:16px;min-height:300px;justify-content:center}
+.spinner{font-size:30px;animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.prompt-wrap{background:#fff8e1;border:1px solid #ffcc02;border-radius:10px;
+  padding:16px 20px;max-width:480px;width:100%}
+.prompt-wrap h4{font-size:13px;color:#e65100;margin-bottom:8px}
+.prompt-code{background:#fff;border:2px dashed #ffcc02;border-radius:7px;
+  padding:10px 14px;font-size:13px;font-family:monospace;cursor:pointer;
+  line-height:1.5;transition:border-color .15s,background .15s;word-break:break-all}
+.prompt-code:hover{border-color:#1565c0;background:#e8f0fe}
+.prompt-sub{font-size:11px;color:#888;margin-top:6px}
+
+/* ══ 4Q MATRIX ══ */
+.mwrap{display:grid;
+  grid-template-areas:". xt ." "yl mx yr" ". xb .";
+  grid-template-columns:28px 1fr 28px;grid-template-rows:26px 1fr 26px;height:480px}
+.ax-xt{grid-area:xt;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#444}
+.ax-xb{grid-area:xb;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888}
+.ax-yl{grid-area:yl;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#444}
+.ax-yr{grid-area:yr;writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888}
+.mx{grid-area:mx;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;border:2.5px solid #555;position:relative}
+.mx::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:#aaa;z-index:1}
+.mx::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#aaa;z-index:1}
+.qd{padding:12px 11px 8px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:auto}
+.ql{position:absolute;top:6px;right:8px;font-size:10px;font-weight:bold;opacity:.7;line-height:1}
+.tl{background:#fce4e4}.tr{background:#e8f0fe}.bl{background:#f0fdf4}.br{background:#f9f9f9}
+.qi{background:white;border-radius:7px;padding:6px 10px;font-size:12px;line-height:1.4;
+  box-shadow:0 1px 4px rgba(0,0,0,.1);border-left:3px solid #ccc}
+.tl .qi{border-left-color:#e53935}.tr .qi{border-left-color:#1e88e5}
+.bl .qi{border-left-color:#43a047}.br .qi{border-left-color:#9e9e9e}
+.qi.link{cursor:pointer;transition:transform .12s,box-shadow .12s}
+.qi.link:hover{transform:translateX(3px);box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.qi-sub{font-size:10px;color:#888;margin-top:2px}
+.qi-tag{font-size:10px;font-weight:bold;color:#e53935;margin-top:2px}
+
+/* ══ FLOW / GANTT ══ */
+.chart-box{background:#fafafa;border-radius:10px;border:1px solid #eee;
+  padding:16px 8px;overflow:auto;display:flex;justify-content:center;min-height:200px}
+.chart-box .mermaid{min-width:660px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.sc{background:#f8f9fa;border-radius:10px;padding:14px;border-left:4px solid #ccc}
+.sc.bl{border-left-color:#1565c0}.sc.rd{border-left-color:#c62828}.sc.gn{border-left-color:#2e7d32}
+.sc-lbl{font-size:11px;color:#888;margin-bottom:3px;font-weight:bold}
+.sc-val{font-size:21px;font-weight:bold;color:#1a1a1a;margin-bottom:2px}
+.sc-sub{font-size:12px;color:#666}
+.stbl{width:100%;border-collapse:collapse;margin-top:18px;font-size:13px}
+.stbl th{background:#f0f2f5;padding:9px 13px;text-align:left;font-weight:bold;color:#444;border-bottom:2px solid #ddd}
+.stbl td{padding:8px 13px;border-bottom:1px solid #eee;vertical-align:top;line-height:1.5}
+.bdg{display:inline-block;padding:2px 7px;border-radius:9px;font-size:11px;font-weight:bold}
+.bk{background:#f3e5f5;color:#6a1b9a}.bb{background:#e8f0fe;color:#1565c0}
+.bg{background:#e8f5e9;color:#2e7d32}.br2{background:#fce4e4;color:#c62828}
+.by{background:#fff8e1;color:#f57f17}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-title">🧠 Kai Visualize</div>
+    <div class="bc" id="bc"></div>
+    <span id="srv-badge" class="srv-badge srv-ng">サーバー未接続</span>
+  </div>
+
+  <!-- ═══ MANDALA ═══ -->
+  <section id="v-mandala" class="view active">
+    <div class="card">
+      <div class="card-title">マンダラチャート　全体マップ</div>
+      <div class="card-meta">AI導入支援事業 2026年戦略　｜　テーマセルをクリックして深掘り</div>
+      <div class="mandala" id="mandala-grid"></div>
+      <div class="legend" id="mandala-legend"></div>
+      <div class="mandala-tip">💡 色のついたセルをクリックすると4象限マトリクスに進めます</div>
+      <div class="toolbar">
+        <button class="btn" onclick="cpJSON()">📋 JSONコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 4Q ═══ -->
+  <section id="v-4q" class="view">
+    <div class="card">
+      <div class="card-title" id="q4-title">4象限マトリクス</div>
+      <div class="card-meta" id="q4-meta"></div>
+      <div id="q4-body"></div>
+      <div class="toolbar">
+        <button class="btn" onclick="go('mandala')">← マンダラに戻る</button>
+        <button class="btn" id="q4-cp-btn" onclick="cpQ4()" style="display:none">📋 テキストコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FLOW ═══ -->
+  <section id="v-flow" class="view">
+    <div class="card">
+      <div class="card-title" id="flow-title">フロー図</div>
+      <div class="card-meta" id="flow-meta"></div>
+      <div id="flow-body"></div>
+      <div class="toolbar">
+        <button class="btn" onclick="go('4q',{ti:S.ti})">← 4象限に戻る</button>
+        <button class="btn btn-primary" id="flow-to-gantt" onclick="go('gantt')" style="display:none">ガントチャートへ →</button>
+        <button class="btn" id="flow-cp-btn" onclick="cpFlow()" style="display:none">📋 Mermaidコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GANTT ═══ -->
+  <section id="v-gantt" class="view">
+    <div class="card">
+      <div class="card-title" id="gantt-title">ガントチャート</div>
+      <div class="card-meta" id="gantt-meta"></div>
+      <div id="gantt-body"></div>
+      <div class="toolbar">
+        <button class="btn" onclick="go('flow')">← フロー図に戻る</button>
+        <button class="btn" id="gantt-cp-btn" onclick="cpGantt()" style="display:none">📋 Mermaidコピー</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+mermaid.initialize({startOnLoad:false,theme:'default',
+  flowchart:{curve:'basis'},
+  gantt:{barHeight:26,barGap:6,fontSize:13}});
+
+/* ═══ DATA (マンダラ静的データ) ═══ */
+const TH=[
+  {n:'顧客開拓',      c:'#c62828',bg:'#ffebee',bc:'#ef9a9a'},
+  {n:'提案品質向上',  c:'#2e7d32',bg:'#e8f5e9',bc:'#a5d6a7'},
+  {n:'収益・財務設計',c:'#e65100',bg:'#fff3e0',bc:'#ffcc80'},
+  {n:'マーケティング',c:'#0277bd',bg:'#e1f5fe',bc:'#81d4fa'},
+  {n:'セミナー事業',  c:'#6a1b9a',bg:'#f3e5f5',bc:'#ce93d8'},
+  {n:'パートナー連携',c:'#00695c',bg:'#e0f2f1',bc:'#80cbc4'},
+  {n:'業務効率化',    c:'#1565c0',bg:'#e3f2fd',bc:'#90caf9'},
+  {n:'人材・組織体制',c:'#4e342e',bg:'#efebe9',bc:'#bcaaa4'},
+];
+const TS=[
+  ['ターゲット業種\n絞り込み','リード獲得\nフロー設計','紹介・口コミ\n仕組み化','問い合わせ\nページ最適化','SNS露出\n増加','無料診断\nメニュー作成','月次アプローチ\n件数管理','商談→成約率\n改善'],
+  ['スキルセット\n拡充','ケーススタディ\n蓄積','提案書テンプレ\n改善','実績事例\nドキュメント化','Kai精度\n継続評価','業種別ノウハウ\n整備','ファクトチェック\n徹底','フィードバック\n収集'],
+  ['月次収益\n目標設定','料金体系\n見直し','収益源の\n多角化','損益\nシミュレーション','CF計画\nの立案','投資計画\nの策定','粗利率\nの改善','年間売上\nKPI分解'],
+  ['LP設計\n最適化','コンテンツ\nマーケ','メルマガ\nリスト構築','SEO/SNS\n戦略','無料セミナー\n告知','事例コンテンツ\n発信','USP\n明確化','広告運用\n検討'],
+  ['セミナー\nテーマ計画','参加者\n目標管理','セミナー後\nフォロー','動画\nコンテンツ化','スライド\n品質向上','アーカイブ\n運用','有料セミナー\n展開','コラボ\nセミナー'],
+  ['税理士・社労士\n連携','中小企業\n診断士連携','差別化\nポジション','紹介ネット\nワーク構築','アライアンス\n条件設計','共同提案\nの仕組み','補助金\n情報提供','商工会・\n金融機関'],
+  ['Kai作業フロー\n最適化','テンプレート\n整備','ファイル管理\n徹底','定型業務\nの自動化','作業時間\nの計測','外注可能\n業務整理','ツール\n棚卸し','週次レビュー\n習慣化'],
+  ['上村スキル\n強化計画','外注スタッフ\n活用検討','Kaiとの\n役割分担','業務委託先\n選定基準','自社ナレッジ\n整備','学習・インプット\n計画','健康・\n稼働管理','3年後の\n組織像設計'],
+];
+
+/* ═══ SERVER STATE ═══ */
+const API = 'http://localhost:3458';
+let STATE = {generated:{}, queue:[]};
+let ONLINE = false;
+let _flowSrc = '', _ganttSrc = '';
+
+async function initServer() {
+  try {
+    const r = await fetch(`${API}/state`, {signal: AbortSignal.timeout(2000)});
+    STATE = await r.json();
+    ONLINE = true;
+    document.getElementById('srv-badge').className = 'srv-badge srv-ok';
+    document.getElementById('srv-badge').textContent = '● サーバー接続中';
+    // SSE
+    const es = new EventSource(`${API}/events`);
+    es.addEventListener('content_ready', e => {
+      const {type, key, content} = JSON.parse(e.data);
+      if (!STATE.generated[type]) STATE.generated[type] = {};
+      STATE.generated[type][key] = content;
+      onContentReady(type, key, content);
+    });
+    es.addEventListener('request_added', e => {
+      const req = JSON.parse(e.data);
+      if (!STATE.queue) STATE.queue = [];
+      STATE.queue.push(req);
+    });
+    es.addEventListener('reset', () => {
+      STATE = {generated:{}, queue:[]};
+      go('mandala');
+    });
+    es.onerror = () => {
+      document.getElementById('srv-badge').className = 'srv-badge srv-ng';
+      document.getElementById('srv-badge').textContent = '接続が切れました';
+    };
+  } catch(e) {
+    ONLINE = false;
+    document.getElementById('srv-badge').textContent = 'サーバー未起動';
+  }
+}
+
+function onContentReady(type, key, content) {
+  if (type === '4q' && S.view === '4q' && key === String(S.ti)) {
+    render4Q(S.ti);
+  } else if (type === 'flow' && S.view === 'flow' && key === String(S.ti)) {
+    _flowSrc = content;
+    renderMermaidView('flow-body', content);
+    document.getElementById('flow-to-gantt').style.display = '';
+    document.getElementById('flow-cp-btn').style.display = '';
+  } else if (type === 'gantt' && S.view === 'gantt' && key === String(S.ti)) {
+    _ganttSrc = content;
+    renderMermaidView('gantt-body', content);
+    document.getElementById('gantt-cp-btn').style.display = '';
+  }
+}
+
+/* ═══ NAVIGATION ═══ */
+const S = {view:'mandala', ti:null};
+function go(view, params={}) {
+  Object.assign(S, params); S.view = view;
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('v-'+view).classList.add('active');
+  if (view === '4q') render4Q(S.ti);
+  else if (view === 'flow') renderFlow(S.ti);
+  else if (view === 'gantt') renderGantt(S.ti);
+  renderBC();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ═══ BREADCRUMB ═══ */
+function renderBC() {
+  const steps = [{lbl:'🏠 マンダラ', v:'mandala'}];
+  if (S.ti !== null) steps.push({lbl:`${TH[S.ti].n}`, v:'4q', p:{ti:S.ti}});
+  if (S.view === 'flow' || S.view === 'gantt') steps.push({lbl:'フロー図', v:'flow'});
+  if (S.view === 'gantt') steps.push({lbl:'ガント', v:'gantt'});
+  document.getElementById('bc').innerHTML = steps.map((s,i) => {
+    const cur = i === steps.length-1;
+    const oc = cur ? '' : ` onclick="go('${s.v}'${s.p?','+JSON.stringify(s.p):''})"`;
+    return `${i?'<span class="bc-sep">›</span>':''}<span class="bc-btn${cur?' cur':''}"${oc}>${s.lbl}</span>`;
+  }).join('');
+}
+
+/* ═══ REQUEST GENERATE ═══ */
+async function requestGenerate(type, ti, context) {
+  if (!ONLINE) {
+    alert('サーバーが起動していません。\n起動してブラウザを開く.vbs を実行してください。');
+    return;
+  }
+  const resp = await fetch(`${API}/request`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({type, theme_id: ti, context: context || TH[ti].n})
+  });
+  const {id} = await resp.json();
+  // Re-render view to show pending state
+  if (type === '4q') render4Q(ti);
+  else if (type === 'flow') renderFlow(ti);
+  else if (type === 'gantt') renderGantt(ti);
+}
+
+function _pendingFor(type, ti) {
+  return (STATE.queue||[]).find(q => q.type === type && q.theme_id === ti);
+}
+
+function _pendingBox(type, ti, context) {
+  const pending = _pendingFor(type, ti);
+  const label = {4q:'4象限マトリクス', flow:'フロー図', gantt:'ガントチャート'}[type];
+  const promptText = `「${context||TH[ti].n}」の${label}を生成してください [ID:${pending?.id||'...'}]`;
+  if (pending) {
+    return `<div class="pending-box">
+      <div class="spinner">⏳</div>
+      <p style="font-size:14px;color:#555">リクエスト送信済み — Kaiが生成するとここに表示されます</p>
+      <div class="prompt-wrap">
+        <h4>📣 Kaiのチャットに貼り付けてください</h4>
+        <div class="prompt-code" onclick="doCp('${promptText.replace(/'/g,"\\'")}',this)">${promptText}</div>
+        <div class="prompt-sub">クリックでコピー　または　「pending requests を処理して」でもOK</div>
+      </div>
+    </div>`;
+  } else {
+    return `<div class="gen-box">
+      <h3>${TH[ti].n}　${label}</h3>
+      <p>まだ生成されていません。ボタンをクリックするとKaiへのリクエストが送られます。</p>
+      <button class="btn-gen" onclick="requestGenerate('${type}',${ti},'${(context||TH[ti].n).replace(/'/g,"\\'")}')">
+        ✨ ${label}を生成する
+      </button>
+    </div>`;
+  }
+}
+
+/* ═══ 4Q RENDER ═══ */
+function render4Q(ti) {
+  const th = TH[ti];
+  document.getElementById('q4-title').textContent = `テーマ${ti+1}: ${th.n}　4象限マトリクス`;
+  const body = document.getElementById('q4-body');
+  const data = STATE?.generated?.['4q']?.[String(ti)];
+  if (!data) {
+    document.getElementById('q4-meta').textContent = '';
+    document.getElementById('q4-cp-btn').style.display = 'none';
+    body.innerHTML = _pendingBox('4q', ti, th.n);
+    return;
+  }
+  document.getElementById('q4-cp-btn').style.display = '';
+  document.getElementById('q4-meta').textContent = `Y軸：${data.axis.y}（高→低）　X軸：${data.axis.x}（低→高）`;
+  const ri = items => items.map(item => `
+    <div class="qi${item.flow?' link':''}"${item.flow?` onclick="go('flow',{ti:${ti}})"`:''}>
+      ${item.t}
+      <div class="qi-sub">${item.s||''}</div>
+      ${item.flow?'<div class="qi-tag">▶ フロー図あり（クリックで表示）</div>':''}
+    </div>`).join('');
+  body.innerHTML = `
+    <div class="mwrap">
+      <div class="ax-xt">← ${data.axis.x} 低</div>
+      <div class="ax-yl">↑ ${data.axis.y} 高</div>
+      <div class="mx">
+        <div class="qd tl"><div class="ql">${data.tl.lbl}</div>${ri(data.tl.items)}</div>
+        <div class="qd tr"><div class="ql">${data.tr.lbl}</div>${ri(data.tr.items)}</div>
+        <div class="qd bl"><div class="ql">${data.bl.lbl}</div>${ri(data.bl.items)}</div>
+        <div class="qd br"><div class="ql">${data.br.lbl}</div>${ri(data.br.items)}</div>
+      </div>
+      <div class="ax-yr">低 ↓</div>
+      <div class="ax-xb">高 →</div>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:#888">💡 <b style="color:#e53935">▶ フロー図あり</b> のカードをクリックするとフロー図に進めます</div>`;
+}
+
+/* ═══ FLOW RENDER ═══ */
+function renderFlow(ti) {
+  const th = TH[ti];
+  document.getElementById('flow-title').textContent = `${th.n}　フロー図`;
+  document.getElementById('flow-meta').textContent = `テーマ${ti+1}: ${th.n} の実行フロー`;
+  const src = STATE?.generated?.flow?.[String(ti)];
+  const body = document.getElementById('flow-body');
+  if (!src) {
+    document.getElementById('flow-to-gantt').style.display = 'none';
+    document.getElementById('flow-cp-btn').style.display = 'none';
+    body.innerHTML = _pendingBox('flow', ti, th.n);
+    return;
+  }
+  _flowSrc = src;
+  document.getElementById('flow-to-gantt').style.display = '';
+  document.getElementById('flow-cp-btn').style.display = '';
+  renderMermaidView('flow-body', src);
+}
+
+/* ═══ GANTT RENDER ═══ */
+function renderGantt(ti) {
+  const th = TH[ti];
+  document.getElementById('gantt-title').textContent = `${th.n}　ガントチャート`;
+  document.getElementById('gantt-meta').textContent = `${th.n} の実行スケジュール`;
+  const src = STATE?.generated?.gantt?.[String(ti)];
+  const body = document.getElementById('gantt-body');
+  if (!src) {
+    document.getElementById('gantt-cp-btn').style.display = 'none';
+    body.innerHTML = _pendingBox('gantt', ti, th.n);
+    return;
+  }
+  _ganttSrc = src;
+  document.getElementById('gantt-cp-btn').style.display = '';
+  renderMermaidView('gantt-body', src);
+}
+
+/* ═══ MERMAID DYNAMIC RENDER ═══ */
+function renderMermaidView(containerId, code) {
+  const container = document.getElementById(containerId);
+  const box = document.createElement('div');
+  box.className = 'chart-box';
+  const pre = document.createElement('pre');
+  pre.className = 'mermaid';
+  pre.textContent = code;
+  box.appendChild(pre);
+  container.innerHTML = '';
+  container.appendChild(box);
+  requestAnimationFrame(() => mermaid.run({nodes: [pre]}));
+}
+
+/* ═══ MANDALA BUILD ═══ */
+const CT = 'AI導入支援\n事業2026年\n戦略';
+const G = Array.from({length:9}, () => Array(9).fill(null));
+G[4][4] = {t:'c'};
+[[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]].forEach(([r,c],i) => G[r][c]={t:'th',i});
+[[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]].forEach(([br,bc],i) => {
+  G[br+1][bc+1] = {t:'tho',i};
+  [[0,0],[0,1],[0,2],[1,2],[2,2],[2,1],[2,0],[1,0]].forEach(([dr,dc],j) => G[br+dr][bc+dc]={t:'tk',i,j});
+});
+const mg = document.getElementById('mandala-grid');
+for (let r=0; r<9; r++) for (let c=0; c<9; c++) {
+  const cell=G[r][c], d=document.createElement('div');
+  d.className='cell';
+  if (!cell) { d.classList.add('c-empty'); }
+  else if (cell.t==='c') { d.classList.add('c-center'); d.textContent=CT; }
+  else if (cell.t==='th'||cell.t==='tho') {
+    const th=TH[cell.i]; d.classList.add('c-theme','clickable');
+    d.style.background=th.c;
+    d.textContent=cell.t==='th'?`${cell.i+1}. ${th.n}`:th.n;
+    d.title=`${th.n}の4象限を表示`;
+    d.onclick=()=>go('4q',{ti:cell.i});
+  } else {
+    const th=TH[cell.i]; d.classList.add('c-task','clickable');
+    d.style.background=th.bg; d.style.border=`1px solid ${th.bc}`;
+    d.textContent=TS[cell.i][cell.j];
+    d.title=`[${th.n}] クリックで詳細へ`;
+    d.onclick=()=>go('4q',{ti:cell.i});
+  }
+  mg.appendChild(d);
+}
+const lg = document.getElementById('mandala-legend');
+TH.forEach((th,i) => {
+  const el=document.createElement('div'); el.className='leg-item';
+  el.innerHTML=`<div class="leg-dot" style="background:${th.c}"></div><span>${i+1}. ${th.n}</span>`;
+  el.onclick=()=>go('4q',{ti:i}); lg.appendChild(el);
+});
+
+/* ═══ COPY HELPERS ═══ */
+function doCp(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    if (!btn) return;
+    const o=btn.textContent; btn.textContent='✅ コピーしました';
+    setTimeout(()=>btn.textContent=o, 2000);
+  }).catch(() => {
+    const ta=document.createElement('textarea'); ta.value=text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+function cpJSON() {
+  doCp(JSON.stringify({themes:TH.map((t,i)=>({name:t.n,tasks:TS[i].map(s=>s.replace(/\n/g,' '))}))},null,2), event.currentTarget);
+}
+function cpQ4() {
+  const d=STATE?.generated?.['4q']?.[String(S.ti)];
+  if (!d) return;
+  const f=k=>`【${d[k].lbl}】\n${d[k].items.map(i=>'- '+i.t).join('\n')}`;
+  doCp([f('tl'),f('tr'),f('bl'),f('br')].join('\n\n'), event.currentTarget);
+}
+function cpFlow() { doCp(_flowSrc, event.currentTarget); }
+function cpGantt() { doCp(_ganttSrc, event.currentTarget); }
+
+/* ═══ INIT ═══ */
+renderBC();
+initServer();
+</script>
+</body>
+</html>
