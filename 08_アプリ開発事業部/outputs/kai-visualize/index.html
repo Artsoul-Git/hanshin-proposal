@@ -246,16 +246,17 @@ let ONLINE = false;
 let _flowSrc = '', _ganttSrc = '';
 
 async function initServer() {
+  const badge = document.getElementById('srv-badge');
+  badge.textContent = '⏳ 接続中...';
   try {
-    const ctrl = new AbortController();
-    setTimeout(() => ctrl.abort(), 2000);
-    const r = await fetch(`${API}/state`, {signal: ctrl.signal});
+    const r = await fetch(API + '/state');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
     STATE = await r.json();
     ONLINE = true;
-    document.getElementById('srv-badge').className = 'srv-badge srv-ok';
-    document.getElementById('srv-badge').textContent = '● サーバー接続中';
+    badge.className = 'srv-badge srv-ok';
+    badge.textContent = '● サーバー接続中';
     // SSE
-    const es = new EventSource(`${API}/events`);
+    const es = new EventSource(API + '/events');
     es.addEventListener('content_ready', e => {
       const {type, key, content} = JSON.parse(e.data);
       if (!STATE.generated[type]) STATE.generated[type] = {};
@@ -272,12 +273,13 @@ async function initServer() {
       go('mandala');
     });
     es.onerror = () => {
-      document.getElementById('srv-badge').className = 'srv-badge srv-ng';
-      document.getElementById('srv-badge').textContent = '接続が切れました';
+      badge.className = 'srv-badge srv-ng';
+      badge.textContent = '再接続中...';
     };
   } catch(e) {
     ONLINE = false;
-    document.getElementById('srv-badge').textContent = 'サーバー未起動';
+    badge.className = 'srv-badge srv-ng';
+    badge.textContent = '✗ ' + (e.message || e.toString());
   }
 }
 
