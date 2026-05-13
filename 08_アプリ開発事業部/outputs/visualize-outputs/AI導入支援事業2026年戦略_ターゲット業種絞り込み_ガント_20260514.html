@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ターゲット業種絞り込み ガントチャート</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Hiragino Sans', 'Meiryo', sans-serif; background: #eef0f4; padding: 24px; }
+.card { background: white; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,.1); max-width: 960px; margin: 0 auto; padding: 32px; }
+h1 { font-size: 20px; color: #1a1a1a; margin-bottom: 4px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 28px; }
+
+.chart-area {
+  background: #fafafa; border-radius: 10px;
+  border: 1px solid #eee; padding: 16px 8px;
+  overflow: auto;
+}
+.mermaid { min-width: 700px; }
+
+/* サマリーカード */
+.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+.s-card { background: #f8f9fa; border-radius: 10px; padding: 16px; border-left: 4px solid #ccc; }
+.s-card.blue  { border-left-color: #1565c0; }
+.s-card.red   { border-left-color: #c62828; }
+.s-card.green { border-left-color: #2e7d32; }
+.s-label { font-size: 11px; color: #888; margin-bottom: 4px; font-weight: bold; letter-spacing: .5px; }
+.s-value { font-size: 22px; font-weight: bold; color: #1a1a1a; margin-bottom: 2px; }
+.s-sub   { font-size: 12px; color: #666; }
+
+/* タスク詳細テーブル */
+.task-table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 13px; }
+.task-table th { background: #f0f2f5; padding: 10px 14px; text-align: left; font-weight: bold; color: #444; border-bottom: 2px solid #ddd; }
+.task-table td { padding: 10px 14px; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5; }
+.task-table tr:hover td { background: #fafafa; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+.b-kai    { background: #f3e5f5; color: #6a1b9a; }
+.b-user   { background: #e8f0fe; color: #1565c0; }
+.b-both   { background: #e8f5e9; color: #2e7d32; }
+.b-crit   { background: #fce4e4; color: #c62828; }
+.b-mile   { background: #fff8e1; color: #f57f17; }
+
+/* ツールバー */
+.toolbar { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid #eee; padding-top: 20px; }
+.toolbar button { padding: 9px 18px; border: 1px solid #ddd; border-radius: 7px; cursor: pointer; font-size: 13px; background: #f8f9fa; font-family: inherit; transition: background .15s; }
+.toolbar button:hover { background: #e2e6ea; }
+.next-hint { font-size: 12px; color: #888; }
+
+/* ドリルダウン完了バナー */
+.complete-banner {
+  margin-top: 28px; background: linear-gradient(135deg, #1565c0, #2e7d32);
+  border-radius: 10px; padding: 20px 24px; color: white;
+}
+.complete-banner h3 { font-size: 15px; margin-bottom: 10px; }
+.complete-banner ul { padding-left: 18px; font-size: 13px; line-height: 1.9; }
+.complete-banner a-hint { font-size: 12px; opacity: .8; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>ターゲット業種絞り込み　ガントチャート</h1>
+  <div class="meta">顧客開拓 → フロー図のスケジュール化　｜　想定開始：2026年6月　｜　作成日：2026-05-14</div>
+
+  <div class="chart-area">
+    <div class="mermaid">
+gantt
+  dateFormat  YYYY-MM-DD
+  title ターゲット業種絞り込み 実行スケジュール（2026年6月）
+  excludes weekends
+
+  section 📋 準備フェーズ（Week 1）
+    受注・問い合わせ棚卸し         :a1, 2026-06-01, 2d
+    得意パターン抽出・仮説リスト   :a2, after a1, 2d
+
+  section 🔍 調査フェーズ（Week 1-2）
+    /research 市場調査             :crit, b1, after a2, 4d
+    業種スコアリング（3軸評価）    :b2, after b1, 2d
+    ▼ 絞り込み判断・意思決定      :milestone, m1, after b2, 0d
+
+  section 🎯 設計フェーズ（Week 2-3）
+    業種別ペルソナ・典型課題を定義 :c1, after b2, 3d
+    LP・提案書・メッセージへ反映   :crit, c2, after c1, 5d
+    ▼ ターゲット業種 確定          :milestone, m2, after c2, 0d
+    </div>
+  </div>
+
+  <!-- サマリー -->
+  <div class="summary">
+    <div class="s-card blue">
+      <div class="s-label">TOTAL DURATION</div>
+      <div class="s-value">約3週間</div>
+      <div class="s-sub">実働 約16日（土日除く）</div>
+    </div>
+    <div class="s-card red">
+      <div class="s-label">CRITICAL PATH</div>
+      <div class="s-value">2タスク</div>
+      <div class="s-sub">/research 調査・LP反映が遅延NG</div>
+    </div>
+    <div class="s-card green">
+      <div class="s-label">MILESTONES</div>
+      <div class="s-value">2件</div>
+      <div class="s-sub">絞り込み判断・ターゲット確定</div>
+    </div>
+  </div>
+
+  <!-- タスク詳細 -->
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>タスク</th>
+        <th>期間</th>
+        <th>担当</th>
+        <th>ポイント</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>受注・問い合わせ棚卸し</td>
+        <td>2日</td>
+        <td><span class="badge b-user">上村さん</span></td>
+        <td>過去の案件を業種・規模・成約率・刺さった課題でリスト化</td>
+      </tr>
+      <tr>
+        <td>得意パターン抽出・仮説リスト</td>
+        <td>2日</td>
+        <td><span class="badge b-both">Kai + 上村さん</span></td>
+        <td>実績があればパターン抽出、なければ仮説3〜5業種をKaiが提案</td>
+      </tr>
+      <tr>
+        <td>/research 市場調査</td>
+        <td>4日 <span class="badge b-crit">クリティカル</span></td>
+        <td><span class="badge b-kai">Kai</span></td>
+        <td>候補業種ごとに市場規模・AI需要・競合・補助金を実調査。Kaiが即日レポート生成</td>
+      </tr>
+      <tr>
+        <td>業種スコアリング</td>
+        <td>2日</td>
+        <td><span class="badge b-both">Kai + 上村さん</span></td>
+        <td>3軸（受注可能性・市場成長性・競合の少なさ）を5点満点でスコアリング</td>
+      </tr>
+      <tr>
+        <td>▼ 絞り込み判断・意思決定</td>
+        <td><span class="badge b-mile">マイルストーン</span></td>
+        <td><span class="badge b-user">上村さん</span></td>
+        <td>上位2〜3業種を上村さんが最終決定。ここから先の活動の方向が決まる</td>
+      </tr>
+      <tr>
+        <td>業種別ペルソナ・典型課題定義</td>
+        <td>3日</td>
+        <td><span class="badge b-both">Kai + 上村さん</span></td>
+        <td>/stakeholder も活用。意思決定者・購買動機・課題の深さを1枚にまとめる</td>
+      </tr>
+      <tr>
+        <td>LP・提案書・メッセージへ反映</td>
+        <td>5日 <span class="badge b-crit">クリティカル</span></td>
+        <td><span class="badge b-kai">Kai</span></td>
+        <td>/marketing でUSP再設計 → /sme-ai-proposal で業種別提案書テンプレを生成</td>
+      </tr>
+      <tr>
+        <td>▼ ターゲット業種 確定</td>
+        <td><span class="badge b-mile">マイルストーン</span></td>
+        <td><span class="badge b-both">Kai + 上村さん</span></td>
+        <td>四半期ごとにスコアを再評価。初回設定後も柔軟に見直す</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ドリルダウン完了バナー -->
+  <div class="complete-banner">
+    <h3>🎉 ドリルダウン完了：マンダラ → 4象限 → フロー → ガント</h3>
+    <ul>
+      <li>マンダラチャートで8テーマ×64タスクの全体像を展開</li>
+      <li>「顧客開拓」テーマを4象限マトリクスで優先度整理</li>
+      <li>最優先タスク「ターゲット業種絞り込み」のフロー図を設計</li>
+      <li>フローを3週間の実行スケジュール（ガントチャート）に変換</li>
+    </ul>
+  </div>
+
+  <div class="toolbar">
+    <button onclick="copyMermaid()">📋 Mermaidコードをコピー</button>
+    <span class="next-hint">他のテーマを深掘りする場合はマンダラチャートに戻って番号を指定してください</span>
+  </div>
+</div>
+
+<pre id="mermaid-source" style="display:none">gantt
+  dateFormat  YYYY-MM-DD
+  title ターゲット業種絞り込み 実行スケジュール（2026年6月）
+  excludes weekends
+
+  section 準備フェーズ（Week 1）
+    受注・問い合わせ棚卸し         :a1, 2026-06-01, 2d
+    得意パターン抽出・仮説リスト   :a2, after a1, 2d
+
+  section 調査フェーズ（Week 1-2）
+    /research 市場調査             :crit, b1, after a2, 4d
+    業種スコアリング（3軸評価）    :b2, after b1, 2d
+    絞り込み判断・意思決定         :milestone, m1, after b2, 0d
+
+  section 設計フェーズ（Week 2-3）
+    業種別ペルソナ・典型課題を定義 :c1, after b2, 3d
+    LP・提案書・メッセージへ反映   :crit, c2, after c1, 5d
+    ターゲット業種 確定            :milestone, m2, after c2, 0d</pre>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'default',
+  gantt: {
+    titleTopMargin: 25,
+    barHeight: 28,
+    barGap: 6,
+    topPadding: 50,
+    fontSize: 13,
+    numberSectionStyles: 3
+  }
+});
+
+function copyMermaid() {
+  const code = document.getElementById('mermaid-source').textContent.trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = event.currentTarget;
+    const orig = btn.textContent;
+    btn.textContent = '✅ コピーしました';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = code;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  });
+}
+</script>
+</body>
+</html>
