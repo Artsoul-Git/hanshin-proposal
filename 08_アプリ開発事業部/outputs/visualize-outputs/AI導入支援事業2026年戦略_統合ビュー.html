@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI導入支援事業 2026年戦略</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-height:100vh}
+
+/* ── App ── */
+#app{max-width:1100px;margin:0 auto;padding:20px}
+
+/* ── Header ── */
+.hdr{background:white;border-radius:12px;padding:18px 24px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.hdr-title{font-size:16px;font-weight:bold;color:#1a1a1a;margin-bottom:10px}
+.bc{display:flex;align-items:center;gap:0;flex-wrap:wrap;font-size:13px}
+.bc-btn{color:#1565c0;cursor:pointer;padding:3px 8px;border-radius:6px;transition:background .15s;white-space:nowrap}
+.bc-btn:hover{background:#e8f0fe}
+.bc-btn.cur{color:#444;cursor:default;font-weight:bold}
+.bc-btn.cur:hover{background:transparent}
+.bc-sep{color:#bbb;padding:0 2px}
+
+/* ── View transitions ── */
+.view{display:none}
+.view.active{display:block;animation:fadeUp .22s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Card ── */
+.card{background:white;border-radius:14px;box-shadow:0 4px 20px rgba(0,0,0,.08);padding:28px}
+.card-title{font-size:18px;font-weight:bold;color:#1a1a1a;margin-bottom:4px}
+.card-meta{font-size:13px;color:#888;margin-bottom:22px}
+
+/* ── Toolbar ── */
+.toolbar{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid #eee;padding-top:18px}
+.btn{padding:8px 16px;border:1px solid #ddd;border-radius:7px;cursor:pointer;font-size:13px;background:#f8f9fa;font-family:inherit;transition:background .15s}
+.btn:hover{background:#e2e6ea}
+.btn-primary{background:#1565c0;color:white;border-color:#1565c0}
+.btn-primary:hover{background:#0d47a1}
+.hint{font-size:12px;color:#888}
+
+/* ══════════════════════════════════════════════
+   MANDALA
+══════════════════════════════════════════════ */
+.mandala{display:grid;grid-template-columns:repeat(9,1fr);gap:3px}
+.cell{display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:10px;line-height:1.35;border-radius:5px;padding:5px 3px;min-height:64px;
+  white-space:pre-line;word-break:break-all;
+  transition:transform .12s,box-shadow .12s}
+.clickable{cursor:pointer;position:relative}
+.clickable:hover{transform:scale(1.07);box-shadow:0 4px 14px rgba(0,0,0,.22);z-index:10}
+.clickable:hover::after{content:'▶';position:absolute;bottom:3px;right:4px;font-size:9px;opacity:.5}
+.c-center{background:#1565c0;color:white;font-weight:bold;font-size:11px}
+.c-theme{font-weight:bold;color:white;font-size:10px}
+.c-task{font-size:10px;color:#333}
+.c-empty{background:#f5f5f5;opacity:.2;pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#444;
+  cursor:pointer;padding:3px 8px;border-radius:14px;transition:background .15s}
+.leg-item:hover{background:#f0f0f0}
+.leg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.mandala-tip{margin-top:10px;font-size:12px;color:#999;text-align:center}
+
+/* ══════════════════════════════════════════════
+   4Q MATRIX
+══════════════════════════════════════════════ */
+.mwrap{display:grid;
+  grid-template-areas:". xt ." "yl mx yr" ". xb .";
+  grid-template-columns:28px 1fr 28px;
+  grid-template-rows:26px 1fr 26px;
+  height:490px;margin-bottom:4px}
+.ax-xt{grid-area:xt;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#444}
+.ax-xb{grid-area:xb;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888}
+.ax-yl{grid-area:yl;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#444}
+.ax-yr{grid-area:yr;writing-mode:vertical-rl;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888}
+.mx{grid-area:mx;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;border:2.5px solid #555;position:relative}
+.mx::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:#aaa;z-index:1}
+.mx::after{content:'';position:absolute;top:50%;left:0;right:0;height:2px;background:#aaa;z-index:1}
+.qd{padding:12px 11px 8px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden}
+.ql{position:absolute;top:6px;right:8px;font-size:10px;font-weight:bold;opacity:.7;line-height:1}
+.tl{background:#fce4e4}.tr{background:#e8f0fe}.bl{background:#f0fdf4}.br{background:#f9f9f9}
+.qi{background:white;border-radius:7px;padding:6px 10px;font-size:12px;line-height:1.4;
+  box-shadow:0 1px 4px rgba(0,0,0,.1);border-left:3px solid #ccc}
+.tl .qi{border-left-color:#e53935}.tr .qi{border-left-color:#1e88e5}
+.bl .qi{border-left-color:#43a047}.br .qi{border-left-color:#9e9e9e}
+.qi.link{cursor:pointer;transition:transform .12s,box-shadow .12s}
+.qi.link:hover{transform:translateX(3px);box-shadow:0 3px 10px rgba(0,0,0,.15)}
+.qi-sub{font-size:10px;color:#888;margin-top:2px}
+.qi-tag{font-size:10px;font-weight:bold;color:#e53935;margin-top:2px}
+.ng-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:60px 20px;text-align:center}
+.ng-box .ng-icon{font-size:44px}
+.ng-box h3{font-size:17px;color:#333}
+.ng-box p{font-size:13px;color:#666;max-width:400px;line-height:1.7}
+
+/* ══════════════════════════════════════════════
+   FLOW / GANTT
+══════════════════════════════════════════════ */
+.chart-box{background:#fafafa;border-radius:10px;border:1px solid #eee;padding:16px 8px;overflow:auto;display:flex;justify-content:center}
+.mermaid{min-width:660px}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+.sc{background:#f8f9fa;border-radius:10px;padding:14px;border-left:4px solid #ccc}
+.sc.bl{border-left-color:#1565c0}.sc.rd{border-left-color:#c62828}.sc.gn{border-left-color:#2e7d32}
+.sc-lbl{font-size:11px;color:#888;margin-bottom:3px;font-weight:bold}
+.sc-val{font-size:21px;font-weight:bold;color:#1a1a1a;margin-bottom:2px}
+.sc-sub{font-size:12px;color:#666}
+.stbl{width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
+.stbl th{background:#f0f2f5;padding:9px 13px;text-align:left;font-weight:bold;color:#444;border-bottom:2px solid #ddd}
+.stbl td{padding:8px 13px;border-bottom:1px solid #eee;vertical-align:top;line-height:1.5}
+.bdg{display:inline-block;padding:2px 7px;border-radius:9px;font-size:11px;font-weight:bold}
+.bk{background:#f3e5f5;color:#6a1b9a}.bb{background:#e8f0fe;color:#1565c0}
+.bg{background:#e8f5e9;color:#2e7d32}.br2{background:#fce4e4;color:#c62828}
+.by{background:#fff8e1;color:#f57f17}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Header + Breadcrumb -->
+  <div class="hdr">
+    <div class="hdr-title">AI導入支援事業　2026年戦略ビジュアライズ</div>
+    <div class="bc" id="bc"></div>
+  </div>
+
+  <!-- ═══ VIEW: MANDALA ═══ -->
+  <section id="v-mandala" class="view active">
+    <div class="card">
+      <div class="card-title">マンダラチャート　全体マップ</div>
+      <div class="card-meta">中心目標：AI導入支援事業で2026年の戦略を具体化する　｜　テーマセルをクリックして深掘り</div>
+      <div class="mandala" id="mandala-grid"></div>
+      <div class="legend" id="mandala-legend"></div>
+      <div class="mandala-tip">💡 色のついたセル（テーマ・タスク）はクリックできます</div>
+      <div class="toolbar">
+        <button class="btn" onclick="cpJSON()">📋 JSONをコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VIEW: 4Q ═══ -->
+  <section id="v-4q" class="view">
+    <div class="card">
+      <div class="card-title" id="q4-title">4象限マトリクス</div>
+      <div class="card-meta" id="q4-meta"></div>
+      <div id="q4-body"></div>
+      <div class="toolbar">
+        <button class="btn" onclick="go('mandala')">← マンダラに戻る</button>
+        <button class="btn" onclick="cpQ4()">📋 テキストをコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VIEW: FLOW ═══ -->
+  <section id="v-flow" class="view">
+    <div class="card">
+      <div class="card-title">ターゲット業種の絞り込み　フロー図</div>
+      <div class="card-meta">顧客開拓 → 今すぐ着手タスク</div>
+      <div class="chart-box">
+        <pre class="mermaid" id="mmd-flow">
+flowchart TD
+  A([🚀 ターゲット業種絞り込み 開始])
+  A --> B[STEP1: 過去の受注・問い合わせを棚卸し\n業種・規模・成約結果を一覧化]
+  B --> C{受注・商談実績が\n3件以上ある？}
+  C -->|Yes| D[STEP2: 得意パターンを抽出\n成約率が高い業種・課題タイプを特定]
+  C -->|No| E[仮説ベースで\nターゲット候補を3〜5業種リストアップ]
+  D --> F
+  E --> F[STEP3: /research で市場調査\n市場規模・AI需要・競合・補助金を確認]
+  F --> G[STEP4: 業種スコアリング\n①受注可能性 ②市場成長性 ③競合の少なさ]
+  G --> H[STEP5: 上位2〜3業種に絞り込む]
+  H --> I{3ヶ月以内に\nテスト受注できる見込みがある？}
+  I -->|Yes| J[STEP6: 業種別ペルソナ・典型課題を定義]
+  I -->|No| F
+  J --> K[STEP7: LP・提案書・集客メッセージに反映]
+  K --> L([✅ ターゲット業種確定・四半期ごとに見直し])
+  style A fill:#1565c0,color:white,stroke:none
+  style L fill:#2e7d32,color:white,stroke:none
+  style C fill:#e65100,color:white,stroke:none
+  style I fill:#e65100,color:white,stroke:none
+  style F fill:#6a1b9a,color:white,stroke:none
+        </pre>
+      </div>
+      <div class="toolbar">
+        <button class="btn" onclick="go('4q',{ti:0})">← 4象限に戻る</button>
+        <button class="btn btn-primary" onclick="go('gantt')">ガントチャートへ →</button>
+        <button class="btn" onclick="cpFlow()">📋 Mermaidをコピー</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VIEW: GANTT ═══ -->
+  <section id="v-gantt" class="view">
+    <div class="card">
+      <div class="card-title">ターゲット業種絞り込み　ガントチャート</div>
+      <div class="card-meta">想定開始：2026年6月　｜　実働約3週間（土日除く）</div>
+      <div class="chart-box">
+        <pre class="mermaid" id="mmd-gantt">
+gantt
+  dateFormat  YYYY-MM-DD
+  title ターゲット業種絞り込み 実行スケジュール（2026年6月）
+  excludes weekends
+  section 📋 準備（Week 1）
+    受注・問い合わせ棚卸し         :a1, 2026-06-01, 2d
+    得意パターン抽出・仮説リスト   :a2, after a1, 2d
+  section 🔍 調査（Week 1-2）
+    /research 市場調査             :crit, b1, after a2, 4d
+    業種スコアリング               :b2, after b1, 2d
+    ▼ 絞り込み判断                :milestone, m1, after b2, 0d
+  section 🎯 設計（Week 2-3）
+    業種別ペルソナ・課題を定義     :c1, after b2, 3d
+    LP・提案書・メッセージへ反映   :crit, c2, after c1, 5d
+    ▼ ターゲット業種 確定          :milestone, m2, after c2, 0d
+        </pre>
+      </div>
+      <div class="sum">
+        <div class="sc bl"><div class="sc-lbl">TOTAL</div><div class="sc-val">約3週間</div><div class="sc-sub">実働 約16日</div></div>
+        <div class="sc rd"><div class="sc-lbl">CRITICAL PATH</div><div class="sc-val">2タスク</div><div class="sc-sub">/research・LP反映</div></div>
+        <div class="sc gn"><div class="sc-lbl">MILESTONES</div><div class="sc-val">2件</div><div class="sc-sub">絞り込み判断・確定</div></div>
+      </div>
+      <table class="stbl">
+        <thead><tr><th>タスク</th><th>期間</th><th>担当</th></tr></thead>
+        <tbody>
+          <tr><td>受注・問い合わせ棚卸し</td><td>2日</td><td><span class="bdg bb">上村さん</span></td></tr>
+          <tr><td>得意パターン抽出・仮説リスト</td><td>2日</td><td><span class="bdg bg">Kai＋上村さん</span></td></tr>
+          <tr><td>/research 市場調査</td><td>4日 <span class="bdg br2">クリティカル</span></td><td><span class="bdg bk">Kai</span></td></tr>
+          <tr><td>業種スコアリング（3軸）</td><td>2日</td><td><span class="bdg bg">Kai＋上村さん</span></td></tr>
+          <tr><td>▼ 絞り込み判断・意思決定</td><td><span class="bdg by">マイルストーン</span></td><td><span class="bdg bb">上村さん</span></td></tr>
+          <tr><td>業種別ペルソナ・典型課題定義</td><td>3日</td><td><span class="bdg bg">Kai＋上村さん</span></td></tr>
+          <tr><td>LP・提案書・メッセージへ反映</td><td>5日 <span class="bdg br2">クリティカル</span></td><td><span class="bdg bk">Kai</span></td></tr>
+        </tbody>
+      </table>
+      <div class="toolbar">
+        <button class="btn" onclick="go('flow')">← フロー図に戻る</button>
+        <button class="btn" onclick="cpGantt()">📋 Mermaidをコピー</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /app -->
+
+<script>
+mermaid.initialize({startOnLoad:false,theme:'default',
+  flowchart:{curve:'basis'},
+  gantt:{barHeight:26,barGap:6,fontSize:13}});
+
+/* ═══ DATA ═══════════════════════════════════════════════════════════════ */
+const CT='AI導入支援\n事業2026年\n戦略';
+const TH=[
+  {n:'顧客開拓',      c:'#c62828',bg:'#ffebee',bc:'#ef9a9a'},
+  {n:'提案品質向上',  c:'#2e7d32',bg:'#e8f5e9',bc:'#a5d6a7'},
+  {n:'収益・財務設計',c:'#e65100',bg:'#fff3e0',bc:'#ffcc80'},
+  {n:'マーケティング',c:'#0277bd',bg:'#e1f5fe',bc:'#81d4fa'},
+  {n:'セミナー事業',  c:'#6a1b9a',bg:'#f3e5f5',bc:'#ce93d8'},
+  {n:'パートナー連携',c:'#00695c',bg:'#e0f2f1',bc:'#80cbc4'},
+  {n:'業務効率化',    c:'#1565c0',bg:'#e3f2fd',bc:'#90caf9'},
+  {n:'人材・組織体制',c:'#4e342e',bg:'#efebe9',bc:'#bcaaa4'},
+];
+const TS=[
+  ['ターゲット業種\n絞り込み','リード獲得\nフロー設計','紹介・口コミ\n仕組み化','問い合わせ\nページ最適化','SNS露出\n増加','無料診断\nメニュー作成','月次アプローチ\n件数管理','商談→成約率\n改善'],
+  ['スキルセット\n拡充','ケーススタディ\n蓄積','提案書テンプレ\n改善','実績事例\nドキュメント化','Kai精度\n継続評価','業種別ノウハウ\n整備','ファクトチェック\n徹底','フィードバック\n収集'],
+  ['月次収益\n目標設定','料金体系\n見直し','収益源の\n多角化','損益\nシミュレーション','CF計画\nの立案','投資計画\nの策定','粗利率\nの改善','年間売上\nKPI分解'],
+  ['LP設計\n最適化','コンテンツ\nマーケ','メルマガ\nリスト構築','SEO/SNS\n戦略','無料セミナー\n告知','事例コンテンツ\n発信','USP\n明確化','広告運用\n検討'],
+  ['セミナー\nテーマ計画','参加者\n目標管理','セミナー後\nフォロー','動画\nコンテンツ化','スライド\n品質向上','アーカイブ\n運用','有料セミナー\n展開','コラボ\nセミナー'],
+  ['税理士・社労士\n連携','中小企業\n診断士連携','差別化\nポジション','紹介ネット\nワーク構築','アライアンス\n条件設計','共同提案\nの仕組み','補助金\n情報提供','商工会・\n金融機関'],
+  ['Kai作業フロー\n最適化','テンプレート\n整備','ファイル管理\n徹底','定型業務\nの自動化','作業時間\nの計測','外注可能\n業務整理','ツール\n棚卸し','週次レビュー\n習慣化'],
+  ['上村スキル\n強化計画','外注スタッフ\n活用検討','Kaiとの\n役割分担','業務委託先\n選定基準','自社ナレッジ\n整備','学習・インプット\n計画','健康・\n稼働管理','3年後の\n組織像設計'],
+];
+const Q4={
+  0:{
+    axis:{x:'実施コスト・難易度',y:'期待インパクト'},
+    tl:{lbl:'🔴 今すぐ着手',items:[
+      {t:'ターゲット業種の絞り込み', s:'方向性が決まれば全活動が効率化',flow:true},
+      {t:'問い合わせページ最適化',   s:'低コストで成約率に直結'},
+      {t:'無料診断メニュー作成',     s:'Kaiで即設計可能。集客フックとして効果大'},
+    ]},
+    tr:{lbl:'🔵 計画的推進',items:[
+      {t:'リード獲得フロー設計',   s:'1〜2ヶ月かけて仕組み化'},
+      {t:'紹介・口コミの仕組み化', s:'既存顧客から次の顧客へ'},
+      {t:'商談→成約率の改善',     s:'トークスクリプト・提案書品質の継続改善'},
+    ]},
+    bl:{lbl:'🟢 余力でやる',items:[
+      {t:'月次アプローチ件数管理', s:'KPI管理ツール整備。習慣として有効'},
+    ]},
+    br:{lbl:'⚪ 保留・見直し',items:[
+      {t:'SNS露出増加', s:'継続コストが高い割に即効性が低め'},
+    ]},
+  }
+};
+
+/* ═══ NAVIGATION STATE ═══════════════════════════════════════════════════ */
+const S={view:'mandala',ti:null};
+function go(view,params={}){
+  Object.assign(S,params); S.view=view;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  const el=document.getElementById('v-'+view);
+  el.classList.add('active');
+  if(view==='4q') render4Q(S.ti);
+  if((view==='flow'||view==='gantt')&&!el.dataset.rend){
+    el.dataset.rend='1';
+    requestAnimationFrame(()=>mermaid.run({nodes:el.querySelectorAll('.mermaid')}));
+  }
+  renderBC();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ═══ BREADCRUMB ═════════════════════════════════════════════════════════ */
+function renderBC(){
+  const steps=[{lbl:'🏠 全体マップ',v:'mandala'}];
+  if(S.ti!==null) steps.push({lbl:`テーマ${S.ti+1}: ${TH[S.ti].n}`,v:'4q',p:{ti:S.ti}});
+  if(S.view==='flow'||S.view==='gantt') steps.push({lbl:'ターゲット業種の絞り込み',v:'flow'});
+  if(S.view==='gantt') steps.push({lbl:'ガントチャート',v:'gantt'});
+  document.getElementById('bc').innerHTML=steps.map((s,i)=>{
+    const cur=i===steps.length-1;
+    const oc=cur?'':` onclick="go('${s.v}'${s.p?','+JSON.stringify(s.p):''})"`;
+    return `${i?'<span class="bc-sep">›</span>':''}<span class="bc-btn${cur?' cur':''}"${oc}>${s.lbl}</span>`;
+  }).join('');
+}
+
+/* ═══ MANDALA BUILD ══════════════════════════════════════════════════════ */
+const G=Array.from({length:9},()=>Array(9).fill(null));
+G[4][4]={t:'c'};
+[[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]].forEach(([r,c],i)=>G[r][c]={t:'th',i});
+[[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]].forEach(([br,bc],i)=>{
+  G[br+1][bc+1]={t:'tho',i};
+  [[0,0],[0,1],[0,2],[1,2],[2,2],[2,1],[2,0],[1,0]].forEach(([dr,dc],j)=>G[br+dr][bc+dc]={t:'tk',i,j});
+});
+const mg=document.getElementById('mandala-grid');
+for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+  const cell=G[r][c],d=document.createElement('div');d.className='cell';
+  if(!cell){d.classList.add('c-empty');}
+  else if(cell.t==='c'){d.classList.add('c-center');d.textContent=CT;}
+  else if(cell.t==='th'||cell.t==='tho'){
+    const th=TH[cell.i];d.classList.add('c-theme','clickable');
+    d.style.background=th.c;
+    d.textContent=cell.t==='th'?`${cell.i+1}. ${th.n}`:th.n;
+    d.title=`${th.n}の詳細を見る`;
+    d.onclick=()=>go('4q',{ti:cell.i});
+  } else {
+    const th=TH[cell.i];d.classList.add('c-task','clickable');
+    d.style.background=th.bg;d.style.border=`1px solid ${th.bc}`;
+    d.textContent=TS[cell.i][cell.j];
+    d.title=`[${th.n}] クリックで詳細へ`;
+    d.onclick=()=>go('4q',{ti:cell.i});
+  }
+  mg.appendChild(d);
+}
+const lg=document.getElementById('mandala-legend');
+TH.forEach((th,i)=>{
+  const el=document.createElement('div');el.className='leg-item';
+  el.innerHTML=`<div class="leg-dot" style="background:${th.c}"></div><span>${i+1}. ${th.n}</span>`;
+  el.onclick=()=>go('4q',{ti:i});lg.appendChild(el);
+});
+
+/* ═══ 4Q RENDER ══════════════════════════════════════════════════════════ */
+function render4Q(ti){
+  const th=TH[ti];
+  document.getElementById('q4-title').textContent=`テーマ${ti+1}: ${th.n}　4象限マトリクス`;
+  const body=document.getElementById('q4-body');
+  if(!Q4[ti]){
+    document.getElementById('q4-meta').textContent='';
+    body.innerHTML=`<div class="ng-box">
+      <div class="ng-icon">📋</div>
+      <h3>このテーマはまだ4象限マトリクスが生成されていません</h3>
+      <p>Kaiに「${th.n}の4象限マトリクスを作って」と伝えると<br>優先度分析を生成できます。</p>
+    </div>`;return;
+  }
+  const d=Q4[ti];
+  document.getElementById('q4-meta').textContent=`Y軸：${d.axis.y}（高→低）　X軸：${d.axis.x}（低→高）`;
+  const ri=(items,pos)=>items.map(item=>`
+    <div class="qi${item.flow?' link':''}"${item.flow?' onclick="go(\'flow\')"':''}>${item.t}
+      <div class="qi-sub">${item.s}</div>
+      ${item.flow?'<div class="qi-tag">▶ フロー図あり（クリックで表示）</div>':''}
+    </div>`).join('');
+  body.innerHTML=`
+    <div class="mwrap">
+      <div class="ax-xt">← ${d.axis.x} 低</div>
+      <div class="ax-yl">↑ ${d.axis.y} 高</div>
+      <div class="mx">
+        <div class="qd tl"><div class="ql">${d.tl.lbl}</div>${ri(d.tl.items,'tl')}</div>
+        <div class="qd tr"><div class="ql">${d.tr.lbl}</div>${ri(d.tr.items,'tr')}</div>
+        <div class="qd bl"><div class="ql">${d.bl.lbl}</div>${ri(d.bl.items,'bl')}</div>
+        <div class="qd br"><div class="ql">${d.br.lbl}</div>${ri(d.br.items,'br')}</div>
+      </div>
+      <div class="ax-yr">低 ↓</div>
+      <div class="ax-xb">高 →</div>
+    </div>
+    <div style="margin-top:10px;font-size:12px;color:#888">💡 <b style="color:#e53935">▶ フロー図あり</b> のカードをクリックするとフロー図に進めます</div>`;
+}
+
+/* ═══ MERMAID SOURCE (保持用: レンダリング後もコードをコピーできるように) ═══ */
+const FLOW_SRC=`flowchart TD
+  A([🚀 ターゲット業種絞り込み 開始])
+  A --> B[STEP1: 過去の受注・問い合わせを棚卸し\\n業種・規模・成約結果を一覧化]
+  B --> C{受注・商談実績が\\n3件以上ある？}
+  C -->|Yes| D[STEP2: 得意パターンを抽出\\n成約率が高い業種・課題タイプを特定]
+  C -->|No| E[仮説ベースで\\nターゲット候補を3〜5業種リストアップ]
+  D --> F
+  E --> F[STEP3: /research で市場調査\\n市場規模・AI需要・競合・補助金を確認]
+  F --> G[STEP4: 業種スコアリング\\n①受注可能性 ②市場成長性 ③競合の少なさ]
+  G --> H[STEP5: 上位2〜3業種に絞り込む]
+  H --> I{3ヶ月以内に\\nテスト受注できる見込みがある？}
+  I -->|Yes| J[STEP6: 業種別ペルソナ・典型課題を定義]
+  I -->|No| F
+  J --> K[STEP7: LP・提案書・集客メッセージに反映]
+  K --> L([✅ ターゲット業種確定・四半期ごとに見直し])
+  style A fill:#1565c0,color:white,stroke:none
+  style L fill:#2e7d32,color:white,stroke:none
+  style C fill:#e65100,color:white,stroke:none
+  style I fill:#e65100,color:white,stroke:none
+  style F fill:#6a1b9a,color:white,stroke:none`;
+
+const GANTT_SRC=`gantt
+  dateFormat  YYYY-MM-DD
+  title ターゲット業種絞り込み 実行スケジュール（2026年6月）
+  excludes weekends
+  section 準備（Week 1）
+    受注・問い合わせ棚卸し         :a1, 2026-06-01, 2d
+    得意パターン抽出・仮説リスト   :a2, after a1, 2d
+  section 調査（Week 1-2）
+    /research 市場調査             :crit, b1, after a2, 4d
+    業種スコアリング               :b2, after b1, 2d
+    絞り込み判断                   :milestone, m1, after b2, 0d
+  section 設計（Week 2-3）
+    業種別ペルソナ・課題を定義     :c1, after b2, 3d
+    LP・提案書・メッセージへ反映   :crit, c2, after c1, 5d
+    ターゲット業種 確定            :milestone, m2, after c2, 0d`;
+
+/* ═══ COPY HELPERS ═══════════════════════════════════════════════════════ */
+function doCp(text,btn){
+  navigator.clipboard.writeText(text).then(()=>{
+    const o=btn.textContent;btn.textContent='✅ コピーしました';
+    setTimeout(()=>btn.textContent=o,2000);
+  }).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);});
+}
+function cpJSON(){
+  doCp(JSON.stringify({center:CT,themes:TH.map((t,i)=>({name:t.n,tasks:TS[i].map(s=>s.replace(/\n/g,' '))}))},null,2),event.currentTarget);
+}
+function cpQ4(){
+  const d=Q4[S.ti];if(!d){alert('データなし');return;}
+  const f=k=>`【${d[k].lbl}】\n${d[k].items.map(i=>'- '+i.t.replace(/\n/g,'')).join('\n')}`;
+  doCp([f('tl'),f('tr'),f('bl'),f('br')].join('\n\n'),event.currentTarget);
+}
+function cpFlow(){doCp(FLOW_SRC,event.currentTarget);}
+function cpGantt(){doCp(GANTT_SRC,event.currentTarget);}
+
+/* ═══ INIT ═══════════════════════════════════════════════════════════════ */
+renderBC();
+</script>
+</body>
+</html>
