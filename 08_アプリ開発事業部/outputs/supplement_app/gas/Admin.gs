@@ -102,7 +102,9 @@ Noliaチーム
 // GASエディタで手動実行してください
 // ────────────────────────────────────────────
 function setupSheets() {
-  const ss = getSpreadsheet();
+  // setupSheets はスプレッドシートに紐付いた GAS から直接実行するため
+  // getActiveSpreadsheet() を使う（SPREADSHEET_ID プロパティ設定前でも動く）
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
 
   const sheetsConfig = {
     users: ['user_id','email','name','display_name','token','line_user_id','birthdate','start_date','initial_weight','goal_weight','purpose','exercise_days','status','joined_at','last_record_at'],
