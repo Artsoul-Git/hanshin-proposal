@@ -26,13 +26,9 @@ function getSheet(name) {
   return getSpreadsheet().getSheetByName(name);
 }
 
-// CORS対応ヘッダー（GAS Web Appに必須）
+// MIMEタイプ設定（GAS「全員公開」デプロイ時はCORSをGoogleが自動処理）
 function setCorsHeaders(output) {
-  return output
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*')
-    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  return output.setMimeType(ContentService.MimeType.JSON);
 }
 
 // JSONレスポンス生成
