@@ -64,5 +64,22 @@
     "flow": {},
     "gantt": {}
   },
-  "queue": []
+  "queue": [
+    {
+      "id": "cd3accc5",
+      "type": "4q",
+      "theme_id": 2,
+      "context": "収益・財務設計",
+      "status": "pending",
+      "created_at": "2026-05-14T07:11:23.434623"
+    },
+    {
+      "id": "cfc46a06",
+      "type": "flow",
+      "theme_id": 0,
+      "context": "顧客開拓",
+      "status": "pending",
+      "created_at": "2026-05-14T07:11:54.014281"
+    }
+  ]
 }

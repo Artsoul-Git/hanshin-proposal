@@ -96,6 +96,52 @@ const Records = {
     return headers.map(h => obj[h] !== undefined ? obj[h] : '');
   },
 
+  // AI フィードバック生成
+  getAiFeedback(token, body) {
+    const userId = Auth.getUserIdByToken(token);
+    if (!userId) return jsonErr('invalid_token');
+
+    const { weight, mood, cond, taken } = body;
+    const today = todayJST();
+
+    // 前回体重を取得
+    const sheet   = getSheet('daily_log');
+    const data    = sheet.getDataRange().getValues();
+    const headers = data[0];
+    const userIdIdx = headers.indexOf('user_id');
+    const weightIdx = headers.indexOf('weight');
+    const dateIdx   = headers.indexOf('log_date');
+
+    const prev = [];
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][userIdIdx] !== userId || data[i][dateIdx] >= today) continue;
+      const w = parseFloat(data[i][weightIdx]);
+      if (!isNaN(w)) prev.push({ date: data[i][dateIdx], weight: w });
+    }
+    prev.sort((a, b) => b.date.localeCompare(a.date));
+    const prevWeight = prev.length > 0 ? prev[0].weight : null;
+    const diff = prevWeight !== null ? (parseFloat(weight) - prevWeight).toFixed(1) : null;
+
+    const moodLabel = ['', 'とても落ち込んだ', '少しモヤモヤ', '普通', '良い感じ', '最高！'][mood] || '';
+
+    const prompt = `あなたはNoliaというサプリ継続サポートアプリのAIコーチです。
+ユーザーの今日の記録を見て、友達に話しかけるような温かい日本語で2〜3文のフィードバックを書いてください。
+命令・説教・比較は禁止。体重増加は「バイオサイクルの調整期」として前向きに。絵文字1〜2個OK。
+
+今日の記録:
+・体重: ${weight}kg${diff !== null ? `（前回から${diff > 0 ? '+' : ''}${diff}kg）` : '（初回記録）'}
+・気分: ${moodLabel}（${mood}/5）
+・体調: ${cond}/5
+・サプリ: ${taken ? '飲んだ ✅' : '飲んでいない ❌'}
+
+フィードバックのみ出力。前置き不要。`;
+
+    const text = callGemini(prompt, 150);
+    return jsonOk({
+      feedback: text || '今日も記録してくれてありがとう！続けることが一番の力になるよ 🌿',
+    });
+  },
+
   // usersシートの last_record_at を更新
   _updateLastRecord(userId) {
     const sheet   = getSheet('users');

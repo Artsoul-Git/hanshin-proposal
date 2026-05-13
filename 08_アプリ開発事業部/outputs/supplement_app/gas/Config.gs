@@ -49,6 +49,27 @@ function generateId(prefix) {
   return prefix + '_' + new Date().getTime() + '_' + Math.random().toString(36).slice(2, 7);
 }
 
+// 共通 Gemini API 呼び出し
+function callGemini(prompt, maxTokens) {
+  const apiKey = getConfig().GEMINI_API_KEY;
+  if (!apiKey) return '';
+  const payload = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { maxOutputTokens: maxTokens || 200, temperature: 0.85 },
+  };
+  try {
+    const res = UrlFetchApp.fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + apiKey,
+      { method: 'post', contentType: 'application/json', payload: JSON.stringify(payload), muteHttpExceptions: true }
+    );
+    const json = JSON.parse(res.getContentText());
+    return json?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  } catch(e) {
+    console.error('Gemini error:', e.message);
+    return '';
+  }
+}
+
 // 今日の日付（JST）
 function todayJST() {
   const now = new Date();
