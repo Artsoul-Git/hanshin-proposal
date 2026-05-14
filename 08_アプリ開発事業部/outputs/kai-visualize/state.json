@@ -151,6 +151,14 @@
       "context": "マーケティング",
       "status": "pending",
       "created_at": "2026-05-14T15:45:10.924433"
+    },
+    {
+      "id": "fca44afd",
+      "type": "4q",
+      "theme_id": 7,
+      "context": "人材・組織体制",
+      "status": "pending",
+      "created_at": "2026-05-14T15:51:35.839225"
     }
   ]
 }
