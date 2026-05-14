@@ -1,0 +1,20 @@
+flowchart TD
+  A([🚀 提案書テンプレ改善 開始])
+  A --> B[STEP1: 既存提案書を棚卸し\n過去6ヶ月の提案書を業種・成約有無・金額で一覧化]
+  B --> C{成約・不成約の\nサンプルが3件以上ある？}
+  C -->|Yes| D[STEP2: 成約パターンを抽出\n「刺さったページ」「よく質問された箇所」を特定]
+  C -->|No サンプル不足| E[STEP3: クライアントに\nフィードバックヒアリング\n「何が決め手でしたか？」]
+  D --> F
+  E --> F[STEP4: 改善ポイントを整理\n①構成 ②数値根拠 ③ビジュアル ④CTA の4軸で評価]
+  F --> G[STEP5: /sme-ai-proposal で\n業種別テンプレを再設計\nKaiが改善案を即日生成]
+  G --> H{社内レビューで\n品質基準を満たすか？}
+  H -->|OK| I[STEP6: テンプレを確定・保存\n業種別・規模別にバリエーションを整備]
+  H -->|要修正| G
+  I --> J[STEP7: 次案件から新テンプレを適用\n成約率を計測して四半期ごとに見直し]
+  J --> K([✅ 提案書テンプレ 継続改善サイクル確立])
+
+  style A fill:#2e7d32,color:white,stroke:none
+  style K fill:#1565c0,color:white,stroke:none
+  style C fill:#e65100,color:white,stroke:none
+  style H fill:#e65100,color:white,stroke:none
+  style G fill:#6a1b9a,color:white,stroke:none
