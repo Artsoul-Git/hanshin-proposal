@@ -52,21 +52,44 @@
   </div>
   
   <div class="step">
-    <p><span class="step-num">4</span> <strong>動作を確認する</strong><br>コピー先のフォルダでKaiを起動し、いつものように動くか確認します。問題なければ、Dドライブの古いデータは消してOKです。</p>
+    <p><span class="step-num">4</span> <strong>動作を確認する</strong><br>コピー先のフォルダでKaiを起動し、いつものように動くか確認します。</p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">5</span> <strong>Kaiに「住所の書き換え」を頼む</strong><br>引越しで住所が変わったので、Kaiに以下のようにお願いしてください。<br>
+    <code>「フォルダの引越しをしたので、全てのファイルの中にある D:\Google Antigravity\AS_AI導入支援事業_cc という文字を、新しい場所のパス（ C:\Users\kei\Dropbox\Dev\Antigravity\AS_AI導入支援事業_cc ）に一括で書き換えて」</code><br>
+    これで全てのリンクが元通りになります。</p>
   </div>
 
   <h2>2. Git（ギット）を「防波堤」にする手順</h2>
-  <p>Gitは本来プログラミングの履歴を残す道具ですが、初心者にとっては**「いつでも1秒で過去に戻れる魔法のバックアップ」**だと考えてください。Kaiに大きな修正を頼む前にこれを行うだけで、失敗が怖くなくなります。</p>
+  <p>「Git（ギット）」とは、一言で言うと**「ファイルのタイムマシン」**です。AIに大きな修正を頼む前に、今の状態を「セーブ（保存）」しておくことで、もし失敗しても1秒で元の状態に巻き戻すことができます。</p>
   
-  <h3>「防波堤」の作り方（作業前）</h3>
-  <ol>
-    <li>Kaiに話しかける前に、黒い画面（ターミナル）で <code>git add .</code> と打ちます。（全ての変更を準備する、という意味）</li>
-    <li>次に <code>git commit -m "作業前バックアップ"</code> と打ちます。（今の状態を保存する、という意味）</li>
-  </ol>
-  
+  <h3>ステップ0：Gitが入っているか確認する</h3>
+  <p>黒い画面（ターミナル）で <code>git --version</code> と打ってみてください。数字が表示されれば準備完了です。<br>
+  エラーが出る場合は、以下の手順でインストールしましょう。</p>
+
+  <div class="tip">
+    <span class="label">インストール方法（Windowsの場合）</span>
+    1. <a href="https://git-for-windows.github.io/" target="_blank">Git for Windows</a> の公式サイトからダウンロードします。<br>
+    2. インストーラーを起動し、基本的に全て「Next（次へ）」を押して進めればOKです。<br>
+    3. インストール後、PCを一度再起動してください。
+  </div>
+
+  <h3>ステップ1：最初の1回だけ必要な設定（名前の登録）</h3>
+  <p>Gitを使うには「誰が保存したか」を登録する必要があります。以下の2行をターミナルで1回ずつ入力してください。（名前とメールは自分のものでOKです）</p>
+  <pre><code>git config --global user.name "Your Name"
+git config --global user.email "your@example.com"</code></pre>
+
+  <h3>ステップ2：実際に「防波堤」を作る（作業前）</h3>
+  <p>Kaiに「〇〇をやって」と頼む直前に、以下の2つを打つのがプロのコツです。</p>
+  <div class="step">
+    <p><span class="step-num">1</span> <strong><code>git add .</code></strong><br>（「全ての変更を保存する準備をして」という意味）</p>
+    <p><span class="step-num">2</span> <strong><code>git commit -m "作業前バックアップ"</code></strong><br>（「今の状態に名前をつけて保存して」という意味）</p>
+  </div>
+
   <div class="warn">
-    <span class="label">もしKaiが失敗して、ファイルがめちゃくちゃになったら？</span>
-    黒い画面で <code>git restore .</code> と打ってください。一瞬で、さっき保存した「作業前」の状態に完全に元通りになります。
+    <span class="label">【緊急事態！】Kaiが失敗して、ファイルが壊れたら？</span>
+    落ち着いて <strong><code>git restore .</code></strong> と打ってください。一瞬で、さっき保存した「作業前」の状態に完全に元通りになります。
   </div>
 
   <h2>3. 日々の運用の注意点とアドバイス</h2>

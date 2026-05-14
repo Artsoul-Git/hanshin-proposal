@@ -136,7 +136,7 @@
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.2</span></div>
+  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.4</span></div>
 
   <div class="sb-section">
     <div class="sb-section-label">🤝 Kaiと協働する</div>
@@ -178,6 +178,7 @@
   <div class="sb-section">
     <div class="sb-section-label">🛠 アプリ・ツール</div>
     <a class="sb-link" href="#app-kai-tasks">Kai Tasks（社内）</a>
+    <a class="sb-link" href="#app-kai-visualize">Kai Visualize（社内）</a>
     <a class="sb-link" href="#app-slide-builder">スライドビルダー（社内）</a>
     <a class="sb-link" href="#app-published">公開済みアプリ</a>
     <a class="sb-link" href="#app-wip">制作中アプリ</a>
@@ -235,12 +236,13 @@
 <div class="cover">
   <h1>有限会社アートソウル<br>総合マニュアル</h1>
   <div class="sub">Kaiとの協働 + 19エージェント + スキルコマンド + アプリ・ツール</div>
-  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.2</div>
+  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.4</div>
 </div>
 
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v3.4</td><td>2026-05-15</td><td>Kai Visualize（思考可視化ツール）追加。サイドバー・目次・社内ツールセクションにカードとVBSリンク・操作マニュアルリンクを追加。</td></tr>
 <tr><td>v3.3</td><td>2026-05-15</td><td>「AI運用ガイド」を新設。PC環境の引越し手順（Dドライブ→Dropbox）、Gitを「防波堤」にする手順、日々の運用Tipsを追加。サイドバー・目次にリンクを追加。</td></tr>
 <tr><td>v3.2</td><td>2026-05-15</td><td>エージェント活かし方マニュアル新設。スキル用エージェントガイド・開発部エージェントガイド・content-burst/deck-sprint 徹底使い倒しガイドへのリンク追加。サイドバー「エージェント活用」セクション追加。</td></tr>
 <tr><td>v3.1</td><td>2026-05-15</td><td>/content-burst・/deck-sprint スキル追加。サイドバー・目次・スキルリファレンス更新。</td></tr>
@@ -285,6 +287,7 @@
     <li><strong>アプリ・ツール（NEW）</strong></li>
     <li class="sub-item"><a href="#app-keiyakusho">契約書AIチェックセミナー</a></li>
     <li class="sub-item"><a href="#app-kai-tasks">Kai Tasks プロジェクト管理</a></li>
+    <li class="sub-item"><a href="#app-kai-visualize">Kai Visualize 可視化ツール</a></li>
     <li class="sub-item"><a href="#app-slide-builder">スライドビルダーツール</a></li>
     <li class="sub-item"><a href="#app-public">公開済みアプリ一覧</a></li>
     <li><strong>PART 2: クライアント案件フロー</strong></li>
@@ -893,6 +896,30 @@
 <tr><td><code>python ...kai-tasks-cli.py status</code></td><td>現在の進捗確認</td></tr>
 <tr><td><code>python ...kai-tasks-cli.py open</code></td><td>ブラウザで開く</td></tr>
 </table>
+</div>
+</details>
+
+<details id="app-kai-visualize">
+<summary><span class="acc-num">A</span>Kai Visualize — 思考可視化ツール<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#7C3AED">
+  <div class="agent-name">Kai Visualize</div>
+  <div class="agent-phase">ローカル（localhost:3458）</div>
+  <p>テーマを入力するだけで、マンダラチャート→4象限マトリクス→フロー図→ガントチャートまでAIが自動生成します。各アイテムをクリックすると詳細フロー図を深掘り。<strong>Groq API（無料）</strong>で動作。</p>
+</div>
+<h3>起動方法</h3>
+<div class="file-card"><div class="file-icon">▶️</div><div><span class="file-path"><a href="../08_アプリ開発事業部/outputs/kai-visualize/起動してブラウザを開く.vbs" style="color:#7C3AED;font-weight:bold;">08_アプリ開発事業部\outputs\kai-visualize\起動してブラウザを開く.vbs</a></span><div class="file-desc">ダブルクリックでサーバー起動＋ブラウザ自動オープン。<code>http://localhost:3458</code></div></div></div>
+<h3>操作フロー</h3>
+<table>
+<tr><th>ステップ</th><th>操作</th></tr>
+<tr><td>①</td><td>テーマを入力して「マンダラ生成」→ 8分野の整理</td></tr>
+<tr><td>②</td><td>分野をクリック →「4象限生成」→ 重要度×緊急度で16項目に分類</td></tr>
+<tr><td>③</td><td>項目をクリック →「フロー図生成」→ 実行手順をフロー図化</td></tr>
+<tr><td>④</td><td>「ガントチャート生成」→ スケジュール表＋タスク詳細一覧が自動表示</td></tr>
+</table>
+<h3>マニュアル・セットアップ</h3>
+<div class="file-card"><div class="file-icon">📗</div><div><span class="file-path"><a href="../08_アプリ開発事業部/outputs/kai-visualize/操作マニュアル.html" style="color:#7C3AED;">08_アプリ開発事業部\outputs\kai-visualize\操作マニュアル.html</a></span><div class="file-desc">初回Groq APIキー設定・起動手順・操作フロー・トラブルシューティング全網羅</div></div></div>
+<div class="tip"><span class="label">初回のみ必須</span>Groq APIキー（<code>gsk_</code>で始まる）をWindowsのユーザー環境変数 <code>GROQ_API_KEY</code> に登録してから起動してください。詳細は操作マニュアルを参照。</div>
 </div>
 </details>
 
