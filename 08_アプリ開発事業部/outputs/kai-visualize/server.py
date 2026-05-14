@@ -67,7 +67,7 @@ def _call_gemini(prompt: str) -> str:
         'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.7}
     }, ensure_ascii=False).encode('utf-8')
 
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}'
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-8b:generateContent?key={api_key}'
     for attempt in range(3):
         req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
         try:
