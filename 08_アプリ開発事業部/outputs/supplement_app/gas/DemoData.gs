@@ -30,8 +30,8 @@ function _updateUserStartDate(ss) {
     var status = statusIdx >= 0 ? data[i][statusIdx] : '';
     if (status === 'churned') continue;
     var userId = String(data[i][userIdIdx]);
-    sheet.getRange(i + 1, startDateIdx + 1).setValue('2026-02-14');
-    sheet.getRange(i + 1, joinedAtIdx  + 1).setValue('2026-02-14T08:30:00.000Z');
+    sheet.getRange(i + 1, startDateIdx + 1).setValue('2026-02-17');
+    sheet.getRange(i + 1, joinedAtIdx  + 1).setValue('2026-02-17T08:30:00.000Z');
     Logger.log('users更新: ' + userId);
     return userId;
   }
@@ -41,7 +41,7 @@ function _updateUserStartDate(ss) {
 function _insertDailyLogs(ss, userId) {
   var sheet   = ss.getSheetByName('daily_log');
   var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  var START      = new Date('2026-02-14T00:00:00Z');
+  var START      = new Date('2026-02-17T00:00:00Z');
   var TOTAL_DAYS = 88;
   var weightCurve = [
     {d:0,w:61.5},{d:7,w:61.9},{d:20,w:61.0},{d:35,w:60.2},

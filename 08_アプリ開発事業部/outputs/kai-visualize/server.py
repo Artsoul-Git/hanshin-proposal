@@ -75,9 +75,11 @@ def _call_gemini(prompt: str) -> str:
                 resp = json.loads(r.read())
                 return resp['candidates'][0]['content']['parts'][0]['text']
         except urllib.error.HTTPError as e:
+            body = e.read().decode('utf-8', errors='replace')
+            print(f'[GEMINI] HTTP {e.code}: {body[:500]}')
             if e.code == 429 and attempt < 2:
                 wait = 20 * (attempt + 1)
-                print(f'[GEMINI] 429 レート制限。{wait}秒後にリトライ ({attempt+1}/3)')
+                print(f'[GEMINI] レート制限。{wait}秒後にリトライ ({attempt+1}/3)')
                 time.sleep(wait)
             else:
                 raise
