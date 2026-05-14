@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Kai Visualize Server  port 3458
-クリックで自動生成: GEMINI_API_KEY が環境変数にあれば Gemini API を直接呼び出す
+クリックで自動生成: GROQ_API_KEY が環境変数にあれば Groq API を直接呼び出す
 Usage: python server.py
 """
 import json, os, uuid, datetime, threading, queue, webbrowser, re, time
@@ -56,30 +56,35 @@ def _broadcast(event: str, data: dict) -> None:
                 pass
 
 
-# ─── Gemini API ───
+# ─── Groq API ───
 def _call_gemini(prompt: str) -> str:
-    api_key = os.environ.get('GEMINI_API_KEY', '')
+    api_key = os.environ.get('GROQ_API_KEY', '')
     if not api_key:
-        raise RuntimeError('GEMINI_API_KEY が設定されていません')
+        raise RuntimeError('GROQ_API_KEY が設定されていません')
 
     payload = json.dumps({
-        'contents': [{'parts': [{'text': prompt}]}],
-        'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.7}
+        'model': 'llama-3.3-70b-versatile',
+        'messages': [{'role': 'user', 'content': prompt}],
+        'max_tokens': 2048,
+        'temperature': 0.7
     }, ensure_ascii=False).encode('utf-8')
 
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
+    url = 'https://api.groq.com/openai/v1/chat/completions'
     for attempt in range(3):
-        req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
+        req = urllib.request.Request(url, data=payload, headers={
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {api_key}'
+        })
         try:
             with urllib.request.urlopen(req, timeout=60) as r:
                 resp = json.loads(r.read())
-                return resp['candidates'][0]['content']['parts'][0]['text']
+                return resp['choices'][0]['message']['content']
         except urllib.error.HTTPError as e:
             body = e.read().decode('utf-8', errors='replace')
-            print(f'[GEMINI] HTTP {e.code}: {body[:500]}')
+            print(f'[GROQ] HTTP {e.code}: {body[:500]}')
             if e.code == 429 and attempt < 2:
-                wait = 20 * (attempt + 1)
-                print(f'[GEMINI] レート制限。{wait}秒後にリトライ ({attempt+1}/3)')
+                wait = 10 * (attempt + 1)
+                print(f'[GROQ] レート制限。{wait}秒後にリトライ ({attempt+1}/3)')
                 time.sleep(wait)
             else:
                 raise
@@ -225,7 +230,7 @@ class _Handler(BaseHTTPRequestHandler):
         elif p == '/events':
             self._sse()
         elif p == '/has-api-key':
-            self._json({'ok': bool(os.environ.get('GEMINI_API_KEY'))})
+            self._json({'ok': bool(os.environ.get('GROQ_API_KEY'))})
         else:
             self.send_response(404)
             self.end_headers()
@@ -257,7 +262,7 @@ class _Handler(BaseHTTPRequestHandler):
             self._json({'ok': True, 'id': req['id']})
 
             # API キーがあれば自動生成
-            if os.environ.get('GEMINI_API_KEY'):
+            if os.environ.get('GROQ_API_KEY'):
                 threading.Thread(target=_auto_generate, args=(req,), daemon=True).start()
 
         elif p == '/generate':
@@ -351,7 +356,7 @@ class _Server(socketserver.ThreadingMixIn, HTTPServer):
 
 
 if __name__ == '__main__':
-    has_key = bool(os.environ.get('GEMINI_API_KEY'))
+    has_key = bool(os.environ.get('GROQ_API_KEY'))
     mode = 'クリック自動生成モード' if has_key else '手動生成モード（API キーなし）'
     print(f'Kai Visualize Server: http://localhost:{PORT}  [{mode}]  (Ctrl+C で停止)')
     srv = _Server(('localhost', PORT), _Handler)
