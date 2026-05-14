@@ -38,6 +38,8 @@ function doPost(e) {
     switch (action) {
       case 'login':           return Auth.login(token);
       case 'setupProfile':    return Auth.setupProfile(token, body);
+      case 'updateProfile':   return Auth.updateProfile(token, body);
+      case 'requestLoginLink': return Auth.requestLoginLink(body);
       case 'saveDailyLog':    return Records.saveLog(token, body);
       case 'createUser':        return Admin.createUser(token, body);
       case 'generateReports':   return Reports.generateAll(token);
