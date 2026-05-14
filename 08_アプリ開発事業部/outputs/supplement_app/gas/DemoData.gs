@@ -229,7 +229,8 @@ function fixDemoDataUserId() {
   let actualUserId = null;
   let actualUserRow = -1;
   for (let i = 1; i < usersData.length; i++) {
-    if (usersData[i][uStatusIdx] !== 'churned') {
+    const status = uStatusIdx >= 0 ? usersData[i][uStatusIdx] : '';
+    if (status !== 'churned') {
       actualUserId  = String(usersData[i][uUserIdIdx]);
       actualUserRow = i + 1;
       break;
@@ -244,12 +245,12 @@ function fixDemoDataUserId() {
 
   Logger.log('実際のユーザーID: ' + actualUserId);
 
-  // start_date を 2026-02-14 に更新（まだされていない場合）
+  // start_date を 2026-02-14 に更新
   if (actualUserRow > 0 && uStartIdx >= 0) {
     usersSheet.getRange(actualUserRow, uStartIdx + 1).setValue('2026-02-14');
   }
 
-  // ── daily_log: LOG_DEMO* 行のuser_idを置換 ──
+  // ── daily_log: データをメモリ上で修正 → 一括書き込み ──
   const logSheet = ss.getSheetByName('daily_log');
   const logData  = logSheet.getDataRange().getValues();
   const lHeaders = logData[0];
@@ -259,15 +260,19 @@ function fixDemoDataUserId() {
   let logCount = 0;
   for (let i = 1; i < logData.length; i++) {
     if (String(logData[i][lIdIdx]).startsWith('LOG_DEMO')) {
-      logSheet.getRange(i + 1, lUserIdx + 1).setValue(actualUserId);
+      logData[i][lUserIdx] = actualUserId;
       logCount++;
     }
   }
+  if (logCount > 0) {
+    // 1回のsetValuesでまとめて書き込み（個別書き込みはしない）
+    logSheet.getRange(1, 1, logData.length, lHeaders.length).setValues(logData);
+  }
 
-  // ── weekly_reports: RPT_DEMO* 行のuser_idを置換 ──
+  // ── weekly_reports: 同様に一括書き込み ──
   const rptSheet = ss.getSheetByName('weekly_reports');
   let rptCount = 0;
-  if (rptSheet) {
+  if (rptSheet && rptSheet.getLastRow() > 1) {
     const rptData  = rptSheet.getDataRange().getValues();
     const rHeaders = rptData[0];
     const rUserIdx = rHeaders.indexOf('user_id');
@@ -275,9 +280,12 @@ function fixDemoDataUserId() {
 
     for (let i = 1; i < rptData.length; i++) {
       if (String(rptData[i][rIdIdx]).startsWith('RPT_DEMO')) {
-        rptSheet.getRange(i + 1, rUserIdx + 1).setValue(actualUserId);
+        rptData[i][rUserIdx] = actualUserId;
         rptCount++;
       }
+    }
+    if (rptCount > 0) {
+      rptSheet.getRange(1, 1, rptData.length, rHeaders.length).setValues(rptData);
     }
   }
 
