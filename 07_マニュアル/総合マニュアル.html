@@ -136,7 +136,7 @@
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.0</span></div>
+  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.2</span></div>
 
   <div class="sb-section">
     <div class="sb-section-label">🤝 Kaiと協働する</div>
@@ -160,6 +160,14 @@
     <a class="sb-link" href="#sk-seminar">/seminar-slide</a>
     <a class="sb-link" href="#sk-content-burst">/content-burst</a>
     <a class="sb-link" href="#sk-deck-sprint">/deck-sprint</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🤖 エージェント活用</div>
+    <a class="sb-link" href="#agent-ecosystem">エコシステム概要</a>
+    <a class="sb-link" href="エージェント活かし方マニュアル.html" target="_blank">活かし方マニュアル↗</a>
+    <a class="sb-link" href="../.claude/agents/エージェントガイド.html" target="_blank">エージェントガイド(スキル)↗</a>
+    <a class="sb-link" href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">エージェントガイド(開発)↗</a>
   </div>
 
   <div class="sb-section">
@@ -225,13 +233,14 @@
 <!-- 表紙 -->
 <div class="cover">
   <h1>有限会社アートソウル<br>総合マニュアル</h1>
-  <div class="sub">Kaiとの協働 + 11エージェント + スキルコマンド + アプリ・ツール</div>
-  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.0</div>
+  <div class="sub">Kaiとの協働 + 19エージェント + スキルコマンド + アプリ・ツール</div>
+  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.2</div>
 </div>
 
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v3.2</td><td>2026-05-15</td><td>エージェント活かし方マニュアル新設。スキル用エージェントガイド・開発部エージェントガイド・content-burst/deck-sprint 徹底使い倒しガイドへのリンク追加。サイドバー「エージェント活用」セクション追加。</td></tr>
 <tr><td>v3.1</td><td>2026-05-15</td><td>/content-burst・/deck-sprint スキル追加。サイドバー・目次・スキルリファレンス更新。</td></tr>
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
@@ -266,6 +275,11 @@
     <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
     <li class="sub-item"><a href="#sk-content-burst">/content-burst — テーマ→6チャネル発信物を並列生成</a></li>
     <li class="sub-item"><a href="#sk-deck-sprint">/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成</a></li>
+    <li><strong>エージェント活用ガイド</strong></li>
+    <li class="sub-item"><a href="#agent-ecosystem">Kaiエージェントエコシステム概要（19体）</a></li>
+    <li class="sub-item"><a href="エージェント活かし方マニュアル.html" target="_blank">↗ エージェント活かし方マニュアル（独立ガイド）</a></li>
+    <li class="sub-item"><a href="../.claude/agents/エージェントガイド.html" target="_blank">↗ エージェントガイド（スキル用：cb-*/ds-*全11体）</a></li>
+    <li class="sub-item"><a href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">↗ エージェントガイド（開発部：ARCH+7体）</a></li>
     <li><strong>アプリ・ツール（NEW）</strong></li>
     <li class="sub-item"><a href="#app-keiyakusho">契約書AIチェックセミナー</a></li>
     <li class="sub-item"><a href="#app-kai-tasks">Kai Tasks プロジェクト管理</a></li>
@@ -723,6 +737,11 @@
   <tr><td>cb-post</td><td>メルマガ（並列）</td></tr>
   <tr><td>cb-canvas</td><td>ビジュアルマップ（並列）</td></tr>
 </table>
+<div class="tip"><span class="label">詳しく知りたい方へ</span>
+  各エージェントの仕様・出力ファイルの活用法・カスタマイズ方法：
+  <a href="../skill/content-burst/使い倒しガイド.html" target="_blank">▶ content-burst 徹底使い倒しガイド</a> |
+  <a href="../.claude/agents/エージェントガイド.html" target="_blank">▶ エージェントガイド（スキル用）</a>
+</div>
 </div>
 </details>
 
@@ -761,6 +780,51 @@
   <tr><td>ds-chair</td><td>報告MTGアジェンダ（並列）</td></tr>
 </table>
 <div class="tip"><span class="label">スライドの仕組み</span>CSS/JSを含む完全テンプレート（<span class="file-path">outputs/deck-sprint/slide-base.html</span>）をコピー後、ds-deck が Edit 2回でコンテンツを差し替えます。毎回ゼロ生成しないためトークン効率が高く、5分以内を実現しています。</div>
+<div class="tip"><span class="label">詳しく知りたい方へ</span>
+  スライドCSSクラス一覧・MTG活用法・カスタマイズ方法：
+  <a href="../skill/deck-sprint/使い倒しガイド.html" target="_blank">▶ deck-sprint 徹底使い倒しガイド</a> |
+  <a href="../.claude/agents/エージェントガイド.html" target="_blank">▶ エージェントガイド（スキル用）</a>
+</div>
+</div>
+</details>
+
+<!-- ===== エージェントエコシステム概要 ===== -->
+<div class="part-header" id="agent-ecosystem">PART <span>★</span>　エージェント活用ガイド</div>
+
+<details id="agent-overview">
+<summary><span class="acc-num">🤖</span>Kai エージェントエコシステム概要（19体）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="lead">Kaiのエコシステムには3つのチームで計19体のエージェントが存在します。テーマを渡すだけで並列実行し、複数の成果物を高速生成します。</div>
+
+<h3>チーム別早見表</h3>
+<table>
+  <tr><th>チーム</th><th>起動コマンド</th><th>用途</th><th>エージェント数</th></tr>
+  <tr><td><strong>content-burst</strong></td><td><code>/content-burst テーマ</code></td><td>SNS・ブログ・動画など6種発信素材を一括生成</td><td>7体</td></tr>
+  <tr><td><strong>deck-sprint</strong></td><td><code>/deck-sprint テーマ</code></td><td>レポート・スライド・MTGアジェンダを高速生成</td><td>4体</td></tr>
+  <tr><td><strong>ARCH開発チーム</strong></td><td>開発依頼 or <code>/company-setup</code></td><td>Webアプリ・GASツール・自動化システム開発</td><td>8体</td></tr>
+</table>
+
+<h3>設計原則：直列先行→並列実行</h3>
+<p>すべてのチームは「リサーチエージェント1体を先行直列実行 → 残りを同時並列実行」という共通パターンを採用しています。これにより全エージェントが同じ情報ベースを持ちながら、最速で成果物を生成できます。</p>
+
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>📄 スキル用エージェントガイド</h4>
+    <p>cb-* / ds-* 全11体の詳細仕様。フロー図・出力ファイル・カスタマイズ方法を網羅。</p>
+    <p><a href="../.claude/agents/エージェントガイド.html" target="_blank">▶ エージェントガイド（スキル用）を開く</a></p>
+  </div>
+  <div class="two-col-box">
+    <h4>🏗 開発部エージェントガイド</h4>
+    <p>ARCH + 7体の開発専門エージェント詳細。開発フロー・各エージェントの責務・追加方法。</p>
+    <p><a href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">▶ エージェントガイド（開発部）を開く</a></p>
+  </div>
+</div>
+
+<div class="ok">
+  <span class="label">エージェントの活かし方をもっと詳しく知りたい場合</span>
+  「いつ使うか判断する」「コンテキストの渡し方」「並列vs直列の設計思想」「新しいエージェントを追加する方法」「よくある失敗パターン」まですべてまとめた独立ガイドがあります。<br>
+  <a href="エージェント活かし方マニュアル.html" target="_blank"><strong>▶ エージェント活かし方マニュアル（完全ガイド）を開く</strong></a>
+</div>
 </div>
 </details>
 

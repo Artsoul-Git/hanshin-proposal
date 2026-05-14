@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>エージェント活かし方マニュアル — Kai エコシステム完全ガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+  /* ===== Sidebar ===== */
+  .sidebar { position: fixed; left: 0; top: 0; width: 220px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+  .sb-logo span { color: #0EA5E9; display: block; font-size: 11px; margin-top: 2px; }
+  .sb-sec { padding: 10px 14px 4px; }
+  .sb-sec-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+  .sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+  .sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .sb-back { display: block; padding: 10px 16px 8px; font-size: 12px; color: #90CDF4; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sb-back:hover { color: #fff; }
+
+  /* ===== Main ===== */
+  .main { margin-left: 220px; flex: 1; padding: 40px 20px; min-width: 0; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* ===== Common ===== */
+  .cover { text-align: center; padding: 80px 0 60px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; }
+  .cover h1 { font-size: 32px; color: #1A365D; margin-bottom: 16px; line-height: 1.4; }
+  .cover .sub { font-size: 18px; color: #0EA5E9; font-weight: bold; margin-bottom: 40px; }
+  .cover .meta { color: #718096; font-size: 14px; line-height: 2; }
+  h2 { font-size: 26px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #0EA5E9; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 20px; color: #2D3748; margin: 30px 0 12px; padding-left: 16px; border-left: 6px solid #0EA5E9; line-height: 1.5; }
+  h4 { font-size: 16px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+  p { margin: 12px 0; }
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #EBF8FF; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #0EA5E9; }
+  .tip .label { font-weight: bold; color: #2B6CB0; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .ok { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 25px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 28px; margin: 12px 0; }
+  li { margin: 7px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  .toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #0EA5E9; }
+  .toc .sub-item { padding-left: 20px; font-size: 14px; color: #4A5568; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 50px 0; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .badge-blue { background: #EBF8FF; color: #2B6CB0; }
+  .badge-green { background: #F0FFF4; color: #276749; }
+  .badge-orange { background: #FFFAF0; color: #C05621; }
+  .badge-purple { background: #FAF5FF; color: #553C9A; }
+  .badge-teal { background: #E6FFFA; color: #2C7A7B; }
+  .badge-red { background: #FFF5F5; color: #C53030; }
+  .file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+  .flow-diagram { background: #FAFBFC; padding: 30px; border-radius: 8px; margin: 22px 0; border: 2px solid #E2E8F0; overflow-x: auto; text-align: center; }
+  .part-header { background: #1A365D; color: white; padding: 16px 24px; border-radius: 10px; margin: 40px 0 16px; font-size: 20px; font-weight: bold; letter-spacing: 0.05em; }
+  .part-header span { color: #0EA5E9; }
+  .copy-btn { display: inline-block; margin-left: 8px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 2px 10px; font-size: 11px; cursor: pointer; }
+
+  /* ===== Agent Cards ===== */
+  .agent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 20px 0; }
+  .agent-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; border-left: 6px solid #1A365D; }
+  .agent-card.cb { border-left-color: #3182CE; }
+  .agent-card.ds { border-left-color: #0EA5E9; }
+  .agent-card.arch { border-left-color: #805AD5; }
+  .agent-card.arch-spec { border-left-color: #2F855A; }
+  .agent-card.arch-build { border-left-color: #DD6B20; }
+  .agent-card.arch-ops { border-left-color: #C53030; }
+  .agent-name { font-size: 16px; font-weight: bold; color: #1A365D; margin-bottom: 4px; }
+  .agent-role { font-size: 12px; color: #718096; background: #EDF2F7; padding: 2px 8px; border-radius: 12px; display: inline-block; margin-bottom: 8px; }
+  .agent-desc { font-size: 13px; color: #4A5568; }
+
+  /* ===== Ecosystem Map ===== */
+  .eco-map { background: #F7FAFC; border: 2px solid #E2E8F0; border-radius: 12px; padding: 32px; margin: 24px 0; overflow-x: auto; }
+  .eco-row { display: flex; align-items: flex-start; gap: 16px; margin: 14px 0; }
+  .eco-label { background: #1A365D; color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: bold; white-space: nowrap; min-width: 140px; text-align: center; }
+  .eco-label.cb-label { background: #3182CE; }
+  .eco-label.ds-label { background: #0EA5E9; }
+  .eco-label.arch-label { background: #805AD5; }
+  .eco-agents { display: flex; flex-wrap: wrap; gap: 8px; }
+  .eco-agent { background: white; border: 1px solid #E2E8F0; border-radius: 6px; padding: 6px 12px; font-size: 12px; color: #2D3748; font-family: "Consolas",monospace; }
+  .eco-arrow { font-size: 20px; color: #CBD5E0; margin-top: 6px; }
+
+  /* ===== Decision Tree ===== */
+  .decision-tree { background: #F0FFF4; border: 2px solid #C6F6D5; border-radius: 12px; padding: 28px 32px; margin: 24px 0; }
+  .dt-node { background: white; border: 2px solid #C6F6D5; border-radius: 8px; padding: 12px 18px; margin: 10px 0; }
+  .dt-node .q { font-weight: bold; color: #276749; margin-bottom: 6px; }
+  .dt-node .a { font-size: 13px; color: #4A5568; padding-left: 14px; }
+  .dt-node .a::before { content: "→ "; color: #38A169; }
+
+  /* ===== Prompt Box ===== */
+  .prompt-box { background: #1A202C; color: #E2E8F0; padding: 22px 26px; border-radius: 8px; margin: 18px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.8; position: relative; }
+  .prompt-box .comment { color: #718096; }
+  .prompt-box .highlight { color: #F6AD55; }
+  .prompt-box .key { color: #68D391; }
+
+  /* ===== Step ===== */
+  .step-list { counter-reset: step; margin: 20px 0; }
+  .step-item { counter-increment: step; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px 22px 18px 56px; margin: 12px 0; position: relative; }
+  .step-item::before { content: counter(step); position: absolute; left: 16px; top: 16px; background: #0EA5E9; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px; }
+  .step-item h4 { margin: 0 0 6px; color: #1A365D; }
+  .step-item p { font-size: 14px; margin: 4px 0; }
+
+  /* ===== Comparison table ===== */
+  .comp-good { color: #276749; font-weight: bold; }
+  .comp-no { color: #C53030; }
+  .comp-mid { color: #C05621; }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <a class="sb-back" href="../07_マニュアル/総合マニュアル.html">← 総合マニュアルに戻る</a>
+  <div class="sb-logo">エージェント活かし方<span>Kai エコシステム完全ガイド</span></div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">基礎理解</div>
+    <a class="sb-link" href="#ch1">1. エージェントとは</a>
+    <a class="sb-link" href="#ch2">2. Kai エコシステム全体像</a>
+    <a class="sb-link" href="#ch3">3. いつ使うか判断する</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">コンテンツ制作チーム</div>
+    <a class="sb-link" href="#ch4">4. content-burst チーム</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">デッキ制作チーム</div>
+    <a class="sb-link" href="#ch5">5. deck-sprint チーム</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">開発チーム（ARCH）</div>
+    <a class="sb-link" href="#ch6">6. ARCH 開発エージェント群</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">活用の技術</div>
+    <a class="sb-link" href="#ch7">7. コンテキストを渡す技術</a>
+    <a class="sb-link" href="#ch8">8. 並列 vs 直列の設計</a>
+    <a class="sb-link" href="#ch9">9. 新しいエージェントを作る</a>
+    <a class="sb-link" href="#ch10">10. よくある失敗と対処</a>
+  </div>
+</nav>
+
+<div class="main">
+<div class="container">
+
+<div class="cover">
+  <h1>エージェント活かし方マニュアル</h1>
+  <div class="sub">Kai エコシステム完全ガイド</div>
+  <div class="meta">2026年5月 作成<br>対象：上村桂右<br>バージョン：v1.0</div>
+</div>
+
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#ch1">第1章　エージェントとは何か — Kaiとの違い</a></li>
+    <li><a href="#ch2">第2章　Kai エコシステム全体像</a></li>
+    <li><a href="#ch3">第3章　「Kai一人か」「チームか」を判断する</a></li>
+    <li><a href="#ch4">第4章　content-burst チーム詳細（7体）</a></li>
+    <li><a href="#ch5">第5章　deck-sprint チーム詳細（4体）</a></li>
+    <li><a href="#ch6">第6章　ARCH 開発エージェント群（8体）</a></li>
+    <li><a href="#ch7">第7章　エージェントにコンテキストを渡す技術</a></li>
+    <li><a href="#ch8">第8章　並列実行 vs 直列実行の設計思想</a></li>
+    <li><a href="#ch9">第9章　新しいエージェントを設計・追加する</a></li>
+    <li><a href="#ch10">第10章　よくある失敗パターンと対処法</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ===== Ch1 ===== -->
+<h2 id="ch1">第1章　エージェントとは何か — Kaiとの違い</h2>
+
+<div class="lead">エージェントは「特定の仕事だけを集中してこなす専門家」です。Kai（メインAI）とはまったく別のプロセスで動き、同時並列実行ができます。</div>
+
+<h3>Kai vs エージェント — 基本の違い</h3>
+<table>
+  <tr><th>比較項目</th><th>Kai（メイン）</th><th>エージェント</th></tr>
+  <tr><td>役割</td><td>司令官・調整役・最終判断</td><td>特定タスクの専門実行者</td></tr>
+  <tr><td>知識</td><td>CLAUDE.md・memory・Knowledge全体</td><td>自分のSKILL.mdに書かれた指示のみ</td></tr>
+  <tr><td>同時実行</td><td>1つ（会話の流れに従う）</td><td>複数を同時に動かせる（並列化）</td></tr>
+  <tr><td>会話履歴</td><td>あり（セッション全体を覚えている）</td><td>なし（毎回ゼロから起動）</td></tr>
+  <tr><td>ツール制限</td><td>制限なし</td><td>SKILL.mdで明示したツールのみ</td></tr>
+  <tr><td>コスト</td><td>1回分のトークン</td><td>エージェント数分のトークン（並列なら合算）</td></tr>
+</table>
+
+<h3>なぜエージェントを使うのか</h3>
+<ul>
+  <li><strong>スピード：</strong>6つの発信物を1体ずつ順番に作ると30分かかるところを、6体並列なら5分で終わる</li>
+  <li><strong>専門性：</strong>「Xスレッドの書き方だけ」に特化した指示を渡せるため、品質が上がる</li>
+  <li><strong>トークン節約：</strong>メイン会話にすべての中間成果物を流さず、ファイルで受け渡しする</li>
+  <li><strong>再現性：</strong>SKILL.mdに書かれた手順が常に同じように実行される</li>
+</ul>
+
+<div class="tip">
+  <span class="label">コンテキストの引き継ぎ方</span>
+  エージェントは会話履歴を持ちません。Kaiが「outdir（出力フォルダパス）」や「研究ノートファイルパス」などを引数で渡すことで、エージェント間のバトンがつながります。ファイルベースの受け渡しがKaiエコシステムの基本設計です。
+</div>
+
+<h3>エージェントファイルはどこにある？</h3>
+<table>
+  <tr><th>場所</th><th>対象エージェント</th><th>詳細ガイド</th></tr>
+  <tr>
+    <td><span class="file-path">.claude/agents/*.md</span></td>
+    <td>content-burst チーム（7体）・deck-sprint チーム（4体）</td>
+    <td><a href="../.claude/agents/エージェントガイド.html" target="_blank">エージェントガイド（スキル用）</a></td>
+  </tr>
+  <tr>
+    <td><span class="file-path">08_アプリ開発事業部/agents/*.md</span></td>
+    <td>ARCH + 開発専門エージェント（8体）</td>
+    <td><a href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">エージェントガイド（開発部）</a></td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- ===== Ch2 ===== -->
+<h2 id="ch2">第2章　Kai エコシステム全体像</h2>
+
+<div class="lead">現在のKaiエコシステムには計19体のエージェントが存在します。3つのチームに分かれ、それぞれ異なる目的で動きます。</div>
+
+<h3>エコシステムマップ</h3>
+<div class="eco-map">
+  <div class="eco-row">
+    <div class="eco-label cb-label">content-burst<br><small>発信素材チーム</small></div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-agents">
+      <div class="eco-agent">cb-scout<br><small>リサーチ</small></div>
+      <div class="eco-agent">cb-ink<br><small>レポート</small></div>
+      <div class="eco-agent">cb-pen<br><small>ブログ</small></div>
+      <div class="eco-agent">cb-spark<br><small>X投稿</small></div>
+      <div class="eco-agent">cb-lens<br><small>YouTube</small></div>
+      <div class="eco-agent">cb-post<br><small>メルマガ</small></div>
+      <div class="eco-agent">cb-canvas<br><small>ビジュアル</small></div>
+    </div>
+  </div>
+  <div class="eco-row">
+    <div class="eco-label ds-label">deck-sprint<br><small>資料作成チーム</small></div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-agents">
+      <div class="eco-agent">ds-scout<br><small>リサーチ</small></div>
+      <div class="eco-agent">ds-analyst<br><small>レポート</small></div>
+      <div class="eco-agent">ds-deck<br><small>スライド</small></div>
+      <div class="eco-agent">ds-chair<br><small>アジェンダ</small></div>
+    </div>
+  </div>
+  <div class="eco-row">
+    <div class="eco-label arch-label">ARCH<br><small>アプリ開発チーム</small></div>
+    <div class="eco-arrow">→</div>
+    <div class="eco-agents">
+      <div class="eco-agent">ARCH<br><small>統括</small></div>
+      <div class="eco-agent">SPEC<br><small>要件定義</small></div>
+      <div class="eco-agent">WIRE<br><small>設計</small></div>
+      <div class="eco-agent">GASBOT<br><small>GAS開発</small></div>
+      <div class="eco-agent">WEBSMITH<br><small>Web開発</small></div>
+      <div class="eco-agent">HOOKUP<br><small>連携</small></div>
+      <div class="eco-agent">SHIELD<br><small>QA</small></div>
+      <div class="eco-agent">SCRIBE<br><small>ドキュメント</small></div>
+    </div>
+  </div>
+</div>
+
+<h3>チーム別サマリー</h3>
+<table>
+  <tr><th>チーム</th><th>起動方法</th><th>用途</th><th>所要時間</th><th>エージェント数</th></tr>
+  <tr>
+    <td><strong>content-burst</strong></td>
+    <td><code>/content-burst テーマ</code></td>
+    <td>SNS・ブログ・動画など6種発信素材を一括生成</td>
+    <td>15〜30分</td>
+    <td>7体（直列1→並列6）</td>
+  </tr>
+  <tr>
+    <td><strong>deck-sprint</strong></td>
+    <td><code>/deck-sprint テーマ</code></td>
+    <td>レポート・スライド・MTGアジェンダを高速生成</td>
+    <td>5〜10分</td>
+    <td>4体（直列1→並列3）</td>
+  </tr>
+  <tr>
+    <td><strong>ARCH</strong></td>
+    <td><code>/company-setup</code> または直接依頼</td>
+    <td>Webアプリ・GASツール・自動化システムの開発</td>
+    <td>案件による</td>
+    <td>8体（ARCHが調整）</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- ===== Ch3 ===== -->
+<h2 id="ch3">第3章　「Kai一人か」「チームか」を判断する</h2>
+
+<div class="lead">すべての作業でエージェントチームを使う必要はありません。判断基準を理解して、状況に合った選択をしましょう。</div>
+
+<h3>判断フローチャート</h3>
+<div class="decision-tree">
+  <div class="dt-node">
+    <div class="q">Q1. 複数の異なるアウトプット形式が必要か？</div>
+    <div class="a">YES → エージェントチームを検討する</div>
+    <div class="a">NO → 次の質問へ</div>
+  </div>
+  <div class="dt-node">
+    <div class="q">Q2. アウトプットが3,000字を超える大規模な成果物か？</div>
+    <div class="a">YES → エージェントに委任する（専門的な大量生成に強い）</div>
+    <div class="a">NO → 次の質問へ</div>
+  </div>
+  <div class="dt-node">
+    <div class="q">Q3. Web検索が5回以上必要なリサーチ作業か？</div>
+    <div class="a">YES → cb-scout / ds-scout を使う（制限付きで集中リサーチ）</div>
+    <div class="a">NO → 次の質問へ</div>
+  </div>
+  <div class="dt-node">
+    <div class="q">Q4. アプリ・ツール開発（コーディング）が必要か？</div>
+    <div class="a">YES → ARCH チームに委任する</div>
+    <div class="a">NO → Kai一人で十分。そのまま依頼する</div>
+  </div>
+</div>
+
+<h3>使い分け早見表</h3>
+<table>
+  <tr><th>シチュエーション</th><th>推奨</th></tr>
+  <tr><td>提案書の文言を修正したい</td><td class="comp-good">Kai 単独</td></tr>
+  <tr><td>セミナーのスライドを作りたい（既存スライドなし）</td><td class="comp-good">/deck-sprint</td></tr>
+  <tr><td>ブログ1本だけ書いてほしい</td><td class="comp-good">Kai 単独</td></tr>
+  <tr><td>1つのテーマで複数チャネルに発信したい</td><td class="comp-good">/content-burst</td></tr>
+  <tr><td>スプレッドシート管理ツールをGASで作りたい</td><td class="comp-good">ARCH チーム</td></tr>
+  <tr><td>報告会用に調査・スライド・議事録準備まで全部</td><td class="comp-good">/deck-sprint</td></tr>
+  <tr><td>クライアント向け提案書を更新したい</td><td class="comp-good">Kai 単独（/sme-ai-proposal）</td></tr>
+  <tr><td>SNS用の投稿だけを大量に作りたい</td><td class="comp-good">cb-spark だけ単体起動も可</td></tr>
+</table>
+
+<div class="tip">
+  <span class="label">単体エージェント起動のヒント</span>
+  スキルを介さずに特定エージェントだけを使いたい場合は、Kaiに「cb-spark だけで X 投稿スレッドを作って」と伝えるだけでOKです。Kaiが適切にエージェントを呼び出します。
+</div>
+
+<hr>
+
+<!-- ===== Ch4 ===== -->
+<h2 id="ch4">第4章　content-burst チーム詳細（7体）</h2>
+
+<div class="lead">content-burst は「1つのテーマを6つの発信形式に展開する」チームです。</div>
+
+<h3>チームフロー</h3>
+<div class="flow-diagram">
+<svg viewBox="0 0 760 120" width="100%" style="max-width:760px">
+  <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2D3748"/></marker></defs>
+  <!-- Phase: /content-burst -->
+  <rect x="10" y="40" width="120" height="40" fill="#EBF8FF" rx="6" stroke="#3182CE" stroke-width="2"/>
+  <text x="70" y="65" fill="#2B6CB0" text-anchor="middle" font-size="12" font-weight="bold">/content-burst</text>
+  <line x1="130" y1="60" x2="155" y2="60" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- cb-scout -->
+  <rect x="155" y="40" width="100" height="40" fill="#3182CE" rx="6"/>
+  <text x="205" y="65" fill="white" text-anchor="middle" font-size="12" font-weight="bold">cb-scout</text>
+  <line x1="255" y1="60" x2="285" y2="60" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- parallel -->
+  <rect x="285" y="5" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="332" y="25" fill="white" text-anchor="middle" font-size="11">cb-ink</text>
+  <rect x="285" y="40" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="332" y="60" fill="white" text-anchor="middle" font-size="11">cb-pen</text>
+  <rect x="285" y="75" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="332" y="95" fill="white" text-anchor="middle" font-size="11">cb-spark</text>
+  <rect x="390" y="5" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="437" y="25" fill="white" text-anchor="middle" font-size="11">cb-lens</text>
+  <rect x="390" y="40" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="437" y="60" fill="white" text-anchor="middle" font-size="11">cb-post</text>
+  <rect x="390" y="75" width="95" height="30" fill="#4A5568" rx="5"/>
+  <text x="437" y="95" fill="white" text-anchor="middle" font-size="11">cb-canvas</text>
+  <!-- 並列ブレース -->
+  <line x1="280" y1="20" x2="280" y2="100" stroke="#718096" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="276" y="60" fill="#718096" text-anchor="middle" font-size="18" transform="rotate(90,276,60)">〕</text>
+  <line x1="490" y1="20" x2="490" y2="100" stroke="#718096" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="490" y1="60" x2="515" y2="60" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr)"/>
+  <!-- output -->
+  <rect x="515" y="40" width="110" height="40" fill="#F0FFF4" rx="6" stroke="#38A169" stroke-width="2"/>
+  <text x="570" y="58" fill="#276749" text-anchor="middle" font-size="11" font-weight="bold">6ファイル</text>
+  <text x="570" y="74" fill="#276749" text-anchor="middle" font-size="10">run_YYYYMMDD/</text>
+</svg>
+</div>
+
+<h3>各エージェント詳細</h3>
+<div class="agent-grid">
+  <div class="agent-card cb">
+    <div class="agent-name">cb-scout</div>
+    <div class="agent-role">リサーチ専門（直列先行）</div>
+    <div class="agent-desc">WebSearch最大15回 + WebFetch最大3回。research-notes.md を生成して後続エージェントに渡す。他の6体はこのファイルを読んでから書く。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-ink</div>
+    <div class="agent-role">HTMLリサーチレポート</div>
+    <div class="agent-desc">3,000〜5,000字。5〜6章構成。ナビゲーション付きの完結したHTMLページを生成。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-pen</div>
+    <div class="agent-role">ブログ記事</div>
+    <div class="agent-desc">2,500〜4,000字。WordPress Gutenberg互換のHTMLブロック形式。見出し・リスト・強調タグを使う。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-spark</div>
+    <div class="agent-role">Xスレッド投稿</div>
+    <div class="agent-desc">6〜9投稿。各投稿140字以内。1投稿目でフック、最後でCTA。数字と実例を盛り込む。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-lens</div>
+    <div class="agent-role">YouTube台本</div>
+    <div class="agent-desc">約10分尺・2,800〜3,200字。オープニング→本編（3〜4パート）→アウトロ構成。[BGM][画面切替]等の演出指示付き。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-post</div>
+    <div class="agent-role">メルマガ</div>
+    <div class="agent-desc">800〜1,500字。件名（A/B案）・プレビューテキスト・本文・CTA・PS。読者の関心を開封から行動まで設計。</div>
+  </div>
+  <div class="agent-card cb">
+    <div class="agent-name">cb-canvas</div>
+    <div class="agent-role">ビジュアルマップ（HTML）</div>
+    <div class="agent-desc">3〜6パネル。Navy×Steel Blueの配色。SVG/CSSで表・フロー・数字ハイライトを視覚化。</div>
+  </div>
+</div>
+
+<div class="ok">
+  <span class="label">詳細ガイド</span>
+  各エージェントの詳細仕様・カスタマイズ・出力ファイル活用法は
+  <a href="../skill/content-burst/使い倒しガイド.html" target="_blank">content-burst 徹底使い倒しガイド</a> および
+  <a href="../.claude/agents/エージェントガイド.html" target="_blank">エージェントガイド（スキル用）</a> を参照してください。
+</div>
+
+<hr>
+
+<!-- ===== Ch5 ===== -->
+<h2 id="ch5">第5章　deck-sprint チーム詳細（4体）</h2>
+
+<div class="lead">deck-sprint は「調査→スライド→会議準備を5分で揃える」高速資料作成チームです。</div>
+
+<h3>チームフロー</h3>
+<div class="flow-diagram">
+<svg viewBox="0 0 680 80" width="100%" style="max-width:680px">
+  <defs><marker id="arr3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2D3748"/></marker></defs>
+  <rect x="10" y="20" width="110" height="40" fill="#E0F2FE" rx="6" stroke="#0EA5E9" stroke-width="2"/>
+  <text x="65" y="45" fill="#0369A1" text-anchor="middle" font-size="12" font-weight="bold">/deck-sprint</text>
+  <line x1="120" y1="40" x2="145" y2="40" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <rect x="145" y="20" width="100" height="40" fill="#0EA5E9" rx="6"/>
+  <text x="195" y="45" fill="white" text-anchor="middle" font-size="12" font-weight="bold">ds-scout</text>
+  <line x1="245" y1="40" x2="275" y2="40" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <rect x="275" y="5" width="110" height="28" fill="#4A5568" rx="5"/>
+  <text x="330" y="23" fill="white" text-anchor="middle" font-size="11">ds-analyst</text>
+  <rect x="275" y="37" width="110" height="28" fill="#4A5568" rx="5"/>
+  <text x="330" y="55" fill="white" text-anchor="middle" font-size="11">ds-deck</text>
+  <line x1="385" y1="20" x2="420" y2="40" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <line x1="385" y1="50" x2="420" y2="50" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <rect x="275" y="68" width="110" height="28" fill="#4A5568" rx="5"/>
+  <text x="330" y="86" fill="white" text-anchor="middle" font-size="11">ds-chair</text>
+  <line x1="385" y1="82" x2="420" y2="60" stroke="#2D3748" stroke-width="1.5" marker-end="url(#arr3)"/>
+  <rect x="420" y="20" width="120" height="40" fill="#F0FFF4" rx="6" stroke="#38A169" stroke-width="2"/>
+  <text x="480" y="38" fill="#276749" text-anchor="middle" font-size="11" font-weight="bold">3ファイル</text>
+  <text x="480" y="54" fill="#276749" text-anchor="middle" font-size="10">run_YYYYMMDD/</text>
+</svg>
+</div>
+
+<h3>各エージェント詳細</h3>
+<div class="agent-grid">
+  <div class="agent-card ds">
+    <div class="agent-name">ds-scout</div>
+    <div class="agent-role">リサーチ専門（直列先行）</div>
+    <div class="agent-desc">WebSearch 最大3回（厳守）。速度優先。信頼性の高いソースのみ選定し research-notes.md に整理。</div>
+  </div>
+  <div class="agent-card ds">
+    <div class="agent-name">ds-analyst</div>
+    <div class="agent-role">構造化レポート</div>
+    <div class="agent-desc">5,000〜8,000字・7〜9章。事実→解釈→示唆の3層構造で深掘り。report.md として出力。</div>
+  </div>
+  <div class="agent-card ds">
+    <div class="agent-name">ds-deck</div>
+    <div class="agent-role">HTMLスライド（Edit差し替え方式）</div>
+    <div class="agent-desc">Write禁止・Editのみ使用。slide-base.html をコピーしたテンプレートに、タイトルとスライド群を差し替えて完成。毎回ゼロ生成しないため高速。</div>
+  </div>
+  <div class="agent-card ds">
+    <div class="agent-name">ds-chair</div>
+    <div class="agent-role">報告MTGアジェンダ</div>
+    <div class="agent-desc">想定質問5問以上（うち1〜2問は懐疑的・批判的視点）。タイムライン・進行メモ・事前配布物リスト付き。</div>
+  </div>
+</div>
+
+<h3>ds-deck の仕組み（Edit差し替え方式）</h3>
+<div class="tip">
+  <span class="label">なぜ Write を使わないのか</span>
+  スライドのCSS/JSは数百行あります。毎回 Write で全量生成するとトークンを大量消費し、ミスも増えます。ds-deck はベーステンプレートをコピー後、<code>__KAI_TITLE__</code> と <code>&lt;!-- [KAI_SLIDES_START] --&gt;</code>〜<code>&lt;!-- [KAI_SLIDES_END] --&gt;</code> の2箇所だけ Edit で差し替えます。変更範囲が最小限なため、5分以内を実現しています。
+</div>
+
+<div class="ok">
+  <span class="label">詳細ガイド</span>
+  各エージェントの詳細仕様・スライドCSSクラス一覧・MTG活用法は
+  <a href="../skill/deck-sprint/使い倒しガイド.html" target="_blank">deck-sprint 徹底使い倒しガイド</a> および
+  <a href="../.claude/agents/エージェントガイド.html" target="_blank">エージェントガイド（スキル用）</a> を参照してください。
+</div>
+
+<hr>
+
+<!-- ===== Ch6 ===== -->
+<h2 id="ch6">第6章　ARCH 開発エージェント群（8体）</h2>
+
+<div class="lead">ARCH は「アプリ・ツール開発の統括」を担うオーケストレーターです。8体の専門開発エージェントを束ねて、要件定義から納品まで一貫して対応します。</div>
+
+<h3>ARCH の位置づけ</h3>
+<p>ARCH はメインKaiから委託を受け、開発案件の全体を指揮します。ARCH 自身は「何をどの順番でどの専門エージェントに任せるか」を決め、成果物の品質を確認してKaiに返却します。</p>
+
+<h3>開発フロー</h3>
+<div class="flow-diagram">
+<svg viewBox="0 0 760 160" width="100%" style="max-width:760px">
+  <defs><marker id="arr4" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><polygon points="0,0 6,3 0,6" fill="#4A5568"/></marker></defs>
+  <!-- Kai -->
+  <rect x="10" y="60" width="80" height="40" fill="#1A365D" rx="6"/>
+  <text x="50" y="85" fill="white" text-anchor="middle" font-size="12" font-weight="bold">Kai</text>
+  <line x1="90" y1="80" x2="115" y2="80" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr4)"/>
+  <!-- ARCH -->
+  <rect x="115" y="60" width="80" height="40" fill="#805AD5" rx="6"/>
+  <text x="155" y="85" fill="white" text-anchor="middle" font-size="12" font-weight="bold">ARCH</text>
+  <line x1="195" y1="80" x2="225" y2="80" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr4)"/>
+  <!-- 直列フェーズ -->
+  <rect x="225" y="10" width="80" height="30" fill="#2F855A" rx="5"/>
+  <text x="265" y="30" fill="white" text-anchor="middle" font-size="11">SPEC</text>
+  <rect x="225" y="45" width="80" height="30" fill="#2F855A" rx="5"/>
+  <text x="265" y="65" fill="white" text-anchor="middle" font-size="11">WIRE</text>
+  <text x="285" y="100" fill="#718096" text-anchor="middle" font-size="10">（直列）</text>
+  <!-- 並列フェーズ -->
+  <line x1="305" y1="60" x2="340" y2="60" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr4)"/>
+  <rect x="340" y="10" width="90" height="30" fill="#DD6B20" rx="5"/>
+  <text x="385" y="30" fill="white" text-anchor="middle" font-size="11">GASBOT</text>
+  <rect x="340" y="45" width="90" height="30" fill="#DD6B20" rx="5"/>
+  <text x="385" y="65" fill="white" text-anchor="middle" font-size="11">WEBSMITH</text>
+  <rect x="340" y="80" width="90" height="30" fill="#DD6B20" rx="5"/>
+  <text x="385" y="100" fill="white" text-anchor="middle" font-size="11">HOOKUP</text>
+  <text x="385" y="130" fill="#718096" text-anchor="middle" font-size="10">（並列）</text>
+  <!-- QAフェーズ -->
+  <line x1="430" y1="60" x2="465" y2="60" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr4)"/>
+  <rect x="465" y="45" width="80" height="30" fill="#C53030" rx="5"/>
+  <text x="505" y="65" fill="white" text-anchor="middle" font-size="11">SHIELD</text>
+  <rect x="465" y="80" width="80" height="30" fill="#2C7A7B" rx="5"/>
+  <text x="505" y="100" fill="white" text-anchor="middle" font-size="11">SCRIBE</text>
+  <!-- 完了 -->
+  <line x1="545" y1="80" x2="580" y2="80" stroke="#4A5568" stroke-width="1.5" marker-end="url(#arr4)"/>
+  <rect x="580" y="60" width="80" height="40" fill="#F0FFF4" rx="6" stroke="#38A169" stroke-width="2"/>
+  <text x="620" y="85" fill="#276749" text-anchor="middle" font-size="11" font-weight="bold">納品</text>
+</svg>
+</div>
+
+<h3>各エージェント詳細</h3>
+<div class="agent-grid">
+  <div class="agent-card arch">
+    <div class="agent-name">ARCH</div>
+    <div class="agent-role">統括オーケストレーター</div>
+    <div class="agent-desc">開発案件全体を指揮。要件確認→SPEC→WIRE（直列）→GASBOT/WEBSMITH/HOOKUP（並列）→SHIELD→SCRIBE の順で進行管理。</div>
+  </div>
+  <div class="agent-card arch-spec">
+    <div class="agent-name">SPEC</div>
+    <div class="agent-role">要件定義</div>
+    <div class="agent-desc">ユーザーの依頼を要件定義書に構造化。目的・ユーザー・機能一覧・制約・非機能要件を明文化。</div>
+  </div>
+  <div class="agent-card arch-spec">
+    <div class="agent-name">WIRE</div>
+    <div class="agent-role">UI/設計</div>
+    <div class="agent-desc">ワイヤーフレーム・画面フロー・データ構造の設計。HTML/CSSのアーキテクチャ方針を決定。</div>
+  </div>
+  <div class="agent-card arch-build">
+    <div class="agent-name">GASBOT</div>
+    <div class="agent-role">Google Apps Script 開発</div>
+    <div class="agent-desc">スプレッドシート・フォーム・Gmail・Drive連携のGASコードを生成。実行環境はGoogle。</div>
+  </div>
+  <div class="agent-card arch-build">
+    <div class="agent-name">WEBSMITH</div>
+    <div class="agent-role">Webフロントエンド開発</div>
+    <div class="agent-desc">HTML/CSS/JavaScript での Webアプリ・管理画面・UI コンポーネントを実装。</div>
+  </div>
+  <div class="agent-card arch-build">
+    <div class="agent-name">HOOKUP</div>
+    <div class="agent-role">API・連携</div>
+    <div class="agent-desc">外部API連携・Webhook設計・データ変換処理を担当。GASとWebの橋渡しも。</div>
+  </div>
+  <div class="agent-card arch-ops">
+    <div class="agent-name">SHIELD</div>
+    <div class="agent-role">QA・品質保証</div>
+    <div class="agent-desc">コードレビュー・セキュリティチェック・エラーハンドリング確認。バグ潰しと改善提案。</div>
+  </div>
+  <div class="agent-card arch-ops">
+    <div class="agent-name">SCRIBE</div>
+    <div class="agent-role">ドキュメント作成</div>
+    <div class="agent-desc">要件定義書・技術仕様書・セットアップ手順書・README を生成。総合マニュアルへの連携も。</div>
+  </div>
+</div>
+
+<div class="ok">
+  <span class="label">詳細ガイド</span>
+  各エージェントの詳細仕様・プロンプト例・追加方法は
+  <a href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">エージェントガイド（開発部）</a> を参照してください。
+</div>
+
+<hr>
+
+<!-- ===== Ch7 ===== -->
+<h2 id="ch7">第7章　エージェントにコンテキストを渡す技術</h2>
+
+<div class="lead">エージェントは「セッション記憶なし」で動きます。必要な情報をすべてプロンプトかファイルで渡すのが鉄則です。</div>
+
+<h3>コンテキストの渡し方3パターン</h3>
+
+<div class="step-list">
+  <div class="step-item">
+    <h4>引数で渡す（最も基本）</h4>
+    <p>Kaiがエージェントを呼ぶとき、出力フォルダパスや入力ファイルパスを引数として渡します。</p>
+    <pre><code><span class="comment"># KaiがAgent呼び出し時に渡す引数の例</span>
+outdir = "08_アプリ開発事業部/outputs/content-burst/run_20260515_1030"
+research_notes = f"{outdir}/research-notes.md"
+
+# cb-inkのpromptに含める
+prompt = f"""research-notes.md を読んでHTMLレポートを生成して。
+入力: {research_notes}
+出力: {outdir}/report.html"""</code></pre>
+  </div>
+  <div class="step-item">
+    <h4>ファイル経由で渡す（エージェント間バトン）</h4>
+    <p>cb-scout / ds-scout が生成した <code>research-notes.md</code> を他のエージェントが読み込みます。エージェント間の唯一の接点がこのファイルです。</p>
+    <p>後続エージェントのプロンプトには「まず research-notes.md を Read してから書け」と明記します。</p>
+  </div>
+  <div class="step-item">
+    <h4>Knowledge ファイルを渡す（クライアント文脈の注入）</h4>
+    <p>クライアント向けコンテンツを作る場合、Knowledge フォルダ内のファイルパスをエージェントプロンプトに含めます。エージェントは自分でファイルを Read してコンテキストを把握します。</p>
+    <pre><code>prompt += f"\nクライアント情報: Knowledge/00_Kaiスターターパック.md を Read すること"</code></pre>
+    <div class="warn"><span class="label">注意</span>Knowledge フォルダは実データです。エージェントに渡す場合も「参照のみ」「外部転記禁止」の制約は守られます。</div>
+  </div>
+</div>
+
+<h3>コンテキストが多すぎる場合の対処</h3>
+<p>エージェントに渡すコンテキストが大きすぎるとトークン超過でエラーになります。</p>
+<table>
+  <tr><th>対処法</th><th>説明</th></tr>
+  <tr><td>要約ファイルを先に作る</td><td>全文ではなく、重要点を抽出した要約ファイルを渡す</td></tr>
+  <tr><td>ページ指定で Read させる</td><td>「offset: 100, limit: 50」でファイルの必要部分だけを参照させる</td></tr>
+  <tr><td>エージェントを分割する</td><td>1エージェントの責務を絞り、渡す情報を最小化する</td></tr>
+</table>
+
+<hr>
+
+<!-- ===== Ch8 ===== -->
+<h2 id="ch8">第8章　並列実行 vs 直列実行の設計思想</h2>
+
+<div class="lead">Kaiエコシステムが採用している「直列先行→並列実行」パターンは、速度と品質を両立させるための設計です。</div>
+
+<h3>なぜ「リサーチだけ先に直列」なのか</h3>
+<p>content-burst も deck-sprint も、必ず「スカウト（リサーチ）エージェントを1体先行させてから、残り全員を並列に動かす」という設計になっています。</p>
+
+<table>
+  <tr><th>パターン</th><th>メリット</th><th>デメリット</th></tr>
+  <tr><td>全員並列（リサーチ共有なし）</td><td>最速</td><td class="comp-no">各エージェントがバラバラに検索して内容がバラバラになる。重複作業も多い。</td></tr>
+  <tr><td>全員直列（順番に一人ずつ）</td><td class="comp-no">情報共有は完璧</td><td class="comp-no">一番遅い。全体で1〜2時間かかることも。</td></tr>
+  <tr><td class="comp-good"><strong>直列先行→並列実行（Kaiの設計）</strong></td><td class="comp-good">リサーチは共有できて品質が揃う。執筆は並列で高速。</td><td class="comp-mid">リサーチフェーズは直列なので若干待つ。</td></tr>
+</table>
+
+<h3>新しいスキルを設計するときの並列設計指針</h3>
+<ol>
+  <li><strong>情報収集（必ず直列）：</strong>WebSearch/WebFetch を含むエージェントを1体先行させる</li>
+  <li><strong>加工・生成（並列OK）：</strong>完成した research-notes.md を読むだけのエージェントは全員同時に動かしてよい</li>
+  <li><strong>統合・品質確認（直列）：</strong>複数の成果物をまとめてレビューする場合は並列後に直列で確認する</li>
+</ol>
+
+<h3>並列実行のKai呼び出し方法</h3>
+<div class="tip">
+  <span class="label">1メッセージで複数Agent呼び出し = 並列実行</span>
+  Kaiが1回のレスポンスの中で複数の <code>Agent()</code> 呼び出しを行うと、それらは並列に実行されます。直列にしたい場合は、前のAgent完了を待ってから次のAgent呼び出しを別メッセージで行います。
+</div>
+<pre><code><span class="comment"># 並列実行（1メッセージ内に複数Agent呼び出し）</span>
+Agent(cb-ink, prompt=..., outdir=...)   <span class="comment">← 同時に起動</span>
+Agent(cb-pen, prompt=..., outdir=...)   <span class="comment">← 同時に起動</span>
+Agent(cb-spark, prompt=..., outdir=...) <span class="comment">← 同時に起動</span>
+
+<span class="comment"># 直列実行（前のAgentが完了してから次を呼ぶ）</span>
+result_scout = Agent(cb-scout, prompt=...) <span class="comment">← 完了待ち</span>
+<span class="comment"># cb-scoutが終わってから↓を呼ぶ</span>
+Agent(cb-ink, prompt=f"research-notes読んで: {outdir}/research-notes.md")</code></pre>
+
+<hr>
+
+<!-- ===== Ch9 ===== -->
+<h2 id="ch9">第9章　新しいエージェントを設計・追加する</h2>
+
+<div class="lead">既存エージェントで対応できない専門業務が出てきたら、新しいエージェントを追加します。設計から追加まで15〜30分で完了します。</div>
+
+<h3>設計の5ステップ</h3>
+<div class="step-list">
+  <div class="step-item">
+    <h4>責務を1行で定義する</h4>
+    <p>「このエージェントは〇〇だけをする」と1文で言えること。複数の責務を持たせない。</p>
+    <p>例：「ブログ記事HTMLを生成する」「想定質問リストを作成する」</p>
+  </div>
+  <div class="step-item">
+    <h4>入力・出力・ツール制限を決める</h4>
+    <table>
+      <tr><th>項目</th><th>決めること</th></tr>
+      <tr><td>入力</td><td>受け取るファイルパスや引数（例: research-notes.md のパス）</td></tr>
+      <tr><td>出力</td><td>生成するファイル名と形式（例: outdir/blog-post.html）</td></tr>
+      <tr><td>ツール</td><td>使ってよいツールを明示（WebSearch 不可・Read/Write/Edit のみ、等）</td></tr>
+    </table>
+  </div>
+  <div class="step-item">
+    <h4>SKILL.md ファイルを書く</h4>
+    <p>フロントマターに <code>name</code>・<code>description</code>・<code>tools</code>（許可ツールのリスト）を書く。本文に「何を・どう・どの形式で」を箇条書きで明記する。</p>
+    <pre><code>---
+name: cb-spark
+description: cb-scoutのリサーチ結果をもとにXスレッドを生成する
+tools: Read, Write
+---
+
+## 責務
+research-notes.md を読んでXスレッド投稿（6〜9投稿）を生成する。
+
+## 出力
+- ファイル: {outdir}/x-thread.md
+- 各投稿: 140字以内、番号付き（1/7〜7/7）
+...</code></pre>
+  </div>
+  <div class="step-item">
+    <h4>保存場所を決めて配置する</h4>
+    <table>
+      <tr><th>エージェントの種類</th><th>保存場所</th></tr>
+      <tr><td>スキル（/content-burst等）から呼ぶ</td><td><span class="file-path">.claude/agents/〈名前〉.md</span></td></tr>
+      <tr><td>アプリ開発部（ARCH系）から呼ぶ</td><td><span class="file-path">08_アプリ開発事業部/agents/〈名前〉.md</span></td></tr>
+    </table>
+  </div>
+  <div class="step-item">
+    <h4>SKILL.md のフローに組み込む（スキルから呼ぶ場合）</h4>
+    <p>既存スキルに新エージェントを追加する場合は、対象スキルの <code>SKILL.md</code> の「フェーズC」または「ステップ5」部分に Agent 呼び出しを追加します。並列エージェント群に追加するだけで自動的に並列実行されます。</p>
+  </div>
+</div>
+
+<h3>命名規則</h3>
+<table>
+  <tr><th>チーム</th><th>プレフィックス</th><th>例</th></tr>
+  <tr><td>content-burst</td><td><code>cb-</code></td><td>cb-scout, cb-ink, cb-spark</td></tr>
+  <tr><td>deck-sprint</td><td><code>ds-</code></td><td>ds-scout, ds-analyst, ds-deck</td></tr>
+  <tr><td>ARCH開発チーム</td><td>大文字英語</td><td>SPEC, WIRE, SHIELD</td></tr>
+  <tr><td>新しいスキル</td><td><code>〈スキル略称〉-</code></td><td>mkt-scout, pr-writer 等</td></tr>
+</table>
+
+<div class="tip">
+  <span class="label">エージェントガイドの更新を忘れずに</span>
+  新エージェントを追加したら、対応する <code>エージェントガイド.html</code> に仕様カードを追記してください。総合マニュアルはエージェントガイドへのリンクで参照するため、個別更新は不要です。
+</div>
+
+<hr>
+
+<!-- ===== Ch10 ===== -->
+<h2 id="ch10">第10章　よくある失敗パターンと対処法</h2>
+
+<div class="lead">エージェントを使い始めたときに陥りやすい失敗と、その対処法をまとめました。</div>
+
+<h3>失敗パターン一覧</h3>
+
+<div class="warn">
+  <span class="label">失敗① 「リサーチなしで全員並列」</span>
+  <p>cb-scout / ds-scout を省いて、いきなり全エージェントを並列起動した。</p>
+  <p><strong>結果：</strong>各エージェントがバラバラにWeb検索し、互いに違うデータを参照した成果物が出来上がった。</p>
+  <p><strong>対処：</strong>必ずスカウトエージェントを先行させ、<code>research-notes.md</code> ができてから並列フェーズを開始する。</p>
+</div>
+
+<div class="warn">
+  <span class="label">失敗② 「出力フォルダパスを渡さなかった」</span>
+  <p>エージェントへの引数に <code>outdir</code> を含め忘れた。</p>
+  <p><strong>結果：</strong>エージェントが勝手なパスにファイルを保存し、後続エージェントがファイルを見つけられなかった。</p>
+  <p><strong>対処：</strong>Kaiがエージェントを呼ぶ前に <code>outdir</code> を確定させ、すべてのエージェントのプロンプトに統一パスを含める。</p>
+</div>
+
+<div class="warn">
+  <span class="label">失敗③ 「エージェントに会話文脈を期待した」</span>
+  <p>「さっき話した内容をベースに」とエージェントに渡した。</p>
+  <p><strong>結果：</strong>エージェントは会話履歴を持たないため、何もベースにせずデフォルト内容を生成した。</p>
+  <p><strong>対処：</strong>必要な文脈はすべてプロンプトかファイルに書き下ろして渡す。「さっきの話」はKaiがまとめてファイルに保存してからエージェントに渡す。</p>
+</div>
+
+<div class="warn">
+  <span class="label">失敗④ 「ds-deck に Write を使わせた」</span>
+  <p>ds-deck のプロンプトから Write の制限を外した or Write を使う指示をした。</p>
+  <p><strong>結果：</strong>ds-deck が CSS/JS を全量再生成しようとして、テンプレートのスタイルが崩れた。</p>
+  <p><strong>対処：</strong>ds-deck は「Edit のみ」「Write 禁止」を必ず維持する。スタイル変更はテンプレートファイル（slide-base.html）を直接編集して対応する。</p>
+</div>
+
+<div class="warn">
+  <span class="label">失敗⑤ 「Knowledge データをエージェント経由で外部に出した」</span>
+  <p>Knowledge フォルダの実データをエージェントに渡し、そのデータが成果物に直接転記された。</p>
+  <p><strong>結果：</strong>クライアントの実情報がHTML成果物に含まれた状態で公開リスクが発生した。</p>
+  <p><strong>対処：</strong>エージェントへの Knowledge 渡しは「参照のみ」に限定する。成果物に書くのは一般論・匿名化情報のみ。</p>
+</div>
+
+<div class="ok">
+  <span class="label">迷ったときのチェックリスト</span>
+  <ul>
+    <li>□ スカウトエージェントを先行させているか？</li>
+    <li>□ <code>outdir</code> をすべてのエージェントに渡しているか？</li>
+    <li>□ エージェントに会話文脈を「ファイル or プロンプト」で明示しているか？</li>
+    <li>□ ds-deck に Write 禁止の制約があるか？</li>
+    <li>□ Knowledge データの扱いが参照のみになっているか？</li>
+  </ul>
+</div>
+
+<hr>
+
+<div style="text-align:center; color:#718096; font-size:13px; padding:40px 0 20px;">
+  エージェント活かし方マニュアル v1.0 — Kai エコシステム完全ガイド<br>
+  有限会社アートソウル · 2026年5月 作成<br>
+  <a href="../07_マニュアル/総合マニュアル.html" style="color:#0EA5E9;">← 総合マニュアルに戻る</a>
+</div>
+
+</div><!-- /container -->
+</div><!-- /main -->
+
+</body>
+</html>
