@@ -111,6 +111,23 @@ def _gen_4q(ti: int) -> dict:
     return _extract_json(_call_gemini(prompt))
 
 
+def _gen_4q_task(ti: int, tj: int) -> dict:
+    theme = THEMES[ti]
+    task = TASKS[ti][tj]
+    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の施策「{task}」を実行するための具体的アクションを4象限マトリクスに整理してください。
+
+「{task}」を進めるための8つのアクション・サブタスクを考案し、以下のJSON形式のみで返答してください（説明・コードブロック不要）：
+{{
+  "axis": {{"x": "実施難易度", "y": "期待効果"}},
+  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "アクション名", "s": "理由（25字以内）", "flow": false}}]}},
+  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
+  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
+  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}}
+}}
+※ 8アクションをすべていずれかの象限に配置。Q1（今すぐ着手）の最重要アクション1つのみ "flow": true を付けてください。"""
+    return _extract_json(_call_gemini(prompt))
+
+
 def _gen_flow(ti: int, context: str) -> str:
     theme = THEMES[ti]
     prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の課題「{context}」の実行フロー図をMermaid記法で生成してください。
@@ -150,16 +167,19 @@ Mermaidコードのみ返答（```や説明は不要）："""
 
 
 def _auto_generate(req: dict) -> None:
-    """バックグラウンドスレッドで Claude API を呼び出して生成"""
+    """バックグラウンドスレッドで Gemini API を呼び出して生成"""
     ti = req.get('theme_id', 0)
+    tj = req.get('task_id')  # None = テーマ全体, 数値 = 特定タスク
     gtype = req.get('type', '')
     context = req.get('context', THEMES[ti] if 0 <= ti < 8 else '')
     req_id = req['id']
+    state_key = f"{ti}_{tj}" if tj is not None else str(ti)
 
-    print(f'[AUTO] 生成開始: {gtype} / {THEMES[ti]} (id={req_id})')
+    label = f"{THEMES[ti]}[{tj}]" if tj is not None else THEMES[ti]
+    print(f'[AUTO] 生成開始: {gtype} / {label} (id={req_id})')
     try:
         if gtype == '4q':
-            content = _gen_4q(ti)
+            content = _gen_4q_task(ti, tj) if tj is not None else _gen_4q(ti)
         elif gtype == 'flow':
             content = _gen_flow(ti, context)
         elif gtype == 'gantt':
@@ -168,11 +188,11 @@ def _auto_generate(req: dict) -> None:
             return
 
         s = _load()
-        s['generated'].setdefault(gtype, {})[str(ti)] = content
+        s['generated'].setdefault(gtype, {})[state_key] = content
         s['queue'] = [q for q in s['queue'] if q['id'] != req_id]
         _save(s)
-        _broadcast('content_ready', {'type': gtype, 'key': str(ti), 'content': content})
-        print(f'[AUTO] 生成完了: {gtype} / {THEMES[ti]}')
+        _broadcast('content_ready', {'type': gtype, 'key': state_key, 'content': content})
+        print(f'[AUTO] 生成完了: {gtype} / {label}')
 
     except Exception as e:
         print(f'[AUTO] エラー: {e}')
@@ -220,6 +240,7 @@ class _Handler(BaseHTTPRequestHandler):
                 'id': str(uuid.uuid4())[:8],
                 'type': body.get('type'),
                 'theme_id': body.get('theme_id'),
+                'task_id': body.get('task_id'),  # None=テーマ全体, 数値=特定タスク
                 'context': body.get('context', ''),
                 'status': 'pending',
                 'created_at': datetime.datetime.now().isoformat(),

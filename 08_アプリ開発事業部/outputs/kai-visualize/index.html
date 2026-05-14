@@ -214,13 +214,12 @@ function showToast(msg) {
   clearTimeout(t._tid);
   t._tid = setTimeout(() => { t.className = ''; }, 5000);
 }
-
 window.onerror = function(msg, src, line) {
   const b = document.getElementById('err-box');
   if (b) { b.textContent = '⚠ JS Error: ' + msg + ' (line ' + line + ')'; b.style.display = 'block'; }
 };
 
-/* ─ Mermaid 遅延初期化（CDN 未ロード時にクラッシュしないため） ─ */
+/* ─ Mermaid 遅延初期化 ─ */
 let _mmdReady = false;
 function initMermaid() {
   if (_mmdReady) return;
@@ -232,7 +231,7 @@ function initMermaid() {
   } catch(e) { console.warn('Mermaid init failed', e); }
 }
 
-/* ═══ DATA (マンダラ静的データ) ═══ */
+/* ═══ DATA ═══ */
 const TH=[
   {n:'顧客開拓',      c:'#c62828',bg:'#ffebee',bc:'#ef9a9a'},
   {n:'提案品質向上',  c:'#2e7d32',bg:'#e8f5e9',bc:'#a5d6a7'},
@@ -258,19 +257,25 @@ const TS=[
 const API = 'http://localhost:3458';
 let STATE = {generated:{}, queue:[]};
 let ONLINE = false;
+let AUTO_MODE = false;
 let _flowSrc = '', _ganttSrc = '';
+
+/* state key: "ti_tj" for task-level, "ti" for theme-level */
+function _sk(ti, tj) {
+  return (tj !== null && tj !== undefined) ? `${ti}_${tj}` : String(ti);
+}
 
 async function initServer() {
   const badge = document.getElementById('srv-badge');
   badge.textContent = '⏳ 接続中...';
   try {
-    const r = await fetch(API + '/state');
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    STATE = await r.json();
+    const [stateR, keyR] = await Promise.all([fetch(API+'/state'), fetch(API+'/has-api-key')]);
+    if (!stateR.ok) throw new Error('HTTP ' + stateR.status);
+    STATE = await stateR.json();
+    AUTO_MODE = (await keyR.json()).ok;
     ONLINE = true;
     badge.className = 'srv-badge srv-ok';
-    badge.textContent = '● サーバー接続中';
-    // SSE
+    badge.textContent = '● サーバー接続中' + (AUTO_MODE ? ' (AI自動)' : '');
     const es = new EventSource(API + '/events');
     es.addEventListener('content_ready', e => {
       const {type, key, content} = JSON.parse(e.data);
@@ -283,22 +288,16 @@ async function initServer() {
       if (!STATE.queue) STATE.queue = [];
       STATE.queue.push(req);
     });
-    es.addEventListener('reset', () => {
-      STATE = {generated:{}, queue:[]};
-      go('mandala');
-    });
+    es.addEventListener('reset', () => { STATE = {generated:{},queue:[]}; go('mandala'); });
     es.addEventListener('generate_error', e => {
       const {id, error} = JSON.parse(e.data);
       if (STATE.queue) STATE.queue = STATE.queue.filter(q => q.id !== id);
-      if (S.view === '4q') render4Q(S.ti);
+      if (S.view === '4q') render4Q(S.ti, S.tj);
       else if (S.view === 'flow') renderFlow(S.ti);
       else if (S.view === 'gantt') renderGantt(S.ti);
       showToast('生成エラー: ' + error);
     });
-    es.onerror = () => {
-      badge.className = 'srv-badge srv-ng';
-      badge.textContent = '再接続中...';
-    };
+    es.onerror = () => { badge.className='srv-badge srv-ng'; badge.textContent='再接続中...'; };
   } catch(e) {
     ONLINE = false;
     badge.className = 'srv-badge srv-ng';
@@ -307,14 +306,14 @@ async function initServer() {
 }
 
 function onContentReady(type, key, content) {
-  if (type === '4q' && S.view === '4q' && key === String(S.ti)) {
-    render4Q(S.ti);
-  } else if (type === 'flow' && S.view === 'flow' && key === String(S.ti)) {
+  const curKey = _sk(S.ti, S.tj);
+  if (type === '4q' && S.view === '4q' && key === curKey) { render4Q(S.ti, S.tj); }
+  else if (type === 'flow' && S.view === 'flow' && key === curKey) {
     _flowSrc = content;
     renderMermaidView('flow-body', content);
     document.getElementById('flow-to-gantt').style.display = '';
     document.getElementById('flow-cp-btn').style.display = '';
-  } else if (type === 'gantt' && S.view === 'gantt' && key === String(S.ti)) {
+  } else if (type === 'gantt' && S.view === 'gantt' && key === curKey) {
     _ganttSrc = content;
     renderMermaidView('gantt-body', content);
     document.getElementById('gantt-cp-btn').style.display = '';
@@ -322,12 +321,13 @@ function onContentReady(type, key, content) {
 }
 
 /* ═══ NAVIGATION ═══ */
-const S = {view:'mandala', ti:null};
+const S = {view:'mandala', ti:null, tj:null};
 function go(view, params={}) {
   Object.assign(S, params); S.view = view;
+  if (view === 'mandala') { S.ti = null; S.tj = null; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('v-'+view).classList.add('active');
-  if (view === '4q') render4Q(S.ti);
+  if (view === '4q') render4Q(S.ti, S.tj);
   else if (view === 'flow') renderFlow(S.ti);
   else if (view === 'gantt') renderGantt(S.ti);
   renderBC();
@@ -337,43 +337,56 @@ function go(view, params={}) {
 /* ═══ BREADCRUMB ═══ */
 function renderBC() {
   const steps = [{lbl:'🏠 マンダラ', v:'mandala'}];
-  if (S.ti !== null) steps.push({lbl:`${TH[S.ti].n}`, v:'4q', p:{ti:S.ti}});
-  if (S.view === 'flow' || S.view === 'gantt') steps.push({lbl:'フロー図', v:'flow'});
-  if (S.view === 'gantt') steps.push({lbl:'ガント', v:'gantt'});
+  if (S.ti !== null) {
+    const tkLbl = (S.tj !== null && S.tj !== undefined) ? TS[S.ti][S.tj].replace(/\n/g,' ') : null;
+    steps.push({lbl: TH[S.ti].n, v:'4q', ti:S.ti, tj:null});
+    if (tkLbl) steps.push({lbl: tkLbl, v:'4q', ti:S.ti, tj:S.tj});
+    if (S.view === 'flow' || S.view === 'gantt') steps.push({lbl:'フロー図', v:'flow'});
+    if (S.view === 'gantt') steps.push({lbl:'ガント', v:'gantt'});
+  }
   document.getElementById('bc').innerHTML = steps.map((s,i) => {
     const cur = i === steps.length-1;
-    const oc = cur ? '' : ` onclick="go('${s.v}'${s.p?','+JSON.stringify(s.p):''})"`;
+    let oc = '';
+    if (!cur) {
+      if (s.v === 'mandala') oc = ` onclick="go('mandala')"`;
+      else if (s.v === '4q') oc = ` onclick="go('4q',{ti:${s.ti},tj:${s.tj === null ? 'null' : s.tj}})"`;
+      else if (s.v === 'flow') oc = ` onclick="go('flow')"`;
+    }
     return `${i?'<span class="bc-sep">›</span>':''}<span class="bc-btn${cur?' cur':''}"${oc}>${s.lbl}</span>`;
   }).join('');
 }
 
 /* ═══ REQUEST GENERATE ═══ */
-async function requestGenerate(type, ti, context) {
-  if (!ONLINE) {
-    alert('サーバーが起動していません。\n起動してブラウザを開く.vbs を実行してください。');
-    return;
-  }
-  const resp = await fetch(`${API}/request`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({type, theme_id: ti, context: context || TH[ti].n})
-  });
-  const {id} = await resp.json();
-  // Re-render view to show pending state
-  if (type === '4q') render4Q(ti);
+async function requestGenerate(type, ti, context, tj) {
+  if (!ONLINE) { alert('サーバーが起動していません。\n起動してブラウザを開く.vbs を実行してください。'); return; }
+  const body = {type, theme_id: ti, context: context || TH[ti].n};
+  if (tj !== null && tj !== undefined) body.task_id = tj;
+  await fetch(`${API}/request`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+  if (type === '4q') render4Q(ti, tj);
   else if (type === 'flow') renderFlow(ti);
   else if (type === 'gantt') renderGantt(ti);
 }
 
-function _pendingFor(type, ti) {
-  return (STATE.queue||[]).find(q => q.type === type && q.theme_id === ti);
+function _pendingFor(type, ti, tj) {
+  const key = _sk(ti, tj);
+  return (STATE.queue||[]).find(q => {
+    const qk = (q.task_id !== null && q.task_id !== undefined) ? `${q.theme_id}_${q.task_id}` : String(q.theme_id);
+    return q.type === type && qk === key;
+  });
 }
 
-function _pendingBox(type, ti, context) {
-  const pending = _pendingFor(type, ti);
+function _pendingBox(type, ti, context, tj) {
+  const pending = _pendingFor(type, ti, tj);
   const label = {'4q':'4象限マトリクス', flow:'フロー図', gantt:'ガントチャート'}[type];
-  const promptText = `「${context||TH[ti].n}」の${label}を生成してください [ID:${pending?.id||'...'}]`;
+  const tjArg = (tj !== null && tj !== undefined) ? tj : 'null';
   if (pending) {
+    if (AUTO_MODE) {
+      return `<div class="pending-box">
+        <div class="spinner">⏳</div>
+        <p style="font-size:14px;color:#555">AIが生成中です... しばらくお待ちください（10〜20秒）</p>
+      </div>`;
+    }
+    const promptText = `「${context}」の${label}を生成してください [ID:${pending.id}]`;
     return `<div class="pending-box">
       <div class="spinner">⏳</div>
       <p style="font-size:14px;color:#555">リクエスト送信済み — Kaiが生成するとここに表示されます</p>
@@ -385,9 +398,9 @@ function _pendingBox(type, ti, context) {
     </div>`;
   } else {
     return `<div class="gen-box">
-      <h3>${TH[ti].n}　${label}</h3>
-      <p>まだ生成されていません。ボタンをクリックするとKaiへのリクエストが送られます。</p>
-      <button class="btn-gen" onclick="requestGenerate('${type}',${ti},'${(context||TH[ti].n).replace(/'/g,"\\'")}')">
+      <h3>${context}　${label}</h3>
+      <p>まだ生成されていません。ボタンをクリックするとAIへのリクエストが送られます。</p>
+      <button class="btn-gen" onclick="requestGenerate('${type}',${ti},'${context.replace(/'/g,"\\'")}',${tjArg})">
         ✨ ${label}を生成する
       </button>
     </div>`;
@@ -395,21 +408,26 @@ function _pendingBox(type, ti, context) {
 }
 
 /* ═══ 4Q RENDER ═══ */
-function render4Q(ti) {
+function render4Q(ti, tj) {
   const th = TH[ti];
-  document.getElementById('q4-title').textContent = `テーマ${ti+1}: ${th.n}　4象限マトリクス`;
+  const taskName = (tj !== null && tj !== undefined) ? TS[ti][tj].replace(/\n/g,' ') : null;
+  const context = taskName || th.n;
+  const titlePrefix = taskName ? `${th.n} › ${taskName}` : `テーマ${ti+1}: ${th.n}`;
+  document.getElementById('q4-title').textContent = titlePrefix + '　4象限マトリクス';
   const body = document.getElementById('q4-body');
-  const data = STATE?.generated?.['4q']?.[String(ti)];
+  const key = _sk(ti, tj);
+  const data = STATE?.generated?.['4q']?.[key];
   if (!data) {
     document.getElementById('q4-meta').textContent = '';
     document.getElementById('q4-cp-btn').style.display = 'none';
-    body.innerHTML = _pendingBox('4q', ti, th.n);
+    body.innerHTML = _pendingBox('4q', ti, context, tj);
     return;
   }
   document.getElementById('q4-cp-btn').style.display = '';
   document.getElementById('q4-meta').textContent = `Y軸：${data.axis.y}（高→低）　X軸：${data.axis.x}（低→高）`;
+  const tjVal = (tj !== null && tj !== undefined) ? tj : 'null';
   const ri = items => items.map(item => `
-    <div class="qi${item.flow?' link':''}"${item.flow?` onclick="go('flow',{ti:${ti}})"`:''}>
+    <div class="qi${item.flow?' link':''}"${item.flow?` onclick="go('flow',{ti:${ti},tj:${tjVal}})"`:''}>
       ${item.t}
       <div class="qi-sub">${item.s||''}</div>
       ${item.flow?'<div class="qi-tag">▶ フロー図あり（クリックで表示）</div>':''}
@@ -433,14 +451,18 @@ function render4Q(ti) {
 /* ═══ FLOW RENDER ═══ */
 function renderFlow(ti) {
   const th = TH[ti];
-  document.getElementById('flow-title').textContent = `${th.n}　フロー図`;
-  document.getElementById('flow-meta').textContent = `テーマ${ti+1}: ${th.n} の実行フロー`;
-  const src = STATE?.generated?.flow?.[String(ti)];
+  const taskName = (S.tj !== null && S.tj !== undefined) ? TS[ti][S.tj].replace(/\n/g,' ') : null;
+  const context = taskName || th.n;
+  const key = _sk(ti, S.tj);
+  document.getElementById('flow-title').textContent = `${context}　フロー図`;
+  document.getElementById('flow-meta').textContent = taskName
+    ? `${th.n} › ${taskName} の実行フロー` : `テーマ${ti+1}: ${th.n} の実行フロー`;
+  const src = STATE?.generated?.flow?.[key];
   const body = document.getElementById('flow-body');
   if (!src) {
     document.getElementById('flow-to-gantt').style.display = 'none';
     document.getElementById('flow-cp-btn').style.display = 'none';
-    body.innerHTML = _pendingBox('flow', ti, th.n);
+    body.innerHTML = _pendingBox('flow', ti, context, S.tj);
     return;
   }
   _flowSrc = src;
@@ -452,13 +474,17 @@ function renderFlow(ti) {
 /* ═══ GANTT RENDER ═══ */
 function renderGantt(ti) {
   const th = TH[ti];
-  document.getElementById('gantt-title').textContent = `${th.n}　ガントチャート`;
-  document.getElementById('gantt-meta').textContent = `${th.n} の実行スケジュール`;
-  const src = STATE?.generated?.gantt?.[String(ti)];
+  const taskName = (S.tj !== null && S.tj !== undefined) ? TS[ti][S.tj].replace(/\n/g,' ') : null;
+  const context = taskName || th.n;
+  const key = _sk(ti, S.tj);
+  document.getElementById('gantt-title').textContent = `${context}　ガントチャート`;
+  document.getElementById('gantt-meta').textContent = taskName
+    ? `${th.n} › ${taskName} の実行スケジュール` : `${th.n} の実行スケジュール`;
+  const src = STATE?.generated?.gantt?.[key];
   const body = document.getElementById('gantt-body');
   if (!src) {
     document.getElementById('gantt-cp-btn').style.display = 'none';
-    body.innerHTML = _pendingBox('gantt', ti, th.n);
+    body.innerHTML = _pendingBox('gantt', ti, context, S.tj);
     return;
   }
   _ganttSrc = src;
@@ -478,9 +504,7 @@ function renderMermaidView(containerId, code) {
   box.appendChild(pre);
   container.innerHTML = '';
   container.appendChild(box);
-  if (_mmdReady) {
-    requestAnimationFrame(() => mermaid.run({nodes: [pre]}));
-  }
+  if (_mmdReady) { requestAnimationFrame(() => mermaid.run({nodes: [pre]})); }
 }
 
 /* ═══ MANDALA BUILD ═══ */
@@ -502,14 +526,14 @@ for (let r=0; r<9; r++) for (let c=0; c<9; c++) {
     const th=TH[cell.i]; d.classList.add('c-theme','clickable');
     d.style.background=th.c;
     d.textContent=cell.t==='th'?`${cell.i+1}. ${th.n}`:th.n;
-    d.title=`${th.n}の4象限を表示`;
-    d.onclick=()=>go('4q',{ti:cell.i});
+    d.title=`${th.n} の8タスク優先順位（テーマ4象限）`;
+    d.onclick=()=>go('4q',{ti:cell.i, tj:null});
   } else {
     const th=TH[cell.i]; d.classList.add('c-task','clickable');
     d.style.background=th.bg; d.style.border=`1px solid ${th.bc}`;
     d.textContent=TS[cell.i][cell.j];
-    d.title=`[${th.n}] クリックで詳細へ`;
-    d.onclick=()=>go('4q',{ti:cell.i});
+    d.title=`${TS[cell.i][cell.j].replace(/\n/g,' ')} の詳細4象限`;
+    d.onclick=()=>go('4q',{ti:cell.i, tj:cell.j});
   }
   mg.appendChild(d);
 }
@@ -517,7 +541,7 @@ const lg = document.getElementById('mandala-legend');
 TH.forEach((th,i) => {
   const el=document.createElement('div'); el.className='leg-item';
   el.innerHTML=`<div class="leg-dot" style="background:${th.c}"></div><span>${i+1}. ${th.n}</span>`;
-  el.onclick=()=>go('4q',{ti:i}); lg.appendChild(el);
+  el.onclick=()=>go('4q',{ti:i, tj:null}); lg.appendChild(el);
 });
 
 /* ═══ COPY HELPERS ═══ */
@@ -528,15 +552,14 @@ function doCp(text, btn) {
     setTimeout(()=>btn.textContent=o, 2000);
   }).catch(() => {
     const ta=document.createElement('textarea'); ta.value=text;
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta);
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
   });
 }
 function cpJSON() {
   doCp(JSON.stringify({themes:TH.map((t,i)=>({name:t.n,tasks:TS[i].map(s=>s.replace(/\n/g,' '))}))},null,2), event.currentTarget);
 }
 function cpQ4() {
-  const d=STATE?.generated?.['4q']?.[String(S.ti)];
+  const d=STATE?.generated?.['4q']?.[_sk(S.ti, S.tj)];
   if (!d) return;
   const f=k=>`【${d[k].lbl}】\n${d[k].items.map(i=>'- '+i.t).join('\n')}`;
   doCp([f('tl'),f('tr'),f('bl'),f('br')].join('\n\n'), event.currentTarget);

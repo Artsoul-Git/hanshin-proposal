@@ -159,6 +159,15 @@
       "context": "人材・組織体制",
       "status": "pending",
       "created_at": "2026-05-14T15:51:35.839225"
+    },
+    {
+      "id": "c15cbbcf",
+      "type": "4q",
+      "theme_id": 7,
+      "task_id": 0,
+      "context": "上村スキル 強化計画",
+      "status": "pending",
+      "created_at": "2026-05-14T16:05:11.278003"
     }
   ]
 }
