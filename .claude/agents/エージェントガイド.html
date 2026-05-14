@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaiコンテンツ系エージェントガイド</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP','Yu Gothic UI','Meiryo',sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; }
+.page { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+.cover { background: linear-gradient(135deg,#1A365D 0%,#2D3748 100%); color: white; border-radius: 14px; padding: 56px 56px; margin-bottom: 48px; }
+.cover .badge { background: rgba(255,255,255,0.12); color: #93C5FD; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; display: inline-block; margin-bottom: 18px; }
+.cover h1 { font-size: 36px; font-weight: 900; line-height: 1.3; margin-bottom: 14px; }
+.cover p { font-size: 16px; color: #93C5FD; }
+h2 { font-size: 22px; color: #1A365D; border-bottom: 3px solid #3182CE; padding-bottom: 10px; margin: 44px 0 18px; }
+h3 { font-size: 17px; color: #1A365D; padding-left: 12px; border-left: 5px solid #3182CE; margin: 26px 0 10px; }
+p { margin: 10px 0; }
+.lead { font-size: 15px; background: #EBF8FF; border-left: 5px solid #3182CE; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.tip { background: #FFFAF0; border-left: 5px solid #ED8936; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 12px; margin-bottom: 4px; }
+.ok { background: #F0FFF4; border-left: 5px solid #38A169; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 12px; margin-bottom: 4px; }
+.warn { background: #FFF5F5; border-left: 5px solid #E53E3E; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 12px; margin-bottom: 4px; }
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 9px 12px; text-align: left; }
+td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+ul,ol { padding-left: 22px; margin: 10px 0; }
+li { margin: 5px 0; }
+.agent-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+.agent-card.scout { border-left: 6px solid #1A365D; }
+.agent-card.ink { border-left: 6px solid #2F855A; }
+.agent-card.pen { border-left: 6px solid #38A169; }
+.agent-card.spark { border-left: 6px solid #0EA5E9; }
+.agent-card.lens { border-left: 6px solid #E53E3E; }
+.agent-card.post { border-left: 6px solid #D69E2E; }
+.agent-card.canvas { border-left: 6px solid #805AD5; }
+.agent-card.ds-scout { border-left: 6px solid #0F172A; }
+.agent-card.ds-analyst { border-left: 6px solid #3182CE; }
+.agent-card.ds-deck { border-left: 6px solid #0EA5E9; }
+.agent-card.ds-chair { border-left: 6px solid #38A169; }
+.agent-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.agent-icon { width: 42px; height: 42px; border-radius: 10px; background: #1A365D; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.agent-name { font-size: 18px; font-weight: 700; color: #1A365D; }
+.agent-role { font-size: 13px; color: #64748B; }
+.spec-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 12px 0; }
+.spec-box { background: #F7FAFC; border-radius: 8px; padding: 10px 12px; }
+.spec-box .label { font-size: 11px; color: #718096; font-weight: 600; margin-bottom: 3px; }
+.spec-box .val { font-size: 13px; color: #2D3748; font-weight: 600; }
+.output-badge { display: inline-block; background: #EBF8FF; color: #2B6CB0; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin: 2px; }
+.flow-diagram { background: #F0F9FF; border: 2px solid #BFDBFE; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+.flow { display: flex; align-items: flex-start; gap: 6px; flex-wrap: wrap; }
+.flow-box { background: #EBF8FF; border: 2px solid #3182CE; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; color: #1A365D; text-align: center; }
+.flow-box.parallel { background: #F0FFF4; border-color: #38A169; color: #276749; }
+.flow-box.input { background: #FFFAF0; border-color: #ED8936; color: #7B341E; }
+.flow-arrow { color: #3182CE; font-size: 18px; line-height: 40px; }
+.parallel-group { display: flex; flex-direction: column; gap: 6px; }
+.toc { background: #F7FAFC; border-radius: 10px; padding: 22px 26px; margin: 26px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; }
+.toc ol { margin: 0; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+.toc a:hover { color: #3182CE; }
+.section-header { background: #1A365D; color: white; padding: 12px 20px; border-radius: 8px; margin: 40px 0 16px; font-size: 18px; font-weight: 700; }
+.section-header span { color: #93C5FD; }
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 44px 0; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 18px 20px; border-radius: 8px; font-family: monospace; font-size: 12px; line-height: 1.7; margin: 12px 0; }
+.prompt-box .comment { color: #718096; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="badge">AGENT REFERENCE GUIDE</div>
+  <h1>Kaiコンテンツ系<br>エージェント解説ガイド</h1>
+  <p>content-burst（7体）+ deck-sprint（4体）合計11体のサブエージェントの<br>役割・仕様・カスタマイズ方法を完全解説</p>
+</div>
+
+<div class="toc">
+  <h3>もくじ</h3>
+  <ol>
+    <li><a href="#what-agent">サブエージェントとは何か</a></li>
+    <li><a href="#cb-family">content-burst系エージェント（cb-*）7体</a></li>
+    <li><a href="#ds-family">deck-sprint系エージェント（ds-*）4体</a></li>
+    <li><a href="#customize">エージェントのカスタマイズ方法</a></li>
+    <li><a href="#new-agent">新しいエージェントの追加方法</a></li>
+    <li><a href="#faq">よくある疑問</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<h2 id="what-agent">1. サブエージェントとは何か</h2>
+<div class="lead">サブエージェントとは、Kaiの指示で動く「専門担当AI」です。Claude Code の <code>Agent</code> ツールを使って起動され、特定のタスクに特化した指示書（.mdファイル）に従って自律的に動きます。</div>
+
+<h3>なぜエージェントに分けるのか</h3>
+<table>
+  <tr><th>理由</th><th>説明</th></tr>
+  <tr><td>並列実行</td><td>Kaiが複数のエージェントを同時起動することで、直列実行の1/N の時間で完了できる</td></tr>
+  <tr><td>専門化</td><td>各エージェントが1つのタスクに集中するため、汎用的な指示より品質が高い</td></tr>
+  <tr><td>再利用性</td><td>同じエージェントを違うスキルから呼び出せる（将来の拡張が容易）</td></tr>
+  <tr><td>文脈汚染の防止</td><td>各エージェントは独立した文脈で動くため、他タスクのノイズが入らない</td></tr>
+</table>
+
+<h3>エージェントファイルの置き場所</h3>
+<p>このフォルダ（<span class="file-path">.claude/agents/</span>）にある <code>.md</code> ファイルが、Kaiが呼び出せるエージェントです。ファイル名（拡張子なし）が <code>subagent_type</code> として使われます。</p>
+<div class="prompt-box"><span class="comment"># Kaiが内部で行うエージェント呼び出しのイメージ</span>
+Agent(subagent_type="cb-scout", prompt="テーマ：AI採用。output/research-notes.md に出力...")</div>
+
+<hr>
+
+<!-- CB系 -->
+<div class="section-header">PART <span>1</span>　content-burst系エージェント（cb-*）</div>
+
+<h2 id="cb-family">2. content-burst系エージェント 7体</h2>
+
+<div class="flow-diagram">
+  <strong style="font-size:14px;color:#1A365D">content-burst のエージェント連携フロー</strong>
+  <div class="flow" style="margin-top:16px;align-items:center">
+    <div class="flow-box input" style="min-width:80px">あなた<br>テーマ</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="min-width:90px">Kai<br>計画立案</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="min-width:90px">cb-scout<br>リサーチ</div>
+    <div class="flow-arrow">→</div>
+    <div class="parallel-group">
+      <div class="flow-box parallel" style="min-width:100px">cb-ink<br>レポート</div>
+      <div class="flow-box parallel" style="min-width:100px">cb-pen<br>ブログ</div>
+      <div class="flow-box parallel" style="min-width:100px">cb-spark<br>X投稿</div>
+      <div class="flow-box parallel" style="min-width:100px">cb-lens<br>YouTube</div>
+      <div class="flow-box parallel" style="min-width:100px">cb-post<br>メルマガ</div>
+      <div class="flow-box parallel" style="min-width:100px">cb-canvas<br>ビジュアル</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#64748B;margin-top:10px">cb-scoutのみ直列（先行実行）。残り6体は1メッセージで並列起動。</p>
+</div>
+
+<!-- cb-scout -->
+<div class="agent-card scout">
+  <div class="agent-header">
+    <div class="agent-icon">🔭</div>
+    <div>
+      <div class="agent-name">cb-scout</div>
+      <div class="agent-role">リサーチ担当 — content-burst の情報収集エージェント</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行順序</div><div class="val">直列（最初）</div></div>
+    <div class="spec-box"><div class="label">WebSearch</div><div class="val">最大15回</div></div>
+    <div class="spec-box"><div class="label">WebFetch</div><div class="val">最大3ページ</div></div>
+  </div>
+  <p><strong>役割：</strong>テーマについてWebSearchで多角的に調査し、後段6エージェントが共有する「研究ノート（research-notes.md）」を作成します。</p>
+  <p><strong>出力：</strong><span class="output-badge">research-notes.md</span></p>
+  <div class="ok"><span class="label">品質のキモ</span>cb-scoutの出力が他6エージェント全員の入力になります。cb-scoutのリサーチが深ければ6チャネルすべての品質が上がります。テーマを絞るほどcb-scoutが的確なクエリを打てます。</div>
+</div>
+
+<!-- cb-ink -->
+<div class="agent-card ink">
+  <div class="agent-header">
+    <div class="agent-icon">📑</div>
+    <div>
+      <div class="agent-name">cb-ink</div>
+      <div class="agent-role">リサーチレポート担当 — HTML形式の読み物レポート作成</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列（6体同時）</div></div>
+    <div class="spec-box"><div class="label">文字数</div><div class="val">3,000〜5,000字</div></div>
+    <div class="spec-box"><div class="label">章数</div><div class="val">5〜6章</div></div>
+  </div>
+  <p><strong>役割：</strong>research-notes.mdを元に、目次付きのHTML形式レポートを生成します。Kaiカラー（ネイビー+スチールブルー）デザイン。</p>
+  <p><strong>出力：</strong><span class="output-badge">report.html</span></p>
+</div>
+
+<!-- cb-pen -->
+<div class="agent-card pen">
+  <div class="agent-header">
+    <div class="agent-icon">✍️</div>
+    <div>
+      <div class="agent-name">cb-pen</div>
+      <div class="agent-role">ブログ記事担当 — WordPress Gutenberg対応SEO記事</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">文字数</div><div class="val">2,500〜4,000字</div></div>
+    <div class="spec-box"><div class="label">構成</div><div class="val">H1+H2×3〜5</div></div>
+  </div>
+  <p><strong>役割：</strong>SEO構造（H1→リード→H2群→まとめ）でブログ記事を生成。WordPressのGutenbergブロックコメントを内包するため、貼り付けてすぐ公開できます。</p>
+  <p><strong>出力：</strong><span class="output-badge">blog-post.html</span></p>
+  <div class="tip"><span class="label">禁止ルール</span>H2にナンバリングをつけない・参考資料セクションを設けない（出典はインラインリンクで代替）というルールが定義されています。</div>
+</div>
+
+<!-- cb-spark -->
+<div class="agent-card spark">
+  <div class="agent-header">
+    <div class="agent-icon">⚡</div>
+    <div>
+      <div class="agent-name">cb-spark</div>
+      <div class="agent-role">X投稿担当 — Xスレッド形式のSNS投稿作成</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">投稿数</div><div class="val">6〜9投稿</div></div>
+    <div class="spec-box"><div class="label">1投稿の字数</div><div class="val">140字以内</div></div>
+  </div>
+  <p><strong>役割：</strong>フック→本編→CTAのスレッド構造。絵文字は最小限。各投稿が独立して読めるよう設計されます。</p>
+  <p><strong>出力：</strong><span class="output-badge">x-thread.md</span></p>
+</div>
+
+<!-- cb-lens -->
+<div class="agent-card lens">
+  <div class="agent-header">
+    <div class="agent-icon">🎬</div>
+    <div>
+      <div class="agent-name">cb-lens</div>
+      <div class="agent-role">YouTube台本担当 — 約10分尺の動画台本作成</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">文字数</div><div class="val">2,800〜3,200字</div></div>
+    <div class="spec-box"><div class="label">目安尺</div><div class="val">約10分</div></div>
+  </div>
+  <p><strong>役割：</strong>話し言葉で書かれたビデオ台本。[間を取る][強調]等のト書き付き。構成はオープニング+本編3〜5パート+クロージング。</p>
+  <p><strong>出力：</strong><span class="output-badge">youtube-script.md</span></p>
+</div>
+
+<!-- cb-post -->
+<div class="agent-card post">
+  <div class="agent-header">
+    <div class="agent-icon">📧</div>
+    <div>
+      <div class="agent-name">cb-post</div>
+      <div class="agent-role">メルマガ担当 — 件名〜CTAまでのメール本文作成</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">本文字数</div><div class="val">800〜1,500字</div></div>
+    <div class="spec-box"><div class="label">CTA</div><div class="val">1メール1つ</div></div>
+  </div>
+  <p><strong>役割：</strong>件名・プレビューテキスト・本文・CTA・署名プレースホルダーを含む完全なメルマガ本文を生成します。</p>
+  <p><strong>出力：</strong><span class="output-badge">newsletter.md</span></p>
+  <div class="tip"><span class="label">注意</span>署名は <code>{{差出人名}}</code> 等のプレースホルダーで出力されます。送付前に実際の情報に置き換えてください。</div>
+</div>
+
+<!-- cb-canvas -->
+<div class="agent-card canvas">
+  <div class="agent-header">
+    <div class="agent-icon">🎨</div>
+    <div>
+      <div class="agent-name">cb-canvas</div>
+      <div class="agent-role">ビジュアルマップ担当 — HTML形式インフォグラフィック生成</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">カード枚数</div><div class="val">3〜6枚</div></div>
+    <div class="spec-box"><div class="label">配置</div><div class="val">縦スクロール型</div></div>
+  </div>
+  <p><strong>役割：</strong>テーマの概要・数値・フロー・比較等を視覚化したHTMLビジュアルマップ。Kaiカラー（#1A365D/#3182CE/#0EA5E9）使用。スクリーンショットでSNS・スライドに活用可能。</p>
+  <p><strong>出力：</strong><span class="output-badge">visual-map.html</span></p>
+</div>
+
+<hr>
+
+<!-- DS系 -->
+<div class="section-header">PART <span>2</span>　deck-sprint系エージェント（ds-*）</div>
+
+<h2 id="ds-family">3. deck-sprint系エージェント 4体</h2>
+
+<div class="flow-diagram">
+  <strong style="font-size:14px;color:#1A365D">deck-sprint のエージェント連携フロー</strong>
+  <div class="flow" style="margin-top:16px;align-items:center">
+    <div class="flow-box input" style="min-width:80px">あなた<br>テーマ</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="min-width:90px">Kai<br>計画承認</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="min-width:90px">ds-scout<br>3検索固定</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="min-width:80px;background:#FFF5F5;border-color:#E53E3E;color:#C53030">テンプレ<br>コピー</div>
+    <div class="flow-arrow">→</div>
+    <div class="parallel-group">
+      <div class="flow-box parallel" style="min-width:110px">ds-analyst<br>レポート</div>
+      <div class="flow-box parallel" style="min-width:110px">ds-deck<br>スライド</div>
+      <div class="flow-box parallel" style="min-width:110px">ds-chair<br>アジェンダ</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#64748B;margin-top:10px">ds-scoutのみ直列。テンプレコピー後に残り3体を並列起動。ds-chairは report.md / presentation.html を参照試行（失敗なら無視）。</p>
+</div>
+
+<!-- ds-scout -->
+<div class="agent-card ds-scout">
+  <div class="agent-header">
+    <div class="agent-icon">🔦</div>
+    <div>
+      <div class="agent-name">ds-scout</div>
+      <div class="agent-role">高速リサーチ担当 — 3検索固定の速度特化版</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行順序</div><div class="val">直列（最初）</div></div>
+    <div class="spec-box"><div class="label">WebSearch</div><div class="val">3回固定（上限）</div></div>
+    <div class="spec-box"><div class="label">WebFetch</div><div class="val">禁止</div></div>
+  </div>
+  <p><strong>役割：</strong>観点3点×1検索ずつで合計3回で打ち切り。content-burst版の cb-scout と同様の役割ですが、速度制約が厳しく設定されています。</p>
+  <p><strong>出力：</strong><span class="output-badge">research-notes.md（高速版）</span></p>
+  <div class="warn"><span class="label">速度のトレードオフ</span>ds-scoutは意図的に情報量を絞っています。深いリサーチが必要なテーマは content-burst（cb-scout）の方が適しています。</div>
+</div>
+
+<!-- ds-analyst -->
+<div class="agent-card ds-analyst">
+  <div class="agent-header">
+    <div class="agent-icon">📊</div>
+    <div>
+      <div class="agent-name">ds-analyst</div>
+      <div class="agent-role">レポート担当 — 事実→解釈→示唆の3段構造で深掘り</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">文字数</div><div class="val">5,000〜8,000字</div></div>
+    <div class="spec-box"><div class="label">章数</div><div class="val">7〜9章</div></div>
+  </div>
+  <p><strong>役割：</strong>deck-sprint唯一のレポート担当。cb-inkより深く、事実の羅列ではなく「事実→解釈→示唆」の3段構造で書くことが義務付けられています。Markdown形式。</p>
+  <p><strong>出力：</strong><span class="output-badge">report.md</span></p>
+</div>
+
+<!-- ds-deck -->
+<div class="agent-card ds-deck">
+  <div class="agent-header">
+    <div class="agent-icon">🖥️</div>
+    <div>
+      <div class="agent-name">ds-deck</div>
+      <div class="agent-role">スライド担当 — Editツールのみで差し替え（Writeは禁止）</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">スライド枚数</div><div class="val">基本7枚（6〜8）</div></div>
+    <div class="spec-box"><div class="label">Edit回数</div><div class="val">2回のみ</div></div>
+  </div>
+  <p><strong>役割：</strong>事前コピーされたテンプレート（slide-base.html）を <strong>Edit 2回のみ</strong>で完成させます。Edit 1回目：タイトル差し替え。Edit 2回目：スライドコンテンツ差し替え。</p>
+  <p><strong>出力：</strong><span class="output-badge">presentation.html（Edit完成版）</span></p>
+  <div class="warn"><span class="label">Write禁止の理由</span>Writeツールを使うとテンプレートのCSS/JSが消えてしまいます。ds-deckはEditのみ使用するよう厳しく制約されています。</div>
+</div>
+
+<!-- ds-chair -->
+<div class="agent-card ds-chair">
+  <div class="agent-header">
+    <div class="agent-icon">🪑</div>
+    <div>
+      <div class="agent-name">ds-chair</div>
+      <div class="agent-role">アジェンダ担当 — 報告MTGの司会者視点で事前準備を整理</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">実行</div><div class="val">並列</div></div>
+    <div class="spec-box"><div class="label">想定質問</div><div class="val">最低5問</div></div>
+    <div class="spec-box"><div class="label">懐疑的質問</div><div class="val">1〜2問必須</div></div>
+  </div>
+  <p><strong>役割：</strong>research-notes.mdを主入力として報告MTGアジェンダを生成。並列実行のためreport.md・presentation.htmlは取れれば参照、エラーなら無視する設計になっています。</p>
+  <p><strong>出力：</strong><span class="output-badge">agenda.md</span></p>
+  <div class="ok"><span class="label">設計のポイント</span>「懐疑的な質問・反対意見系」を最低1〜2問含むよう義務付けています。楽観的な質問しか準備しない資料より、実際のMTGでの耐性が格段に高まります。</div>
+</div>
+
+<hr>
+
+<h2 id="customize">4. エージェントのカスタマイズ方法</h2>
+<div class="lead">各エージェントの <code>.md</code> ファイルを直接編集することで、出力の仕様を変更できます。</div>
+
+<h3>よくある変更例</h3>
+<table>
+  <tr><th>変更したい内容</th><th>対象ファイル</th><th>変更箇所</th></tr>
+  <tr><td>ブログ記事のデフォルト字数を変えたい</td><td>cb-pen.md</td><td>「文字数」セクションの範囲を変更</td></tr>
+  <tr><td>Xスレッドをもっと長くしたい</td><td>cb-spark.md</td><td>「投稿数」を6〜9→8〜12に変更</td></tr>
+  <tr><td>ビジュアルマップのカラーを変えたい</td><td>cb-canvas.md</td><td>「デザイン（Kaiカラー）」セクションの色コードを変更</td></tr>
+  <tr><td>レポートを英語で書かせたい</td><td>cb-ink.md または ds-analyst.md</td><td>禁止事項に「日本語のみ」を削除し、「英語で出力」を追記</td></tr>
+  <tr><td>ds-scoutの検索回数を増やしたい</td><td>ds-scout.md</td><td>「高速リサーチの絶対制約」の3回を5回に変更（ただし速度は遅くなる）</td></tr>
+</table>
+
+<div class="warn"><span class="label">変更前の注意</span>エージェントファイルを変更すると、そのスキルの全ての実行に影響します。テスト用に別ファイル（例：<code>cb-pen-v2.md</code>）を作って試してから本番に適用することを推奨します。</div>
+
+<hr>
+
+<h2 id="new-agent">5. 新しいエージェントの追加方法</h2>
+<h3>ステップ1：エージェントファイルを作る</h3>
+<p><span class="file-path">.claude/agents/</span> フォルダに <code>新しい名前.md</code> を作成します。</p>
+<div class="prompt-box"><span class="comment"># .claude/agents/cb-twitter-jp.md（例：日本語X特化版）</span>
+# CB-TWITTER-JP — 日本語X専用エージェント
+
+## 役割
+...（役割の定義）
+
+## 起動元
+content-burst フェーズC ステップ2（または直接呼び出し）
+
+## 入力
+- &lt;outdir&gt;/research-notes.md
+
+## 成果物
+&lt;outdir&gt;/x-jp.md
+
+---
+（以下、具体的な実行手順と禁止事項）</div>
+
+<h3>ステップ2：スキルファイルに追加する</h3>
+<p>新しいエージェントをcontent-burstで使うなら <span class="file-path">skill/content-burst/SKILL.md</span> の「ステップ2: 6エージェントを並列起動」セクションに呼び出し定義を追加します。</p>
+
+<hr>
+
+<h2 id="faq">6. よくある疑問</h2>
+
+<div style="margin:16px 0"><strong style="color:#1A365D">Q. エージェントに直接話しかけることはできますか？</strong>
+<p style="padding-left:16px;border-left:3px solid #3182CE;margin-top:6px">A. 直接は難しいです。エージェントはスキル（SKILL.md）から起動される設計です。ただしKaiに「cb-scoutだけ単独で動かして」と依頼するとKaiがエージェントを呼び出すことは可能です。</p></div>
+
+<div style="margin:16px 0"><strong style="color:#1A365D">Q. エージェントはいつ「学習」しますか？</strong>
+<p style="padding-left:16px;border-left:3px solid #3182CE;margin-top:6px">A. エージェントは .md ファイルの内容しか学習しません。会話の内容は次の実行に引き継がれません。「毎回同じ改善をしてほしい」なら .md ファイルを直接編集してください。</p></div>
+
+<div style="margin:16px 0"><strong style="color:#1A365D">Q. エージェントが失敗したらどうなりますか？</strong>
+<p style="padding-left:16px;border-left:3px solid #3182CE;margin-top:6px">A. Kaiはベストエフォートで続行します。cb-scoutが失敗した場合のみ後段全員が停止します（research-notes.mdがないため）。それ以外は、失敗したエージェントのファイルのみ欠損し、残りは完成します。</p></div>
+
+<hr>
+<p style="text-align:center;color:#94A3B8;font-size:13px">Kaiコンテンツ系エージェントガイド / 有限会社アートソウル</p>
+</div>
+</body>
+</html>

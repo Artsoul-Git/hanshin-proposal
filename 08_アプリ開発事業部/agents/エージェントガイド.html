@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アプリ開発チーム エージェントガイド — ARCH &amp; 7 Specialists</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP','Yu Gothic UI','Meiryo',sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; }
+.page { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+.cover { background: linear-gradient(135deg,#1A202C 0%,#2D3748 60%,#4A5568 100%); color: white; border-radius: 14px; padding: 56px 56px; margin-bottom: 48px; }
+.cover .badge { background: rgba(255,255,255,0.12); color: #FBD38D; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; display: inline-block; margin-bottom: 18px; }
+.cover h1 { font-size: 36px; font-weight: 900; line-height: 1.3; margin-bottom: 14px; }
+.cover p { font-size: 15px; color: #A0AEC0; }
+h2 { font-size: 22px; color: #1A202C; border-bottom: 3px solid #ED8936; padding-bottom: 10px; margin: 44px 0 18px; }
+h3 { font-size: 17px; color: #2D3748; padding-left: 12px; border-left: 5px solid #ED8936; margin: 26px 0 10px; }
+p { margin: 10px 0; }
+.lead { font-size: 15px; background: #FFFBEB; border-left: 5px solid #ED8936; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.tip { background: #FFFAF0; border-left: 5px solid #ED8936; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 12px; margin-bottom: 4px; }
+.ok { background: #F0FFF4; border-left: 5px solid #38A169; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 12px; margin-bottom: 4px; }
+.warn { background: #FFF5F5; border-left: 5px solid #E53E3E; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 12px; margin-bottom: 4px; }
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+th { background: #2D3748; color: white; padding: 9px 12px; text-align: left; }
+td { padding: 9px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+ul,ol { padding-left: 22px; margin: 10px 0; }
+li { margin: 5px 0; }
+.arch-card { background: linear-gradient(135deg,#1A202C,#2D3748); color: white; border-radius: 12px; padding: 24px 28px; margin: 20px 0; }
+.arch-card h3 { color: #FBD38D; border-color: #ED8936; }
+.arch-card p { color: #CBD5E0; }
+.agent-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+.agent-card.spec { border-left: 6px solid #3182CE; }
+.agent-card.wire { border-left: 6px solid #805AD5; }
+.agent-card.gasbot { border-left: 6px solid #D69E2E; }
+.agent-card.websmith { border-left: 6px solid #2F855A; }
+.agent-card.hookup { border-left: 6px solid #DD6B20; }
+.agent-card.shield { border-left: 6px solid #E53E3E; }
+.agent-card.scribe { border-left: 6px solid #2C7A7B; }
+.agent-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.agent-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; color: white; }
+.agent-icon.spec { background: #3182CE; }
+.agent-icon.wire { background: #805AD5; }
+.agent-icon.gasbot { background: #D69E2E; }
+.agent-icon.websmith { background: #2F855A; }
+.agent-icon.hookup { background: #DD6B20; }
+.agent-icon.shield { background: #E53E3E; }
+.agent-icon.scribe { background: #2C7A7B; }
+.agent-name { font-size: 18px; font-weight: 700; color: #1A202C; }
+.agent-role { font-size: 13px; color: #64748B; }
+.spec-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 12px 0; }
+.spec-box { background: #F7FAFC; border-radius: 8px; padding: 10px 12px; }
+.spec-box .label { font-size: 11px; color: #718096; font-weight: 600; margin-bottom: 3px; }
+.spec-box .val { font-size: 13px; color: #2D3748; font-weight: 600; }
+.output-badge { display: inline-block; background: #FFFBEB; color: #92400E; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin: 2px; }
+.flow-diagram { background: #F7FAFC; border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 20px 0; overflow-x: auto; }
+.flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.flow-box { background: white; border: 2px solid #E2E8F0; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: #2D3748; text-align: center; white-space: nowrap; }
+.flow-box.owner { background: #FFFBEB; border-color: #ED8936; color: #7B341E; }
+.flow-box.arch { background: #1A202C; border-color: #1A202C; color: white; }
+.flow-arrow { color: #A0AEC0; font-size: 18px; }
+.toc { background: #F7FAFC; border-radius: 10px; padding: 22px 26px; margin: 26px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; }
+.toc ol { margin: 0; }
+.toc a { color: #2D3748; text-decoration: none; font-weight: 500; }
+.toc a:hover { color: #ED8936; }
+.section-header { background: #2D3748; color: white; padding: 12px 20px; border-radius: 8px; margin: 40px 0 16px; font-size: 18px; font-weight: 700; }
+.section-header span { color: #FBD38D; }
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 44px 0; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 18px 20px; border-radius: 8px; font-family: monospace; font-size: 12px; line-height: 1.7; margin: 12px 0; }
+.prompt-box .comment { color: #718096; }
+.devflow { display: flex; flex-direction: column; gap: 4px; }
+.devflow-step { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; border: 1px solid #E2E8F0; background: white; }
+.devflow-step .num { width: 28px; height: 28px; background: #2D3748; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.devflow-step .agent-tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; }
+.devflow-step.spec-step .agent-tag { background: #EBF8FF; color: #2B6CB0; }
+.devflow-step.wire-step .agent-tag { background: #FAF5FF; color: #553C9A; }
+.devflow-step.impl-step .agent-tag { background: #FFFBEB; color: #92400E; }
+.devflow-step.shield-step .agent-tag { background: #FFF5F5; color: #C53030; }
+.devflow-step.scribe-step .agent-tag { background: #E6FFFA; color: #234E52; }
+.devflow-step.owner-step .agent-tag { background: #FFFBEB; color: #7B341E; border: 1px solid #ED8936; }
+.devflow-connector { margin-left: 26px; color: #A0AEC0; font-size: 14px; }
+@media (max-width: 640px) { .cover { padding: 36px 22px; } .cover h1 { font-size: 26px; } .spec-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="badge">APP DEPT. AGENT GUIDE</div>
+  <h1>アプリ開発チーム<br>エージェントガイド</h1>
+  <p>ARCH（統括AI）+ SPEC / WIRE / GASBOT / WEBSMITH / HOOKUP / SHIELD / SCRIBE<br>合計8体のエージェント構成と連携フローの完全解説</p>
+</div>
+
+<div class="toc">
+  <h3>もくじ</h3>
+  <ol>
+    <li><a href="#arch">ARCH — 統括エージェント</a></li>
+    <li><a href="#devflow">開発フロー（全8フェーズ）</a></li>
+    <li><a href="#agents">各エージェント詳細</a></li>
+    <li><a href="#how-to">正しい使い方と注意事項</a></li>
+    <li><a href="#output">成果物の置き場所ルール</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- ARCH -->
+<h2 id="arch">1. ARCH — 統括エージェント</h2>
+
+<div class="arch-card">
+  <div class="agent-header">
+    <div class="agent-icon" style="background:#ED8936;width:48px;height:48px;font-size:22px">🏗</div>
+    <div>
+      <div class="agent-name" style="color:white;font-size:20px">ARCH（アーチ）</div>
+      <div class="agent-role" style="color:#A0AEC0">アプリ開発事業部 統括AI / 唯一の対外窓口</div>
+    </div>
+  </div>
+  <p>上村さんと直接対話する唯一のエージェント。「設計士の思想」で動き、実装の前に必ず設計図を引きます。配下7体の専門AIを統括し、案件開始〜納品まで責任を持ちます。</p>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:14px">
+      <div style="font-size:11px;color:#A0AEC0;margin-bottom:6px">自律実行できること</div>
+      <ul style="font-size:13px;color:#CBD5E0;padding-left:18px">
+        <li>要件整理・設計ドラフト</li>
+        <li>コーディング・テスト</li>
+        <li>ドキュメント作成</li>
+      </ul>
+    </div>
+    <div style="background:rgba(237,137,54,0.15);border-radius:8px;padding:14px">
+      <div style="font-size:11px;color:#FBD38D;margin-bottom:6px">必ずオーナー承認が必要</div>
+      <ul style="font-size:13px;color:#CBD5E0;padding-left:18px">
+        <li>技術スタックの最終決定</li>
+        <li>追加費用が発生する提案</li>
+        <li>クライアントへの対外納品</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3>ARCHへの指示の仕方</h3>
+<p>ARCHは <span class="file-path">08_アプリ開発事業部/CLAUDE.md</span> を読み込んで動きます。以下の形式で指示すると正確に動きます。</p>
+<div class="prompt-box"><span class="comment"># 新規案件</span>
+まる様向けに出退勤管理システムを作りたい。
+GASとAppSheetで、スマホから入力→Sheetsに記録→月次集計が自動で動く仕組み。
+
+<span class="comment"># 途中経過の確認</span>
+今の開発状況を教えて。何フェーズ目？
+
+<span class="comment"># 特定フェーズを指定</span>
+SHIELDにテストを依頼して</div>
+
+<hr>
+
+<!-- DEV FLOW -->
+<h2 id="devflow">2. 開発フロー（全フェーズ・スキップ禁止）</h2>
+<div class="lead">アプリ開発事業部のすべての案件は、このフローを必ず通ります。フェーズのスキップは品質リスクとなるためARCHが拒否します。</div>
+
+<div class="devflow">
+  <div class="devflow-step owner-step">
+    <div class="num">0</div>
+    <div class="agent-tag">上村</div>
+    <div>ヒアリング・案件受付（要件を言語化してARCHに渡す）</div>
+  </div>
+  <div class="devflow-connector">↓</div>
+  <div class="devflow-step spec-step">
+    <div class="num">1</div>
+    <div class="agent-tag">SPEC</div>
+    <div>要件定義書作成（MUST/WANT/NOT分類・工数見積もり・未確認事項リスト）</div>
+  </div>
+  <div class="devflow-connector">↓</div>
+  <div class="devflow-step wire-step">
+    <div class="num">2</div>
+    <div class="agent-tag">WIRE</div>
+    <div>設計図作成（フロー図・画面設計・DB/シート設計・トリガー設計）</div>
+  </div>
+  <div class="devflow-connector">↓ ← ここで上村承認</div>
+  <div class="devflow-step impl-step">
+    <div class="num">3</div>
+    <div class="agent-tag">GASBOT / WEBSMITH / HOOKUP</div>
+    <div>実装（案件種別に応じていずれか or 組み合わせ）</div>
+  </div>
+  <div class="devflow-connector">↓</div>
+  <div class="devflow-step shield-step">
+    <div class="num">4</div>
+    <div class="agent-tag">SHIELD</div>
+    <div>テスト・QA（全項目パスするまで実装に差し戻し）</div>
+  </div>
+  <div class="devflow-connector">↓</div>
+  <div class="devflow-step scribe-step">
+    <div class="num">5</div>
+    <div class="agent-tag">SCRIBE</div>
+    <div>マニュアル・引継ぎ資料作成（クライアントが一人で使える状態に）</div>
+  </div>
+  <div class="devflow-connector">↓</div>
+  <div class="devflow-step owner-step">
+    <div class="num">6</div>
+    <div class="agent-tag">上村</div>
+    <div>最終確認・クライアントへの納品</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- AGENTS -->
+<div class="section-header">PART <span>1</span>　専門エージェント 7体の詳細</div>
+<h2 id="agents">3. 各エージェント詳細</h2>
+
+<!-- SPEC -->
+<div class="agent-card spec">
+  <div class="agent-header">
+    <div class="agent-icon spec">📋</div>
+    <div>
+      <div class="agent-name">SPEC（仕様書記）</div>
+      <div class="agent-role">要件定義・仕様書作成 — 開発の起点</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">案件開始時</div></div>
+    <div class="spec-box"><div class="label">呼び出し元</div><div class="val">ARCH</div></div>
+    <div class="spec-box"><div class="label">次のエージェント</div><div class="val">WIRE</div></div>
+  </div>
+  <p><strong>役割：</strong>ヒアリング内容をMUST/WANT/NOTに分類し、チームが迷わず動ける要件定義書を作成します。技術スタック案を3択以内で提示してARCHに判断を仰ぎます。</p>
+  <p><strong>出力：</strong><span class="output-badge">outputs/&lt;案件名&gt;/spec.md</span></p>
+  <div class="warn"><span class="label">禁止事項</span>要件を推測で補完して確定させること・工数を楽観的に過小見積もること・NOT要件を曖昧にすること。</div>
+</div>
+
+<!-- WIRE -->
+<div class="agent-card wire">
+  <div class="agent-header">
+    <div class="agent-icon wire">🔌</div>
+    <div>
+      <div class="agent-name">WIRE（設計師）</div>
+      <div class="agent-role">フロー・画面・DB設計 — 実装前の最後の砦</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">SPEC完了後</div></div>
+    <div class="spec-box"><div class="label">呼び出し元</div><div class="val">ARCH</div></div>
+    <div class="spec-box"><div class="label">次のエージェント</div><div class="val">実装担当3体</div></div>
+  </div>
+  <p><strong>役割：</strong>要件定義書をもとに「実装が始められる設計図」を作成します。データフロー・画面設計・DB/シート設計・トリガー設計を4ファイルにまとめます。<strong>設計の漏れをここで全部潰すのがWIREの使命です。</strong></p>
+  <p><strong>出力：</strong>
+    <span class="output-badge">wire/flow.md</span>
+    <span class="output-badge">wire/screen.md</span>
+    <span class="output-badge">wire/db.md</span>
+    <span class="output-badge">wire/trigger.md（GAS系のみ）</span>
+  </p>
+  <div class="tip"><span class="label">承認ポイント</span>WIREの設計図完成後、上村さんの承認を得てから実装に進みます。ここが「引き返せる最後のポイント」です。</div>
+</div>
+
+<!-- GASBOT -->
+<div class="agent-card gasbot">
+  <div class="agent-header">
+    <div class="agent-icon gasbot">⚙️</div>
+    <div>
+      <div class="agent-name">GASBOT（GASビルダー）</div>
+      <div class="agent-role">GAS / AppSheet / Google Sheets 実装担当</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">WIRE完了後</div></div>
+    <div class="spec-box"><div class="label">技術スタック</div><div class="val">GAS / AppSheet / Sheets</div></div>
+    <div class="spec-box"><div class="label">AI連携</div><div class="val">Gemini API対応</div></div>
+  </div>
+  <p><strong>役割：</strong>GAS（Google Apps Script）でバックエンドロジックを実装。AppSheetでUIを構築。「クライアントが自走できるコード」を書くことが設計思想です。</p>
+  <p><strong>出力：</strong>
+    <span class="output-badge">src/&lt;ファイル名&gt;.gs</span>
+    <span class="output-badge">src/シート設計.md</span>
+    <span class="output-badge">src/AppSheet設定手順.md</span>
+  </p>
+  <div class="ok"><span class="label">コーディング原則</span>個人情報マスキング必須（masking.gs）・GAS 6分タイムアウト対策・CONFIG オブジェクトへの設定値集約・エラーハンドリング必須。</div>
+</div>
+
+<!-- WEBSMITH -->
+<div class="agent-card websmith">
+  <div class="agent-header">
+    <div class="agent-icon websmith">🔨</div>
+    <div>
+      <div class="agent-name">WEBSMITH（HTMLビルダー）</div>
+      <div class="agent-role">HTML / CSS / JavaScript 実装担当</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">WIRE完了後</div></div>
+    <div class="spec-box"><div class="label">技術スタック</div><div class="val">HTML/CSS/JS</div></div>
+    <div class="spec-box"><div class="label">成果物原則</div><div class="val">単一HTMLファイル</div></div>
+  </div>
+  <p><strong>役割：</strong>提案書・セミナー資料・ダッシュボード・インタラクティブレポートなどのHTML系成果物を担当。「ブラウザで開いてそのまま使える」状態を原則とします。</p>
+  <p><strong>出力：</strong><span class="output-badge">src/&lt;ファイル名&gt;.html</span></p>
+  <div class="tip"><span class="label">Kaiの設計仕様</span>AS社の提案書HTMLは <code>html { zoom: 1.4; }</code> が標準仕様。SVG内テキストは最小12pxで設定。印刷・PDF対応を@media printで必ず実装します。</div>
+</div>
+
+<!-- HOOKUP -->
+<div class="agent-card hookup">
+  <div class="agent-header">
+    <div class="agent-icon hookup">🔗</div>
+    <div>
+      <div class="agent-name">HOOKUP（外部連携師）</div>
+      <div class="agent-role">LINE bot / Gemini API / Notion / Slack など外部API連携</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">WIRE完了後</div></div>
+    <div class="spec-box"><div class="label">得意領域</div><div class="val">外部API連携</div></div>
+    <div class="spec-box"><div class="label">GASとの関係</div><div class="val">橋渡し設計担当</div></div>
+  </div>
+  <p><strong>役割：</strong>LINE bot・Gemini API・Notion API・Slack Webhook等の外部サービス連携を実装します。GASとの橋渡し設計も担当し、「つながる」を確実にします。</p>
+  <p><strong>出力：</strong>
+    <span class="output-badge">src/webhook.gs</span>
+    <span class="output-badge">src/api_client.gs</span>
+    <span class="output-badge">src/設定手順.md</span>
+  </p>
+</div>
+
+<!-- SHIELD -->
+<div class="agent-card shield">
+  <div class="agent-header">
+    <div class="agent-icon shield">🛡</div>
+    <div>
+      <div class="agent-name">SHIELD（QAテスター）</div>
+      <div class="agent-role">テスト・品質保証 — 「動く」から「確実に動く」へ</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">実装完了後</div></div>
+    <div class="spec-box"><div class="label">合格条件</div><div class="val">全項目PASS</div></div>
+    <div class="spec-box"><div class="label">不合格時</div><div class="val">実装に差し戻し</div></div>
+  </div>
+  <p><strong>役割：</strong>実装完了後の全テストを担当します。機能テスト・エッジケース・異常系・クライアント環境での動作確認を実施。SHIELDが全PASS出すまでSCRIBEは起動されません。</p>
+  <p><strong>出力：</strong><span class="output-badge">shield/test-report.md</span></p>
+  <div class="warn"><span class="label">差し戻しルール</span>1項目でもFAILがあれば実装に差し戻します。「ほぼ動く」での通過は認められません。これがASの品質基準です。</div>
+</div>
+
+<!-- SCRIBE -->
+<div class="agent-card scribe">
+  <div class="agent-header">
+    <div class="agent-icon scribe">📝</div>
+    <div>
+      <div class="agent-name">SCRIBE（ドキュメンター）</div>
+      <div class="agent-role">マニュアル・引継ぎ資料・コードコメント整備</div>
+    </div>
+  </div>
+  <div class="spec-grid">
+    <div class="spec-box"><div class="label">起動タイミング</div><div class="val">SHIELD全PASS後</div></div>
+    <div class="spec-box"><div class="label">完了定義</div><div class="val">一人で運用できる状態</div></div>
+    <div class="spec-box"><div class="label">対象読者</div><div class="val">クライアント / AS社内</div></div>
+  </div>
+  <p><strong>役割：</strong>「読んだ人が一人で運用できる状態を作る」のが完了定義。クライアント向け操作マニュアル・AS社内引継ぎメモ・コードコメント整備の3種を作成します。</p>
+  <p><strong>出力：</strong>
+    <span class="output-badge">manual/操作マニュアル.md</span>
+    <span class="output-badge">manual/引継ぎメモ.md</span>
+    <span class="output-badge">コードコメント追記</span>
+  </p>
+  <div class="ok"><span class="label">SCRIBEの品質基準</span>「詳細は担当者まで」というFAQは禁止。「設定方法・接続先URLのない引継ぎメモ」は禁止。技術用語をそのまま使ったクライアント向けマニュアルは禁止。</div>
+</div>
+
+<hr>
+
+<h2 id="how-to">4. 正しい使い方と注意事項</h2>
+
+<h3>ARCHへの依頼の書き方</h3>
+<table>
+  <tr><th>状況</th><th>良い例</th><th>悪い例</th></tr>
+  <tr><td>新規案件</td><td>「まる様向けに〇〇システムを作りたい。要件は〜」</td><td>「コード書いて」（要件なし）</td></tr>
+  <tr><td>設計確認</td><td>「WIREの設計図を見て、懸念点があれば教えて」</td><td>「どう思う？」（主語が曖昧）</td></tr>
+  <tr><td>テスト依頼</td><td>「SHIELDに〇〇システムのテストを依頼して」</td><td>「テストして」（案件名なし）</td></tr>
+</table>
+
+<h3>フェーズ飛ばしは危険</h3>
+<div class="warn"><span class="label">よくある失敗</span>「急いでいるからWIREをスキップして実装に入りたい」という要望は、設計ミスが実装後に発覚するリスクを高めます。ARCH は設計フェーズのスキップを提案しません。どうしても急ぐ場合はARCHに「急ぎの理由」を伝え、スコープを絞ることで対応します。</div>
+
+<h3>技術スタック選定の原則</h3>
+<ol>
+  <li><strong>クライアントが既に持っているツール</strong>（ライモBiz・GWS・Sheetsなど）</li>
+  <li><strong>追加コストゼロで実現できるか</strong></li>
+  <li><strong>クライアントが将来自分で修正・運用できるか</strong></li>
+  <li><strong>Claude Codeで実装・デバッグ・改修できる構造か</strong></li>
+</ol>
+
+<hr>
+
+<h2 id="output">5. 成果物の置き場所ルール</h2>
+<div class="lead">すべての成果物は <span class="file-path">08_アプリ開発事業部/outputs/&lt;案件名&gt;/</span> 以下に保存します。</div>
+
+<table>
+  <tr><th>フォルダ</th><th>内容</th><th>担当</th></tr>
+  <tr><td><code>outputs/&lt;案件名&gt;/spec.md</code></td><td>要件定義書</td><td>SPEC</td></tr>
+  <tr><td><code>outputs/&lt;案件名&gt;/wire/</code></td><td>設計図（フロー・画面・DB・トリガー）</td><td>WIRE</td></tr>
+  <tr><td><code>outputs/&lt;案件名&gt;/src/</code></td><td>実装ファイル（.gs / .html）</td><td>GASBOT / WEBSMITH / HOOKUP</td></tr>
+  <tr><td><code>outputs/&lt;案件名&gt;/shield/</code></td><td>テスト報告書</td><td>SHIELD</td></tr>
+  <tr><td><code>outputs/&lt;案件名&gt;/manual/</code></td><td>操作マニュアル・引継ぎメモ</td><td>SCRIBE</td></tr>
+</table>
+
+<div class="tip"><span class="label">納品完了の定義</span>受託案件：① 動作するコード/アプリがoutputsに存在 ② SHIELDの全項目PASS ③ SCRIBEのマニュアルがクライアントに渡せる状態 ④ 「クライアントが一人で使い始められる」状態</div>
+
+<hr>
+<p style="text-align:center;color:#94A3B8;font-size:13px">アプリ開発事業部 エージェントガイド / 有限会社アートソウル</p>
+</div>
+</body>
+</html>
