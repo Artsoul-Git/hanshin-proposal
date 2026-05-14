@@ -212,6 +212,84 @@ function _rand(seed) {
 }
 
 // ──────────────────────────────────────────────────────────────────
+// ▼ デモデータのuser_idを実際のユーザーIDに修正（週次レポートが表示されない場合）
+//   GASエディタで fixDemoDataUserId() を選択して「実行」してください
+// ──────────────────────────────────────────────────────────────────
+function fixDemoDataUserId() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // ── 実際の最初のアクティブユーザーIDを取得 ──
+  const usersSheet = ss.getSheetByName('users');
+  const usersData  = usersSheet.getDataRange().getValues();
+  const uHeaders   = usersData[0];
+  const uUserIdIdx = uHeaders.indexOf('user_id');
+  const uStatusIdx = uHeaders.indexOf('status');
+  const uStartIdx  = uHeaders.indexOf('start_date');
+
+  let actualUserId = null;
+  let actualUserRow = -1;
+  for (let i = 1; i < usersData.length; i++) {
+    if (usersData[i][uStatusIdx] !== 'churned') {
+      actualUserId  = String(usersData[i][uUserIdIdx]);
+      actualUserRow = i + 1;
+      break;
+    }
+  }
+
+  if (!actualUserId) {
+    Logger.log('アクティブなユーザーが見つかりません');
+    SpreadsheetApp.getActiveSpreadsheet().toast('ユーザーが見つかりません', 'エラー', 5);
+    return;
+  }
+
+  Logger.log('実際のユーザーID: ' + actualUserId);
+
+  // start_date を 2026-02-14 に更新（まだされていない場合）
+  if (actualUserRow > 0 && uStartIdx >= 0) {
+    usersSheet.getRange(actualUserRow, uStartIdx + 1).setValue('2026-02-14');
+  }
+
+  // ── daily_log: LOG_DEMO* 行のuser_idを置換 ──
+  const logSheet = ss.getSheetByName('daily_log');
+  const logData  = logSheet.getDataRange().getValues();
+  const lHeaders = logData[0];
+  const lUserIdx = lHeaders.indexOf('user_id');
+  const lIdIdx   = lHeaders.indexOf('log_id');
+
+  let logCount = 0;
+  for (let i = 1; i < logData.length; i++) {
+    if (String(logData[i][lIdIdx]).startsWith('LOG_DEMO')) {
+      logSheet.getRange(i + 1, lUserIdx + 1).setValue(actualUserId);
+      logCount++;
+    }
+  }
+
+  // ── weekly_reports: RPT_DEMO* 行のuser_idを置換 ──
+  const rptSheet = ss.getSheetByName('weekly_reports');
+  let rptCount = 0;
+  if (rptSheet) {
+    const rptData  = rptSheet.getDataRange().getValues();
+    const rHeaders = rptData[0];
+    const rUserIdx = rHeaders.indexOf('user_id');
+    const rIdIdx   = rHeaders.indexOf('report_id');
+
+    for (let i = 1; i < rptData.length; i++) {
+      if (String(rptData[i][rIdIdx]).startsWith('RPT_DEMO')) {
+        rptSheet.getRange(i + 1, rUserIdx + 1).setValue(actualUserId);
+        rptCount++;
+      }
+    }
+  }
+
+  Logger.log('daily_log 修正: ' + logCount + '件');
+  Logger.log('weekly_reports 修正: ' + rptCount + '件');
+  SpreadsheetApp.getActiveSpreadsheet().toast(
+    `修正完了！ ログ:${logCount}件 レポート:${rptCount}件`,
+    'Nolia Demo Fix', 5
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────
 // ▼ デモデータを削除したい場合はこちらを実行
 // ──────────────────────────────────────────────────────────────────
 function deleteDemoData() {
