@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Kai Visualize Server  port 3458
+クリックで自動生成: ANTHROPIC_API_KEY が環境変数にあれば Claude API を直接呼び出す
 Usage: python server.py
 """
-import json, os, uuid, datetime, threading, queue, webbrowser
+import json, os, uuid, datetime, threading, queue, webbrowser, re
+import urllib.request, urllib.error
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import socketserver
 
@@ -13,7 +15,24 @@ STATE_FILE = os.path.join(BASE, 'state.json')
 _clients: dict = {}
 _lock = threading.Lock()
 
+# ─── テーマ・タスクデータ（index.html と同期） ───
+THEMES = [
+    '顧客開拓', '提案品質向上', '収益・財務設計', 'マーケティング',
+    'セミナー事業', 'パートナー連携', '業務効率化', '人材・組織体制'
+]
+TASKS = [
+    ['ターゲット業種絞り込み','リード獲得フロー設計','紹介・口コミ仕組み化','問い合わせページ最適化','SNS露出増加','無料診断メニュー作成','月次アプローチ件数管理','商談→成約率改善'],
+    ['スキルセット拡充','ケーススタディ蓄積','提案書テンプレ改善','実績事例ドキュメント化','Kai精度継続評価','業種別ノウハウ整備','ファクトチェック徹底','フィードバック収集'],
+    ['月次収益目標設定','料金体系見直し','収益源の多角化','損益シミュレーション','CF計画の立案','投資計画の策定','粗利率の改善','年間売上KPI分解'],
+    ['LP設計最適化','コンテンツマーケ','メルマガリスト構築','SEO/SNS戦略','無料セミナー告知','事例コンテンツ発信','USP明確化','広告運用検討'],
+    ['セミナーテーマ計画','参加者目標管理','セミナー後フォロー','動画コンテンツ化','スライド品質向上','アーカイブ運用','有料セミナー展開','コラボセミナー'],
+    ['税理士・社労士連携','中小企業診断士連携','差別化ポジション','紹介ネットワーク構築','アライアンス条件設計','共同提案の仕組み','補助金情報提供','商工会・金融機関'],
+    ['Kai作業フロー最適化','テンプレート整備','ファイル管理徹底','定型業務の自動化','作業時間の計測','外注可能業務整理','ツール棚卸し','週次レビュー習慣化'],
+    ['上村スキル強化計画','外注スタッフ活用検討','Kaiとの役割分担','業務委託先選定基準','自社ナレッジ整備','学習・インプット計画','健康・稼働管理','3年後の組織像設計'],
+]
 
+
+# ─── State I/O ───
 def _load() -> dict:
     try:
         with open(STATE_FILE, encoding='utf-8') as f:
@@ -37,6 +56,129 @@ def _broadcast(event: str, data: dict) -> None:
                 pass
 
 
+# ─── Claude API ───
+def _call_claude(prompt: str) -> str:
+    api_key = os.environ.get('ANTHROPIC_API_KEY', '')
+    if not api_key:
+        raise RuntimeError('ANTHROPIC_API_KEY が設定されていません')
+
+    payload = json.dumps({
+        'model': 'claude-sonnet-4-6',
+        'max_tokens': 2048,
+        'messages': [{'role': 'user', 'content': prompt}]
+    }, ensure_ascii=False).encode('utf-8')
+
+    req = urllib.request.Request(
+        'https://api.anthropic.com/v1/messages',
+        data=payload,
+        headers={
+            'x-api-key': api_key,
+            'anthropic-version': '2023-06-01',
+            'content-type': 'application/json',
+        }
+    )
+    with urllib.request.urlopen(req, timeout=45) as r:
+        resp = json.loads(r.read())
+        return resp['content'][0]['text']
+
+
+def _extract_json(text: str) -> dict:
+    # コードブロックを除去してJSONを抽出
+    text = re.sub(r'```[a-z]*\n?', '', text).strip()
+    match = re.search(r'\{[\s\S]*\}', text)
+    if not match:
+        raise ValueError('JSON が見つかりませんでした')
+    return json.loads(match.group(0))
+
+
+def _gen_4q(ti: int) -> dict:
+    theme = THEMES[ti]
+    tasks = ', '.join(TASKS[ti])
+    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の8タスクを4象限マトリクスに整理してください。
+
+タスク一覧：{tasks}
+
+以下のJSON形式のみで返答してください（説明・コードブロック不要）：
+{{
+  "axis": {{"x": "実施コスト・難易度", "y": "期待インパクト"}},
+  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "タスク名", "s": "理由（25字以内）", "flow": false}}]}},
+  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
+  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
+  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}}
+}}
+※ 8タスクをすべていずれかの象限に配置。Q1（今すぐ着手）の最重要タスク1つのみ "flow": true を付けてください。"""
+    return _extract_json(_call_claude(prompt))
+
+
+def _gen_flow(ti: int, context: str) -> str:
+    theme = THEMES[ti]
+    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の課題「{context}」の実行フロー図をMermaid記法で生成してください。
+
+要件：
+- flowchart TD 形式
+- 7〜10ステップ（STEP番号付き）
+- 分岐（菱形）を2箇所含む
+- Kaiスキル（/sme-ai-proposal, /research, /marketing 等）を1箇所に含める
+- style文で色付け：開始(fill:#1565c0)、終了(fill:#2e7d32)、分岐(fill:#e65100)、Kaiスキルノード(fill:#6a1b9a)
+
+Mermaidコードのみ返答（```や説明は不要）："""
+    text = _call_claude(prompt).strip()
+    # コードブロックを除去
+    text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
+    return text.strip()
+
+
+def _gen_gantt(ti: int, context: str) -> str:
+    theme = THEMES[ti]
+    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」（{context}）の実行スケジュールをMermaid gaanttで生成してください。
+
+要件：
+- dateFormat YYYY-MM-DD
+- excludes weekends
+- 想定開始：2026年6月1日
+- 3週間・3セクション構成
+- クリティカルパス2タスク（:crit付き）
+- マイルストーン2個（:milestone付き）
+
+Mermaidコードのみ返答（```や説明は不要）："""
+    text = _call_claude(prompt).strip()
+    text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
+    return text.strip()
+
+
+def _auto_generate(req: dict) -> None:
+    """バックグラウンドスレッドで Claude API を呼び出して生成"""
+    ti = req.get('theme_id', 0)
+    gtype = req.get('type', '')
+    context = req.get('context', THEMES[ti] if 0 <= ti < 8 else '')
+    req_id = req['id']
+
+    print(f'[AUTO] 生成開始: {gtype} / {THEMES[ti]} (id={req_id})')
+    try:
+        if gtype == '4q':
+            content = _gen_4q(ti)
+        elif gtype == 'flow':
+            content = _gen_flow(ti, context)
+        elif gtype == 'gantt':
+            content = _gen_gantt(ti, context)
+        else:
+            return
+
+        s = _load()
+        s['generated'].setdefault(gtype, {})[str(ti)] = content
+        s['queue'] = [q for q in s['queue'] if q['id'] != req_id]
+        _save(s)
+        _broadcast('content_ready', {'type': gtype, 'key': str(ti), 'content': content})
+        print(f'[AUTO] 生成完了: {gtype} / {THEMES[ti]}')
+
+    except Exception as e:
+        print(f'[AUTO] エラー: {e}')
+        _broadcast('generate_error', {'id': req_id, 'error': str(e)})
+
+
+# ─── HTTP Handler ───
 class _Handler(BaseHTTPRequestHandler):
     def _cors(self):
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -56,6 +198,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._json(_load())
         elif p == '/events':
             self._sse()
+        elif p == '/has-api-key':
+            self._json({'ok': bool(os.environ.get('ANTHROPIC_API_KEY'))})
         else:
             self.send_response(404)
             self.end_headers()
@@ -84,6 +228,10 @@ class _Handler(BaseHTTPRequestHandler):
             _save(s)
             _broadcast('request_added', req)
             self._json({'ok': True, 'id': req['id']})
+
+            # API キーがあれば自動生成
+            if os.environ.get('ANTHROPIC_API_KEY'):
+                threading.Thread(target=_auto_generate, args=(req,), daemon=True).start()
 
         elif p == '/generate':
             gtype = body.get('type')
@@ -176,8 +324,10 @@ class _Server(socketserver.ThreadingMixIn, HTTPServer):
 
 
 if __name__ == '__main__':
+    has_key = bool(os.environ.get('ANTHROPIC_API_KEY'))
+    mode = 'クリック自動生成モード' if has_key else '手動生成モード（API キーなし）'
+    print(f'Kai Visualize Server: http://localhost:{PORT}  [{mode}]  (Ctrl+C で停止)')
     srv = _Server(('localhost', PORT), _Handler)
-    print(f'Kai Visualize Server: http://localhost:{PORT}  (Ctrl+C で停止)')
     threading.Timer(1.2, lambda: webbrowser.open(f'http://localhost:{PORT}')).start()
     try:
         srv.serve_forever()
