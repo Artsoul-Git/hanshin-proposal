@@ -1,0 +1,21 @@
+{
+  "query": "SELECT * FROM projects WHERE id = 2;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2hmW7JoNEqgT9bn.42e7d04f85c2 --database UXC9acevbVPZUwg2UyJ9NW --execute SELECT * FROM projects WHERE id = 2;",
+  "rows": [
+    {
+      "id": "2",
+      "userId": "1",
+      "title": "テストプロジェクト",
+      "background": "これはテスト用のプロジェクトです。エラーを再現するために作成しています。",
+      "targetPeriod": "NULL",
+      "constraints": "NULL",
+      "status": "draft",
+      "createdAt": "2026-01-05 14:06:09",
+      "updatedAt": "2026-01-05 14:06:09"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tuserId\ttitle\tbackground\ttargetPeriod\tconstraints\tstatus\tcreatedAt\tupdatedAt\n2\t1\tテストプロジェクト\tこれはテスト用のプロジェクトです。エラーを再現するために作成しています。\tNULL\tNULL\tdraft\t2026-01-05 14:06:09\t2026-01-05 14:06:09\n",
+  "stderr": "",
+  "execution_time_ms": 1518
+}
