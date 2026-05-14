@@ -1,0 +1,19 @@
+gantt
+  dateFormat  YYYY-MM-DD
+  title 提案書テンプレ改善 実行スケジュール（2026年6月）
+  excludes weekends
+
+  section 📋 準備（Week 1）
+    既存提案書の棚卸し・一覧化        :a1, 2026-06-01, 2d
+    成約・不成約パターン分析          :a2, after a1, 2d
+    クライアントフィードバックヒアリング :a3, after a1, 3d
+
+  section 🔍 設計（Week 2）
+    改善ポイント整理（4軸評価）        :b1, after a2, 2d
+    /sme-ai-proposal でテンプレ再設計  :crit, b2, after b1, 3d
+    ▼ 初稿レビュー・承認              :milestone, m1, after b2, 0d
+
+  section ✅ 検証・確定（Week 3）
+    社内レビュー・修正ループ           :crit, c1, after b2, 3d
+    業種別バリエーション整備           :c2, after c1, 2d
+    ▼ テンプレ確定・運用開始          :milestone, m2, after c2, 0d
