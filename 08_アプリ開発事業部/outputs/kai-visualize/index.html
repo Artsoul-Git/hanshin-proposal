@@ -308,12 +308,12 @@ async function initServer() {
 function onContentReady(type, key, content) {
   const curKey = _sk(S.ti, S.tj);
   if (type === '4q' && S.view === '4q' && key === curKey) { render4Q(S.ti, S.tj); }
-  else if (type === 'flow' && S.view === 'flow' && key === curKey) {
+  else if (type === 'flow' && S.view === 'flow' && key === (S.flowKey || curKey)) {
     _flowSrc = content;
     renderMermaidView('flow-body', content);
     document.getElementById('flow-to-gantt').style.display = '';
     document.getElementById('flow-cp-btn').style.display = '';
-  } else if (type === 'gantt' && S.view === 'gantt' && key === curKey) {
+  } else if (type === 'gantt' && S.view === 'gantt' && key === (S.flowKey || curKey)) {
     _ganttSrc = content;
     renderMermaidView('gantt-body', content);
     document.getElementById('gantt-cp-btn').style.display = '';
@@ -321,10 +321,10 @@ function onContentReady(type, key, content) {
 }
 
 /* ═══ NAVIGATION ═══ */
-const S = {view:'mandala', ti:null, tj:null};
+const S = {view:'mandala', ti:null, tj:null, flowCtx:null, flowKey:null};
 function go(view, params={}) {
   Object.assign(S, params); S.view = view;
-  if (view === 'mandala') { S.ti = null; S.tj = null; }
+  if (view === 'mandala') { S.ti = null; S.tj = null; S.flowCtx = null; S.flowKey = null; }
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('v-'+view).classList.add('active');
   if (view === '4q') render4Q(S.ti, S.tj);
@@ -357,17 +357,25 @@ function renderBC() {
 }
 
 /* ═══ REQUEST GENERATE ═══ */
-async function requestGenerate(type, ti, context, tj) {
+async function requestGenerate(type, ti, context, tj, flowKey) {
   if (!ONLINE) { alert('サーバーが起動していません。\n起動してブラウザを開く.vbs を実行してください。'); return; }
   const body = {type, theme_id: ti, context: context || TH[ti].n};
   if (tj !== null && tj !== undefined) body.task_id = tj;
+  if (flowKey) body.flow_key = flowKey;
   await fetch(`${API}/request`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
   if (type === '4q') render4Q(ti, tj);
   else if (type === 'flow') renderFlow(ti);
   else if (type === 'gantt') renderGantt(ti);
 }
 
-function _pendingFor(type, ti, tj) {
+function goFlow(el) {
+  const ti = parseInt(el.dataset.ti);
+  const tj = el.dataset.tj === 'null' ? null : parseInt(el.dataset.tj);
+  go('flow', {ti, tj, flowCtx: el.dataset.fctx, flowKey: el.dataset.fkey});
+}
+
+function _pendingFor(type, ti, tj, flowKey) {
+  if (flowKey) return (STATE.queue||[]).find(q => q.type === type && q.flow_key === flowKey);
   const key = _sk(ti, tj);
   return (STATE.queue||[]).find(q => {
     const qk = (q.task_id !== null && q.task_id !== undefined) ? `${q.theme_id}_${q.task_id}` : String(q.theme_id);
@@ -375,10 +383,11 @@ function _pendingFor(type, ti, tj) {
   });
 }
 
-function _pendingBox(type, ti, context, tj) {
-  const pending = _pendingFor(type, ti, tj);
+function _pendingBox(type, ti, context, tj, flowKey) {
+  const pending = _pendingFor(type, ti, tj, flowKey);
   const label = {'4q':'4象限マトリクス', flow:'フロー図', gantt:'ガントチャート'}[type];
   const tjArg = (tj !== null && tj !== undefined) ? tj : 'null';
+  const fkArg = flowKey ? `,'${flowKey}'` : '';
   if (pending) {
     if (AUTO_MODE) {
       return `<div class="pending-box">
@@ -400,7 +409,7 @@ function _pendingBox(type, ti, context, tj) {
     return `<div class="gen-box">
       <h3>${context}　${label}</h3>
       <p>まだ生成されていません。ボタンをクリックするとAIへのリクエストが送られます。</p>
-      <button class="btn-gen" onclick="requestGenerate('${type}',${ti},'${context.replace(/'/g,"\\'")}',${tjArg})">
+      <button class="btn-gen" onclick="requestGenerate('${type}',${ti},'${context.replace(/'/g,"\\'")}',${tjArg}${fkArg})">
         ✨ ${label}を生成する
       </button>
     </div>`;
@@ -426,43 +435,49 @@ function render4Q(ti, tj) {
   document.getElementById('q4-cp-btn').style.display = '';
   document.getElementById('q4-meta').textContent = `Y軸：${data.axis.y}（高→低）　X軸：${data.axis.x}（低→高）`;
   const tjVal = (tj !== null && tj !== undefined) ? tj : 'null';
-  const ri = items => items.map(item => `
-    <div class="qi${item.flow?' link':''}"${item.flow?` onclick="go('flow',{ti:${ti},tj:${tjVal}})"`:''}>
+  const ri = (items, quad) => items.map((item, idx) => {
+    const fKey = `f_${ti}_${tjVal}_${quad}_${idx}`;
+    const fCtx = (item.t||'').replace(/"/g,'&quot;');
+    return `<div class="qi link"
+      data-fkey="${fKey}" data-fctx="${fCtx}" data-ti="${ti}" data-tj="${tjVal}"
+      onclick="goFlow(this)">
       ${item.t}
       <div class="qi-sub">${item.s||''}</div>
-      ${item.flow?'<div class="qi-tag">▶ フロー図あり（クリックで表示）</div>':''}
-    </div>`).join('');
+      <div class="qi-tag">▶ フロー図を生成</div>
+    </div>`;
+  }).join('');
   body.innerHTML = `
     <div class="mwrap">
       <div class="ax-xt">← ${data.axis.x} 低</div>
       <div class="ax-yl">↑ ${data.axis.y} 高</div>
       <div class="mx">
-        <div class="qd tl"><div class="ql">${data.tl.lbl}</div>${ri(data.tl.items)}</div>
-        <div class="qd tr"><div class="ql">${data.tr.lbl}</div>${ri(data.tr.items)}</div>
-        <div class="qd bl"><div class="ql">${data.bl.lbl}</div>${ri(data.bl.items)}</div>
-        <div class="qd br"><div class="ql">${data.br.lbl}</div>${ri(data.br.items)}</div>
+        <div class="qd tl"><div class="ql">${data.tl.lbl}</div>${ri(data.tl.items,'tl')}</div>
+        <div class="qd tr"><div class="ql">${data.tr.lbl}</div>${ri(data.tr.items,'tr')}</div>
+        <div class="qd bl"><div class="ql">${data.bl.lbl}</div>${ri(data.bl.items,'bl')}</div>
+        <div class="qd br"><div class="ql">${data.br.lbl}</div>${ri(data.br.items,'br')}</div>
       </div>
       <div class="ax-yr">低 ↓</div>
       <div class="ax-xb">高 →</div>
     </div>
-    <div style="margin-top:8px;font-size:12px;color:#888">💡 <b style="color:#e53935">▶ フロー図あり</b> のカードをクリックするとフロー図に進めます</div>`;
+    <div style="margin-top:8px;font-size:12px;color:#888">💡 各カードをクリックするとそのアクションのフロー図を生成します</div>`;
 }
 
 /* ═══ FLOW RENDER ═══ */
 function renderFlow(ti) {
   const th = TH[ti];
   const taskName = (S.tj !== null && S.tj !== undefined) ? TS[ti][S.tj].replace(/\n/g,' ') : null;
-  const context = taskName || th.n;
-  const key = _sk(ti, S.tj);
+  const context = S.flowCtx || taskName || th.n;
+  const key = S.flowKey || _sk(ti, S.tj);
   document.getElementById('flow-title').textContent = `${context}　フロー図`;
-  document.getElementById('flow-meta').textContent = taskName
-    ? `${th.n} › ${taskName} の実行フロー` : `テーマ${ti+1}: ${th.n} の実行フロー`;
+  document.getElementById('flow-meta').textContent = S.flowCtx
+    ? `${th.n}${taskName ? ' › ' + taskName : ''} › ${S.flowCtx} の実行フロー`
+    : (taskName ? `${th.n} › ${taskName} の実行フロー` : `テーマ${ti+1}: ${th.n} の実行フロー`);
   const src = STATE?.generated?.flow?.[key];
   const body = document.getElementById('flow-body');
   if (!src) {
     document.getElementById('flow-to-gantt').style.display = 'none';
     document.getElementById('flow-cp-btn').style.display = 'none';
-    body.innerHTML = _pendingBox('flow', ti, context, S.tj);
+    body.innerHTML = _pendingBox('flow', ti, context, S.tj, key);
     return;
   }
   _flowSrc = src;
@@ -475,16 +490,17 @@ function renderFlow(ti) {
 function renderGantt(ti) {
   const th = TH[ti];
   const taskName = (S.tj !== null && S.tj !== undefined) ? TS[ti][S.tj].replace(/\n/g,' ') : null;
-  const context = taskName || th.n;
-  const key = _sk(ti, S.tj);
+  const context = S.flowCtx || taskName || th.n;
+  const key = S.flowKey || _sk(ti, S.tj);
   document.getElementById('gantt-title').textContent = `${context}　ガントチャート`;
-  document.getElementById('gantt-meta').textContent = taskName
-    ? `${th.n} › ${taskName} の実行スケジュール` : `${th.n} の実行スケジュール`;
+  document.getElementById('gantt-meta').textContent = S.flowCtx
+    ? `${S.flowCtx} の実行スケジュール`
+    : (taskName ? `${th.n} › ${taskName} の実行スケジュール` : `${th.n} の実行スケジュール`);
   const src = STATE?.generated?.gantt?.[key];
   const body = document.getElementById('gantt-body');
   if (!src) {
     document.getElementById('gantt-cp-btn').style.display = 'none';
-    body.innerHTML = _pendingBox('gantt', ti, context, S.tj);
+    body.innerHTML = _pendingBox('gantt', ti, context, S.tj, key);
     return;
   }
   _ganttSrc = src;

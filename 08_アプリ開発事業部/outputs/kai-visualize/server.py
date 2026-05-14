@@ -137,42 +137,62 @@ def _gen_4q_task(ti: int, tj: int) -> dict:
     return _extract_json(_call_gemini(prompt))
 
 
-def _gen_flow(ti: int, context: str) -> str:
-    theme = THEMES[ti]
-    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の課題「{context}」の実行フロー図をMermaid記法で生成してください。
-
-要件：
-- flowchart TD 形式
-- 7〜10ステップ（STEP番号付き）
-- 分岐（菱形）を2箇所含む
-- Kaiスキル（/sme-ai-proposal, /research, /marketing 等）を1箇所に含める
-- style文で色付け：開始(fill:#1565c0)、終了(fill:#2e7d32)、分岐(fill:#e65100)、Kaiスキルノード(fill:#6a1b9a)
-
-Mermaidコードのみ返答（```や説明は不要）："""
-    text = _call_gemini(prompt).strip()
-    # コードブロックを除去
+def _sanitize_mermaid(text: str) -> str:
+    lines = []
+    for line in text.split('\n'):
+        s = line.strip()
+        if s.startswith('style ') or s.startswith('classDef ') or s.startswith('class '):
+            continue
+        lines.append(line)
+    text = '\n'.join(lines).strip()
     text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
     text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
     return text.strip()
+
+
+def _gen_flow(ti: int, context: str) -> str:
+    theme = THEMES[ti]
+    prompt = f"""テーマ「{theme}」のアクション「{context}」の実行手順をMermaidフロー図で生成してください。
+
+【Mermaid構文ルール（必ず守ること）】
+- 1行目: flowchart TD
+- ノードID: 英字1〜2文字のみ（A B C D E F G H）
+- 全ラベルは二重引用符で囲む: A["開始"]
+- 分岐（菱形）: D{{"判断？"}}
+- 条件付き矢印: D -- "はい" --> E
+- style/classDef/class 文は一切書かない
+- コードブロック（```）は書かない
+
+【構成（8〜10ノード）】
+開始 → 準備ステップ2〜3個 → 分岐1箇所 → 実行ステップ2〜3個 → 終了
+
+Mermaidコードのみ出力:"""
+    return _sanitize_mermaid(_call_gemini(prompt))
 
 
 def _gen_gantt(ti: int, context: str) -> str:
     theme = THEMES[ti]
-    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」（{context}）の実行スケジュールをMermaid gaanttで生成してください。
+    prompt = f"""テーマ「{theme}」（{context}）の実行スケジュールをMermaidガントチャートで生成してください。
 
-要件：
-- dateFormat YYYY-MM-DD
-- excludes weekends
-- 想定開始：2026年6月1日
-- 3週間・3セクション構成
-- クリティカルパス2タスク（:crit付き）
-- マイルストーン2個（:milestone付き）
+【Mermaid構文ルール（必ず守ること）】
+- 1行目: gantt（gが1つ。"gaantt"は誤り）
+- 2行目: title {context}の実行計画
+- 3行目: dateFormat YYYY-MM-DD
+- 4行目: excludes weekends
+- タスク名に括弧・コロン・スラッシュは使わない
+- クリティカルタスク: タスク名 :crit, 2026-06-01, 5d
+- マイルストーン: 名前 :milestone, 2026-06-07, 0d
+- コードブロック（```）は書かない
 
-Mermaidコードのみ返答（```や説明は不要）："""
-    text = _call_gemini(prompt).strip()
-    text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
-    text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
-    return text.strip()
+【構成】
+section 準備フェーズ（3タスク）
+section 実行フェーズ（3タスク、うち1つcrit）
+section 完了フェーズ（マイルストーン2個）
+
+開始日: 2026-06-01
+
+Mermaidコードのみ出力:"""
+    return _sanitize_mermaid(_call_gemini(prompt))
 
 
 def _auto_generate(req: dict) -> None:
@@ -182,7 +202,8 @@ def _auto_generate(req: dict) -> None:
     gtype = req.get('type', '')
     context = req.get('context', THEMES[ti] if 0 <= ti < 8 else '')
     req_id = req['id']
-    state_key = f"{ti}_{tj}" if tj is not None else str(ti)
+    default_key = f"{ti}_{tj}" if tj is not None else str(ti)
+    state_key = req.get('flow_key') or default_key
 
     label = f"{THEMES[ti]}[{tj}]" if tj is not None else THEMES[ti]
     print(f'[AUTO] 生成開始: {gtype} / {label} (id={req_id})')
@@ -254,6 +275,7 @@ class _Handler(BaseHTTPRequestHandler):
                 'theme_id': body.get('theme_id'),
                 'task_id': body.get('task_id'),  # None=テーマ全体, 数値=特定タスク
                 'context': body.get('context', ''),
+                'flow_key': body.get('flow_key'),
                 'status': 'pending',
                 'created_at': datetime.datetime.now().isoformat(),
             }
