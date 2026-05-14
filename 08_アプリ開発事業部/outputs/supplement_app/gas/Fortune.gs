@@ -1,5 +1,5 @@
 // =============================================
-// Fortune.gs — 今日の占い（四柱推命ベース・動物占い風）
+// Fortune.gs — 今日のエネルギー（四柱推命×五行カラー）
 // =============================================
 
 const Fortune = {
@@ -8,7 +8,6 @@ const Fortune = {
     const userId = Auth.getUserIdByToken(token);
     if (!userId) return jsonErr('invalid_token');
 
-    // ユーザーの生年月日を取得
     const sheet   = getSheet('users');
     const data    = sheet.getDataRange().getValues();
     const headers = data[0];
@@ -28,22 +27,23 @@ const Fortune = {
     if (!birthdate) return jsonErr('birthdate_not_set');
 
     const today = todayJST();
-    const fortune = this._generate(birthdate, today, userName);
-    return jsonOk({ fortune, date: today });
+    const energy = this._generate(birthdate, today, userName);
+    return jsonOk({ fortune: energy, date: today });
   },
 
   _generate(birthdate, today, userName) {
-    const prompt = `あなたは四柱推命をベースにした動物占いの占い師です。
-生年月日から命式（年柱・月柱・日柱の干支）を算出し、今日の日柱と月柱の干支と組み合わせて、
-${userName || 'あなた'}さんの今日の運勢を動物キャラクターで表現してください。
+    const prompt = `あなたはNoliaというウェルネスアプリのAIです。
+四柱推命に基づき、命式（年柱・月柱・日柱の干支）と今日の日柱・月柱の干支を計算し、
+${userName || 'あなた'}さんの「今日の気（エネルギー）」を五行（木・火・土・金・水）と自然の色彩で表現してください。
+動物キャラクターは一切使わず、自然の元素・光・色のイメージで。
 
 生年月日: ${birthdate}
 今日の日付: ${today}
 
 以下のJSON形式のみで出力（前後に余計な文章・マークダウン不要）:
-{"animal":"動物名（ライオン・ウサギ・コアラ・チーター・ゾウ・オオカミ・トラ・クマ・キツネ・シカ・イルカ・フクロウ・ペガサス・タヌキなどから）","emoji":"その動物の絵文字1つ","tagline":"今日のひとことキャッチ（12文字以内）","message":"今日の運勢（70〜90文字・前向きに・具体的なアドバイスを含む）","lucky_color":"ラッキーカラー（色名のみ）","lucky_action":"今日のラッキーアクション（10文字以内）"}`;
+{"energy_name":"気のエネルギー名（例：清流の気・大地の息吹・陽炎の光・深淵の静・金風の閃き）（12文字以内）","color_name":"今日のカラー（日本語の色名 例：深緑・朱色・藤色・琥珀・紺碧）（10文字以内）","color_hex":"そのカラーのHEXコード（例：#2B8A7A）","keyword":"今日の一言（例：前進・充電・解放・温もり・凛）（6文字以内）","message":"今日のウェルネスメッセージ（70〜90文字・具体的な行動アドバイスを含む・前向きな内容）","lucky_action":"今日意識すること（12文字以内）"}`;
 
-    const raw = callGemini(prompt, 300);
+    const raw = callGemini(prompt, 350);
 
     try {
       const m = raw.match(/\{[\s\S]*?\}/);
@@ -52,13 +52,13 @@ ${userName || 'あなた'}さんの今日の運勢を動物キャラクターで
       console.warn('Fortune parse error:', e.message, raw);
     }
 
-    // フォールバック
+    // フォールバック（デフォルトは木のエネルギー）
     return {
-      animal:       'コアラ',
-      emoji:        '🐨',
-      tagline:      'ゆっくりが一番速い',
-      message:      '今日は焦らずマイペースに過ごすと吉。カラダの声をよく聞いて、サプリもしっかり続けましょう。',
-      lucky_color:  'グリーン',
+      energy_name:  '清流の気',
+      color_name:   'フォレストグリーン',
+      color_hex:    '#2B8A7A',
+      keyword:      'ありのまま',
+      message:      '今日は自分のペースを大切に。カラダの声に耳を傾けながら、サプリとともにリズムを整えていきましょう。',
       lucky_action: '深呼吸する',
     };
   },

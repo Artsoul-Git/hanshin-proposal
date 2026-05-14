@@ -59,7 +59,7 @@ const Auth = {
     const headers = data[0];
     const userIdIdx = headers.indexOf('user_id');
 
-    const updatable = ['display_name','height','exercise_days','goal_weight','purpose'];
+    const updatable = ['display_name','birthdate','height','exercise_days','goal_weight','purpose'];
 
     for (let i = 1; i < data.length; i++) {
       if (data[i][userIdIdx] !== userId) continue;
