@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__KAI_TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== DECK-SPRINT SLIDE TEMPLATE — Kai Edition ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', sans-serif;
+  background: #0F172A;
+  color: #1E293B;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== CONTROLS ===== */
+.deck-controls {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 48px;
+  background: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.deck-title-bar {
+  font-size: 13px;
+  color: #94A3B8;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+.deck-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-btn {
+  background: rgba(255,255,255,0.08);
+  color: #CBD5E1;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  user-select: none;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.slide-counter {
+  font-size: 13px;
+  color: #64748B;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ===== SLIDE VIEWPORT ===== */
+.deck-viewport {
+  margin-top: 48px;
+  width: 100vw;
+  min-height: calc(100vh - 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ===== BASE SLIDE ===== */
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 960px;
+  min-height: 540px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease;
+}
+.slide.active { display: flex; flex-direction: column; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Slide header bar */
+.slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1A365D 0%, #3182CE 60%, #0EA5E9 100%);
+}
+
+/* ===== TITLE SLIDE ===== */
+.title-slide {
+  background: #1A365D;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 80px;
+}
+.title-slide::before { background: linear-gradient(90deg, #0EA5E9, #3182CE, #1A365D); }
+.title-slide .slide-label {
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #93C5FD;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.title-slide h1 {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.25;
+  color: #FFFFFF;
+  margin-bottom: 28px;
+}
+.title-slide .subtitle {
+  font-size: 18px;
+  color: #93C5FD;
+  font-weight: 400;
+}
+.title-slide .meta {
+  position: absolute;
+  bottom: 28px;
+  right: 36px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ===== CONTENT SLIDES ===== */
+.slide-header {
+  background: #1A365D;
+  color: white;
+  padding: 20px 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.slide-num {
+  width: 32px; height: 32px;
+  background: #3182CE;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: white;
+  flex-shrink: 0;
+}
+.slide-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+}
+.slide-body {
+  padding: 32px 36px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* ===== KPI CARDS ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.kpi-card {
+  background: #F0F9FF;
+  border: 2px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 20px 18px;
+  text-align: center;
+  border-top: 4px solid #3182CE;
+}
+.kpi-number {
+  font-size: 40px;
+  font-weight: 900;
+  color: #1A365D;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi-unit { font-size: 18px; color: #3182CE; font-weight: 700; }
+.kpi-label {
+  font-size: 12px;
+  color: #64748B;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* ===== CARD GRID ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 18px 20px;
+  border-left: 5px solid #3182CE;
+}
+.card h4 { font-size: 14px; color: #1A365D; font-weight: 700; margin-bottom: 8px; }
+.card p { font-size: 13px; color: #4A5568; line-height: 1.6; }
+
+/* ===== TWO COLUMN ===== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.col-box {
+  background: #F8FAFC;
+  border-radius: 10px;
+  padding: 20px 24px;
+  border-top: 4px solid #3182CE;
+}
+.col-box h4 { font-size: 15px; color: #1A365D; font-weight: 700; margin-bottom: 12px; }
+.col-box ul { list-style: none; padding: 0; }
+.col-box li { font-size: 13px; color: #4A5568; padding: 5px 0; border-bottom: 1px solid #E2E8F0; }
+.col-box li:last-child { border: none; }
+.col-box li::before { content: '▸ '; color: #3182CE; }
+
+/* ===== ICON LIST ===== */
+.icon-list { list-style: none; padding: 0; display: grid; gap: 12px; }
+.icon-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 16px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+}
+.icon-list .icon {
+  width: 36px; height: 36px;
+  background: #1A365D;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.icon-list .text h5 { font-size: 13px; color: #1A365D; font-weight: 700; margin-bottom: 2px; }
+.icon-list .text p { font-size: 12px; color: #64748B; line-height: 1.5; }
+
+/* ===== KEY MESSAGE (quote style) ===== */
+.key-message {
+  background: #1A365D;
+  border-radius: 12px;
+  padding: 36px 40px;
+  text-align: center;
+  color: white;
+}
+.key-message .quote-text {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: white;
+  margin-bottom: 16px;
+}
+.key-message .quote-sub { font-size: 14px; color: #93C5FD; }
+
+/* ===== BAR CHART ===== */
+.bar-chart { display: flex; flex-direction: column; gap: 12px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label { font-size: 13px; color: #4A5568; width: 120px; flex-shrink: 0; text-align: right; }
+.bar-track { flex: 1; height: 28px; background: #F1F5F9; border-radius: 6px; overflow: hidden; }
+.bar-fill { height: 100%; background: linear-gradient(90deg, #1A365D, #3182CE); border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+.bar-val { font-size: 12px; color: white; font-weight: 700; }
+
+/* ===== AGENDA LIST ===== */
+.agenda-list { list-style: none; padding: 0; counter-reset: agenda; display: grid; gap: 12px; }
+.agenda-list li {
+  counter-increment: agenda;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+}
+.agenda-list li::before {
+  content: counter(agenda);
+  width: 32px; height: 32px;
+  background: #3182CE;
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+  flex-shrink: 0;
+}
+.agenda-list li .item-title { font-size: 14px; color: #1E293B; font-weight: 600; }
+.agenda-list li .item-desc { font-size: 12px; color: #64748B; margin-top: 2px; }
+
+/* ===== CLOSING SLIDE ===== */
+.closing-slide {
+  background: linear-gradient(135deg, #1A365D 0%, #0F172A 100%);
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 80px;
+}
+.closing-slide::before { background: linear-gradient(90deg, #0EA5E9, #3182CE); }
+.closing-slide h2 {
+  font-size: 32px;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 20px;
+}
+.closing-slide p {
+  font-size: 16px;
+  color: #93C5FD;
+  line-height: 1.8;
+}
+.closing-slide .generated-by {
+  position: absolute;
+  bottom: 24px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar {
+  position: fixed;
+  bottom: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #1A365D, #3182CE, #0EA5E9);
+  transition: width 0.3s ease;
+  z-index: 100;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .slide { min-height: 400px; }
+  .title-slide h1 { font-size: 28px; }
+  .slide-header h2 { font-size: 16px; }
+  .two-col { grid-template-columns: 1fr; }
+  .kpi-number { font-size: 30px; }
+}
+
+@media print {
+  .deck-controls, .progress-bar { display: none; }
+  body { background: white; }
+  .deck-viewport { margin-top: 0; padding: 0; }
+  .slide { display: flex !important; box-shadow: none; page-break-after: always; border-radius: 0; max-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Controls -->
+<div class="deck-controls">
+  <div class="deck-title-bar" id="deckTitleBar">__KAI_TITLE__</div>
+  <div class="deck-nav">
+    <button class="nav-btn" id="btnPrev" onclick="navigate(-1)">← 前へ</button>
+    <span class="slide-counter" id="slideCounter">1 / 1</span>
+    <button class="nav-btn" id="btnNext" onclick="navigate(1)">次へ →</button>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Slides Viewport -->
+<div class="deck-viewport" id="deckViewport">
+
+<!-- [KAI_SLIDES_START] -->
+<!-- ds-deck エージェントがここを差し替えます。下記はプレースホルダーです。 -->
+<section class="slide title-slide active">
+  <div class="slide-label">deck-sprint — Kai Edition</div>
+  <h1>__KAI_TITLE__</h1>
+  <div class="subtitle">deck-sprint が生成中です</div>
+  <div class="meta">生成：Kai / deck-sprint</div>
+</section>
+<!-- [KAI_SLIDES_END] -->
+
+</div>
+
+<script>
+(function() {
+  var slides = document.querySelectorAll('.slide');
+  var current = 0;
+  var total = slides.length;
+
+  function updateUI() {
+    slides.forEach(function(s, i) { s.classList.toggle('active', i === current); });
+    document.getElementById('slideCounter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('btnPrev').disabled = current === 0;
+    document.getElementById('btnNext').disabled = current === total - 1;
+    var pct = total > 1 ? ((current + 1) / total * 100) : 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  window.navigate = function(dir) {
+    current = Math.max(0, Math.min(total - 1, current + dir));
+    updateUI();
+  };
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  updateUI();
+})();
+</script>
+</body>
+</html>

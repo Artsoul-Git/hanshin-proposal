@@ -158,6 +158,8 @@
     <a class="sb-link" href="#sk-news">/ai-news-digest</a>
     <a class="sb-link" href="#sk-setup">/company-setup</a>
     <a class="sb-link" href="#sk-seminar">/seminar-slide</a>
+    <a class="sb-link" href="#sk-content-burst">/content-burst</a>
+    <a class="sb-link" href="#sk-deck-sprint">/deck-sprint</a>
   </div>
 
   <div class="sb-section">
@@ -230,6 +232,7 @@
 <!-- 変更履歴 -->
 <table class="changelog">
 <tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v3.1</td><td>2026-05-15</td><td>/content-burst・/deck-sprint スキル追加。サイドバー・目次・スキルリファレンス更新。</td></tr>
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
@@ -261,6 +264,8 @@
     <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
     <li class="sub-item"><a href="#sk-setup">/company-setup — AI組織ゼロベース設計</a></li>
     <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
+    <li class="sub-item"><a href="#sk-content-burst">/content-burst — テーマ→6チャネル発信物を並列生成</a></li>
+    <li class="sub-item"><a href="#sk-deck-sprint">/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成</a></li>
     <li><strong>アプリ・ツール（NEW）</strong></li>
     <li class="sub-item"><a href="#app-keiyakusho">契約書AIチェックセミナー</a></li>
     <li class="sub-item"><a href="#app-kai-tasks">Kai Tasks プロジェクト管理</a></li>
@@ -681,6 +686,81 @@
 <h3>完全マニュアル</h3>
 <div class="file-card"><div class="file-icon">📗</div><div><span class="file-path">07_マニュアル/スライドビルダー完全ガイド.html</span><div class="file-desc">スライドビルダー完全ガイド（システム概要・全ページの役割・テンプレート管理・デプロイ手順・当日操作・slides.js書き方リファレンス）</div></div></div>
 <div class="tip"><span class="label">初回のみ必須</span>スキル完了後、<strong>admin.html を開いてプレゼンターパスワードを設定する</strong>ことを忘れずに。</div>
+</div>
+</details>
+
+<details id="sk-content-burst">
+<summary><span class="acc-num">SK</span>/content-burst — テーマ→6チャネル発信物を並列生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/content-burst</div>
+  <div class="agent-phase">テーマを1つ決めたら、あとは全自動で6種類の発信素材を同時生成</div>
+  <p>リサーチ→レポート・ブログ・X投稿・YouTube台本・メルマガ・ビジュアルマップを並列生成します。Kai Tasks連動・セッションログ自動記録。承認は展開計画の1回のみ。</p>
+</div>
+<h3>生成される6種類の発信物</h3>
+<table>
+  <tr><th>ファイル</th><th>内容</th><th>規模</th></tr>
+  <tr><td><code>report.html</code></td><td>リサーチレポート（HTML）</td><td>3,000〜5,000字</td></tr>
+  <tr><td><code>blog-post.html</code></td><td>ブログ記事（WordPress Gutenberg対応）</td><td>2,500〜4,000字</td></tr>
+  <tr><td><code>x-thread.md</code></td><td>Xスレッド投稿</td><td>140字×6〜9投稿</td></tr>
+  <tr><td><code>youtube-script.md</code></td><td>YouTube台本（約10分尺）</td><td>2,800〜3,200字</td></tr>
+  <tr><td><code>newsletter.md</code></td><td>メルマガ（件名+本文+CTA）</td><td>800〜1,500字</td></tr>
+  <tr><td><code>visual-map.html</code></td><td>ビジュアルマップ（HTML形式・3〜6枚）</td><td>—</td></tr>
+</table>
+<h3>使い方</h3>
+<div class="prompt-box"><span class="comment"># テーマを渡すだけ</span><br>/content-burst 中小企業のAI活用2026年最新動向<br><br><span class="comment"># または</span><br>「DX推進のポイント」をcontent-burstして</div>
+<h3>出力フォルダ</h3>
+<p>実行するたびに <span class="file-path">08_アプリ開発事業部/outputs/content-burst/run_YYYYMMDD_HHMM/</span> に保存されます（上書きなし）。</p>
+<div class="ok"><span class="label">Kai Tasks 自動連動</span>スキル起動時にプロジェクトが自動作成され、完了時にクローズされます。</div>
+<h3>使用エージェント（7体）</h3>
+<table>
+  <tr><th>エージェント</th><th>担当</th></tr>
+  <tr><td>cb-scout</td><td>リサーチ（直列先行）</td></tr>
+  <tr><td>cb-ink</td><td>リサーチレポート（並列）</td></tr>
+  <tr><td>cb-pen</td><td>ブログ記事（並列）</td></tr>
+  <tr><td>cb-spark</td><td>X投稿スレッド（並列）</td></tr>
+  <tr><td>cb-lens</td><td>YouTube台本（並列）</td></tr>
+  <tr><td>cb-post</td><td>メルマガ（並列）</td></tr>
+  <tr><td>cb-canvas</td><td>ビジュアルマップ（並列）</td></tr>
+</table>
+</div>
+</details>
+
+<details id="sk-deck-sprint">
+<summary><span class="acc-num">SK</span>/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#0EA5E9">
+  <div class="agent-name">/deck-sprint</div>
+  <div class="agent-phase">報告資料を5分で揃えたい時 / リサーチからプレゼンまで一気に仕上げたい時</div>
+  <p>テーマを渡すだけで、構造化レポート・HTMLプレゼン・報告MTGアジェンダの3点を5分前後で高速生成します。Kai Tasks連動・セッションログ自動記録。</p>
+</div>
+<h3>生成される3種類の成果物</h3>
+<table>
+  <tr><th>ファイル</th><th>内容</th><th>規模</th></tr>
+  <tr><td><code>report.md</code></td><td>構造化レポート（インサイト重視・7〜9章）</td><td>5,000〜8,000字</td></tr>
+  <tr><td><code>presentation.html</code></td><td>HTMLプレゼンテーション（Kaiテンプレート使用）</td><td>基本7枚</td></tr>
+  <tr><td><code>agenda.md</code></td><td>報告MTGアジェンダ（想定質問5問以上含む）</td><td>30分想定</td></tr>
+</table>
+<h3>使い方</h3>
+<div class="prompt-box"><span class="comment"># テーマを渡すだけ</span><br>/deck-sprint 2026年AI採用戦略の最新動向<br><br><span class="comment"># または</span><br>「物流DXの課題と機会」をdeck-sprintして</div>
+<h3>content-burst との使い分け</h3>
+<table>
+  <tr><th>スキル</th><th>向いているシーン</th><th>所要時間</th></tr>
+  <tr><td>/deck-sprint</td><td>報告・提案・会議資料を素早く揃えたい</td><td>5分前後</td></tr>
+  <tr><td>/content-burst</td><td>SNS・ブログ等で発信素材を一括生成したい</td><td>15〜30分</td></tr>
+</table>
+<h3>出力フォルダ</h3>
+<p>実行するたびに <span class="file-path">08_アプリ開発事業部/outputs/deck-sprint/run_YYYYMMDD_HHMM/</span> に保存されます（上書きなし）。</p>
+<div class="ok"><span class="label">Kai Tasks 自動連動</span>スキル起動時にプロジェクトが自動作成され、完了時にクローズされます。</div>
+<h3>使用エージェント（4体）</h3>
+<table>
+  <tr><th>エージェント</th><th>担当</th></tr>
+  <tr><td>ds-scout</td><td>リサーチ（直列先行・3検索固定）</td></tr>
+  <tr><td>ds-analyst</td><td>構造化レポート（並列）</td></tr>
+  <tr><td>ds-deck</td><td>HTMLスライド・Edit差し替え方式（並列）</td></tr>
+  <tr><td>ds-chair</td><td>報告MTGアジェンダ（並列）</td></tr>
+</table>
+<div class="tip"><span class="label">スライドの仕組み</span>CSS/JSを含む完全テンプレート（<span class="file-path">outputs/deck-sprint/slide-base.html</span>）をコピー後、ds-deck が Edit 2回でコンテンツを差し替えます。毎回ゼロ生成しないためトークン効率が高く、5分以内を実現しています。</div>
 </div>
 </details>
 
