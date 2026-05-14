@@ -4,5 +4,15 @@
     "flow": {},
     "gantt": {}
   },
-  "queue": []
+  "queue": [
+    {
+      "id": "d437cf5f",
+      "type": "4q",
+      "theme_id": 3,
+      "task_id": 0,
+      "context": "LP設計 最適化",
+      "status": "pending",
+      "created_at": "2026-05-15T05:23:11.960246"
+    }
+  ]
 }
