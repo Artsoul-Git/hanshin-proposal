@@ -121,6 +121,9 @@
   .app-card .app-badge { display: inline-block; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
   .app-badge.gh { background: #F0FFF4; color: #276749; }
   .app-badge.lo { background: #EBF8FF; color: #2B6CB0; }
+  .app-badge.wip { background: #FFFBEB; color: #975A16; }
+  .app-badge.seminar { background: #FAF5FF; color: #553C9A; }
+  .app-section-label { font-size: 12px; font-weight: bold; color: #718096; letter-spacing: 0.06em; text-transform: uppercase; margin: 20px 0 8px; padding-bottom: 4px; border-bottom: 2px solid #E2E8F0; }
   .app-card p { font-size: 13px; color: #4A5568; margin: 6px 0; }
   .app-links { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
   .alink { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; text-decoration: none; font-weight: bold; }
@@ -158,11 +161,16 @@
   </div>
 
   <div class="sb-section">
+    <div class="sb-section-label">🎬 セミナーコンテンツ</div>
+    <a class="sb-link" href="#seminar-contents">公開済みセミナー一覧</a>
+  </div>
+
+  <div class="sb-section">
     <div class="sb-section-label">🛠 アプリ・ツール</div>
-    <a class="sb-link" href="#app-keiyakusho">契約書AIチェックセミナー</a>
-    <a class="sb-link" href="#app-kai-tasks">Kai Tasks</a>
-    <a class="sb-link" href="#app-slide-builder">スライドビルダー</a>
-    <a class="sb-link" href="#app-public">公開済みアプリ一覧</a>
+    <a class="sb-link" href="#app-kai-tasks">Kai Tasks（社内）</a>
+    <a class="sb-link" href="#app-slide-builder">スライドビルダー（社内）</a>
+    <a class="sb-link" href="#app-published">公開済みアプリ</a>
+    <a class="sb-link" href="#app-wip">制作中アプリ</a>
   </div>
 
   <div class="sb-section">
@@ -676,63 +684,49 @@
 </div>
 </details>
 
+<!-- ===== セミナーコンテンツ一覧 ===== -->
+<details id="seminar-contents">
+<summary><span class="acc-num">▶</span>公開済みセミナー一覧<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+スライドビルダーで作成・公開済みのセミナーコンテンツ一覧。スライドの中身（コンテンツ）はここで管理し、ツール（エンジン）はアプリ・ツールセクションで管理する。
+</div>
+
+<div class="app-grid">
+  <div class="app-card" style="border-left:5px solid #6F911D">
+    <span class="app-badge seminar">セミナーコンテンツ</span>
+    <h4>契約書AIチェックセミナー</h4>
+    <p>中小企業向け・契約書をAIでチェックする手法を解説。44枚・kei_modelテーマ。</p>
+    <div class="app-links">
+      <a class="alink pri" href="https://artsoul-git.github.io/keiyakusho-ai-check/" target="_blank">受講者URL</a>
+      <a class="alink int" href="#sk-seminar">editor.html → editor.html（社内）</a>
+    </div>
+    <p style="font-size:12px;color:#718096;margin-top:8px">
+      ローカル：<code>06_セミナー事業部\outputs\keiyakusho-ai-check\</code><br>
+      リポジトリ：Artsoul-Git/keiyakusho-ai-check<br>
+      詳細ガイド：同フォルダの <code>GUIDE.md</code>
+    </p>
+  </div>
+</div>
+
+<div class="tip">
+<span class="label">新しいセミナーを作ったら</span>
+/seminar-slide スキルで完成後、このセクションにカードを追加する。keiyakusho-ai-check の形式をコピーして使う。
+</div>
+
+</div>
+</details>
+
 <hr>
 <!-- ===== アプリ・ツール ===== -->
 <div class="part-header" id="apps">アプリ・ツール</div>
 
-<details id="app-keiyakusho" open>
-<summary><span class="acc-num">A</span>契約書AIチェックセミナー<span class="acc-arrow">▼</span></summary>
-<div class="acc-content">
-<div class="agent-card" style="border-left-color:#6F911D">
-  <div class="agent-name">契約書AIチェックセミナー</div>
-  <div class="agent-phase">公開中 — GitHub Pages</div>
-  <p>契約書をAIでチェックする手法を解説するセミナーのHTMLスライド。44枚・kei_modelテーマ（緑#6F911D・黄#FABE00）。受講者向けビューア（index.html）と社内用エディター（editor.html）を分離した設計。</p>
-</div>
-<h3>URL・ファイル構成</h3>
-<div class="app-grid">
-  <div class="app-card github">
-    <span class="app-badge gh">GitHub Pages 公開中</span>
-    <h4>受講者URL（公開）</h4>
-    <p><a href="https://artsoul-git.github.io/keiyakusho-ai-check/" target="_blank">https://artsoul-git.github.io/keiyakusho-ai-check/</a></p>
-    <p>受講者に共有するURL。スライド閲覧のみ。編集機能なし。</p>
-  </div>
-  <div class="app-card local">
-    <span class="app-badge lo">ローカル（社内用）</span>
-    <h4>editor.html</h4>
-    <p><span class="file-path">06_セミナー事業部\outputs\keiyakusho-ai-check\editor.html</span></p>
-    <p>Canvaエディター・PDF/PPTX出力・スライド編集。社内のみ。</p>
-  </div>
-</div>
-<h3>ファイル構成</h3>
-<pre><code>keiyakusho-ai-check/
-├── index.html      ← 受講者用ビューア（公開URL直アクセス対応）
-├── editor.html     ← Canvaエディター（社内用・編集・エクスポート）
-├── presenter.html  ← プレゼンターモード（パスワード保護）
-├── admin.html      ← パスワード設定・管理
-├── css/style.css   ← kei_model テーマ
-├── css/editor.css  ← エディター専用スタイル
-└── js/
-    ├── slides.js   ← 44スライドのファクトリ関数群
-    ├── app.js      ← ナビ・ズーム・編集（viewer/editor共通）
-    └── editor.js   ← Canvaエディターロジック</code></pre>
-<h3>editor.html の使い方（概要）</h3>
-<table>
-<tr><th>操作</th><th>方法</th></tr>
-<tr><td>編集モードON</td><td>右下「✏️ 編集」ボタン → 左サイドバーが展開</td></tr>
-<tr><td>テキスト追加</td><td>左サイドバー「T テキスト」タブ → テキストボックスを追加</td></tr>
-<tr><td>図形追加</td><td>「▭ 図形」タブ → 種類を選択 → スライドをクリック</td></tr>
-<tr><td>画像追加</td><td>「⬚ 画像」タブ → ファイル選択</td></tr>
-<tr><td>既存テキスト編集</td><td>スライド内のテキストを直接クリック（contentEditable）</td></tr>
-<tr><td>保存</td><td>localStorage に自動保存（500ms）または Ctrl+S</td></tr>
-<tr><td>PDF出力</td><td>右下バー「PDF出力」</td></tr>
-<tr><td>PPTX出力</td><td>右下バー「PPTX出力」</td></tr>
-</table>
-<div class="warn"><span class="label">注意</span>editor.htmlで追加したオブジェクトはlocalStorage管理のため、永続化したければ js/slides.js に反映してからgit push が必要。</div>
-<h3>GitHub リポジトリ</h3>
-<p>リポジトリ：<code>Artsoul-Git/keiyakusho-ai-check</code>（master + gh-pages）<br>
-ローカルフォルダ自体がリポジトリ。更新後は <code>git add . &amp;&amp; git commit &amp;&amp; git push</code>。</p>
-</div>
-</details>
+<p style="color:#718096;font-size:14px;margin:0 0 16px">
+  ※ セミナーのスライドコンテンツ（作品）は「セミナーコンテンツ一覧」で管理。ここはツール・アプリ（エンジン）のみ。
+</p>
+
+<div class="app-section-label">社内ツール</div>
 
 <details id="app-kai-tasks">
 <summary><span class="acc-num">A</span>Kai Tasks — プロジェクト管理アプリ<span class="acc-arrow">▼</span></summary>
@@ -769,17 +763,66 @@
 </div>
 </details>
 
-<details id="app-public">
+<div class="app-section-label">公開済みアプリ</div>
+
+<details id="app-published">
 <summary><span class="acc-num">A</span>公開済みアプリ一覧<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<table>
-<tr><th>アプリ名</th><th>リポジトリ</th><th>公開URL</th><th>状態</th></tr>
-<tr><td>音源トリミング</td><td>audio-trimmer</td><td><a href="https://artsoul-git.github.io/audio-trimmer/" target="_blank">audio-trimmer/</a></td><td>公開中</td></tr>
-<tr><td>もらったプロンプトを使い倒そう！（kawai版）</td><td>morai-prompt</td><td><a href="https://artsoul-git.github.io/morai-prompt/viewer.html" target="_blank">morai-prompt/viewer.html</a></td><td>公開中</td></tr>
-<tr><td>もらったプロンプトを使い倒そう！（画像版）</td><td>m2</td><td><a href="https://artsoul-git.github.io/m2/viewer.html" target="_blank">m2/viewer.html</a></td><td>公開中</td></tr>
-<tr><td>契約書AIチェックセミナー</td><td>keiyakusho-ai-check</td><td><a href="https://artsoul-git.github.io/keiyakusho-ai-check/" target="_blank">keiyakusho-ai-check/</a></td><td>公開中</td></tr>
-</table>
-<p>詳細な公開手順・更新手順は <span class="file-path">08_アプリ開発事業部\docs\アプリGitHub公開マニュアル.md</span> を参照。</p>
+<div class="app-grid">
+  <div class="app-card github">
+    <span class="app-badge gh">GitHub Pages 公開中</span>
+    <h4>音源トリミング</h4>
+    <p>音声ファイルをブラウザだけでトリミング。サーバー不要。</p>
+    <div class="app-links">
+      <a class="alink pri" href="https://artsoul-git.github.io/audio-trimmer/" target="_blank">公開URL</a>
+    </div>
+    <p style="font-size:12px;color:#718096;margin-top:8px">Artsoul-Git/audio-trimmer</p>
+  </div>
+  <div class="app-card github">
+    <span class="app-badge gh">GitHub Pages 公開中</span>
+    <h4>もらったプロンプトを使い倒そう！（kawai版）</h4>
+    <p>川合様向けプロンプト活用ガイドビューア。</p>
+    <div class="app-links">
+      <a class="alink pri" href="https://artsoul-git.github.io/morai-prompt/viewer.html" target="_blank">公開URL</a>
+    </div>
+    <p style="font-size:12px;color:#718096;margin-top:8px">Artsoul-Git/morai-prompt</p>
+  </div>
+  <div class="app-card github">
+    <span class="app-badge gh">GitHub Pages 公開中</span>
+    <h4>もらったプロンプトを使い倒そう！（画像版）</h4>
+    <p>画像付きプロンプト活用ガイドビューア。</p>
+    <div class="app-links">
+      <a class="alink pri" href="https://artsoul-git.github.io/m2/viewer.html" target="_blank">公開URL</a>
+    </div>
+    <p style="font-size:12px;color:#718096;margin-top:8px">Artsoul-Git/m2</p>
+  </div>
+</div>
+<p>公開手順・更新手順 → <span class="file-path">08_アプリ開発事業部\docs\アプリGitHub公開マニュアル.md</span></p>
+</div>
+</details>
+
+<div class="app-section-label">制作中アプリ</div>
+
+<details id="app-wip">
+<summary><span class="acc-num">A</span>制作中アプリ一覧<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="app-grid">
+  <div class="app-card" style="border-left:5px solid #D69E2E">
+    <span class="app-badge wip">制作中</span>
+    <h4>Nolia</h4>
+    <p>サプリメント管理・顧客対応を GAS で構築する業務アプリ。</p>
+    <p style="font-size:12px;color:#718096;margin-top:8px">ローカル：<code>08_アプリ開発事業部\outputs\supplement_app\</code></p>
+    <p style="font-size:12px;margin-top:6px">
+      📄 <a href="file:///D:/Google%20Antigravity/AS_AI%E5%B0%8E%E5%85%A5%E6%94%AF%E6%8F%B4%E4%BA%8B%E6%A5%AD_cc/08_%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA%E4%BA%8B%E6%A5%AD%E9%83%A8/outputs/supplement_app/%E8%A6%81%E4%BB%B6%E5%AE%9A%E7%BE%A9%E6%9B%B8.html" target="_blank">要件定義書</a>
+      ／ <a href="file:///D:/Google%20Antigravity/AS_AI%E5%B0%8E%E5%85%A5%E6%94%AF%E6%8F%B4%E4%BA%8B%E6%A5%AD_cc/08_%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA%E4%BA%8B%E6%A5%AD%E9%83%A8/outputs/supplement_app/%E6%8A%80%E8%A1%93%E8%A8%AD%E8%A8%88%E6%9B%B8.html" target="_blank">技術設計書</a>
+      ／ <a href="file:///D:/Google%20Antigravity/AS_AI%E5%B0%8E%E5%85%A5%E6%94%AF%E6%8F%B4%E4%BA%8B%E6%A5%AD_cc/08_%E3%82%A2%E3%83%97%E3%83%AA%E9%96%8B%E7%99%BA%E4%BA%8B%E6%A5%AD%E9%83%A8/outputs/supplement_app/%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E6%89%8B%E9%A0%86%E6%9B%B8.html" target="_blank">セットアップ手順書</a>
+    </p>
+  </div>
+</div>
+<div class="tip">
+<span class="label">制作中アプリの追加方法</span>
+新しいアプリの開発が始まったら Kai が自動でここにカードを追加します。公開が確定したら「公開済みアプリ」に移動します。
+</div>
 </div>
 </details>
 
