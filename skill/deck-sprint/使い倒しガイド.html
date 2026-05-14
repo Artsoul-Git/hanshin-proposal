@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/deck-sprint 徹底活用ガイド — Kai</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP','Yu Gothic UI','Meiryo',sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; }
+.page { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+.cover { background: linear-gradient(135deg,#0F172A 0%,#1A365D 60%,#2563EB 100%); color: white; border-radius: 14px; padding: 64px 60px; margin-bottom: 48px; }
+.cover .badge { display: inline-block; background: rgba(255,255,255,0.12); color: #7DD3FC; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+.cover h1 { font-size: 40px; font-weight: 900; line-height: 1.2; margin-bottom: 18px; }
+.cover .tagline { font-size: 18px; color: #7DD3FC; margin-bottom: 32px; }
+.cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 32px; }
+.cover .meta-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 16px; }
+.cover .meta-item .label { font-size: 11px; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+.cover .meta-item .val { font-size: 16px; font-weight: 700; }
+h2 { font-size: 24px; color: #1A365D; border-bottom: 3px solid #0EA5E9; padding-bottom: 10px; margin: 48px 0 20px; }
+h3 { font-size: 18px; color: #1A365D; padding-left: 14px; border-left: 5px solid #0EA5E9; margin: 28px 0 12px; }
+h4 { font-size: 15px; color: #1A365D; font-weight: 700; margin: 20px 0 8px; }
+p { margin: 12px 0; }
+.lead { font-size: 16px; background: #F0F9FF; border-left: 5px solid #0EA5E9; padding: 18px 22px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+.tip { background: #FFFAF0; border-left: 5px solid #ED8936; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 13px; margin-bottom: 6px; }
+.ok { background: #F0FFF4; border-left: 5px solid #38A169; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 13px; margin-bottom: 6px; }
+.warn { background: #FFF5F5; border-left: 5px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 13px; margin-bottom: 6px; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 32px 24px 20px; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; margin: 16px 0; position: relative; }
+.prompt-box .comment { color: #718096; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.1); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 3px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 10px 14px; text-align: left; }
+td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+ul, ol { padding-left: 24px; margin: 12px 0; }
+li { margin: 6px 0; }
+.step { background: #EDF2F7; border-top: 4px solid #1A365D; border-radius: 8px; padding: 20px 24px; margin: 20px 0; }
+.step-num { display: inline-block; background: #0EA5E9; color: white; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-weight: 700; margin-right: 10px; font-size: 14px; }
+.output-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+.output-card.report { border-left: 6px solid #1A365D; }
+.output-card.slide { border-left: 6px solid #0EA5E9; }
+.output-card.agenda { border-left: 6px solid #38A169; }
+.output-card h4 { margin-top: 0; }
+.output-card .use-tag { display: inline-block; background: #F0F9FF; color: #0369A1; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin: 2px; }
+.flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+.flow-box { background: #F0F9FF; border: 2px solid #0EA5E9; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; color: #1A365D; }
+.flow-arrow { color: #0EA5E9; font-size: 20px; font-weight: 700; }
+.toc { background: #F7FAFC; border-radius: 10px; padding: 24px 28px; margin: 28px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; }
+.toc ol { margin: 0; }
+.toc li { padding: 4px 0; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+.toc a:hover { color: #0EA5E9; }
+.scenario-card { border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; background: #F8FAFC; }
+.scenario-card h4 { color: #1A365D; margin-top: 0; margin-bottom: 8px; }
+.scenario-card .tag { display: inline-block; background: #0F172A; color: white; font-size: 11px; padding: 2px 9px; border-radius: 10px; margin-bottom: 10px; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.compare-box { border-radius: 10px; padding: 20px 22px; border: 2px solid #E2E8F0; }
+.compare-box.cb { border-color: #3182CE; background: #EBF8FF; }
+.compare-box.ds { border-color: #0EA5E9; background: #F0F9FF; }
+.compare-box h4 { margin-top: 0; }
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+.faq-q { font-weight: 700; color: #1A365D; margin-top: 20px; }
+.faq-a { padding-left: 16px; border-left: 3px solid #0EA5E9; margin-top: 6px; }
+.slide-preview { background: #F0F9FF; border: 2px solid #0EA5E9; border-radius: 10px; padding: 20px 24px; margin: 16px 0; }
+.slide-preview .slide-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 10px; margin-top: 12px; }
+.slide-thumb { background: white; border: 1px solid #BFDBFE; border-radius: 6px; padding: 10px 12px; font-size: 12px; }
+.slide-thumb .num { font-weight: 700; color: #0EA5E9; margin-bottom: 4px; }
+.slide-thumb .title { color: #1E293B; font-weight: 600; }
+.slide-thumb .type { color: #64748B; font-size: 11px; }
+@media (max-width: 640px) { .cover { padding: 40px 24px; } .cover h1 { font-size: 28px; } .cover .meta-grid,.compare-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="badge">SKILL DEEP-DIVE GUIDE</div>
+  <h1>/deck-sprint<br>徹底活用ガイド</h1>
+  <div class="tagline">テーマ1つでレポート・スライド・アジェンダを<br>5分前後で高速生成するKai デッキ生成スキルの完全マニュアル</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">生成成果物</div><div class="val">3種類</div></div>
+    <div class="meta-item"><div class="label">目標完了時間</div><div class="val">5分前後</div></div>
+    <div class="meta-item"><div class="label">承認回数</div><div class="val">1回のみ</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>もくじ</h3>
+  <ol>
+    <li><a href="#what">deck-sprintとは何か</a></li>
+    <li><a href="#quickstart">クイックスタート（最短3ステップ）</a></li>
+    <li><a href="#outputs">3種類の成果物の活用法</a></li>
+    <li><a href="#slides">スライドの見方・カスタマイズ</a></li>
+    <li><a href="#meeting">報告MTGの進め方</a></li>
+    <li><a href="#scenarios">ユースケース別活用シナリオ</a></li>
+    <li><a href="#compare">content-burstとの使い分け</a></li>
+    <li><a href="#trouble">トラブルシューティング</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- CH1 -->
+<h2 id="what">1. deck-sprintとは何か</h2>
+<div class="lead">「テーマ」を渡すだけで、AIエージェント4体がリサーチ→詳細レポート→HTMLプレゼン→MTGアジェンダを5分で並列生成する高速資料作成スキルです。</div>
+
+<p>「明日のMTGまでに〇〇の資料が必要」「クライアントにこのテーマで説明したい」そんな状況で、<strong>ゼロから資料作りに数時間かける代わりに、deck-sprintが5分でベースを揃えます。</strong></p>
+
+<h3>高速化を支える3つの仕組み</h3>
+<table>
+  <tr><th>仕組み</th><th>説明</th><th>効果</th></tr>
+  <tr><td>リサーチを3回に絞る</td><td>ds-scoutは観点3点×1回ずつ、合計3検索固定</td><td>リサーチ時間を大幅短縮</td></tr>
+  <tr><td>テンプレートコピー方式</td><td>CSS/JSを含む完全テンプレートをコピー後、内容だけ差し替え</td><td>スライドHTML生成のトークン消費を80%削減</td></tr>
+  <tr><td>3エージェント並列起動</td><td>ds-analyst・ds-deck・ds-chairを同時実行</td><td>直列比較で時間を1/3に</td></tr>
+</table>
+
+<hr>
+
+<!-- CH2 -->
+<h2 id="quickstart">2. クイックスタート（最短3ステップ）</h2>
+
+<div class="step"><span class="step-num">1</span><strong>テーマを渡す</strong>
+<div class="prompt-box"><button class="copy-btn" onclick="copyText(this)">コピー</button>/deck-sprint 2026年AI採用戦略の最新動向</div>
+<p>または：</p>
+<div class="prompt-box">「物流DXの課題と機会」をdeck-sprintして</div>
+</div>
+
+<div class="step"><span class="step-num">2</span><strong>計画を確認して「開始する」を選ぶ</strong>
+<p>リサーチ観点（3点固定）・スライド構成案・レポート章構成が表示されます。問題なければ「開始する」を選択。</p>
+</div>
+
+<div class="step"><span class="step-num">3</span><strong>5分待って成果物を確認</strong>
+<p><span class="file-path">08_アプリ開発事業部/outputs/deck-sprint/run_YYYYMMDD_HHMM/</span> に4ファイルが生成されます。完了後にHTMLスライドが自動オープン。</p>
+</div>
+
+<hr>
+
+<!-- CH3 -->
+<h2 id="outputs">3. 3種類の成果物の活用法</h2>
+
+<div class="output-card report">
+  <h4>📄 report.md — 構造化レポート（5,000〜8,000字 / 7〜9章）</h4>
+  <div><span class="use-tag">事前読み込み用</span><span class="use-tag">提案書のエビデンス</span><span class="use-tag">社内共有資料</span><span class="use-tag">スライドの補足資料</span></div>
+  <p style="margin-top:12px">deck-sprintの成果物の中でもっとも情報量が多いのがこのレポートです。<strong>事実→解釈→示唆</strong>の3段構造で書かれており、「なぜそうなのか」まで踏み込んでいます。</p>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>MTG前にこのレポートを自分で一読することで、質疑応答の準備になります。「詳しく知りたい方はこちら」としてスライドのQRコードから参照するのも効果的です。</div>
+</div>
+
+<div class="output-card slide">
+  <h4>🖥 presentation.html — HTMLプレゼンテーション（基本7枚）</h4>
+  <div><span class="use-tag">報告MTG</span><span class="use-tag">クライアント提案</span><span class="use-tag">社内勉強会</span><span class="use-tag">セミナー資料</span></div>
+  <p style="margin-top:12px">ブラウザで開いてすぐプレゼンできるHTMLスライド。キーボード矢印キーでスライドを進められます。</p>
+  <div class="slide-preview">
+    <strong style="font-size:13px; color:#1A365D">標準スライド構成（7枚）</strong>
+    <div class="slide-list" style="margin-top:10px">
+      <div class="slide-thumb"><div class="num">1</div><div class="title">タイトル</div><div class="type">テーマ名・日付</div></div>
+      <div class="slide-thumb"><div class="num">2</div><div class="title">アジェンダ</div><div class="type">目次・進行確認</div></div>
+      <div class="slide-thumb"><div class="num">3</div><div class="title">背景・現状</div><div class="type">KPIカード・数値</div></div>
+      <div class="slide-thumb"><div class="num">4</div><div class="title">主要トピック</div><div class="type">カードグリッド</div></div>
+      <div class="slide-thumb"><div class="num">5</div><div class="title">データ・比較</div><div class="type">グラフ・テーブル</div></div>
+      <div class="slide-thumb"><div class="num">6</div><div class="title">インサイト</div><div class="type">キーメッセージ</div></div>
+      <div class="slide-thumb"><div class="num">7</div><div class="title">クロージング</div><div class="type">次のアクション</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="output-card agenda">
+  <h4>📋 agenda.md — 報告MTGアジェンダ（30分MTG想定）</h4>
+  <div><span class="use-tag">MTG前準備</span><span class="use-tag">司会進行メモ</span><span class="use-tag">議事録テンプレ</span></div>
+  <p style="margin-top:12px">議題と時間配分・ディスカッションポイント・<strong>想定質問5問以上（懐疑的なものを含む）</strong>・決定事項候補が事前整理されています。</p>
+  <div class="ok" style="margin-top:12px"><span class="label">想定質問の価値</span>ai-analyst・ai-deckと並列で動くds-chairは、研究ノートを元に「反対意見を出してくる参加者」を想定した質問と回答方針を用意します。これを事前に読んでおくだけで、突っ込まれ耐性が上がります。</div>
+</div>
+
+<hr>
+
+<!-- CH4 -->
+<h2 id="slides">4. スライドの見方・カスタマイズ</h2>
+
+<h3>基本操作</h3>
+<table>
+  <tr><th>操作</th><th>方法</th></tr>
+  <tr><td>スライドを進める</td><td>→キー or「次へ」ボタン</td></tr>
+  <tr><td>スライドを戻す</td><td>←キー or「前へ」ボタン</td></tr>
+  <tr><td>印刷・PDF化</td><td>Ctrl+P（全スライドが縦に並んで印刷）</td></tr>
+  <tr><td>全画面表示</td><td>ブラウザのF11キー</td></tr>
+</table>
+
+<h3>内容の修正（Kaiに依頼する場合）</h3>
+<div class="prompt-box"><span class="comment"># スライドの特定箇所を修正</span>
+deck-sprint で作ったスライドの4枚目を「課題と機会」ではなく「コスト削減事例3つ」に変えて</div>
+<div class="prompt-box"><span class="comment"># 枚数を変更</span>
+presentation.html に「実装ロードマップ」のスライドを1枚追加して（7枚目の前に）</div>
+
+<h3>自分で直接編集する場合</h3>
+<p><span class="file-path">presentation.html</span> をテキストエディタで開き、<code>&lt;section class="slide"&gt;</code> ブロックを編集します。使えるCSSクラスはコードコメントで確認できます。</p>
+
+<div class="tip"><span class="label">再生成より編集が速い</span>細かい修正（数値の変更・文言調整）は直接HTMLを編集する方が速いケースが多いです。大きく構成を変えたい場合のみKaiに依頼するのが効率的です。</div>
+
+<hr>
+
+<!-- CH5 -->
+<h2 id="meeting">5. 報告MTGの進め方</h2>
+
+<h3>MTG前（5分）</h3>
+<ol>
+  <li><strong>agenda.md を開いて全体を読む</strong>（特に想定質問セクション）</li>
+  <li>「決定事項候補」を確認し、自分の意見を固めておく</li>
+  <li>report.md の「エグゼクティブサマリー」だけ再確認</li>
+</ol>
+
+<h3>MTG中</h3>
+<ol>
+  <li>スライド2枚目（アジェンダ）で「今日のゴール」を宣言</li>
+  <li>スライドを進めながら、必要に応じてreport.mdを補足資料として参照</li>
+  <li>agenda.mdの「ディスカッションポイント」を使って議論を誘導</li>
+  <li>「決定事項候補」を最後に確認してMTGを閉じる</li>
+</ol>
+
+<div class="ok"><span class="label">想定質問リストの使い方</span>「Q2：懐疑的な質問…」のような項目が来たとき、「その点については想定していて…」と answer.md の回答方針を使うと、準備度の高さが伝わります。</div>
+
+<hr>
+
+<!-- CH6 -->
+<h2 id="scenarios">6. ユースケース別活用シナリオ</h2>
+
+<div class="scenario-card">
+  <div class="tag">クライアント報告</div>
+  <h4>月次業績・AI活用進捗の報告資料</h4>
+  <p>毎月のクライアント定例MTGの前にdeck-sprintを実行。前月のKPI・今月のトピックをテーマにすれば、定例資料が5分で揃います。</p>
+  <div class="prompt-box">/deck-sprint まる様5月度AI活用進捗レポート</div>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">社内勉強会</div>
+  <h4>AI・業界トレンドの社内勉強会資料</h4>
+  <p>「来週の勉強会でAIエージェントの話をしたい」→ deck-sprintで資料と台本（report.md）が揃います。アジェンダをそのまま司会進行メモに転用可能。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">提案前リサーチ</div>
+  <h4>新規提案テーマの下調べ</h4>
+  <p>新しいサービス・業界への提案を検討中に使う。report.mdで市場理解を深め、スライドを提案書の骨格として活用。本格的な提案書は /sme-ai-proposal で別途作成。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">自己学習</div>
+  <h4>新しいテーマを素早くキャッチアップ</h4>
+  <p>「〇〇という分野のことをよく知らないので概要を掴みたい」という時に。5,000〜8,000字のreport.mdを読めば、短時間でテーマの全体像がわかります。</p>
+</div>
+
+<hr>
+
+<!-- CH7 -->
+<h2 id="compare">7. content-burstとの使い分け</h2>
+<div class="compare-grid">
+  <div class="compare-box cb">
+    <h4 style="color:#1A365D">/content-burst</h4>
+    <ul style="font-size:14px">
+      <li>外部への発信が目的</li>
+      <li>ブログ・SNS・動画・メルマガが欲しい</li>
+      <li>複数チャネルへの展開を一括で</li>
+      <li>所要時間：15〜30分</li>
+      <li>エージェント7体</li>
+    </ul>
+  </div>
+  <div class="compare-box ds">
+    <h4 style="color:#0F172A">/deck-sprint</h4>
+    <ul style="font-size:14px">
+      <li>内部報告・提案・会議が目的</li>
+      <li>スライド・レポート・アジェンダが欲しい</li>
+      <li>資料を素早く揃えたい</li>
+      <li>所要時間：5分前後</li>
+      <li>エージェント4体</li>
+    </ul>
+  </div>
+</div>
+
+<div class="tip"><span class="label">組み合わせ活用</span>「テーマについてまず内部で整理したい（deck-sprint）→ 社外に発信する（content-burst）」という順序で使うと相性バツグン。deck-sprintのreport.mdをcontent-burstのKnowledge参照に渡せばコンテンツの深さが上がります。</div>
+
+<hr>
+
+<!-- CH8 -->
+<h2 id="trouble">8. トラブルシューティング</h2>
+<table>
+  <tr><th>症状</th><th>原因</th><th>対処</th></tr>
+  <tr><td>スライドが開かない</td><td>ブラウザ自動オープン失敗</td><td>出力フォルダを開いて <code>presentation.html</code> をダブルクリック</td></tr>
+  <tr><td>スライドのタイトルが "__KAI_TITLE__" のまま</td><td>ds-deckのEdit失敗</td><td>Kaiに「presentation.htmlのタイトルを修正して」と依頼</td></tr>
+  <tr><td>agenda.mdが薄い</td><td>research-notes.mdの情報量不足</td><td>テーマをより具体的にして再実行。または「agenda.mdの想定質問を5問追加して」と追加依頼</td></tr>
+  <tr><td>report.mdが5,000字未満</td><td>リサーチが薄かった</td><td>テーマを絞るか、「report.mdをより詳しく書き直して」と依頼</td></tr>
+  <tr><td>スライド枚数が少ない</td><td>ds-deckが内容に合わせて調整</td><td>「スライドを10枚に増やして」とKaiに依頼（ds-deckが差し替え）</td></tr>
+</table>
+
+<hr>
+
+<!-- CH9 -->
+<h2 id="faq">9. よくある質問</h2>
+
+<div class="faq-q">Q. スライドのデザインを変えたい場合は？</div>
+<div class="faq-a">A. <span class="file-path">08_アプリ開発事業部/outputs/deck-sprint/slide-base.html</span> がマスターテンプレートです。このファイルのCSSを変更すると、以後のdeck-sprint実行すべてに反映されます。個別案件だけ変えたい場合は生成後のpresentation.htmlを直接編集してください。</div>
+
+<div class="faq-q">Q. 英語のプレゼンも作れますか？</div>
+<div class="faq-a">A. テーマに「英語で作成」と追記することで対応可能です。ただし現時点のエージェントは日本語向けに最適化されているため、一部の表現が直訳的になる場合があります。</div>
+
+<div class="faq-q">Q. 既存のデータや調査結果を使いたい場合は？</div>
+<div class="faq-a">A. <span class="file-path">knowledge/</span> フォルダに資料を置いておくか、「〇〇のデータを参照して」とテーマに追記してください。KaiがKnowledgeフォルダを確認して参照します。</div>
+
+<div class="faq-q">Q. presentation.htmlをPPTXに変換できますか？</div>
+<div class="faq-a">A. 直接変換はできません。ブラウザの印刷機能でPDF化→PowerPoint経由でPPTX化が現実的なワークフローです。または <code>/seminar-slide</code> スキルで最初からPPTX出力対応のスライドを作ることもできます。</div>
+
+<div class="faq-q">Q. テーマ以外に何を伝えると品質が上がりますか？</div>
+<div class="faq-a">A. 「対象読者（誰に見せるか）」「重点を置きたい観点」「MTGの想定時間」「懸念事項（何に備えたいか）」を追加すると、アジェンダの品質が特に向上します。</div>
+
+<hr>
+<p style="text-align:center; color:#94A3B8; font-size:13px">Kai — deck-sprint 徹底活用ガイド / 有限会社アートソウル</p>
+</div>
+
+<script>
+function copyText(btn) {
+  var code = btn.parentElement.innerText.replace('コピー','').trim();
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = 'コピー済み'; btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/content-burst 徹底活用ガイド — Kai</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP','Yu Gothic UI','Meiryo',sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; }
+.page { max-width: 900px; margin: 0 auto; padding: 40px 24px 100px; }
+.cover { background: linear-gradient(135deg,#1A365D 0%,#2A4A7F 60%,#3182CE 100%); color: white; border-radius: 14px; padding: 64px 60px; margin-bottom: 48px; }
+.cover .badge { display: inline-block; background: rgba(255,255,255,0.15); color: #93C5FD; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+.cover h1 { font-size: 40px; font-weight: 900; line-height: 1.2; margin-bottom: 18px; }
+.cover .tagline { font-size: 18px; color: #93C5FD; margin-bottom: 32px; }
+.cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 32px; }
+.cover .meta-item { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 14px 16px; }
+.cover .meta-item .label { font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.cover .meta-item .val { font-size: 16px; font-weight: 700; }
+h2 { font-size: 24px; color: #1A365D; border-bottom: 3px solid #3182CE; padding-bottom: 10px; margin: 48px 0 20px; }
+h3 { font-size: 18px; color: #1A365D; padding-left: 14px; border-left: 5px solid #3182CE; margin: 28px 0 12px; }
+h4 { font-size: 15px; color: #1A365D; font-weight: 700; margin: 20px 0 8px; }
+p { margin: 12px 0; }
+.lead { font-size: 16px; background: #EBF8FF; border-left: 5px solid #3182CE; padding: 18px 22px; border-radius: 0 8px 8px 0; margin: 20px 0; }
+.tip { background: #FFFAF0; border-left: 5px solid #ED8936; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 13px; margin-bottom: 6px; }
+.ok { background: #F0FFF4; border-left: 5px solid #38A169; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 13px; margin-bottom: 6px; }
+.warn { background: #FFF5F5; border-left: 5px solid #E53E3E; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 18px 0; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 13px; margin-bottom: 6px; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 32px 24px 20px; border-radius: 8px; font-family: 'Consolas','SF Mono',monospace; font-size: 13px; line-height: 1.8; margin: 16px 0; position: relative; }
+.prompt-box .comment { color: #718096; }
+.prompt-box .highlight { color: #F6AD55; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.1); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 3px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 10px 14px; text-align: left; }
+td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+ul, ol { padding-left: 24px; margin: 12px 0; }
+li { margin: 6px 0; }
+.step { background: #EDF2F7; border-top: 4px solid #1A365D; border-radius: 8px; padding: 20px 24px; margin: 20px 0; }
+.step-num { display: inline-block; background: #3182CE; color: white; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-weight: 700; margin-right: 10px; font-size: 14px; }
+.output-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; border-left: 6px solid #3182CE; }
+.output-card.report { border-left-color: #1A365D; }
+.output-card.blog { border-left-color: #2F855A; }
+.output-card.x { border-left-color: #0EA5E9; }
+.output-card.youtube { border-left-color: #E53E3E; }
+.output-card.mail { border-left-color: #D69E2E; }
+.output-card.visual { border-left-color: #805AD5; }
+.output-card h4 { margin-top: 0; }
+.output-card .file-name { display: inline-block; margin-bottom: 10px; }
+.output-card .use-tag { display: inline-block; background: #EBF8FF; color: #2B6CB0; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 10px; margin: 2px; }
+.flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+.flow-box { background: #EBF8FF; border: 2px solid #3182CE; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; color: #1A365D; }
+.flow-arrow { color: #3182CE; font-size: 20px; font-weight: 700; }
+.toc { background: #F7FAFC; border-radius: 10px; padding: 24px 28px; margin: 28px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; }
+.toc ol { margin: 0; }
+.toc li { padding: 4px 0; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+.toc a:hover { color: #3182CE; }
+.scenario-card { border: 1px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; background: #F8FAFC; }
+.scenario-card h4 { color: #1A365D; margin-top: 0; margin-bottom: 8px; }
+.scenario-card .tag { display: inline-block; background: #1A365D; color: white; font-size: 11px; padding: 2px 9px; border-radius: 10px; margin-bottom: 10px; }
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+.faq-q { font-weight: 700; color: #1A365D; margin-top: 20px; }
+.faq-a { padding-left: 16px; border-left: 3px solid #3182CE; margin-top: 6px; }
+@media (max-width: 640px) { .cover { padding: 40px 24px; } .cover h1 { font-size: 28px; } .cover .meta-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="badge">SKILL DEEP-DIVE GUIDE</div>
+  <h1>/content-burst<br>徹底活用ガイド</h1>
+  <div class="tagline">テーマ1つで6チャネルの発信素材を同時生成する<br>Kai コンテンツ展開スキルの完全マニュアル</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">生成チャネル数</div><div class="val">6チャネル</div></div>
+    <div class="meta-item"><div class="label">承認回数</div><div class="val">1回のみ</div></div>
+    <div class="meta-item"><div class="label">所要時間目安</div><div class="val">15〜30分</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>もくじ</h3>
+  <ol>
+    <li><a href="#what">content-burstとは何か</a></li>
+    <li><a href="#quickstart">クイックスタート（最短3ステップ）</a></li>
+    <li><a href="#outputs">6種類の成果物の活用法</a></li>
+    <li><a href="#customize">カスタマイズのコツ</a></li>
+    <li><a href="#knowledge">Knowledge統合の使い方</a></li>
+    <li><a href="#scenarios">ユースケース別活用シナリオ</a></li>
+    <li><a href="#workflow">生成後のワークフロー</a></li>
+    <li><a href="#trouble">トラブルシューティング</a></li>
+    <li><a href="#faq">よくある質問</a></li>
+  </ol>
+</div>
+
+<hr>
+
+<!-- CH1 -->
+<h2 id="what">1. content-burstとは何か</h2>
+<div class="lead">「テーマ」を1行渡すだけで、専門のAIエージェント7体が自動で動き出し、リサーチから6種類の発信素材まで並列生成するKaiのコンテンツ展開スキルです。</div>
+
+<p>毎回ゼロから「ブログ記事書いて」「X投稿考えて」と依頼する代わりに、<strong>一度のリサーチを7本の発信物に展開</strong>できます。同じテーマについて整合性のとれたコンテンツ群が、一度の承認で揃います。</p>
+
+<h3>従来のやり方と比較</h3>
+<table>
+  <tr><th>従来</th><th>content-burst</th></tr>
+  <tr><td>「ブログ記事書いて」→ 完成 → 「X版も書いて」→ 完成 → …（チャネルごとに依頼）</td><td>テーマを1つ渡す → 承認1回 → 6チャネル同時完成</td></tr>
+  <tr><td>チャネルごとに別々にリサーチ → 微妙にトーンがブレる</td><td>1本のリサーチを全チャネルで共有 → 一貫性が保たれる</td></tr>
+  <tr><td>各チャネルへの変換作業を自分でやる</td><td>各チャネルの最適な形式・字数・構成をエージェントが自動調整</td></tr>
+</table>
+
+<h3>生成の仕組み（簡略版）</h3>
+<div class="flow">
+  <div class="flow-box">あなた<br>テーマを渡す</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">cb-scout<br>リサーチ</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="background:#EBF8FF;border-color:#0EA5E9">6エージェント<br>同時生成</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box" style="background:#F0FFF4;border-color:#38A169">6ファイル<br>完成</div>
+</div>
+
+<hr>
+
+<!-- CH2 -->
+<h2 id="quickstart">2. クイックスタート（最短3ステップ）</h2>
+
+<div class="step"><span class="step-num">1</span><strong>Claude Codeを開いてテーマを渡す</strong>
+<div class="prompt-box"><button class="copy-btn" onclick="copyText(this)">コピー</button>/content-burst 中小企業のAI活用最新動向2026</div>
+<p>または自然な文章でも動きます：</p>
+<div class="prompt-box">「採用活動のDX化」についてcontent-burstして</div>
+</div>
+
+<div class="step"><span class="step-num">2</span><strong>展開計画を確認して「開始する」を選ぶ</strong>
+<p>Kaiが自動でリサーチ観点を3〜5点提案します。内容を確認して「開始する」を選択。修正したい場合は「計画を修正してから開始する」を選べます（1回だけ）。</p>
+</div>
+
+<div class="step"><span class="step-num">3</span><strong>完了を待って成果物を取り出す</strong>
+<p>自動的に <span class="file-path">08_アプリ開発事業部/outputs/content-burst/run_YYYYMMDD_HHMM/</span> にファイルが生成されます。完了後にビジュアルマップがブラウザで自動オープンします。</p>
+</div>
+
+<div class="ok"><span class="label">所要時間の目安</span>リサーチの深さとテーマの専門性によって15〜30分かかります。その間は他の作業をしていても問題ありません。</div>
+
+<hr>
+
+<!-- CH3 -->
+<h2 id="outputs">3. 6種類の成果物の活用法</h2>
+
+<div class="output-card report">
+  <span class="file-name"><span class="file-path">report.html</span></span>
+  <h4>リサーチレポート（HTML形式）</h4>
+  <p>テーマの現状・課題・インサイトを章立てでまとめた読み物レポート。3,000〜5,000字・5〜6章構成。</p>
+  <div><span class="use-tag">社内勉強会</span><span class="use-tag">クライアントへの現状説明</span><span class="use-tag">提案書の下調べ</span><span class="use-tag">セミナー資料のベース</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>提案書を作る前にcontent-burstを走らせると、report.htmlがそのまま「テーマの背景説明」セクションのベースになります。</div>
+</div>
+
+<div class="output-card blog">
+  <span class="file-name"><span class="file-path">blog-post.html</span></span>
+  <h4>ブログ記事（WordPress Gutenberg対応）</h4>
+  <p>SEOを意識した構成のブログ記事。H1+リード+H2×3〜5+まとめで構成。2,500〜4,000字。WordPressに貼り付けてそのまま使用可能。</p>
+  <div><span class="use-tag">会社ブログ</span><span class="use-tag">note</span><span class="use-tag">クライアントのブログ代行</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>Gutenbergブロックコメントが内包されているので、WordPressのHTML編集モードに貼り付けるだけで構造が保たれます。公開前に事実確認と自社情報の追加を忘れずに。</div>
+</div>
+
+<div class="output-card x">
+  <span class="file-name"><span class="file-path">x-thread.md</span></span>
+  <h4>Xスレッド投稿</h4>
+  <p>6〜9投稿のスレッド構成。フック→本編→CTAの流れ。各投稿が日本語140字以内に収まるよう設計済み。</p>
+  <div><span class="use-tag">X（Twitter）</span><span class="use-tag">Facebook</span><span class="use-tag">LinkedIn</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>各投稿の前後に「[n/9]」のような番号を付けると、スレッドとしての可読性が上がります。投稿前に最新情報や個人エピソードを1行加えると反応率が高まります。</div>
+</div>
+
+<div class="output-card youtube">
+  <span class="file-name"><span class="file-path">youtube-script.md</span></span>
+  <h4>YouTube台本（約10分尺）</h4>
+  <p>話し言葉で書かれたビデオ台本。2,800〜3,200字。オープニング/本編3〜5パート/クロージングの構成。ト書き付き。</p>
+  <div><span class="use-tag">YouTube</span><span class="use-tag">Loom動画</span><span class="use-tag">セミナー登壇</span><span class="use-tag">音声ポッドキャスト</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>読み上げそのままではなく「会話の流れ」として使うのがコツ。[間を取る][強調]のト書きは実際に従うと視聴者への伝わり方が格段に変わります。</div>
+</div>
+
+<div class="output-card mail">
+  <span class="file-name"><span class="file-path">newsletter.md</span></span>
+  <h4>メルマガ</h4>
+  <p>件名+プレビューテキスト+本文+CTA+署名プレースホルダー。800〜1,500字。</p>
+  <div><span class="use-tag">メールマガジン</span><span class="use-tag">既存顧客フォロー</span><span class="use-tag">ステップメール素材</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>署名欄の <code>{{差出人名}}</code> 等のプレースホルダーを実際の情報に置き換えてから送付。CTAリンクを実際のURLに差し替えることを忘れずに。</div>
+</div>
+
+<div class="output-card visual">
+  <span class="file-name"><span class="file-path">visual-map.html</span></span>
+  <h4>ビジュアルマップ（HTML形式）</h4>
+  <p>3〜6枚のカード型インフォグラフィック。ブラウザで表示・スクリーンショット可能。KPIカード・フロー図・比較など複数のビジュアル形式を組み合わせ。</p>
+  <div><span class="use-tag">SNSへの画像貼り付け</span><span class="use-tag">提案資料の挿絵</span><span class="use-tag">セミナースライドの1枚</span></div>
+  <div class="tip" style="margin-top:12px"><span class="label">活用Tips</span>完了後に自動でブラウザが開きます。ブラウザのスクリーンショット機能（全ページキャプチャ）でPNG化するとSNSやスライドに貼れます。</div>
+</div>
+
+<hr>
+
+<!-- CH4 -->
+<h2 id="customize">4. カスタマイズのコツ</h2>
+
+<h3>テーマの渡し方で品質が変わる</h3>
+<table>
+  <tr><th>渡し方</th><th>例</th><th>効果</th></tr>
+  <tr><td>シンプル（最短）</td><td><code>/content-burst AI活用</code></td><td>Kaiが観点を自動設定。幅広いコンテンツになる。</td></tr>
+  <tr><td>ターゲットを追加</td><td><code>/content-burst 中小企業向けAI活用の始め方</code></td><td>読者対象が絞られ、具体的な内容になる。</td></tr>
+  <tr><td>角度を指定</td><td><code>/content-burst AIコスト削減の具体的手法（製造業向け）</code></td><td>専門性が高くなり、特定業種への刺さりが強くなる。</td></tr>
+  <tr><td>トーン追加</td><td><code>/content-burst AI採用戦略。トーン：経営者向け・シリアス寄り</code></td><td>6チャネル全体のトーンが統一される。</td></tr>
+</table>
+
+<h3>展開計画フェーズでの修正ポイント</h3>
+<p>「計画を修正してから開始する」を選んだ場合、以下の点を伝えると効果的です：</p>
+<ul>
+  <li><strong>観点の追加/削除</strong>：「観点2は不要。代わりに『コスト面』を追加して」</li>
+  <li><strong>観点の深掘り指定</strong>：「観点3を『法規制リスク』にフォーカスして」</li>
+  <li><strong>除外したい内容</strong>：「競合他社名は出さないで」</li>
+  <li><strong>強調したい点</strong>：「ROIの数値を重視したリサーチにして」</li>
+</ul>
+
+<div class="warn"><span class="label">修正は1回のみ</span>計画修正の機会は1回のみです。大きく変更したい場合は、修正後にスキルを再実行するより効率的なケースもあります。</div>
+
+<hr>
+
+<!-- CH5 -->
+<h2 id="knowledge">5. Knowledge統合の使い方</h2>
+<div class="lead">Kaiの <span class="file-path">knowledge/</span> フォルダにクライアント情報や業界データを入れておくと、content-burstがそれを参照してより具体的なコンテンツを生成します。</div>
+
+<h3>活用シナリオ</h3>
+<div class="scenario-card">
+  <div class="tag">シナリオA</div>
+  <h4>クライアント向けコンテンツの一括生成</h4>
+  <p>クライアントのヒアリングメモや業界データを <span class="file-path">knowledge/<案件名>_背景.md</span> に保存しておく。content-burst実行時にKaiが自動参照し、クライアントの業種・規模・課題に合わせた内容になります。</p>
+  <div class="prompt-box">/content-burst まる様向けAI活用コンテンツ</div>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">シナリオB</div>
+  <h4>自社の実績データを盛り込む</h4>
+  <p>自社の支援実績・成功事例・独自データを <span class="file-path">knowledge/AS実績データ.md</span> に蓄積。テーマに関連する実績が自動でコンテンツに組み込まれます。</p>
+</div>
+
+<h3>Knowledge ファイルの作り方（推奨フォーマット）</h3>
+<div class="prompt-box"><span class="comment"># knowledge/クライアント名_context.md</span>
+
+## 基本情報
+- 業種：障害福祉（グループホーム運営）
+- スタッフ数：約30名
+- 主な課題：記録業務に1人あたり2時間/日消費
+
+## AI活用の現状
+- 現在未導入。ITリテラシーは低め。
+- スマートフォンは全員使用可能。
+
+## 強調したい観点
+- コスト削減よりも「現場スタッフの負担軽減」を前面に
+- 難しい専門用語を避けた平易な表現を優先</div>
+
+<hr>
+
+<!-- CH6 -->
+<h2 id="scenarios">6. ユースケース別活用シナリオ</h2>
+
+<div class="scenario-card">
+  <div class="tag">毎週の情報発信</div>
+  <h4>週次コンテンツカレンダーの一括準備</h4>
+  <p>月曜日にその週のテーマを決めてcontent-burstを実行。ブログ（水曜公開）・Xスレッド（月・木）・メルマガ（金曜）の素材が一度に揃います。</p>
+  <div class="prompt-box">/content-burst 今週のテーマ：中小企業に今すぐ使えるChatGPT活用法5選</div>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">セミナー後フォロー</div>
+  <h4>登壇後のコンテンツ展開</h4>
+  <p>セミナーで話したテーマをcontent-burstに渡す。参加者へのフォローメール（newsletter.md）・SNS報告投稿（x-thread.md）・ブログ記事化（blog-post.html）が同時生成。</p>
+  <div class="prompt-box">/content-burst 先日のセミナーテーマ「AI導入で変わる中小企業の採用活動」</div>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">提案書の前段</div>
+  <h4>クライアント提案前のリサーチ＋教育コンテンツ</h4>
+  <p>提案書作成前にcontent-burstを走らせる。report.htmlで自分がテーマを深く理解しつつ、blog-post.htmlをクライアントの理解度UPに使います。</p>
+</div>
+
+<div class="scenario-card">
+  <div class="tag">クライアント向け代行</div>
+  <h4>コンテンツマーケティング代行</h4>
+  <p>クライアントの事業テーマをcontent-burstで展開。月1〜2回の実行で、クライアントの全チャネル分の発信素材をまとめて納品。</p>
+  <div class="tip" style="margin-top:12px"><span class="label">注意</span>生成物はあくまで素材です。クライアント固有の実績・数字・声は人の手で加えてから公開してください。</div>
+</div>
+
+<hr>
+
+<!-- CH7 -->
+<h2 id="workflow">7. 生成後のワークフロー</h2>
+<h3>推奨の公開順序</h3>
+<ol>
+  <li><strong>report.html</strong> — 自分でまず読んでファクトチェック・情報の鮮度確認</li>
+  <li><strong>blog-post.html</strong> — 自社情報・実体験を追記してWordPressにアップ</li>
+  <li><strong>x-thread.md</strong> — ブログ公開と同日or翌日にXに投稿。ブログへのリンクをCTAに追加</li>
+  <li><strong>newsletter.md</strong> — 週末のメルマガ配信に使用。CTA先をブログ記事に変更</li>
+  <li><strong>youtube-script.md</strong> — 収録・投稿（動画作成の余裕がある週に）</li>
+  <li><strong>visual-map.html</strong> — スクリーンショットしてSNS・スライドに活用</li>
+</ol>
+
+<div class="ok"><span class="label">タイムスタンプフォルダで管理が楽</span>実行ごとに <code>run_YYYYMMDD_HHMM</code> フォルダが作られるので、過去の生成物も消えません。同じテーマを違う角度で再実行して比較することもできます。</div>
+
+<hr>
+
+<!-- CH8 -->
+<h2 id="trouble">8. トラブルシューティング</h2>
+<table>
+  <tr><th>症状</th><th>原因</th><th>対処</th></tr>
+  <tr><td>cb-scoutが途中で止まった</td><td>WebSearchの接続エラー</td><td>もう一度 <code>/content-burst [テーマ]</code> を実行。Kaiはべストエフォートで続行します。</td></tr>
+  <tr><td>一部のファイルが生成されていない</td><td>エージェントのエラー</td><td>完了報告の ✗ マークを確認。Kaiに「〇〇だけ再生成して」と依頼するのが最速。</td></tr>
+  <tr><td>内容が薄い・一般的すぎる</td><td>テーマが広すぎる</td><td>テーマを絞る。「AI活用」→「中小企業の経理業務でのAI活用」など具体化。</td></tr>
+  <tr><td>トーンがバラバラな気がする</td><td>トーン指定なし</td><td>次回は「トーン：〇〇向け・〇〇調」をテーマに追記する。</td></tr>
+  <tr><td>ビジュアルマップが開かない</td><td>ブラウザ自動オープン失敗</td><td>フォルダを直接開いて <code>visual-map.html</code> をダブルクリック。</td></tr>
+  <tr><td>Kai Tasksが更新されない</td><td>サーバー未起動</td><td>kai-tasks を手動で開いてから再実行、またはKaiに「Kai Tasksを手動更新して」と依頼。</td></tr>
+</table>
+
+<hr>
+
+<!-- CH9 -->
+<h2 id="faq">9. よくある質問</h2>
+
+<div class="faq-q">Q. 生成された内容をそのまま公開してもいいですか？</div>
+<div class="faq-a">A. そのままの公開は非推奨です。数値のファクトチェック、自社・クライアント固有の情報追加、文体の最終確認を行ってから公開してください。Kaiはベースを作るものと捉えてください。</div>
+
+<div class="faq-q">Q. 同じテーマで何度も実行できますか？</div>
+<div class="faq-a">A. できます。実行ごとに別フォルダに保存されるため上書きは起きません。同じテーマを異なる観点で実行して、できのよいものを選ぶ使い方も有効です。</div>
+
+<div class="faq-q">Q. 英語のコンテンツも生成できますか？</div>
+<div class="faq-a">A. テーマに「英語で生成して」と追記することで対応可能です。ただしcb-*エージェントは日本語向けに設計されているため、品質は日本語が最良です。</div>
+
+<div class="faq-q">Q. content-burstとdeck-sprintはどちらを使えばいいですか？</div>
+<div class="faq-a">A. 「外に発信するコンテンツを複数チャネルで揃えたい」→ content-burst。「社内報告や提案のための資料を5分で作りたい」→ deck-sprint。</div>
+
+<div class="faq-q">Q. 生成にどれくらいトークンを使いますか？</div>
+<div class="faq-a">A. エージェント7体分の実行になるため、1回の実行で相応のトークンを消費します。テーマを絞るとcb-scoutの検索回数が減り、効率が上がります。</div>
+
+<hr>
+<p style="text-align:center; color:#94A3B8; font-size:13px">Kai — content-burst 徹底活用ガイド / 有限会社アートソウル</p>
+</div>
+
+<script>
+function copyText(btn) {
+  var code = btn.parentElement.innerText.replace('コピー','').trim();
+  navigator.clipboard.writeText(code).then(function() {
+    btn.textContent = 'コピー済み';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

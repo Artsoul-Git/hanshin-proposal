@@ -73,7 +73,9 @@ def _call_gemini(prompt: str) -> str:
     for attempt in range(3):
         req = urllib.request.Request(url, data=payload, headers={
             'Content-Type': 'application/json',
-            'Authorization': f'Bearer {api_key}'
+            'Authorization': f'Bearer {api_key}',
+            'User-Agent': 'python-requests/2.31.0',
+            'Accept': 'application/json'
         })
         try:
             with urllib.request.urlopen(req, timeout=60) as r:
