@@ -3,7 +3,7 @@
 クリックで自動生成: GEMINI_API_KEY が環境変数にあれば Gemini API を直接呼び出す
 Usage: python server.py
 """
-import json, os, uuid, datetime, threading, queue, webbrowser, re
+import json, os, uuid, datetime, threading, queue, webbrowser, re, time
 import urllib.request, urllib.error
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import socketserver
@@ -68,10 +68,19 @@ def _call_gemini(prompt: str) -> str:
     }, ensure_ascii=False).encode('utf-8')
 
     url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
-    req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
-    with urllib.request.urlopen(req, timeout=45) as r:
-        resp = json.loads(r.read())
-        return resp['candidates'][0]['content']['parts'][0]['text']
+    for attempt in range(3):
+        req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                resp = json.loads(r.read())
+                return resp['candidates'][0]['content']['parts'][0]['text']
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 2:
+                wait = 20 * (attempt + 1)
+                print(f'[GEMINI] 429 レート制限。{wait}秒後にリトライ ({attempt+1}/3)')
+                time.sleep(wait)
+            else:
+                raise
 
 
 def _extract_json(text: str) -> dict:
