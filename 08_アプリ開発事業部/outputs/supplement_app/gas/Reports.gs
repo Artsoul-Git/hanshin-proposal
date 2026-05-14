@@ -16,16 +16,15 @@ const Reports = {
 
     const reports = [];
     for (let i = 1; i < data.length; i++) {
-      if (data[i][userIdIdx] === userId) {
-        reports.push({
-          report_id:      data[i][headers.indexOf('report_id')],
-          week_start:     data[i][headers.indexOf('week_start')],
-          report_text:    data[i][headers.indexOf('report_text')],
-          biorhythm_info: data[i][headers.indexOf('biorhythm_info')],
-          sent_at:        data[i][headers.indexOf('sent_at')],
-          stats:          this._parseStats(data[i][headers.indexOf('biorhythm_info')]),
-        });
-      }
+      if (String(data[i][userIdIdx]).trim() !== userId) continue;
+      reports.push({
+        report_id:      data[i][headers.indexOf('report_id')],
+        week_start:     this._toDateStr(data[i][headers.indexOf('week_start')]),
+        report_text:    data[i][headers.indexOf('report_text')],
+        biorhythm_info: data[i][headers.indexOf('biorhythm_info')],
+        sent_at:        this._toDateStr(data[i][headers.indexOf('sent_at')]),
+        stats:          this._parseStats(data[i][headers.indexOf('biorhythm_info')]),
+      });
     }
 
     reports.sort((a, b) => b.week_start.localeCompare(a.week_start));
@@ -224,6 +223,15 @@ Noliaチーム
 
   _parseStats(biorhythmInfo) {
     try { return JSON.parse(biorhythmInfo); } catch(_) { return null; }
+  },
+
+  // Sheets が Date オブジェクトで返す場合も YYYY-MM-DD 文字列に統一
+  _toDateStr(val) {
+    if (!val) return '';
+    if (val instanceof Date) {
+      return Utilities.formatDate(val, 'Asia/Tokyo', 'yyyy-MM-dd');
+    }
+    return String(val).split('T')[0];
   },
 };
 

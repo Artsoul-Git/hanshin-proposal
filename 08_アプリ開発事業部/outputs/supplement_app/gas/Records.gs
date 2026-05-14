@@ -19,10 +19,12 @@ const Records = {
     const dateIdx   = headers.indexOf('log_date');
     let existingRow = -1;
     for (let i = 1; i < data.length; i++) {
-      if (data[i][userIdIdx] === userId && data[i][dateIdx] === date) {
-        existingRow = i + 1; // 1-indexed
-        break;
-      }
+      if (data[i][userIdIdx] !== userId) continue;
+      const d = data[i][dateIdx];
+      const dStr = d instanceof Date
+        ? Utilities.formatDate(d, 'Asia/Tokyo', 'yyyy-MM-dd')
+        : String(d || '').split('T')[0];
+      if (dStr === date) { existingRow = i + 1; break; }
     }
 
     const rowData = this._buildRowData(headers, {
@@ -69,9 +71,12 @@ const Records = {
 
     const logs = [];
     for (let i = 1; i < data.length; i++) {
-      if (data[i][userIdIdx] === userId && data[i][dateIdx] >= cutoffStr) {
-        logs.push(this._rowToLog(headers, data[i]));
-      }
+      if (data[i][userIdIdx] !== userId) continue;
+      const d = data[i][dateIdx];
+      const dStr = d instanceof Date
+        ? Utilities.formatDate(d, 'Asia/Tokyo', 'yyyy-MM-dd')
+        : String(d || '').split('T')[0];
+      if (dStr >= cutoffStr) logs.push(this._rowToLog(headers, data[i]));
     }
 
     logs.sort((a, b) => a.date.localeCompare(b.date));
@@ -80,9 +85,12 @@ const Records = {
 
   // 行データオブジェクトに変換
   _rowToLog(headers, row) {
+    const dateVal = row[headers.indexOf('log_date')];
     return {
       log_id:  row[headers.indexOf('log_id')],
-      date:    row[headers.indexOf('log_date')],
+      date:    dateVal instanceof Date
+        ? Utilities.formatDate(dateVal, 'Asia/Tokyo', 'yyyy-MM-dd')
+        : String(dateVal || '').split('T')[0],
       weight:  parseFloat(row[headers.indexOf('weight')]) || null,
       mood:    parseInt(row[headers.indexOf('mood')])     || null,
       cond:    parseInt(row[headers.indexOf('cond')])     || null,
