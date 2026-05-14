@@ -170,29 +170,61 @@ Mermaidコードのみ出力:"""
     return _sanitize_mermaid(_call_gemini(prompt))
 
 
-def _gen_gantt(ti: int, context: str) -> str:
+def _gen_gantt(ti: int, context: str) -> dict:
     theme = THEMES[ti]
-    prompt = f"""テーマ「{theme}」（{context}）の実行スケジュールをMermaidガントチャートで生成してください。
+    prompt = f"""テーマ「{theme}」のアクション「{context}」について、実行スケジュールとタスク詳細を生成してください。
 
-【Mermaid構文ルール（必ず守ること）】
-- 1行目: gantt（gが1つ。"gaantt"は誤り）
-- 2行目: title {context}の実行計画
-- 3行目: dateFormat YYYY-MM-DD
-- 4行目: excludes weekends
-- タスク名に括弧・コロン・スラッシュは使わない
-- クリティカルタスク: タスク名 :crit, 2026-06-01, 5d
-- マイルストーン: 名前 :milestone, 2026-06-07, 0d
-- コードブロック（```）は書かない
+以下の形式で出力してください（===の行はそのまま出力）：
 
-【構成】
-section 準備フェーズ（3タスク）
-section 実行フェーズ（3タスク、うち1つcrit）
-section 完了フェーズ（マイルストーン2個）
+===MERMAID===
+gantt
+    title {context}の実行計画
+    dateFormat YYYY-MM-DD
+    excludes weekends
+    section 準備フェーズ
+    （タスクをここに）
+    section 実行フェーズ
+    （タスクをここに）
+    section 完了フェーズ
+    （タスクをここに）
+===TASKS===
+[
+  {{"id": "t1", "title": "タスク名", "summary": "作業内容1〜2文", "notes": "注意点1〜2文"}}
+]
 
-開始日: 2026-06-01
+【Mermaidのルール】
+- gantt（gは1つ）
+- タスクID: t1 t2 t3...（英数字のみ、スペース不可）
+- タスク名にコロン・カッコ・スラッシュ不可
+- 形式: タスク名 :t1, 2026-06-01, 3d
+- クリティカル: タスク名 :crit, t2, 2026-06-04, 5d
+- マイルストーン: 完了確認 :milestone, m1, 2026-06-14, 0d
+- 3セクション計6〜8タスク、コードブロック不要
 
-Mermaidコードのみ出力:"""
-    return _sanitize_mermaid(_call_gemini(prompt))
+【TASKSのルール】
+- JSON配列形式
+- Mermaidの全タスクをリストアップ（マイルストーン含む）
+- idはMermaidのタスクIDと対応"""
+
+    text = _call_gemini(prompt)
+    mermaid_code = ''
+    tasks = []
+
+    if '===MERMAID===' in text and '===TASKS===' in text:
+        parts = text.split('===TASKS===')
+        mermaid_part = parts[0].replace('===MERMAID===', '').strip()
+        tasks_part = parts[1].strip()
+        mermaid_code = _sanitize_mermaid(mermaid_part)
+        try:
+            arr_match = re.search(r'\[[\s\S]*\]', tasks_part)
+            if arr_match:
+                tasks = json.loads(arr_match.group(0))
+        except Exception as e:
+            print(f'[GANTT] タスクJSON解析エラー: {e}')
+    else:
+        mermaid_code = _sanitize_mermaid(text)
+
+    return {'mermaid': mermaid_code, 'tasks': tasks}
 
 
 def _auto_generate(req: dict) -> None:

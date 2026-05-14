@@ -136,6 +136,11 @@ body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-heig
 .bk{background:#f3e5f5;color:#6a1b9a}.bb{background:#e8f0fe;color:#1565c0}
 .bg{background:#e8f5e9;color:#2e7d32}.br2{background:#fce4e4;color:#c62828}
 .by{background:#fff8e1;color:#f57f17}
+.task-list{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.task-item{background:#f8f9fa;border-radius:10px;padding:14px 16px;border-left:4px solid #1565c0}
+.task-item-title{font-size:14px;font-weight:bold;color:#1a1a1a;margin-bottom:6px}
+.task-item-row{font-size:12px;color:#555;line-height:1.6;margin-top:3px}
+.task-item-row b{color:#333}
 </style>
 </head>
 <body>
@@ -196,6 +201,7 @@ body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#eef0f4;min-heig
       <div class="card-title" id="gantt-title">ガントチャート</div>
       <div class="card-meta" id="gantt-meta"></div>
       <div id="gantt-body"></div>
+      <div id="gantt-tasks" style="display:none"></div>
       <div class="toolbar">
         <button class="btn" onclick="go('flow')">← フロー図に戻る</button>
         <button class="btn" id="gantt-cp-btn" onclick="cpGantt()" style="display:none">📋 Mermaidコピー</button>
@@ -314,9 +320,7 @@ function onContentReady(type, key, content) {
     document.getElementById('flow-to-gantt').style.display = '';
     document.getElementById('flow-cp-btn').style.display = '';
   } else if (type === 'gantt' && S.view === 'gantt' && key === (S.flowKey || curKey)) {
-    _ganttSrc = content;
-    renderMermaidView('gantt-body', content);
-    document.getElementById('gantt-cp-btn').style.display = '';
+    renderGantt(S.ti);
   }
 }
 
@@ -496,16 +500,31 @@ function renderGantt(ti) {
   document.getElementById('gantt-meta').textContent = S.flowCtx
     ? `${S.flowCtx} の実行スケジュール`
     : (taskName ? `${th.n} › ${taskName} の実行スケジュール` : `${th.n} の実行スケジュール`);
-  const src = STATE?.generated?.gantt?.[key];
+  const raw = STATE?.generated?.gantt?.[key];
   const body = document.getElementById('gantt-body');
-  if (!src) {
+  const taskDiv = document.getElementById('gantt-tasks');
+  if (!raw) {
     document.getElementById('gantt-cp-btn').style.display = 'none';
+    taskDiv.style.display = 'none';
     body.innerHTML = _pendingBox('gantt', ti, context, S.tj, key);
     return;
   }
-  _ganttSrc = src;
+  const mermaidSrc = (typeof raw === 'object' && raw.mermaid) ? raw.mermaid : raw;
+  const tasks = (typeof raw === 'object' && Array.isArray(raw.tasks)) ? raw.tasks : [];
+  _ganttSrc = mermaidSrc;
   document.getElementById('gantt-cp-btn').style.display = '';
-  renderMermaidView('gantt-body', src);
+  renderMermaidView('gantt-body', mermaidSrc);
+  if (tasks.length > 0) {
+    taskDiv.style.display = '';
+    taskDiv.innerHTML = `<div class="task-list">${tasks.map((t, i) => `
+      <div class="task-item">
+        <div class="task-item-title">タスク${i+1}：${t.title||''}</div>
+        <div class="task-item-row"><b>概要：</b>${t.summary||''}</div>
+        <div class="task-item-row"><b>注意点：</b>${t.notes||''}</div>
+      </div>`).join('')}</div>`;
+  } else {
+    taskDiv.style.display = 'none';
+  }
 }
 
 /* ═══ MERMAID DYNAMIC RENDER ═══ */
