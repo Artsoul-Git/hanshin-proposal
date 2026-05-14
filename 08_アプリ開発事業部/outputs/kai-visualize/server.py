@@ -67,7 +67,7 @@ def _call_gemini(prompt: str) -> str:
         'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.7}
     }, ensure_ascii=False).encode('utf-8')
 
-    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}'
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
     for attempt in range(3):
         req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
         try:
@@ -196,6 +196,9 @@ def _auto_generate(req: dict) -> None:
 
     except Exception as e:
         print(f'[AUTO] エラー: {e}')
+        s = _load()
+        s['queue'] = [q for q in s['queue'] if q['id'] != req_id]
+        _save(s)
         _broadcast('generate_error', {'id': req_id, 'error': str(e)})
 
 
