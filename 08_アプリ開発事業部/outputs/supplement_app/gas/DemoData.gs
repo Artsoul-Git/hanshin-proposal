@@ -8,14 +8,20 @@
 function insertDemoData() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
-  // ── 1. users シート：start_date と joined_at を更新 ──────────────
-  _updateUserStartDate(ss);
+  // ── 1. users シート更新 + 実際のユーザーIDを取得 ──────────────────
+  const userId = _updateUserStartDate(ss);
+  if (!userId) {
+    Logger.log('エラー: アクティブなユーザーが見つかりません');
+    SpreadsheetApp.getActiveSpreadsheet().toast('ユーザーが見つかりません', 'エラー', 5);
+    return;
+  }
+  Logger.log('対象ユーザーID: ' + userId);
 
   // ── 2. daily_log シート：2026-02-14〜2026-05-12 の記録を追加 ──────
-  _insertDailyLogs(ss);
+  _insertDailyLogs(ss, userId);
 
   // ── 3. weekly_reports シート：週次レポートを追加 ──────────────────
-  _insertWeeklyReports(ss);
+  _insertWeeklyReports(ss, userId);
 
   Logger.log('デモデータ挿入完了！');
   SpreadsheetApp.getActiveSpreadsheet().toast('デモデータ挿入完了！', 'Nolia Demo', 5);
@@ -24,6 +30,7 @@ function insertDemoData() {
 // ──────────────────────────────────────────────────────────────────
 // ユーザーのサプリ開始日・登録日を3か月前に変更
 // ──────────────────────────────────────────────────────────────────
+// 戻り値: 更新したユーザーのuser_id（見つからなければnull）
 function _updateUserStartDate(ss) {
   const sheet   = ss.getSheetByName('users');
   const data    = sheet.getDataRange().getValues();
@@ -31,21 +38,25 @@ function _updateUserStartDate(ss) {
   const userIdIdx    = headers.indexOf('user_id');
   const startDateIdx = headers.indexOf('start_date');
   const joinedAtIdx  = headers.indexOf('joined_at');
+  const statusIdx    = headers.indexOf('status');
 
   for (let i = 1; i < data.length; i++) {
-    if (data[i][userIdIdx] !== 'USR0001') continue;
+    var status = statusIdx >= 0 ? data[i][statusIdx] : '';
+    if (status === 'churned') continue;
+    var userId = String(data[i][userIdIdx]);
     sheet.getRange(i + 1, startDateIdx + 1).setValue('2026-02-14');
     sheet.getRange(i + 1, joinedAtIdx  + 1).setValue('2026-02-14T08:30:00.000Z');
-    Logger.log('users 更新完了');
-    break;
+    Logger.log('users 更新完了: ' + userId);
+    return userId;
   }
+  return null;
 }
 
 // ──────────────────────────────────────────────────────────────────
 // 日次記録を生成して追加
 // ストーリー：61.5kg → 58.0kg（自然な減少・停滞・回復のリズム）
 // ──────────────────────────────────────────────────────────────────
-function _insertDailyLogs(ss) {
+function _insertDailyLogs(ss, userId) {
   const sheet   = ss.getSheetByName('daily_log');
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
@@ -116,7 +127,7 @@ function _insertDailyLogs(ss) {
 
     const logObj = {
       log_id:     logId,
-      user_id:    'USR0001',
+      user_id:    userId,
       log_date:   dateStr,
       weight:     weight,
       mood:       mood,
@@ -139,7 +150,7 @@ function _insertDailyLogs(ss) {
 // ──────────────────────────────────────────────────────────────────
 // 週次レポートを生成（12週分）
 // ──────────────────────────────────────────────────────────────────
-function _insertWeeklyReports(ss) {
+function _insertWeeklyReports(ss, userId) {
   const sheet   = ss.getSheetByName('weekly_reports');
   if (!sheet) { Logger.log('weekly_reports シートなし、スキップ'); return; }
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -167,7 +178,7 @@ function _insertWeeklyReports(ss) {
 
     return headers.map(h => ({
       report_id:      reportId,
-      user_id:        'USR0001',
+      user_id:        userId,
       week_start:     r.week,
       report_text:    r.text,
       biorhythm_info: bioInfo,
@@ -175,7 +186,7 @@ function _insertWeeklyReports(ss) {
       opened_at:      '',
     }[h] !== undefined ? {
       report_id:      reportId,
-      user_id:        'USR0001',
+      user_id:        userId,
       week_start:     r.week,
       report_text:    r.text,
       biorhythm_info: bioInfo,
