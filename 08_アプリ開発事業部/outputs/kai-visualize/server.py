@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Kai Visualize Server  port 3458
-クリックで自動生成: ANTHROPIC_API_KEY が環境変数にあれば Claude API を直接呼び出す
+クリックで自動生成: GEMINI_API_KEY が環境変数にあれば Gemini API を直接呼び出す
 Usage: python server.py
 """
 import json, os, uuid, datetime, threading, queue, webbrowser, re
@@ -56,30 +56,22 @@ def _broadcast(event: str, data: dict) -> None:
                 pass
 
 
-# ─── Claude API ───
-def _call_claude(prompt: str) -> str:
-    api_key = os.environ.get('ANTHROPIC_API_KEY', '')
+# ─── Gemini API ───
+def _call_gemini(prompt: str) -> str:
+    api_key = os.environ.get('GEMINI_API_KEY', '')
     if not api_key:
-        raise RuntimeError('ANTHROPIC_API_KEY が設定されていません')
+        raise RuntimeError('GEMINI_API_KEY が設定されていません')
 
     payload = json.dumps({
-        'model': 'claude-sonnet-4-6',
-        'max_tokens': 2048,
-        'messages': [{'role': 'user', 'content': prompt}]
+        'contents': [{'parts': [{'text': prompt}]}],
+        'generationConfig': {'maxOutputTokens': 2048, 'temperature': 0.7}
     }, ensure_ascii=False).encode('utf-8')
 
-    req = urllib.request.Request(
-        'https://api.anthropic.com/v1/messages',
-        data=payload,
-        headers={
-            'x-api-key': api_key,
-            'anthropic-version': '2023-06-01',
-            'content-type': 'application/json',
-        }
-    )
+    url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}'
+    req = urllib.request.Request(url, data=payload, headers={'content-type': 'application/json'})
     with urllib.request.urlopen(req, timeout=45) as r:
         resp = json.loads(r.read())
-        return resp['content'][0]['text']
+        return resp['candidates'][0]['content']['parts'][0]['text']
 
 
 def _extract_json(text: str) -> dict:
@@ -107,7 +99,7 @@ def _gen_4q(ti: int) -> dict:
   "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}}
 }}
 ※ 8タスクをすべていずれかの象限に配置。Q1（今すぐ着手）の最重要タスク1つのみ "flow": true を付けてください。"""
-    return _extract_json(_call_claude(prompt))
+    return _extract_json(_call_gemini(prompt))
 
 
 def _gen_flow(ti: int, context: str) -> str:
@@ -122,7 +114,7 @@ def _gen_flow(ti: int, context: str) -> str:
 - style文で色付け：開始(fill:#1565c0)、終了(fill:#2e7d32)、分岐(fill:#e65100)、Kaiスキルノード(fill:#6a1b9a)
 
 Mermaidコードのみ返答（```や説明は不要）："""
-    text = _call_claude(prompt).strip()
+    text = _call_gemini(prompt).strip()
     # コードブロックを除去
     text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
     text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
@@ -142,7 +134,7 @@ def _gen_gantt(ti: int, context: str) -> str:
 - マイルストーン2個（:milestone付き）
 
 Mermaidコードのみ返答（```や説明は不要）："""
-    text = _call_claude(prompt).strip()
+    text = _call_gemini(prompt).strip()
     text = re.sub(r'^```[a-z]*\n?', '', text, flags=re.MULTILINE)
     text = re.sub(r'\n?```$', '', text, flags=re.MULTILINE)
     return text.strip()
@@ -199,7 +191,7 @@ class _Handler(BaseHTTPRequestHandler):
         elif p == '/events':
             self._sse()
         elif p == '/has-api-key':
-            self._json({'ok': bool(os.environ.get('ANTHROPIC_API_KEY'))})
+            self._json({'ok': bool(os.environ.get('GEMINI_API_KEY'))})
         else:
             self.send_response(404)
             self.end_headers()
@@ -230,7 +222,7 @@ class _Handler(BaseHTTPRequestHandler):
             self._json({'ok': True, 'id': req['id']})
 
             # API キーがあれば自動生成
-            if os.environ.get('ANTHROPIC_API_KEY'):
+            if os.environ.get('GEMINI_API_KEY'):
                 threading.Thread(target=_auto_generate, args=(req,), daemon=True).start()
 
         elif p == '/generate':
@@ -324,7 +316,7 @@ class _Server(socketserver.ThreadingMixIn, HTTPServer):
 
 
 if __name__ == '__main__':
-    has_key = bool(os.environ.get('ANTHROPIC_API_KEY'))
+    has_key = bool(os.environ.get('GEMINI_API_KEY'))
     mode = 'クリック自動生成モード' if has_key else '手動生成モード（API キーなし）'
     print(f'Kai Visualize Server: http://localhost:{PORT}  [{mode}]  (Ctrl+C で停止)')
     srv = _Server(('localhost', PORT), _Handler)
