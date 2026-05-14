@@ -62,7 +62,7 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
   <div class="sub">マンダラチャート × AI自動生成ビジュアライザー</div>
   <div class="meta">
     対象：上村桂右（社内利用）　　ポート：localhost:3458<br>
-    使用API：Groq API（llama-3.3-70b-versatile）　　最終更新：2026-05-15
+    使用API：Groq API（llama-3.3-70b-versatile）　　最終更新：2026-05-15 v2.0
   </div>
 </div>
 
@@ -74,7 +74,7 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
     <li><a href="#sec3">3. 起動方法</a></li>
     <li><a href="#sec4">4. 操作フロー</a></li>
     <li><a href="#sec5">5. 画面の見方</a></li>
-    <li><a href="#sec6">6. データリセット</a></li>
+    <li><a href="#sec6">6. セッションの管理（履歴・削除・リネーム）</a></li>
     <li><a href="#sec7">7. APIキーの更新</a></li>
     <li><a href="#sec8">8. トラブルシューティング</a></li>
     <li><a href="#sec9">9. ファイル構成</a></li>
@@ -83,9 +83,11 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
 
 <!-- ===== 1. 概要 ===== -->
 <h2 id="sec1">1. アプリ概要</h2>
-<p>マンダラチャートのタスクセルをクリックするだけで、AIが以下を順番に自動生成します。</p>
+<p>テーマを入力するだけで、AIがマンダラチャートから順に深掘りビジュアルを自動生成します。テーマは複数作成・保存でき、履歴からいつでも続きを再開できます。</p>
 <div class="flow-row">
-  <div class="flow-box">マンダラチャート<br><small>9×9グリッド</small></div>
+  <div class="flow-box">テーマ入力<br><small>好きなテーマを入力</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">マンダラチャート<br><small>8テーマ×8タスク</small></div>
   <div class="flow-arrow">→</div>
   <div class="flow-box">4象限マトリクス<br><small>優先度・難易度</small></div>
   <div class="flow-arrow">→</div>
@@ -94,6 +96,8 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
   <div class="flow-box">ガントチャート<br><small>スケジュール＋<br>タスク詳細</small></div>
 </div>
 <ul>
+  <li><strong>セッション管理</strong>：テーマごとにセッションが作成され、ホーム画面から一覧・再開できます</li>
+  <li><strong>マンダラもAI生成</strong>：入力テーマに合わせて8サブテーマ×64タスクをAIが自動構築します</li>
   <li>4象限の<strong>すべてのアイテム</strong>からフロー図を生成できます</li>
   <li>ガントチャートにはタスクごとの概要・注意点が一覧表示されます</li>
   <li>生成済みコンテンツは <code>state.json</code> に保存され、次回起動時も維持されます</li>
@@ -161,44 +165,90 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
 <h2 id="sec4">4. 操作フロー</h2>
 
 <div class="step-box">
-  <div class="step-row"><span class="step-num">1</span><div><strong>マンダラ画面で「小さいマス（タスクセル）」をクリック</strong><br>中央の大きいテーマセルではなく、その周囲の8つの小さいセルをクリックします。</div></div>
-  <div class="step-row"><span class="step-num">2</span><div><strong>4象限マトリクスが自動生成される</strong><br>「AIが生成中...」と表示され、10〜20秒で4象限に8つのアクションが配置されます。</div></div>
-  <div class="step-row"><span class="step-num">3</span><div><strong>アイテムをクリックしてフロー図を生成</strong><br>4象限のどのアイテムでも「▶ フロー図を生成」ボタンが表示されます。クリックすると実行手順フロー図が生成されます。</div></div>
-  <div class="step-row"><span class="step-num">4</span><div><strong>「ガントチャートへ →」でガントチャートを生成</strong><br>フロー図の下部に表示されるボタンをクリック。スケジュールとタスク詳細（概要・注意点）が生成されます。</div></div>
+  <div class="step-row"><span class="step-num">1</span><div><strong>ホーム画面で「＋ 新規作成」をクリック</strong><br>起動するとホーム画面が表示されます。テーマを入力（例：副業収入アップ、新規事業計画）して「マンダラを生成 →」をクリック。</div></div>
+  <div class="step-row"><span class="step-num">2</span><div><strong>「✨ マンダラを生成する」ボタンをクリック</strong><br>AIが入力テーマから8サブテーマ×64タスクのマンダラを構築します（15〜25秒）。</div></div>
+  <div class="step-row"><span class="step-num">3</span><div><strong>マンダラ画面でセルをクリック → 4象限マトリクス生成</strong><br>色のついたセルをクリックすると4象限マトリクスが生成されます（10〜20秒）。</div></div>
+  <div class="step-row"><span class="step-num">4</span><div><strong>4象限のアイテムをクリック → フロー図生成</strong><br>どのアイテムでも「▶ フロー図を生成」からクリックして実行手順フロー図を生成できます。</div></div>
+  <div class="step-row"><span class="step-num">5</span><div><strong>「ガントチャートへ →」でガントチャート生成</strong><br>スケジュール表＋タスク詳細（概要・注意点）が自動表示されます。</div></div>
 </div>
 
 <div class="tip">
-  <span class="label">💡 生成済みコンテンツはキャッシュされます</span>
-  一度生成したアイテムは <code>state.json</code> に保存されます。同じアイテムを再クリックしても再生成されず、即座に表示されます。
+  <span class="label">💡 続きはいつでも再開できます</span>
+  生成済みコンテンツはセッションとして <code>state.json</code> に保存されます。ホーム画面の履歴から選択すれば、前回の続きをすぐに再開できます。
+</div>
+<div class="tip">
+  <span class="label">💡 複数テーマを並行して管理できます</span>
+  「＋ 新規作成」で別テーマのセッションを作成できます。各セッションは独立しており、ホーム画面からいつでも切り替えられます。
 </div>
 
 <!-- ===== 5. 画面の見方 ===== -->
 <h2 id="sec5">5. 画面の見方</h2>
 
+<h3>ホーム画面</h3>
+<ul>
+  <li><strong>＋ 新規作成</strong>：テーマ入力モーダルを開いて新しいセッションを作成</li>
+  <li><strong>📋 全履歴</strong>：履歴一覧画面へ移動（全セッションを管理）</li>
+  <li><strong>📗 マニュアル</strong>：このファイルを開く</li>
+  <li><strong>最近のセッション</strong>：最新6件のカードが表示。クリックで続きを再開</li>
+</ul>
+
+<h3>履歴一覧画面</h3>
+<ul>
+  <li>全セッションを更新日時の新しい順で表示</li>
+  <li><strong>タイトルをクリック / ✏️ アイコン</strong>：インラインでリネーム（表示名変更）</li>
+  <li><strong>メモ欄をクリック</strong>：セッションへのメモ・備忘録を編集</li>
+  <li><strong>開く</strong>：そのセッションのマンダラ画面を表示</li>
+  <li><strong>🗑 削除</strong>：セッションと生成済みデータをすべて削除</li>
+</ul>
+
+<h3>進捗バッジ</h3>
+<p>各セッションカードには <span class="badge-green">✓ マンダラ</span> <span class="badge-green">✓ 4象限</span> <span class="badge-purple">フロー</span> のように進捗が表示されます。</p>
+
 <h3>サーバー接続バッジ（右上）</h3>
 <table class="status-table">
   <tr><th>表示</th><th>状態</th></tr>
-  <tr><td>● サーバー接続中 (AI自動)</td><td>正常。GROQ_API_KEYが読み込まれており、クリックで自動生成されます</td></tr>
-  <tr><td>● サーバー接続中</td><td>サーバーは動作中ですがAPIキーが読み込まれていません（手動モード）</td></tr>
+  <tr><td>● 接続中 (AI自動)</td><td>正常。GROQ_API_KEYが読み込まれており、クリックで自動生成されます</td></tr>
+  <tr><td>● 接続中</td><td>サーバーは動作中ですがAPIキーが読み込まれていません</td></tr>
   <tr><td>再接続中...</td><td>SSE接続が一時切断されました。自動的に復帰します</td></tr>
   <tr><td>✗ エラー</td><td>サーバーが起動していません</td></tr>
 </table>
 
 <h3>パンくずナビゲーション</h3>
-<p>画面上部に <code>🏠 マンダラ › テーマ名 › タスク名 › フロー図</code> のように表示されます。クリックで前の画面に戻れます。</p>
+<p>画面上部に <code>🏠 › セッション名 › サブテーマ名 › フロー図</code> のように表示されます。クリックで前の画面に戻れます。</p>
 
-<!-- ===== 6. リセット ===== -->
-<h2 id="sec6">6. データリセット</h2>
-<p>生成済みコンテンツをすべて削除してやり直す場合：</p>
+<!-- ===== 6. セッション管理 ===== -->
+<h2 id="sec6">6. セッションの管理（履歴・削除・リネーム）</h2>
+
+<h3>セッションのリネーム</h3>
 <ol>
-  <li>サーバーを停止（PowerShellウィンドウで <code>Ctrl+C</code>）</li>
-  <li>以下のコマンドを実行：</li>
+  <li>ホーム画面の「📋 全履歴」ボタンをクリック</li>
+  <li>対象セッションのタイトル文字または ✏️ アイコンをクリック</li>
+  <li>テキストボックスに新しい名前を入力 → 「保存」</li>
 </ol>
-<pre><code>cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize"
-Remove-Item state.json</code></pre>
-<p>3. サーバーを再起動（方法A または 方法B）</p>
-<p>または、サーバー起動中にPowerShellから以下でもリセットできます：</p>
-<pre><code>Invoke-RestMethod -Uri http://localhost:3458/reset -Method POST</code></pre>
+<div class="tip">
+  <span class="label">💡 テーマとタイトルは別々</span>
+  テーマはAI生成のプロンプト（変更不可）。タイトルは表示名（自由に変更可）。
+</div>
+
+<h3>メモの追加・編集</h3>
+<ol>
+  <li>履歴一覧でメモ欄（「メモを追加...」と表示されている部分）をクリック</li>
+  <li>テキストを入力 → 「保存」</li>
+</ol>
+
+<h3>セッションの削除</h3>
+<ol>
+  <li>履歴一覧で対象セッションの「🗑 削除」ボタンをクリック</li>
+  <li>確認ダイアログで「OK」</li>
+</ol>
+<div class="warn">
+  <span class="label">⚠️ 削除は取り消せません</span>
+  そのセッションで生成したマンダラ・4象限・フロー図・ガントチャートのデータがすべて削除されます。
+</div>
+
+<h3>全データをリセットする場合</h3>
+<p>すべてのセッションを一括削除するには、サーバーを停止してから <code>state.json</code> を削除してください。</p>
+<pre><code>Remove-Item "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize\state.json"</code></pre>
 
 <!-- ===== 7. APIキー更新 ===== -->
 <h2 id="sec7">7. APIキーの更新</h2>
@@ -251,9 +301,9 @@ Remove-Item state.json</code></pre>
 <table>
   <tr><th>ファイル</th><th>役割</th></tr>
   <tr><td><code>起動してブラウザを開く.vbs</code></td><td><strong>通常起動用。ダブルクリックで起動</strong>。GROQ_API_KEYを自動読み込み</td></tr>
-  <tr><td><code>server.py</code></td><td>ローカルHTTPサーバー（ポート3458）＋Groq API呼び出し</td></tr>
-  <tr><td><code>index.html</code></td><td>ブラウザUI（マンダラ・4象限・フロー・ガント）</td></tr>
-  <tr><td><code>state.json</code></td><td>生成済みコンテンツとキューの保存ファイル（自動生成）</td></tr>
+  <tr><td><code>server.py</code></td><td>ローカルHTTPサーバー（ポート3458）＋Groq API呼び出し＋セッション管理API</td></tr>
+  <tr><td><code>index.html</code></td><td>ブラウザUI（ホーム・履歴・マンダラ・4象限・フロー・ガント）</td></tr>
+  <tr><td><code>state.json</code></td><td>セッション・生成コンテンツ・キューの保存ファイル（自動生成）</td></tr>
   <tr><td><code>操作マニュアル.html</code></td><td>このファイル</td></tr>
 </table>
 

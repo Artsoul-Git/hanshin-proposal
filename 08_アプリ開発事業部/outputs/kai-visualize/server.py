@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Kai Visualize Server  port 3458
-クリックで自動生成: GROQ_API_KEY が環境変数にあれば Groq API を直接呼び出す
+セッション管理・マンダラ含む全工程をGroq API自動生成
 Usage: python server.py
 """
 import json, os, uuid, datetime, threading, queue, webbrowser, re, time
@@ -15,35 +15,47 @@ STATE_FILE = os.path.join(BASE, 'state.json')
 _clients: dict = {}
 _lock = threading.Lock()
 
-# ─── テーマ・タスクデータ（index.html と同期） ───
-THEMES = [
-    '顧客開拓', '提案品質向上', '収益・財務設計', 'マーケティング',
-    'セミナー事業', 'パートナー連携', '業務効率化', '人材・組織体制'
-]
-TASKS = [
-    ['ターゲット業種絞り込み','リード獲得フロー設計','紹介・口コミ仕組み化','問い合わせページ最適化','SNS露出増加','無料診断メニュー作成','月次アプローチ件数管理','商談→成約率改善'],
-    ['スキルセット拡充','ケーススタディ蓄積','提案書テンプレ改善','実績事例ドキュメント化','Kai精度継続評価','業種別ノウハウ整備','ファクトチェック徹底','フィードバック収集'],
-    ['月次収益目標設定','料金体系見直し','収益源の多角化','損益シミュレーション','CF計画の立案','投資計画の策定','粗利率の改善','年間売上KPI分解'],
-    ['LP設計最適化','コンテンツマーケ','メルマガリスト構築','SEO/SNS戦略','無料セミナー告知','事例コンテンツ発信','USP明確化','広告運用検討'],
-    ['セミナーテーマ計画','参加者目標管理','セミナー後フォロー','動画コンテンツ化','スライド品質向上','アーカイブ運用','有料セミナー展開','コラボセミナー'],
-    ['税理士・社労士連携','中小企業診断士連携','差別化ポジション','紹介ネットワーク構築','アライアンス条件設計','共同提案の仕組み','補助金情報提供','商工会・金融機関'],
-    ['Kai作業フロー最適化','テンプレート整備','ファイル管理徹底','定型業務の自動化','作業時間の計測','外注可能業務整理','ツール棚卸し','週次レビュー習慣化'],
-    ['上村スキル強化計画','外注スタッフ活用検討','Kaiとの役割分担','業務委託先選定基準','自社ナレッジ整備','学習・インプット計画','健康・稼働管理','3年後の組織像設計'],
+PALETTE = [
+    {'c':'#c62828','bg':'#ffebee','bc':'#ef9a9a'},
+    {'c':'#2e7d32','bg':'#e8f5e9','bc':'#a5d6a7'},
+    {'c':'#e65100','bg':'#fff3e0','bc':'#ffcc80'},
+    {'c':'#0277bd','bg':'#e1f5fe','bc':'#81d4fa'},
+    {'c':'#6a1b9a','bg':'#f3e5f5','bc':'#ce93d8'},
+    {'c':'#00695c','bg':'#e0f2f1','bc':'#80cbc4'},
+    {'c':'#1565c0','bg':'#e3f2fd','bc':'#90caf9'},
+    {'c':'#4e342e','bg':'#efebe9','bc':'#bcaaa4'},
 ]
 
 
 # ─── State I/O ───
+
 def _load() -> dict:
     try:
         with open(STATE_FILE, encoding='utf-8') as f:
-            return json.load(f)
+            s = json.load(f)
     except FileNotFoundError:
-        return {'generated': {'4q': {}, 'flow': {}, 'gantt': {}}, 'queue': []}
+        s = {}
+    return _migrate(s)
 
 
-def _save(state: dict) -> None:
+def _migrate(s: dict) -> dict:
+    if 'sessions' not in s:
+        s = {'sessions': [], 'queue': []}
+    if 'queue' not in s:
+        s['queue'] = []
+    return s
+
+
+def _save(s: dict) -> None:
     with open(STATE_FILE, 'w', encoding='utf-8') as f:
-        json.dump(state, f, ensure_ascii=False, indent=2)
+        json.dump(s, f, ensure_ascii=False, indent=2)
+
+
+def _get_session(s: dict, sid: str):
+    for sess in s.get('sessions', []):
+        if sess['id'] == sid:
+            return sess
+    return None
 
 
 def _broadcast(event: str, data: dict) -> None:
@@ -57,18 +69,17 @@ def _broadcast(event: str, data: dict) -> None:
 
 
 # ─── Groq API ───
-def _call_gemini(prompt: str) -> str:
+
+def _call_groq(prompt: str) -> str:
     api_key = os.environ.get('GROQ_API_KEY', '')
     if not api_key:
         raise RuntimeError('GROQ_API_KEY が設定されていません')
-
     payload = json.dumps({
         'model': 'llama-3.3-70b-versatile',
         'messages': [{'role': 'user', 'content': prompt}],
         'max_tokens': 2048,
         'temperature': 0.7
     }, ensure_ascii=False).encode('utf-8')
-
     url = 'https://api.groq.com/openai/v1/chat/completions'
     for attempt in range(3):
         req = urllib.request.Request(url, data=payload, headers={
@@ -92,49 +103,13 @@ def _call_gemini(prompt: str) -> str:
                 raise
 
 
-def _extract_json(text: str) -> dict:
-    # コードブロックを除去してJSONを抽出
+def _extract_json(text: str):
     text = re.sub(r'```[a-z]*\n?', '', text).strip()
-    match = re.search(r'\{[\s\S]*\}', text)
+    text = re.sub(r'\n?```', '', text).strip()
+    match = re.search(r'[\[{][\s\S]*[\]}]', text)
     if not match:
         raise ValueError('JSON が見つかりませんでした')
     return json.loads(match.group(0))
-
-
-def _gen_4q(ti: int) -> dict:
-    theme = THEMES[ti]
-    tasks = ', '.join(TASKS[ti])
-    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の8タスクを4象限マトリクスに整理してください。
-
-タスク一覧：{tasks}
-
-以下のJSON形式のみで返答してください（説明・コードブロック不要）：
-{{
-  "axis": {{"x": "実施コスト・難易度", "y": "期待インパクト"}},
-  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "タスク名", "s": "理由（25字以内）", "flow": false}}]}},
-  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
-  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
-  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}}
-}}
-※ 8タスクをすべていずれかの象限に配置。Q1（今すぐ着手）の最重要タスク1つのみ "flow": true を付けてください。"""
-    return _extract_json(_call_gemini(prompt))
-
-
-def _gen_4q_task(ti: int, tj: int) -> dict:
-    theme = THEMES[ti]
-    task = TASKS[ti][tj]
-    prompt = f"""AI導入支援コンサルタントとして、テーマ「{theme}」の施策「{task}」を実行するための具体的アクションを4象限マトリクスに整理してください。
-
-「{task}」を進めるための8つのアクション・サブタスクを考案し、以下のJSON形式のみで返答してください（説明・コードブロック不要）：
-{{
-  "axis": {{"x": "実施難易度", "y": "期待効果"}},
-  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "アクション名", "s": "理由（25字以内）", "flow": false}}]}},
-  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
-  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
-  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}}
-}}
-※ 8アクションをすべていずれかの象限に配置。Q1（今すぐ着手）の最重要アクション1つのみ "flow": true を付けてください。"""
-    return _extract_json(_call_gemini(prompt))
 
 
 def _sanitize_mermaid(text: str) -> str:
@@ -150,8 +125,72 @@ def _sanitize_mermaid(text: str) -> str:
     return text.strip()
 
 
-def _gen_flow(ti: int, context: str) -> str:
-    theme = THEMES[ti]
+# ─── Generators ───
+
+def _gen_mandala(theme: str) -> list:
+    prompt = f"""テーマ「{theme}」のマンダラチャートを日本語で生成してください。
+中心テーマを展開する8つのサブテーマと、各サブテーマの8つのタスク・アクションを考えてください。
+
+以下のJSON形式のみで返答してください（説明・コードブロック不要）：
+{{
+  "themes": [
+    {{"name": "サブテーマ（8字以内）", "tasks": ["タスク（15字以内）","タスク","タスク","タスク","タスク","タスク","タスク","タスク"]}},
+    {{"name": "...（計8テーマ）"}}
+  ]
+}}
+8テーマ×8タスク=64個必須。"""
+    data = _extract_json(_call_groq(prompt))
+    themes = data.get('themes', [])[:8]
+    for i, t in enumerate(themes):
+        t.update(PALETTE[i % 8])
+        t['tasks'] = [str(tk)[:20] for tk in t.get('tasks', [])[:8]]
+        while len(t['tasks']) < 8:
+            t['tasks'].append(f'タスク{len(t["tasks"])+1}')
+    while len(themes) < 8:
+        idx = len(themes)
+        themes.append({'name': f'テーマ{idx+1}', 'tasks': [f'タスク{j+1}' for j in range(8)], **PALETTE[idx % 8]})
+    return themes
+
+
+def _gen_4q(sess: dict, ti: int, tj=None) -> dict:
+    theme = sess.get('theme', '')
+    themes = (sess.get('mandala') or {}).get('themes', [])
+    sub_name = themes[ti]['name'] if ti < len(themes) else f'テーマ{ti+1}'
+
+    if tj is not None:
+        tasks = themes[ti].get('tasks', []) if ti < len(themes) else []
+        task_name = tasks[tj] if tj < len(tasks) else f'タスク{tj+1}'
+        prompt = f"""テーマ「{theme}」のサブテーマ「{sub_name}」のタスク「{task_name}」を実行するための具体的アクションを4象限マトリクスに整理してください。
+
+8つのアクション・サブタスクを考案し、以下のJSON形式のみで返答してください（説明不要）：
+{{
+  "axis": {{"x": "実施難易度", "y": "期待効果"}},
+  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
+  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
+  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}},
+  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "アクション名", "s": "理由（25字以内）"}}]}}
+}}
+※ 8アクションをすべていずれかの象限に配置。"""
+    else:
+        tasks_str = ', '.join(themes[ti].get('tasks', [])) if ti < len(themes) else ''
+        prompt = f"""テーマ「{theme}」のサブテーマ「{sub_name}」の8タスクを4象限マトリクスに整理してください。
+
+タスク一覧：{tasks_str}
+
+以下のJSON形式のみで返答してください（説明不要）：
+{{
+  "axis": {{"x": "実施コスト・難易度", "y": "期待インパクト"}},
+  "tl": {{"lbl": "🔴 今すぐ着手", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
+  "tr": {{"lbl": "🔵 計画的推進", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
+  "bl": {{"lbl": "🟢 余力でやる", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}},
+  "br": {{"lbl": "⚪ 保留・見直し", "items": [{{"t": "タスク名", "s": "理由（25字以内）"}}]}}
+}}
+※ 8タスクをすべていずれかの象限に配置。"""
+    return _extract_json(_call_groq(prompt))
+
+
+def _gen_flow(sess: dict, ti: int, context: str) -> str:
+    theme = sess.get('theme', '')
     prompt = f"""テーマ「{theme}」のアクション「{context}」の実行手順をMermaidフロー図で生成してください。
 
 【Mermaid構文ルール（必ず守ること）】
@@ -167,11 +206,11 @@ def _gen_flow(ti: int, context: str) -> str:
 開始 → 準備ステップ2〜3個 → 分岐1箇所 → 実行ステップ2〜3個 → 終了
 
 Mermaidコードのみ出力:"""
-    return _sanitize_mermaid(_call_gemini(prompt))
+    return _sanitize_mermaid(_call_groq(prompt))
 
 
-def _gen_gantt(ti: int, context: str) -> dict:
-    theme = THEMES[ti]
+def _gen_gantt(sess: dict, ti: int, context: str) -> dict:
+    theme = sess.get('theme', '')
     prompt = f"""テーマ「{theme}」のアクション「{context}」について、実行スケジュールとタスク詳細を生成してください。
 
 以下の形式で出力してください（===の行はそのまま出力）：
@@ -194,22 +233,15 @@ gantt
 
 【Mermaidのルール】
 - gantt（gは1つ）
-- タスクID: t1 t2 t3...（英数字のみ、スペース不可）
+- タスクID: t1 t2 t3...（英数字のみ）
 - タスク名にコロン・カッコ・スラッシュ不可
 - 形式: タスク名 :t1, 2026-06-01, 3d
 - クリティカル: タスク名 :crit, t2, 2026-06-04, 5d
 - マイルストーン: 完了確認 :milestone, m1, 2026-06-14, 0d
-- 3セクション計6〜8タスク、コードブロック不要
-
-【TASKSのルール】
-- JSON配列形式
-- Mermaidの全タスクをリストアップ（マイルストーン含む）
-- idはMermaidのタスクIDと対応"""
-
-    text = _call_gemini(prompt)
+- 3セクション計6〜8タスク、コードブロック不要"""
+    text = _call_groq(prompt)
     mermaid_code = ''
     tasks = []
-
     if '===MERMAID===' in text and '===TASKS===' in text:
         parts = text.split('===TASKS===')
         mermaid_part = parts[0].replace('===MERMAID===', '').strip()
@@ -223,38 +255,56 @@ gantt
             print(f'[GANTT] タスクJSON解析エラー: {e}')
     else:
         mermaid_code = _sanitize_mermaid(text)
-
     return {'mermaid': mermaid_code, 'tasks': tasks}
 
 
+# ─── Auto Generate ───
+
 def _auto_generate(req: dict) -> None:
-    """バックグラウンドスレッドで Gemini API を呼び出して生成"""
-    ti = req.get('theme_id', 0)
-    tj = req.get('task_id')  # None = テーマ全体, 数値 = 特定タスク
+    sid = req.get('session_id', '')
+    ti = req.get('theme_id')
+    tj = req.get('task_id')
     gtype = req.get('type', '')
-    context = req.get('context', THEMES[ti] if 0 <= ti < 8 else '')
+    context = req.get('context', '')
     req_id = req['id']
     default_key = f"{ti}_{tj}" if tj is not None else str(ti)
     state_key = req.get('flow_key') or default_key
 
-    label = f"{THEMES[ti]}[{tj}]" if tj is not None else THEMES[ti]
-    print(f'[AUTO] 生成開始: {gtype} / {label} (id={req_id})')
+    print(f'[AUTO] 生成開始: {gtype} / session={sid} (id={req_id})')
     try:
-        if gtype == '4q':
-            content = _gen_4q_task(ti, tj) if tj is not None else _gen_4q(ti)
+        s = _load()
+        sess = _get_session(s, sid)
+        if not sess:
+            raise RuntimeError(f'セッション {sid} が見つかりません')
+
+        if gtype == 'mandala':
+            content = _gen_mandala(sess['theme'])
+            sess['mandala'] = {'themes': content}
+            bcast_key = 'mandala'
+            bcast_content = {'themes': content}
+        elif gtype == '4q':
+            content = _gen_4q(sess, ti, tj)
+            sess.setdefault('generated', {}).setdefault('4q', {})[state_key] = content
+            bcast_key, bcast_content = state_key, content
         elif gtype == 'flow':
-            content = _gen_flow(ti, context)
+            content = _gen_flow(sess, ti, context)
+            sess.setdefault('generated', {}).setdefault('flow', {})[state_key] = content
+            bcast_key, bcast_content = state_key, content
         elif gtype == 'gantt':
-            content = _gen_gantt(ti, context)
+            content = _gen_gantt(sess, ti, context)
+            sess.setdefault('generated', {}).setdefault('gantt', {})[state_key] = content
+            bcast_key, bcast_content = state_key, content
         else:
             return
 
-        s = _load()
-        s['generated'].setdefault(gtype, {})[state_key] = content
+        sess['updatedAt'] = datetime.datetime.now().isoformat()
         s['queue'] = [q for q in s['queue'] if q['id'] != req_id]
         _save(s)
-        _broadcast('content_ready', {'type': gtype, 'key': state_key, 'content': content})
-        print(f'[AUTO] 生成完了: {gtype} / {label}')
+        _broadcast('content_ready', {
+            'type': gtype, 'session_id': sid,
+            'key': bcast_key, 'content': bcast_content
+        })
+        print(f'[AUTO] 生成完了: {gtype} / session={sid}')
 
     except Exception as e:
         print(f'[AUTO] エラー: {e}')
@@ -265,10 +315,11 @@ def _auto_generate(req: dict) -> None:
 
 
 # ─── HTTP Handler ───
+
 class _Handler(BaseHTTPRequestHandler):
     def _cors(self):
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
 
     def do_OPTIONS(self):
@@ -280,32 +331,81 @@ class _Handler(BaseHTTPRequestHandler):
         p = self.path.split('?')[0]
         if p == '/':
             self._file('index.html', 'text/html; charset=utf-8')
-        elif p == '/state':
-            self._json(_load())
-        elif p == '/events':
-            self._sse()
         elif p == '/has-api-key':
             self._json({'ok': bool(os.environ.get('GROQ_API_KEY'))})
+        elif p == '/events':
+            self._sse()
+        elif p == '/api/sessions':
+            s = _load()
+            summaries = []
+            for sess in s.get('sessions', []):
+                gen = sess.get('generated', {})
+                summaries.append({
+                    'id': sess['id'],
+                    'theme': sess.get('theme', ''),
+                    'title': sess.get('title', sess.get('theme', '')),
+                    'memo': sess.get('memo', ''),
+                    'createdAt': sess.get('createdAt', ''),
+                    'updatedAt': sess.get('updatedAt', ''),
+                    'progress': {
+                        'mandala': bool(sess.get('mandala')),
+                        '4q': bool(gen.get('4q')),
+                        'flow': bool(gen.get('flow')),
+                        'gantt': bool(gen.get('gantt')),
+                    }
+                })
+            summaries.sort(key=lambda x: x.get('updatedAt', ''), reverse=True)
+            self._json(summaries)
+        elif p.startswith('/api/sessions/'):
+            sid = p[len('/api/sessions/'):]
+            s = _load()
+            sess = _get_session(s, sid)
+            if not sess:
+                self.send_response(404); self.end_headers(); return
+            self._json(sess)
         else:
-            self.send_response(404)
-            self.end_headers()
+            self.send_response(404); self.end_headers()
 
-    def do_POST(self):
+    def _read_body(self):
         try:
             n = int(self.headers.get('Content-Length', 0))
-            body = json.loads(self.rfile.read(n)) if n else {}
+            return json.loads(self.rfile.read(n)) if n else {}
         except Exception:
-            self.send_response(400)
-            self.end_headers()
-            return
+            return None
+
+    def do_POST(self):
+        body = self._read_body()
+        if body is None:
+            self.send_response(400); self.end_headers(); return
 
         p = self.path
-        if p == '/request':
+        if p == '/api/sessions':
+            theme = body.get('theme', '').strip()
+            if not theme:
+                self._json({'ok': False, 'error': 'theme required'}); return
+            now = datetime.datetime.now().isoformat()
+            sess = {
+                'id': str(uuid.uuid4())[:8],
+                'theme': theme,
+                'title': theme,
+                'memo': '',
+                'createdAt': now,
+                'updatedAt': now,
+                'mandala': None,
+                'generated': {'4q': {}, 'flow': {}, 'gantt': {}}
+            }
+            s = _load()
+            s['sessions'].insert(0, sess)
+            _save(s)
+            self._json(sess)
+
+        elif p == '/request':
             req = {
                 'id': str(uuid.uuid4())[:8],
+                'session_id': body.get('session_id', ''),
                 'type': body.get('type'),
                 'theme_id': body.get('theme_id'),
-                'task_id': body.get('task_id'),  # None=テーマ全体, 数値=特定タスク
+                'task_id': body.get('task_id'),
                 'context': body.get('context', ''),
                 'flow_key': body.get('flow_key'),
                 'status': 'pending',
@@ -316,26 +416,8 @@ class _Handler(BaseHTTPRequestHandler):
             _save(s)
             _broadcast('request_added', req)
             self._json({'ok': True, 'id': req['id']})
-
-            # API キーがあれば自動生成
             if os.environ.get('GROQ_API_KEY'):
                 threading.Thread(target=_auto_generate, args=(req,), daemon=True).start()
-
-        elif p == '/generate':
-            gtype = body.get('type')
-            key = str(body.get('key', ''))
-            content = body.get('content')
-            req_id = body.get('request_id')
-            if gtype and key and content is not None:
-                s = _load()
-                s['generated'].setdefault(gtype, {})[key] = content
-                if req_id:
-                    s['queue'] = [q for q in s['queue'] if q['id'] != req_id]
-                _save(s)
-                _broadcast('content_ready', {'type': gtype, 'key': key, 'content': content})
-                self._json({'ok': True})
-            else:
-                self._json({'ok': False, 'error': 'type/key/content required'})
 
         elif p == '/clear-queue':
             s = _load()
@@ -343,14 +425,41 @@ class _Handler(BaseHTTPRequestHandler):
             _save(s)
             self._json({'ok': True})
 
-        elif p == '/reset':
-            _save({'generated': {'4q': {}, 'flow': {}, 'gantt': {}}, 'queue': []})
-            _broadcast('reset', {})
-            self._json({'ok': True})
-
         else:
-            self.send_response(404)
-            self.end_headers()
+            self.send_response(404); self.end_headers()
+
+    def do_PATCH(self):
+        body = self._read_body()
+        if body is None:
+            self.send_response(400); self.end_headers(); return
+
+        p = self.path
+        if p.startswith('/api/sessions/'):
+            sid = p[len('/api/sessions/'):]
+            s = _load()
+            sess = _get_session(s, sid)
+            if not sess:
+                self.send_response(404); self.end_headers(); return
+            if 'title' in body:
+                sess['title'] = body['title']
+            if 'memo' in body:
+                sess['memo'] = body['memo']
+            sess['updatedAt'] = datetime.datetime.now().isoformat()
+            _save(s)
+            self._json({'ok': True})
+        else:
+            self.send_response(404); self.end_headers()
+
+    def do_DELETE(self):
+        p = self.path
+        if p.startswith('/api/sessions/'):
+            sid = p[len('/api/sessions/'):]
+            s = _load()
+            s['sessions'] = [sess for sess in s['sessions'] if sess['id'] != sid]
+            _save(s)
+            self._json({'ok': True})
+        else:
+            self.send_response(404); self.end_headers()
 
     def _file(self, name: str, ct: str):
         try:
@@ -363,10 +472,9 @@ class _Handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(data)
         except FileNotFoundError:
-            self.send_response(404)
-            self.end_headers()
+            self.send_response(404); self.end_headers()
 
-    def _json(self, data: dict):
+    def _json(self, data):
         body = json.dumps(data, ensure_ascii=False).encode()
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')
