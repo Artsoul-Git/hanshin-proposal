@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIエージェント「Kai」安全・快適運用ガイド</title>
+<style>
+  /* 総合マニュアルと共通のスタイルを適用 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; }
+  .container { max-width: 920px; margin: 40px auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+  h1 { font-size: 30px; color: #1A365D; margin-bottom: 20px; border-bottom: 4px solid #ED8936; padding-bottom: 10px; }
+  h2 { font-size: 24px; color: #1A365D; margin-top: 40px; margin-bottom: 20px; padding-left: 15px; border-left: 8px solid #ED8936; }
+  h3 { font-size: 19px; color: #2D3748; margin: 25px 0 10px; font-weight: bold; }
+  p { margin: 15px 0; }
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .step { background: #F7FAFC; padding: 20px 25px; border-radius: 8px; border: 1px solid #E2E8F0; margin: 15px 0; }
+  .step-num { display: inline-block; background: #1A365D; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+  ul { padding-left: 25px; margin: 15px 0; }
+  li { margin: 8px 0; }
+  .back-link { display: inline-block; margin-bottom: 20px; color: #3182CE; text-decoration: none; font-weight: bold; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="総合マニュアル.html" class="back-link">← 総合マニュアルに戻る</a>
+  
+  <h1>AIエージェント「Kai」安全・快適運用ガイド</h1>
+  
+  <p class="lead">このガイドでは、AIエージェント「Kai（Antigravity）」を、より速く、より安全に、そしてストレスなく使い続けるための設定とコツを解説します。</p>
+
+  <h2>1. PC環境の引越し手順（Dドライブ → Dropbox）</h2>
+  <p>外付けSSD（Dドライブ）での作業は、通信の遅れや暗号化の負担で動作が重くなりがちです。CドライブにあるDropboxフォルダへ移動させることで、爆速かつ自動バックアップ付きの環境になります。</p>
+  
+  <div class="step">
+    <p><span class="step-num">1</span> <strong>Kaiを完全に終了する</strong><br>動いているターミナル（黒い画面）をすべて閉じます。</p>
+  </div>
+  
+  <div class="step">
+    <p><span class="step-num">2</span> <strong>Dropbox内に専用フォルダを作る</strong><br><code>C:\Users\kei\Dropbox\Dev\Antigravity</code> のように、分かりやすい場所にフォルダを作成します。</p>
+  </div>
+  
+  <div class="step">
+    <p><span class="step-num">3</span> <strong>フォルダを「コピー」する</strong><br>Dドライブの <code>AS_AI導入支援事業_cc</code> フォルダを、今作ったDropbox内の場所へコピーします。<br><span class="tip"><span class="label">コツ</span>「切り取り」ではなく「コピー」を使うと、万が一失敗しても元のデータが残るので安全です。</span></p>
+  </div>
+  
+  <div class="step">
+    <p><span class="step-num">4</span> <strong>動作を確認する</strong><br>コピー先のフォルダでKaiを起動し、いつものように動くか確認します。問題なければ、Dドライブの古いデータは消してOKです。</p>
+  </div>
+
+  <h2>2. Git（ギット）を「防波堤」にする手順</h2>
+  <p>Gitは本来プログラミングの履歴を残す道具ですが、初心者にとっては**「いつでも1秒で過去に戻れる魔法のバックアップ」**だと考えてください。Kaiに大きな修正を頼む前にこれを行うだけで、失敗が怖くなくなります。</p>
+  
+  <h3>「防波堤」の作り方（作業前）</h3>
+  <ol>
+    <li>Kaiに話しかける前に、黒い画面（ターミナル）で <code>git add .</code> と打ちます。（全ての変更を準備する、という意味）</li>
+    <li>次に <code>git commit -m "作業前バックアップ"</code> と打ちます。（今の状態を保存する、という意味）</li>
+  </ol>
+  
+  <div class="warn">
+    <span class="label">もしKaiが失敗して、ファイルがめちゃくちゃになったら？</span>
+    黒い画面で <code>git restore .</code> と打ってください。一瞬で、さっき保存した「作業前」の状態に完全に元通りになります。
+  </div>
+
+  <h2>3. 日々の運用の注意点とアドバイス</h2>
+  
+  <h3>① Dropboxの「同期完了」を待つ</h3>
+  <p>ファイルを保存した後、Dropboxのアイコンが「青いぐるぐる」から「緑のチェック」になるのを待ってからPCを閉じたり移動したりしましょう。これだけで、データの食い違いを防げます。</p>
+  
+  <h3>② 大量ファイルの時は少し休憩</h3>
+  <p>一度に100個以上のファイルを一気に作った時は、Dropboxの同期に数分かかることがあります。その間は少し休憩して、同期が終わってから次の指示を出すとスムーズです。</p>
+  
+  <h3>③ Kaiに「迷ったら聞いて」と伝える</h3>
+  <p>Kaiは非常に優秀ですが、時々勝手に想像して進めてしまうことがあります。指示の最後に**「やり方がいくつかある場合は、勝手に進めずに一旦相談して」**と添えると、より確実な仕事をしてくれます。</p>
+
+  <h3>④ パスワード管理</h3>
+  <p>DropboxやGitHubなど、大事なツールのパスワードは使い回さず、安全な場所に保管しておきましょう。PC環境をCドライブに集約することで、セキュリティ対策も一箇所で済むようになります。</p>
+
+</div>
+
+</body>
+</html>
