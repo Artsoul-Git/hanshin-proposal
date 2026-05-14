@@ -93,20 +93,25 @@ const Reports = {
     const userIdIdx = logHeaders.indexOf('user_id');
     const dateIdx   = logHeaders.indexOf('log_date');
     for (let i = 1; i < logData.length; i++) {
-      if (logData[i][userIdIdx] === user.user_id &&
-          logData[i][dateIdx] >= weekStart && logData[i][dateIdx] <= weekEnd) {
-        logs.push(logData[i]);
-      }
+      if (String(logData[i][userIdIdx]).trim() !== user.user_id) continue;
+      const d = logData[i][dateIdx];
+      const dStr = d instanceof Date
+        ? Utilities.formatDate(d, 'Asia/Tokyo', 'yyyy-MM-dd')
+        : String(d || '').split('T')[0];
+      if (dStr >= weekStart && dStr <= weekEnd) logs.push(logData[i]);
     }
 
     if (logs.length === 0) return; // 記録なしはスキップ
 
     // 統計計算
-    const weights = logs.map(r => parseFloat(r[logHeaders.indexOf('weight')])).filter(w => !isNaN(w));
-    const moods   = logs.map(r => parseInt(r[logHeaders.indexOf('mood')])).filter(m => !isNaN(m));
-    const taken   = logs.filter(r => r[logHeaders.indexOf('taken')] === true || r[logHeaders.indexOf('taken')] === 'TRUE').length;
+    const wi = logHeaders.indexOf('weight');
+    const mi = logHeaders.indexOf('mood');
+    const ti = logHeaders.indexOf('taken');
+    const weights = logs.map(r => parseFloat(r[wi])).filter(w => !isNaN(w));
+    const moods   = logs.map(r => parseInt(r[mi])).filter(m => !isNaN(m));
+    const taken   = logs.filter(r => r[ti] === true || String(r[ti]).toUpperCase() === 'TRUE').length;
     const weightChange = weights.length >= 2 ? (weights[weights.length-1] - weights[0]).toFixed(1) : 0;
-    const avgMood = moods.length > 0 ? (moods.reduce((a,b) => a+b, 0) / moods.length).toFixed(1) : '-';
+    const avgMood  = moods.length > 0 ? (moods.reduce((a,b) => a+b, 0) / moods.length).toFixed(1) : '-';
     const takenRate = Math.round(taken / logs.length * 100);
 
     // バイオリズム計算（JS側と同じロジック）
