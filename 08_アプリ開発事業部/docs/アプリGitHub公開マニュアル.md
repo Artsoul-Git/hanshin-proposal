@@ -211,7 +211,7 @@ gh api repos/Artsoul-Git/<repo-name> --method DELETE
 | 音源トリミング | `audio-trimmer` | `https://artsoul-git.github.io/audio-trimmer/` | 2026-05-12 | 公開中 |
 | もらったプロンプトを使い倒そう！（kawai版） | `morai-prompt` | `https://artsoul-git.github.io/morai-prompt/viewer.html` | 2026-05-13 | 公開中 |
 | もらったプロンプトを使い倒そう！（画像版） | `m2` | `https://artsoul-git.github.io/m2/viewer.html` | 2026-05-13 | 公開中 |
-| 契約書AIチェックセミナー（新ルール版） | `keiyakusho-ai-check` | `https://artsoul-git.github.io/keiyakusho-ai-check/viewer.html` | 2026-05-13 | 公開中 |
+| 契約書AIチェックセミナー（新ルール版） | `keiyakusho-ai-check` | `https://artsoul-git.github.io/keiyakusho-ai-check/` | 2026-05-13 | 公開中 |
 
 ---
 
@@ -295,14 +295,81 @@ Move-Item `
 
 ### セミナーの公開URL パターン
 
-| URL | 用途 |
-|-----|------|
-| `https://artsoul-git.github.io/{slug}/viewer.html` | 受講者用（閲覧のみ） |
-| `https://artsoul-git.github.io/{slug}/presenter.html` | プレゼンターモード（パスワード） |
-| `https://artsoul-git.github.io/{slug}/admin.html` | パスワード設定・管理 |
-| `https://artsoul-git.github.io/{slug}/index.html` | 編集・PDF/PPTX出力 |
+| URL | 用途 | 共有可否 |
+|-----|------|---------|
+| `https://artsoul-git.github.io/{slug}/` | 受講者用ビューア（`index.html`） | ✅ 受講者に共有 |
+| `https://artsoul-git.github.io/{slug}/presenter.html` | プレゼンターモード（パスワード保護） | 🔒 登壇者のみ |
+| `https://artsoul-git.github.io/{slug}/admin.html` | パスワード設定・管理 | 🔒 管理者のみ |
+| `https://artsoul-git.github.io/{slug}/editor.html` | Canvaエディター（スライド編集） | 🔒 社内のみ |
 
 > **注意：** セミナー公開は必ずオーナー（上村）の確認後に実行すること（CONSTITUTION.md §3）
+
+---
+
+## 10. セミナースライドの編集（editor.html）
+
+### ファイル構成（2026-05-14 改訂後）
+
+```
+{slug}/
+├── index.html       ← 受講者用ビューア（旧 viewer.html に相当）
+├── editor.html      ← スライド編集エディター（旧 index.html を拡張）
+├── presenter.html   ← プレゼンターモード
+├── admin.html       ← パスワード管理
+├── css/
+│   ├── style.css    ← 共通スライドスタイル
+│   └── editor.css   ← エディター専用スタイル
+└── js/
+    ├── slides.js    ← スライドデータ（コンテンツ本体）
+    ├── app.js       ← ナビ・エクスポート・既存編集モード
+    └── editor.js    ← Canvaエディターロジック
+```
+
+### editor.html の使い方
+
+#### 基本操作
+
+1. ブラウザで `editor.html` を開く（またはローカルファイルとして直接開く）
+2. 右下の **「✏️ 編集」** ボタンをクリック → 編集モード ON
+3. 左サイドバーが展開し、スライドが右にシフトする
+
+#### 左サイドバーの構成
+
+| タブ | 機能 |
+|------|------|
+| **T テキスト** | テキストボックス追加 / フォントサイズ・色・太字・斜体・揃え |
+| **▭ 図形** | 矩形・楕円・直線・矢印を配置（クリックで種類選択→スライドをクリックで配置） |
+| **⬚ 画像** | JPG/PNG/GIF/SVG を挿入（スライド中央に配置、ドラッグ移動可） |
+
+#### オブジェクト操作
+
+| 操作 | 方法 |
+|------|------|
+| 選択 | オブジェクトをクリック（青枠 + ハンドルが表示） |
+| 移動 | 選択状態でドラッグ |
+| リサイズ | 四隅・辺中央の8ハンドルをドラッグ |
+| テキスト編集 | テキストボックスの内部をクリック（カーソルが入る） |
+| 削除 | 選択後「×」ボタン または `Delete` キー |
+| 選択解除 | `Esc` キー |
+| ポインターに戻す | `V` キー または 選択ツールアイコン |
+
+#### 既存テキストの編集（スライド本文）
+
+左サイドバーの「テキスト」タブ下部のヒントにある通り、**スライド内の既存テキストは直接クリックして編集できる**（app.js の contentEditable モード）。テキストボックスを追加しなくても、見出し・本文・箇条書きをその場で修正可能。
+
+#### 保存・出力
+
+- **自動保存**：入力後500ms で `localStorage` に保存される
+- **Ctrl+S**：その場で保存
+- **「保存」ボタン**：編集モード終了時に保存（右下の「保存」）
+- **PDF出力**：右下バーの「PDF出力」→ ブラウザ印刷ダイアログ
+- **PPTX出力**：右下バーの「PPTX出力」→ 全スライドをキャプチャして `.pptx` 生成
+
+#### 注意事項
+
+- オブジェクト（図形・画像・テキストボックス）のデータは **ブラウザの `localStorage` に保存**される。別のブラウザ・PCでは表示されない
+- スライドコンテンツ（既存テキストの変更）も同様に `localStorage` 保存。**GitHubにpushしないと他端末に反映されない**
+- 公開URLの `index.html` にオブジェクトを表示させたい場合は、`editor.html` でPPTXエクスポート後、スライドの内容を `js/slides.js` に直接反映させること
 
 ---
 
@@ -310,5 +377,6 @@ Move-Item `
 
 | 日付 | 変更内容 |
 |------|---------|
+| 2026-05-14 | §10 editor.html 使い方追加。§9 URLパターン表を更新（viewer.html→index.html, editor.html追加）。§6 keiyakusho-ai-check の公開URLを更新 |
 | 2026-05-13 | §9 セミナースライド専用フロー追加。公開済み一覧に morai-prompt・m2 を追記 |
 | 2026-05-12 | 初版作成。音源トリミング公開を初適用 |
