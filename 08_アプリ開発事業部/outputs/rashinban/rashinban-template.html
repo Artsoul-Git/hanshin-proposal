@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧭 REPLACE_THEME — 目標達成コンパス</title>
+<style>
+/* ============================================================
+   RASHINBAN — 目標達成コンパス  v1.0
+   生成: Kai (Claude Code)
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #070B14; --surface: #0F1720; --surface2: #162030;
+  --border: #1A2A3D; --text: #E2E8F0; --muted: #64748B; --dim: #94A3B8;
+  --primary: #6366F1; --primary-glow: rgba(99,102,241,.25);
+  --secondary: #8B5CF6; --success: #10B981;
+  --warn: #F59E0B; --danger: #EF4444;
+  --kai-bg: #0D0820; --kai-border: #4C1D95; --kai-text: #C4B5FD; --kai-hi: #DDD6FE;
+  --t0:#EF4444; --t1:#F97316; --t2:#EAB308; --t3:#22C55E;
+  --t4:#06B6D4; --t5:#6366F1; --t6:#8B5CF6; --t7:#EC4899;
+}
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Hiragino Sans','Yu Gothic UI',sans-serif; font-size:14px; line-height:1.6; min-height:100vh; }
+h2 { font-size:18px; font-weight:700; }
+h3 { font-size:15px; font-weight:600; }
+
+/* ---- HEADER ---- */
+.hdr { position:sticky; top:0; z-index:100; background:rgba(7,11,20,.96); backdrop-filter:blur(12px);
+       border-bottom:1px solid var(--border); padding:0 20px; height:56px;
+       display:flex; align-items:center; gap:14px; }
+.hdr-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#6366F1,#8B5CF6,#EC4899);
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.hdr-theme { flex:1; font-size:13px; color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hdr-prog { display:flex; align-items:center; gap:8px; }
+.prog-bar { width:100px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#6366F1,#8B5CF6); transition:width .4s; }
+.prog-pct { font-size:11px; color:var(--muted); min-width:30px; text-align:right; }
+.hdr-btn { background:var(--surface); border:1px solid var(--border); color:var(--dim);
+           padding:5px 11px; border-radius:6px; cursor:pointer; font-size:12px; transition:all .15s; }
+.hdr-btn:hover { background:var(--surface2); color:var(--text); }
+
+/* ---- NAV ---- */
+.nav { display:flex; gap:2px; padding:10px 20px 0; border-bottom:1px solid var(--border);
+       overflow-x:auto; background:var(--bg); }
+.tab { padding:7px 14px; border-radius:6px 6px 0 0; cursor:pointer; font-size:13px;
+       font-weight:500; color:var(--muted); border:1px solid transparent; border-bottom:none;
+       white-space:nowrap; position:relative; bottom:-1px; transition:all .15s; }
+.tab:hover { color:var(--text); background:var(--surface); }
+.tab.on { color:var(--primary); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+
+/* ---- VIEWS ---- */
+.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view.on { display:block; }
+
+/* ---- CARDS ---- */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(99,102,241,.12));
+             border:1px solid rgba(99,102,241,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
+.goal-tag { display:inline-block; background:rgba(99,102,241,.18); color:#A5B4FC;
+            padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
+.goal-meta { font-size:12px; color:var(--dim); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+
+/* ---- STATS ---- */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
+.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- KAI CARD ---- */
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px;
+            padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
+.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px;
+                    border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%); }
+.kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#8B5CF6);
+          display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
+.kai-rl { font-size:11px; color:var(--kai-text); }
+.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
+.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(239,68,68,.1);
+             border-left:3px solid var(--danger); border-radius:0 6px 6px 0;
+             color:#FCA5A5; font-size:13px; font-style:italic; }
+.kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
+.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
+
+/* ---- SECTION TITLE ---- */
+.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase;
+       letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ---- TOP ACTIONS ---- */
+.act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
+.act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+            padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px;
+            transition:all .15s; }
+.act-item:hover { background:var(--surface2); border-color:var(--primary); transform:translateY(-1px); }
+.act-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.act-tx { font-size:12px; }
+.act-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- MANDALA ---- */
+.mandala-note { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.mandala-wrap { overflow-x:auto; }
+.m-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:2px;
+          width:100%; max-width:780px; margin:0 auto; aspect-ratio:1; }
+.mc { display:flex; align-items:center; justify-content:center; text-align:center;
+      font-size:9.5px; line-height:1.25; border-radius:3px; padding:2px;
+      transition:transform .12s, box-shadow .12s; overflow:hidden; word-break:break-all; }
+.mc.cp { cursor:pointer; }
+.mc.cp:hover { transform:scale(1.09); z-index:10; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+.mc.center { background:linear-gradient(135deg,#6366F1,#8B5CF6); color:#fff; font-weight:800; font-size:10px; z-index:5; }
+.mc.theme { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.tr  { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.item { font-size:9px; }
+.mc.empty { background:var(--surface); opacity:.25; }
+.m-legend { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.m-leg { display:flex; align-items:center; gap:5px; font-size:12px; padding:3px 10px;
+         background:var(--surface); border:1px solid var(--border); border-radius:20px;
+         cursor:pointer; transition:border-color .15s; }
+.m-leg:hover { border-color:var(--primary); }
+.m-leg-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* ---- MATRIX ---- */
+.bc { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); margin-bottom:14px; flex-wrap:wrap; }
+.bc a { color:var(--muted); cursor:pointer; text-decoration:none; }
+.bc a:hover { color:var(--primary); }
+.bc .cur { color:var(--text); }
+.bc-sep { opacity:.4; }
+.t-pills { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer;
+          border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
+.t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.mx-wrap { display:flex; gap:8px; align-items:stretch; }
+.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted);
+         display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-inner { flex:1; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+           gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; position:relative; }
+.mx-cross::before, .mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
+.mx-cross::after { top:50%; left:0; right:0; height:1px; }
+.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
+.quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
+.quad.q-tr { background:rgba(239,68,68,.06); }
+.quad.q-tl { background:rgba(99,102,241,.06); }
+.quad.q-br { background:rgba(245,158,11,.06); }
+.quad.q-bl { background:rgba(100,116,139,.04); }
+.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px;
+      padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s;
+      display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.qi-tx { flex:1; line-height:1.4; }
+.qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+           padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
+
+/* ---- FLOW ---- */
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+          padding:10px 14px; margin-bottom:18px; }
+.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-ctx-t { font-size:15px; font-weight:700; }
+.fl-steps { position:relative; padding-left:38px; }
+.fl-step { position:relative; margin-bottom:14px; }
+.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px;
+                   width:2px; background:var(--border); }
+.fl-step:last-child::before { display:none; }
+.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px;
+           border-radius:50%; display:flex; align-items:center; justify-content:center;
+           font-size:12px; z-index:1; font-weight:700; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
+.fl-card.done { opacity:.55; }
+.fl-card.done .fl-title { text-decoration:line-through; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
+.fb-act  { background:rgba(99,102,241,.14); color:#A5B4FC; }
+.fb-dec  { background:rgba(245,158,11,.14); color:#FCD34D; }
+.fb-mil  { background:rgba(16,185,129,.14); color:#6EE7B7; }
+.fb-wrn  { background:rgba(239,68,68,.14); color:#FCA5A5; }
+.fb-dur  { background:rgba(100,116,139,.14); color:var(--muted); }
+.fb-out  { background:rgba(6,182,212,.14); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer;
+            font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-check.done { text-decoration:line-through; opacity:.5; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+          padding:12px 14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
+.fk-tx  { font-size:13px; color:var(--kai-text); line-height:1.7; }
+
+/* ---- GANTT ---- */
+.gt-wrap { overflow-x:auto; }
+.gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
+.gt-wk  { flex:1; text-align:center; font-size:10px; color:var(--muted);
+          padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
+.gt-phase { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase;
+            letter-spacing:.5px; padding:8px 0 4px; }
+.gt-row { display:flex; align-items:center; margin-bottom:3px; min-height:30px; }
+.gt-name { width:190px; min-width:190px; font-size:12px; padding-right:10px;
+           overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--dim); }
+.gt-bars { flex:1; position:relative; height:28px; }
+.gt-bar { position:absolute; height:18px; top:5px; border-radius:4px; padding:0 6px;
+          font-size:9.5px; color:#fff; font-weight:500; display:flex; align-items:center;
+          overflow:hidden; white-space:nowrap; transition:opacity .15s; }
+.gt-bar:hover { opacity:.8; }
+.gt-bar.crit { box-shadow:0 0 8px rgba(239,68,68,.45); }
+.gt-bar.ms { width:18px !important; border-radius:50%; padding:0; justify-content:center; font-size:11px; }
+.gt-legend { display:flex; gap:12px; margin-bottom:10px; font-size:12px; color:var(--muted); }
+.gt-leg-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+
+/* ---- KAI FLOAT ---- */
+#kai-float { position:fixed; bottom:18px; right:18px; z-index:200; width:340px; }
+.kf-panel { display:none; background:var(--kai-bg); border:1px solid var(--kai-border);
+            border-radius:12px; padding:14px; margin-bottom:7px;
+            max-height:380px; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.kf-panel.on { display:block; }
+.kf-sec { margin-bottom:14px; }
+.kf-sec-t { font-size:11px; color:var(--kai-text); font-weight:600; letter-spacing:.4px; opacity:.65; margin-bottom:7px; }
+.kf-ins { font-size:13px; color:var(--kai-text); line-height:1.65; padding:8px 10px;
+          background:rgba(255,255,255,.04); border-radius:6px; margin-bottom:5px; }
+.kf-btn { background:linear-gradient(135deg,#4C1D95,#6366F1); border:1px solid #7C3AED;
+          border-radius:10px; padding:9px 14px; cursor:pointer; display:flex;
+          align-items:center; gap:8px; box-shadow:0 4px 20px rgba(99,102,241,.3);
+          transition:all .2s; color:#fff; width:100%; }
+.kf-btn:hover { box-shadow:0 6px 28px rgba(99,102,241,.5); transform:translateY(-1px); }
+.kf-av { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.18);
+         display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+.kf-lbl { flex:1; font-size:13px; font-weight:700; }
+.kf-arr { font-size:11px; opacity:.8; }
+
+/* ---- UTIL ---- */
+.btn { padding:7px 14px; border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; border:none; transition:all .15s; }
+.btn-g { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-g:hover { background:var(--surface2); color:var(--text); }
+.empty-s { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-s-i { font-size:40px; margin-bottom:10px; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+@media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="hdr">
+  <div class="hdr-logo">🧭 目標達成コンパス</div>
+  <div class="hdr-theme" id="hTheme"></div>
+  <div class="hdr-prog">
+    <span class="prog-pct" id="hPct">0%</span>
+    <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
+  </div>
+  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="tab on"  onclick="go('dashboard',this)">📊 ダッシュボード</div>
+  <div class="tab"     onclick="go('mandala',this)">🌸 マンダラ</div>
+  <div class="tab"     onclick="go('matrix',this)">⊞ マトリクス</div>
+  <div class="tab"     onclick="go('flow',this)">→ フロー</div>
+  <div class="tab"     onclick="go('gantt',this)">📅 ガント</div>
+</nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="v-dashboard" class="view on">
+  <div class="goal-card">
+    <div class="goal-tag">目標テーマ</div>
+    <div class="goal-title" id="dTheme"></div>
+    <div class="goal-meta" id="dMeta"></div>
+    <div class="goal-bg" id="dBg"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">8</div><div class="stat-l">主要テーマ</div></div>
+    <div class="stat"><div class="stat-v">64</div><div class="stat-l">アクション項目</div></div>
+    <div class="stat"><div class="stat-v" id="sFlows">0</div><div class="stat-l">フロー図</div></div>
+    <div class="stat"><div class="stat-v" id="sPct">0%</div><div class="stat-l">実行進捗</div></div>
+  </div>
+  <div class="kai-card">
+    <div class="kai-hdr">
+      <div class="kai-av">K</div>
+      <div><div class="kai-nm">Kai — ストラテジックコンサルタント</div><div class="kai-rl">あなたの目標達成を最短距離で実現する</div></div>
+    </div>
+    <div class="kai-sum" id="kSum"></div>
+    <div class="kai-verd" id="kVerd"></div>
+    <div class="kai-tags" id="kTags"></div>
+  </div>
+  <div class="sec">最優先で着手すべきアクション</div>
+  <div class="act-grid" id="dActs"></div>
+</div>
+
+<!-- ═══ MANDALA ═══ -->
+<div id="v-mandala" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <h2>マンダラチャート</h2>
+    <button class="btn btn-g" onclick="go('matrix',null)">マトリクスを見る →</button>
+  </div>
+  <div class="mandala-note">テーマセル（色付き）をクリック → 優先度マトリクスへ</div>
+  <div class="mandala-wrap"><div class="m-grid" id="mGrid"></div></div>
+  <div class="m-legend" id="mLeg"></div>
+</div>
+
+<!-- ═══ MATRIX ═══ -->
+<div id="v-matrix" class="view">
+  <div class="bc" id="mxBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="mxBcTh">マトリクス</span>
+  </div>
+  <div class="t-pills" id="tPills"></div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度 ↑</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">→ 緊急度</div>
+    </div>
+  </div>
+  <div class="mx-kai" id="mxKai" style="display:none;">
+    <div class="mk-lbl">🧭 Kai アドバイス</div>
+    <div id="mxKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ FLOW ═══ -->
+<div id="v-flow" class="view">
+  <div class="bc" id="flBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="flBcIt">フロー</span>
+  </div>
+  <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
+  <div id="flEmpty" class="empty-s">
+    <div class="empty-s-i">→</div>
+    <div>マトリクスの項目をクリックするとフローが表示されます</div>
+  </div>
+  <div class="fl-steps" id="flSteps"></div>
+  <div class="fl-kai" id="flKai" style="display:none;">
+    <div class="fk-lbl">🧭 Kai アドバイス</div>
+    <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ GANTT ═══ -->
+<div id="v-gantt" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <h2 id="gtTitle">実行タイムライン</h2>
+    <div class="gt-legend">
+      <span><span class="gt-leg-dot" style="background:var(--danger)"></span>クリティカル</span>
+      <span><span class="gt-leg-dot" style="background:var(--primary)"></span>通常</span>
+      <span><span class="gt-leg-dot" style="background:var(--success);border-radius:50%"></span>マイルストーン</span>
+    </div>
+  </div>
+  <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<!-- ═══ KAI FLOAT ═══ -->
+<div id="kai-float">
+  <div class="kf-panel" id="kfPanel"></div>
+  <button class="kf-btn" onclick="toggleKai()">
+    <div class="kf-av">K</div>
+    <span class="kf-lbl">Kai に相談する</span>
+    <span class="kf-arr" id="kfArr">▲</span>
+  </button>
+</div>
+
+<script>
+/* ================================================================
+   DATA — Kai が以下の REPLACE_ マーカーを実際の内容に置き換えて生成する
+   ================================================================ */
+const DATA = {
+  meta: {
+    theme:        "REPLACE_THEME",
+    background:   "REPLACE_BACKGROUND",
+    targetPeriod: "REPLACE_PERIOD",
+    constraints:  "REPLACE_CONSTRAINTS",
+    createdAt:    "REPLACE_DATE"
+  },
+  kai: {
+    summary:           "REPLACE_KAI_SUMMARY_200字",
+    coreIssue:         "REPLACE_CORE_ISSUE_50字",
+    topPriority:       "REPLACE_TOP_PRIORITY_ACTION",
+    consultantVerdict: "REPLACE_VERDICT_厳しい一言50字",
+    strengths: [
+      "REPLACE_STRENGTH_1",
+      "REPLACE_STRENGTH_2",
+      "REPLACE_STRENGTH_3"
+    ],
+    risks: [
+      "REPLACE_RISK_1",
+      "REPLACE_RISK_2",
+      "REPLACE_RISK_3"
+    ],
+    themeInsights: [
+      /* { index: 0, insight: "テーマ0へのKaiコメント" } × 8 */
+    ]
+  },
+  mandala: {
+    center: "REPLACE_CENTER",
+    themes: [
+      /* 8テーマ × 8アクション = 64項目
+      {
+        index: 0,
+        name: "テーマ名",
+        description: "このテーマが目標達成に必要な理由（1〜2文）",
+        color: "#EF4444",
+        bgLight: "rgba(239,68,68,.13)",
+        items: [
+          { id: "t0-0", text: "アクション項目", description: "詳細説明", priority: 1 },
+          { id: "t0-1", text: "アクション項目", description: "詳細説明", priority: 2 },
+          { id: "t0-2", text: "アクション項目", description: "詳細説明", priority: 2 },
+          { id: "t0-3", text: "アクション項目", description: "詳細説明", priority: 3 },
+          { id: "t0-4", text: "アクション項目", description: "詳細説明", priority: 2 },
+          { id: "t0-5", text: "アクション項目", description: "詳細説明", priority: 3 },
+          { id: "t0-6", text: "アクション項目", description: "詳細説明", priority: 1 },
+          { id: "t0-7", text: "アクション項目", description: "詳細説明", priority: 3 }
+        ]
+      } */
+    ]
+  },
+  matrices: [
+    /* 8テーマ分のマトリクス
+    {
+      themeIndex: 0,
+      title: "マトリクスタイトル",
+      kaiInsight: "このテーマのKaiアドバイス（2〜3文）",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q0-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急",
+          items: [ { text: "項目名", detail: "詳細" } ] },
+        { id: "q0-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急",
+          items: [ { text: "項目名", detail: "詳細" } ] },
+        { id: "q0-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急",
+          items: [ { text: "項目名", detail: "詳細" } ] },
+        { id: "q0-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急",
+          items: [ { text: "項目名", detail: "詳細" } ] }
+      ]
+    } */
+  ],
+  flows: [
+    /* マトリクス「今すぐ着手」項目ごとのフロー図
+    {
+      id: "fl-0",
+      themeIndex: 0,
+      quadrant: "q0-tr",
+      sourceItem: "今すぐ着手の項目名（matrixのitems.textと一致させる）",
+      title: "フロータイトル",
+      kaiComment: "このフローへのKaiコメント（2〜3文）",
+      steps: [
+        { order: 1, title: "ステップ名", description: "詳細説明（2〜4文）",
+          type: "action",     // action / decision / milestone / warning
+          duration: "1週間",
+          output: "成果物名" },
+        ... × 5〜8
+      ]
+    } */
+  ],
+  gantt: {
+    title:      "REPLACE_GANTT_TITLE",
+    totalWeeks: 24,
+    phases: [
+      /* {
+        name: "フェーズ1：XXXX",
+        color: "#6366F1",
+        tasks: [
+          { name: "タスク名", startWeek: 1, endWeek: 4, isCritical: false, milestone: false }
+        ]
+      } × 3〜5フェーズ */
+    ]
+  }
+};
+
+/* ================================================================
+   STATE
+   ================================================================ */
+const TC = ['#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#6366F1','#8B5CF6','#EC4899'];
+const TBG= ['rgba(239,68,68,.13)','rgba(249,115,22,.13)','rgba(234,179,8,.13)','rgba(34,197,94,.13)',
+            'rgba(6,182,212,.13)','rgba(99,102,241,.13)','rgba(139,92,246,.13)','rgba(236,72,153,.13)'];
+let curTheme = 0;
+const SK = 'rsh_' + encodeURIComponent(DATA.meta.theme || 'x');
+const checks = () => { try { return JSON.parse(localStorage.getItem(SK)||'{}'); } catch { return {}; } };
+const saveCheck = (id, v) => {
+  const c = checks(); c[id] = v;
+  localStorage.setItem(SK, JSON.stringify(c));
+  updatePct();
+};
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function go(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('v-' + name).classList.add('on');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  if (tabEl) { tabEl.classList.add('on'); }
+  else {
+    const idx = {dashboard:0,mandala:1,matrix:2,flow:3,gantt:4}[name];
+    if (idx != null) document.querySelectorAll('.tab')[idx].classList.add('on');
+  }
+  if (name === 'mandala') renderMandala();
+  if (name === 'matrix')  renderMatrix(curTheme);
+  if (name === 'gantt')   renderGantt();
+}
+
+function goMatrix(ti) { curTheme = ti; go('matrix', null); }
+function goFlow(ti, qid, itemTx) {
+  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx)
+           || DATA.flows.find(f => f.themeIndex === ti)
+           || DATA.flows[0];
+  const th = DATA.mandala.themes[ti];
+  document.getElementById('flBcTh').textContent = th ? th.name : 'マトリクス';
+  document.getElementById('flBcIt').textContent = itemTx || 'フロー';
+  document.getElementById('flCtx').textContent = itemTx;
+  if (fl) { renderFlow(fl); }
+  else {
+    document.getElementById('flEmpty').style.display = 'block';
+    document.getElementById('flSteps').innerHTML = '';
+    document.getElementById('flKai').style.display = 'none';
+  }
+  go('flow', null);
+}
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function initDash() {
+  const m = DATA.meta, k = DATA.kai;
+  document.getElementById('hTheme').textContent  = m.theme;
+  document.getElementById('dTheme').textContent  = m.theme;
+  document.getElementById('dMeta').textContent   = '作成日: ' + m.createdAt + (m.targetPeriod ? '　目標期間: ' + m.targetPeriod : '');
+  document.getElementById('dBg').textContent     = m.background;
+  document.getElementById('kSum').textContent    = k.summary;
+  document.getElementById('kVerd').textContent   = '⚠️ ' + k.consultantVerdict;
+  document.getElementById('sFlows').textContent  = DATA.flows.length;
+
+  const tg = document.getElementById('kTags');
+  (k.strengths||[]).forEach(s => { const x=document.createElement('span'); x.className='ktag ok'; x.textContent='✓ '+s; tg.appendChild(x); });
+  (k.risks||[]).forEach(r    => { const x=document.createElement('span'); x.className='ktag ng'; x.textContent='⚠ '+r;  tg.appendChild(x); });
+
+  const ag = document.getElementById('dActs');
+  DATA.mandala.themes.forEach(th => {
+    const top = th.items.filter(i => i.priority===1)[0];
+    if (!top) return;
+    const col = th.color || TC[th.index];
+    const d = document.createElement('div'); d.className='act-item';
+    d.onclick = () => goMatrix(th.index);
+    d.innerHTML = `<div class="act-dot" style="background:${col}"></div><div><div class="act-tx"><strong>${th.name}</strong></div><div class="act-sub">${top.text}</div></div>`;
+    ag.appendChild(d);
+  });
+  updatePct();
+}
+
+function updatePct() {
+  const c = checks();
+  const total = DATA.flows.reduce((s,f)=>s+f.steps.length,0)||1;
+  const done  = Object.values(c).filter(Boolean).length;
+  const p = Math.round(done/total*100);
+  document.getElementById('hPct').textContent = p+'%';
+  document.getElementById('hFill').style.width = p+'%';
+  document.getElementById('sPct').textContent  = p+'%';
+}
+
+/* ================================================================
+   MANDALA
+   ================================================================ */
+const SG  = [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+const CP  = [[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+const IO  = [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]];
+
+function renderMandala() {
+  const grid = Array.from({length:9},()=>Array(9).fill({t:'empty'}));
+  grid[4][4] = {t:'center'};
+  DATA.mandala.themes.forEach((th,ti) => {
+    const [cr,cc]=CP[ti]; grid[cr][cc]={t:'theme',th,ti};
+    const [sr,sc]=SG[ti]; grid[sr+1][sc+1]={t:'tr',th,ti};
+    th.items.forEach((item,ii)=>{ const [or,oc]=IO[ii]; grid[sr+or][sc+oc]={t:'item',item,th,ti}; });
+  });
+  const g=document.getElementById('mGrid'); g.innerHTML='';
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+    const cell=grid[r][c], d=document.createElement('div'); d.className='mc';
+    if(cell.t==='center'){
+      d.classList.add('center'); d.textContent=DATA.mandala.center;
+    } else if(cell.t==='theme'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('theme','cp'); d.style.background=col;
+      d.textContent=cell.th.name; d.title=cell.th.description||'';
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='tr'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('tr','cp'); d.style.background=col; d.style.color='#fff';
+      d.textContent=cell.th.name;
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='item'){
+      const bg=cell.th.bgLight||TBG[cell.ti];
+      d.classList.add('item'); d.style.background=bg; d.style.color='var(--dim)';
+      d.textContent=cell.item.text; d.title=cell.item.description||cell.item.text;
+    } else { d.classList.add('empty'); }
+    g.appendChild(d);
+  }
+  const leg=document.getElementById('mLeg'); leg.innerHTML='';
+  DATA.mandala.themes.forEach((th,ti)=>{
+    const col=th.color||TC[ti];
+    const l=document.createElement('div'); l.className='m-leg';
+    l.onclick=()=>goMatrix(ti);
+    l.innerHTML=`<div class="m-leg-dot" style="background:${col}"></div>${th.name}`;
+    leg.appendChild(l);
+  });
+}
+
+/* ================================================================
+   MATRIX
+   ================================================================ */
+function renderMatrix(ti) {
+  curTheme=ti;
+  const th=DATA.mandala.themes[ti], mx=DATA.matrices[ti]||DATA.matrices[0];
+  document.getElementById('mxBcTh').textContent=th?th.name:'マトリクス';
+
+  const pp=document.getElementById('tPills'); pp.innerHTML='';
+  DATA.mandala.themes.forEach((t,i)=>{
+    const col=t.color||TC[i];
+    const p=document.createElement('div'); p.className='t-pill'+(i===ti?' on':'');
+    p.style.background=col; p.textContent=t.name;
+    p.onclick=()=>renderMatrix(i); pp.appendChild(p);
+  });
+
+  if(!mx) return;
+  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'重要度');
+  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+'→';
+
+  const g=document.getElementById('mxGrid');
+  Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
+
+  ['tl','tr','bl','br'].forEach(pos=>{
+    const qd=mx.quadrants.find(q=>q.pos===pos);
+    const d=document.createElement('div'); d.className='quad q-'+pos;
+    if(qd){
+      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
+      (qd.items||[]).forEach(item=>{
+        const it=document.createElement('div'); it.className='qi';
+        it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}
+                      </div><div class="qi-ar">→</div>`;
+        it.onclick=()=>goFlow(ti,qd.id,item.text);
+        d.appendChild(it);
+      });
+    }
+    g.appendChild(d);
+  });
+
+  if(mx.kaiInsight){
+    document.getElementById('mxKaiTx').textContent=mx.kaiInsight;
+    document.getElementById('mxKai').style.display='block';
+  } else { document.getElementById('mxKai').style.display='none'; }
+}
+
+/* ================================================================
+   FLOW
+   ================================================================ */
+const SICO = {
+  action:    {bg:'rgba(99,102,241,.2)', col:'#A5B4FC', ic:'▶', cls:'fb-act',  lbl:'アクション'},
+  decision:  {bg:'rgba(245,158,11,.2)',  col:'#FCD34D', ic:'◆', cls:'fb-dec',  lbl:'判断'},
+  milestone: {bg:'rgba(16,185,129,.2)',  col:'#6EE7B7', ic:'★', cls:'fb-mil',  lbl:'マイルストーン'},
+  warning:   {bg:'rgba(239,68,68,.2)',   col:'#FCA5A5', ic:'!', cls:'fb-wrn',  lbl:'注意'}
+};
+
+function renderFlow(fl) {
+  const c=checks(), con=document.getElementById('flSteps'); con.innerHTML='';
+  document.getElementById('flEmpty').style.display='none';
+  fl.steps.forEach(step=>{
+    const si=SICO[step.type]||SICO.action;
+    const cid=fl.id+'-s'+step.order;
+    const ck=c[cid]||false;
+    const d=document.createElement('div'); d.className='fl-step';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card${ck?' done':''}">
+        <div class="fl-ord">STEP ${step.order}</div>
+        <div class="fl-title">${step.title}</div>
+        <div class="fl-desc">${step.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
+          ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
+        </div>
+        <label class="fl-check${ck?' done':''}">
+          <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
+          完了としてマーク
+        </label>
+      </div>`;
+    con.appendChild(d);
+  });
+  if(fl.kaiComment){
+    document.getElementById('flKaiTx').textContent=fl.kaiComment;
+    document.getElementById('flKai').style.display='block';
+  } else { document.getElementById('flKai').style.display='none'; }
+}
+
+function onCk(el) {
+  saveCheck(el.dataset.cid, el.checked);
+  const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
+  el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
+             : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   GANTT
+   ================================================================ */
+function renderGantt() {
+  const g=DATA.gantt, wk=g.totalWeeks||24;
+  document.getElementById('gtTitle').textContent=g.title||'実行タイムライン';
+  const con=document.getElementById('gtChart'); con.innerHTML='';
+
+  const hdr=document.createElement('div'); hdr.className='gt-hdr';
+  for(let w=1;w<=wk;w++){
+    const wd=document.createElement('div'); wd.className='gt-wk';
+    wd.textContent=(w%4===0)?'W'+w:''; hdr.appendChild(wd);
+  }
+  con.appendChild(hdr);
+
+  g.phases.forEach(ph=>{
+    const pl=document.createElement('div'); pl.className='gt-phase';
+    pl.textContent=ph.name; con.appendChild(pl);
+    ph.tasks.forEach(task=>{
+      const row=document.createElement('div'); row.className='gt-row';
+      const nm=document.createElement('div'); nm.className='gt-name';
+      nm.textContent=task.name; nm.title=task.name; row.appendChild(nm);
+      const bw=document.createElement('div'); bw.className='gt-bars';
+      bw.style.flex='1'; bw.style.position='relative'; bw.style.height='28px';
+      const bar=document.createElement('div');
+      bar.className='gt-bar'+(task.isCritical?' crit':'')+(task.milestone?' ms':'');
+      bar.style.left=((task.startWeek-1)/wk*100)+'%';
+      bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
+      bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary))'));
+      bar.textContent=task.milestone?'◆':task.name;
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
+    });
+  });
+}
+
+/* ================================================================
+   KAI FLOAT PANEL
+   ================================================================ */
+function buildKaiPanel(){
+  const k=DATA.kai, p=document.getElementById('kfPanel');
+  let h=`<div class="kf-sec"><div class="kf-sec-t">📌 コアイシュー</div>
+           <div class="kf-ins">${k.coreIssue||'—'}</div></div>
+          <div class="kf-sec"><div class="kf-sec-t">🎯 最優先アクション</div>
+           <div class="kf-ins">${k.topPriority||'—'}</div></div>`;
+  if(k.themeInsights&&k.themeInsights.length){
+    h+=`<div class="kf-sec"><div class="kf-sec-t">🧭 テーマ別アドバイス</div>`;
+    k.themeInsights.forEach(ti=>{
+      const th=DATA.mandala.themes[ti.index];
+      const col=th?(th.color||TC[ti.index]):'#6366F1';
+      h+=`<div class="kf-ins" style="border-left:3px solid ${col};padding-left:10px">
+            <strong style="color:${col}">${th?th.name:'テーマ'+(ti.index+1)}</strong><br>${ti.insight}</div>`;
+    });
+    h+='</div>';
+  }
+  p.innerHTML=h;
+}
+
+function toggleKai(){
+  const p=document.getElementById('kfPanel'), a=document.getElementById('kfArr');
+  p.classList.toggle('on'); a.textContent=p.classList.contains('on')?'▼':'▲';
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDash(); renderMandala(); buildKaiPanel();
+  if(DATA.matrices.length) renderMatrix(0);
+  document.getElementById('flEmpty').style.display='block';
+  document.getElementById('flSteps').innerHTML='';
+  document.getElementById('flKai').style.display='none';
+});
+</script>
+</body>
+</html>
