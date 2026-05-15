@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nolia 操作マニュアル v1.0</title>
+<title>Nolia 謫堺ｽ懊・繝九Η繧｢繝ｫ v1.0</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif; background:#F7FAFC; color:#2D3748; font-size:13px; line-height:1.7; }
@@ -68,390 +68,380 @@ hr { border:none; border-top:1px solid #E2E8F0; margin:24px 0; }
 <body>
 <div class="wrap">
 
-<!-- ヘッダー -->
+<!-- 繝倥ャ繝繝ｼ -->
 <div class="page-header">
   <div class="app-name">N<span>o</span>lia</div>
-  <h1>操作マニュアル</h1>
-  <div class="sub">機能説明・管理者操作・修正方法・トラブルシューティング</div>
+  <h1>謫堺ｽ懊・繝九Η繧｢繝ｫ</h1>
+  <div class="sub">讖溯・隱ｬ譏弱・邂｡逅・・桃菴懊・菫ｮ豁｣譁ｹ豕輔・繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</div>
   <div class="meta">
-    <span>📅 最終更新：2026-05-15</span>
-    <span>🔖 v1.0</span>
-    <span>👤 有限会社アートソウル</span>
-    <span>🌐 <a href="https://artsoul-git.github.io/nolia-app/" target="_blank" style="color:rgba(255,255,255,.8)">https://artsoul-git.github.io/nolia-app/</a></span>
+    <span>套 譛邨よ峩譁ｰ・・026-05-15</span>
+    <span>薄 v1.0</span>
+    <span>側 譛蛾剞莨夂､ｾ繧｢繝ｼ繝医た繧ｦ繝ｫ</span>
+    <span>倹 <a href="https://artsoul-git.github.io/nolia-app/" target="_blank" style="color:rgba(255,255,255,.8)">https://artsoul-git.github.io/nolia-app/</a></span>
   </div>
 </div>
 
-<!-- 目次 -->
+<!-- 逶ｮ谺｡ -->
 <div class="toc-card">
-  <h2>📋 目次</h2>
+  <h2>搭 逶ｮ谺｡</h2>
   <ul class="toc-list">
-    <li><a href="#overview">1. アプリ概要</a></li>
-    <li><a href="#screens">2. 画面構成と機能一覧</a></li>
-    <li><a href="#admin">3. 管理者操作</a></li>
-    <li><a href="#modify">4. 修正方法</a></li>
-    <li><a href="#deploy">5. フロントエンドのデプロイ</a></li>
-    <li><a href="#gas-deploy">6. GASの修正・デプロイ</a></li>
-    <li><a href="#demo">7. デモデータの管理</a></li>
-    <li><a href="#trouble">8. トラブルシューティング</a></li>
+    <li><a href="#overview">1. 繧｢繝励Μ讎りｦ・/a></li>
+    <li><a href="#screens">2. 逕ｻ髱｢讒区・縺ｨ讖溯・荳隕ｧ</a></li>
+    <li><a href="#admin">3. 邂｡逅・・桃菴・/a></li>
+    <li><a href="#modify">4. 菫ｮ豁｣譁ｹ豕・/a></li>
+    <li><a href="#deploy">5. 繝輔Ο繝ｳ繝医お繝ｳ繝峨・繝・・繝ｭ繧､</a></li>
+    <li><a href="#gas-deploy">6. GAS縺ｮ菫ｮ豁｣繝ｻ繝・・繝ｭ繧､</a></li>
+    <li><a href="#demo">7. 繝・Δ繝・・繧ｿ縺ｮ邂｡逅・/a></li>
+    <li><a href="#trouble">8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</a></li>
   </ul>
 </div>
 
-<!-- 1. アプリ概要 -->
+<!-- 1. 繧｢繝励Μ讎りｦ・-->
 <div class="section-card" id="overview">
-  <div class="section-title">1. アプリ概要</div>
-  <p>Nolia はサプリメント継続サポートを目的としたモバイルWebアプリです。利用者は毎日の体重・気分・サプリ服用を記録し、週次AIレポートやバイオリズム分析でモチベーションを維持します。</p>
+  <div class="section-title">1. 繧｢繝励Μ讎りｦ・/div>
+  <p>Nolia 縺ｯ繧ｵ繝励Μ繝｡繝ｳ繝育ｶ咏ｶ壹し繝昴・繝医ｒ逶ｮ逧・→縺励◆繝｢繝舌う繝ｫWeb繧｢繝励Μ縺ｧ縺吶ょ茜逕ｨ閠・・豈取律縺ｮ菴馴㍾繝ｻ豌怜・繝ｻ繧ｵ繝励Μ譛咲畑繧定ｨ倬鹸縺励・ｱ谺｡AI繝ｬ繝昴・繝医ｄ繝舌う繧ｪ繝ｪ繧ｺ繝蛻・梵縺ｧ繝｢繝√・繝ｼ繧ｷ繝ｧ繝ｳ繧堤ｶｭ謖√＠縺ｾ縺吶・/p>
 
   <table>
-    <tr><th>項目</th><th>内容</th></tr>
-    <tr><td>公開URL</td><td><a href="https://artsoul-git.github.io/nolia-app/" target="_blank">https://artsoul-git.github.io/nolia-app/</a></td></tr>
-    <tr><td>フロントエンド</td><td>HTML/CSS/JS（GitHub Pages）</td></tr>
-    <tr><td>バックエンド</td><td>Google Apps Script（GAS）Web App</td></tr>
-    <tr><td>データベース</td><td>Googleスプレッドシート</td></tr>
-    <tr><td>AI機能</td><td>Gemini API（AIフィードバック・週次レポート・占い）</td></tr>
-    <tr><td>認証</td><td>トークン方式（UUIDをメールで送信）</td></tr>
-    <tr><td>フロントソース</td><td><code>D:\Google Antigravity\_publish-staging\nolia-app\</code></td></tr>
-    <tr><td>GASソース</td><td><code>08_アプリ開発事業部\outputs\supplement_app\gas\</code></td></tr>
+    <tr><th>鬆・岼</th><th>蜀・ｮｹ</th></tr>
+    <tr><td>蜈ｬ髢偽RL</td><td><a href="https://artsoul-git.github.io/nolia-app/" target="_blank">https://artsoul-git.github.io/nolia-app/</a></td></tr>
+    <tr><td>繝輔Ο繝ｳ繝医お繝ｳ繝・/td><td>HTML/CSS/JS・・itHub Pages・・/td></tr>
+    <tr><td>繝舌ャ繧ｯ繧ｨ繝ｳ繝・/td><td>Google Apps Script・・AS・姥eb App</td></tr>
+    <tr><td>繝・・繧ｿ繝吶・繧ｹ</td><td>Google繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝・/td></tr>
+    <tr><td>AI讖溯・</td><td>Gemini API・・I繝輔ぅ繝ｼ繝峨ヰ繝・け繝ｻ騾ｱ谺｡繝ｬ繝昴・繝医・蜊縺・ｼ・/td></tr>
+    <tr><td>隱崎ｨｼ</td><td>繝医・繧ｯ繝ｳ譁ｹ蠑擾ｼ・UID繧偵Γ繝ｼ繝ｫ縺ｧ騾∽ｿ｡・・/td></tr>
+    <tr><td>繝輔Ο繝ｳ繝医た繝ｼ繧ｹ</td><td><code>C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app\</code></td></tr>
+    <tr><td>GAS繧ｽ繝ｼ繧ｹ</td><td><code>08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\outputs\supplement_app\gas\</code></td></tr>
   </table>
 </div>
 
-<!-- 2. 画面構成と機能一覧 -->
+<!-- 2. 逕ｻ髱｢讒区・縺ｨ讖溯・荳隕ｧ -->
 <div class="section-card" id="screens">
-  <div class="section-title">2. 画面構成と機能一覧</div>
+  <div class="section-title">2. 逕ｻ髱｢讒区・縺ｨ讖溯・荳隕ｧ</div>
 
   <div class="screen-grid">
     <div class="screen-card">
-      <h4>🏠 ホーム</h4>
+      <h4>匠 繝帙・繝</h4>
       <ul>
-        <li>連続記録日数バッジ（🔥 n日連続）</li>
-        <li>今日の記録状況（済み/記録ボタン）</li>
-        <li>AIフィードバック（記録後に表示）</li>
-        <li><strong>体重×気分 デュアル軸グラフ</strong>（30日間）</li>
-        <li>エネルギー占い（JST 0時リセット）</li>
-        <li>バイオリズム（体力・こころ・活力）</li>
-        <li>最新レポートプレビュー</li>
+        <li>騾｣邯夊ｨ倬鹸譌･謨ｰ繝舌ャ繧ｸ・芋沐･ n譌･騾｣邯夲ｼ・/li>
+        <li>莉頑律縺ｮ險倬鹸迥ｶ豕・ｼ域ｸ医∩/險倬鹸繝懊ち繝ｳ・・/li>
+        <li>AI繝輔ぅ繝ｼ繝峨ヰ繝・け・郁ｨ倬鹸蠕後↓陦ｨ遉ｺ・・/li>
+        <li><strong>菴馴㍾ﾃ玲ｰ怜・ 繝・Η繧｢繝ｫ霆ｸ繧ｰ繝ｩ繝・/strong>・・0譌･髢難ｼ・/li>
+        <li>繧ｨ繝阪Ν繧ｮ繝ｼ蜊縺・ｼ・ST 0譎ゅΜ繧ｻ繝・ヨ・・/li>
+        <li>繝舌う繧ｪ繝ｪ繧ｺ繝・井ｽ灘鴨繝ｻ縺薙％繧阪・豢ｻ蜉幢ｼ・/li>
+        <li>譛譁ｰ繝ｬ繝昴・繝医・繝ｬ繝薙Η繝ｼ</li>
       </ul>
     </div>
     <div class="screen-card">
-      <h4>📝 記録</h4>
+      <h4>統 險倬鹸</h4>
       <ul>
-        <li>体重（kg）入力</li>
-        <li>気分スコア（1〜5 スライダー）</li>
-        <li>体調スコア（1〜5 スライダー）</li>
-        <li>サプリ服用 yes/no トグル</li>
-        <li>メモ（200文字以内）</li>
-        <li>AI即時フィードバック（Gemini）</li>
-        <li>同日は上書き保存</li>
+        <li>菴馴㍾・・g・牙・蜉・/li>
+        <li>豌怜・繧ｹ繧ｳ繧｢・・縲・ 繧ｹ繝ｩ繧､繝繝ｼ・・/li>
+        <li>菴楢ｪｿ繧ｹ繧ｳ繧｢・・縲・ 繧ｹ繝ｩ繧､繝繝ｼ・・/li>
+        <li>繧ｵ繝励Μ譛咲畑 yes/no 繝医げ繝ｫ</li>
+        <li>繝｡繝｢・・00譁・ｭ嶺ｻ･蜀・ｼ・/li>
+        <li>AI蜊ｳ譎ゅヵ繧｣繝ｼ繝峨ヰ繝・け・・emini・・/li>
+        <li>蜷梧律縺ｯ荳頑嶌縺堺ｿ晏ｭ・/li>
       </ul>
     </div>
     <div class="screen-card">
-      <h4>📊 レポート</h4>
+      <h4>投 繝ｬ繝昴・繝・/h4>
       <ul>
-        <li>週次AIレポート一覧</li>
-        <li>週ごとの体重変化・服用率・気分平均</li>
-        <li>バイオリズム情報付き</li>
-        <li>開封状態の管理</li>
+        <li>騾ｱ谺｡AI繝ｬ繝昴・繝井ｸ隕ｧ</li>
+        <li>騾ｱ縺斐→縺ｮ菴馴㍾螟牙喧繝ｻ譛咲畑邇・・豌怜・蟷ｳ蝮・/li>
+        <li>繝舌う繧ｪ繝ｪ繧ｺ繝諠・ｱ莉倥″</li>
+        <li>髢句ｰ∫憾諷九・邂｡逅・/li>
       </ul>
     </div>
     <div class="screen-card">
-      <h4>🌿 ヘルスガイド</h4>
+      <h4>諺 繝倥Ν繧ｹ繧ｬ繧､繝・/h4>
       <ul>
-        <li>今日のパーソナルヒント（記録状況・連続記録数・服用率に応じて変化）</li>
-        <li>利用状況に応じたアプリ活用ガイド</li>
-        <li>管理者が追加した編集コンテンツ（ContentManager）</li>
+        <li>莉頑律縺ｮ繝代・繧ｽ繝翫Ν繝偵Φ繝茨ｼ郁ｨ倬鹸迥ｶ豕√・騾｣邯夊ｨ倬鹸謨ｰ繝ｻ譛咲畑邇・↓蠢懊§縺ｦ螟牙喧・・/li>
+        <li>蛻ｩ逕ｨ迥ｶ豕√↓蠢懊§縺溘い繝励Μ豢ｻ逕ｨ繧ｬ繧､繝・/li>
+        <li>邂｡逅・・′霑ｽ蜉縺励◆邱ｨ髮・さ繝ｳ繝・Φ繝・ｼ・ontentManager・・/li>
       </ul>
     </div>
     <div class="screen-card">
-      <h4>👤 マイページ</h4>
+      <h4>側 繝槭う繝壹・繧ｸ</h4>
       <ul>
-        <li>実績バッジ（連続記録・服用率など8種）</li>
-        <li>サプリ継続日数プログレスバー</li>
-        <li>楽天・Amazonリンク（常時表示、別タブ）</li>
-        <li>体重グラフ（30日・Chart.js）</li>
-        <li>クロスセルカード（遺伝子検査・ジム）</li>
-        <li>プロフィール編集（表示名・生年月日・身長等）</li>
-        <li>ログインリンク再送（プロフィールモーダル内）</li>
+        <li>螳溽ｸｾ繝舌ャ繧ｸ・磯｣邯夊ｨ倬鹸繝ｻ譛咲畑邇・↑縺ｩ8遞ｮ・・/li>
+        <li>繧ｵ繝励Μ邯咏ｶ壽律謨ｰ繝励Ο繧ｰ繝ｬ繧ｹ繝舌・</li>
+        <li>讌ｽ螟ｩ繝ｻAmazon繝ｪ繝ｳ繧ｯ・亥ｸｸ譎り｡ｨ遉ｺ縲∝挨繧ｿ繝厄ｼ・/li>
+        <li>菴馴㍾繧ｰ繝ｩ繝包ｼ・0譌･繝ｻChart.js・・/li>
+        <li>繧ｯ繝ｭ繧ｹ繧ｻ繝ｫ繧ｫ繝ｼ繝会ｼ磯⊆莨晏ｭ先､懈渊繝ｻ繧ｸ繝・・/li>
+        <li>繝励Ο繝輔ぅ繝ｼ繝ｫ邱ｨ髮・ｼ郁｡ｨ遉ｺ蜷阪・逕溷ｹｴ譛域律繝ｻ霄ｫ髟ｷ遲会ｼ・/li>
+        <li>繝ｭ繧ｰ繧､繝ｳ繝ｪ繝ｳ繧ｯ蜀埼・ｼ医・繝ｭ繝輔ぅ繝ｼ繝ｫ繝｢繝ｼ繝繝ｫ蜀・ｼ・/li>
       </ul>
     </div>
     <div class="screen-card">
-      <h4>🔐 ログイン</h4>
+      <h4>柏 繝ｭ繧ｰ繧､繝ｳ</h4>
       <ul>
-        <li>メールアドレスを入力してリンクを受信</li>
-        <li>リンクをクリックして自動ログイン</li>
-        <li>パスワード不要（トークン認証）</li>
-        <li>別デバイスからもメール再送で対応</li>
+        <li>繝｡繝ｼ繝ｫ繧｢繝峨Ξ繧ｹ繧貞・蜉帙＠縺ｦ繝ｪ繝ｳ繧ｯ繧貞女菫｡</li>
+        <li>繝ｪ繝ｳ繧ｯ繧偵け繝ｪ繝・け縺励※閾ｪ蜍輔Ο繧ｰ繧､繝ｳ</li>
+        <li>繝代せ繝ｯ繝ｼ繝我ｸ崎ｦ・ｼ医ヨ繝ｼ繧ｯ繝ｳ隱崎ｨｼ・・/li>
+        <li>蛻･繝・ヰ繧､繧ｹ縺九ｉ繧ゅΓ繝ｼ繝ｫ蜀埼√〒蟇ｾ蠢・/li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- 3. 管理者操作 -->
+<!-- 3. 邂｡逅・・桃菴・-->
 <div class="section-card" id="admin">
-  <div class="section-title">3. 管理者操作</div>
+  <div class="section-title">3. 邂｡逅・・桃菴・/div>
 
-  <div class="section-sub">3-1. ユーザーの招待</div>
+  <div class="section-sub">3-1. 繝ｦ繝ｼ繧ｶ繝ｼ縺ｮ諡帛ｾ・/div>
   <ol>
-    <li>スプレッドシートを開く → <strong>拡張機能 → Apps Script</strong></li>
-    <li>GASエディタの上部ドロップダウンから <code>inviteUser</code> 関数を探す（Admin.gs内）</li>
-    <li>または管理者用URLから直接招待メールを送信する</li>
+    <li>繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医ｒ髢九￥ 竊・<strong>諡｡蠑ｵ讖溯・ 竊・Apps Script</strong></li>
+    <li>GAS繧ｨ繝・ぅ繧ｿ縺ｮ荳企Κ繝峨Ο繝・・繝繧ｦ繝ｳ縺九ｉ <code>inviteUser</code> 髢｢謨ｰ繧呈爾縺呻ｼ・dmin.gs蜀・ｼ・/li>
+    <li>縺ｾ縺溘・邂｡逅・・畑URL縺九ｉ逶ｴ謗･諡帛ｾ・Γ繝ｼ繝ｫ繧帝∽ｿ｡縺吶ｋ</li>
   </ol>
   <div class="tip">
-    <span class="label">💡 補足</span>
-    招待するにはスプレッドシートの <strong>users</strong> シートに手動でメールアドレスを追加してから <code>inviteUser</code> を実行するか、管理者ページ（<code>/admin/</code>）から操作できます。
-  </div>
+    <span class="label">庁 陬懆ｶｳ</span>
+    諡帛ｾ・☆繧九↓縺ｯ繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医・ <strong>users</strong> 繧ｷ繝ｼ繝医↓謇句虚縺ｧ繝｡繝ｼ繝ｫ繧｢繝峨Ξ繧ｹ繧定ｿｽ蜉縺励※縺九ｉ <code>inviteUser</code> 繧貞ｮ溯｡後☆繧九°縲∫ｮ｡逅・・・繝ｼ繧ｸ・・code>/admin/</code>・峨°繧画桃菴懊〒縺阪∪縺吶・  </div>
 
-  <div class="section-sub">3-2. 週次レポートの送信</div>
-  <p>Reports.gs の <code>sendWeeklyReports</code> 関数を毎週月曜に手動または時間トリガーで実行します。</p>
+  <div class="section-sub">3-2. 騾ｱ谺｡繝ｬ繝昴・繝医・騾∽ｿ｡</div>
+  <p>Reports.gs 縺ｮ <code>sendWeeklyReports</code> 髢｢謨ｰ繧呈ｯ朱ｱ譛域屆縺ｫ謇句虚縺ｾ縺溘・譎る俣繝医Μ繧ｬ繝ｼ縺ｧ螳溯｡後＠縺ｾ縺吶・/p>
   <ol>
-    <li>GASエディタ → <code>sendWeeklyReports</code> を選択 → 実行</li>
-    <li>またはGASの「トリガー」設定で毎週月曜 7:00 に自動実行を設定</li>
+    <li>GAS繧ｨ繝・ぅ繧ｿ 竊・<code>sendWeeklyReports</code> 繧帝∈謚・竊・螳溯｡・/li>
+    <li>縺ｾ縺溘・GAS縺ｮ縲後ヨ繝ｪ繧ｬ繝ｼ縲崎ｨｭ螳壹〒豈朱ｱ譛域屆 7:00 縺ｫ閾ｪ蜍募ｮ溯｡後ｒ險ｭ螳・/li>
   </ol>
 
-  <div class="section-sub">3-3. コンテンツの追加（ヘルスガイド）</div>
-  <p>ヘルスガイドの「ヘルスコンテンツ」セクションに記事や体験談を追加できます。</p>
+  <div class="section-sub">3-3. 繧ｳ繝ｳ繝・Φ繝・・霑ｽ蜉・医・繝ｫ繧ｹ繧ｬ繧､繝会ｼ・/div>
+  <p>繝倥Ν繧ｹ繧ｬ繧､繝峨・縲後・繝ｫ繧ｹ繧ｳ繝ｳ繝・Φ繝・阪そ繧ｯ繧ｷ繝ｧ繝ｳ縺ｫ險倅ｺ九ｄ菴馴ｨ楢ｫ・ｒ霑ｽ蜉縺ｧ縺阪∪縺吶・/p>
   <ol>
-    <li>スプレッドシートの <strong>content</strong> シートを直接編集</li>
-    <li>カラム：<code>content_id / user_id / type / title / excerpt / external_url / status</code></li>
-    <li>type は <code>tip</code>（健康Tips）/<code>blog</code>（ブログ）/<code>promo</code>（特別提案）/<code>testimonial</code>（体験談）</li>
-    <li>status を <code>active</code> にすると表示される</li>
+    <li>繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医・ <strong>content</strong> 繧ｷ繝ｼ繝医ｒ逶ｴ謗･邱ｨ髮・/li>
+    <li>繧ｫ繝ｩ繝・・code>content_id / user_id / type / title / excerpt / external_url / status</code></li>
+    <li>type 縺ｯ <code>tip</code>・亥▼蠎ｷTips・・<code>blog</code>・医ヶ繝ｭ繧ｰ・・<code>promo</code>・育音蛻･謠先｡茨ｼ・<code>testimonial</code>・井ｽ馴ｨ楢ｫ・ｼ・/li>
+    <li>status 繧・<code>active</code> 縺ｫ縺吶ｋ縺ｨ陦ｨ遉ｺ縺輔ｌ繧・/li>
   </ol>
 </div>
 
-<!-- 4. 修正方法 -->
+<!-- 4. 菫ｮ豁｣譁ｹ豕・-->
 <div class="section-card" id="modify">
-  <div class="section-title">4. 修正方法（よくある変更）</div>
+  <div class="section-title">4. 菫ｮ豁｣譁ｹ豕包ｼ医ｈ縺上≠繧句､画峩・・/div>
 
-  <div class="section-sub">4-1. 楽天・Amazon URLを変更する</div>
-  <p>商品URLは <strong>1ファイルだけ</strong> を変更すれば全画面に反映されます。</p>
+  <div class="section-sub">4-1. 讌ｽ螟ｩ繝ｻAmazon URL繧貞､画峩縺吶ｋ</div>
+  <p>蝠・刀URL縺ｯ <strong>1繝輔ぃ繧､繝ｫ縺縺・/strong> 繧貞､画峩縺吶ｌ縺ｰ蜈ｨ逕ｻ髱｢縺ｫ蜿肴丐縺輔ｌ縺ｾ縺吶・/p>
   <div class="step-row">
     <div class="step-circle">1</div>
     <div class="step-body-text">
-      <strong>ファイルを開く：</strong><br>
-      <span class="file-ref">D:\Google Antigravity\_publish-staging\nolia-app\js\config.js</span>
+      <strong>繝輔ぃ繧､繝ｫ繧帝幕縺擾ｼ・/strong><br>
+      <span class="file-ref">C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app\js\config.js</span>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">2</div>
     <div class="step-body-text">
-      <code>RAKUTEN_URL</code> と <code>AMAZON_URL</code> の値を新しいURLに書き換える
+      <code>RAKUTEN_URL</code> 縺ｨ <code>AMAZON_URL</code> 縺ｮ蛟､繧呈眠縺励＞URL縺ｫ譖ｸ縺肴鋤縺医ｋ
       <pre>RAKUTEN_URL: 'https://item.rakuten.co.jp/your-new-url/',
 AMAZON_URL:  'https://www.amazon.co.jp/dp/XXXXXXXXXX/',</pre>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">3</div>
-    <div class="step-body-text">保存してデプロイ（→ <a href="#deploy">5. デプロイ</a>）</div>
+    <div class="step-body-text">菫晏ｭ倥＠縺ｦ繝・・繝ｭ繧､・遺・ <a href="#deploy">5. 繝・・繝ｭ繧､</a>・・/div>
   </div>
 
-  <div class="section-sub">4-2. アプリ名・カラーを変更する</div>
+  <div class="section-sub">4-2. 繧｢繝励Μ蜷阪・繧ｫ繝ｩ繝ｼ繧貞､画峩縺吶ｋ</div>
   <table>
-    <tr><th>変更箇所</th><th>ファイル</th></tr>
-    <tr><td>アプリ名（APP_NAME）</td><td><code>js/config.js</code> の <code>APP_NAME</code></td></tr>
-    <tr><td>テーマカラー（グリーン）</td><td><code>css/style.css</code> の <code>--nolia-primary</code> と <code>--nolia-secondary</code></td></tr>
-    <tr><td>遺伝子検査URL</td><td><code>js/config.js</code> の <code>GENE_TEST_URL</code>（現在 <code>'#'</code>→実URLに変更）</td></tr>
-    <tr><td>ジムURL</td><td><code>js/config.js</code> の <code>GYM_URL</code></td></tr>
+    <tr><th>螟画峩邂・園</th><th>繝輔ぃ繧､繝ｫ</th></tr>
+    <tr><td>繧｢繝励Μ蜷搾ｼ・PP_NAME・・/td><td><code>js/config.js</code> 縺ｮ <code>APP_NAME</code></td></tr>
+    <tr><td>繝・・繝槭き繝ｩ繝ｼ・医げ繝ｪ繝ｼ繝ｳ・・/td><td><code>css/style.css</code> 縺ｮ <code>--nolia-primary</code> 縺ｨ <code>--nolia-secondary</code></td></tr>
+    <tr><td>驕ｺ莨晏ｭ先､懈渊URL</td><td><code>js/config.js</code> 縺ｮ <code>GENE_TEST_URL</code>・育樟蝨ｨ <code>'#'</code>竊貞ｮ欟RL縺ｫ螟画峩・・/td></tr>
+    <tr><td>繧ｸ繝URL</td><td><code>js/config.js</code> 縺ｮ <code>GYM_URL</code></td></tr>
   </table>
 
-  <div class="section-sub">4-3. ヘルスガイドのヒント文言を変更する</div>
-  <p>パーソナルヒントの文言は <code>js/app.js</code> の <code>Content._buildDailyTip()</code> 関数内（約600行目）にあります。条件ごとにテキストを書き換えてデプロイします。</p>
+  <div class="section-sub">4-3. 繝倥Ν繧ｹ繧ｬ繧､繝峨・繝偵Φ繝域枚險繧貞､画峩縺吶ｋ</div>
+  <p>繝代・繧ｽ繝翫Ν繝偵Φ繝医・譁・ｨ縺ｯ <code>js/app.js</code> 縺ｮ <code>Content._buildDailyTip()</code> 髢｢謨ｰ蜀・ｼ育ｴ・00陦檎岼・峨↓縺ゅｊ縺ｾ縺吶よ擅莉ｶ縺斐→縺ｫ繝・く繧ｹ繝医ｒ譖ｸ縺肴鋤縺医※繝・・繝ｭ繧､縺励∪縺吶・/p>
 
-  <div class="section-sub">4-4. バッジの種類・条件を変更する</div>
-  <p><code>js/app.js</code> の <code>MyPage._renderAchievements()</code> 関数内（約760行目）の <code>badges</code> 配列を編集します。</p>
+  <div class="section-sub">4-4. 繝舌ャ繧ｸ縺ｮ遞ｮ鬘槭・譚｡莉ｶ繧貞､画峩縺吶ｋ</div>
+  <p><code>js/app.js</code> 縺ｮ <code>MyPage._renderAchievements()</code> 髢｢謨ｰ蜀・ｼ育ｴ・60陦檎岼・峨・ <code>badges</code> 驟榊・繧堤ｷｨ髮・＠縺ｾ縺吶・/p>
 </div>
 
-<!-- 5. フロントエンドのデプロイ -->
+<!-- 5. 繝輔Ο繝ｳ繝医お繝ｳ繝峨・繝・・繝ｭ繧､ -->
 <div class="section-card" id="deploy">
-  <div class="section-title">5. フロントエンドのデプロイ（GitHub Pages 更新）</div>
-  <p>フロントエンドのファイル（html/css/js）を変更したら、以下の手順でGitHub Pagesに反映します。</p>
+  <div class="section-title">5. 繝輔Ο繝ｳ繝医お繝ｳ繝峨・繝・・繝ｭ繧､・・itHub Pages 譖ｴ譁ｰ・・/div>
+  <p>繝輔Ο繝ｳ繝医お繝ｳ繝峨・繝輔ぃ繧､繝ｫ・・tml/css/js・峨ｒ螟画峩縺励◆繧峨∽ｻ･荳九・謇矩・〒GitHub Pages縺ｫ蜿肴丐縺励∪縺吶・/p>
 
   <div class="tip">
-    <span class="label">📂 作業ディレクトリ</span>
-    <span class="file-ref">D:\Google Antigravity\_publish-staging\nolia-app\</span>
+    <span class="label">唐 菴懈･ｭ繝・ぅ繝ｬ繧ｯ繝医Μ</span>
+    <span class="file-ref">C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app\</span>
   </div>
 
   <div class="step-row">
     <div class="step-circle">1</div>
     <div class="step-body-text">
-      <strong>Claude Codeのチャットで依頼する（推奨）：</strong><br>
-      「config.jsの楽天URLを〇〇に変更してデプロイして」と伝えるだけでKaiが変更〜push まで実行
-    </div>
+      <strong>Claude Code縺ｮ繝√Ε繝・ヨ縺ｧ萓晞ｼ縺吶ｋ・域耳螂ｨ・会ｼ・/strong><br>
+      縲慶onfig.js縺ｮ讌ｽ螟ｩURL繧偵・・↓螟画峩縺励※繝・・繝ｭ繧､縺励※縲阪→莨昴∴繧九□縺代〒Kai縺悟､画峩縲徘ush 縺ｾ縺ｧ螳溯｡・    </div>
   </div>
   <div class="step-row">
     <div class="step-circle">2</div>
     <div class="step-body-text">
-      <strong>手動でやる場合：</strong> ターミナルで以下を実行
-      <pre>cd "D:\Google Antigravity\_publish-staging\nolia-app"
+      <strong>謇句虚縺ｧ繧・ｋ蝣ｴ蜷茨ｼ・/strong> 繧ｿ繝ｼ繝溘リ繝ｫ縺ｧ莉･荳九ｒ螳溯｡・      <pre>cd "C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app"
 git add -A
-git commit -m "変更内容の説明"
+git commit -m "螟画峩蜀・ｮｹ縺ｮ隱ｬ譏・
 git push origin main</pre>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">3</div>
     <div class="step-body-text">
-      <strong>反映確認：</strong> 2〜3分後にアプリURLをリロードして確認
-    </div>
+      <strong>蜿肴丐遒ｺ隱搾ｼ・/strong> 2縲・蛻・ｾ後↓繧｢繝励ΜURL繧偵Μ繝ｭ繝ｼ繝峨＠縺ｦ遒ｺ隱・    </div>
   </div>
 
   <div class="ok">
-    <span class="label">✅ 確認ポイント</span>
-    ブラウザのキャッシュが残っていると古い画面が表示されることがある。<strong>Ctrl+Shift+R</strong（強制リロード）で確認する。
-  </div>
+    <span class="label">笨・遒ｺ隱阪・繧､繝ｳ繝・/span>
+    繝悶Λ繧ｦ繧ｶ縺ｮ繧ｭ繝｣繝・す繝･縺梧ｮ九▲縺ｦ縺・ｋ縺ｨ蜿､縺・判髱｢縺瑚｡ｨ遉ｺ縺輔ｌ繧九％縺ｨ縺後≠繧九・strong>Ctrl+Shift+R</strong・亥ｼｷ蛻ｶ繝ｪ繝ｭ繝ｼ繝会ｼ峨〒遒ｺ隱阪☆繧九・  </div>
 </div>
 
-<!-- 6. GASの修正・デプロイ -->
+<!-- 6. GAS縺ｮ菫ｮ豁｣繝ｻ繝・・繝ｭ繧､ -->
 <div class="section-card" id="gas-deploy">
-  <div class="section-title">6. GASの修正・デプロイ</div>
+  <div class="section-title">6. GAS縺ｮ菫ｮ豁｣繝ｻ繝・・繝ｭ繧､</div>
 
   <div class="warn">
-    <span class="label">⚠️ 重要：ローカルファイルとGASエディタは別物</span>
-    <code>gas/</code>フォルダのファイルを編集しても自動でGASに反映<strong>されません</strong>。必ずGASエディタに手動でコピーペーストする必要があります。
-  </div>
+    <span class="label">笞・・驥崎ｦ・ｼ壹Ο繝ｼ繧ｫ繝ｫ繝輔ぃ繧､繝ｫ縺ｨGAS繧ｨ繝・ぅ繧ｿ縺ｯ蛻･迚ｩ</span>
+    <code>gas/</code>繝輔か繝ｫ繝縺ｮ繝輔ぃ繧､繝ｫ繧堤ｷｨ髮・＠縺ｦ繧り・蜍輔〒GAS縺ｫ蜿肴丐<strong>縺輔ｌ縺ｾ縺帙ｓ</strong>縲ょｿ・★GAS繧ｨ繝・ぅ繧ｿ縺ｫ謇句虚縺ｧ繧ｳ繝斐・繝壹・繧ｹ繝医☆繧句ｿ・ｦ√′縺ゅｊ縺ｾ縺吶・  </div>
 
-  <div class="section-sub">6-1. GASコードを修正する手順</div>
+  <div class="section-sub">6-1. GAS繧ｳ繝ｼ繝峨ｒ菫ｮ豁｣縺吶ｋ謇矩・/div>
   <div class="step-row">
     <div class="step-circle">1</div>
     <div class="step-body-text">
-      ローカルの <code>.gs</code> ファイルを編集（Claude Codeで依頼するか直接編集）
-    </div>
+      繝ｭ繝ｼ繧ｫ繝ｫ縺ｮ <code>.gs</code> 繝輔ぃ繧､繝ｫ繧堤ｷｨ髮・ｼ・laude Code縺ｧ萓晞ｼ縺吶ｋ縺狗峩謗･邱ｨ髮・ｼ・    </div>
   </div>
   <div class="step-row">
     <div class="step-circle">2</div>
     <div class="step-body-text">
-      スプレッドシートを開く → <strong>拡張機能 → Apps Script</strong>
+      繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医ｒ髢九￥ 竊・<strong>諡｡蠑ｵ讖溯・ 竊・Apps Script</strong>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">3</div>
     <div class="step-body-text">
-      左メニューから対象の <code>.gs</code> ファイルを選択 → <strong>Ctrl+A → Delete → 貼り付け（Ctrl+V）→ Ctrl+S</strong>
+      蟾ｦ繝｡繝九Η繝ｼ縺九ｉ蟇ｾ雎｡縺ｮ <code>.gs</code> 繝輔ぃ繧､繝ｫ繧帝∈謚・竊・<strong>Ctrl+A 竊・Delete 竊・雋ｼ繧贋ｻ倥￠・・trl+V・俄・ Ctrl+S</strong>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">4</div>
     <div class="step-body-text">
-      <strong>デプロイ → デプロイを管理</strong> → 既存のデプロイを選択 → ✏️編集ボタン → <strong>「新バージョン」を選択</strong> → デプロイ
+      <strong>繝・・繝ｭ繧､ 竊・繝・・繝ｭ繧､繧堤ｮ｡逅・/strong> 竊・譌｢蟄倥・繝・・繝ｭ繧､繧帝∈謚・竊・笨擾ｸ冗ｷｨ髮・・繧ｿ繝ｳ 竊・<strong>縲梧眠繝舌・繧ｸ繝ｧ繝ｳ縲阪ｒ驕ｸ謚・/strong> 竊・繝・・繝ｭ繧､
     </div>
   </div>
 
   <div class="tip">
-    <span class="label">💡 新バージョン vs 既存バージョン</span>
-    「新バージョン」を選ぶと URLが変わらずコードだけ更新されます。「既存バージョン」のままだと変更が反映されません。<strong>必ず「新バージョン」</strong>を選んでください。
-  </div>
+    <span class="label">庁 譁ｰ繝舌・繧ｸ繝ｧ繝ｳ vs 譌｢蟄倥ヰ繝ｼ繧ｸ繝ｧ繝ｳ</span>
+    縲梧眠繝舌・繧ｸ繝ｧ繝ｳ縲阪ｒ驕ｸ縺ｶ縺ｨ URL縺悟､峨ｏ繧峨★繧ｳ繝ｼ繝峨□縺第峩譁ｰ縺輔ｌ縺ｾ縺吶ゅ梧里蟄倥ヰ繝ｼ繧ｸ繝ｧ繝ｳ縲阪・縺ｾ縺ｾ縺縺ｨ螟画峩縺悟渚譏縺輔ｌ縺ｾ縺帙ｓ縲・strong>蠢・★縲梧眠繝舌・繧ｸ繝ｧ繝ｳ縲・/strong>繧帝∈繧薙〒縺上□縺輔＞縲・  </div>
 
-  <div class="section-sub">6-2. GASのランタイム設定</div>
-  <p>このプロジェクトは <strong>V8ランタイム</strong>（Chrome V8）を使用しています。Rhinoモード（レガシー）では <code>const</code>/<code>let</code>/アロー関数などES6構文が使えず全関数が壊れます。</p>
-  <p>確認方法：GASエディタ → ⚙️ プロジェクトの設定 → 「Chrome V8 ランタイムを有効にする」にチェックが入っているか確認</p>
+  <div class="section-sub">6-2. GAS縺ｮ繝ｩ繝ｳ繧ｿ繧､繝險ｭ螳・/div>
+  <p>縺薙・繝励Ο繧ｸ繧ｧ繧ｯ繝医・ <strong>V8繝ｩ繝ｳ繧ｿ繧､繝</strong>・・hrome V8・峨ｒ菴ｿ逕ｨ縺励※縺・∪縺吶３hino繝｢繝ｼ繝会ｼ医Ξ繧ｬ繧ｷ繝ｼ・峨〒縺ｯ <code>const</code>/<code>let</code>/繧｢繝ｭ繝ｼ髢｢謨ｰ縺ｪ縺ｩES6讒区枚縺御ｽｿ縺医★蜈ｨ髢｢謨ｰ縺悟｣翫ｌ縺ｾ縺吶・/p>
+  <p>遒ｺ隱肴婿豕包ｼ哦AS繧ｨ繝・ぅ繧ｿ 竊・笞呻ｸ・繝励Ο繧ｸ繧ｧ繧ｯ繝医・險ｭ螳・竊・縲靴hrome V8 繝ｩ繝ｳ繧ｿ繧､繝繧呈怏蜉ｹ縺ｫ縺吶ｋ縲阪↓繝√ぉ繝・け縺悟・縺｣縺ｦ縺・ｋ縺狗｢ｺ隱・/p>
 
-  <div class="section-sub">6-3. 古いバージョンの削除</div>
-  <p>デプロイ → デプロイを管理 → 削除したいバージョンの 🗑️ アイコンをクリック。現在アクティブなバージョンは削除できません。</p>
+  <div class="section-sub">6-3. 蜿､縺・ヰ繝ｼ繧ｸ繝ｧ繝ｳ縺ｮ蜑企勁</div>
+  <p>繝・・繝ｭ繧､ 竊・繝・・繝ｭ繧､繧堤ｮ｡逅・竊・蜑企勁縺励◆縺・ヰ繝ｼ繧ｸ繝ｧ繝ｳ縺ｮ 卵・・繧｢繧､繧ｳ繝ｳ繧偵け繝ｪ繝・け縲ら樟蝨ｨ繧｢繧ｯ繝・ぅ繝悶↑繝舌・繧ｸ繝ｧ繝ｳ縺ｯ蜑企勁縺ｧ縺阪∪縺帙ｓ縲・/p>
 </div>
 
-<!-- 7. デモデータの管理 -->
+<!-- 7. 繝・Δ繝・・繧ｿ縺ｮ邂｡逅・-->
 <div class="section-card" id="demo">
-  <div class="section-title">7. デモデータの管理</div>
-  <p>デモ用データの挿入・削除は <code>DemoData.gs</code> の関数で行います。</p>
+  <div class="section-title">7. 繝・Δ繝・・繧ｿ縺ｮ邂｡逅・/div>
+  <p>繝・Δ逕ｨ繝・・繧ｿ縺ｮ謖ｿ蜈･繝ｻ蜑企勁縺ｯ <code>DemoData.gs</code> 縺ｮ髢｢謨ｰ縺ｧ陦後＞縺ｾ縺吶・/p>
 
-  <div class="section-sub">デモデータを入れる手順</div>
+  <div class="section-sub">繝・Δ繝・・繧ｿ繧貞・繧後ｋ謇矩・/div>
   <div class="step-row">
     <div class="step-circle">1</div>
-    <div class="step-body-text">既存のデモデータがある場合は先に削除：GASエディタで <code>deleteDemoData</code> を実行</div>
+    <div class="step-body-text">譌｢蟄倥・繝・Δ繝・・繧ｿ縺後≠繧句ｴ蜷医・蜈医↓蜑企勁・哦AS繧ｨ繝・ぅ繧ｿ縺ｧ <code>deleteDemoData</code> 繧貞ｮ溯｡・/div>
   </div>
   <div class="step-row">
     <div class="step-circle">2</div>
     <div class="step-body-text">
-      ローカルファイルを最新版に更新してからGASエディタに貼り替え：<br>
-      <span class="file-ref">08_アプリ開発事業部\outputs\supplement_app\gas\DemoData.gs</span>
+      繝ｭ繝ｼ繧ｫ繝ｫ繝輔ぃ繧､繝ｫ繧呈怙譁ｰ迚医↓譖ｴ譁ｰ縺励※縺九ｉGAS繧ｨ繝・ぅ繧ｿ縺ｫ雋ｼ繧頑崛縺茨ｼ・br>
+      <span class="file-ref">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\outputs\supplement_app\gas\DemoData.gs</span>
     </div>
   </div>
   <div class="step-row">
     <div class="step-circle">3</div>
-    <div class="step-body-text"><code>insertDemoData</code> を実行 → 「デモデータ挿入完了！」のトーストが出ればOK</div>
+    <div class="step-body-text"><code>insertDemoData</code> 繧貞ｮ溯｡・竊・縲後ョ繝｢繝・・繧ｿ謖ｿ蜈･螳御ｺ・ｼ√阪・繝医・繧ｹ繝医′蜃ｺ繧後・OK</div>
   </div>
 
   <table style="margin-top:12px;">
-    <tr><th>関数</th><th>内容</th></tr>
-    <tr><td><code>insertDemoData()</code></td><td>スタート日・daily_log 74件・週次レポート12件を一括挿入。ユーザーIDは動的取得</td></tr>
-    <tr><td><code>deleteDemoData()</code></td><td>LOG_DEMO・RPT_DEMOプレフィックスの行を全削除</td></tr>
+    <tr><th>髢｢謨ｰ</th><th>蜀・ｮｹ</th></tr>
+    <tr><td><code>insertDemoData()</code></td><td>繧ｹ繧ｿ繝ｼ繝域律繝ｻdaily_log 74莉ｶ繝ｻ騾ｱ谺｡繝ｬ繝昴・繝・2莉ｶ繧剃ｸ諡ｬ謖ｿ蜈･縲ゅΘ繝ｼ繧ｶ繝ｼID縺ｯ蜍慕噪蜿門ｾ・/td></tr>
+    <tr><td><code>deleteDemoData()</code></td><td>LOG_DEMO繝ｻRPT_DEMO繝励Ξ繝輔ぅ繝・け繧ｹ縺ｮ陦後ｒ蜈ｨ蜑企勁</td></tr>
   </table>
 
   <div class="tip">
-    <span class="label">📅 デモデータの日付について</span>
-    デモデータのSTART日（現在 <code>2026-02-17</code>）を変えると連続記録の日数が変わります。今日を最終日にするには「today − 87日」をSTARTに設定してください。変更後は <code>deleteDemoData</code> → <code>insertDemoData</code> の順で再実行します。
-  </div>
+    <span class="label">套 繝・Δ繝・・繧ｿ縺ｮ譌･莉倥↓縺､縺・※</span>
+    繝・Δ繝・・繧ｿ縺ｮSTART譌･・育樟蝨ｨ <code>2026-02-17</code>・峨ｒ螟峨∴繧九→騾｣邯夊ｨ倬鹸縺ｮ譌･謨ｰ縺悟､峨ｏ繧翫∪縺吶ゆｻ頑律繧呈怙邨よ律縺ｫ縺吶ｋ縺ｫ縺ｯ縲荊oday 竏・87譌･縲阪ｒSTART縺ｫ險ｭ螳壹＠縺ｦ縺上□縺輔＞縲ょ､画峩蠕後・ <code>deleteDemoData</code> 竊・<code>insertDemoData</code> 縺ｮ鬆・〒蜀榊ｮ溯｡後＠縺ｾ縺吶・  </div>
 </div>
 
-<!-- 8. トラブルシューティング -->
+<!-- 8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ -->
 <div class="section-card" id="trouble">
-  <div class="section-title">8. トラブルシューティング</div>
+  <div class="section-title">8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</div>
 
-  <div class="section-sub">GASで「不明なエラーが発生しました」</div>
+  <div class="section-sub">GAS縺ｧ縲御ｸ肴・縺ｪ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｾ縺励◆縲・/div>
   <table>
-    <tr><th>原因</th><th>対処</th></tr>
+    <tr><th>蜴溷屏</th><th>蟇ｾ蜃ｦ</th></tr>
     <tr>
-      <td>V8ランタイムがOFFになっている</td>
-      <td>⚙️プロジェクトの設定 → 「Chrome V8 ランタイムを有効にする」にチェック</td>
+      <td>V8繝ｩ繝ｳ繧ｿ繧､繝縺薫FF縺ｫ縺ｪ縺｣縺ｦ縺・ｋ</td>
+      <td>笞呻ｸ上・繝ｭ繧ｸ繧ｧ繧ｯ繝医・險ｭ螳・竊・縲靴hrome V8 繝ｩ繝ｳ繧ｿ繧､繝繧呈怏蜉ｹ縺ｫ縺吶ｋ縲阪↓繝√ぉ繝・け</td>
     </tr>
     <tr>
-      <td>他のファイルに構文エラーがある（1ファイルのエラーで全関数が止まる）</td>
-      <td>各.gsファイルを順番に確認。ファイルを保存し直すとキャッシュがリフレッシュされることがある</td>
+      <td>莉悶・繝輔ぃ繧､繝ｫ縺ｫ讒区枚繧ｨ繝ｩ繝ｼ縺後≠繧具ｼ・繝輔ぃ繧､繝ｫ縺ｮ繧ｨ繝ｩ繝ｼ縺ｧ蜈ｨ髢｢謨ｰ縺梧ｭ｢縺ｾ繧具ｼ・/td>
+      <td>蜷・gs繝輔ぃ繧､繝ｫ繧帝・分縺ｫ遒ｺ隱阪ゅヵ繧｡繧､繝ｫ繧剃ｿ晏ｭ倥＠逶ｴ縺吶→繧ｭ繝｣繝・す繝･縺後Μ繝輔Ξ繝・す繝･縺輔ｌ繧九％縺ｨ縺後≠繧・/td>
     </tr>
     <tr>
-      <td>スプレッドシートから開いていない</td>
-      <td>script.google.comから直接開くと <code>getActiveSpreadsheet()</code> がnullになる。<strong>スプレッドシート → 拡張機能 → Apps Script</strong> から開くこと</td>
+      <td>繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医°繧蛾幕縺・※縺・↑縺・/td>
+      <td>script.google.com縺九ｉ逶ｴ謗･髢九￥縺ｨ <code>getActiveSpreadsheet()</code> 縺系ull縺ｫ縺ｪ繧九・strong>繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝・竊・諡｡蠑ｵ讖溯・ 竊・Apps Script</strong> 縺九ｉ髢九￥縺薙→</td>
     </tr>
     <tr>
-      <td>GASキャッシュ問題（コード変更後も古い動作をする）</td>
-      <td>別の小さな関数を追加して保存・実行を繰り返すとキャッシュがリフレッシュされる</td>
+      <td>GAS繧ｭ繝｣繝・す繝･蝠城｡鯉ｼ医さ繝ｼ繝牙､画峩蠕後ｂ蜿､縺・虚菴懊ｒ縺吶ｋ・・/td>
+      <td>蛻･縺ｮ蟆上＆縺ｪ髢｢謨ｰ繧定ｿｽ蜉縺励※菫晏ｭ倥・螳溯｡後ｒ郢ｰ繧願ｿ斐☆縺ｨ繧ｭ繝｣繝・す繝･縺後Μ繝輔Ξ繝・す繝･縺輔ｌ繧・/td>
     </tr>
   </table>
 
-  <div class="section-sub">連続記録日数が0になる</div>
+  <div class="section-sub">騾｣邯夊ｨ倬鹸譌･謨ｰ縺・縺ｫ縺ｪ繧・/div>
   <table>
-    <tr><th>原因</th><th>対処</th></tr>
+    <tr><th>蜴溷屏</th><th>蟇ｾ蜃ｦ</th></tr>
     <tr>
-      <td>デモデータの最終日が今日より前</td>
-      <td>DemoData.gsのSTARTを「today − 87日」に更新してデモデータを再挿入</td>
+      <td>繝・Δ繝・・繧ｿ縺ｮ譛邨よ律縺御ｻ頑律繧医ｊ蜑・/td>
+      <td>DemoData.gs縺ｮSTART繧偵荊oday 竏・87譌･縲阪↓譖ｴ譁ｰ縺励※繝・Δ繝・・繧ｿ繧貞・謖ｿ蜈･</td>
     </tr>
     <tr>
-      <td>実際に最近ログが入っていない</td>
-      <td>正常動作。今日の記録を入れると streak が始まる</td>
+      <td>螳滄圀縺ｫ譛霑代Ο繧ｰ縺悟・縺｣縺ｦ縺・↑縺・/td>
+      <td>豁｣蟶ｸ蜍穂ｽ懊ゆｻ頑律縺ｮ險倬鹸繧貞・繧後ｋ縺ｨ streak 縺悟ｧ九∪繧・/td>
     </tr>
   </table>
 
-  <div class="section-sub">楽天・Amazonリンクが外部に飛ばない</div>
+  <div class="section-sub">讌ｽ螟ｩ繝ｻAmazon繝ｪ繝ｳ繧ｯ縺悟､夜Κ縺ｫ鬟帙・縺ｪ縺・/div>
   <table>
-    <tr><th>原因</th><th>対処</th></tr>
+    <tr><th>蜴溷屏</th><th>蟇ｾ蜃ｦ</th></tr>
     <tr>
-      <td>config.jsのURLが<code>'#'</code>のまま</td>
-      <td><code>js/config.js</code>の<code>RAKUTEN_URL</code>/<code>AMAZON_URL</code>を実URLに変更してデプロイ</td>
+      <td>config.js縺ｮURL縺・code>'#'</code>縺ｮ縺ｾ縺ｾ</td>
+      <td><code>js/config.js</code>縺ｮ<code>RAKUTEN_URL</code>/<code>AMAZON_URL</code>繧貞ｮ欟RL縺ｫ螟画峩縺励※繝・・繝ｭ繧､</td>
     </tr>
     <tr>
-      <td>iOSのポップアップブロック</td>
-      <td>現在は<code>&lt;a target="_blank"&gt;</code>タグを使用。ブラウザのポップアップ許可設定を確認</td>
+      <td>iOS縺ｮ繝昴ャ繝励い繝・・繝悶Ο繝・け</td>
+      <td>迴ｾ蝨ｨ縺ｯ<code>&lt;a target="_blank"&gt;</code>繧ｿ繧ｰ繧剃ｽｿ逕ｨ縲ゅヶ繝ｩ繧ｦ繧ｶ縺ｮ繝昴ャ繝励い繝・・險ｱ蜿ｯ險ｭ螳壹ｒ遒ｺ隱・/td>
     </tr>
   </table>
 
-  <div class="section-sub">週次レポートが「まだレポートがありません」と表示される</div>
+  <div class="section-sub">騾ｱ谺｡繝ｬ繝昴・繝医′縲後∪縺繝ｬ繝昴・繝医′縺ゅｊ縺ｾ縺帙ｓ縲阪→陦ｨ遉ｺ縺輔ｌ繧・/div>
   <table>
-    <tr><th>原因</th><th>対処</th></tr>
+    <tr><th>蜴溷屏</th><th>蟇ｾ蜃ｦ</th></tr>
     <tr>
-      <td>デモデータのuser_idと実際のログインユーザーのIDが違う</td>
-      <td>deleteDemoData → insertDemoData を再実行（現バージョンはuser_idを動的取得）</td>
+      <td>繝・Δ繝・・繧ｿ縺ｮuser_id縺ｨ螳滄圀縺ｮ繝ｭ繧ｰ繧､繝ｳ繝ｦ繝ｼ繧ｶ繝ｼ縺ｮID縺碁＆縺・/td>
+      <td>deleteDemoData 竊・insertDemoData 繧貞・螳溯｡鯉ｼ育樟繝舌・繧ｸ繝ｧ繝ｳ縺ｯuser_id繧貞虚逧・叙蠕暦ｼ・/td>
     </tr>
     <tr>
-      <td>weekly_reportsシートにデータがない</td>
-      <td>insertDemoDataを実行してデータを挿入</td>
+      <td>weekly_reports繧ｷ繝ｼ繝医↓繝・・繧ｿ縺後↑縺・/td>
+      <td>insertDemoData繧貞ｮ溯｡後＠縺ｦ繝・・繧ｿ繧呈諺蜈･</td>
     </tr>
   </table>
 
-  <div class="section-sub">エネルギー占いが0時に切り替わらない</div>
-  <p>現バージョンはJST基準（UTC+9）で日付を取得しています。ブラウザのlocalStorageに前日のキャッシュが残っている場合は、デベロッパーツール（F12）→ Application → Local Storage → <code>nolia_fortune_YYYY-MM-DD</code> のキーを手動削除してリロードしてください。</p>
+  <div class="section-sub">繧ｨ繝阪Ν繧ｮ繝ｼ蜊縺・′0譎ゅ↓蛻・ｊ譖ｿ繧上ｉ縺ｪ縺・/div>
+  <p>迴ｾ繝舌・繧ｸ繝ｧ繝ｳ縺ｯJST蝓ｺ貅厄ｼ・TC+9・峨〒譌･莉倥ｒ蜿門ｾ励＠縺ｦ縺・∪縺吶ゅヶ繝ｩ繧ｦ繧ｶ縺ｮlocalStorage縺ｫ蜑肴律縺ｮ繧ｭ繝｣繝・す繝･縺梧ｮ九▲縺ｦ縺・ｋ蝣ｴ蜷医・縲√ョ繝吶Ο繝・ヱ繝ｼ繝・・繝ｫ・・12・俄・ Application 竊・Local Storage 竊・<code>nolia_fortune_YYYY-MM-DD</code> 縺ｮ繧ｭ繝ｼ繧呈焔蜍募炎髯､縺励※繝ｪ繝ｭ繝ｼ繝峨＠縺ｦ縺上□縺輔＞縲・/p>
 
   <hr>
   <div class="ok">
-    <span class="label">📞 困ったときは</span>
-    Claude Code（Kai）に「Noliaの〇〇が動かない」と伝えてください。セットアップ手順書・技術設計書・このマニュアルを参照しながら対処します。
-  </div>
+    <span class="label">到 蝗ｰ縺｣縺溘→縺阪・</span>
+    Claude Code・・ai・峨↓縲君olia縺ｮ縲・・′蜍輔°縺ｪ縺・阪→莨昴∴縺ｦ縺上□縺輔＞縲ゅそ繝・ヨ繧｢繝・・謇矩・嶌繝ｻ謚陦楢ｨｭ險域嶌繝ｻ縺薙・繝槭ル繝･繧｢繝ｫ繧貞盾辣ｧ縺励↑縺後ｉ蟇ｾ蜃ｦ縺励∪縺吶・  </div>
 </div>
 
 </div>
