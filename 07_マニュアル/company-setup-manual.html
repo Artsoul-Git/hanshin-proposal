@@ -117,6 +117,19 @@
     h2 { font-size: 22px; }
     .timeline-left { display: none; }
   }
+  /* ── ページトップへ戻るボタン ── */
+  .to-top { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+    background: #1A365D; color: white; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    z-index: 1000; display: flex; align-items: center; justify-content: center; line-height: 1; }
+  .to-top.visible { opacity: 1; transform: translateY(0); }
+  .to-top:hover { background: #2B6CB0; box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
+  /* ── SVG図 ── */
+  .svg-fig { margin: 22px 0; text-align: center; }
+  .svg-fig svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .svg-fig figcaption { font-size: 12px; color: #718096; margin-top: 8px; font-style: italic; }
 </style>
 </head>
 <body>
@@ -164,6 +177,39 @@
 <div class="lead">
   このスキルは「AI組織を新規に立ち上げたい」というオーナーとの対話を通じて、<strong>そのオーナー専用のAI組織一式（憲法・ルール・スキル・管理フォルダ）をゼロから設計・生成する</strong>スキルです。
 </div>
+
+<figure class="svg-fig">
+  <svg viewBox="0 0 560 150" width="560" font-family="Yu Gothic UI,Meiryo,sans-serif">
+    <rect width="560" height="150" fill="#F0FFF4" rx="10"/>
+    <defs><marker id="arr-c" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2F855A"/></marker></defs>
+    <!-- ステップボックス -->
+    <rect x="15" y="45" width="90" height="50" rx="6" fill="#2F855A"/>
+    <text x="60" y="66" fill="white" text-anchor="middle" font-size="11" font-weight="bold">/company</text>
+    <text x="60" y="81" fill="white" text-anchor="middle" font-size="11" font-weight="bold">-setup</text>
+    <line x1="105" y1="70" x2="125" y2="70" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-c)"/>
+    <rect x="125" y="45" width="90" height="50" rx="6" fill="#38A169"/>
+    <text x="170" y="66" fill="white" text-anchor="middle" font-size="11" font-weight="bold">ヒアリング</text>
+    <text x="170" y="81" fill="white" text-anchor="middle" font-size="10">5項目 + B欄</text>
+    <line x1="215" y1="70" x2="235" y2="70" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-c)"/>
+    <rect x="235" y="45" width="90" height="50" rx="6" fill="#276749"/>
+    <text x="280" y="63" fill="white" text-anchor="middle" font-size="11" font-weight="bold">AI組織</text>
+    <text x="280" y="78" fill="white" text-anchor="middle" font-size="10">設計・生成</text>
+    <text x="280" y="91" fill="#A0FFA0" text-anchor="middle" font-size="9">CONSTITUTION等</text>
+    <line x1="325" y1="70" x2="345" y2="70" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-c)"/>
+    <rect x="345" y="45" width="90" height="50" rx="6" fill="#1A365D"/>
+    <text x="390" y="63" fill="white" text-anchor="middle" font-size="11" font-weight="bold">配置・</text>
+    <text x="390" y="78" fill="white" text-anchor="middle" font-size="11" font-weight="bold">git init</text>
+    <line x1="435" y1="70" x2="455" y2="70" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-c)"/>
+    <rect x="455" y="45" width="90" height="50" rx="6" fill="#ED8936"/>
+    <text x="500" y="63" fill="white" text-anchor="middle" font-size="11" font-weight="bold">運用</text>
+    <text x="500" y="78" fill="white" text-anchor="middle" font-size="10">スタート！</text>
+    <!-- 所要時間ラベル -->
+    <text x="280" y="120" fill="#4A5568" text-anchor="middle" font-size="11">所要時間 合計：45分〜90分（記入モード選択）</text>
+    <text x="170" y="15" fill="#276749" text-anchor="middle" font-size="10">Aモード：記入15〜30分</text>
+    <text x="170" y="28" fill="#276749" text-anchor="middle" font-size="10">Bモード：壁打ち30〜60分</text>
+  </svg>
+  <figcaption>/company-setup の全体フロー。起動からAI組織の運用開始まで、最短1時間以内に完了する。</figcaption>
+</figure>
 
 <p>有限会社アートソウルが持つ「AI導入支援組織」の設計思想をテンプレートとして応用し、業種・業態・規模・コンセプトが異なる任意のオーナーに対して繰り返し使えます。</p>
 
@@ -262,6 +308,25 @@
 <h2 id="modes"><span class="num">3</span>2つの進行モード</h2>
 
 <p>ヒアリングシートを保存したら、Kaiが2つのモードを提示します。どちらを選ぶかはオーナーの好みや状況次第です。</p>
+
+<figure class="svg-fig">
+  <svg viewBox="0 0 560 130" width="560" font-family="Yu Gothic UI,Meiryo,sans-serif">
+    <rect width="560" height="130" fill="#F7FAFC" rx="10"/>
+    <!-- Aモード -->
+    <rect x="20" y="20" width="240" height="90" rx="8" fill="#EBF8FF" stroke="#3182CE" stroke-width="2"/>
+    <text x="140" y="45" fill="#2B6CB0" text-anchor="middle" font-size="14" font-weight="bold">A) ファイル記入モード</text>
+    <text x="140" y="65" fill="#2D3748" text-anchor="middle" font-size="11">自分のペースで記入できる</text>
+    <text x="140" y="82" fill="#2D3748" text-anchor="middle" font-size="11">整理して書くのが得意な人向け</text>
+    <text x="140" y="103" fill="#2B6CB0" text-anchor="middle" font-size="12" font-weight="bold">記入15〜30分</text>
+    <!-- Bモード -->
+    <rect x="300" y="20" width="240" height="90" rx="8" fill="#FAF5FF" stroke="#805AD5" stroke-width="2"/>
+    <text x="420" y="45" fill="#6B46C1" text-anchor="middle" font-size="14" font-weight="bold">B) 壁打ちモード</text>
+    <text x="420" y="65" fill="#2D3748" text-anchor="middle" font-size="11">Kaiと会話しながら整理できる</text>
+    <text x="420" y="82" fill="#2D3748" text-anchor="middle" font-size="11">書くのが苦手な人向け</text>
+    <text x="420" y="103" fill="#6B46C1" text-anchor="middle" font-size="12" font-weight="bold">対話30〜60分</text>
+  </svg>
+  <figcaption>AモードとBモードの違い。どちらを選んでも成果物の品質は同じ。</figcaption>
+</figure>
 
 <div class="choice-box">
   <div class="choice-a">
@@ -446,6 +511,33 @@
 
 <!-- 第5章 -->
 <h2 id="deploy"><span class="num">5</span>生成後の配置・運用開始</h2>
+
+<figure class="svg-fig">
+  <svg viewBox="0 0 560 110" width="560" font-family="Yu Gothic UI,Meiryo,sans-serif">
+    <rect width="560" height="110" fill="#F0FFF4" rx="10"/>
+    <defs><marker id="arr-d" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#2F855A"/></marker></defs>
+    <rect x="15" y="30" width="100" height="50" rx="6" fill="#2F855A"/>
+    <text x="65" y="52" fill="white" text-anchor="middle" font-size="11" font-weight="bold">生成フォルダ</text>
+    <text x="65" y="67" fill="white" text-anchor="middle" font-size="10">確認</text>
+    <line x1="115" y1="55" x2="135" y2="55" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-d)"/>
+    <rect x="135" y="30" width="100" height="50" rx="6" fill="#38A169"/>
+    <text x="185" y="52" fill="white" text-anchor="middle" font-size="11" font-weight="bold">ルートへ</text>
+    <text x="185" y="67" fill="white" text-anchor="middle" font-size="10">配置</text>
+    <line x1="235" y1="55" x2="255" y2="55" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-d)"/>
+    <rect x="255" y="30" width="100" height="50" rx="6" fill="#276749"/>
+    <text x="305" y="52" fill="white" text-anchor="middle" font-size="11" font-weight="bold">git init</text>
+    <text x="305" y="67" fill="white" text-anchor="middle" font-size="10">&amp; commit</text>
+    <line x1="355" y1="55" x2="375" y2="55" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-d)"/>
+    <rect x="375" y="30" width="100" height="50" rx="6" fill="#ED8936"/>
+    <text x="425" y="52" fill="white" text-anchor="middle" font-size="11" font-weight="bold">Claude Code</text>
+    <text x="425" y="67" fill="white" text-anchor="middle" font-size="10">起動・運用開始</text>
+    <line x1="475" y1="55" x2="495" y2="55" stroke="#2F855A" stroke-width="2" marker-end="url(#arr-d)"/>
+    <rect x="495" y="37" width="55" height="36" rx="6" fill="#1A365D"/>
+    <text x="522" y="52" fill="white" text-anchor="middle" font-size="10" font-weight="bold">完成</text>
+    <text x="522" y="65" fill="#A0FFA0" text-anchor="middle" font-size="9">Day 1</text>
+  </svg>
+  <figcaption>生成後の配置は「確認→配置→git init→起動」の4ステップ。Kaiに「配置して」と言えば自動実行される。</figcaption>
+</figure>
 
 <h3>Step 1：生成フォルダの確認</h3>
 <p>生成が終わると Kai から「AI組織設計 完成レポート」が表示されます。内容を確認してください。</p>
@@ -694,7 +786,16 @@ git commit -m "feat: AI組織設計 初期セットアップ"</code></pre>
   }
   document.querySelectorAll('.file-tree, pre').forEach(function(el) { addCopyBtn(el, false); });
   document.querySelectorAll('.dialog-owner').forEach(function(el) { addCopyBtn(el, true); });
+  // ── ページトップへ戻るボタン ──
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function() {
+    toTop.classList.toggle('visible', window.scrollY > 300);
+  });
+  toTop.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 })();
 </script>
+<button class="to-top" id="toTop" title="ページトップへ戻る" aria-label="ページトップへ戻る">↑</button>
 </body>
 </html>

@@ -82,6 +82,21 @@
   .qa strong { color: #44337A; }
 
   @media (max-width: 680px) { .container { padding: 28px 20px; } }
+
+  /* ── SVG図版 ── */
+  .svg-fig { margin: 22px 0; text-align: center; }
+  .svg-fig svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .svg-fig figcaption { font-size: 12px; color: #718096; margin-top: 8px; font-style: italic; }
+
+  /* ── ページトップへ戻るボタン ── */
+  .to-top { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+    background: #1A365D; color: white; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    z-index: 1000; display: flex; align-items: center; justify-content: center; line-height: 1; }
+  .to-top.visible { opacity: 1; transform: translateY(0); }
+  .to-top:hover { background: #2B6CB0; box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
 </style>
 </head>
 <body>
@@ -132,6 +147,38 @@
     ウェブのAIチャット＝「話し相手」　Claude Code＝「実際に手を動かしてくれる同僚」
   </div>
 
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 188" width="640">
+    <!-- Left: Web Chat -->
+    <rect x="8" y="8" width="290" height="164" rx="10" fill="#EBF8FF" stroke="#90CDF4" stroke-width="1.5"/>
+    <rect x="24" y="28" width="258" height="20" rx="4" fill="#3182CE"/>
+    <circle cx="36" cy="38" r="5" fill="#FC8181"/><circle cx="50" cy="38" r="5" fill="#F6E05E"/><circle cx="64" cy="38" r="5" fill="#68D391"/>
+    <text x="155" y="41" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="white">claude.ai（ブラウザ）</text>
+    <rect x="24" y="52" width="258" height="78" rx="4" fill="white" stroke="#BEE3F8"/>
+    <rect x="34" y="62" width="150" height="20" rx="10" fill="#EDF2F7"/>
+    <text x="109" y="76" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">「この文章を直して」</text>
+    <rect x="104" y="88" width="170" height="20" rx="10" fill="#3182CE"/>
+    <text x="189" y="102" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="white">返答のみ（ファイルは変更しない）</text>
+    <text x="153" y="150" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" font-weight="bold" fill="#2C5282">ウェブ版AIチャット</text>
+    <text x="153" y="166" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#718096">話すだけ・ファイル操作はできない</text>
+    <!-- VS -->
+    <text x="320" y="99" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="22" font-weight="bold" fill="#E2E8F0">VS</text>
+    <!-- Right: Claude Code -->
+    <rect x="342" y="8" width="290" height="164" rx="10" fill="#F0FFF4" stroke="#9AE6B4" stroke-width="1.5"/>
+    <rect x="358" y="28" width="258" height="100" rx="6" fill="#1A202C"/>
+    <rect x="358" y="28" width="258" height="20" rx="6" fill="#2D3748"/>
+    <rect x="358" y="40" width="258" height="8" fill="#2D3748"/>
+    <text x="487" y="41" text-anchor="middle" font-family="Consolas,monospace" font-size="9" fill="#A0AEC0">PowerShell</text>
+    <text x="366" y="64" font-family="Consolas,monospace" font-size="10" fill="#A0AEC0">&#62; 「この文章を直して」</text>
+    <text x="366" y="82" font-family="Consolas,monospace" font-size="10" fill="#68D391">&#x1F4DD; report.txt を読み込み中...</text>
+    <text x="366" y="98" font-family="Consolas,monospace" font-size="10" fill="#68D391">✓ 修正して保存しました</text>
+    <text x="366" y="114" font-family="Consolas,monospace" font-size="10" fill="#A0AEC0">&#62; _</text>
+    <text x="487" y="150" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" font-weight="bold" fill="#276749">Claude Code</text>
+    <text x="487" y="166" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#718096">ファイルを実際に読み書きできる</text>
+  </svg>
+  <figcaption>ウェブ版AIチャットとClaude Codeのいちばんの違い</figcaption>
+  </figure>
+
   <!-- S2 -->
   <h2 id="s2"><span class="sec-num">2</span> 始める前に確認すること</h2>
   <p>以下の3つが揃っているか確認してください。</p>
@@ -155,6 +202,28 @@
     </div>
   </details>
 
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 192" width="480">
+    <text x="240" y="18" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#718096">Claude Code が動く仕組み（層構造）</text>
+    <!-- Claude Code layer -->
+    <rect x="90" y="28" width="300" height="42" rx="8" fill="#805AD5"/>
+    <text x="240" y="46" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" font-weight="bold" fill="white">Claude Code</text>
+    <text x="240" y="62" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="rgba(255,255,255,0.85)">あなたが話しかけるAIツール</text>
+    <!-- arrow -->
+    <text x="240" y="92" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" fill="#A0AEC0">▼ 動くために必要</text>
+    <!-- Node.js layer -->
+    <rect x="44" y="100" width="392" height="46" rx="8" fill="#276749"/>
+    <text x="240" y="119" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" font-weight="bold" fill="white">Node.js　← 今からインストールするもの</text>
+    <text x="240" y="136" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="rgba(255,255,255,0.85)">Claude Code を実行するための土台エンジン</text>
+    <!-- arrow -->
+    <text x="240" y="162" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" fill="#A0AEC0">▼ その下に</text>
+    <!-- OS layer -->
+    <rect x="0" y="170" width="480" height="20" rx="5" fill="#A0AEC0"/>
+    <text x="240" y="184" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="white">Windows / Mac（あなたのパソコンのOS）</text>
+  </svg>
+  <figcaption>Node.js がないと Claude Code は起動しません。土台として最初にインストールします。</figcaption>
+  </figure>
+
   <h3>すでに入っているか確認する</h3>
 
   <details>
@@ -166,6 +235,31 @@
       <p><strong>開き方：</strong><br>
       Windows：「Windowsキー」を押して「powershell」と検索 →「Windows PowerShell」をクリック<br>
       Mac：「アプリケーション」→「ユーティリティ」→「ターミナル」をダブルクリック</p>
+      <figure class="svg-fig" style="margin-top:14px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 162" width="560">
+        <!-- terminal frame -->
+        <rect x="0" y="0" width="560" height="162" rx="10" fill="#1A202C"/>
+        <rect x="0" y="0" width="560" height="32" rx="10" fill="#2D3748"/>
+        <rect x="0" y="18" width="560" height="14" fill="#2D3748"/>
+        <circle cx="20" cy="16" r="6" fill="#FC8181"/><circle cx="40" cy="16" r="6" fill="#F6E05E"/><circle cx="60" cy="16" r="6" fill="#68D391"/>
+        <text x="280" y="20" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="#718096">Windows PowerShell</text>
+        <!-- content lines -->
+        <text x="16" y="58" font-family="Consolas,monospace" font-size="12" fill="#A0AEC0">PS C:\Users\あなたの名前&#62; node --version</text>
+        <text x="16" y="78" font-family="Consolas,monospace" font-size="12" fill="#68D391">v20.11.0</text>
+        <text x="16" y="100" font-family="Consolas,monospace" font-size="12" fill="#A0AEC0">PS C:\Users\あなたの名前&#62; _</text>
+        <!-- annotation: version number -->
+        <line x1="100" y1="78" x2="300" y2="78" stroke="#ED8936" stroke-width="1" stroke-dasharray="3,3"/>
+        <rect x="300" y="66" width="248" height="24" rx="4" fill="#FFFAF0" stroke="#ED8936" stroke-width="1"/>
+        <text x="424" y="82" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#C05621">← バージョン番号が出ればOK！</text>
+        <!-- annotation: cursor -->
+        <line x1="40" y1="100" x2="300" y2="118" stroke="#3182CE" stroke-width="1" stroke-dasharray="3,3"/>
+        <rect x="300" y="108" width="248" height="24" rx="4" fill="#EBF8FF" stroke="#3182CE" stroke-width="1"/>
+        <text x="424" y="124" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#2C5282">← 入力待ち（ここにコマンドを打つ）</text>
+        <!-- note -->
+        <text x="16" y="150" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#718096">&#62; の右にコマンドを入力 → Enter で実行。打ち間違えてもEnterを押さなければ何も起きません。</text>
+      </svg>
+      <figcaption>PowerShell の画面はこんな見た目です（怖くありません！）</figcaption>
+      </figure>
     </div>
   </details>
 
@@ -249,6 +343,43 @@
   <h2 id="s5"><span class="sec-num">5</span> 作業フォルダを準備する</h2>
   <p>Claude Code は「フォルダ」を単位として動きます。AIと一緒に仕事をするための専用フォルダを用意しましょう。</p>
 
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 218" width="540">
+    <text x="270" y="18" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#718096">おすすめのフォルダ構成（完成イメージ）</text>
+    <!-- Dropbox root -->
+    <rect x="10" y="26" width="520" height="40" rx="8" fill="#EBF8FF" stroke="#3182CE" stroke-width="1.5"/>
+    <text x="26" y="44" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" fill="#2C5282">&#x1F4C1; Dropbox（または OneDrive / Google ドライブ）</text>
+    <text x="26" y="60" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#718096">クラウドと自動同期 → パソコンが壊れてもデータが消えない</text>
+    <!-- branch lines -->
+    <line x1="40" y1="66" x2="40" y2="82" stroke="#CBD5E0" stroke-width="2"/>
+    <line x1="40" y1="82" x2="62" y2="82" stroke="#CBD5E0" stroke-width="2"/>
+    <!-- AI work folder -->
+    <rect x="62" y="70" width="468" height="40" rx="8" fill="#F0FFF4" stroke="#38A169" stroke-width="2"/>
+    <text x="78" y="88" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="13" font-weight="bold" fill="#276749">&#x1F4C1; AI作業フォルダ　←　ここで作業！名前は自由でOK</text>
+    <text x="78" y="104" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#276749">例：「マイAIワークスペース」「仕事AI」など</text>
+    <!-- branch lines from AI folder -->
+    <line x1="92" y1="110" x2="92" y2="130" stroke="#CBD5E0" stroke-width="1.5"/>
+    <line x1="92" y1="130" x2="116" y2="130" stroke="#CBD5E0" stroke-width="1.5"/>
+    <line x1="92" y1="130" x2="92" y2="158" stroke="#CBD5E0" stroke-width="1.5"/>
+    <line x1="92" y1="158" x2="116" y2="158" stroke="#CBD5E0" stroke-width="1.5"/>
+    <line x1="92" y1="158" x2="92" y2="186" stroke="#CBD5E0" stroke-width="1.5"/>
+    <line x1="92" y1="186" x2="116" y2="186" stroke="#CBD5E0" stroke-width="1.5"/>
+    <!-- File 1: CLAUDE.md -->
+    <rect x="116" y="120" width="404" height="22" rx="5" fill="#FAF5FF" stroke="#D6BCFA"/>
+    <text x="128" y="135" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#553C9A">&#x1F4C4; CLAUDE.md　← AIパートナーの設定ファイル（Section 8 で作成）</text>
+    <!-- File 2: Work files -->
+    <rect x="116" y="148" width="404" height="22" rx="5" fill="#F7FAFC" stroke="#E2E8F0"/>
+    <text x="128" y="163" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#4A5568">&#x1F4C4; メモ.md / 提案書.md / 資料.md など… ← あなたの成果物</text>
+    <!-- File 3: .git -->
+    <rect x="116" y="176" width="404" height="22" rx="5" fill="#F7FAFC" stroke="#E2E8F0"/>
+    <text x="128" y="191" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#A0AEC0">&#x1F4C1; .git　← Git が自動で作成する記録フォルダ。触らなくてOK</text>
+    <!-- legend -->
+    <rect x="10" y="204" width="520" height="14" rx="4" fill="#F7FAFC"/>
+    <text x="270" y="214" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#A0AEC0">※ .git フォルダは Windows では隠しフォルダとして表示されないことがあります</text>
+  </svg>
+  <figcaption>このガイドを進めると、上の構成が自動的に出来上がります</figcaption>
+  </figure>
+
   <h3>おすすめの保存場所</h3>
   <p>Dropbox や OneDrive などのクラウド同期フォルダの中に作ることをおすすめします。理由：</p>
   <ul>
@@ -281,6 +412,44 @@
   <!-- S6 -->
   <h2 id="s6"><span class="sec-num">6</span> データを守る仕組みを作る（Git）</h2>
   <p>「Git（ギット）」は、ファイルの変更履歴を自動的に記録してくれるツールです。ゲームの「セーブデータ」と同じ仕組みで、AIが誤ってファイルを変えてしまっても<strong>一瞬で元に戻せます</strong>。</p>
+
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 185" width="600">
+    <text x="300" y="18" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#718096">Git はファイルの「セーブポイント」を積み重ねます</text>
+    <!-- timeline line -->
+    <line x1="50" y1="82" x2="550" y2="82" stroke="#E2E8F0" stroke-width="3" stroke-linecap="round"/>
+    <!-- commit 1 -->
+    <circle cx="90" cy="82" r="16" fill="#3182CE" stroke="white" stroke-width="3"/>
+    <text x="90" y="87" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="white">1</text>
+    <text x="90" y="112" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">はじめての</text>
+    <text x="90" y="124" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">セーブ</text>
+    <!-- commit 2 -->
+    <circle cx="240" cy="82" r="16" fill="#3182CE" stroke="white" stroke-width="3"/>
+    <text x="240" y="87" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="white">2</text>
+    <text x="240" y="112" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">提案書</text>
+    <text x="240" y="124" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">完成</text>
+    <!-- commit 3 -->
+    <circle cx="390" cy="82" r="16" fill="#3182CE" stroke="white" stroke-width="3"/>
+    <text x="390" y="87" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="white">3</text>
+    <text x="390" y="112" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#4A5568">修正版</text>
+    <!-- current (orange = AI edited) -->
+    <circle cx="530" cy="82" r="16" fill="#ED8936" stroke="white" stroke-width="3"/>
+    <text x="530" y="80" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="9" fill="white">AIが</text>
+    <text x="530" y="92" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="9" fill="white">変更！</text>
+    <text x="530" y="112" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#C05621">おかしい</text>
+    <text x="530" y="124" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#C05621">かも？</text>
+    <!-- restore arrow -->
+    <path d="M 514 60 C 450 30, 180 30, 106 60" stroke="#E53E3E" stroke-width="2" fill="none" stroke-dasharray="6,3"/>
+    <polygon points="98,60 112,53 113,67" fill="#E53E3E"/>
+    <rect x="185" y="20" width="230" height="22" rx="4" fill="#FFF5F5" stroke="#FC8181" stroke-width="1"/>
+    <text x="300" y="35" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" font-weight="bold" fill="#E53E3E">git restore .　で直前のセーブに戻す</text>
+    <!-- command label -->
+    <rect x="60" y="143" width="480" height="22" rx="6" fill="#F7FAFC" stroke="#E2E8F0"/>
+    <text x="300" y="158" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="#4A5568">git commit -m "提案書完成"　← セーブのコマンド。メモはなんでもOK</text>
+    <text x="300" y="178" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#A0AEC0">AIに「Gitでセーブしてから進めて」と頼めば、代わりに実行してくれます</text>
+  </svg>
+  <figcaption>セーブポイントがあれば、AIが大量ファイルを変更しても1行で元通りにできます</figcaption>
+  </figure>
 
   <details>
     <summary>Gitって本当に必要ですか？なんだか難しそうで不安です</summary>
@@ -416,6 +585,36 @@
     「&gt;」のような入力欄が表示されれば成功です！ここにメッセージを入力するとAIが返答します。
   </div>
 
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 196" width="560">
+    <!-- terminal frame -->
+    <rect x="0" y="0" width="560" height="196" rx="10" fill="#1A202C"/>
+    <rect x="0" y="0" width="560" height="32" rx="10" fill="#2D3748"/>
+    <rect x="0" y="18" width="560" height="14" fill="#2D3748"/>
+    <circle cx="20" cy="16" r="6" fill="#FC8181"/><circle cx="40" cy="16" r="6" fill="#F6E05E"/><circle cx="60" cy="16" r="6" fill="#68D391"/>
+    <text x="280" y="20" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="#718096">PowerShell — AI作業フォルダ</text>
+    <!-- command to launch -->
+    <text x="16" y="58" font-family="Consolas,monospace" font-size="12" fill="#A0AEC0">PS C:\AI作業フォルダ&#62; claude</text>
+    <!-- claude code header box -->
+    <rect x="16" y="70" width="360" height="64" rx="4" fill="#1E2A1E" stroke="#2F6B2F" stroke-width="1"/>
+    <text x="28" y="88" font-family="Consolas,monospace" font-size="11" fill="#68D391">  Claude Code  v1.x.x</text>
+    <text x="28" y="106" font-family="Consolas,monospace" font-size="11" fill="#68D391">  ✓ Anthropic — 認証済み</text>
+    <text x="28" y="124" font-family="Consolas,monospace" font-size="11" fill="#A0AEC0">  /help でコマンド一覧を見る</text>
+    <!-- input prompt -->
+    <text x="16" y="152" font-family="Consolas,monospace" font-size="12" fill="#E2E8F0">&#62; こんにちは！何ができるか教えてください。</text>
+    <text x="16" y="172" font-family="Consolas,monospace" font-size="11" fill="#A0AEC0">&#9679; 入力中…</text>
+    <!-- annotations -->
+    <rect x="390" y="68" width="158" height="30" rx="4" fill="#FFFAF0" stroke="#ED8936"/>
+    <text x="469" y="87" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#C05621">← 起動成功！</text>
+    <line x1="378" y1="82" x2="390" y2="82" stroke="#ED8936" stroke-width="1.5"/>
+    <rect x="390" y="140" width="158" height="30" rx="4" fill="#F0FFF4" stroke="#38A169"/>
+    <text x="469" y="159" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#276749">← ここに話しかける</text>
+    <line x1="378" y1="152" x2="390" y2="155" stroke="#38A169" stroke-width="1.5"/>
+    <text x="280" y="190" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#718096">終了するには Ctrl + C を押す（またはターミナルを閉じる）</text>
+  </svg>
+  <figcaption>Claude Code を起動した直後の画面イメージ</figcaption>
+  </figure>
+
   <p>試しに以下と入力してみましょう：</p>
   <pre><code>こんにちは！何ができるか教えてください。</code></pre>
 
@@ -444,6 +643,47 @@
     <span class="lbl">CLAUDE.md って何？</span>
     作業フォルダの中に置くテキストファイルです。Claude Code はこのファイルを毎回自動で読み込むため、「このAIは常にこう振る舞う」という設定が固定されます。いわばAIへの「お仕事の説明書」です。
   </div>
+
+  <figure class="svg-fig">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 148" width="560">
+    <!-- CLAUDE.md -->
+    <rect x="14" y="24" width="136" height="100" rx="8" fill="#EBF8FF" stroke="#3182CE" stroke-width="1.5"/>
+    <rect x="14" y="24" width="136" height="24" rx="8" fill="#3182CE"/>
+    <rect x="14" y="38" width="136" height="10" fill="#3182CE"/>
+    <text x="82" y="40" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="white">CLAUDE.md</text>
+    <text x="82" y="64" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#2C5282">パートナーの名前</text>
+    <text x="82" y="80" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#2C5282">話し方のルール</text>
+    <text x="82" y="96" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#2C5282">仕事の進め方</text>
+    <text x="82" y="112" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#2C5282">挨拶の形式</text>
+    <!-- arrow 1 -->
+    <line x1="152" y1="74" x2="196" y2="74" stroke="#CBD5E0" stroke-width="2"/>
+    <polygon points="196,68 210,74 196,80" fill="#CBD5E0"/>
+    <text x="180" y="62" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#718096">起動時に</text>
+    <text x="180" y="90" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#718096">自動読込</text>
+    <!-- Claude Code -->
+    <rect x="210" y="24" width="140" height="100" rx="8" fill="#FAF5FF" stroke="#805AD5" stroke-width="1.5"/>
+    <rect x="210" y="24" width="140" height="24" rx="8" fill="#805AD5"/>
+    <rect x="210" y="38" width="140" height="10" fill="#805AD5"/>
+    <text x="280" y="40" text-anchor="middle" font-family="Consolas,monospace" font-size="11" fill="white">Claude Code</text>
+    <text x="280" y="68" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#553C9A">ファイルを読み込んで</text>
+    <text x="280" y="84" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#553C9A">設定を適用する</text>
+    <!-- arrow 2 -->
+    <line x1="352" y1="74" x2="396" y2="74" stroke="#CBD5E0" stroke-width="2"/>
+    <polygon points="396,68 410,74 396,80" fill="#CBD5E0"/>
+    <text x="380" y="62" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#718096">変身！</text>
+    <!-- AI Partner -->
+    <rect x="410" y="24" width="136" height="100" rx="8" fill="#F0FFF4" stroke="#38A169" stroke-width="1.5"/>
+    <rect x="410" y="24" width="136" height="24" rx="8" fill="#38A169"/>
+    <rect x="410" y="38" width="136" height="10" fill="#38A169"/>
+    <text x="478" y="40" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="white" font-weight="bold">AIパートナー</text>
+    <text x="478" y="64" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="12" fill="#276749">「ソラ」</text>
+    <text x="478" y="82" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#276749">あなたの設定通りに</text>
+    <text x="478" y="98" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="10" fill="#276749">動くAIの誕生！</text>
+    <!-- caption -->
+    <text x="280" y="138" text-anchor="middle" font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="11" fill="#718096">CLAUDE.md を書き換えるだけで、次回から設定が反映されます</text>
+  </svg>
+  <figcaption>テキストファイル1つで、AIがあなたのパートナーに変わる仕組み</figcaption>
+  </figure>
 
   <h3>パートナーの名前を決めましょう</h3>
   <p>AIパートナーにはどんな名前でも付けられます。仕事のパートナーらしい名前でも、親しみやすいニックネームでも構いません。</p>
@@ -606,10 +846,13 @@ git commit -m "作業前バックアップ"</code></pre>
       <li>AIパートナー設定（CLAUDE.md）の手順を初収録</li>
       <li>Windows / Mac 両対応の手順を掲載</li>
       <li>v1.1：立ち止まりやすいポイントにトグル式ワンポイントアドバイスを13箇所追加</li>
+      <li>v1.2：SVGイラスト7点を追加（チャットとの違い・Node.jsスタック・ターミナル画面・フォルダ構成・Gitタイムライン・起動画面・CLAUDE.mdフロー）</li>
     </ul>
   </div>
 
 </div>
+
+<button class="to-top" id="toTop" title="ページトップへ戻る" aria-label="ページトップへ戻る">↑</button>
 
 <script>
 document.querySelectorAll('pre').forEach(function(pre) {
@@ -637,6 +880,15 @@ function fallback(text, cb) {
   try { document.execCommand('copy'); cb(); } catch(e) {}
   document.body.removeChild(ta);
 }
+
+// ── ページトップへ戻るボタン ──
+var toTop = document.getElementById('toTop');
+window.addEventListener('scroll', function() {
+  toTop.classList.toggle('visible', window.scrollY > 300);
+});
+toTop.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 </script>
 </body>
 </html>

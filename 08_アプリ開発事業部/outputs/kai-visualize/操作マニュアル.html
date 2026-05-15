@@ -157,7 +157,7 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
 <h3>方法B：PowerShellから手動起動（確実）</h3>
 <p>以下を1行ずつ実行してください（複数行をまとめて貼り付けると警告が出ます）。</p>
 <pre><code>$env:GROQ_API_KEY = [System.Environment]::GetEnvironmentVariable('GROQ_API_KEY','User')</code></pre>
-<pre><code>cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize"</code></pre>
+<pre><code>cd "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize"</code></pre>
 <pre><code>py -3 server.py</code></pre>
 <p>起動後、ブラウザで <code>http://localhost:3458</code> を開いてください。</p>
 
@@ -248,7 +248,7 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
 
 <h3>全データをリセットする場合</h3>
 <p>すべてのセッションを一括削除するには、サーバーを停止してから <code>state.json</code> を削除してください。</p>
-<pre><code>Remove-Item "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize\state.json"</code></pre>
+<pre><code>Remove-Item "D:\Google Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize\state.json"</code></pre>
 
 <!-- ===== 7. APIキー更新 ===== -->
 <h2 id="sec7">7. APIキーの更新</h2>

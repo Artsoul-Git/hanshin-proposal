@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI導入 総合ガイド ／ 合同会社まる</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif;background:#F0F4F8;color:#2D3748;line-height:1.7}
+  .top-bar{background:linear-gradient(135deg,#1A365D 0%,#112A46 100%);color:white;padding:24px 32px 20px}
+  .top-bar .label{font-size:11px;letter-spacing:3px;color:#00A8B5;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .top-bar h1{font-size:22px;font-weight:700;margin-bottom:4px}
+  .top-bar .sub{font-size:14px;color:#BEE3F8;margin-top:6px}
+  .container{max-width:860px;margin:0 auto;padding:32px 20px}
+  .intro-card{background:white;border-radius:14px;padding:24px 28px;margin-bottom:28px;border-left:5px solid #00A8B5;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .intro-card p{color:#4A5568;font-size:15px}
+  .phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px}
+  @media(max-width:600px){.phase-grid{grid-template-columns:1fr}}
+  .phase-card{background:white;border-radius:14px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-decoration:none;color:inherit;display:block;transition:transform .15s,box-shadow .15s;border-top:4px solid var(--accent)}
+  .phase-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+  .phase-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:var(--accent);color:white;margin-bottom:12px}
+  .phase-card h2{font-size:17px;font-weight:700;margin-bottom:8px;color:#1A365D}
+  .phase-card .timing{font-size:12px;color:#718096;margin-bottom:12px;font-weight:600}
+  .phase-card .desc{font-size:14px;color:#4A5568;line-height:1.6}
+  .phase-card .items{margin-top:12px;padding-top:12px;border-top:1px solid #E2E8F0}
+  .phase-card .items li{font-size:13px;color:#4A5568;list-style:none;padding:3px 0 3px 20px;position:relative}
+  .phase-card .items li::before{content:'✓';color:var(--accent);position:absolute;left:0;font-weight:700}
+  .phase-card .link-hint{margin-top:16px;font-size:13px;font-weight:700;color:var(--accent)}
+  .ph0{--accent:#553C9A}
+  .ph1{--accent:#0D6EFD}
+  .ph2{--accent:#276749}
+  .ph3{--accent:#C05621}
+  .flow-section{background:white;border-radius:14px;padding:24px 28px;margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+  .flow-section h2{font-size:16px;font-weight:700;color:#1A365D;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid #E2E8F0}
+  .flow-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+  .flow-num{width:32px;height:32px;border-radius:50%;background:#1A365D;color:white;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .flow-body h3{font-size:15px;font-weight:700;margin-bottom:4px;color:#2D3748}
+  .flow-body p{font-size:13px;color:#718096}
+  .contact-box{background:#EBF8FF;border:2px solid #BEE3F8;border-radius:12px;padding:20px 24px;text-align:center;margin-bottom:24px}
+  .contact-box p{font-size:14px;color:#2C5282}
+  .contact-box a{color:#2B6CB0;font-weight:700}
+  footer{text-align:center;padding:24px;font-size:12px;color:#A0AEC0}
+  /* ── ページトップへ戻るボタン ── */
+  .to-top { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+    background: #00A8B5; color: white; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,168,181,0.35);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    z-index: 1000; display: flex; align-items: center; justify-content: center; line-height: 1; }
+  .to-top.visible { opacity: 1; transform: translateY(0); }
+  .to-top:hover { background: #0891A0; }
+  /* ── SVGイラスト共通 ── */
+  .svg-fig { margin: 22px 0; text-align: center; }
+  .svg-fig svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .svg-fig figcaption { font-size: 12px; color: #718096; margin-top: 8px; font-style: italic; }
+</style>
+</head>
+<body>
+<div style="background:#112A46;padding:8px 24px;border-bottom:1px solid rgba(255,255,255,0.12);">
+  <a href="../index.html" style="color:#90CDF4;font-size:13px;font-weight:600;text-decoration:none;">← 提案書に戻る</a>
+</div>
+
+<div class="top-bar">
+  <div class="label">合同会社まる ／ AI導入支援</div>
+  <h1>AI活用 導入ガイド 総合インデックス</h1>
+  <div class="sub">有限会社アートソウル（上村桂右）が伴走サポートします ／ 2026年5月</div>
+</div>
+
+<div class="container">
+
+  <div class="intro-card">
+    <p>このガイドは、<strong>合同会社まる</strong>のスタッフ全員がAIを活用した業務改善をスムーズに進められるよう作成しました。IT初心者の方でも安心して読めるよう、専門用語をなるべく使わず、一つひとつの手順を丁寧に説明しています。<br><br>
+    ガイドは<strong>フェーズ別（Phase 0〜3）</strong>と<strong>オプション別（オプション①③）</strong>に分かれています。Phase 0からはじめて、順番に進めていきましょう。</p>
+  </div>
+
+  <!-- フェーズカード -->
+  <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#553C9A;text-transform:uppercase;margin-bottom:12px;">Phase 別ガイド — アプリ導入手順</div>
+  <div class="phase-grid">
+
+    <a href="01-phase0-gws.html" class="phase-card ph0">
+      <div class="phase-badge">Phase 0</div>
+      <h2>GWSセットアップ ＋ 即効録音体制</h2>
+      <div class="timing">Week 1〜2（開発ゼロ・設定だけ）</div>
+      <div class="desc">Google Workspaceを導入し、Google Meetで面談を録音。Geminiに貼り付けるだけで記録が完成します。</div>
+      <ul class="items">
+        <li>Google Workspaceの初期設定</li>
+        <li>Google Meetで字幕・録音を使う</li>
+        <li>Geminiで面談記録を自動生成（手動コピペ）</li>
+        <li>Driveで記録を整理・共有</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+    <a href="02-phase1-apps.html" class="phase-card ph1">
+      <div class="phase-badge">Phase 1</div>
+      <h2>受入れフォーム ＋ 出退勤アプリ</h2>
+      <div class="timing">Week 2〜4（アプリ③→①の順で開発）</div>
+      <div class="desc">新規受入れ手続きと出退勤記録をアプリ化。紙やExcelへの手入力が不要になります。</div>
+      <ul class="items">
+        <li>受入れフォームアプリの使い方</li>
+        <li>出退勤打刻アプリの使い方</li>
+        <li>Google Sheetsの台帳で一覧管理</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+    <a href="03-phase2-voice.html" class="phase-card ph2">
+      <div class="phase-badge">Phase 2</div>
+      <h2>音声入力 記録アプリ</h2>
+      <div class="timing">Month 2（アプリ②）</div>
+      <div class="desc">スマートフォンのマイクに向かって話すだけで日々の支援記録を入力できます。</div>
+      <ul class="items">
+        <li>スマホで音声入力する手順</li>
+        <li>記録アプリへの保存方法</li>
+        <li>あとから確認・修正する方法</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+    <a href="04-phase3-ai-records.html" class="phase-card ph3">
+      <div class="phase-badge">Phase 3</div>
+      <h2>AI記録 自動生成システム</h2>
+      <div class="timing">Month 2〜3（アプリ④ GAS＋Gemini API）</div>
+      <div class="desc">面談のテキストが自動でAIに送られ、個別支援計画の記録が自動生成されます。</div>
+      <ul class="items">
+        <li>自動生成の仕組みを理解する</li>
+        <li>生成された記録の確認・編集方法</li>
+        <li>個人情報マスキングの仕組み</li>
+        <li>エラー時の対処法</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+  </div>
+
+  <!-- オプション別ガイド -->
+  <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#2B6CB0;text-transform:uppercase;margin-bottom:12px;margin-top:32px;">オプション別ガイド — 設定・管理・コーチング</div>
+  <div class="phase-grid">
+
+    <a href="05-gws-admin-setup.html" class="phase-card" style="--accent:#2B6CB0;">
+      <div class="phase-badge" style="background:#2B6CB0;">オプション①</div>
+      <h2>GWS管理者設定 ＋ Driveフォルダ整備</h2>
+      <div class="timing">Week 1〜2（管理者向け設定手順）</div>
+      <div class="desc">GWSアカウントの設定・権限管理・Driveフォルダ構成・Meetの文字起こし確認・Geminiテンプレート設置。</div>
+      <ul class="items">
+        <li>アカウントログインと2段階認証設定</li>
+        <li>Driveフォルダの構成と確認方法</li>
+        <li>Meetの文字起こしが動くか確認</li>
+        <li>スタッフのアクセス権限管理</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+    <a href="06-sheets-ledger.html" class="phase-card" style="--accent:#00A8B5;">
+      <div class="phase-badge" style="background:#00A8B5;">オプション① 続き</div>
+      <h2>利用者台帳・Google Sheets 操作</h2>
+      <div class="timing">Week 1〜常時（台帳の日常管理）</div>
+      <div class="desc">5シート構成の利用者台帳の使い方・新規利用者の登録・国保連集計・個別支援計画スケジュール管理。</div>
+      <ul class="items">
+        <li>5シートの役割と日常操作</li>
+        <li>新規利用者の登録手順</li>
+        <li>国保連テンプレートの使い方</li>
+        <li>計画書の更新期限管理</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+    <a href="07-ai-coaching.html" class="phase-card" style="--accent:#276749;">
+      <div class="phase-badge" style="background:#276749;">オプション③</div>
+      <h2>AIコーチングセッション 準備と進め方</h2>
+      <div class="timing">月4回（第1段階〜）</div>
+      <div class="desc">週次レポートの書き方・セッション前の準備・1時間の進め方・業務改善アイデアの見つけ方・KPI記録。</div>
+      <ul class="items">
+        <li>週次レポートの作り方（5分）</li>
+        <li>オンラインセッションの準備</li>
+        <li>業務改善アイデアの見つけ方</li>
+        <li>KPI数値の記録・自走度評価</li>
+      </ul>
+      <div class="link-hint">→ このガイドを読む</div>
+    </a>
+
+  </div>
+
+  <!-- フェーズタイムライン SVG -->
+  <figure class="svg-fig">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 180" width="780" font-family="Hiragino Kaku Gothic ProN,Hiragino Sans,Meiryo,sans-serif">
+      <!-- 背景 -->
+      <rect width="780" height="180" rx="12" fill="#F0F4F8"/>
+      <!-- タイトル -->
+      <text x="390" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#1A365D">導入タイムライン — Phase 0 〜 3 の流れ</text>
+      <!-- 軸線 -->
+      <line x1="60" y1="90" x2="720" y2="90" stroke="#CBD5E0" stroke-width="3"/>
+      <!-- Phase 0 -->
+      <circle cx="120" cy="90" r="22" fill="#553C9A"/>
+      <text x="120" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="white">Ph.0</text>
+      <text x="120" y="128" text-anchor="middle" font-size="11" fill="#553C9A" font-weight="700">Week 1〜2</text>
+      <text x="120" y="143" text-anchor="middle" font-size="10" fill="#4A5568">GWS・録音</text>
+      <!-- 矢印 -->
+      <polygon points="192,87 178,81 178,93" fill="#CBD5E0"/>
+      <!-- Phase 1 -->
+      <circle cx="280" cy="90" r="22" fill="#1A56DB"/>
+      <text x="280" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="white">Ph.1</text>
+      <text x="280" y="128" text-anchor="middle" font-size="11" fill="#1A56DB" font-weight="700">Week 2〜4</text>
+      <text x="280" y="143" text-anchor="middle" font-size="10" fill="#4A5568">アプリ導入</text>
+      <!-- 矢印 -->
+      <polygon points="352,87 338,81 338,93" fill="#CBD5E0"/>
+      <!-- Phase 2 -->
+      <circle cx="440" cy="90" r="22" fill="#276749"/>
+      <text x="440" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="white">Ph.2</text>
+      <text x="440" y="128" text-anchor="middle" font-size="11" fill="#276749" font-weight="700">Month 2</text>
+      <text x="440" y="143" text-anchor="middle" font-size="10" fill="#4A5568">音声記録</text>
+      <!-- 矢印 -->
+      <polygon points="512,87 498,81 498,93" fill="#CBD5E0"/>
+      <!-- Phase 3 -->
+      <circle cx="600" cy="90" r="22" fill="#C05621"/>
+      <text x="600" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="white">Ph.3</text>
+      <text x="600" y="128" text-anchor="middle" font-size="11" fill="#C05621" font-weight="700">Month 2〜3</text>
+      <text x="600" y="143" text-anchor="middle" font-size="10" fill="#4A5568">AI自動生成</text>
+      <!-- 完了マーク -->
+      <circle cx="720" cy="90" r="22" fill="#00A8B5"/>
+      <text x="720" y="95" text-anchor="middle" font-size="18" fill="white">★</text>
+      <text x="720" y="143" text-anchor="middle" font-size="10" fill="#00A8B5" font-weight="700">自走運用</text>
+      <!-- 吹き出し -->
+      <rect x="60" y="38" width="120" height="30" rx="6" fill="#EDE9FE" stroke="#553C9A" stroke-width="1.5"/>
+      <polygon points="120,68 113,60 127,60" fill="#EDE9FE" stroke="#553C9A" stroke-width="1" stroke-linejoin="round"/>
+      <text x="120" y="57" text-anchor="middle" font-size="10" fill="#553C9A" font-weight="700">まず効果を出す！</text>
+    </svg>
+    <figcaption>Phase 0 から順番に進めることで、業務改善効果が段階的に積み上がります</figcaption>
+  </figure>
+
+  <!-- 導入ステップ概要 -->
+  <div class="flow-section">
+    <h2>導入の全体的な流れ</h2>
+
+    <div class="flow-row">
+      <div class="flow-num">1</div>
+      <div class="flow-body">
+        <h3>Phase 0 — まず「すぐに効果が出る」体制を作る（Week 1〜2）</h3>
+        <p>アプリ開発は後回し。Google MeetとGeminiだけで、面談記録が60分→15分になります。</p>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-num">2</div>
+      <div class="flow-body">
+        <h3>Phase 1 — 入力の手間を自動化する（Week 2〜4）</h3>
+        <p>新規受入れと出退勤をアプリで管理。日々の転記ミスや二重入力がなくなります。</p>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-num">3</div>
+      <div class="flow-body">
+        <h3>Phase 2 — 音声で記録する（Month 2）</h3>
+        <p>キーボード入力が苦手な方も、話すだけで記録できます。</p>
+      </div>
+    </div>
+
+    <div class="flow-row">
+      <div class="flow-num">4</div>
+      <div class="flow-body">
+        <h3>Phase 3 — AIが記録を自動生成する（Month 2〜3）</h3>
+        <p>面談後に何もしなくても、AIが記録の下書きを作ってくれます。確認・修正するだけです。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- フェーズ依存関係 SVG -->
+  <figure class="svg-fig">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 200" width="680" font-family="Hiragino Kaku Gothic ProN,Hiragino Sans,Meiryo,sans-serif">
+      <rect width="680" height="200" rx="12" fill="#F7FAFC"/>
+      <text x="340" y="26" text-anchor="middle" font-size="13" font-weight="700" fill="#1A365D">各フェーズのツールと依存関係</text>
+      <!-- Phase 0 ボックス -->
+      <rect x="30" y="45" width="140" height="65" rx="8" fill="#EDE9FE" stroke="#553C9A" stroke-width="2"/>
+      <text x="100" y="70" text-anchor="middle" font-size="11" font-weight="700" fill="#553C9A">Phase 0</text>
+      <text x="100" y="86" text-anchor="middle" font-size="10" fill="#4A5568">Google Meet</text>
+      <text x="100" y="100" text-anchor="middle" font-size="10" fill="#4A5568">Gemini（手動）</text>
+      <!-- 矢印 -->
+      <line x1="170" y1="77" x2="200" y2="77" stroke="#553C9A" stroke-width="2" marker-end="url(#arr)"/>
+      <!-- Phase 1 ボックス -->
+      <rect x="200" y="45" width="140" height="65" rx="8" fill="#DBEAFE" stroke="#1A56DB" stroke-width="2"/>
+      <text x="270" y="70" text-anchor="middle" font-size="11" font-weight="700" fill="#1A56DB">Phase 1</text>
+      <text x="270" y="86" text-anchor="middle" font-size="10" fill="#4A5568">受入れフォーム</text>
+      <text x="270" y="100" text-anchor="middle" font-size="10" fill="#4A5568">出退勤アプリ</text>
+      <!-- 矢印 -->
+      <line x1="340" y1="77" x2="370" y2="77" stroke="#1A56DB" stroke-width="2" marker-end="url(#arr2)"/>
+      <!-- Phase 2 ボックス -->
+      <rect x="370" y="45" width="140" height="65" rx="8" fill="#C6F6D5" stroke="#276749" stroke-width="2"/>
+      <text x="440" y="70" text-anchor="middle" font-size="11" font-weight="700" fill="#276749">Phase 2</text>
+      <text x="440" y="86" text-anchor="middle" font-size="10" fill="#4A5568">音声入力アプリ</text>
+      <text x="440" y="100" text-anchor="middle" font-size="10" fill="#4A5568">スマホ録音</text>
+      <!-- 矢印 -->
+      <line x1="510" y1="77" x2="540" y2="77" stroke="#276749" stroke-width="2" marker-end="url(#arr3)"/>
+      <!-- Phase 3 ボックス -->
+      <rect x="540" y="45" width="110" height="65" rx="8" fill="#FEEBC8" stroke="#C05621" stroke-width="2"/>
+      <text x="595" y="70" text-anchor="middle" font-size="11" font-weight="700" fill="#C05621">Phase 3</text>
+      <text x="595" y="86" text-anchor="middle" font-size="10" fill="#4A5568">GAS＋Gemini</text>
+      <text x="595" y="100" text-anchor="middle" font-size="10" fill="#4A5568">自動生成</text>
+      <!-- 矢印マーカー定義 -->
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#553C9A"/></marker>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#1A56DB"/></marker>
+        <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#276749"/></marker>
+      </defs>
+      <!-- 前提条件の注記 -->
+      <text x="340" y="150" text-anchor="middle" font-size="11" fill="#718096">各フェーズは前のフェーズが完了してから始めます。Phase 0 だけは即日開始できます。</text>
+      <!-- オプションゾーン -->
+      <rect x="30" y="160" width="620" height="30" rx="6" fill="#EBF8FF" stroke="#BEE3F8" stroke-width="1.5"/>
+      <text x="340" y="180" text-anchor="middle" font-size="10" fill="#2C5282">オプション①（GWS管理者設定・台帳）はPhase 0 と並行して進めます ／ オプション③（コーチング）は全フェーズを通して実施</text>
+    </svg>
+    <figcaption>依存関係の図：前のフェーズの完了を確認してから次へ進んでください</figcaption>
+  </figure>
+
+  <div class="contact-box">
+    <p>わからないことがあれば気軽にご連絡ください。</p>
+  </div>
+
+</div>
+
+<footer>© 2026 有限会社アートソウル ／ 合同会社まる 専用ガイド ／ 無断転載禁止</footer>
+
+<button class="to-top" id="toTop" title="ページトップへ戻る" aria-label="ページトップへ戻る">↑</button>
+<script>
+var toTop = document.getElementById('toTop');
+window.addEventListener('scroll', function() {
+  toTop.classList.toggle('visible', window.scrollY > 300);
+});
+toTop.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

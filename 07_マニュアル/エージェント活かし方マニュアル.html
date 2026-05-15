@@ -121,12 +121,25 @@
   .comp-good { color: #276749; font-weight: bold; }
   .comp-no { color: #C53030; }
   .comp-mid { color: #C05621; }
+  /* ── ページトップへ戻るボタン ── */
+  .to-top { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px;
+    background: #1A365D; color: white; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.25s, transform 0.25s, background 0.2s;
+    z-index: 1000; display: flex; align-items: center; justify-content: center; line-height: 1; }
+  .to-top.visible { opacity: 1; transform: translateY(0); }
+  .to-top:hover { background: #2B6CB0; box-shadow: 0 6px 24px rgba(0,0,0,0.28); }
+  /* ── SVG図 ── */
+  .svg-fig { margin: 22px 0; text-align: center; }
+  .svg-fig svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+  .svg-fig figcaption { font-size: 12px; color: #718096; margin-top: 8px; font-style: italic; }
 </style>
 </head>
 <body>
 
 <nav class="sidebar">
-  <a class="sb-back" href="../07_マニュアル/総合マニュアル.html">← 総合マニュアルに戻る</a>
+  <a class="sb-back" href="総合マニュアル.html">← 総合マニュアルに戻る</a>
   <div class="sb-logo">エージェント活かし方<span>Kai エコシステム完全ガイド</span></div>
 
   <div class="sb-sec">
@@ -202,6 +215,29 @@
   <tr><td>ツール制限</td><td>制限なし</td><td>SKILL.mdで明示したツールのみ</td></tr>
   <tr><td>コスト</td><td>1回分のトークン</td><td>エージェント数分のトークン（並列なら合算）</td></tr>
 </table>
+
+<figure class="svg-fig">
+  <svg viewBox="0 0 560 150" width="560" font-family="Yu Gothic UI,Meiryo,sans-serif">
+    <rect width="560" height="150" fill="#EDF2F7" rx="10"/>
+    <!-- Kai -->
+    <rect x="20" y="30" width="230" height="90" rx="8" fill="#1A365D" stroke="#0F2340" stroke-width="2"/>
+    <text x="135" y="55" fill="white" text-anchor="middle" font-size="14" font-weight="bold">Kai（メイン）</text>
+    <text x="135" y="75" fill="#CBD5E0" text-anchor="middle" font-size="11">司令官・調整役・最終判断</text>
+    <text x="135" y="93" fill="#CBD5E0" text-anchor="middle" font-size="11">全体の会話履歴あり</text>
+    <text x="135" y="111" fill="#A3BFFA" text-anchor="middle" font-size="10">同時実行：1つ</text>
+    <!-- エージェント -->
+    <rect x="305" y="30" width="235" height="90" rx="8" fill="#3182CE" stroke="#2B6CB0" stroke-width="2"/>
+    <text x="422" y="55" fill="white" text-anchor="middle" font-size="14" font-weight="bold">エージェント</text>
+    <text x="422" y="75" fill="#BEE3F8" text-anchor="middle" font-size="11">特定タスクの専門実行者</text>
+    <text x="422" y="93" fill="#BEE3F8" text-anchor="middle" font-size="11">履歴なし（毎回ゼロから）</text>
+    <text x="422" y="111" fill="#FBBF24" text-anchor="middle" font-size="10">同時実行：複数並列 OK</text>
+    <!-- vs -->
+    <text x="280" y="82" fill="#718096" text-anchor="middle" font-size="22" font-weight="bold">vs</text>
+    <!-- 矢印ラベル -->
+    <text x="280" y="135" fill="#4A5568" text-anchor="middle" font-size="11">Kaiがエージェントに指示を出し、結果を受け取る</text>
+  </svg>
+  <figcaption>KaiとエージェントはClaude Code内で別々のプロセス。Kaiが司令官として複数エージェントを同時に動かせる。</figcaption>
+</figure>
 
 <h3>なぜエージェントを使うのか</h3>
 <ul>
@@ -620,6 +656,41 @@
 
 <div class="lead">エージェントは「セッション記憶なし」で動きます。必要な情報をすべてプロンプトかファイルで渡すのが鉄則です。</div>
 
+<figure class="svg-fig">
+  <svg viewBox="0 0 560 130" width="560" font-family="Yu Gothic UI,Meiryo,sans-serif">
+    <rect width="560" height="130" fill="#F7FAFC" rx="10"/>
+    <defs><marker id="arr-ctx" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#0EA5E9"/></marker></defs>
+    <!-- Kai -->
+    <rect x="20" y="40" width="80" height="50" rx="6" fill="#1A365D"/>
+    <text x="60" y="70" fill="white" text-anchor="middle" font-size="13" font-weight="bold">Kai</text>
+    <!-- 矢印：引数 -->
+    <line x1="100" y1="55" x2="155" y2="55" stroke="#0EA5E9" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arr-ctx)"/>
+    <text x="127" y="48" fill="#0369A1" text-anchor="middle" font-size="10">引数</text>
+    <!-- エージェント1 -->
+    <rect x="155" y="40" width="90" height="30" rx="5" fill="#4A5568"/>
+    <text x="200" y="60" fill="white" text-anchor="middle" font-size="11">cb-scout</text>
+    <!-- research-notes -->
+    <rect x="265" y="25" width="110" height="28" rx="5" fill="#276749"/>
+    <text x="320" y="43" fill="white" text-anchor="middle" font-size="10" font-weight="bold">research-notes.md</text>
+    <line x1="245" y1="55" x2="265" y2="38" stroke="#38A169" stroke-width="1.5" marker-end="url(#arr-ctx)"/>
+    <text x="247" y="30" fill="#276749" text-anchor="middle" font-size="9">ファイル</text>
+    <!-- 並列エージェント -->
+    <line x1="375" y1="38" x2="400" y2="50" stroke="#0EA5E9" stroke-width="1.5" marker-end="url(#arr-ctx)"/>
+    <line x1="375" y1="38" x2="400" y2="70" stroke="#0EA5E9" stroke-width="1.5" marker-end="url(#arr-ctx)"/>
+    <line x1="375" y1="38" x2="400" y2="90" stroke="#0EA5E9" stroke-width="1.5" marker-end="url(#arr-ctx)"/>
+    <rect x="400" y="38" width="70" height="20" rx="4" fill="#3182CE"/>
+    <text x="435" y="52" fill="white" text-anchor="middle" font-size="10">cb-ink</text>
+    <rect x="400" y="62" width="70" height="20" rx="4" fill="#3182CE"/>
+    <text x="435" y="76" fill="white" text-anchor="middle" font-size="10">cb-pen</text>
+    <rect x="400" y="86" width="70" height="20" rx="4" fill="#3182CE"/>
+    <text x="435" y="100" fill="white" text-anchor="middle" font-size="10">cb-spark</text>
+    <text x="435" y="120" fill="#718096" text-anchor="middle" font-size="9">並列実行</text>
+    <text x="200" y="100" fill="#718096" text-anchor="middle" font-size="10">research-notes.md を共有して</text>
+    <text x="200" y="113" fill="#718096" text-anchor="middle" font-size="10">後続全員が同じ情報を使う</text>
+  </svg>
+  <figcaption>コンテキストはファイル経由で渡す。cb-scoutが生成したresearch-notes.mdを全並列エージェントが読み込む。</figcaption>
+</figure>
+
 <h3>コンテキストの渡し方3パターン</h3>
 
 <div class="step-list">
@@ -824,11 +895,21 @@ research-notes.md を読んでXスレッド投稿（6〜9投稿）を生成す�
 <div style="text-align:center; color:#718096; font-size:13px; padding:40px 0 20px;">
   エージェント活かし方マニュアル v1.0 — Kai エコシステム完全ガイド<br>
   有限会社アートソウル · 2026年5月 作成<br>
-  <a href="../07_マニュアル/総合マニュアル.html" style="color:#0EA5E9;">← 総合マニュアルに戻る</a>
+  <a href="総合マニュアル.html" style="color:#0EA5E9;">← 総合マニュアルに戻る</a>
 </div>
 
 </div><!-- /container -->
 </div><!-- /main -->
 
+<button class="to-top" id="toTop" title="ページトップへ戻る" aria-label="ページトップへ戻る">↑</button>
+<script>
+var toTop = document.getElementById('toTop');
+window.addEventListener('scroll', function() {
+  toTop.classList.toggle('visible', window.scrollY > 300);
+});
+toTop.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
 </body>
 </html>
