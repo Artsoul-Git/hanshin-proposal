@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧭 月商200万達成 — 目標達成コンパス</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #070B14; --surface: #0F1720; --surface2: #162030;
+  --border: #1A2A3D; --text: #E2E8F0; --muted: #64748B; --dim: #94A3B8;
+  --primary: #6366F1; --primary-glow: rgba(99,102,241,.25);
+  --secondary: #8B5CF6; --success: #10B981;
+  --warn: #F59E0B; --danger: #EF4444;
+  --kai-bg: #0D0820; --kai-border: #4C1D95; --kai-text: #C4B5FD; --kai-hi: #DDD6FE;
+}
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Hiragino Sans','Yu Gothic UI',sans-serif; font-size:14px; line-height:1.6; min-height:100vh; }
+h2 { font-size:18px; font-weight:700; }
+.hdr { position:sticky; top:0; z-index:100; background:rgba(7,11,20,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:0 20px; height:56px; display:flex; align-items:center; gap:14px; }
+.hdr-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#6366F1,#8B5CF6,#EC4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.hdr-theme { flex:1; font-size:13px; color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hdr-prog { display:flex; align-items:center; gap:8px; }
+.prog-bar { width:100px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#6366F1,#8B5CF6); transition:width .4s; }
+.prog-pct { font-size:11px; color:var(--muted); min-width:30px; text-align:right; }
+.hdr-btn { background:var(--surface); border:1px solid var(--border); color:var(--dim); padding:5px 11px; border-radius:6px; cursor:pointer; font-size:12px; transition:all .15s; }
+.hdr-btn:hover { background:var(--surface2); color:var(--text); }
+.nav { display:flex; gap:2px; padding:10px 20px 0; border-bottom:1px solid var(--border); overflow-x:auto; background:var(--bg); }
+.tab { padding:7px 14px; border-radius:6px 6px 0 0; cursor:pointer; font-size:13px; font-weight:500; color:var(--muted); border:1px solid transparent; border-bottom:none; white-space:nowrap; position:relative; bottom:-1px; transition:all .15s; }
+.tab:hover { color:var(--text); background:var(--surface); }
+.tab.on { color:var(--primary); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view.on { display:block; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(99,102,241,.12)); border:1px solid rgba(99,102,241,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
+.goal-tag { display:inline-block; background:rgba(99,102,241,.18); color:#A5B4FC; padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
+.goal-meta { font-size:12px; color:var(--dim); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
+.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px; padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
+.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%); }
+.kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#8B5CF6); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
+.kai-rl { font-size:11px; color:var(--kai-text); }
+.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
+.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(239,68,68,.1); border-left:3px solid var(--danger); border-radius:0 6px 6px 0; color:#FCA5A5; font-size:13px; font-style:italic; }
+.kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
+.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
+.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.sec::after { content:''; flex:1; height:1px; background:var(--border); }
+.act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
+.act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px; transition:all .15s; }
+.act-item:hover { background:var(--surface2); border-color:var(--primary); transform:translateY(-1px); }
+.act-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.act-tx { font-size:12px; }
+.act-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+.mandala-note { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.mandala-wrap { overflow-x:auto; }
+.m-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:2px; width:100%; max-width:780px; margin:0 auto; aspect-ratio:1; }
+.mc { display:flex; align-items:center; justify-content:center; text-align:center; font-size:9.5px; line-height:1.25; border-radius:3px; padding:2px; transition:transform .12s, box-shadow .12s; overflow:hidden; word-break:break-all; }
+.mc.cp { cursor:pointer; }
+.mc.cp:hover { transform:scale(1.09); z-index:10; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+.mc.center { background:linear-gradient(135deg,#6366F1,#8B5CF6); color:#fff; font-weight:800; font-size:10px; z-index:5; }
+.mc.theme,.mc.tr { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.item { font-size:9px; }
+.mc.empty { background:var(--surface); opacity:.25; }
+.m-legend { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.m-leg { display:flex; align-items:center; gap:5px; font-size:12px; padding:3px 10px; background:var(--surface); border:1px solid var(--border); border-radius:20px; cursor:pointer; transition:border-color .15s; }
+.m-leg:hover { border-color:var(--primary); }
+.m-leg-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.bc { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); margin-bottom:14px; flex-wrap:wrap; }
+.bc a { color:var(--muted); cursor:pointer; text-decoration:none; }
+.bc a:hover { color:var(--primary); }
+.bc .cur { color:var(--text); }
+.bc-sep { opacity:.4; }
+.t-pills { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
+.t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.mx-wrap { display:flex; gap:8px; align-items:stretch; }
+.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted); display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-inner { flex:1; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px; overflow:hidden; position:relative; }
+.mx-cross::before,.mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
+.mx-cross::after { top:50%; left:0; right:0; height:1px; }
+.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
+.quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
+.quad.q-tr { background:rgba(239,68,68,.06); }
+.quad.q-tl { background:rgba(99,102,241,.06); }
+.quad.q-br { background:rgba(245,158,11,.06); }
+.quad.q-bl { background:rgba(100,116,139,.04); }
+.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s; display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.qi-tx { flex:1; line-height:1.4; }
+.qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px; padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-bottom:18px; }
+.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-ctx-t { font-size:15px; font-weight:700; }
+.fl-steps { position:relative; padding-left:38px; }
+.fl-step { position:relative; margin-bottom:14px; }
+.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px; width:2px; background:var(--border); }
+.fl-step:last-child::before { display:none; }
+.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; z-index:1; font-weight:700; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
+.fl-card.done { opacity:.55; }
+.fl-card.done .fl-title { text-decoration:line-through; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
+.fb-act { background:rgba(99,102,241,.14); color:#A5B4FC; }
+.fb-dec { background:rgba(245,158,11,.14); color:#FCD34D; }
+.fb-mil { background:rgba(16,185,129,.14); color:#6EE7B7; }
+.fb-wrn { background:rgba(239,68,68,.14); color:#FCA5A5; }
+.fb-dur { background:rgba(100,116,139,.14); color:var(--muted); }
+.fb-out { background:rgba(6,182,212,.14); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer; font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-check.done { text-decoration:line-through; opacity:.5; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px; padding:12px 14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
+.fk-tx { font-size:13px; color:var(--kai-text); line-height:1.7; }
+.gt-wrap { overflow-x:auto; }
+.gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
+.gt-wk { flex:1; text-align:center; font-size:10px; color:var(--muted); padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
+.gt-phase { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; padding:8px 0 4px; }
+.gt-row { display:flex; align-items:center; margin-bottom:3px; min-height:30px; }
+.gt-name { width:190px; min-width:190px; font-size:12px; padding-right:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--dim); }
+.gt-bars { flex:1; position:relative; height:28px; }
+.gt-bar { position:absolute; height:18px; top:5px; border-radius:4px; padding:0 6px; font-size:9.5px; color:#fff; font-weight:500; display:flex; align-items:center; overflow:hidden; white-space:nowrap; transition:opacity .15s; }
+.gt-bar:hover { opacity:.8; }
+.gt-bar.crit { box-shadow:0 0 8px rgba(239,68,68,.45); }
+.gt-bar.ms { width:18px !important; border-radius:50%; padding:0; justify-content:center; font-size:11px; }
+.gt-legend { display:flex; gap:12px; margin-bottom:10px; font-size:12px; color:var(--muted); }
+.gt-leg-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+#kai-float { position:fixed; bottom:18px; right:18px; z-index:200; width:340px; }
+.kf-panel { display:none; background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px; padding:14px; margin-bottom:7px; max-height:380px; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.kf-panel.on { display:block; }
+.kf-sec { margin-bottom:14px; }
+.kf-sec-t { font-size:11px; color:var(--kai-text); font-weight:600; letter-spacing:.4px; opacity:.65; margin-bottom:7px; }
+.kf-ins { font-size:13px; color:var(--kai-text); line-height:1.65; padding:8px 10px; background:rgba(255,255,255,.04); border-radius:6px; margin-bottom:5px; }
+.kf-btn { background:linear-gradient(135deg,#4C1D95,#6366F1); border:1px solid #7C3AED; border-radius:10px; padding:9px 14px; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 4px 20px rgba(99,102,241,.3); transition:all .2s; color:#fff; width:100%; }
+.kf-btn:hover { box-shadow:0 6px 28px rgba(99,102,241,.5); transform:translateY(-1px); }
+.kf-av { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+.kf-lbl { flex:1; font-size:13px; font-weight:700; }
+.kf-arr { font-size:11px; opacity:.8; }
+.btn { padding:7px 14px; border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; border:none; transition:all .15s; }
+.btn-g { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-g:hover { background:var(--surface2); color:var(--text); }
+.empty-s { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-s-i { font-size:40px; margin-bottom:10px; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+@media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-logo">🧭 目標達成コンパス</div>
+  <div class="hdr-theme" id="hTheme"></div>
+  <div class="hdr-prog">
+    <span class="prog-pct" id="hPct">0%</span>
+    <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
+  </div>
+  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+</header>
+
+<nav class="nav">
+  <div class="tab on" onclick="go('dashboard',this)">📊 ダッシュボード</div>
+  <div class="tab" onclick="go('mandala',this)">🌸 マンダラ</div>
+  <div class="tab" onclick="go('matrix',this)">⊞ マトリクス</div>
+  <div class="tab" onclick="go('flow',this)">→ フロー</div>
+  <div class="tab" onclick="go('gantt',this)">📅 ガント</div>
+</nav>
+
+<div id="v-dashboard" class="view on">
+  <div class="goal-card">
+    <div class="goal-tag">目標テーマ</div>
+    <div class="goal-title" id="dTheme"></div>
+    <div class="goal-meta" id="dMeta"></div>
+    <div class="goal-bg" id="dBg"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">8</div><div class="stat-l">主要テーマ</div></div>
+    <div class="stat"><div class="stat-v">64</div><div class="stat-l">アクション項目</div></div>
+    <div class="stat"><div class="stat-v" id="sFlows">0</div><div class="stat-l">フロー図</div></div>
+    <div class="stat"><div class="stat-v" id="sPct">0%</div><div class="stat-l">実行進捗</div></div>
+  </div>
+  <div class="kai-card">
+    <div class="kai-hdr">
+      <div class="kai-av">K</div>
+      <div><div class="kai-nm">Kai — ストラテジックコンサルタント</div><div class="kai-rl">あなたの目標達成を最短距離で実現する</div></div>
+    </div>
+    <div class="kai-sum" id="kSum"></div>
+    <div class="kai-verd" id="kVerd"></div>
+    <div class="kai-tags" id="kTags"></div>
+  </div>
+  <div class="sec">最優先で着手すべきアクション</div>
+  <div class="act-grid" id="dActs"></div>
+</div>
+
+<div id="v-mandala" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <h2>マンダラチャート</h2>
+    <button class="btn btn-g" onclick="go('matrix',null)">マトリクスを見る →</button>
+  </div>
+  <div class="mandala-note">テーマセル（色付き）をクリック → 優先度マトリクスへ</div>
+  <div class="mandala-wrap"><div class="m-grid" id="mGrid"></div></div>
+  <div class="m-legend" id="mLeg"></div>
+</div>
+
+<div id="v-matrix" class="view">
+  <div class="bc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="mxBcTh">マトリクス</span>
+  </div>
+  <div class="t-pills" id="tPills"></div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度 ↑</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">→ 緊急度</div>
+    </div>
+  </div>
+  <div class="mx-kai" id="mxKai" style="display:none;">
+    <div class="mk-lbl">🧭 Kai アドバイス</div>
+    <div id="mxKaiTx"></div>
+  </div>
+</div>
+
+<div id="v-flow" class="view">
+  <div class="bc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="flBcIt">フロー</span>
+  </div>
+  <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
+  <div id="flEmpty" class="empty-s"><div class="empty-s-i">→</div><div>マトリクスの項目をクリックするとフローが表示されます</div></div>
+  <div class="fl-steps" id="flSteps"></div>
+  <div class="fl-kai" id="flKai" style="display:none;">
+    <div class="fk-lbl">🧭 Kai アドバイス</div>
+    <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+</div>
+
+<div id="v-gantt" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <h2 id="gtTitle">実行タイムライン</h2>
+    <div class="gt-legend">
+      <span><span class="gt-leg-dot" style="background:var(--danger)"></span>クリティカル</span>
+      <span><span class="gt-leg-dot" style="background:var(--primary)"></span>通常</span>
+      <span><span class="gt-leg-dot" style="background:var(--success);border-radius:50%"></span>マイルストーン</span>
+    </div>
+  </div>
+  <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<div id="kai-float">
+  <div class="kf-panel" id="kfPanel"></div>
+  <button class="kf-btn" onclick="toggleKai()">
+    <div class="kf-av">K</div>
+    <span class="kf-lbl">Kai に相談する</span>
+    <span class="kf-arr" id="kfArr">▲</span>
+  </button>
+</div>
+
+<script>
+const DATA = {
+  meta: {
+    theme: "月商200万円 3ヶ月連続達成",
+    background: "現在月商15万（コンサルティング）。ライモBizのFC権利取得済みだが販売チャネル未確立。コンサル12万＋ライモBiz販売140万（20万×7件）＋伴走支援30万（5万×6社）で200万を設計。サブスク型伴走支援で3ヶ月先の売上が見える経営を実現する。",
+    targetPeriod: "2026年10月末まで（約5.5ヶ月）",
+    constraints: "週15時間・月予算5万・ソロ経営・飛び込みNG・口コミ志向・税理士アライアンス検討中",
+    createdAt: "2026-05-16"
+  },
+  kai: {
+    summary: "商品力はある。コンサルで実績もある。問題は「誰にも知られていない」という一点だけ。月商15万→200万の13倍成長は、今月から毎週具体的なアクションを積み上げないと物理的に届かない。最速の打ち手は税理士アライアンスによる紹介チャネルの確立。週15時間のうち最低8時間をチャネル開拓に投下することが絶対条件になる。",
+    coreIssue: "認知ゼロ・チャネルゼロ。商品は揃っているが「誰かに届ける仕組み」が存在しない。",
+    topPriority: "今月中に税理士1社とのアライアンス合意を得ること。これだけ。他は全部二の次。",
+    consultantVerdict: "広報未着手・人脈ゼロのまま5ヶ月で13倍は甘くない。今週動かないなら目標を下げるべき。",
+    strengths: ["差別化済みの商品がある（ライモBizFC権利）","相談が来れば成約できる提案力がある","AI課金・投資への意志と資本がある"],
+    risks: ["口コミ依存は立ち上がりが遅い（仕組みなしでは偶発頼み）","週15時間では実行できる施策数に上限がある","ライモBiz7件/月は現実的か検証が必要"],
+    themeInsights: [
+      { index: 0, insight: "アライアンスは最速の打ち手。税理士は既存の中小企業顧客を持ち、AI導入ニーズの入り口として最適。まず5事務所にアプローチし、1社でも合意できれば月1〜2件の紹介が期待できる。" },
+      { index: 1, insight: "ライモBiz7件/月は提案書とトークスクリプトがなければ絶対に達成できない。提案資料・フロー標準化・反論処理の3点を今月中に整備。完璧より早さを優先すること。" },
+      { index: 2, insight: "コンテンツは3ヶ月後に効いてくる投資。今月始めないと10月に間に合わない。XとBiz事例レポートの2本柱に絞り、週2〜3時間以上かけないこと。" },
+      { index: 3, insight: "サブスク収入は月商安定化の命綱。1社でも早く契約を取ることが最優先。料金と内容を今週中に決め、契約書を整備してから営業に動くこと。" },
+      { index: 4, insight: "自社集客より、アライアンス先主催勉強会への登壇が圧倒的に効率的。集客コストゼロ・信頼の借り受けができる。アライアンス合意後、即座に登壇を打診すること。" },
+      { index: 5, insight: "パイプライン管理なしで月商200万は無理。現状の案件数・確度・金額を毎週可視化しないと、目標到達の8週前まで問題に気づけない。今週開始せよ。" },
+      { index: 6, insight: "今すぐできる最高の口コミ施策は既存客の事例化。ゼロコスト・高信頼性。過去のクライアントに今週連絡を取り、許可を得ること。事例1枚が提案成功率を3倍にする。" },
+      { index: 7, insight: "今週中に200万の逆算スケジュールを作ること。毎月何件成約すればいいかが見えていないのに目標達成はできない。3シナリオのシミュレーションは1〜2時間で作れる。" }
+    ]
+  },
+  mandala: {
+    center: "月商200万\n安定達成",
+    themes: [
+      { index:0, name:"アライアンス構築", description:"税理士・士業との提携で紹介チャネルを確立。既存顧客を持つ士業が最速の集客入り口。", color:"#EF4444", bgLight:"rgba(239,68,68,.13)",
+        items:[
+          {id:"t0-0",text:"税理士リスト作成",description:"地域×規模別の税理士事務所リスト。中小企業顧客が多い事務所を優先。",priority:1},
+          {id:"t0-1",text:"アライアンス提案書",description:"税理士向け提案書A4一枚。紹介メリット・フィー・手順を明記。",priority:1},
+          {id:"t0-2",text:"初回アポ5件獲得",description:"メール・知人紹介で税理士5件にアプローチし面談設定。",priority:1},
+          {id:"t0-3",text:"紹介フィー設計",description:"紹介成功報酬（成約額の10〜15%）と支払いフローを設計。",priority:2},
+          {id:"t0-4",text:"士業横展開",description:"社労士・行政書士・診断士へのアライアンス拡大。税理士軌道後に着手。",priority:2},
+          {id:"t0-5",text:"商工会アプローチ",description:"地元商工会・商工会議所への登壇・協力依頼。認知獲得と信頼構築。",priority:2},
+          {id:"t0-6",text:"アライアンス勉強会",description:"アライアンス先顧客向けAI勉強会を共催。成約率の高い接点を量産。",priority:3},
+          {id:"t0-7",text:"紹介ネットワーク化",description:"アライアンス先同士をつなぐコミュニティ形成で紹介が紹介を呼ぶ仕組み。",priority:3}
+        ]
+      },
+      { index:1, name:"ライモBiz販売体制", description:"20万×7件/月の成約を実現する提案〜成約フローを標準化する。", color:"#F97316", bgLight:"rgba(249,115,22,.13)",
+        items:[
+          {id:"t1-0",text:"提案資料1枚作成",description:"業種別ライモBiz提案シート。ROI・事例・価格を1枚に集約。",priority:1},
+          {id:"t1-1",text:"成約フロー標準化",description:"初回面談→ヒアリング→提案→クロージングの60〜90分フロー確立。",priority:1},
+          {id:"t1-2",text:"週次販売KPI分解",description:"月7件成約から逆算して週次のアポ数・面談数・提案数を設定。",priority:1},
+          {id:"t1-3",text:"トークスクリプト作成",description:"業種別（小売・飲食・士業・製造）の課題別トークスクリプト。",priority:1},
+          {id:"t1-4",text:"FAQ・反論処理集",description:"「高い」「必要ない」「今は時期じゃない」の反論と切り返し。",priority:2},
+          {id:"t1-5",text:"体験プラン設計",description:"1ヶ月お試しや無料診断など、初期ハードルを下げる入口商品。",priority:2},
+          {id:"t1-6",text:"オンボーディング整備",description:"成約後30日のオンボーディングフロー。早期離脱防止と満足度向上。",priority:2},
+          {id:"t1-7",text:"競合比較シート",description:"他社AIツールとの比較表。差別化ポイントを明確化。",priority:3}
+        ]
+      },
+      { index:2, name:"コンテンツ発信", description:"SNS・note・事例レポートで認知を獲得し口コミが起きやすい状態を作る。", color:"#EAB308", bgLight:"rgba(234,179,8,.13)",
+        items:[
+          {id:"t2-0",text:"発信テーマ設定",description:"「中小企業×AI導入」の発信ペルソナ・テーマ・トーンを決定。",priority:1},
+          {id:"t2-1",text:"X週3投稿開始",description:"月水金にAI活用・導入事例・気づきを発信。短文・具体例重視。",priority:1},
+          {id:"t2-2",text:"導入事例レポート作成",description:"ライモBiz導入事例を業種別に1〜2ページでまとめ配布資料として活用。",priority:1},
+          {id:"t2-3",text:"note月2本執筆",description:"「中小企業がAI導入で失敗する3つの理由」などノウハウ記事を発信。",priority:2},
+          {id:"t2-4",text:"LINE公式開設",description:"見込み客のナーチャリング開始。メルマガ代替として活用。",priority:2},
+          {id:"t2-5",text:"コンテンツカレンダー",description:"月次のコンテンツ計画。週2〜3時間を上限に運用。",priority:2},
+          {id:"t2-6",text:"SEOブログ記事",description:"「[地域名] AI導入 コンサル」などの検索流入を狙った記事3〜5本。",priority:3},
+          {id:"t2-7",text:"YouTube・音声配信",description:"ライモBiz活用ノウハウの動画・Podcast。コンテンツ資産の積み上げ。",priority:3}
+        ]
+      },
+      { index:3, name:"伴走支援設計", description:"月額サブスク型の伴走支援でキャッシュフローを安定させる。", color:"#22C55E", bgLight:"rgba(34,197,94,.13)",
+        items:[
+          {id:"t3-0",text:"3ティア料金設計",description:"月5万（ライト）・月10万（スタンダード）・月15万（プレミアム）の内容と価格を設計。",priority:1},
+          {id:"t3-1",text:"提供内容の標準化",description:"月次MTG回数・報告書・Slack対応範囲など提供内容を仕様書化。",priority:1},
+          {id:"t3-2",text:"契約書テンプレート",description:"業務委託契約・秘密保持・解約条件などの契約書整備。",priority:2},
+          {id:"t3-3",text:"継続率向上施策",description:"3ヶ月目・6ヶ月目の更新トーク・成果報告書でチャーン防止。",priority:2},
+          {id:"t3-4",text:"成果KPI追跡ツール",description:"クライアントごとのKPI達成状況をNotionで可視化し成果を証明。",priority:2},
+          {id:"t3-5",text:"紹介インセンティブ",description:"既存クライアントが新規を紹介した場合の報酬・御礼の仕組み設計。",priority:3},
+          {id:"t3-6",text:"複数社管理効率化",description:"6社同時対応のためのAIツール・テンプレート・バッチ処理の整備。",priority:2},
+          {id:"t3-7",text:"ケーススタディ蓄積",description:"伴走中の成功・失敗パターンをドキュメント化し提案品質を向上。",priority:3}
+        ]
+      },
+      { index:4, name:"セミナー・勉強会", description:"小規模セミナーと登壇で信頼構築と見込み客育成を行う。", color:"#06B6D4", bgLight:"rgba(6,182,212,.13)",
+        items:[
+          {id:"t4-0",text:"初回セミナー企画",description:"アライアンス先顧客向け「中小企業のAI活用入門」5〜10名セミナーを企画。",priority:1},
+          {id:"t4-1",text:"告知文・LP作成",description:"セミナー告知文とシンプルな申込みLPをGoogleフォームで作成。",priority:1},
+          {id:"t4-2",text:"登壇交渉（アライアンス）",description:"税理士・士業の主催勉強会への登壇を打診。集客コストゼロで見込み客獲得。",priority:1},
+          {id:"t4-3",text:"フォローアップフロー",description:"セミナー翌日〜7日間のフォローメール・個別面談打診フローを設計。",priority:2},
+          {id:"t4-4",text:"参加者管理",description:"参加者情報をCRMに登録し見込み度合い別にフォローを分ける。",priority:2},
+          {id:"t4-5",text:"資料の二次活用",description:"セミナー資料をnote・Xに分解して投稿。1回の準備を多重活用。",priority:2},
+          {id:"t4-6",text:"月1回定期開催化",description:"初回成功後は月1回の定期セミナーとして継続化。",priority:3},
+          {id:"t4-7",text:"参加者アンケートPDCA",description:"毎回アンケートを取り次回セミナーの内容・集客方法を改善。",priority:3}
+        ]
+      },
+      { index:5, name:"営業パイプライン管理", description:"CRMで案件を可視化し3ヶ月先の売上を常に把握できる状態を作る。", color:"#6366F1", bgLight:"rgba(99,102,241,.13)",
+        items:[
+          {id:"t5-0",text:"パイプライン可視化",description:"リード→商談→提案→成約→伴走の各フェーズを件数・金額で管理。",priority:1},
+          {id:"t5-1",text:"3ヶ月先売上予測",description:"成約確率×案件金額のウェイテッドパイプラインで将来売上を試算。",priority:1},
+          {id:"t5-2",text:"週次レビュー習慣化",description:"毎週月曜30分でパイプライン確認・不足分のアクション決定。",priority:1},
+          {id:"t5-3",text:"見込み客リスト50社",description:"アプローチ候補の企業・個人を50社リストアップして管理開始。",priority:2},
+          {id:"t5-4",text:"成約率・LTV追跡",description:"提案→成約率・平均単価・LTVを月次で追跡し戦略を最適化。",priority:2},
+          {id:"t5-5",text:"失注分析",description:"断られた理由を記録・分類し、提案改善と商品改善に活かす。",priority:2},
+          {id:"t5-6",text:"CRMツール整備",description:"NotionもしくはシンプルなSpreadsheetでCRM構築。複雑にしない。",priority:1},
+          {id:"t5-7",text:"リードタイム把握",description:"初接触から成約まで平均何週かかるかを計測し営業計画に反映。",priority:3}
+        ]
+      },
+      { index:6, name:"実績・口コミ構築", description:"事例化と紹介依頼の仕組みで口コミエンジンを稼働させる。", color:"#8B5CF6", bgLight:"rgba(139,92,246,.13)",
+        items:[
+          {id:"t6-0",text:"既存客事例化許可取得",description:"過去・現在のクライアントに事例化の許可を取り、ヒアリングを実施。",priority:1},
+          {id:"t6-1",text:"事例1枚ペーパー作成",description:"業種・課題・施策・効果の4項目で1枚にまとめた事例資料を3種作成。",priority:1},
+          {id:"t6-2",text:"紹介依頼スクリプト",description:"既存客に紹介を依頼するタイミング・文章・インセンティブを設計。",priority:1},
+          {id:"t6-3",text:"数値実績の蓄積ルール",description:"「作業時間○%削減」「売上○%向上」などビフォーアフターを必ず記録。",priority:2},
+          {id:"t6-4",text:"Google口コミ促進",description:"成果が出た顧客にGoogle/SNSレビューを依頼する仕組み。",priority:2},
+          {id:"t6-5",text:"紹介者フォロー仕組み",description:"紹介してくれた方への御礼・近況報告・情報提供を定期実施。",priority:2},
+          {id:"t6-6",text:"業界登壇・露出",description:"業界団体・異業種交流会での登壇で第三者信頼を獲得。",priority:3},
+          {id:"t6-7",text:"成功事例動画制作",description:"1〜2分の導入事例インタビュー動画。SNS・提案時に活用。",priority:3}
+        ]
+      },
+      { index:7, name:"財務・事業設計", description:"収益モデルの安定化と逆算経営でキャッシュフローを管理する。", color:"#EC4899", bgLight:"rgba(236,72,153,.13)",
+        items:[
+          {id:"t7-0",text:"月次収支3シナリオ",description:"楽観・標準・悲観の3シナリオで月次収支を2026年10月まで試算。",priority:1},
+          {id:"t7-1",text:"200万逆算スケジュール",description:"10月末200万達成を逆算し、毎月の必要成約数・売上目標を設定。",priority:1},
+          {id:"t7-2",text:"損益分岐点把握",description:"固定費・変動費を洗い出し、月商いくらで黒字化するかを把握。",priority:1},
+          {id:"t7-3",text:"CF計画6ヶ月分",description:"入金タイミング・支払いサイクルを考慮した6ヶ月キャッシュフロー計画。",priority:2},
+          {id:"t7-4",text:"価格改定の検討",description:"現在1日3万は市場価格の下限。月商安定後の値上げタイミングと設定を検討。",priority:2},
+          {id:"t7-5",text:"投資対効果の追跡",description:"月5万のAI課金・広告投資のROIを月次で計測し最適化。",priority:2},
+          {id:"t7-6",text:"外注コスト最適化",description:"週15時間の制約を踏まえた外注・AI代替の費用対効果計算。",priority:3},
+          {id:"t7-7",text:"法人化タイミング検討",description:"月商100万超え前後での法人化・節税対策の検討と準備。",priority:3}
+        ]
+      }
+    ]
+  },
+  matrices: [
+    { themeIndex:0, title:"アライアンス構築 優先度マトリクス",
+      kaiInsight:"今月の最優先は「アポ獲得」と「提案書作成」の2点に絞ること。リスト作りに時間をかけすぎず、まず5社に連絡を入れることが全てのスタート。商工会や士業横展開は税理士が軌道に乗ってから。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"チャネル獲得効果",highLabel:"高効果",lowLabel:"低効果"},
+      quadrants:[
+        {id:"q0-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"最速でチャネルが生まれる",items:[{text:"税理士リスト作成",detail:"5事務所を今週中に特定"},{text:"アライアンス提案書",detail:"A4一枚・今月中に完成"},{text:"初回アポ5件獲得",detail:"メール送付から開始"}]},
+        {id:"q0-tl",pos:"tl",label:"🔵 計画的推進",desc:"重要だが時間をかけて育てる",items:[{text:"アライアンス勉強会",detail:"アポ後2ヶ月目以降に設計"},{text:"商工会アプローチ",detail:"来月以降に着手"}]},
+        {id:"q0-br",pos:"br",label:"🟡 委任・効率化",desc:"提案書に含めて作成",items:[{text:"紹介フィー設計",detail:"提案書作成と同時に整理"}]},
+        {id:"q0-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"税理士軌道後に検討",items:[{text:"士業横展開",detail:"税理士2社合意後に開始"},{text:"紹介ネットワーク化",detail:"3ヶ月後以降"}]}
+      ]
+    },
+    { themeIndex:1, title:"ライモBiz販売体制 優先度マトリクス",
+      kaiInsight:"提案資料とトークスクリプトがなければ7件成約は永遠に達成できない。この2点は今週着手・来週完成を死守。FAQと競合比較は提案に慣れてから追加で十分。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"成約への直接効果",highLabel:"高効果",lowLabel:"低効果"},
+      quadrants:[
+        {id:"q1-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"成約に直結する最重要準備",items:[{text:"提案資料1枚作成",detail:"今週着手・来週完成"},{text:"トークスクリプト作成",detail:"業種別2パターンから"},{text:"成約フロー標準化",detail:"60分の面談フロー設計"}]},
+        {id:"q1-tl",pos:"tl",label:"🔵 計画的推進",desc:"提案精度を上げる中期施策",items:[{text:"FAQ・反論処理集",detail:"初回提案後に課題収集"},{text:"週次販売KPI分解",detail:"月7件→週次目標に分解"}]},
+        {id:"q1-br",pos:"br",label:"🟡 委任・効率化",desc:"あると便利だが後回しOK",items:[{text:"オンボーディング整備",detail:"2〜3件成約後に整備"},{text:"体験プラン設計",detail:"成約率低迷時に検討"}]},
+        {id:"q1-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"聞かれてから作成でOK",items:[{text:"競合比較シート",detail:"質問された時に対応"}]}
+      ]
+    },
+    { themeIndex:2, title:"コンテンツ発信 優先度マトリクス",
+      kaiInsight:"コンテンツは3ヶ月後に効いてくる投資。今月から始めないと10月に間に合わない。XとBiz事例レポートを最初の2本柱に絞り、週2〜3時間以上かけないこと。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"見込み客獲得効果",highLabel:"高効果",lowLabel:"低効果"},
+      quadrants:[
+        {id:"q2-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"認知獲得の土台を今すぐ作る",items:[{text:"発信テーマ設定",detail:"今週中に決定"},{text:"X週3投稿開始",detail:"今週から開始"},{text:"導入事例レポート作成",detail:"提案資料と並行作成"}]},
+        {id:"q2-tl",pos:"tl",label:"🔵 計画的推進",desc:"来月以降に着手する中期施策",items:[{text:"note月2本執筆",detail:"来月から開始"},{text:"LINE公式開設",detail:"見込み客が増えてから"}]},
+        {id:"q2-br",pos:"br",label:"🟡 委任・効率化",desc:"テンプレ化して時間を最小化",items:[{text:"コンテンツカレンダー",detail:"月次30分で計画立案"}]},
+        {id:"q2-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"今は手を出さない",items:[{text:"SEOブログ記事",detail:"効果が出るまで3〜6ヶ月"},{text:"YouTube・音声配信",detail:"認知が一定水準になってから"}]}
+      ]
+    },
+    { themeIndex:3, title:"伴走支援設計 優先度マトリクス",
+      kaiInsight:"サブスク収入は月商安定化の命綱。1社でも早く契約を取ることが最優先。まず料金と内容を決め、契約書を整備すること。複数社管理の効率化は5社を超えてから考えれば十分。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"サブスク収入への貢献",highLabel:"高貢献",lowLabel:"低貢献"},
+      quadrants:[
+        {id:"q3-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"初契約獲得に必要な最低限",items:[{text:"3ティア料金設計",detail:"今週中に価格と内容を決定"},{text:"提供内容の標準化",detail:"月次MTG・報告書の仕様を決める"}]},
+        {id:"q3-tl",pos:"tl",label:"🔵 計画的推進",desc:"契約が増えてから整備する",items:[{text:"契約書テンプレート",detail:"初契約前に整備"},{text:"成果KPI追跡ツール",detail:"2社目以降に構築"},{text:"継続率向上施策",detail:"3ヶ月目更新前に設計"}]},
+        {id:"q3-br",pos:"br",label:"🟡 委任・効率化",desc:"AIで効率化できる業務",items:[{text:"複数社管理効率化",detail:"5社超えたらAI活用で管理"}]},
+        {id:"q3-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"安定後に検討",items:[{text:"紹介インセンティブ",detail:"既存客が増えてから設計"},{text:"ケーススタディ蓄積",detail:"3社以上の伴走事例が溜まってから"}]}
+      ]
+    },
+    { themeIndex:4, title:"セミナー・勉強会 優先度マトリクス",
+      kaiInsight:"自社集客セミナーよりアライアンス先の主催勉強会への登壇が圧倒的に効率的。集客コストゼロ・信頼の借り受けができる。アライアンス合意後、即座に登壇を打診すること。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"リード獲得効果",highLabel:"高効果",lowLabel:"低効果"},
+      quadrants:[
+        {id:"q4-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"見込み客獲得の最速ルート",items:[{text:"登壇交渉（アライアンス）",detail:"アライアンス合意後すぐ打診"},{text:"初回セミナー企画",detail:"アライアンス先顧客向け5〜10名"}]},
+        {id:"q4-tl",pos:"tl",label:"🔵 計画的推進",desc:"初回後に整備・改善する",items:[{text:"フォローアップフロー",detail:"初回セミナー前に設計"},{text:"参加者管理",detail:"CRMと連携"},{text:"資料の二次活用",detail:"SNS投稿・note記事化"}]},
+        {id:"q4-br",pos:"br",label:"🟡 委任・効率化",desc:"テンプレ化して負担を減らす",items:[{text:"告知文・LP作成",detail:"Googleフォームでシンプルに作成"}]},
+        {id:"q4-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"軌道に乗ってから",items:[{text:"月1回定期開催化",detail:"初回2〜3回の成果確認後"},{text:"参加者アンケートPDCA",detail:"継続化後に仕組み化"}]}
+      ]
+    },
+    { themeIndex:5, title:"営業パイプライン管理 優先度マトリクス",
+      kaiInsight:"パイプライン管理は「200万達成を確実にする」ための安全装置。週次レビューがないと気づいたときには手遅れになる。ツールはシンプルなNotionかスプレッドシートで十分。複雑にしないこと。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"目標達成への貢献",highLabel:"高貢献",lowLabel:"低貢献"},
+      quadrants:[
+        {id:"q5-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"今週中に構築開始",items:[{text:"パイプライン可視化",detail:"シンプルなシートで今週開始"},{text:"CRMツール整備",detail:"Notionで30分で作れる"},{text:"週次レビュー習慣化",detail:"毎週月曜朝30分を固定"}]},
+        {id:"q5-tl",pos:"tl",label:"🔵 計画的推進",desc:"来月以降に追加する機能",items:[{text:"3ヶ月先売上予測",detail:"案件が増えてから確率×金額計算"},{text:"成約率・LTV追跡",detail:"2ヶ月後に追加"}]},
+        {id:"q5-br",pos:"br",label:"🟡 委任・効率化",desc:"並行して進める",items:[{text:"見込み客リスト50社",detail:"アライアンス開拓と並行して作成"},{text:"失注分析",detail:"月次で分類・振り返り"}]},
+        {id:"q5-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"後で",items:[{text:"リードタイム把握",detail:"成約10件後にデータ分析"}]}
+      ]
+    },
+    { themeIndex:6, title:"実績・口コミ構築 優先度マトリクス",
+      kaiInsight:"今すぐできる最高の口コミ施策は「既存客の事例化」。ゼロコスト・高信頼性。過去のクライアントに今週連絡を取り、許可を得ること。事例1枚が提案成功率を3倍にする。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"信頼獲得効果",highLabel:"高効果",lowLabel:"低効果"},
+      quadrants:[
+        {id:"q6-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"ゼロコストで信頼を獲得する",items:[{text:"既存客事例化許可取得",detail:"今週中に連絡する"},{text:"事例1枚ペーパー作成",detail:"業種別3種・来週完成目標"},{text:"紹介依頼スクリプト",detail:"事例化ついでに紹介も依頼"}]},
+        {id:"q6-tl",pos:"tl",label:"🔵 計画的推進",desc:"1ヶ月後以降に整備",items:[{text:"数値実績の蓄積ルール",detail:"伴走契約開始と同時に設定"},{text:"紹介者フォロー仕組み",detail:"最初の紹介が来てから整備"}]},
+        {id:"q6-br",pos:"br",label:"🟡 委任・効率化",desc:"簡単にできることから",items:[{text:"Google口コミ促進",detail:"成果が出た顧客にお願いする"}]},
+        {id:"q6-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"当面は不要",items:[{text:"業界登壇・露出",detail:"実績が積み上がってから"},{text:"成功事例動画制作",detail:"3ヶ月後以降に検討"}]}
+      ]
+    },
+    { themeIndex:7, title:"財務・事業設計 優先度マトリクス",
+      kaiInsight:"今週中に「200万の逆算スケジュール」を作ること。毎月何件成約すればいいかが見えていないのに目標達成はできない。3シナリオのシミュレーションは1〜2時間あれば作れる。",
+      xAxis:{label:"緊急度",highLabel:"今すぐ",lowLabel:"後で"},
+      yAxis:{label:"経営判断への影響",highLabel:"高影響",lowLabel:"低影響"},
+      quadrants:[
+        {id:"q7-tr",pos:"tr",label:"🔴 今すぐ着手",desc:"今週中に数字を揃える",items:[{text:"200万逆算スケジュール",detail:"月次目標を今週中に作成"},{text:"月次収支3シナリオ",detail:"楽観・標準・悲観でシミュレーション"},{text:"損益分岐点把握",detail:"固定費の洗い出しから"}]},
+        {id:"q7-tl",pos:"tl",label:"🔵 計画的推進",desc:"月商50万超えたら整備する",items:[{text:"CF計画6ヶ月分",detail:"入金サイクルを考慮した計画"},{text:"価格改定の検討",detail:"月商100万時点で値上げ検討"}]},
+        {id:"q7-br",pos:"br",label:"🟡 委任・効率化",desc:"月次で確認する習慣だけでOK",items:[{text:"投資対効果の追跡",detail:"月5万の使途を毎月確認"}]},
+        {id:"q7-bl",pos:"bl",label:"⚪ 保留・見直し",desc:"月商100万後に考える",items:[{text:"外注コスト最適化",detail:"外注を始めてから考える"},{text:"法人化タイミング検討",detail:"月商100万安定後"}]}
+      ]
+    }
+  ],
+  flows: [
+    { id:"fl-0", themeIndex:0, quadrant:"q0-tr", sourceItem:"アライアンス提案書",
+      title:"税理士アライアンス提案書の作成と初回アポ獲得",
+      kaiComment:"アライアンス提案書は「税理士にとって何が嬉しいか」から書くこと。顧客への付加価値・紹介フィー・手間のなさの3点を一枚に。完璧を目指さず今週中に完成させること。初回面談の合意まで取れれば全てが動き出す。",
+      steps:[
+        {order:1,title:"ターゲット税理士のプロファイル作成",description:"中小企業顧客が多い（従業員5〜50名が顧問先）、IT・AI導入に前向き、地域密着型事務所を優先。Googleマップ・税理士紹介サイトで5〜10事務所をリストアップ。",type:"action",duration:"1〜2時間",output:"税理士候補リスト（5〜10社）"},
+        {order:2,title:"税理士にとっての提携メリットを整理",description:"①顧問先に付加価値（AI活用）を提供できる、②自分では対応できないDX相談を適切に紹介できる、③紹介成功報酬（成約額の10〜15%）が得られる。この3点を明確に言語化する。",type:"action",duration:"1時間",output:"メリット整理メモ"},
+        {order:3,title:"提案書（A4一枚）作成",description:"構成：①自己紹介（実績）②提供サービス概要③紹介の流れ（問い合わせ→引き合わせ→成約）④報酬体系（成約額の10%）⑤連絡先。Canvaかパワーポイントで視覚的に整える。",type:"action",duration:"2〜3時間",output:"提案書PDF"},
+        {order:4,title:"初回アプローチメール文作成",description:"件名：「AI導入支援のご紹介と業務提携のご相談」。本文：自己紹介・提携内容の概要・30分オンラインでのご説明のお願い。200字以内で読んで損はないと思ってもらえる文体で。",type:"action",duration:"1時間",output:"アプローチメールテンプレート"},
+        {order:5,title:"5事務所にメール送付",description:"優先度が高い5事務所を選びメールを送付。既存の知人・紹介で繋がれる場合は優先。送付後は毎日返信チェックし、2〜3営業日で返信がなければ電話でフォロー。",type:"action",duration:"1時間",output:"送付記録（送付日・返信状況）"},
+        {order:6,title:"初回面談の実施（30〜60分）",description:"オンライン可。アジェンダ：①提携内容の説明（15分）②相手の顧問先の状況ヒアリング（15分）③紹介イメージのすり合わせ（15分）④合意・次のステップ確認（5分）。合意が出たら翌日に簡易契約書を送付。",type:"milestone",duration:"60分",output:"アライアンス合意（口頭でOK）"}
+      ]
+    },
+    { id:"fl-1", themeIndex:1, quadrant:"q1-tr", sourceItem:"提案資料1枚作成",
+      title:"ライモBiz提案資料と成約フローの完成",
+      kaiComment:"提案資料は「1枚で全部わかる」設計にすること。なぜこのサービスが必要か、導入するとどう変わるか、価格と次のステップを1枚に収める。作り込むより早く使って現場でブラッシュアップすること。",
+      steps:[
+        {order:1,title:"理想クライアント像の定義",description:"どんな業種・規模・課題を持つ経営者がライモBizを最も必要としているか。「従業員3〜30名・IT苦手・業務効率化に課題」などペルソナを1〜2パターン設定。",type:"action",duration:"1時間",output:"ターゲットペルソナ定義書"},
+        {order:2,title:"ライモBizの価値と導入効果を整理",description:"導入後に何が変わるか。時間削減・コスト削減・売上向上の3軸で効果を数値化。FC加盟後に得られている事例・数値があれば積極活用。",type:"action",duration:"1〜2時間",output:"効果一覧メモ"},
+        {order:3,title:"提案資料（A4一枚）作成",description:"構成：①課題提起（こんな問題ありませんか？）②解決策（ライモBizとは）③導入効果④価格と契約の流れ⑤会社概要・実績。シンプル・見やすく。",type:"action",duration:"2〜3時間",output:"提案資料PDF（A4一枚）"},
+        {order:4,title:"初回面談フロー（60分）の設計",description:"0〜10分：自己紹介・アイスブレイク。10〜30分：課題ヒアリング（5問）。30〜50分：提案資料を元に説明・デモ。50〜60分：疑問解消・次のステップ提示。",type:"action",duration:"1時間",output:"面談フロー台本"},
+        {order:5,title:"反論処理リスト（上位5パターン）作成",description:"「高い」「今は時期が悪い」「社内で決められない」「他と比較したい」「効果があるかわからない」の5パターンの切り返し回答を準備。紙に書いて暗記。",type:"action",duration:"1時間",output:"反論処理チートシート"},
+        {order:6,title:"ロールプレイで精度を上げる",description:"家族・知人または自分で録音して実施。5回繰り返すと自然に話せるようになる。最初の本番前に最低3回やること。",type:"decision",duration:"3〜5時間（3回分）",output:"改善済み提案フロー"},
+        {order:7,title:"初回提案の実施",description:"アライアンス先からの紹介や既存知人へ初回提案を実施。完璧を目指さず「使いながら直す」マインドで臨む。終了後30分以内に振り返りメモを記録。",type:"milestone",duration:"60〜90分",output:"振り返りメモ・次回改善点"}
+      ]
+    },
+    { id:"fl-2", themeIndex:5, quadrant:"q5-tr", sourceItem:"パイプライン可視化",
+      title:"営業パイプライン管理シートの構築と週次レビュー開始",
+      kaiComment:"複雑にしないこと。Notionかスプレッドシートの5列（会社名・フェーズ・金額・次のアクション・期限）で十分。毎週月曜に30分見直すだけで、何が足りていないかが一目でわかる。これをやらない人が目標を達成できない。",
+      steps:[
+        {order:1,title:"パイプラインの5段階フェーズを定義",description:"①リード（認知・接触済み）②ヒアリング（課題確認中）③提案（資料送付・面談済み）④クロージング（検討中・見積もり提出）⑤成約。各フェーズに入れる基準を言葉で定義しておく。",type:"action",duration:"30分",output:"フェーズ定義メモ"},
+        {order:2,title:"管理シートを作成（Notion or スプレッドシート）",description:"列構成：会社名・担当者名・フェーズ・案件金額・確度(%)・次のアクション・期限・メモ。最初は既知の見込み先を5〜10社入力してスタート。",type:"action",duration:"1時間",output:"パイプライン管理シート（初版）"},
+        {order:3,title:"週次レビューのルーティンを設定",description:"毎週月曜AM9時に30分ブロック。確認内容：①今週成約見込みは何件か②フォローが必要な案件はどれか③今週新たに開拓すべき件数はいくつか。カレンダーに固定で入れてしまう。",type:"milestone",duration:"毎週30分",output:"週次レビュー習慣化"},
+        {order:4,title:"3ヶ月先の売上予測を計算",description:"各案件の「金額×確度%」を足し合わせてウェイテッドパイプラインを算出。目標200万との差分を毎週確認し、不足分をどう埋めるかを決める。",type:"decision",duration:"15分/週",output:"売上予測サマリー（毎週更新）"},
+        {order:5,title:"初月の振り返りと改善",description:"1ヶ月運用後、成約率・フェーズ滞留期間・失注理由を分析。フェーズごとの転換率が低い箇所が「ボトルネック」なのでそこに集中改善を加える。",type:"action",duration:"1時間/月",output:"パイプライン改善アクションリスト"}
+      ]
+    },
+    { id:"fl-3", themeIndex:7, quadrant:"q7-tr", sourceItem:"200万逆算スケジュール",
+      title:"月商200万円達成の逆算スケジュール作成",
+      kaiComment:"数字を作る前に「どの月に何件成約すればいいか」を計算しておくこと。漠然と「200万目指す」だけでは毎週の行動が変わらない。今週中に必ず作成すること。悲観シナリオでも見通しが立てば動ける。",
+      steps:[
+        {order:1,title:"収益モデルの確認",description:"コンサル月12万（1日3万×4日）＋ライモBiz販売20万×N件＋伴走支援5万×M社の3つの収益柱を確認。各柱の月次目標金額を設定（コンサル12万、販売140万、伴走30万＋α）。",type:"action",duration:"30分",output:"収益モデル整理メモ"},
+        {order:2,title:"10月末200万達成の月次目標を逆算",description:"5月〜10月の6ヶ月分の月次売上目標を設定。例：5月20万→6月40万→7月70万→8月110万→9月160万→10月200万。リアルな成長カーブを描く。",type:"action",duration:"1時間",output:"月次売上目標表（5〜10月）"},
+        {order:3,title:"月次目標を週次アクションに分解",description:"例：7月70万達成には「ライモBiz月3件（週0.75件）、伴走支援4社、コンサル月4日稼働」が必要。毎週何件アポを取り何件提案すれば成約率から計算して目標達成できるかを数値化。",type:"action",duration:"1時間",output:"週次KPI表"},
+        {order:4,title:"3シナリオでリスクを把握",description:"楽観：月次目標通りに成約、標準：成約数が目標の70%、悲観：成約数が目標の50%。悲観シナリオでも月商はいくらになるかを計算し、必要な対策を事前に考えておく。",type:"decision",duration:"1時間",output:"3シナリオ財務シミュレーション"},
+        {order:5,title:"毎月第1週に進捗を確認・修正",description:"毎月1日に前月の実績と計画のズレを確認。目標との差分が20%以上の場合は即座に原因分析と計画修正を行う。計画は「作るだけ」でなく「毎月見直す」ことで初めて機能する。",type:"milestone",duration:"1時間/月",output:"月次進捗レポート（更新版）"}
+      ]
+    }
+  ],
+  gantt: {
+    title:"月商200万達成 実行タイムライン（2026年5月〜10月）",
+    totalWeeks:24,
+    phases:[
+      { name:"Phase 1：基盤整備（5月）", color:"#6366F1",
+        tasks:[
+          {name:"税理士リスト＆提案書作成",startWeek:1,endWeek:2,isCritical:true,milestone:false},
+          {name:"ライモBiz提案資料作成",startWeek:1,endWeek:3,isCritical:true,milestone:false},
+          {name:"逆算スケジュール作成",startWeek:1,endWeek:1,isCritical:true,milestone:false},
+          {name:"パイプライン管理シート構築",startWeek:2,endWeek:3,isCritical:false,milestone:false},
+          {name:"伴走支援料金・内容設計",startWeek:2,endWeek:4,isCritical:false,milestone:false},
+          {name:"▶ 基盤整備完了",startWeek:4,endWeek:4,isCritical:false,milestone:true}
+        ]
+      },
+      { name:"Phase 2：初動・チャネル確立（6月）", color:"#F97316",
+        tasks:[
+          {name:"税理士アポ5件→合意1〜2社",startWeek:3,endWeek:8,isCritical:true,milestone:false},
+          {name:"X発信開始（週3投稿）",startWeek:4,endWeek:24,isCritical:false,milestone:false},
+          {name:"事例1枚ペーパー作成",startWeek:4,endWeek:6,isCritical:false,milestone:false},
+          {name:"初回ライモBiz提案実施",startWeek:5,endWeek:8,isCritical:true,milestone:false},
+          {name:"初セミナー開催（5〜10名）",startWeek:7,endWeek:8,isCritical:false,milestone:false},
+          {name:"▶ 初成約獲得",startWeek:8,endWeek:8,isCritical:true,milestone:true}
+        ]
+      },
+      { name:"Phase 3：拡大（7〜8月）", color:"#22C55E",
+        tasks:[
+          {name:"ライモBiz月2〜3件ペースへ",startWeek:9,endWeek:16,isCritical:true,milestone:false},
+          {name:"伴走支援2〜3社契約獲得",startWeek:10,endWeek:14,isCritical:true,milestone:false},
+          {name:"アライアンス追加開拓（士業）",startWeek:11,endWeek:16,isCritical:false,milestone:false},
+          {name:"▶ 月商50万達成",startWeek:12,endWeek:12,isCritical:false,milestone:true}
+        ]
+      },
+      { name:"Phase 4：加速・達成（9〜10月）", color:"#EF4444",
+        tasks:[
+          {name:"ライモBiz月5〜7件体制確立",startWeek:17,endWeek:24,isCritical:true,milestone:false},
+          {name:"伴走支援6社達成",startWeek:17,endWeek:22,isCritical:true,milestone:false},
+          {name:"▶ 月商100万突破",startWeek:16,endWeek:16,isCritical:false,milestone:true},
+          {name:"コンテンツ→見込み客流入",startWeek:18,endWeek:24,isCritical:false,milestone:false},
+          {name:"▶ 月商200万・3ヶ月連続達成",startWeek:22,endWeek:22,isCritical:true,milestone:true}
+        ]
+      }
+    ]
+  }
+};
+
+/* ================================================================ STATE ================================================================ */
+const TC=['#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#6366F1','#8B5CF6','#EC4899'];
+const TBG=['rgba(239,68,68,.13)','rgba(249,115,22,.13)','rgba(234,179,8,.13)','rgba(34,197,94,.13)','rgba(6,182,212,.13)','rgba(99,102,241,.13)','rgba(139,92,246,.13)','rgba(236,72,153,.13)'];
+let curTheme=0;
+const SK='rsh_'+encodeURIComponent(DATA.meta.theme||'x');
+const checks=()=>{try{return JSON.parse(localStorage.getItem(SK)||'{}')}catch{return{}}};
+const saveCheck=(id,v)=>{const c=checks();c[id]=v;localStorage.setItem(SK,JSON.stringify(c));updatePct()};
+
+/* ================================================================ NAV ================================================================ */
+function go(name,tabEl){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('v-'+name).classList.add('on');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(tabEl){tabEl.classList.add('on');}else{const idx={dashboard:0,mandala:1,matrix:2,flow:3,gantt:4}[name];if(idx!=null)document.querySelectorAll('.tab')[idx].classList.add('on');}
+  if(name==='mandala')renderMandala();
+  if(name==='matrix')renderMatrix(curTheme);
+  if(name==='gantt')renderGantt();
+}
+function goMatrix(ti){curTheme=ti;go('matrix',null);}
+function goFlow(ti,qid,itemTx){
+  const fl=DATA.flows.find(f=>f.themeIndex===ti&&f.quadrant===qid&&f.sourceItem===itemTx)||DATA.flows.find(f=>f.themeIndex===ti)||DATA.flows[0];
+  const th=DATA.mandala.themes[ti];
+  document.getElementById('flBcTh').textContent=th?th.name:'マトリクス';
+  document.getElementById('flBcIt').textContent=itemTx||'フロー';
+  document.getElementById('flCtx').textContent=itemTx;
+  if(fl){document.getElementById('flEmpty').style.display='none';renderFlow(fl);}
+  else{document.getElementById('flEmpty').style.display='block';document.getElementById('flSteps').innerHTML='';document.getElementById('flKai').style.display='none';}
+  go('flow',null);
+}
+
+/* ================================================================ DASHBOARD ================================================================ */
+function initDash(){
+  const m=DATA.meta,k=DATA.kai;
+  document.getElementById('hTheme').textContent=m.theme;
+  document.getElementById('dTheme').textContent=m.theme;
+  document.getElementById('dMeta').textContent='作成日: '+m.createdAt+'　目標期間: '+m.targetPeriod;
+  document.getElementById('dBg').textContent=m.background;
+  document.getElementById('kSum').textContent=k.summary;
+  document.getElementById('kVerd').textContent='⚠️ '+k.consultantVerdict;
+  document.getElementById('sFlows').textContent=DATA.flows.length;
+  const tg=document.getElementById('kTags');
+  (k.strengths||[]).forEach(s=>{const x=document.createElement('span');x.className='ktag ok';x.textContent='✓ '+s;tg.appendChild(x);});
+  (k.risks||[]).forEach(r=>{const x=document.createElement('span');x.className='ktag ng';x.textContent='⚠ '+r;tg.appendChild(x);});
+  const ag=document.getElementById('dActs');
+  DATA.mandala.themes.forEach(th=>{
+    const top=th.items.filter(i=>i.priority===1)[0];if(!top)return;
+    const col=th.color||TC[th.index];
+    const d=document.createElement('div');d.className='act-item';d.onclick=()=>goMatrix(th.index);
+    d.innerHTML=`<div class="act-dot" style="background:${col}"></div><div><div class="act-tx"><strong>${th.name}</strong></div><div class="act-sub">${top.text}</div></div>`;
+    ag.appendChild(d);
+  });
+  updatePct();
+}
+function updatePct(){
+  const c=checks(),total=DATA.flows.reduce((s,f)=>s+f.steps.length,0)||1,done=Object.values(c).filter(Boolean).length,p=Math.round(done/total*100);
+  document.getElementById('hPct').textContent=p+'%';document.getElementById('hFill').style.width=p+'%';document.getElementById('sPct').textContent=p+'%';
+}
+
+/* ================================================================ MANDALA ================================================================ */
+const SG=[[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+const CP=[[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+const IO=[[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]];
+function renderMandala(){
+  const grid=Array.from({length:9},()=>Array(9).fill({t:'empty'}));grid[4][4]={t:'center'};
+  DATA.mandala.themes.forEach((th,ti)=>{
+    const[cr,cc]=CP[ti];grid[cr][cc]={t:'theme',th,ti};
+    const[sr,sc]=SG[ti];grid[sr+1][sc+1]={t:'tr',th,ti};
+    th.items.forEach((item,ii)=>{const[or,oc]=IO[ii];grid[sr+or][sc+oc]={t:'item',item,th,ti};});
+  });
+  const g=document.getElementById('mGrid');g.innerHTML='';
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+    const cell=grid[r][c],d=document.createElement('div');d.className='mc';
+    if(cell.t==='center'){d.classList.add('center');d.textContent=DATA.mandala.center;}
+    else if(cell.t==='theme'){const col=cell.th.color||TC[cell.ti];d.classList.add('theme','cp');d.style.background=col;d.textContent=cell.th.name;d.title=cell.th.description||'';d.onclick=()=>goMatrix(cell.ti);}
+    else if(cell.t==='tr'){const col=cell.th.color||TC[cell.ti];d.classList.add('tr','cp');d.style.background=col;d.textContent=cell.th.name;d.onclick=()=>goMatrix(cell.ti);}
+    else if(cell.t==='item'){d.classList.add('item');d.style.background=cell.th.bgLight||TBG[cell.ti];d.style.color='var(--dim)';d.textContent=cell.item.text;d.title=cell.item.description||cell.item.text;}
+    else{d.classList.add('empty');}
+    g.appendChild(d);
+  }
+  const leg=document.getElementById('mLeg');leg.innerHTML='';
+  DATA.mandala.themes.forEach((th,ti)=>{const col=th.color||TC[ti];const l=document.createElement('div');l.className='m-leg';l.onclick=()=>goMatrix(ti);l.innerHTML=`<div class="m-leg-dot" style="background:${col}"></div>${th.name}`;leg.appendChild(l);});
+}
+
+/* ================================================================ MATRIX ================================================================ */
+function renderMatrix(ti){
+  curTheme=ti;const th=DATA.mandala.themes[ti],mx=DATA.matrices[ti]||DATA.matrices[0];
+  document.getElementById('mxBcTh').textContent=th?th.name:'マトリクス';
+  const pp=document.getElementById('tPills');pp.innerHTML='';
+  DATA.mandala.themes.forEach((t,i)=>{const col=t.color||TC[i];const p=document.createElement('div');p.className='t-pill'+(i===ti?' on':'');p.style.background=col;p.textContent=t.name;p.onclick=()=>renderMatrix(i);pp.appendChild(p);});
+  if(!mx)return;
+  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'');
+  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'')+'｜ '+(mx.xAxis?.highLabel||'高')+'→';
+  const g=document.getElementById('mxGrid');Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
+  ['tl','tr','bl','br'].forEach(pos=>{
+    const qd=mx.quadrants.find(q=>q.pos===pos);const d=document.createElement('div');d.className='quad q-'+pos;
+    if(qd){
+      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
+      (qd.items||[]).forEach(item=>{const it=document.createElement('div');it.className='qi';it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}</div><div class="qi-ar">→</div>`;it.onclick=()=>goFlow(ti,qd.id,item.text);d.appendChild(it);});
+    }
+    g.appendChild(d);
+  });
+  if(mx.kaiInsight){document.getElementById('mxKaiTx').textContent=mx.kaiInsight;document.getElementById('mxKai').style.display='block';}
+  else{document.getElementById('mxKai').style.display='none';}
+}
+
+/* ================================================================ FLOW ================================================================ */
+const SICO={action:{bg:'rgba(99,102,241,.2)',col:'#A5B4FC',ic:'▶',cls:'fb-act',lbl:'アクション'},decision:{bg:'rgba(245,158,11,.2)',col:'#FCD34D',ic:'◆',cls:'fb-dec',lbl:'判断'},milestone:{bg:'rgba(16,185,129,.2)',col:'#6EE7B7',ic:'★',cls:'fb-mil',lbl:'マイルストーン'},warning:{bg:'rgba(239,68,68,.2)',col:'#FCA5A5',ic:'!',cls:'fb-wrn',lbl:'注意'}};
+function renderFlow(fl){
+  const c=checks(),con=document.getElementById('flSteps');con.innerHTML='';
+  fl.steps.forEach(step=>{
+    const si=SICO[step.type]||SICO.action,cid=fl.id+'-s'+step.order,ck=c[cid]||false;
+    const d=document.createElement('div');d.className='fl-step';
+    d.innerHTML=`<div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+    <div class="fl-card${ck?' done':''}">
+      <div class="fl-ord">STEP ${step.order}</div>
+      <div class="fl-title">${step.title}</div>
+      <div class="fl-desc">${step.description}</div>
+      <div class="fl-meta"><span class="fbg ${si.cls}">${si.lbl}</span>${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}</div>
+      <label class="fl-check${ck?' done':''}"><input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)"> 完了としてマーク</label>
+    </div>`;
+    con.appendChild(d);
+  });
+  if(fl.kaiComment){document.getElementById('flKaiTx').textContent=fl.kaiComment;document.getElementById('flKai').style.display='block';}
+  else{document.getElementById('flKai').style.display='none';}
+}
+function onCk(el){
+  saveCheck(el.dataset.cid,el.checked);
+  const card=el.closest('.fl-card'),lbl=el.closest('.fl-check');
+  el.checked?(card.classList.add('done'),lbl.classList.add('done')):(card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================ GANTT ================================================================ */
+function renderGantt(){
+  const g=DATA.gantt,wk=g.totalWeeks||24;
+  document.getElementById('gtTitle').textContent=g.title||'実行タイムライン';
+  const con=document.getElementById('gtChart');con.innerHTML='';
+  const hdr=document.createElement('div');hdr.className='gt-hdr';
+  for(let w=1;w<=wk;w++){const wd=document.createElement('div');wd.className='gt-wk';wd.textContent=(w%4===0)?'W'+w:'';hdr.appendChild(wd);}
+  con.appendChild(hdr);
+  g.phases.forEach(ph=>{
+    const pl=document.createElement('div');pl.className='gt-phase';pl.textContent=ph.name;con.appendChild(pl);
+    ph.tasks.forEach(task=>{
+      const row=document.createElement('div');row.className='gt-row';
+      const nm=document.createElement('div');nm.className='gt-name';nm.textContent=task.name;nm.title=task.name;row.appendChild(nm);
+      const bw=document.createElement('div');bw.className='gt-bars';bw.style.flex='1';bw.style.position='relative';bw.style.height='28px';
+      const bar=document.createElement('div');
+      bar.className='gt-bar'+(task.isCritical?' crit':'')+(task.milestone?' ms':'');
+      bar.style.left=((task.startWeek-1)/wk*100)+'%';
+      bar.style.width=task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%';
+      bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary)'));
+      bar.textContent=task.milestone?'◆':task.name;bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bw.appendChild(bar);row.appendChild(bw);con.appendChild(row);
+    });
+  });
+}
+
+/* ================================================================ KAI FLOAT ================================================================ */
+function buildKaiPanel(){
+  const k=DATA.kai,p=document.getElementById('kfPanel');
+  let h=`<div class="kf-sec"><div class="kf-sec-t">📌 コアイシュー</div><div class="kf-ins">${k.coreIssue||'—'}</div></div><div class="kf-sec"><div class="kf-sec-t">🎯 最優先アクション</div><div class="kf-ins">${k.topPriority||'—'}</div></div>`;
+  if(k.themeInsights&&k.themeInsights.length){
+    h+=`<div class="kf-sec"><div class="kf-sec-t">🧭 テーマ別アドバイス</div>`;
+    k.themeInsights.forEach(ti=>{const th=DATA.mandala.themes[ti.index];const col=th?(th.color||TC[ti.index]):'#6366F1';h+=`<div class="kf-ins" style="border-left:3px solid ${col};padding-left:10px"><strong style="color:${col}">${th?th.name:'テーマ'+(ti.index+1)}</strong><br>${ti.insight}</div>`;});
+    h+='</div>';
+  }
+  p.innerHTML=h;
+}
+function toggleKai(){const p=document.getElementById('kfPanel'),a=document.getElementById('kfArr');p.classList.toggle('on');a.textContent=p.classList.contains('on')?'▼':'▲';}
+
+/* ================================================================ INIT ================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDash();renderMandala();buildKaiPanel();
+  if(DATA.matrices.length)renderMatrix(0);
+  document.getElementById('flEmpty').style.display='block';
+  document.getElementById('flSteps').innerHTML='';
+  document.getElementById('flKai').style.display='none';
+});
+</script>
+</body>
+</html>
