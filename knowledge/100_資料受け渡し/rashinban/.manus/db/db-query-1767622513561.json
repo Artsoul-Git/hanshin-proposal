@@ -1,0 +1,40 @@
+{
+  "query": "SELECT p.id, p.title, p.status, (SELECT COUNT(*) FROM hearingQuestions hq WHERE hq.projectId = p.id) as question_count FROM projects p ORDER BY p.id DESC LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2hmW7JoNEqgT9bn.42e7d04f85c2 --database UXC9acevbVPZUwg2UyJ9NW --execute SELECT p.id, p.title, p.status, (SELECT COUNT(*) FROM hearingQuestions hq WHERE hq.projectId = p.id) as question_count FROM projects p ORDER BY p.id DESC LIMIT 5;",
+  "rows": [
+    {
+      "id": "9",
+      "title": "プログラミングスキル向上",
+      "status": "draft",
+      "question_count": "0"
+    },
+    {
+      "id": "8",
+      "title": "プログラミングスキル向上",
+      "status": "draft",
+      "question_count": "0"
+    },
+    {
+      "id": "7",
+      "title": "プログラミングスキル向上",
+      "status": "draft",
+      "question_count": "0"
+    },
+    {
+      "id": "6",
+      "title": "プログラミングスキル向上",
+      "status": "draft",
+      "question_count": "0"
+    },
+    {
+      "id": "5",
+      "title": "英語学習の目標達成",
+      "status": "draft",
+      "question_count": "0"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tstatus\tquestion_count\n9\tプログラミングスキル向上\tdraft\t0\n8\tプログラミングスキル向上\tdraft\t0\n7\tプログラミングスキル向上\tdraft\t0\n6\tプログラミングスキル向上\tdraft\t0\n5\t英語学習の目標達成\tdraft\t0\n",
+  "stderr": "",
+  "execution_time_ms": 1515
+}
