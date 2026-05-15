@@ -66,6 +66,21 @@
   .changelog-date { font-weight: bold; color: #1A365D; }
   hr { border: none; border-top: 1px solid #EDF2F7; margin: 44px 0; }
   a { color: #3182CE; }
+
+  /* ── トグルボックス（ワンポイントアドバイス）── */
+  details { border: 1px solid #D6BCFA; border-radius: 8px; margin: 12px 0; overflow: hidden; }
+  details[open] { border-color: #805AD5; }
+  summary { padding: 11px 16px; cursor: pointer; background: #FAF5FF; color: #553C9A; font-weight: bold; font-size: 14px; user-select: none; display: flex; align-items: center; gap: 8px; list-style: none; line-height: 1.5; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▶"; font-size: 10px; flex-shrink: 0; margin-top: 1px; }
+  details[open] summary::before { content: "▼"; }
+  .qa { padding: 16px 20px; font-size: 14px; line-height: 1.9; background: #FDFCFF; border-top: 1px solid #E9D8FD; }
+  .qa p { margin: 10px 0; font-size: 14px; }
+  .qa p:first-child { margin-top: 0; }
+  .qa p:last-child { margin-bottom: 0; }
+  .qa ul { margin: 8px 0; font-size: 14px; }
+  .qa strong { color: #44337A; }
+
   @media (max-width: 680px) { .container { padding: 28px 20px; } }
 </style>
 </head>
@@ -130,7 +145,30 @@
   <h2 id="s3"><span class="sec-num">3</span> Node.js のインストール</h2>
   <p>Claude Code を動かすには「Node.js（ノードジェイエス）」というソフトが必要です。これはClaude Code の「土台」のようなものです。</p>
 
+  <details>
+    <summary>Node.js って何ですか？入れて大丈夫なものですか？</summary>
+    <div class="qa">
+      <p>Node.js は「ウェブサービスやアプリを作るための世界標準ツール」で、Google・Netflix・LinkedInなど世界の大企業も使っています。OpenJS Foundation という非営利団体が管理しており、世界2億台以上のパソコンにインストールされている、信頼性の高いソフトです。</p>
+      <p>ウイルスや悪意のあるソフトではありません。Claude Code がこのソフトの上で動く仕組みになっているため、必須のインストールです。</p>
+      <p><strong>後で消せますか？</strong><br>はい。Windowsなら「設定」→「アプリ」から普通のアプリと同じように削除できます。Macも「アプリケーション」フォルダから削除できます。</p>
+      <p><strong>インストール中に何かが盗まれたりしない？</strong><br>Node.js 自体はインターネットに何かを送ったりしません。ファイルをダウンロードしてパソコンにインストールするだけです。公式サイト（nodejs.org）からダウンロードすれば安全です。</p>
+    </div>
+  </details>
+
   <h3>すでに入っているか確認する</h3>
+
+  <details>
+    <summary>「ターミナル（黒い画面）」って何ですか？怖くないですか？</summary>
+    <div class="qa">
+      <p>ターミナルとは、パソコンにキーボードで命令を文字で打ち込む画面のことです。昔はすべてのパソコン操作がこの形式でしたが、マウスで操作できるようになってから見る機会が減りました。</p>
+      <p><strong>怖くありません。</strong>画面が黒いだけで、普通のアプリと同じです。文字を打って Enter を押して初めて命令が実行されます。Enter を押さない限り、何も起きません。</p>
+      <p><strong>ミスしても大丈夫です。</strong>打ち間違えてもEnterを押さなければ影響ゼロ。押した後でも「元に戻す」コマンドで取り消せる操作がほとんどです。</p>
+      <p><strong>開き方：</strong><br>
+      Windows：「Windowsキー」を押して「powershell」と検索 →「Windows PowerShell」をクリック<br>
+      Mac：「アプリケーション」→「ユーティリティ」→「ターミナル」をダブルクリック</p>
+    </div>
+  </details>
+
   <p>「ターミナル」（Windowsなら PowerShell、Macならターミナル）を開いて、以下を入力してEnterを押してください：</p>
   <pre><code>node --version</code></pre>
   <p><code>v18.0.0</code> 以上の数字が表示されればOKです。次のセクションに進んでください。<br>
@@ -149,18 +187,59 @@
   <div class="step"><span class="sn">4</span> PCを一度再起動する</div>
   <div class="step"><span class="sn">5</span> ターミナルを開いて <code>node --version</code> と打ち、数字が表示されれば成功</div>
 
+  <details>
+    <summary>「LTS」って何ですか？どれを選べばいい？</summary>
+    <div class="qa">
+      <p>LTS は「Long Term Support（長期サポート版）」の略です。安定していて、長期間セキュリティ対応がされるバージョンという意味です。</p>
+      <p>一般的な用途では必ずこちらを選んでください。もう一方の「最新版（Current）」は新機能が試せますが不安定なことがあるため初心者には向きません。</p>
+    </div>
+  </details>
+
   <!-- S4 -->
   <h2 id="s4"><span class="sec-num">4</span> Claude Code のインストール</h2>
   <p>Node.js が入ったら、Claude Code をインストールします。ターミナルに以下をそのままコピー＆ペーストしてEnterを押してください：</p>
+
+  <details>
+    <summary>「npm install」って何をしているの？怪しいコマンドじゃないですか？</summary>
+    <div class="qa">
+      <p>npm（エヌピーエム）は「Node Package Manager」の略で、ソフトウェアを安全に配布・管理するための公式の仕組みです。スマートフォンの「App Store」や「Google Play」に近いイメージです。</p>
+      <p><code>npm install -g @anthropic-ai/claude-code</code> は「Anthropic（Claudeの開発会社）が公開しているClaude Codeというソフトを、公式の配布場所からダウンロードしてインストールする」という命令です。</p>
+      <p><strong><code>@anthropic-ai</code> の部分が重要です。</strong>これはAnthropicの公式パッケージであることを示すIDです。まったく知らない会社のコマンドを実行するわけではありません。</p>
+      <p><code>-g</code> は「このパソコン全体で使えるようにする」という意味のオプションです。</p>
+    </div>
+  </details>
+
   <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
 
-  <p>「Successfully installed」のような表示が出ればインストール完了です。</p>
+  <details>
+    <summary>インストール中に英語がたくさん流れてきた。エラーですか？</summary>
+    <div class="qa">
+      <p>大丈夫です。npm install は「何をダウンロードしているか」をリアルタイムで表示するため、大量の英語が流れます。これは正常な動作です。</p>
+      <p><strong>問題ない場合のサイン（最後にこういった表示が出る）：</strong><br>
+      「added ○○○ packages」「Successfully installed」など</p>
+      <p><strong>問題がある場合のサイン：</strong><br>
+      「Error」「ERR!」などの赤い文字が大量に出る場合はエラーです。その画面をスクリーンショットして保存しておくと、後でAIに見せて解決策を聞けます。</p>
+      <p>黄色い「WARN」という文字は「警告」ですが、ほとんどの場合は無視して問題ありません。</p>
+    </div>
+  </details>
+
+  <p>最後に「Successfully installed」のような表示が出ればインストール完了です。</p>
 
   <div class="warn">
     <span class="lbl">エラーが出た場合（Windowsのみ）</span>
     PowerShell を「管理者として実行」してから同じコマンドを試してください。<br>
     スタートメニューで「powershell」を右クリック →「管理者として実行」を選択。
   </div>
+
+  <details>
+    <summary>「管理者として実行」って何ですか？やって大丈夫ですか？</summary>
+    <div class="qa">
+      <p>Windowsでは、パソコン全体に関わる変更（ソフトのインストールなど）には「管理者権限」が必要な場合があります。「管理者として実行」とは、その権限を持った状態でPowerShellを起動することです。</p>
+      <p>家で例えるなら「合鍵を使って家の中の大きな家具を動かせる状態」のようなイメージです。</p>
+      <p><strong>このガイドで紹介しているコマンドはすべて安全です。</strong>Anthropicの公式ドキュメントに記載されたコマンドのみを使っています。</p>
+      <p>ただし一般的な注意として、知らない人から「このコマンドを管理者権限で実行して」と言われた場合は実行しないようにしてください。</p>
+    </div>
+  </details>
 
   <h3>インストールできたか確認する</h3>
   <pre><code>claude --version</code></pre>
@@ -180,14 +259,43 @@
 
   <div class="step"><span class="sn">1</span> Dropbox（または OneDrive / Googleドライブ）フォルダを開く</div>
   <div class="step"><span class="sn">2</span> 新しいフォルダを作る（例：「AI作業フォルダ」「マイAIワークスペース」など好きな名前でOK）</div>
-  <div class="step"><span class="sn">3</span> そのフォルダのパス（場所）をメモしておく<br>
+  <div class="step"><span class="sn">3</span> そのフォルダの「パス（場所）」をメモしておく<br>
     例（Windows）：<code>C:\Users\あなたの名前\Dropbox\AI作業フォルダ</code><br>
     例（Mac）：<code>/Users/あなたの名前/Dropbox/AI作業フォルダ</code>
   </div>
 
+  <details>
+    <summary>「パス」って何ですか？どうやって調べればいい？</summary>
+    <div class="qa">
+      <p>パス（path）とは、パソコンの中でファイルやフォルダがどこにあるかを示す「住所」のことです。</p>
+      <p><code>C:\Users\田中\Dropbox\AI作業フォルダ</code> は「Cドライブの中の、田中というユーザーフォルダの中の、Dropboxフォルダの中の、AI作業フォルダ」という意味です。</p>
+      <p><strong>パスを調べる方法（Windows）：</strong><br>
+      エクスプローラーでフォルダを開く → 上部のアドレスバーをクリック → パスが全部表示される → 右クリックでコピー</p>
+      <p><strong>パスを調べる方法（Mac）：</strong><br>
+      フォルダを右クリック → 「情報を見る」→「場所」の欄に表示される<br>
+      または：フォルダを開いた状態で「command + option + P」を押すと下部にパスが表示される</p>
+      <p><strong>スペースが含まれる場合：</strong>パスの中にスペース（空白）が含まれるときは、コマンドに使うときに前後を <code>"</code>（ダブルクォーテーション）で囲む必要があります。このガイドではそのようにしています。</p>
+    </div>
+  </details>
+
   <!-- S6 -->
   <h2 id="s6"><span class="sec-num">6</span> データを守る仕組みを作る（Git）</h2>
   <p>「Git（ギット）」は、ファイルの変更履歴を自動的に記録してくれるツールです。ゲームの「セーブデータ」と同じ仕組みで、AIが誤ってファイルを変えてしまっても<strong>一瞬で元に戻せます</strong>。</p>
+
+  <details>
+    <summary>Gitって本当に必要ですか？なんだか難しそうで不安です</summary>
+    <div class="qa">
+      <p>正直に言うと、Gitがなくても Claude Code は動きます。ただし、<strong>AIが間違えたときに取り返しがつかなくなります。</strong></p>
+      <p>AIは「よかれと思って」ファイルを大量に変更することがあります。1〜2ファイルなら手動で直せますが、10個・20個となると現実的ではありません。</p>
+      <p>Gitを使うコマンドは実際には3つだけです：</p>
+      <ul>
+        <li><code>git add .</code>（セーブの準備）</li>
+        <li><code>git commit -m "名前"</code>（セーブ実行）</li>
+        <li><code>git restore .</code>（元に戻す）</li>
+      </ul>
+      <p>これだけ覚えれば十分です。AIに「Gitでセーブして」と頼めば代わりにやってもくれます。</p>
+    </div>
+  </details>
 
   <div class="good">
     <span class="lbl">なぜ必要か</span>
@@ -209,11 +317,48 @@
   <pre><code>git config --global user.name "あなたの名前"</code></pre>
   <pre><code>git config --global user.email "あなたのメール@example.com"</code></pre>
 
+  <details>
+    <summary>なぜ名前とメールが必要なの？どこかに送られる？</summary>
+    <div class="qa">
+      <p>Gitは「誰がいつセーブしたか」を記録するために名前とメールを使います。これはあなたのパソコンの中だけに保存されるものであり、外部に送信されることはありません。</p>
+      <p>GitHub などのサービスと連携する場合は表示されることがありますが、このガイドの範囲ではパソコン内で完結します。架空の名前でも動作しますが、後で見たときに自分とわかる名前にしておくと管理しやすいです。</p>
+    </div>
+  </details>
+
   <h3>③ 作業フォルダをGit管理下に置く</h3>
+
+  <details>
+    <summary>「git init」で何が起きますか？パソコン全体に影響しない？</summary>
+    <div class="qa">
+      <p><code>git init</code> は「このフォルダをGitで管理し始める」という宣言です。フォルダの中に「.git」という小さな隠しフォルダが作られるだけで、それ以外は何も変わりません。</p>
+      <p><strong>パソコン全体には一切影響しません。</strong>このフォルダの中だけの変更履歴を記録する準備が整うイメージです。</p>
+      <p>後でGit管理をやめたい場合は「.git」という隠しフォルダを削除するだけでOKです。</p>
+    </div>
+  </details>
+
   <p>作業フォルダの中でターミナルを開き、以下を順番に実行します：</p>
   <pre><code>git init</code></pre>
+
+  <details>
+    <summary>「git add .」の「.（ドット）」って何ですか？</summary>
+    <div class="qa">
+      <p>「.（ドット）」は「このフォルダの中にある全てのファイル」を意味するショートカット記号です。</p>
+      <p>つまり <code>git add .</code> は「フォルダ内の全ての変更ファイルを、次のセーブの対象にする」という意味です。</p>
+      <p>特定のファイルだけ対象にする方法もありますが、最初は全部まとめてセーブする <code>git add .</code> で問題ありません。</p>
+    </div>
+  </details>
+
   <pre><code>git add .</code></pre>
   <pre><code>git commit -m "はじめてのセーブ"</code></pre>
+
+  <details>
+    <summary>「git commit -m "..."」の <code>-m</code> と「" "」って何ですか？</summary>
+    <div class="qa">
+      <p><code>-m</code> は「メッセージ（message）」の略で、「このセーブにメモを付ける」という意味のオプションです。</p>
+      <p><code>"はじめてのセーブ"</code> の部分が実際のメモ内容です。あとで「いつ何をセーブしたか」を見返すときのための名前です。日本語でも英語でも好きな言葉でOKです。</p>
+      <p>例えば「提案書修正前」「会議資料完成版」など、内容がわかる名前にしておくと便利です。</p>
+    </div>
+  </details>
 
   <div class="tip">
     <span class="lbl">フォルダの中でターミナルを開く方法（Windows）</span>
@@ -225,11 +370,31 @@
     <code>git restore .</code> と打つと、最後にセーブした時点に全ファイルが戻ります。
   </div>
 
+  <details>
+    <summary>「git restore .」で本当に元に戻りますか？戻しすぎることはない？</summary>
+    <div class="qa">
+      <p><code>git restore .</code> は「最後に <code>git commit</code> した時点」に戻ります。それより古いセーブには戻りません。</p>
+      <p>イメージとしては「直前のセーブポイントに戻る」だけです。その1つ前のセーブには影響しません。</p>
+      <p><strong>注意：</strong>コミット後にセーブしていない変更は消えます。「やっぱり戻したくない」と思った場合でも、一度実行すると取り消せません。迷ったら実行前にAIに「どうなるか確認して」と聞いてから実行しましょう。</p>
+    </div>
+  </details>
+
   <!-- S7 -->
   <h2 id="s7"><span class="sec-num">7</span> Claude Code を起動して確認する</h2>
-  <p>ターミナルで作業フォルダに移動してから、Claude Code を起動します：</p>
+  <p>ターミナルで作業フォルダに移動してから、Claude Code を起動します。</p>
 
   <h3>作業フォルダに移動する</h3>
+
+  <details>
+    <summary>「cd」コマンドって何をしているの？なぜ移動が必要？</summary>
+    <div class="qa">
+      <p><code>cd</code> は「Change Directory（ディレクトリを変える）」の略です。ターミナルが「今どのフォルダを作業対象にしているか」を切り替えるコマンドです。</p>
+      <p>エクスプローラーで「フォルダをダブルクリックして開く」のと同じ感覚です。</p>
+      <p>Claude Code は「今いるフォルダ」を基準に動くため、作業フォルダに移動してから起動する必要があります。移動せずに起動すると、別の場所（デスクトップなど）で作業してしまいます。</p>
+      <p><strong>パスにスペースが含まれる場合：</strong>前後を <code>"</code> で囲んでください。囲まないとエラーになることがあります。</p>
+    </div>
+  </details>
+
   <pre><code>cd "C:\Users\あなたの名前\Dropbox\AI作業フォルダ"</code></pre>
   <p>（Macの場合は <code>/Users/あなたの名前/Dropbox/AI作業フォルダ</code> のように入力）</p>
 
@@ -237,9 +402,18 @@
   <pre><code>claude</code></pre>
   <p>初回起動時はログイン画面が表示されます。Claude.ai のアカウントでログインしてください。</p>
 
+  <details>
+    <summary>ログイン画面が出た。アカウント情報は安全ですか？</summary>
+    <div class="qa">
+      <p>Claude Code のログインはAnthropicの公式サーバーを通じて行われます。パスワードをターミナルに直接入力するわけではなく、ブラウザが自動的に開いてclaude.ai の通常のログイン画面が表示されます。</p>
+      <p>ログインが完了すると「認証トークン」という一時的な鍵がパソコンに保存され、次回からはこの鍵で自動的に認証されます。<strong>パスワード自体はパソコンに保存されません。</strong></p>
+      <p>この仕組みはGoogleやMicrosoftのサービスと同様の「OAuth認証」という方式で、業界標準の安全な仕組みです。</p>
+    </div>
+  </details>
+
   <div class="good">
     <span class="lbl">起動成功のサイン</span>
-    「&gt;」や「Kai&gt;」のような入力欄が表示されれば成功です！ここにメッセージを入力するとAIが返答します。
+    「&gt;」のような入力欄が表示されれば成功です！ここにメッセージを入力するとAIが返答します。
   </div>
 
   <p>試しに以下と入力してみましょう：</p>
@@ -257,10 +431,18 @@
 
   <p>Claude Code は「設定ファイル」を用意することで、AIの話し方や行動ルールをカスタマイズできます。この設定ファイルのことを <strong>CLAUDE.md</strong>（クロード エムディー）と呼びます。</p>
 
+  <details>
+    <summary>テキストファイルを置くだけで本当にAIの動きが変わるの？</summary>
+    <div class="qa">
+      <p>はい、本当に変わります。Claude Code は起動するたびに、作業フォルダ内の「CLAUDE.md」というファイルを自動的に読み込みます。</p>
+      <p>このファイルに書かれた内容がそのままAIへの「事前指示」として機能するため、名前・話し方・行動ルールを書いておくと毎回同じ設定でAIが動きます。</p>
+      <p><strong>設定が反映されているか確認したい場合：</strong>起動後に「あなたの名前は？」と聞いてみてください。設定した名前で答えてくれれば成功です。</p>
+    </div>
+  </details>
+
   <div class="tip">
     <span class="lbl">CLAUDE.md って何？</span>
-    作業フォルダの中に置くテキストファイルです。Claude Code はこのファイルを毎回自動で読み込むため、「このAIは常にこう振る舞う」という設定が固定されます。<br>
-    いわばAIへの「お仕事の説明書」です。
+    作業フォルダの中に置くテキストファイルです。Claude Code はこのファイルを毎回自動で読み込むため、「このAIは常にこう振る舞う」という設定が固定されます。いわばAIへの「お仕事の説明書」です。
   </div>
 
   <h3>パートナーの名前を決めましょう</h3>
@@ -335,6 +517,15 @@
       <span class="lbl">「CLAUDE.md」として保存する方法（Windows）</span>
       メモ帳（Notepad）を開く → 内容を貼り付ける → 「名前を付けて保存」→ ファイル名を <code>CLAUDE.md</code> と入力 → 「ファイルの種類」を「すべてのファイル」に変更 → 保存
     </div>
+
+    <details style="margin-top:12px;">
+      <summary>「すべてのファイル」に変更しないとどうなる？</summary>
+      <div class="qa">
+        <p>メモ帳（Notepad）でそのまま保存すると、ファイル名が「CLAUDE.md.txt」になってしまいます（.txt という拡張子が自動でつく）。これでは Claude Code が認識できません。</p>
+        <p>「ファイルの種類」を「すべてのファイル」に変えることで、拡張子を自分で指定できるようになります。ファイル名を <code>CLAUDE.md</code> と入力すれば、.md で保存されます。</p>
+        <p>保存後、エクスプローラーでファイル名が <code>CLAUDE.md</code>（.md だけ）になっていることを確認してください。</p>
+      </div>
+    </details>
   </div>
 
   <h3>はじめてのパートナーとの会話</h3>
@@ -399,6 +590,9 @@ git commit -m "作業前バックアップ"</code></pre>
 
     <dt>Q. CLAUDE.md を作ったのに挨拶してくれません</dt>
     <dd>Claude Code を一度完全に終了して、ターミナルも閉じてから再起動してみてください。再起動後に設定が読み込まれます。</dd>
+
+    <dt>Q. 途中でやめても大丈夫ですか？</dt>
+    <dd>はい。ターミナルをいつでも閉じて終了できます。次回、作業フォルダで <code>claude</code> を起動すれば続きから使えます。インストールしたものが消えることもありません。</dd>
   </dl>
 
   <hr>
@@ -406,11 +600,12 @@ git commit -m "作業前バックアップ"</code></pre>
   <!-- CHANGELOG -->
   <h2 id="changelog"><span class="sec-num" style="background:#718096;">―</span> 作成・更新履歴</h2>
   <div class="changelog-entry">
-    <p class="changelog-date">2026-05-15 — 初版作成</p>
+    <p class="changelog-date">2026-05-15 — 初版作成 / v1.1 更新</p>
     <ul style="font-size:14px;margin-top:6px;">
       <li>超初心者向け完全セットアップガイドとして新規作成</li>
       <li>AIパートナー設定（CLAUDE.md）の手順を初収録</li>
       <li>Windows / Mac 両対応の手順を掲載</li>
+      <li>v1.1：立ち止まりやすいポイントにトグル式ワンポイントアドバイスを13箇所追加</li>
     </ul>
   </div>
 
@@ -424,11 +619,9 @@ document.querySelectorAll('pre').forEach(function(pre) {
   btn.addEventListener('click', function() {
     var codeEl = pre.querySelector('code');
     var text = codeEl ? codeEl.innerText : pre.innerText;
-    // ボタン自身のテキストを除去
     text = text.replace(/^コピー\n?|コピー完了！?\n?/g, '').trim();
     function onSuccess() {
-      btn.textContent = 'コピー完了！';
-      btn.classList.add('copied');
+      btn.textContent = 'コピー完了！'; btn.classList.add('copied');
       setTimeout(function() { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2200);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
