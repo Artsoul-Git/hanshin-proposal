@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>はじめてのClaude Code — ゼロから始める完全セットアップガイド</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif; line-height: 1.85; color: #2D3748; background: #F7FAFC; }
+  .container { max-width: 900px; margin: 40px auto 80px; background: white; padding: 60px 70px; box-shadow: 0 4px 40px rgba(0,0,0,0.08); border-radius: 16px; }
+  .hero { text-align: center; padding: 20px 0 40px; border-bottom: 2px solid #EDF2F7; margin-bottom: 36px; }
+  .hero h1 { font-size: 28px; color: #1A365D; margin-bottom: 10px; line-height: 1.4; }
+  .hero .sub { font-size: 15px; color: #718096; margin-bottom: 18px; }
+  .badge-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .tag { display: inline-block; background: #EDF2F7; color: #4A5568; font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: bold; }
+  h2 { font-size: 21px; color: #1A365D; margin-top: 52px; margin-bottom: 16px; padding: 12px 18px; background: #FFFBF5; border-left: 7px solid #ED8936; border-radius: 0 8px 8px 0; display: flex; align-items: center; gap: 10px; }
+  h2 .sec-num { display: inline-block; background: #ED8936; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: bold; flex-shrink: 0; }
+  h3 { font-size: 16px; color: #2D3748; margin: 26px 0 10px; padding-left: 12px; border-left: 3px solid #CBD5E0; font-weight: bold; }
+  p { margin: 12px 0; font-size: 15px; }
+  .lead { font-size: 16px; color: #2C5282; background: #EBF8FF; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #3182CE; line-height: 1.8; }
+  .tip  { background: #FFFAF0; padding: 15px 18px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #ED8936; font-size: 14px; }
+  .tip .lbl  { font-weight: bold; color: #C05621; display: block; margin-bottom: 5px; font-size: 13px; }
+  .warn { background: #FFF5F5; padding: 15px 18px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #E53E3E; font-size: 14px; }
+  .warn .lbl { font-weight: bold; color: #C53030; display: block; margin-bottom: 5px; font-size: 13px; }
+  .good { background: #F0FFF4; padding: 15px 18px; border-radius: 8px; margin: 15px 0; border-left: 5px solid #38A169; font-size: 14px; }
+  .good .lbl { font-weight: bold; color: #276749; display: block; margin-bottom: 5px; font-size: 13px; }
+  .step { background: #F7FAFC; padding: 16px 20px; border-radius: 8px; border: 1px solid #E2E8F0; margin: 10px 0; font-size: 15px; }
+  .sn { display: inline-flex; align-items: center; justify-content: center; background: #1A365D; color: white; width: 24px; height: 24px; border-radius: 50%; font-weight: bold; margin-right: 8px; font-size: 12px; flex-shrink: 0; }
+  pre { background: #1E2533; color: #E2E8F0; padding: 18px 20px; border-radius: 8px; font-family: "Consolas", "Courier New", monospace; font-size: 13.5px; line-height: 1.7; margin: 14px 0; overflow-x: auto; position: relative; }
+  pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+  .pre-prompt { background: #EDF2F7; color: #2D3748; font-style: normal; border: 1px solid #CBD5E0; }
+  .pre-prompt code { color: #2D3748; }
+  code { background: #EDF2F7; color: #C05621; padding: 2px 6px; border-radius: 4px; font-family: "Consolas", "Courier New", monospace; font-size: 0.87em; }
+  pre code { background: none; color: inherit; }
+  .copy-btn { position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.12); color: #A0AEC0; border: 1px solid rgba(255,255,255,0.18); border-radius: 5px; padding: 3px 11px; font-size: 12px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); color: white; }
+  .copy-btn.copied { background: #38A169; border-color: #38A169; color: white; }
+  .pre-prompt .copy-btn { background: rgba(0,0,0,0.06); color: #4A5568; border-color: rgba(0,0,0,0.12); }
+  .pre-prompt .copy-btn:hover { background: rgba(0,0,0,0.12); }
+  ul { padding-left: 22px; margin: 12px 0; }
+  li { margin: 7px 0; font-size: 15px; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; margin: 6px 0; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 14px; }
+  .checklist li::before { content: "□"; font-size: 18px; color: #A0AEC0; line-height: 1.3; flex-shrink: 0; }
+  .toc { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 22px 28px; margin: 28px 0; }
+  .toc h4 { font-size: 13px; color: #718096; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.05em; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 6px 0; font-size: 14px; }
+  .toc a { color: #3182CE; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .milestone { background: linear-gradient(135deg, #1A365D 0%, #2B6CB0 100%); color: white; padding: 28px 32px; border-radius: 12px; margin: 40px 0 24px; text-align: center; }
+  .milestone h3 { color: white; border: none; padding: 0; margin: 0 0 8px; font-size: 19px; }
+  .milestone p { color: rgba(255,255,255,0.85); margin: 0; font-size: 15px; }
+  .name-input-demo { background: #EBF8FF; border: 2px dashed #3182CE; border-radius: 8px; padding: 18px 22px; margin: 16px 0; text-align: center; }
+  .name-input-demo p { font-size: 18px; color: #2C5282; font-weight: bold; margin: 0; }
+  .name-input-demo .hint { font-size: 13px; color: #718096; margin-top: 6px; font-weight: normal; }
+  .method-card { border: 1px solid #E2E8F0; border-radius: 10px; padding: 22px 24px; margin: 14px 0; }
+  .method-card.recommended { border-top: 4px solid #38A169; }
+  .method-card.advanced { border-top: 4px solid #3182CE; }
+  .method-label { font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+  .method-label.green { color: #276749; }
+  .method-label.blue { color: #2B6CB0; }
+  .faq dt { font-weight: bold; color: #1A365D; margin-top: 20px; margin-bottom: 6px; font-size: 15px; }
+  .faq dd { margin-left: 0; padding-left: 14px; border-left: 3px solid #E2E8F0; font-size: 14px; color: #4A5568; }
+  .changelog-entry { border-left: 3px solid #CBD5E0; padding: 10px 18px; margin: 12px 0; font-size: 14px; }
+  .changelog-date { font-weight: bold; color: #1A365D; }
+  hr { border: none; border-top: 1px solid #EDF2F7; margin: 44px 0; }
+  a { color: #3182CE; }
+  @media (max-width: 680px) { .container { padding: 28px 20px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>はじめてのClaude Code<br>ゼロから始める完全セットアップガイド</h1>
+    <p class="sub">パソコンに詳しくなくても大丈夫。順番通りに進めるだけで完成します。</p>
+    <div class="badge-row">
+      <span class="tag">所要時間 約30〜45分</span>
+      <span class="tag">Windows / Mac 対応</span>
+      <span class="tag">完全初心者向け</span>
+    </div>
+  </div>
+
+  <p class="lead">このガイドを最後まで読むと、AIと一緒に仕事ができる環境が整い、あなただけのAIパートナーが誕生します。難しい言葉はできるだけ使わずに説明しますので、安心して進めてください。</p>
+
+  <div class="toc">
+    <h4>目次</h4>
+    <ol>
+      <li><a href="#s1">Claude Codeって何？</a></li>
+      <li><a href="#s2">始める前に確認すること</a></li>
+      <li><a href="#s3">Node.js のインストール</a></li>
+      <li><a href="#s4">Claude Code のインストール</a></li>
+      <li><a href="#s5">作業フォルダを準備する</a></li>
+      <li><a href="#s6">データを守る仕組みを作る（Git）</a></li>
+      <li><a href="#s7">Claude Code を起動して確認する</a></li>
+      <li><a href="#s8">あなただけのAIパートナーを作る</a></li>
+      <li><a href="#s9">毎日の使い方とコツ</a></li>
+      <li><a href="#s10">よくある質問</a></li>
+    </ol>
+  </div>
+
+  <!-- S1 -->
+  <h2 id="s1"><span class="sec-num">1</span> Claude Codeって何？</h2>
+  <p>Claude Code（クロード コード）は、Anthropic（アンソロピック）という会社が作ったAIツールです。</p>
+  <p>普通のAIチャット（例：ChatGPTやClaude.aiのウェブ版）とのいちばんの違いは、<strong>あなたのパソコン上のファイルを直接読んだり書いたりできる</strong>ことです。</p>
+  <ul>
+    <li>文章の作成・修正・翻訳</li>
+    <li>ファイルの整理・一括変換</li>
+    <li>表やデータの加工</li>
+    <li>プログラムの作成（知識不要）</li>
+    <li>調べ物・まとめ・提案書の作成</li>
+  </ul>
+  <div class="tip">
+    <span class="lbl">チャットとの違いをひとことで言うと</span>
+    ウェブのAIチャット＝「話し相手」　Claude Code＝「実際に手を動かしてくれる同僚」
+  </div>
+
+  <!-- S2 -->
+  <h2 id="s2"><span class="sec-num">2</span> 始める前に確認すること</h2>
+  <p>以下の3つが揃っているか確認してください。</p>
+  <ul class="checklist">
+    <li><div><strong>Claude.ai のアカウント（Proプラン以上）</strong><br><span style="color:#718096;">Claude Code を使うには有料プラン（月額約3,000円〜）が必要です。<a href="https://claude.ai" target="_blank">claude.ai</a> でサインアップできます。</span></div></li>
+    <li><div><strong>Windows 10/11 または Mac（OSX 10.15以上）のパソコン</strong><br><span style="color:#718096;">スマートフォンやタブレットでは動きません。</span></div></li>
+    <li><div><strong>インターネット接続</strong><br><span style="color:#718096;">Claude Code はAIと通信しながら動くため、常時接続が必要です。</span></div></li>
+  </ul>
+
+  <!-- S3 -->
+  <h2 id="s3"><span class="sec-num">3</span> Node.js のインストール</h2>
+  <p>Claude Code を動かすには「Node.js（ノードジェイエス）」というソフトが必要です。これはClaude Code の「土台」のようなものです。</p>
+
+  <h3>すでに入っているか確認する</h3>
+  <p>「ターミナル」（Windowsなら PowerShell、Macならターミナル）を開いて、以下を入力してEnterを押してください：</p>
+  <pre><code>node --version</code></pre>
+  <p><code>v18.0.0</code> 以上の数字が表示されればOKです。次のセクションに進んでください。<br>
+  「コマンドが見つかりません」などのエラーが出た場合は、以下でインストールします。</p>
+
+  <div class="tip">
+    <span class="lbl">ターミナル（黒い画面）の開き方</span>
+    <strong>Windows：</strong>キーボードの「Windows キー」を押して「powershell」と検索 → 「Windows PowerShell」をクリック<br>
+    <strong>Mac：</strong>「アプリケーション」→「ユーティリティ」→「ターミナル」をダブルクリック
+  </div>
+
+  <h3>Node.js のインストール手順</h3>
+  <div class="step"><span class="sn">1</span> <a href="https://nodejs.org/ja/" target="_blank">nodejs.org/ja</a> をブラウザで開く</div>
+  <div class="step"><span class="sn">2</span> 「LTS」と書かれたボタン（推奨版）をクリックしてダウンロード</div>
+  <div class="step"><span class="sn">3</span> ダウンロードしたファイルを開き、「次へ」を押し続けてインストール完了</div>
+  <div class="step"><span class="sn">4</span> PCを一度再起動する</div>
+  <div class="step"><span class="sn">5</span> ターミナルを開いて <code>node --version</code> と打ち、数字が表示されれば成功</div>
+
+  <!-- S4 -->
+  <h2 id="s4"><span class="sec-num">4</span> Claude Code のインストール</h2>
+  <p>Node.js が入ったら、Claude Code をインストールします。ターミナルに以下をそのままコピー＆ペーストしてEnterを押してください：</p>
+  <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+
+  <p>「Successfully installed」のような表示が出ればインストール完了です。</p>
+
+  <div class="warn">
+    <span class="lbl">エラーが出た場合（Windowsのみ）</span>
+    PowerShell を「管理者として実行」してから同じコマンドを試してください。<br>
+    スタートメニューで「powershell」を右クリック →「管理者として実行」を選択。
+  </div>
+
+  <h3>インストールできたか確認する</h3>
+  <pre><code>claude --version</code></pre>
+  <p>バージョン番号が表示されればOKです。</p>
+
+  <!-- S5 -->
+  <h2 id="s5"><span class="sec-num">5</span> 作業フォルダを準備する</h2>
+  <p>Claude Code は「フォルダ」を単位として動きます。AIと一緒に仕事をするための専用フォルダを用意しましょう。</p>
+
+  <h3>おすすめの保存場所</h3>
+  <p>Dropbox や OneDrive などのクラウド同期フォルダの中に作ることをおすすめします。理由：</p>
+  <ul>
+    <li>パソコンが壊れても自動でバックアップされている</li>
+    <li>別のPCからも作業できる</li>
+    <li>速度が安定している</li>
+  </ul>
+
+  <div class="step"><span class="sn">1</span> Dropbox（または OneDrive / Googleドライブ）フォルダを開く</div>
+  <div class="step"><span class="sn">2</span> 新しいフォルダを作る（例：「AI作業フォルダ」「マイAIワークスペース」など好きな名前でOK）</div>
+  <div class="step"><span class="sn">3</span> そのフォルダのパス（場所）をメモしておく<br>
+    例（Windows）：<code>C:\Users\あなたの名前\Dropbox\AI作業フォルダ</code><br>
+    例（Mac）：<code>/Users/あなたの名前/Dropbox/AI作業フォルダ</code>
+  </div>
+
+  <!-- S6 -->
+  <h2 id="s6"><span class="sec-num">6</span> データを守る仕組みを作る（Git）</h2>
+  <p>「Git（ギット）」は、ファイルの変更履歴を自動的に記録してくれるツールです。ゲームの「セーブデータ」と同じ仕組みで、AIが誤ってファイルを変えてしまっても<strong>一瞬で元に戻せます</strong>。</p>
+
+  <div class="good">
+    <span class="lbl">なぜ必要か</span>
+    AIは一度に大量のファイルを変更できます。Gitがあれば「元に戻して」の一言で完全に復元できます。必ず設定しておきましょう。
+  </div>
+
+  <h3>① Git をインストールする</h3>
+  <p>ターミナルで確認：</p>
+  <pre><code>git --version</code></pre>
+  <p>数字が表示されれば入っています。表示されなかった場合：</p>
+  <div class="tip">
+    <span class="lbl">インストール方法</span>
+    <strong>Windows：</strong><a href="https://git-for-windows.github.io/" target="_blank">git-for-windows.github.io</a> からダウンロードし、全て「Next」でインストール<br>
+    <strong>Mac：</strong>ターミナルで <code>xcode-select --install</code> と打つと自動でインストールされます
+  </div>
+
+  <h3>② 名前とメールを登録する（最初の1回だけ）</h3>
+  <p>以下を1行ずつ実行してください。名前とメールは自分のものに変えてください：</p>
+  <pre><code>git config --global user.name "あなたの名前"</code></pre>
+  <pre><code>git config --global user.email "あなたのメール@example.com"</code></pre>
+
+  <h3>③ 作業フォルダをGit管理下に置く</h3>
+  <p>作業フォルダの中でターミナルを開き、以下を順番に実行します：</p>
+  <pre><code>git init</code></pre>
+  <pre><code>git add .</code></pre>
+  <pre><code>git commit -m "はじめてのセーブ"</code></pre>
+
+  <div class="tip">
+    <span class="lbl">フォルダの中でターミナルを開く方法（Windows）</span>
+    エクスプローラーで作業フォルダを開く → アドレスバーに <code>powershell</code> と入力 → Enter
+  </div>
+
+  <div class="warn">
+    <span class="lbl">何かおかしくなったときの復元コマンド（覚えておいてください）</span>
+    <code>git restore .</code> と打つと、最後にセーブした時点に全ファイルが戻ります。
+  </div>
+
+  <!-- S7 -->
+  <h2 id="s7"><span class="sec-num">7</span> Claude Code を起動して確認する</h2>
+  <p>ターミナルで作業フォルダに移動してから、Claude Code を起動します：</p>
+
+  <h3>作業フォルダに移動する</h3>
+  <pre><code>cd "C:\Users\あなたの名前\Dropbox\AI作業フォルダ"</code></pre>
+  <p>（Macの場合は <code>/Users/あなたの名前/Dropbox/AI作業フォルダ</code> のように入力）</p>
+
+  <h3>Claude Code を起動する</h3>
+  <pre><code>claude</code></pre>
+  <p>初回起動時はログイン画面が表示されます。Claude.ai のアカウントでログインしてください。</p>
+
+  <div class="good">
+    <span class="lbl">起動成功のサイン</span>
+    「&gt;」や「Kai&gt;」のような入力欄が表示されれば成功です！ここにメッセージを入力するとAIが返答します。
+  </div>
+
+  <p>試しに以下と入力してみましょう：</p>
+  <pre><code>こんにちは！何ができるか教えてください。</code></pre>
+
+  <hr>
+
+  <!-- S8 -->
+  <div class="milestone">
+    <h3>セットアップ完了！</h3>
+    <p>ここからが本番です。あなただけのAIパートナーを作りましょう。</p>
+  </div>
+
+  <h2 id="s8"><span class="sec-num">8</span> あなただけのAIパートナーを作る</h2>
+
+  <p>Claude Code は「設定ファイル」を用意することで、AIの話し方や行動ルールをカスタマイズできます。この設定ファイルのことを <strong>CLAUDE.md</strong>（クロード エムディー）と呼びます。</p>
+
+  <div class="tip">
+    <span class="lbl">CLAUDE.md って何？</span>
+    作業フォルダの中に置くテキストファイルです。Claude Code はこのファイルを毎回自動で読み込むため、「このAIは常にこう振る舞う」という設定が固定されます。<br>
+    いわばAIへの「お仕事の説明書」です。
+  </div>
+
+  <h3>パートナーの名前を決めましょう</h3>
+  <p>AIパートナーにはどんな名前でも付けられます。仕事のパートナーらしい名前でも、親しみやすいニックネームでも構いません。</p>
+
+  <div class="name-input-demo">
+    <p>好きな名前を自由に決めてください</p>
+    <p class="hint">例：「ソラ」「ハナ」「アシスト」「Nova」「Sora」「Leo」など、なんでもOK</p>
+  </div>
+
+  <p>名前が決まったら、以下のどちらかの方法で設定します。</p>
+
+  <!-- Method A -->
+  <div class="method-card recommended">
+    <p class="method-label green">方法A（おすすめ）— Claude Code に作ってもらう</p>
+    <p>Claude Code を起動した状態で、以下のメッセージを送るだけでパートナー設定ファイルが自動で作られます。<code>[　]</code> の部分を自分の名前・パートナーの名前に変えてからコピーしてください。</p>
+
+    <pre class="pre-prompt"><code>今日から私のAIパートナーとして一緒に働いてもらいます。
+まず、この作業フォルダに「CLAUDE.md」というファイルを作ってください。
+
+設定内容：
+- パートナーの名前：[パートナーの名前をここに入力]
+- 私の名前：[あなたの名前をここに入力]
+- 話し方：むずかしい専門用語は使わず、親しみやすくわかりやすく話す
+- ルール①：ファイルの削除・大きな変更をする前は「〜してもよいですか？」と必ず確認する
+- ルール②：指示の意味がわからないときは勝手に進めず質問する
+- ルール③：作業が終わったら「〜が完了しました」と必ず報告する
+- 会話の始め方：毎回「こんにちは、[あなたの名前]さん！[パートナーの名前]です。今日は何をお手伝いしますか？」と挨拶する
+
+ファイルを作ったら内容を見せてください。</code></pre>
+
+    <p style="font-size:14px;margin-top:10px;color:#718096;">Claude Code がファイルを作成したら、ターミナルを一度閉じて再起動してください。次回から設定が有効になります。</p>
+  </div>
+
+  <!-- Method B -->
+  <div class="method-card advanced">
+    <p class="method-label blue">方法B — 自分でファイルを作る（より細かくカスタマイズしたい方向け）</p>
+    <p>以下のテンプレートをコピーして、<code>[　]</code> 内を書き換えてから「CLAUDE.md」という名前で作業フォルダに保存します。</p>
+
+    <pre><code># AIパートナー設定
+
+## 基本情報
+- パートナーの名前：[パートナーの名前を入力]
+- あなたの名前：[あなたの名前を入力]
+
+---
+
+## パートナーの役割
+
+あなたは [あなたの名前] さんをサポートするAIパートナー「[パートナーの名前]」です。
+文章の作成・修正、アイデア整理、調べ物など、どんな依頼にも前向きに取り組みます。
+
+## 話し方のルール
+
+- むずかしい専門用語は使わず、やさしい言葉で話す
+- 正直に、親しみやすく接する
+- わからないことは「わかりません」「確認が必要です」とはっきり伝える
+- 返答は長くなりすぎず、大切なことを先に伝える
+
+## 仕事の進め方
+
+- ファイルの削除・大きな変更をする前は「〜してもよいですか？」と必ず確認する
+- 指示の意味がわからないときは勝手に進めず質問する
+- 作業が終わったら「〜が完了しました」と必ず報告する
+
+## 会話の始め方
+
+新しい会話が始まったら、必ずこのように挨拶してください：
+「こんにちは、[あなたの名前]さん！[パートナーの名前]です。今日は何をお手伝いしますか？」</code></pre>
+
+    <div class="tip" style="margin-top:10px;">
+      <span class="lbl">「CLAUDE.md」として保存する方法（Windows）</span>
+      メモ帳（Notepad）を開く → 内容を貼り付ける → 「名前を付けて保存」→ ファイル名を <code>CLAUDE.md</code> と入力 → 「ファイルの種類」を「すべてのファイル」に変更 → 保存
+    </div>
+  </div>
+
+  <h3>はじめてのパートナーとの会話</h3>
+  <p>CLAUDE.md を設定して Claude Code を再起動したら、以下のメッセージを送って関係をスタートさせましょう：</p>
+
+  <pre class="pre-prompt"><code>はじめまして！これから一緒に働きましょう。
+まず自己紹介をしてください。
+それから私のことをもっと知るために、次の2つを聞いてください：
+1. 主にどんな仕事や作業でサポートを使いたいか
+2. AIに特に得意になってほしいことは何か</code></pre>
+
+  <div class="good">
+    <span class="lbl">パートナーがうまく機能しているサイン</span>
+    毎回の会話が「こんにちは、〇〇さん！△△です。」という挨拶から始まるようになれば、設定が正しく読み込まれています。
+  </div>
+
+  <h3>パートナーへの上手な頼み方</h3>
+  <ul>
+    <li><strong>具体的に伝える</strong>：「文章を直して」より「この文章を小学生でも読めるくらいやさしくして」</li>
+    <li><strong>背景を伝える</strong>：「これはお客さんに送るメールです」のように用途を教えると精度が上がります</li>
+    <li><strong>「〇〇してから進めて」</strong>：大きな作業の前に「保存してから作業して」と一言添えると安全です</li>
+    <li><strong>迷ったら聞いてと言う</strong>：「やり方が複数ある場合は先に相談して」と伝えると勝手に進みません</li>
+  </ul>
+
+  <!-- S9 -->
+  <h2 id="s9"><span class="sec-num">9</span> 毎日の使い方とコツ</h2>
+
+  <h3>毎日の起動手順</h3>
+  <div class="step"><span class="sn">1</span> ターミナルを開く</div>
+  <div class="step"><span class="sn">2</span> 作業フォルダに移動する：<code>cd "作業フォルダのパス"</code></div>
+  <div class="step"><span class="sn">3</span> Claude Code を起動：<code>claude</code></div>
+  <div class="step"><span class="sn">4</span> パートナーが挨拶してくれたら作業開始！</div>
+
+  <h3>大きな作業の前のひと手間（習慣にしてください）</h3>
+  <p>AIに大量のファイルを変更させる前に、必ずGitでセーブしておきましょう：</p>
+  <pre><code>git add .
+git commit -m "作業前バックアップ"</code></pre>
+  <p>または、パートナーに「作業前にGitでセーブしてから進めて」と一言添えるだけでもOKです。</p>
+
+  <h3>何かおかしくなったとき</h3>
+  <pre><code>git restore .</code></pre>
+  <p>このコマンド1行で、最後にセーブした状態に全ファイルが戻ります。</p>
+
+  <!-- S10 -->
+  <h2 id="s10"><span class="sec-num">10</span> よくある質問</h2>
+
+  <dl class="faq">
+    <dt>Q. パートナーの名前は後から変更できますか？</dt>
+    <dd>はい。CLAUDE.md ファイルの名前の部分を書き換えるだけで変更できます。パートナーに「名前を〇〇に変更して」と頼むこともできます。</dd>
+
+    <dt>Q. Claude Code を閉じてもパートナーの設定は消えませんか？</dt>
+    <dd>CLAUDE.md ファイルとして保存されているので、次回起動時にも同じ設定で動きます。</dd>
+
+    <dt>Q. 無料で使えますか？</dt>
+    <dd>Claude Code の本体ソフトは無料でインストールできますが、使用にはClaude.ai の有料プラン（Proプラン）またはAPIキーが必要です。</dd>
+
+    <dt>Q. パートナーに言ってはいけないことはありますか？</dt>
+    <dd>パスワード、クレジットカード番号、個人情報などは入力しないようにしましょう。AIとの会話はAnthropicのサーバーを通じて処理されます。</dd>
+
+    <dt>Q. Gitのコマンドが怖くて使えません</dt>
+    <dd>パートナーに「Gitで今の状態を保存して」と日本語でお願いすれば、代わりにコマンドを実行してくれます。</dd>
+
+    <dt>Q. CLAUDE.md を作ったのに挨拶してくれません</dt>
+    <dd>Claude Code を一度完全に終了して、ターミナルも閉じてから再起動してみてください。再起動後に設定が読み込まれます。</dd>
+  </dl>
+
+  <hr>
+
+  <!-- CHANGELOG -->
+  <h2 id="changelog"><span class="sec-num" style="background:#718096;">―</span> 作成・更新履歴</h2>
+  <div class="changelog-entry">
+    <p class="changelog-date">2026-05-15 — 初版作成</p>
+    <ul style="font-size:14px;margin-top:6px;">
+      <li>超初心者向け完全セットアップガイドとして新規作成</li>
+      <li>AIパートナー設定（CLAUDE.md）の手順を初収録</li>
+      <li>Windows / Mac 両対応の手順を掲載</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('pre').forEach(function(pre) {
+  var btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'コピー';
+  btn.addEventListener('click', function() {
+    var codeEl = pre.querySelector('code');
+    var text = codeEl ? codeEl.innerText : pre.innerText;
+    // ボタン自身のテキストを除去
+    text = text.replace(/^コピー\n?|コピー完了！?\n?/g, '').trim();
+    function onSuccess() {
+      btn.textContent = 'コピー完了！';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2200);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onSuccess).catch(function() { fallback(text, onSuccess); });
+    } else { fallback(text, onSuccess); }
+  });
+  pre.appendChild(btn);
+});
+function fallback(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); cb(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
