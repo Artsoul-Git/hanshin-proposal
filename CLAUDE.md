@@ -153,5 +153,6 @@ python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py open
 - **ブリーフィング記録ルール：** `rules/briefing-log-rules.md`
 - **自己検証プロトコル：** `rules/self-validation-protocol.md`
 - **上村フィードバック蓄積：** `rules/kai-style-guide.md`
+- **第三者コンテンツ転用ルール：** `rules/third-party-adaptation.md`
 - **自律レベル記録：** `01_経営管理/自律レベル記録.md`
 - **構造改革ロードマップ：** `01_経営管理/構造改革ロードマップ_2026.md`
