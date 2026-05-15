@@ -517,6 +517,7 @@ class _Handler(BaseHTTPRequestHandler):
 
 class _Server(socketserver.ThreadingMixIn, HTTPServer):
     daemon_threads = True
+    allow_reuse_address = True
 
 
 if __name__ == '__main__':
