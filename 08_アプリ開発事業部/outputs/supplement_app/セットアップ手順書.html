@@ -1,15 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nolia 繧ｻ繝・ヨ繧｢繝・・謇矩・嶌 v1.0</title>
+<title>Nolia セットアップ手順書 v1.0</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif; background:#F7FAFC; color:#2D3748; font-size:13px; line-height:1.7; }
 .wrap { max-width:920px; margin:0 auto; padding:32px 20px 80px; }
 
-/* 笏笏 繝倥ャ繝繝ｼ 笏笏 */
+/* ── ヘッダー ── */
 .page-header { background:linear-gradient(135deg,#1A3C34 0%,#2B8A7A 100%); border-radius:14px; padding:32px; margin-bottom:28px; color:white; }
 .page-header h1 { font-size:22px; font-weight:bold; margin-bottom:6px; }
 .page-header .sub { font-size:13px; opacity:.85; margin-bottom:14px; }
@@ -17,12 +17,12 @@ body { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif
 .app-name { font-size:32px; font-weight:900; letter-spacing:4px; }
 .app-name span { color:#F6AD55; }
 
-/* 笏笏 蜈ｨ菴薙ヵ繝ｭ繝ｼ 笏笏 */
+/* ── 全体フロー ── */
 .flow-section { background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.07); padding:26px 30px; margin-bottom:20px; }
 .section-title { font-size:15px; font-weight:bold; color:#1A365D; border-left:5px solid #2B8A7A; padding-left:12px; margin-bottom:18px; }
 .section-sub { font-size:13px; font-weight:bold; color:#2B8A7A; margin:20px 0 10px; border-bottom:1px dashed #BEE3F8; padding-bottom:4px; }
 
-/* 笏笏 繧ｹ繝・ャ繝励き繝ｼ繝・笏笏 */
+/* ── ステップカード ── */
 .step-section { border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.07); padding:0; margin-bottom:24px; overflow:hidden; }
 .step-header { padding:18px 26px; display:flex; align-items:center; gap:16px; }
 .step-num { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:white; flex-shrink:0; }
@@ -44,7 +44,7 @@ body { font-family: 'Noto Sans JP','Hiragino Kaku Gothic ProN',Meiryo,sans-serif
 .s5 .step-num { background:rgba(255,255,255,.25); }
 .s6 .step-num { background:rgba(255,255,255,.25); }
 
-/* 笏笏 豎守畑 笏笏 */
+/* ── 汎用 ── */
 p { font-size:12px; color:#4A5568; margin-bottom:8px; line-height:1.8; }
 ul,ol { padding-left:20px; margin-bottom:12px; }
 li { font-size:12px; color:#4A5568; margin-bottom:5px; line-height:1.7; }
@@ -66,7 +66,7 @@ tr:nth-child(even) td { background:#F7FAFC; }
 .success { background:#F0FFF4; border:1px solid #9AE6B4; border-radius:8px; padding:12px 14px; font-size:11px; color:#276749; margin:12px 0; }
 .danger  { background:#FFF5F5; border:1px solid #FC8181; border-radius:8px; padding:12px 14px; font-size:11px; color:#742A2A; margin:12px 0; }
 
-/* 笏笏 繧ｳ繝ｼ繝峨ヶ繝ｭ繝・け 笏笏 */
+/* ── コードブロック ── */
 .code-block { background:#1A202C; border-radius:8px; margin:10px 0; overflow:hidden; }
 .code-header { background:#2D3748; padding:8px 14px; display:flex; justify-content:space-between; align-items:center; }
 .code-lang { font-size:10px; color:#A0AEC0; font-family:monospace; }
@@ -79,7 +79,7 @@ pre .str { color:#F6AD55; }
 pre .hl { color:#FC8181; font-weight:bold; }
 pre .ok { color:#68D391; }
 
-/* 笏笏 謇矩・Μ繧ｹ繝・笏笏 */
+/* ── 手順リスト ── */
 .proc-list { list-style:none; padding:0; }
 .proc-item { display:flex; gap:12px; margin-bottom:14px; align-items:flex-start; }
 .proc-dot { width:26px; height:26px; border-radius:50%; background:#2B8A7A; color:white; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:bold; flex-shrink:0; margin-top:1px; }
@@ -88,7 +88,7 @@ pre .ok { color:#68D391; }
 .proc-body { font-size:11px; color:#4A5568; line-height:1.7; }
 .proc-body code { background:#EBF8FF; color:#1A365D; padding:1px 5px; border-radius:3px; font-family:monospace; font-size:10px; }
 
-/* 笏笏 繧ｹ繧ｯ繝ｪ繝ｼ繝ｳ繧ｷ繝ｧ繝・ヨ鬚ｨ繝｢繝・け 笏笏 */
+/* ── スクリーンショット風モック ── */
 .screen-mock { background:#F7FAFC; border:1px solid #E2E8F0; border-radius:8px; overflow:hidden; margin:12px 0; }
 .screen-mock .mock-bar { background:#CBD5E0; padding:6px 10px; display:flex; gap:6px; align-items:center; }
 .mock-dot { width:10px; height:10px; border-radius:50%; }
@@ -98,17 +98,17 @@ pre .ok { color:#68D391; }
 .screen-mock .mock-url { flex:1; background:white; border-radius:4px; padding:3px 8px; font-size:10px; color:#718096; font-family:monospace; margin-left:6px; }
 .screen-mock .mock-body { padding:14px 16px; }
 
-/* 笏笏 繝励Ο繝代ユ繧｣蜈･蜉帙ユ繝ｼ繝悶Ν 笏笏 */
+/* ── プロパティ入力テーブル ── */
 .prop-table td:first-child { font-family:monospace; font-size:11px; color:#553C9A; font-weight:bold; }
 .prop-table td:nth-child(2) { color:#2B6CB0; }
 
-/* 笏笏 繝√ぉ繝・け繝ｪ繧ｹ繝・笏笏 */
+/* ── チェックリスト ── */
 .checklist { background:#F0FFF4; border-radius:8px; padding:14px 18px; margin:12px 0; }
 .check-item { display:flex; gap:10px; margin-bottom:6px; align-items:flex-start; }
 .check-box { width:16px; height:16px; border:2px solid #38A169; border-radius:3px; flex-shrink:0; margin-top:2px; }
 .check-label { font-size:11px; color:#276749; }
 
-/* 笏笏 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ 笏笏 */
+/* ── トラブルシューティング ── */
 .trouble-table td:first-child { color:#742A2A; font-weight:bold; }
 .trouble-table td:nth-child(2) { color:#744210; }
 .trouble-table td:nth-child(3) { color:#276749; }
@@ -122,22 +122,23 @@ pre .ok { color:#68D391; }
 <body>
 <div class="wrap">
 
-<!-- 繝倥ャ繝繝ｼ -->
+<!-- ヘッダー -->
 <div class="page-header">
   <div class="app-name">N<span>o</span>lia</div>
-  <h1 style="margin-top:8px;">繧ｻ繝・ヨ繧｢繝・・謇矩・嶌 <span style="font-size:14px; background:rgba(255,255,255,.2); border-radius:20px; padding:3px 10px; font-weight:normal;">v1.0</span></h1>
-  <div class="sub">GitHub Pages・医ユ繧ｹ繝茨ｼ俄・ Xserver・域悽逡ｪ・臥腸蠅・・讒狗ｯ峨ぎ繧､繝・/div>
+  <h1 style="margin-top:8px;">セットアップ手順書 <span style="font-size:14px; background:rgba(255,255,255,.2); border-radius:20px; padding:3px 10px; font-weight:normal;">v1.0</span></h1>
+  <div class="sub">GitHub Pages（テスト）→ Xserver（本番）環境の構築ガイド</div>
   <div class="meta">
-    <span>菴懈・・壽怏髯蝉ｼ夂､ｾ繧｢繝ｼ繝医た繧ｦ繝ｫ縲荳頑搗譯ょ承 / Kai</span>
-    <span>菴懈・譌･・・026蟷ｴ5譛・3譌･</span>
-    <span>謇隕∵凾髢鍋岼螳会ｼ夂ｴ・縲・譎る俣</span>
+    <span>作成：有限会社アートソウル　上村桂右 / Kai</span>
+    <span>作成日：2026年5月13日</span>
+    <span>所要時間目安：約1〜2時間</span>
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     蜈ｨ菴薙ヵ繝ｭ繝ｼ蝗ｳ
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     全体フロー図
+════════════════════════════════════════ -->
 <div class="flow-section">
-  <div class="section-title">蜈ｨ菴薙ヵ繝ｭ繝ｼ 窶・Phase 0 螳梧・縺ｾ縺ｧ縺ｮ蝨ｰ蝗ｳ</div>
+  <div class="section-title">全体フロー — Phase 0 完成までの地図</div>
 
   <svg viewBox="0 0 860 520" style="width:100%;max-width:100%;display:block;" xmlns="http://www.w3.org/2000/svg" font-family="Meiryo,'Noto Sans JP',sans-serif">
     <defs>
@@ -153,35 +154,35 @@ pre .ok { color:#68D391; }
     <rect x="30" y="20" width="160" height="72" rx="10" fill="#F0FFF4" stroke="#38A169" stroke-width="2"/>
     <text x="110" y="46" text-anchor="middle" font-size="11" fill="#276749" font-weight="bold">STEP 1</text>
     <text x="110" y="62" text-anchor="middle" font-size="12" fill="#1C4532" font-weight="bold">Google</text>
-    <text x="110" y="78" text-anchor="middle" font-size="12" fill="#1C4532" font-weight="bold">繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝井ｽ懈・</text>
+    <text x="110" y="78" text-anchor="middle" font-size="12" fill="#1C4532" font-weight="bold">スプレッドシート作成</text>
 
     <!-- STEP 2: GAS -->
     <rect x="230" y="20" width="160" height="72" rx="10" fill="#EBF8FF" stroke="#3182CE" stroke-width="2"/>
     <text x="310" y="46" text-anchor="middle" font-size="11" fill="#1A365D" font-weight="bold">STEP 2</text>
-    <text x="310" y="62" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">GAS繝励Ο繧ｸ繧ｧ繧ｯ繝・/text>
-    <text x="310" y="78" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">繧ｳ繝ｼ繝峨ｒ雋ｼ繧贋ｻ倥￠</text>
+    <text x="310" y="62" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">GASプロジェクト</text>
+    <text x="310" y="78" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">コードを貼り付け</text>
 
     <!-- STEP 3: API Keys -->
     <rect x="430" y="20" width="160" height="72" rx="10" fill="#FFFAF0" stroke="#C05621" stroke-width="2"/>
     <text x="510" y="46" text-anchor="middle" font-size="11" fill="#7B341E" font-weight="bold">STEP 3</text>
-    <text x="510" y="62" text-anchor="middle" font-size="12" fill="#7B341E" font-weight="bold">API繧ｭ繝ｼ繧・/text>
-    <text x="510" y="78" text-anchor="middle" font-size="12" fill="#7B341E" font-weight="bold">繧ｹ繧ｯ繝ｪ繝励ヨ縺ｫ逋ｻ骭ｲ</text>
+    <text x="510" y="62" text-anchor="middle" font-size="12" fill="#7B341E" font-weight="bold">APIキーを</text>
+    <text x="510" y="78" text-anchor="middle" font-size="12" fill="#7B341E" font-weight="bold">スクリプトに登録</text>
 
-    <!-- 遏｢蜊ｰ 1竊・ -->
+    <!-- 矢印 1→2 -->
     <line x1="190" y1="56" x2="228" y2="56" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
-    <!-- 遏｢蜊ｰ 2竊・ -->
+    <!-- 矢印 2→3 -->
     <line x1="390" y1="56" x2="428" y2="56" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
 
     <!-- STEP 4: Deploy -->
     <rect x="630" y="20" width="160" height="72" rx="10" fill="#FAF5FF" stroke="#805AD5" stroke-width="2"/>
     <text x="710" y="46" text-anchor="middle" font-size="11" fill="#553C9A" font-weight="bold">STEP 4</text>
     <text x="710" y="62" text-anchor="middle" font-size="12" fill="#553C9A" font-weight="bold">GAS Web App</text>
-    <text x="710" y="78" text-anchor="middle" font-size="12" fill="#553C9A" font-weight="bold">繝・・繝ｭ繧､竊旦RL蜿門ｾ・/text>
+    <text x="710" y="78" text-anchor="middle" font-size="12" fill="#553C9A" font-weight="bold">デプロイ→URL取得</text>
 
-    <!-- 遏｢蜊ｰ 3竊・ -->
+    <!-- 矢印 3→4 -->
     <line x1="590" y1="56" x2="628" y2="56" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
 
-    <!-- 遏｢蜊ｰ 4 竊・荳九∈謚倥ｊ霑斐＠ -->
+    <!-- 矢印 4 → 下へ折り返し -->
     <line x1="710" y1="92" x2="710" y2="130" stroke="#718096" stroke-width="1.5"/>
     <line x1="710" y1="130" x2="110" y2="130" stroke="#718096" stroke-width="1.5"/>
     <line x1="110" y1="130" x2="110" y2="166" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
@@ -189,130 +190,132 @@ pre .ok { color:#68D391; }
     <!-- STEP 5: GitHub -->
     <rect x="30" y="168" width="160" height="72" rx="10" fill="#E6FFFA" stroke="#2B8A7A" stroke-width="2"/>
     <text x="110" y="193" text-anchor="middle" font-size="11" fill="#1A3C34" font-weight="bold">STEP 5</text>
-    <text x="110" y="210" text-anchor="middle" font-size="12" fill="#1A3C34" font-weight="bold">config.js縺ｫURL險ｭ螳・/text>
-    <text x="110" y="226" text-anchor="middle" font-size="12" fill="#1A3C34" font-weight="bold">GitHub縺ｸ繧｢繝・・</text>
+    <text x="110" y="210" text-anchor="middle" font-size="12" fill="#1A3C34" font-weight="bold">config.jsにURL設定</text>
+    <text x="110" y="226" text-anchor="middle" font-size="12" fill="#1A3C34" font-weight="bold">GitHubへアップ</text>
 
     <!-- STEP 6: Test -->
     <rect x="230" y="168" width="160" height="72" rx="10" fill="#FFF5F5" stroke="#E53E3E" stroke-width="2"/>
     <text x="310" y="193" text-anchor="middle" font-size="11" fill="#742A2A" font-weight="bold">STEP 6</text>
-    <text x="310" y="210" text-anchor="middle" font-size="12" fill="#742A2A" font-weight="bold">繝・せ繝医Θ繝ｼ繧ｶ繝ｼ縺ｧ</text>
-    <text x="310" y="226" text-anchor="middle" font-size="12" fill="#742A2A" font-weight="bold">蜍穂ｽ懃｢ｺ隱・/text>
+    <text x="310" y="210" text-anchor="middle" font-size="12" fill="#742A2A" font-weight="bold">テストユーザーで</text>
+    <text x="310" y="226" text-anchor="middle" font-size="12" fill="#742A2A" font-weight="bold">動作確認</text>
 
-    <!-- 遏｢蜊ｰ 5竊・ -->
+    <!-- 矢印 5→6 -->
     <line x1="190" y1="204" x2="228" y2="204" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
 
     <!-- COMPLETE -->
     <rect x="430" y="168" width="200" height="72" rx="10" fill="#1A3C34" stroke="#2B8A7A" stroke-width="2"/>
-    <text x="530" y="197" text-anchor="middle" font-size="13" fill="white" font-weight="bold">脂 Phase 0 螳梧・・・/text>
-    <text x="530" y="217" text-anchor="middle" font-size="11" fill="#9AE6B4">繧｢繝励Μ縺悟虚縺・※縺・ｋ迥ｶ諷・/text>
-    <text x="530" y="233" text-anchor="middle" font-size="11" fill="#9AE6B4">繝・せ繝医Θ繝ｼ繧ｶ繝ｼ縺瑚ｨ倬鹸縺ｧ縺阪ｋ</text>
+    <text x="530" y="197" text-anchor="middle" font-size="13" fill="white" font-weight="bold">🎉 Phase 0 完成！</text>
+    <text x="530" y="217" text-anchor="middle" font-size="11" fill="#9AE6B4">アプリが動いている状態</text>
+    <text x="530" y="233" text-anchor="middle" font-size="11" fill="#9AE6B4">テストユーザーが記録できる</text>
 
-    <!-- 遏｢蜊ｰ 6 竊・Complete -->
+    <!-- 矢印 6 → Complete -->
     <line x1="390" y1="204" x2="428" y2="204" stroke="#38A169" stroke-width="2" marker-end="url(#arr-g)"/>
 
-    <!-- 蛹ｺ蛻・ｊ邱・-->
+    <!-- 区切り線 -->
     <line x1="30" y1="290" x2="830" y2="290" stroke="#E2E8F0" stroke-width="1.5" stroke-dasharray="6,3"/>
 
-    <!-- 貅門ｙ迚ｩ荳隕ｧ -->
-    <text x="30" y="318" font-size="13" fill="#1A365D" font-weight="bold">貅門ｙ縺吶ｋ繧ゅ・・井ｺ句燕縺ｫ逕ｨ諢上＠縺ｦ縺翫￥縺ｨ繧ｹ繝繝ｼ繧ｺ・・/text>
+    <!-- 準備物一覧 -->
+    <text x="30" y="318" font-size="13" fill="#1A365D" font-weight="bold">準備するもの（事前に用意しておくとスムーズ）</text>
 
-    <!-- 貅門ｙ迚ｩ繧ｫ繝ｼ繝・-->
+    <!-- 準備物カード -->
     <rect x="30"  y="330" width="160" height="160" rx="8" fill="#F0FFF4" stroke="#9AE6B4"/>
-    <text x="110" y="353" text-anchor="middle" font-size="10" fill="#276749" font-weight="bold">笨・縺吶〒縺ｫ縺ゅｋ</text>
+    <text x="110" y="353" text-anchor="middle" font-size="10" fill="#276749" font-weight="bold">✅ すでにある</text>
     <text x="110" y="373" text-anchor="middle" font-size="11" fill="#1C4532">Google Workspace</text>
     <text x="110" y="390" text-anchor="middle" font-size="11" fill="#1C4532">Business Standard</text>
     <line x1="50" y1="400" x2="170" y2="400" stroke="#9AE6B4" stroke-dasharray="3,2"/>
     <text x="110" y="418" text-anchor="middle" font-size="11" fill="#1C4532">Artsoul-Git</text>
-    <text x="110" y="435" text-anchor="middle" font-size="11" fill="#1C4532">・・itHub・・/text>
+    <text x="110" y="435" text-anchor="middle" font-size="11" fill="#1C4532">（GitHub）</text>
     <line x1="50" y1="445" x2="170" y2="445" stroke="#9AE6B4" stroke-dasharray="3,2"/>
-    <text x="110" y="463" text-anchor="middle" font-size="11" fill="#1C4532">LINE蜈ｬ蠑・/text>
-    <text x="110" y="480" text-anchor="middle" font-size="11" fill="#1C4532">繧｢繧ｫ繧ｦ繝ｳ繝・/text>
+    <text x="110" y="463" text-anchor="middle" font-size="11" fill="#1C4532">LINE公式</text>
+    <text x="110" y="480" text-anchor="middle" font-size="11" fill="#1C4532">アカウント</text>
 
     <rect x="210"  y="330" width="160" height="160" rx="8" fill="#FFFAF0" stroke="#F6AD55"/>
-    <text x="290" y="353" text-anchor="middle" font-size="10" fill="#C05621" font-weight="bold">泊 蜿門ｾ励′蠢・ｦ・/text>
-    <text x="290" y="373" text-anchor="middle" font-size="11" fill="#7B341E">Gemini API繧ｭ繝ｼ</text>
-    <text x="290" y="390" text-anchor="middle" font-size="10" fill="#C05621">・・istudio.google.com・・/text>
+    <text x="290" y="353" text-anchor="middle" font-size="10" fill="#C05621" font-weight="bold">🔑 取得が必要</text>
+    <text x="290" y="373" text-anchor="middle" font-size="11" fill="#7B341E">Gemini APIキー</text>
+    <text x="290" y="390" text-anchor="middle" font-size="10" fill="#C05621">（aistudio.google.com）</text>
     <line x1="230" y1="400" x2="350" y2="400" stroke="#F6AD55" stroke-dasharray="3,2"/>
     <text x="290" y="418" text-anchor="middle" font-size="11" fill="#7B341E">LINE Channel</text>
     <text x="290" y="435" text-anchor="middle" font-size="11" fill="#7B341E">Access Token</text>
-    <text x="290" y="452" text-anchor="middle" font-size="10" fill="#C05621">・・INE Developers・・/text>
+    <text x="290" y="452" text-anchor="middle" font-size="10" fill="#C05621">（LINE Developers）</text>
     <line x1="230" y1="462" x2="350" y2="462" stroke="#F6AD55" stroke-dasharray="3,2"/>
-    <text x="290" y="480" text-anchor="middle" font-size="11" fill="#7B341E">邂｡逅・・ヱ繧ｹ繝ｯ繝ｼ繝・/text>
-    <text x="290" y="497" text-anchor="middle" font-size="10" fill="#C05621">・郁・蛻・〒豎ｺ繧√ｋ・・/text>
+    <text x="290" y="480" text-anchor="middle" font-size="11" fill="#7B341E">管理者パスワード</text>
+    <text x="290" y="497" text-anchor="middle" font-size="10" fill="#C05621">（自分で決める）</text>
 
     <rect x="390"  y="330" width="180" height="160" rx="8" fill="#EBF8FF" stroke="#63B3ED"/>
-    <text x="480" y="353" text-anchor="middle" font-size="10" fill="#1A365D" font-weight="bold">刀 繝輔ぃ繧､繝ｫ縺ｮ蝣ｴ謇</text>
-    <text x="480" y="373" text-anchor="middle" font-size="10" fill="#2B6CB0">繝輔Ο繝ｳ繝医お繝ｳ繝・</text>
+    <text x="480" y="353" text-anchor="middle" font-size="10" fill="#1A365D" font-weight="bold">📁 ファイルの場所</text>
+    <text x="480" y="373" text-anchor="middle" font-size="10" fill="#2B6CB0">フロントエンド:</text>
     <text x="480" y="390" text-anchor="middle" font-size="9" fill="#2D3748">_publish-staging/</text>
     <text x="480" y="406" text-anchor="middle" font-size="9" fill="#2D3748">nolia-app/</text>
     <line x1="410" y1="416" x2="550" y2="416" stroke="#63B3ED" stroke-dasharray="3,2"/>
-    <text x="480" y="435" text-anchor="middle" font-size="10" fill="#2B6CB0">GAS繧ｳ繝ｼ繝・</text>
+    <text x="480" y="435" text-anchor="middle" font-size="10" fill="#2B6CB0">GASコード:</text>
     <text x="480" y="452" text-anchor="middle" font-size="9" fill="#2D3748">outputs/supplement_app/</text>
     <text x="480" y="468" text-anchor="middle" font-size="9" fill="#2D3748">gas/*.gs</text>
     <line x1="410" y1="478" x2="550" y2="478" stroke="#63B3ED" stroke-dasharray="3,2"/>
-    <text x="480" y="497" text-anchor="middle" font-size="10" fill="#2B6CB0">謇矩・嶌: 縺薙・譁・嶌</text>
+    <text x="480" y="497" text-anchor="middle" font-size="10" fill="#2B6CB0">手順書: この文書</text>
 
     <rect x="590"  y="330" width="240" height="160" rx="8" fill="#FAF5FF" stroke="#D6BCFA"/>
-    <text x="710" y="353" text-anchor="middle" font-size="10" fill="#553C9A" font-weight="bold">竢ｱ 謇隕∵凾髢薙・逶ｮ螳・/text>
-    <text x="630" y="375" font-size="10" fill="#4A5568">STEP 1  Sheets菴懈・</text>
-    <text x="790" y="375" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5蛻・/text>
-    <text x="630" y="395" font-size="10" fill="#4A5568">STEP 2  GAS繧ｻ繝・ヨ繧｢繝・・</text>
-    <text x="790" y="395" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">20蛻・/text>
-    <text x="630" y="415" font-size="10" fill="#4A5568">STEP 3  API繧ｭ繝ｼ逋ｻ骭ｲ</text>
-    <text x="790" y="415" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5蛻・/text>
-    <text x="630" y="435" font-size="10" fill="#4A5568">STEP 4  繝・・繝ｭ繧､</text>
-    <text x="790" y="435" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5蛻・/text>
-    <text x="630" y="455" font-size="10" fill="#4A5568">STEP 5  GitHub蜈ｬ髢・/text>
-    <text x="790" y="455" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">15蛻・/text>
-    <text x="630" y="475" font-size="10" fill="#4A5568">STEP 6  蜍穂ｽ懃｢ｺ隱・/text>
-    <text x="790" y="475" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">10蛻・/text>
+    <text x="710" y="353" text-anchor="middle" font-size="10" fill="#553C9A" font-weight="bold">⏱ 所要時間の目安</text>
+    <text x="630" y="375" font-size="10" fill="#4A5568">STEP 1  Sheets作成</text>
+    <text x="790" y="375" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5分</text>
+    <text x="630" y="395" font-size="10" fill="#4A5568">STEP 2  GASセットアップ</text>
+    <text x="790" y="395" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">20分</text>
+    <text x="630" y="415" font-size="10" fill="#4A5568">STEP 3  APIキー登録</text>
+    <text x="790" y="415" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5分</text>
+    <text x="630" y="435" font-size="10" fill="#4A5568">STEP 4  デプロイ</text>
+    <text x="790" y="435" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">5分</text>
+    <text x="630" y="455" font-size="10" fill="#4A5568">STEP 5  GitHub公開</text>
+    <text x="790" y="455" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">15分</text>
+    <text x="630" y="475" font-size="10" fill="#4A5568">STEP 6  動作確認</text>
+    <text x="790" y="475" text-anchor="end" font-size="10" fill="#553C9A" font-weight="bold">10分</text>
     <line x1="610" y1="484" x2="820" y2="484" stroke="#D6BCFA" stroke-width="1.5"/>
-    <text x="630" y="500" font-size="11" fill="#553C9A" font-weight="bold">蜷郁ｨ・/text>
-    <text x="790" y="500" text-anchor="end" font-size="11" fill="#553C9A" font-weight="bold">邏・0蛻・/text>
+    <text x="630" y="500" font-size="11" fill="#553C9A" font-weight="bold">合計</text>
+    <text x="790" y="500" text-anchor="end" font-size="11" fill="#553C9A" font-weight="bold">約60分</text>
   </svg>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 1: 繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝・笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 1: スプレッドシート
+════════════════════════════════════════ -->
 <div class="step-section s1">
   <div class="step-header">
     <div class="step-num">1</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 1 窶・邏・蛻・/div>
-      <h2>Google 繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医ｒ菴懈・縺吶ｋ</h2>
+      <div class="step-label">STEP 1 — 約5分</div>
+      <h2>Google スプレッドシートを作成する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">投</div>
+    <div style="margin-left:auto; font-size:28px;">📊</div>
   </div>
   <div class="step-body">
 
-    <div class="info">邃ｹ・・繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医′Nolia縺ｮ繝・・繧ｿ繝吶・繧ｹ縺ｫ縺ｪ繧翫∪縺吶る｡ｧ螳｢縺ｮ險倬鹸繝ｻ繝ｬ繝昴・繝医′縺吶∋縺ｦ縺薙％縺ｫ闢・ｩ阪＆繧後∪縺吶・/div>
+    <div class="info">ℹ️ スプレッドシートがNoliaのデータベースになります。顧客の記録・レポートがすべてここに蓄積されます。</div>
 
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">Google Drive 繧帝幕縺・/div>
-          <div class="proc-body"><code>drive.google.com</code> 縺ｫ繧｢繧ｯ繧ｻ繧ｹ縺励∪縺呻ｼ・WS繧｢繧ｫ繧ｦ繝ｳ繝医〒繝ｭ繧ｰ繧､繝ｳ貂医∩縺ｮ縺薙→・・/div>
+          <div class="proc-title">Google Drive を開く</div>
+          <div class="proc-body"><code>drive.google.com</code> にアクセスします（GWSアカウントでログイン済みのこと）</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">譁ｰ隕上せ繝励Ξ繝・ラ繧ｷ繝ｼ繝医ｒ菴懈・</div>
-          <div class="proc-body">蟾ｦ荳翫鯉ｼ・譁ｰ隕上坂・縲隈oogle 繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医阪ｒ繧ｯ繝ｪ繝・け</div>
+          <div class="proc-title">新規スプレッドシートを作成</div>
+          <div class="proc-body">左上「＋ 新規」→「Google スプレッドシート」をクリック</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">繝輔ぃ繧､繝ｫ蜷阪ｒ螟画峩</div>
-          <div class="proc-body">蟾ｦ荳翫・縲檎┌鬘後・繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医阪ｒ繧ｯ繝ｪ繝・け縺励※ <code>Nolia-DB</code> 縺ｫ螟画峩</div>
+          <div class="proc-title">ファイル名を変更</div>
+          <div class="proc-body">左上の「無題のスプレッドシート」をクリックして <code>Nolia-DB</code> に変更</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot" style="background:#C05621;">!</div>
         <div class="proc-content">
-          <div class="proc-title" style="color:#C05621;">繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝・D繧偵Γ繝｢縺吶ｋ・磯㍾隕・ｼ・/div>
-          <div class="proc-body">URL縺ｮ荳ｭ縺九ｉ髟ｷ縺・枚蟄怜・繧偵さ繝斐・縺励※繝｡繝｢蟶ｳ縺ｫ菫晏ｭ倥＠縺ｦ縺上□縺輔＞</div>
+          <div class="proc-title" style="color:#C05621;">スプレッドシートIDをメモする（重要）</div>
+          <div class="proc-body">URLの中から長い文字列をコピーしてメモ帳に保存してください</div>
         </div>
       </li>
     </ul>
@@ -324,44 +327,45 @@ pre .ok { color:#68D391; }
       </div>
       <div class="mock-body">
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <div style="font-size:11px; color:#718096;">URL縺ｮ</div>
-          <div style="background:#FED7D7; border:1px dashed #E53E3E; border-radius:4px; padding:4px 8px; font-family:monospace; font-size:11px; color:#742A2A;">/d/ 縺ｨ /edit 縺ｮ髢薙・譁・ｭ怜・</div>
-          <div style="font-size:11px; color:#718096;">縺栗D縺ｧ縺・/div>
+          <div style="font-size:11px; color:#718096;">URLの</div>
+          <div style="background:#FED7D7; border:1px dashed #E53E3E; border-radius:4px; padding:4px 8px; font-family:monospace; font-size:11px; color:#742A2A;">/d/ と /edit の間の文字列</div>
+          <div style="font-size:11px; color:#718096;">がIDです</div>
         </div>
-        <div style="font-size:11px; color:#4A5568;">萓・ <code style="background:#EBF8FF; padding:2px 6px; border-radius:4px; color:#1A365D;">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms</code> 竊・縺薙ｌ繧偵さ繝斐・</div>
+        <div style="font-size:11px; color:#4A5568;">例: <code style="background:#EBF8FF; padding:2px 6px; border-radius:4px; color:#1A365D;">1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms</code> ← これをコピー</div>
       </div>
     </div>
 
-    <div class="success">笨・縺薙・ID縺ｯ STEP 3 縺ｧ縲後せ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縲阪↓逋ｻ骭ｲ縺励∪縺吶ゆｻ翫・繝｡繝｢蟶ｳ縺ｫ菫晏ｭ倥＠縺ｦ縺翫￥縺縺代〒OK縲・/div>
+    <div class="success">✅ このIDは STEP 3 で「スクリプトプロパティ」に登録します。今はメモ帳に保存しておくだけでOK。</div>
 
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 2: GAS 繧ｻ繝・ヨ繧｢繝・・
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 2: GAS セットアップ
+════════════════════════════════════════ -->
 <div class="step-section s2">
   <div class="step-header">
     <div class="step-num">2</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 2 窶・邏・0蛻・/div>
-      <h2>GAS縺ｫ繧ｳ繝ｼ繝峨ｒ雋ｼ繧贋ｻ倥￠縺ｦSheets繧貞・譛溷喧縺吶ｋ</h2>
+      <div class="step-label">STEP 2 — 約20分</div>
+      <h2>GASにコードを貼り付けてSheetsを初期化する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">笞呻ｸ・/div>
+    <div style="margin-left:auto; font-size:28px;">⚙️</div>
   </div>
   <div class="step-body">
 
-    <div class="section-sub">2-1. Apps Script繧帝幕縺・/div>
+    <div class="section-sub">2-1. Apps Scriptを開く</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">Nolia-DB繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医ｒ髢九＞縺溽憾諷九〒</div>
-          <div class="proc-body">繝｡繝九Η繝ｼ繝舌・縲梧僑蠑ｵ讖溯・縲坂・縲窟pps Script縲阪ｒ繧ｯ繝ｪ繝・け 竊・譁ｰ縺励＞繧ｿ繝悶〒GAS繧ｨ繝・ぅ繧ｿ縺碁幕縺・/div>
+          <div class="proc-title">Nolia-DBスプレッドシートを開いた状態で</div>
+          <div class="proc-body">メニューバー「拡張機能」→「Apps Script」をクリック → 新しいタブでGASエディタが開く</div>
         </div>
       </li>
     </ul>
 
-    <div class="section-sub">2-2. 繝輔ぃ繧､繝ｫ繧・縺､菴懈・縺励※繧ｳ繝ｼ繝峨ｒ雋ｼ繧贋ｻ倥￠繧・/div>
+    <div class="section-sub">2-2. ファイルを7つ作成してコードを貼り付ける</div>
 
     <svg viewBox="0 0 820 320" style="width:100%;display:block;margin:14px 0;" xmlns="http://www.w3.org/2000/svg" font-family="Meiryo,'Noto Sans JP',sans-serif">
       <defs>
@@ -370,88 +374,88 @@ pre .ok { color:#68D391; }
         </marker>
       </defs>
 
-      <!-- GAS繧ｨ繝・ぅ繧ｿ譫 -->
+      <!-- GASエディタ枠 -->
       <rect x="10" y="10" width="340" height="300" rx="8" fill="#1E2433" stroke="#4A5568"/>
-      <text x="180" y="34" text-anchor="middle" font-size="11" fill="#A0AEC0">GAS繧ｨ繝・ぅ繧ｿ・亥ｷｦ縺ｮ繝輔ぃ繧､繝ｫ荳隕ｧ・・/text>
+      <text x="180" y="34" text-anchor="middle" font-size="11" fill="#A0AEC0">GASエディタ（左のファイル一覧）</text>
 
-      <!-- 繝輔ぃ繧､繝ｫ繝ｪ繧ｹ繝・-->
+      <!-- ファイルリスト -->
       <rect x="20" y="42" width="320" height="32" rx="4" fill="#2D3748"/>
-      <text x="36" y="63" font-size="11" fill="#F6AD55">塘 Code.gs</text>
-      <text x="250" y="63" font-size="9" fill="#68D391">竊・繝・ヵ繧ｩ繝ｫ繝医〒蟄伜惠</text>
+      <text x="36" y="63" font-size="11" fill="#F6AD55">📄 Code.gs</text>
+      <text x="250" y="63" font-size="9" fill="#68D391">← デフォルトで存在</text>
 
       <rect x="20" y="82" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="101" font-size="11" fill="#63B3ED">塘 Config.gs</text>
-      <text x="250" y="101" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="101" font-size="11" fill="#63B3ED">📄 Config.gs</text>
+      <text x="250" y="101" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
       <rect x="20" y="118" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="137" font-size="11" fill="#63B3ED">塘 Auth.gs</text>
-      <text x="250" y="137" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="137" font-size="11" fill="#63B3ED">📄 Auth.gs</text>
+      <text x="250" y="137" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
       <rect x="20" y="154" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="173" font-size="11" fill="#63B3ED">塘 Records.gs</text>
-      <text x="250" y="173" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="173" font-size="11" fill="#63B3ED">📄 Records.gs</text>
+      <text x="250" y="173" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
       <rect x="20" y="190" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="209" font-size="11" fill="#63B3ED">塘 Reports.gs</text>
-      <text x="250" y="209" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="209" font-size="11" fill="#63B3ED">📄 Reports.gs</text>
+      <text x="250" y="209" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
       <rect x="20" y="226" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="245" font-size="11" fill="#63B3ED">塘 Admin.gs</text>
-      <text x="250" y="245" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="245" font-size="11" fill="#63B3ED">📄 Admin.gs</text>
+      <text x="250" y="245" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
       <rect x="20" y="262" width="320" height="28" rx="4" fill="#374151"/>
-      <text x="36" y="281" font-size="11" fill="#63B3ED">塘 ContentManager.gs</text>
-      <text x="250" y="281" font-size="9" fill="#A0AEC0">竊・・九〒霑ｽ蜉</text>
+      <text x="36" y="281" font-size="11" fill="#63B3ED">📄 ContentManager.gs</text>
+      <text x="250" y="281" font-size="9" fill="#A0AEC0">← ＋で追加</text>
 
-      <!-- 遏｢蜊ｰ縺ｨ隱ｬ譏・-->
+      <!-- 矢印と説明 -->
       <line x1="360" y1="100" x2="400" y2="100" stroke="#718096" stroke-width="1.5" marker-end="url(#arr2)"/>
-      <text x="410" y="88" font-size="11" fill="#4A5568">竭 繝輔ぃ繧､繝ｫ蜷肴ｨｪ縺ｮ</text>
-      <text x="410" y="104" font-size="11" fill="#4A5568">縲鯉ｼ九阪・繧ｿ繝ｳ繧偵け繝ｪ繝・け</text>
-      <text x="410" y="120" font-size="11" fill="#4A5568">竊偵後せ繧ｯ繝ｪ繝励ヨ縲阪ｒ驕ｸ謚・/text>
+      <text x="410" y="88" font-size="11" fill="#4A5568">① ファイル名横の</text>
+      <text x="410" y="104" font-size="11" fill="#4A5568">「＋」ボタンをクリック</text>
+      <text x="410" y="120" font-size="11" fill="#4A5568">→「スクリプト」を選択</text>
 
       <line x1="360" y1="200" x2="400" y2="200" stroke="#718096" stroke-width="1.5" marker-end="url(#arr2)"/>
-      <text x="410" y="188" font-size="11" fill="#4A5568">竭｡ 繝輔ぃ繧､繝ｫ蜷阪ｒ蜈･蜉・/text>
-      <text x="410" y="204" font-size="11" fill="#4A5568">・井ｾ・ Config・・/text>
+      <text x="410" y="188" font-size="11" fill="#4A5568">② ファイル名を入力</text>
+      <text x="410" y="204" font-size="11" fill="#4A5568">（例: Config）</text>
 
       <line x1="360" y1="270" x2="400" y2="270" stroke="#38A169" stroke-width="1.5" marker-end="url(#arr2)"/>
-      <text x="410" y="258" font-size="11" fill="#276749">竭｢ 繧ｳ繝ｼ繝峨ｒ蜈ｨ驕ｸ謚槭＠縺ｦ</text>
-      <text x="410" y="274" font-size="11" fill="#276749">gas繝輔か繝ｫ繝縺ｮ蜷・ヵ繧｡繧､繝ｫ繧・/text>
-      <text x="410" y="290" font-size="11" fill="#276749">繧ｳ繝斐・縺励※雋ｼ繧贋ｻ倥￠</text>
+      <text x="410" y="258" font-size="11" fill="#276749">③ コードを全選択して</text>
+      <text x="410" y="274" font-size="11" fill="#276749">gasフォルダの各ファイルを</text>
+      <text x="410" y="290" font-size="11" fill="#276749">コピペして貼り付け</text>
     </svg>
 
-    <div class="warn">笞・・Code.gs・域怙蛻昴°繧峨≠繧具ｼ峨・荳ｭ霄ｫ繧貞・驛ｨ豸医＠縺ｦ縺九ｉ <code>gas/Code.gs</code> 縺ｮ蜀・ｮｹ繧定ｲｼ繧贋ｻ倥￠縺ｦ縺上□縺輔＞縲・/div>
+    <div class="warn">⚠️ Code.gs（最初からある）は中身を全部消してから <code>gas/Code.gs</code> の内容を貼り付けてください。</div>
 
-    <div class="section-sub">2-3. Sheets繧貞・譛溷喧縺吶ｋ・磯㍾隕・ｼ・ｼ・/div>
+    <div class="section-sub">2-3. Sheetsを初期化する（重要！）</div>
 
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">GAS繧ｨ繝・ぅ繧ｿ荳企Κ縺ｮ髢｢謨ｰ蜷阪ラ繝ｭ繝・・繝繧ｦ繝ｳ繧帝幕縺・/div>
-          <div class="proc-body">縲碁未謨ｰ繧帝∈謚槭阪→譖ｸ縺九ｌ縺溘・繝ｫ繝繧ｦ繝ｳ繧偵け繝ｪ繝・け</div>
+          <div class="proc-title">GASエディタ上部の関数名ドロップダウンを開く</div>
+          <div class="proc-body">「関数を選択」と書かれたプルダウンをクリック</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title"><code>setupSheets</code> 繧帝∈謚槭＠縺ｦ笆ｶ・・螳溯｡・/div>
-          <div class="proc-body">蛻晏屓縺ｯ縲梧価隱阪′蠢・ｦ√阪ム繧､繧｢繝ｭ繧ｰ縺悟・縺ｾ縺・竊・縲梧ｨｩ髯舌ｒ遒ｺ隱阪坂・縲瑚ｩｳ邏ｰ縲坂・縲悟ｮ牙・縺ｧ縺ｯ縺ｪ縺・・繝ｼ繧ｸ縺ｸ遘ｻ蜍輔坂・縲瑚ｨｱ蜿ｯ縲・/div>
+          <div class="proc-title"><code>setupSheets</code> を選択して▶️ 実行</div>
+          <div class="proc-body">初回は「承認が必要」ダイアログが出ます → 「権限を確認」→「詳細」→「安全ではないページへ移動」→「許可」</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医↓謌ｻ縺｣縺ｦ遒ｺ隱・/div>
-          <div class="proc-body">Nolia-DB繧帝幕縺上→ <code>users / daily_log / weekly_reports / content / testimonials / coupons</code> 縺ｮ6繧ｷ繝ｼ繝医′縺ｧ縺阪※縺・ｌ縺ｰOK</div>
+          <div class="proc-title">スプレッドシートに戻って確認</div>
+          <div class="proc-body">Nolia-DBを開くと <code>users / daily_log / weekly_reports / content / testimonials / coupons</code> の6シートができていればOK</div>
         </div>
       </li>
     </ul>
 
     <svg viewBox="0 0 820 120" style="width:100%;display:block;margin:14px 0;" xmlns="http://www.w3.org/2000/svg" font-family="Meiryo,'Noto Sans JP',sans-serif">
-      <!-- 繧ｷ繝ｼ繝医ち繝冶｡ｨ遉ｺ -->
+      <!-- シートタブ表示 -->
       <rect x="10" y="20" width="800" height="80" rx="6" fill="#F7FAFC" stroke="#E2E8F0"/>
-      <text x="420" y="16" text-anchor="middle" font-size="10" fill="#718096">setupSheets 螳溯｡悟ｾ・竊・繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝医・荳矩Κ縺ｫ6縺､縺ｮ繧ｿ繝悶′迴ｾ繧後∪縺・/text>
-      <!-- 繧ｷ繝ｼ繝医ち繝・-->
+      <text x="420" y="16" text-anchor="middle" font-size="10" fill="#718096">setupSheets 実行後 → スプレッドシートの下部に6つのタブが現れます</text>
+      <!-- シートタブ -->
       <rect x="20"  y="50" width="100" height="30" rx="4 4 0 0" fill="#276749"/>
       <text x="70"  y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">users</text>
       <rect x="128" y="50" width="110" height="30" rx="4 4 0 0" fill="#2B6CB0"/>
@@ -464,119 +468,120 @@ pre .ok { color:#68D391; }
       <text x="549" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">testimonials</text>
       <rect x="615" y="50" width="90" height="30" rx="4 4 0 0" fill="#1A3C34"/>
       <text x="660" y="70" text-anchor="middle" font-size="10" fill="white" font-weight="bold">coupons</text>
-      <text x="420" y="100" text-anchor="middle" font-size="10" fill="#38A169" font-weight="bold">笨・縺薙・6縺､縺梧純縺｣縺ｦ縺・ｌ縺ｰ謌仙粥・・/text>
+      <text x="420" y="100" text-anchor="middle" font-size="10" fill="#38A169" font-weight="bold">✅ この6つが揃っていれば成功！</text>
     </svg>
 
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 3: API繧ｭ繝ｼ逋ｻ骭ｲ
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 3: APIキー登録
+════════════════════════════════════════ -->
 <div class="step-section s3">
   <div class="step-header">
     <div class="step-num">3</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 3 窶・邏・蛻・/div>
-      <h2>API繧ｭ繝ｼ縺ｨ繝代せ繝ｯ繝ｼ繝峨ｒ繧ｹ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縺ｫ險ｭ螳壹☆繧・/h2>
+      <div class="step-label">STEP 3 — 約5分</div>
+      <h2>APIキーとパスワードをスクリプトプロパティに設定する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">泊</div>
+    <div style="margin-left:auto; font-size:28px;">🔑</div>
   </div>
   <div class="step-body">
 
-    <div class="danger">白 API繧ｭ繝ｼ縺ｯ繧ｳ繝ｼ繝峨↓逶ｴ謗･譖ｸ縺九★縲∝ｿ・★繧ｹ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縺ｫ菫晏ｭ倥＠縺ｦ縺上□縺輔＞縲ゅさ繝ｼ繝峨↓繧ｭ繝ｼ繧呈嶌縺上→縲；itHub縺ｫ蜈ｬ髢九＠縺滄圀縺ｫ螟夜Κ縺ｫ貍上ｌ繧句些髯ｺ縺後≠繧翫∪縺吶・/div>
+    <div class="danger">🔒 APIキーはコードに直接書かず、必ずスクリプトプロパティに保存してください。コードにキーを書くと、GitHubに公開した際に外部に漏れる危険があります。</div>
 
-    <div class="section-sub">謫堺ｽ懈焔鬆・/div>
+    <div class="section-sub">操作手順</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">GAS繧ｨ繝・ぅ繧ｿ縺ｧ蟾ｦ縺ｮ繝翫ン縲後・繝ｭ繧ｸ繧ｧ繧ｯ繝医・險ｭ螳壹坂囮・・繧偵け繝ｪ繝・け</div>
+          <div class="proc-title">GASエディタで左のナビ「プロジェクトの設定」⚙️ をクリック</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">縲後せ繧ｯ繝ｪ繝励ヨ縺ｮ繝励Ο繝代ユ繧｣縲阪そ繧ｯ繧ｷ繝ｧ繝ｳ縺ｾ縺ｧ繧ｹ繧ｯ繝ｭ繝ｼ繝ｫ</div>
-          <div class="proc-body">縲後・繝ｭ繝代ユ繧｣繧定ｿｽ蜉縲阪・繧ｿ繝ｳ縺瑚ｦ九∴縺ｾ縺・/div>
+          <div class="proc-title">「スクリプトのプロパティ」セクションまでスクロール</div>
+          <div class="proc-body">「プロパティを追加」ボタンが見えます</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">莉･荳九・4縺､繧・縺､縺壹▽霑ｽ蜉縺吶ｋ</div>
+          <div class="proc-title">以下の4つを1つずつ追加する</div>
         </div>
       </li>
     </ul>
 
     <table class="prop-table">
-      <tr><th>繝励Ο繝代ユ繧｣蜷搾ｼ亥ｷｦ縺ｮ谺・ｼ・/th><th>蛟､・亥承縺ｮ谺・ｼ・/th><th>蜿門ｾ怜ｴ謇</th></tr>
+      <tr><th>プロパティ名（左の欄）</th><th>値（右の欄）</th><th>取得場所</th></tr>
       <tr>
         <td>SPREADSHEET_ID</td>
-        <td>STEP 1 縺ｧ繝｡繝｢縺励◆ID</td>
-        <td><span class="badge badge-green">貂・/span> 繝｡繝｢蟶ｳ縺ｫ菫晏ｭ俶ｸ医∩</td>
+        <td>STEP 1 でメモしたID</td>
+        <td><span class="badge badge-green">済</span> メモ帳に保存済み</td>
       </tr>
       <tr>
         <td>GEMINI_API_KEY</td>
-        <td>Gemini API繧ｭ繝ｼ・磯聞縺・枚蟄怜・・・/td>
-        <td><span class="badge badge-orange">隕∝叙蠕・/span> aistudio.google.com</td>
+        <td>Gemini APIキー（長い文字列）</td>
+        <td><span class="badge badge-orange">要取得</span> aistudio.google.com</td>
       </tr>
       <tr>
         <td>LINE_TOKEN</td>
         <td>Channel Access Token</td>
-        <td><span class="badge badge-orange">隕∝叙蠕・/span> LINE Developers</td>
+        <td><span class="badge badge-orange">要取得</span> LINE Developers</td>
       </tr>
       <tr>
         <td>ADMIN_TOKEN</td>
-        <td>閾ｪ蛻・〒豎ｺ繧√◆邂｡逅・・ヱ繧ｹ繝ｯ繝ｼ繝・br>萓・ <code>nolia-admin-2026</code></td>
-        <td><span class="badge badge-blue">閾ｪ逕ｱ</span> 閾ｪ蛻・〒豎ｺ繧√ｋ</td>
+        <td>自分で決めた管理者パスワード<br>例: <code>nolia-admin-2026</code></td>
+        <td><span class="badge badge-blue">自由</span> 自分で決める</td>
       </tr>
     </table>
 
-    <div class="section-sub">Gemini API繧ｭ繝ｼ縺ｮ蜿門ｾ玲婿豕・/div>
+    <div class="section-sub">Gemini APIキーの取得方法</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title"><code>aistudio.google.com</code> 繧帝幕縺・/div>
-          <div class="proc-body">Google繧｢繧ｫ繧ｦ繝ｳ繝医〒繝ｭ繧ｰ繧､繝ｳ・・WS繧｢繧ｫ繧ｦ繝ｳ繝医〒OK・・/div>
+          <div class="proc-title"><code>aistudio.google.com</code> を開く</div>
+          <div class="proc-body">Googleアカウントでログイン（GWSアカウントでOK）</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">蟾ｦ繝｡繝九Η繝ｼ縲隈et API key縲坂・縲靴reate API key縲・/div>
-          <div class="proc-body">縲靴reate API key in new project縲阪ｒ驕ｸ謚・/div>
+          <div class="proc-title">左メニュー「Get API key」→「Create API key」</div>
+          <div class="proc-body">「Create API key in new project」を選択</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">逕滓・縺輔ｌ縺溘く繝ｼ繧偵さ繝斐・ 竊・繧ｹ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縺ｫ雋ｼ繧贋ｻ倥￠</div>
-          <div class="proc-body">繧ｭ繝ｼ縺ｯ <code>AIzaSy...</code> 縺九ｉ蟋九∪繧矩聞縺・枚蟄怜・縺ｧ縺・/div>
+          <div class="proc-title">生成されたキーをコピー → スクリプトプロパティに貼り付け</div>
+          <div class="proc-body">キーは <code>AIzaSy...</code> から始まる長い文字列です</div>
         </div>
       </li>
     </ul>
 
-    <div class="section-sub">LINE Channel Access Token 縺ｮ蜿門ｾ玲婿豕・/div>
+    <div class="section-sub">LINE Channel Access Token の取得方法</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title"><code>developers.line.biz</code> 繧帝幕縺・/div>
-          <div class="proc-body">LINE Business ID縺ｧ繝ｭ繧ｰ繧､繝ｳ・亥・蠑上い繧ｫ繧ｦ繝ｳ繝医〒菴ｿ縺｣縺ｦ縺・ｋ繧｢繧ｫ繧ｦ繝ｳ繝茨ｼ・/div>
+          <div class="proc-title"><code>developers.line.biz</code> を開く</div>
+          <div class="proc-body">LINE Business IDでログイン（公式アカウントで使っているアカウント）</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">繝励Ο繝舌う繝繝ｼ 竊・蜈ｬ蠑上い繧ｫ繧ｦ繝ｳ繝医・繝√Ε繝阪Ν繧帝∈謚・/div>
+          <div class="proc-title">プロバイダー → 公式アカウントのチャネルを選択</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">縲勲essaging API險ｭ螳壹阪ち繝・竊偵靴hannel access token縲坂・縲栗ssue縲・/div>
-          <div class="proc-body">逕滓・縺輔ｌ縺溘ヨ繝ｼ繧ｯ繝ｳ繧偵さ繝斐・ 竊・繧ｹ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縺ｫ雋ｼ繧贋ｻ倥￠</div>
+          <div class="proc-title">「Messaging API設定」タブ →「Channel access token」→「Issue」</div>
+          <div class="proc-body">生成されたトークンをコピー → スクリプトプロパティに貼り付け</div>
         </div>
       </li>
     </ul>
@@ -584,44 +589,45 @@ pre .ok { color:#68D391; }
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 4: 繝・・繝ｭ繧､
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 4: デプロイ
+════════════════════════════════════════ -->
 <div class="step-section s4">
   <div class="step-header">
     <div class="step-num">4</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 4 窶・邏・蛻・/div>
-      <h2>GAS Web App 繧偵ョ繝励Ο繧､縺励※URL繧貞叙蠕励☆繧・/h2>
+      <div class="step-label">STEP 4 — 約5分</div>
+      <h2>GAS Web App をデプロイしてURLを取得する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">噫</div>
+    <div style="margin-left:auto; font-size:28px;">🚀</div>
   </div>
   <div class="step-body">
 
-    <div class="info">邃ｹ・・繝・・繝ｭ繧､縺吶ｋ縺ｨ縲√ヵ繝ｭ繝ｳ繝医お繝ｳ繝会ｼ・itHub Pages・峨°繧峨い繧ｯ繧ｻ繧ｹ縺ｧ縺阪ｋAPI縺ｮURL縺檎匱陦後＆繧後∪縺吶・/div>
+    <div class="info">ℹ️ デプロイすると、フロントエンド（GitHub Pages）からアクセスできるAPIのURLが発行されます。</div>
 
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">GAS繧ｨ繝・ぅ繧ｿ蜿ｳ荳翫後ョ繝励Ο繧､縲坂・縲梧眠縺励＞繝・・繝ｭ繧､縲・/div>
+          <div class="proc-title">GASエディタ右上「デプロイ」→「新しいデプロイ」</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">豁ｯ霆翫い繧､繧ｳ繝ｳ 竊偵後え繧ｧ繝悶い繝励Μ縲阪ｒ驕ｸ謚・/div>
+          <div class="proc-title">歯車アイコン →「ウェブアプリ」を選択</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">莉･荳九・險ｭ螳壹↓縺吶ｋ</div>
+          <div class="proc-title">以下の設定にする</div>
           <div class="proc-body">
             <table style="margin-top:6px; width:auto;">
-              <tr><th style="min-width:160px;">鬆・岼</th><th>險ｭ螳壼､</th></tr>
-              <tr><td>隱ｬ譏・/td><td>Nolia v1.0</td></tr>
-              <tr><td>谺｡縺ｮ繝ｦ繝ｼ繧ｶ繝ｼ縺ｨ縺励※螳溯｡・/td><td><strong>閾ｪ蛻・/strong>・医Γ繝ｼ繝ｫ繧｢繝峨Ξ繧ｹ・・/td></tr>
-              <tr><td>繧｢繧ｯ繧ｻ繧ｹ縺ｧ縺阪ｋ繝ｦ繝ｼ繧ｶ繝ｼ</td><td><strong style="color:#C53030;">蜈ｨ蜩｡</strong>・遺・縺薙ｌ縺碁㍾隕・ｼ・/td></tr>
+              <tr><th style="min-width:160px;">項目</th><th>設定値</th></tr>
+              <tr><td>説明</td><td>Nolia v1.0</td></tr>
+              <tr><td>次のユーザーとして実行</td><td><strong>自分</strong>（メールアドレス）</td></tr>
+              <tr><td>アクセスできるユーザー</td><td><strong style="color:#C53030;">全員</strong>（←これが重要）</td></tr>
             </table>
           </div>
         </div>
@@ -629,7 +635,7 @@ pre .ok { color:#68D391; }
       <li class="proc-item">
         <div class="proc-dot">4</div>
         <div class="proc-content">
-          <div class="proc-title">縲後ョ繝励Ο繧､縲阪ｒ繧ｯ繝ｪ繝・け 竊・陦ｨ遉ｺ縺輔ｌ縺欟RL繧偵さ繝斐・</div>
+          <div class="proc-title">「デプロイ」をクリック → 表示されたURLをコピー</div>
         </div>
       </li>
     </ul>
@@ -641,132 +647,133 @@ pre .ok { color:#68D391; }
       </div>
       <div class="mock-body">
         <div style="background:#F0FFF4; border:1px solid #9AE6B4; border-radius:6px; padding:12px;">
-          <div style="font-size:12px; font-weight:bold; color:#276749; margin-bottom:8px;">笨・繝・・繝ｭ繧､縺悟ｮ御ｺ・＠縺ｾ縺励◆</div>
-          <div style="font-size:11px; color:#4A5568; margin-bottom:4px;">繧ｦ繧ｧ繝悶い繝励Μ縺ｮURL</div>
-          <div style="background:#1A202C; border-radius:4px; padding:8px 10px; font-family:monospace; font-size:11px; color:#F6AD55;">https://script.google.com/macros/s/<strong style="color:#FC8181;">AKfycbx...髟ｷ縺・枚蟄怜・...8xZ</strong>/exec</div>
-          <div style="font-size:10px; color:#C05621; margin-top:6px;">笞・・縺薙・URL繧偵Γ繝｢蟶ｳ縺ｫ菫晏ｭ倥＠縺ｦ縺上□縺輔＞・・TEP 5 縺ｧ菴ｿ縺・∪縺呻ｼ・/div>
+          <div style="font-size:12px; font-weight:bold; color:#276749; margin-bottom:8px;">✅ デプロイが完了しました</div>
+          <div style="font-size:11px; color:#4A5568; margin-bottom:4px;">ウェブアプリのURL</div>
+          <div style="background:#1A202C; border-radius:4px; padding:8px 10px; font-family:monospace; font-size:11px; color:#F6AD55;">https://script.google.com/macros/s/<strong style="color:#FC8181;">AKfycbx...長い文字列...8xZ</strong>/exec</div>
+          <div style="font-size:10px; color:#C05621; margin-top:6px;">⚠️ このURLをメモ帳に保存してください（STEP 5 で使います）</div>
         </div>
       </div>
     </div>
 
-    <div class="warn">笞・・繧ｳ繝ｼ繝峨ｒ菫ｮ豁｣縺励◆蠕後・縲後ョ繝励Ο繧､縲坂・縲後ョ繝励Ο繧､繧堤ｮ｡逅・坂・縲碁央遲・い繧､繧ｳ繝ｳ・育ｷｨ髮・ｼ峨坂・縲後ヰ繝ｼ繧ｸ繝ｧ繝ｳ: 譁ｰ繝舌・繧ｸ繝ｧ繝ｳ縲阪〒蜀阪ョ繝励Ο繧､縺悟ｿ・ｦ√〒縺吶６RL縺ｯ螟峨ｏ繧翫∪縺帙ｓ縲・/div>
+    <div class="warn">⚠️ コードを修正した後は「デプロイ」→「デプロイを管理」→「鉛筆アイコン（編集）」→「バージョン: 新バージョン」で再デプロイが必要です。URLは変わりません。</div>
 
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 5: GitHub
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 5: GitHub
+════════════════════════════════════════ -->
 <div class="step-section s5">
   <div class="step-header">
     <div class="step-num">5</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 5 窶・邏・5蛻・/div>
-      <h2>config.js 繧呈嶌縺肴鋤縺医※ GitHub Pages 縺ｫ蜈ｬ髢九☆繧・/h2>
+      <div class="step-label">STEP 5 — 約15分</div>
+      <h2>config.js を書き換えて GitHub Pages に公開する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">杉</div>
+    <div style="margin-left:auto; font-size:28px;">🐙</div>
   </div>
   <div class="step-body">
 
-    <div class="section-sub">5-1. config.js 縺ｫGAS縺ｮURL繧定ｲｼ繧贋ｻ倥￠繧・/div>
-    <p>繝輔ぃ繧､繝ｫ縺ｮ蝣ｴ謇: <code>C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app\js\config.js</code></p>
+    <div class="section-sub">5-1. config.js にGASのURLを貼り付ける</div>
+    <p>ファイルの場所: <code>C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app\js\config.js</code></p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang">js/config.js 窶・譖ｸ縺肴鋤縺医ｋ邂・園</span>
+        <span class="code-lang">js/config.js — 書き換える箇所</span>
       </div>
-      <pre><span class="cm">// 螟画峩蜑搾ｼ医％縺ｮ縺ｾ縺ｾ谿九▲縺ｦ縺・ｋ迥ｶ諷具ｼ・/span>
+      <pre><span class="cm">// 変更前（このまま残っている状態）</span>
 API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="hl">YOUR_GAS_DEPLOYMENT_ID</span>/exec'</span>,
 
-<span class="cm">// 竊・STEP 4 縺ｧ繧ｳ繝斐・縺励◆ URL 縺ｫ譖ｸ縺肴鋤縺医ｋ</span>
-API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="ok">AKfycbx...螳滄圀縺ｮID.../exec</span>'</span>,</pre>
+<span class="cm">// ↓ STEP 4 でコピーした URL に書き換える</span>
+API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="ok">AKfycbx...実際のID.../exec</span>'</span>,</pre>
     </div>
 
-    <div class="section-sub">5-2. LINE 縺ｮ蜿矩＃霑ｽ蜉URL繧定ｨｭ螳壹☆繧・/div>
-    <p>繝輔ぃ繧､繝ｫ縺ｮ蝣ｴ謇: <code>_publish-staging/nolia-app/index.html</code> 縺ｮ荳逡ｪ荳・/p>
+    <div class="section-sub">5-2. LINE の友達追加URLを設定する</div>
+    <p>ファイルの場所: <code>_publish-staging/nolia-app/index.html</code> の一番下</p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang">index.html 窶・譛荳矩Κ繧呈嶌縺肴鋤縺医ｋ</span>
+        <span class="code-lang">index.html — 最下部を書き換える</span>
       </div>
-      <pre><span class="cm">// 螟画峩蜑・/span>
+      <pre><span class="cm">// 変更前</span>
 <span class="kw">const</span> lineUrl = <span class="str">'https://line.me/R/ti/p/<span class="hl">YOUR_LINE_ID</span>'</span>;
 
-<span class="cm">// 竊・蜈ｬ蠑上い繧ｫ繧ｦ繝ｳ繝医・LINE ID・・縺九ｉ蟋九∪繧具ｼ峨↓螟峨∴繧・/span>
+<span class="cm">// ↓ 公式アカウントのLINE ID（@から始まる）に変える</span>
 <span class="kw">const</span> lineUrl = <span class="str">'https://line.me/R/ti/p/<span class="ok">@your_account</span>'</span>;</pre>
     </div>
 
-    <div class="section-sub">5-3. GitHub繝ｪ繝昴ず繝医Μ繧剃ｽ懈・縺吶ｋ</div>
+    <div class="section-sub">5-3. GitHubリポジトリを作成する</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">github.com 縺ｧ Artsoul-Git 繧｢繧ｫ繧ｦ繝ｳ繝医↓繝ｭ繧ｰ繧､繝ｳ</div>
+          <div class="proc-title">github.com で Artsoul-Git アカウントにログイン</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">蜿ｳ荳翫鯉ｼ九坂・縲君ew repository縲・/div>
+          <div class="proc-title">右上「＋」→「New repository」</div>
           <div class="proc-body">
             <table style="width:auto; margin-top:6px;">
-              <tr><th>鬆・岼</th><th>險ｭ螳壼､</th></tr>
+              <tr><th>項目</th><th>設定値</th></tr>
               <tr><td>Repository name</td><td><code>nolia-app</code></td></tr>
-              <tr><td>Public / Private</td><td><strong>Public</strong>・・itHub Pages 繧堤┌譁吶〒菴ｿ縺・◆繧・ｼ・/td></tr>
-              <tr><td>Add README</td><td>繝√ぉ繝・け縺励↑縺・/td></tr>
+              <tr><td>Public / Private</td><td><strong>Public</strong>（GitHub Pages を無料で使うため）</td></tr>
+              <tr><td>Add README</td><td>チェックしない</td></tr>
             </table>
           </div>
         </div>
       </li>
     </ul>
 
-    <div class="section-sub">5-4. PowerShell 縺ｧ繧｢繝・・繝ｭ繝ｼ繝峨☆繧・/div>
-    <p>Claude縺ｫ縲・ 縺ｧ蟋九∪繧九さ繝槭Φ繝峨ｒ螳溯｡後＠縺ｦ縲阪→險縺医・縲√％縺ｮ繧ｦ繧｣繝ｳ繝峨え縺ｧ逶ｴ謗･螳溯｡後〒縺阪∪縺吶・/p>
+    <div class="section-sub">5-4. PowerShell でアップロードする</div>
+    <p>Claudeに「! で始まるコマンドを実行して」と言えば、このウィンドウで直接実行できます。</p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang">PowerShell 窶・Claude Code 縺ｮ繧ｿ繝ｼ繝溘リ繝ｫ縺ｧ螳溯｡・/span>
+        <span class="code-lang">PowerShell — Claude Code のターミナルで実行</span>
       </div>
-      <pre><span class="cm"># nolia-app繝輔か繝ｫ繝縺ｫ遘ｻ蜍・/span>
+      <pre><span class="cm"># nolia-appフォルダに移動</span>
 <span class="kw">cd</span> <span class="str">"C:\Users\kei\Dropbox\00_Antigravity\_publish-staging\nolia-app"</span>
 
-<span class="cm"># git繧貞・譛溷喧縺励※譛蛻昴・繧ｳ繝溘ャ繝・/span>
+<span class="cm"># gitを初期化して最初のコミット</span>
 <span class="kw">git</span> init
 <span class="kw">git</span> add .
 <span class="kw">git</span> commit -m <span class="str">"feat: Nolia v1.0 Phase 0 initial release"</span>
 
-<span class="cm"># GitHub縺ｫ謗･邯壹＠縺ｦ繝励ャ繧ｷ繝･</span>
+<span class="cm"># GitHubに接続してプッシュ</span>
 <span class="kw">git</span> branch -M main
 <span class="kw">git</span> remote add origin https://github.com/Artsoul-Git/nolia-app.git
 <span class="kw">git</span> push -u origin main</pre>
     </div>
 
-    <div class="section-sub">5-5. GitHub Pages 繧呈怏蜉ｹ蛹悶☆繧・/div>
+    <div class="section-sub">5-5. GitHub Pages を有効化する</div>
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">GitHub 縺ｮ nolia-app 繝ｪ繝昴ず繝医Μ繝壹・繧ｸ繧帝幕縺・/div>
+          <div class="proc-title">GitHub の nolia-app リポジトリページを開く</div>
           <div class="proc-body"><code>github.com/Artsoul-Git/nolia-app</code></div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">縲郡ettings縲阪ち繝・竊・蟾ｦ繝｡繝九Η繝ｼ縲訓ages縲・/div>
+          <div class="proc-title">「Settings」タブ → 左メニュー「Pages」</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">3</div>
         <div class="proc-content">
-          <div class="proc-title">Source: 縲轡eploy from a branch縲・ Branch: <code>main</code> / <code>/ (root)</code> 竊・縲郡ave縲・/div>
+          <div class="proc-title">Source: 「Deploy from a branch」/ Branch: <code>main</code> / <code>/ (root)</code> → 「Save」</div>
         </div>
       </li>
       <li class="proc-item">
-        <div class="proc-dot" style="background:#38A169;">笨・/div>
+        <div class="proc-dot" style="background:#38A169;">✓</div>
         <div class="proc-content">
-          <div class="proc-title" style="color:#276749;">2縲・蛻・ｾ・▽縺ｨ繧｢繝励Μ縺悟・髢九＆繧後ｋ</div>
+          <div class="proc-title" style="color:#276749;">2〜3分待つとアプリが公開される</div>
           <div class="proc-body">
-            蜈ｬ髢偽RL: <code style="background:#F0FFF4; color:#276749; padding:2px 8px; border-radius:4px; font-size:12px;">https://artsoul-git.github.io/nolia-app/</code>
+            公開URL: <code style="background:#F0FFF4; color:#276749; padding:2px 8px; border-radius:4px; font-size:12px;">https://artsoul-git.github.io/nolia-app/</code>
           </div>
         </div>
       </li>
@@ -775,77 +782,79 @@ API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="ok"
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     STEP 6: 蜍穂ｽ懃｢ｺ隱・笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     STEP 6: 動作確認
+════════════════════════════════════════ -->
 <div class="step-section s6">
   <div class="step-header">
     <div class="step-num">6</div>
     <div class="step-title-block" style="color:white;">
-      <div class="step-label">STEP 6 窶・邏・0蛻・/div>
-      <h2>繝・せ繝医Θ繝ｼ繧ｶ繝ｼ繧剃ｽ懊▲縺ｦ蜍穂ｽ懃｢ｺ隱阪☆繧・/h2>
+      <div class="step-label">STEP 6 — 約10分</div>
+      <h2>テストユーザーを作って動作確認する</h2>
     </div>
-    <div style="margin-left:auto; font-size:28px;">笨・/div>
+    <div style="margin-left:auto; font-size:28px;">✅</div>
   </div>
   <div class="step-body">
 
-    <div class="section-sub">6-1. 繝・せ繝医Θ繝ｼ繧ｶ繝ｼ繧剃ｽ懈・縺励※繝｡繝ｼ繝ｫ繧貞女縺大叙繧・/div>
-    <p>GAS繧ｨ繝・ぅ繧ｿ縺ｧ莉･荳九・繧ｳ繝ｼ繝峨ｒ荳譎ら噪縺ｫ霑ｽ蜉縺励※螳溯｡後＠縺ｾ縺吶・/p>
+    <div class="section-sub">6-1. テストユーザーを作成してメールを受け取る</div>
+    <p>GASエディタで以下のコードを一時的に追加して実行します。</p>
 
     <div class="code-block">
       <div class="code-header">
-        <span class="code-lang">GAS繧ｨ繝・ぅ繧ｿ 窶・譁ｰ縺励＞繧ｹ繧ｯ繝ｪ繝励ヨ繝輔ぃ繧､繝ｫ縲卦est.gs縲阪↓雋ｼ繧贋ｻ倥￠縺ｦ螳溯｡・/span>
+        <span class="code-lang">GASエディタ — 新しいスクリプトファイル「Test.gs」に貼り付けて実行</span>
       </div>
       <pre><span class="kw">function</span> createTestUser() {
   <span class="kw">const</span> config = getConfig();
   <span class="kw">const</span> result = Admin.createUser(config.ADMIN_TOKEN, {
-    email: <span class="str">'<span class="hl">縺ゅ↑縺溘・繝｡繝ｼ繝ｫ繧｢繝峨Ξ繧ｹ@gmail.com</span>'</span>,
-    name:  <span class="str">'繝・せ繝亥､ｪ驛・</span>,
+    email: <span class="str">'<span class="hl">あなたのメールアドレス@gmail.com</span>'</span>,
+    name:  <span class="str">'テスト太郎'</span>,
   });
-  Logger.log(result.getContent()); <span class="cm">// 繝ｭ繧ｰ縺ｧuser_id縺ｨtoken繧堤｢ｺ隱・/span>
+  Logger.log(result.getContent()); <span class="cm">// ログでuser_idとtokenを確認</span>
 }</pre>
     </div>
 
     <ol style="margin:12px 0;">
-      <li>髢｢謨ｰ荳隕ｧ縺九ｉ <code>createTestUser</code> 繧帝∈繧薙〒笆ｶ・丞ｮ溯｡・/li>
-      <li>謖・ｮ壹＠縺溘Γ繝ｼ繝ｫ繧｢繝峨Ξ繧ｹ縺ｫ諡帛ｾ・Γ繝ｼ繝ｫ縺悟ｱ翫￥・域焚蛻・°縺九ｋ縺薙→縺ゅｊ・・/li>
-      <li>繝｡繝ｼ繝ｫ蜀・・繝ｪ繝ｳ繧ｯ繧偵せ繝槭・縺ｧ繧ｿ繝・・</li>
+      <li>関数一覧から <code>createTestUser</code> を選んで▶️実行</li>
+      <li>指定したメールアドレスに招待メールが届く（数分かかることあり）</li>
+      <li>メール内のリンクをスマホでタップ</li>
     </ol>
 
-    <div class="section-sub">6-2. 遒ｺ隱阪メ繧ｧ繝・け繝ｪ繧ｹ繝・/div>
+    <div class="section-sub">6-2. 確認チェックリスト</div>
 
     <div class="checklist">
-      <div style="font-size:12px; font-weight:bold; color:#276749; margin-bottom:10px;">莉･荳九′蜈ｨ驛ｨ蜍輔＞縺溘ｉPhase 0螳梧・縺ｧ縺呻ｼ・/div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">諡帛ｾ・Γ繝ｼ繝ｫ縺悟ｱ翫＞縺ｦ繝ｪ繝ｳ繧ｯ繧偵ち繝・・縺吶ｋ縺ｨ繧｢繝励Μ縺碁幕縺・/div></div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">蛻晏屓繧ｻ繝・ヨ繧｢繝・・逕ｻ髱｢縺瑚｡ｨ遉ｺ縺輔ｌ縺ｦ菫晏ｭ倥〒縺阪ｋ</div></div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">繝帙・繝逕ｻ髱｢縺ｧ繝舌う繧ｪ繧ｵ繧､繧ｯ繝ｫ縺瑚｡ｨ遉ｺ縺輔ｌ繧・/div></div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">譌･谺｡險倬鹸繝輔か繝ｼ繝縺ｧ菴馴㍾繝ｻ豌怜・繧貞・蜉帙＠縺ｦ菫晏ｭ倥〒縺阪ｋ</div></div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">繧ｹ繝励Ξ繝・ラ繧ｷ繝ｼ繝茨ｼ・aily_log 繧ｷ繝ｼ繝茨ｼ峨↓險倬鹸縺瑚ｿｽ蜉縺輔ｌ縺ｦ縺・ｋ</div></div>
-      <div class="check-item"><div class="check-box"></div><div class="check-label">繝槭う繝壹・繧ｸ縺ｧ繧ｰ繝ｩ繝輔′陦ｨ遉ｺ縺輔ｌ繧・/div></div>
+      <div style="font-size:12px; font-weight:bold; color:#276749; margin-bottom:10px;">以下が全部動いたらPhase 0完成です！</div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">招待メールが届いてリンクをタップするとアプリが開く</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">初回セットアップ画面が表示されて保存できる</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">ホーム画面でバイオサイクルが表示される</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">日次記録フォームで体重・気分を入力して保存できる</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">スプレッドシート（daily_log シート）に記録が追加されている</div></div>
+      <div class="check-item"><div class="check-box"></div><div class="check-label">マイページでグラフが表示される</div></div>
     </div>
 
-    <div class="success">脂 蜈ｨ驛ｨ繝√ぉ繝・け縺ｧ縺阪◆繧臼hase 0螳梧・・∵ｬ｡縺ｯ Phase 2・磯ｱ谺｡繝ｬ繝昴・繝医・閾ｪ蜍慕函謌撰ｼ峨↓騾ｲ縺ｿ縺ｾ縺吶・/div>
+    <div class="success">🎉 全部チェックできたらPhase 0完成！次は Phase 2（週次レポートの自動生成）に進みます。</div>
 
-    <div class="section-sub">6-3. 騾ｱ谺｡繝ｬ繝昴・繝郁・蜍暮∽ｿ｡縺ｮ險ｭ螳夲ｼ・hase 2・・/div>
-    <p>豈朱ｱ譌･譖懷､懊↓繝ｬ繝昴・繝医ｒ閾ｪ蜍暮∽ｿ｡縺吶ｋ繝医Μ繧ｬ繝ｼ繧定ｨｭ螳壹＠縺ｾ縺吶・/p>
+    <div class="section-sub">6-3. 週次レポート自動送信の設定（Phase 2）</div>
+    <p>毎週日曜夜にレポートを自動送信するトリガーを設定します。</p>
 
     <ul class="proc-list">
       <li class="proc-item">
         <div class="proc-dot">1</div>
         <div class="proc-content">
-          <div class="proc-title">GAS繧ｨ繝・ぅ繧ｿ蟾ｦ縺ｮ譎りｨ医い繧､繧ｳ繝ｳ縲後ヨ繝ｪ繧ｬ繝ｼ縲阪ｒ繧ｯ繝ｪ繝・け</div>
+          <div class="proc-title">GASエディタ左の時計アイコン「トリガー」をクリック</div>
         </div>
       </li>
       <li class="proc-item">
         <div class="proc-dot">2</div>
         <div class="proc-content">
-          <div class="proc-title">蜿ｳ荳九後ヨ繝ｪ繧ｬ繝ｼ繧定ｿｽ蜉縲・/div>
+          <div class="proc-title">右下「トリガーを追加」</div>
           <div class="proc-body">
             <table style="width:auto; margin-top:6px;">
-              <tr><th>險ｭ螳夐・岼</th><th>驕ｸ謚槭☆繧句､</th></tr>
-              <tr><td>螳溯｡後☆繧矩未謨ｰ</td><td><code>generateWeeklyReports</code></td></tr>
-              <tr><td>繧､繝吶Φ繝医・繧ｽ繝ｼ繧ｹ</td><td>譎る俣荳ｻ蟆主梛</td></tr>
-              <tr><td>繧ｿ繧､繝・/td><td>騾ｱ繝吶・繧ｹ縺ｮ繧ｿ繧､繝槭・</td></tr>
-              <tr><td>譖懈律</td><td>豈朱ｱ譌･譖懈律</td></tr>
-              <tr><td>譎ょ綾</td><td>蜊亥ｾ・10 譎ゅ・1 譎・/td></tr>
+              <tr><th>設定項目</th><th>選択する値</th></tr>
+              <tr><td>実行する関数</td><td><code>generateWeeklyReports</code></td></tr>
+              <tr><td>イベントのソース</td><td>時間主導型</td></tr>
+              <tr><td>タイプ</td><td>週ベースのタイマー</td></tr>
+              <tr><td>曜日</td><td>毎週日曜日</td></tr>
+              <tr><td>時刻</td><td>午後 10 時〜11 時</td></tr>
             </table>
           </div>
         </div>
@@ -855,61 +864,64 @@ API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="ok"
   </div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ
-笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     トラブルシューティング
+════════════════════════════════════════ -->
 <div class="flow-section">
-  <div class="section-title">繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</div>
+  <div class="section-title">トラブルシューティング</div>
 
   <table class="trouble-table">
-    <tr><th>逞・憾</th><th>蜴溷屏</th><th>蟇ｾ蜃ｦ豕・/th></tr>
+    <tr><th>症状</th><th>原因</th><th>対処法</th></tr>
     <tr>
-      <td>縲後Μ繝ｳ繧ｯ縺瑚ｦ九▽縺九ｊ縺ｾ縺帙ｓ縲阪→蜃ｺ繧・/td>
-      <td>config.js縺ｮURL縺碁俣驕輔＞ or 繝医・繧ｯ繝ｳ縺檎┌蜉ｹ</td>
-      <td>config.js縺ｮAPI_BASE繧堤｢ｺ隱阪・AS繧偵後ョ繝励Ο繧､繧堤ｮ｡逅・阪°繧牙・繝・・繝ｭ繧､</td>
+      <td>「リンクが見つかりません」と出る</td>
+      <td>config.jsのURLが間違い or トークンが無効</td>
+      <td>config.jsのAPI_BASEを確認。GASを「デプロイを管理」から再デプロイ</td>
     </tr>
     <tr>
-      <td>險倬鹸繧剃ｿ晏ｭ倥＠縺ｦ繧ゆｽ輔ｂ襍ｷ縺阪↑縺・/td>
-      <td>GAS縺ｮCORS繧ｨ繝ｩ繝ｼ or 繧｢繧ｯ繧ｻ繧ｹ讓ｩ髯舌お繝ｩ繝ｼ</td>
-      <td>繝・・繝ｭ繧､險ｭ螳壹後い繧ｯ繧ｻ繧ｹ縺ｧ縺阪ｋ繝ｦ繝ｼ繧ｶ繝ｼ・壼・蜩｡縲阪↓縺ｪ縺｣縺ｦ縺・ｋ縺狗｢ｺ隱阪ゅヶ繝ｩ繧ｦ繧ｶ縺ｮF12竊辰onsole縺ｧ繧ｨ繝ｩ繝ｼ遒ｺ隱・/td>
+      <td>記録を保存しても何も起きない</td>
+      <td>GASのCORSエラー or アクセス権限エラー</td>
+      <td>デプロイ設定「アクセスできるユーザー：全員」になっているか確認。ブラウザのF12→Consoleでエラー確認</td>
     </tr>
     <tr>
-      <td>Sheets縺ｫ繝・・繧ｿ縺悟・繧峨↑縺・/td>
-      <td>SPREADSHEET_ID縺碁俣驕輔＞</td>
-      <td>繧ｹ繧ｯ繝ｪ繝励ヨ繝励Ο繝代ユ繧｣縺ｮSPREADSHEET_ID繧貞・遒ｺ隱阪・AS繝ｭ繧ｰ繧ら｢ｺ隱・/td>
+      <td>Sheetsにデータが入らない</td>
+      <td>SPREADSHEET_IDが間違い</td>
+      <td>スクリプトプロパティのSPREADSHEET_IDを再確認。GASログも確認</td>
     </tr>
     <tr>
-      <td>諡帛ｾ・Γ繝ｼ繝ｫ縺悟ｱ翫°縺ｪ縺・/td>
-      <td>GmailApp騾∽ｿ｡繧ｨ繝ｩ繝ｼ or 霑ｷ諠代Γ繝ｼ繝ｫ</td>
-      <td>GAS縺ｮ繝ｭ繧ｰ繧堤｢ｺ隱阪ょ女菫｡蛛ｴ縺ｮ霑ｷ諠代Γ繝ｼ繝ｫ繝輔か繝ｫ繝繧ら｢ｺ隱・/td>
+      <td>招待メールが届かない</td>
+      <td>GmailApp送信エラー or 迷惑メール</td>
+      <td>GASのログを確認。受信側の迷惑メールフォルダも確認</td>
     </tr>
     <tr>
-      <td>GAS繧ｨ繝ｩ繝ｼ縲梧価隱阪′蠢・ｦ√・/td>
-      <td>蛻晏屓螳溯｡梧凾縺ｮ隱崎ｨｼ</td>
-      <td>縲梧ｨｩ髯舌ｒ遒ｺ隱阪坂・縲瑚ｩｳ邏ｰ縲坂・縲悟ｮ牙・縺ｧ縺ｪ縺・・繝ｼ繧ｸ縺ｸ遘ｻ蜍輔坂・縲瑚ｨｱ蜿ｯ縲・/td>
+      <td>GASエラー「承認が必要」</td>
+      <td>初回実行時の認証</td>
+      <td>「権限を確認」→「詳細」→「安全でないページへ移動」→「許可」</td>
     </tr>
     <tr>
-      <td>繧ｰ繝ｩ繝輔′陦ｨ遉ｺ縺輔ｌ縺ｪ縺・/td>
-      <td>險倬鹸繝・・繧ｿ縺・莉ｶ譛ｪ貅 or Chart.js縺ｮ隱ｭ縺ｿ霎ｼ縺ｿ繧ｨ繝ｩ繝ｼ</td>
-      <td>縺ｾ縺壽焚譌･髢楢ｨ倬鹸縺励※縺九ｉ遒ｺ隱阪ゅ∪縺溘・繝阪ャ繝域磁邯壹ｒ遒ｺ隱搾ｼ・DN縺瑚ｪｭ繧√↑縺・庄閭ｽ諤ｧ・・/td>
+      <td>グラフが表示されない</td>
+      <td>記録データが2件未満 or Chart.jsの読み込みエラー</td>
+      <td>まず数日間記録してから確認。またはネット接続を確認（CDNが読めない可能性）</td>
     </tr>
     <tr>
-      <td>GitHub Pages縺ｮURL縺ｫ繧｢繧ｯ繧ｻ繧ｹ縺励※繧ら悄縺｣逋ｽ</td>
-      <td>Pages險ｭ螳壹′螳御ｺ・＠縺ｦ縺・↑縺・or 繝薙Ν繝牙ｾ・■</td>
-      <td>險ｭ螳壼ｾ・縲・蛻・ｾ・▽縲・itHub縺ｮActions繧ｿ繝悶〒繝・・繝ｭ繧､迥ｶ豕√ｒ遒ｺ隱・/td>
+      <td>GitHub PagesのURLにアクセスしても真っ白</td>
+      <td>Pages設定が完了していない or ビルド待ち</td>
+      <td>設定後2〜5分待つ。GitHubのActionsタブでデプロイ状況を確認</td>
     </tr>
     <tr>
-      <td>GAS繧剃ｿｮ豁｣縺励◆縺ｮ縺ｫ蜿肴丐縺輔ｌ縺ｪ縺・/td>
-      <td>譁ｰ繝舌・繧ｸ繝ｧ繝ｳ縺ｧ繝・・繝ｭ繧､縺励※縺・↑縺・/td>
-      <td>縲後ョ繝励Ο繧､縲坂・縲後ョ繝励Ο繧､繧堤ｮ｡逅・坂・驩帷ｭ・い繧､繧ｳ繝ｳ竊偵後ヰ繝ｼ繧ｸ繝ｧ繝ｳ・壽眠繝舌・繧ｸ繝ｧ繝ｳ縲坂・縲後ョ繝励Ο繧､縲・/td>
+      <td>GASを修正したのに反映されない</td>
+      <td>新バージョンでデプロイしていない</td>
+      <td>「デプロイ」→「デプロイを管理」→鉛筆アイコン→「バージョン：新バージョン」→「デプロイ」</td>
     </tr>
   </table>
 
-  <div class="info">邃ｹ・・隗｣豎ｺ縺励↑縺・ｴ蜷医・縲；AS繧ｨ繝・ぅ繧ｿ蟾ｦ荳九・縲悟ｮ溯｡梧焚縲阪〒繝ｭ繧ｰ繧堤｢ｺ隱阪☆繧九°縲，laude Code縺ｫ縲後お繝ｩ繝ｼ蜀・ｮｹ縲阪→縲後←縺ｮSTEP縺ｧ豁｢縺ｾ縺｣縺溘°縲阪ｒ謨吶∴縺ｦ縺上□縺輔＞縲・/div>
+  <div class="info">ℹ️ 解決しない場合は、GASエディタ左下の「実行数」でログを確認するか、Claude Codeに「エラー内容」と「どのSTEPで止まったか」を教えてください。</div>
 </div>
 
-<!-- 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊・     Xserver譛ｬ逡ｪ遘ｻ陦鯉ｼ亥ｰ・擂・・笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 -->
+<!-- ═══════════════════════════════════════
+     Xserver本番移行（将来）
+════════════════════════════════════════ -->
 <div class="flow-section">
-  <div class="section-title">蟆・擂縺ｮ譛ｬ逡ｪ遘ｻ陦・窶・GitHub・・AS・俄・ Xserver・・HP + MySQL・・/div>
+  <div class="section-title">将来の本番移行 — GitHub（GAS）→ Xserver（PHP + MySQL）</div>
 
   <svg viewBox="0 0 820 200" style="width:100%;display:block;margin:14px 0;" xmlns="http://www.w3.org/2000/svg" font-family="Meiryo,'Noto Sans JP',sans-serif">
     <defs>
@@ -918,37 +930,38 @@ API_BASE: <span class="str">'https://script.google.com/macros/s/<span class="ok"
       </marker>
     </defs>
 
-    <!-- 迴ｾ蝨ｨ -->
+    <!-- 現在 -->
     <rect x="10" y="20" width="340" height="160" rx="10" fill="#EBF8FF" stroke="#3182CE" stroke-width="1.5"/>
-    <text x="180" y="44" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">迴ｾ蝨ｨ・・hase 0・・/text>
+    <text x="180" y="44" text-anchor="middle" font-size="12" fill="#1A365D" font-weight="bold">現在（Phase 0）</text>
     <rect x="25" y="54" width="310" height="36" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="180" y="77" text-anchor="middle" font-size="11" fill="#2D3748">塘 繝輔Ο繝ｳ繝医お繝ｳ繝・ GitHub Pages</text>
+    <text x="180" y="77" text-anchor="middle" font-size="11" fill="#2D3748">📄 フロントエンド: GitHub Pages</text>
     <rect x="25" y="98" width="310" height="36" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="180" y="121" text-anchor="middle" font-size="11" fill="#2D3748">笞呻ｸ・繝舌ャ繧ｯ繧ｨ繝ｳ繝・ GAS Web App</text>
+    <text x="180" y="121" text-anchor="middle" font-size="11" fill="#2D3748">⚙️ バックエンド: GAS Web App</text>
     <rect x="25" y="142" width="310" height="32" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="180" y="163" text-anchor="middle" font-size="11" fill="#2D3748">淀・・DB: Google Sheets</text>
+    <text x="180" y="163" text-anchor="middle" font-size="11" fill="#2D3748">🗄️ DB: Google Sheets</text>
 
-    <!-- 遏｢蜊ｰ -->
+    <!-- 矢印 -->
     <line x1="360" y1="100" x2="455" y2="100" stroke="#2B8A7A" stroke-width="2.5" marker-end="url(#arr3)" stroke-dasharray="6,3"/>
-    <text x="408" y="90" text-anchor="middle" font-size="10" fill="#2B8A7A" font-weight="bold">遘ｻ陦・/text>
-    <text x="408" y="114" text-anchor="middle" font-size="9" fill="#4A5568">config.js縺ｮ</text>
-    <text x="408" y="126" text-anchor="middle" font-size="9" fill="#4A5568">1陦後ｒ螟画峩</text>
+    <text x="408" y="90" text-anchor="middle" font-size="10" fill="#2B8A7A" font-weight="bold">移行</text>
+    <text x="408" y="114" text-anchor="middle" font-size="9" fill="#4A5568">config.jsの</text>
+    <text x="408" y="126" text-anchor="middle" font-size="9" fill="#4A5568">1行を変更</text>
 
-    <!-- 譛ｬ逡ｪ -->
+    <!-- 本番 -->
     <rect x="465" y="20" width="345" height="160" rx="10" fill="#F0FFF4" stroke="#38A169" stroke-width="1.5"/>
-    <text x="637" y="44" text-anchor="middle" font-size="12" fill="#1C4532" font-weight="bold">譛ｬ逡ｪ・・server遘ｻ陦悟ｾ鯉ｼ・/text>
+    <text x="637" y="44" text-anchor="middle" font-size="12" fill="#1C4532" font-weight="bold">本番（Xserver移行後）</text>
     <rect x="480" y="54" width="315" height="36" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="637" y="77" text-anchor="middle" font-size="11" fill="#2D3748">塘 繝輔Ο繝ｳ繝医お繝ｳ繝・ Xserver・亥酔縺路TML・・/text>
+    <text x="637" y="77" text-anchor="middle" font-size="11" fill="#2D3748">📄 フロントエンド: Xserver（同じHTML）</text>
     <rect x="480" y="98" width="315" height="36" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="637" y="121" text-anchor="middle" font-size="11" fill="#2D3748">笞呻ｸ・繝舌ャ繧ｯ繧ｨ繝ｳ繝・ PHP 8.x on Xserver</text>
+    <text x="637" y="121" text-anchor="middle" font-size="11" fill="#2D3748">⚙️ バックエンド: PHP 8.x on Xserver</text>
     <rect x="480" y="142" width="315" height="32" rx="6" fill="white" stroke="#E2E8F0"/>
-    <text x="637" y="163" text-anchor="middle" font-size="11" fill="#2D3748">淀・・DB: MySQL 8.0 on Xserver</text>
+    <text x="637" y="163" text-anchor="middle" font-size="11" fill="#2D3748">🗄️ DB: MySQL 8.0 on Xserver</text>
   </svg>
 
-  <p>遘ｻ陦梧凾縺ｫ繝輔Ο繝ｳ繝医お繝ｳ繝峨・HTML縺ｯ<strong>荳蛻・､画峩荳崎ｦ・/strong>縲・code>js/config.js</code> 縺ｮ <code>API_BASE</code> 縺ｮ1陦後ｒXserver縺ｮURL縺ｫ譖ｸ縺肴鋤縺医ｋ縺縺代〒縺吶りｩｳ邏ｰ縺ｪ遘ｻ陦梧焔鬆・・謚陦楢ｨｭ險域嶌繧貞盾辣ｧ縺励※縺上□縺輔＞縲・/p>
+  <p>移行時にフロントエンドのHTMLは<strong>一切変更不要</strong>。<code>js/config.js</code> の <code>API_BASE</code> の1行をXserverのURLに書き換えるだけです。詳細な移行手順は技術設計書を参照してください。</p>
 
   <div style="text-align:center; color:#718096; font-size:11px; margin-top:30px; padding-top:20px; border-top:1px solid #E2E8F0;">
-    Nolia 繧ｻ繝・ヨ繧｢繝・・謇矩・嶌 v1.0 ・・譛蛾剞莨夂､ｾ繧｢繝ｼ繝医た繧ｦ繝ｫ ・・菴懈・・哮ai・・026-05-13・・  </div>
+    Nolia セットアップ手順書 v1.0 ／ 有限会社アートソウル ／ 作成：Kai（2026-05-13）
+  </div>
 </div>
 
 </div>

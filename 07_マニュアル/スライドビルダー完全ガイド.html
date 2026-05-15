@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>繧ｻ繝溘リ繝ｼ繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ 螳悟・繧ｬ繧､繝・/title>
+<title>セミナースライドビルダー 完全ガイド</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -113,552 +113,580 @@
 <body>
 <div class="container">
 
-<!-- 陦ｨ邏・-->
+<!-- 表紙 -->
 <div class="cover">
   <div class="tag">Artsoul AI Tools</div>
-  <h1>繧ｻ繝溘リ繝ｼ繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ<br>螳悟・繧ｬ繧､繝・/h1>
-  <div class="sub">繝・・繝槭ｒ謚輔￡繧九□縺代〒縲∵悽逡ｪ遞ｼ蜒阪☆繧九せ繝ｩ繧､繝峨す繧ｹ繝・Β縺後〒縺阪ｋ</div>
+  <h1>セミナースライドビルダー<br>完全ガイド</h1>
+  <div class="sub">テーマを投げるだけで、本番稼働するスライドシステムができる</div>
   <div class="meta">
-    2026蟷ｴ5譛・逋ｺ陦・br>
-    蟇ｾ雎｡・壻ｸ頑搗譯ょ承<br>
-    繝舌・繧ｸ繝ｧ繝ｳ・嘛1.0<br>
-    髢｢騾｣・壹お繝ｼ繧ｸ繧ｧ繝ｳ繝域桃菴懊・繝九Η繧｢繝ｫ v2.4 PART 6
+    2026年5月 発行<br>
+    対象：上村桂右<br>
+    バージョン：v1.0<br>
+    関連：エージェント操作マニュアル v2.4 PART 6
   </div>
 </div>
 
-<!-- 螟画峩螻･豁ｴ -->
+<!-- 変更履歴 -->
 <table class="changelog">
-<tr><th>迚・/th><th>譌･莉・/th><th>螟画峩蜀・ｮｹ</th></tr>
-<tr><td>v1.0</td><td>2026-05-12</td><td>蛻晉沿菴懈・縲ゅせ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ繝ｻ/seminar-slide繧ｹ繧ｭ繝ｫ繝ｻkawai-dark-v1繝・Φ繝励Ξ繝ｼ繝亥ｮ梧・縺ｫ蜷医ｏ縺帙※菴懈・縲・/td></tr>
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v1.0</td><td>2026-05-12</td><td>初版作成。スライドビルダー・/seminar-slideスキル・kawai-dark-v1テンプレート完成に合わせて作成。</td></tr>
 </table>
 
 <hr>
 
-<!-- 逶ｮ谺｡ -->
+<!-- 目次 -->
 <div class="toc">
-  <h3>繧ゅ￥縺・/h3>
+  <h3>もくじ</h3>
   <ul>
-    <li><a href="#overview">1. 縺薙・繧ｷ繧ｹ繝・Β縺ｧ縺ｧ縺阪ｋ縺薙→</a></li>
-    <li><a href="#pages">2. 5遞ｮ鬘槭・繝壹・繧ｸ縺ｮ蠖ｹ蜑ｲ</a></li>
-    <li><a href="#skill">3. /seminar-slide 繧ｹ繧ｭ繝ｫ 窶・蜈ｨ閾ｪ蜍輔〒繧ｹ繝ｩ繧､繝峨ｒ菴懊ｋ</a></li>
-    <li class="sub-item"><a href="#skill-how">3-1. 蝓ｺ譛ｬ縺ｮ菴ｿ縺・婿</a></li>
-    <li class="sub-item"><a href="#skill-interview">3-2. 繝偵い繝ｪ繝ｳ繧ｰ蜀・ｮｹ</a></li>
-    <li class="sub-item"><a href="#skill-output">3-3. 逕滓・縺輔ｌ繧九ｂ縺ｮ</a></li>
-    <li><a href="#builder">4. 繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ 繧｢繝励Μ・・ndex.html・・/a></li>
-    <li class="sub-item"><a href="#builder-step1">4-1. 繧ｻ繝溘リ繝ｼ諠・ｱ繧貞・蜉帙☆繧・/a></li>
-    <li class="sub-item"><a href="#builder-step2">4-2. PDF/PPTX縺九ｉ繝・く繧ｹ繝医ｒ謚ｽ蜃ｺ縺吶ｋ</a></li>
-    <li class="sub-item"><a href="#builder-step3">4-3. Kai縺ｸ縺ｮ萓晞ｼ繝励Ο繝ｳ繝励ヨ繧堤函謌舌☆繧・/a></li>
-    <li class="sub-item"><a href="#builder-step4">4-4. 繝・・繝ｭ繧､繧ｳ繝槭Φ繝峨ｒ遒ｺ隱阪☆繧・/a></li>
-    <li><a href="#cli">5. new-seminar.py CLI繝・・繝ｫ</a></li>
-    <li><a href="#template">6. 繝・Φ繝励Ξ繝ｼ繝育ｮ｡逅・ｼ・awai-dark-v1・・/a></li>
-    <li class="sub-item"><a href="#template-spec">6-1. 繝・じ繧､繝ｳ莉墓ｧ・/a></li>
-    <li class="sub-item"><a href="#template-brush">6-2. 繝悶Λ繝・す繝･繧｢繝・・譁ｹ豕・/a></li>
-    <li class="sub-item"><a href="#template-new">6-3. 譁ｰ繝・Φ繝励Ξ繝ｼ繝医ｒ霑ｽ蜉縺吶ｋ</a></li>
-    <li><a href="#deploy">7. GitHub Pages 繝・・繝ｭ繧､謇矩・/a></li>
-    <li class="sub-item"><a href="#deploy-new">7-1. 譁ｰ隕上ョ繝励Ο繧､</a></li>
-    <li class="sub-item"><a href="#deploy-update">7-2. 繧ｹ繝ｩ繧､繝峨ｒ譖ｴ譁ｰ縺吶ｋ</a></li>
-    <li><a href="#operation">8. 繧ｻ繝溘リ繝ｼ蠖捺律縺ｮ謫堺ｽ・/a></li>
-    <li><a href="#password">9. 繝代せ繝ｯ繝ｼ繝峨・縺励￥縺ｿ</a></li>
-    <li><a href="#naming">10. 繝輔ぃ繧､繝ｫ繝ｻ繝輔か繝ｫ繝蜷阪Ν繝ｼ繝ｫ</a></li>
-    <li><a href="#trouble">11. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</a></li>
-    <li><a href="#slides-js">12. slides.js 縺ｮ譖ｸ縺肴婿繝ｪ繝輔ぃ繝ｬ繝ｳ繧ｹ</a></li>
+    <li><a href="#overview">1. このシステムでできること</a></li>
+    <li><a href="#pages">2. 5種類のページの役割</a></li>
+    <li><a href="#skill">3. /seminar-slide スキル — 全自動でスライドを作る</a></li>
+    <li class="sub-item"><a href="#skill-how">3-1. 基本の使い方</a></li>
+    <li class="sub-item"><a href="#skill-interview">3-2. ヒアリング内容</a></li>
+    <li class="sub-item"><a href="#skill-output">3-3. 生成されるもの</a></li>
+    <li><a href="#builder">4. スライドビルダー アプリ（index.html）</a></li>
+    <li class="sub-item"><a href="#builder-step1">4-1. セミナー情報を入力する</a></li>
+    <li class="sub-item"><a href="#builder-step2">4-2. PDF/PPTXからテキストを抽出する</a></li>
+    <li class="sub-item"><a href="#builder-step3">4-3. Kaiへの依頼プロンプトを生成する</a></li>
+    <li class="sub-item"><a href="#builder-step4">4-4. デプロイコマンドを確認する</a></li>
+    <li><a href="#cli">5. new-seminar.py CLIツール</a></li>
+    <li><a href="#template">6. テンプレート管理（kawai-dark-v1）</a></li>
+    <li class="sub-item"><a href="#template-spec">6-1. デザイン仕様</a></li>
+    <li class="sub-item"><a href="#template-brush">6-2. ブラッシュアップ方法</a></li>
+    <li class="sub-item"><a href="#template-new">6-3. 新テンプレートを追加する</a></li>
+    <li><a href="#deploy">7. GitHub Pages デプロイ手順</a></li>
+    <li class="sub-item"><a href="#deploy-new">7-1. 新規デプロイ</a></li>
+    <li class="sub-item"><a href="#deploy-update">7-2. スライドを更新する</a></li>
+    <li><a href="#operation">8. セミナー当日の操作</a></li>
+    <li><a href="#password">9. パスワードのしくみ</a></li>
+    <li><a href="#naming">10. ファイル・フォルダ名ルール</a></li>
+    <li><a href="#trouble">11. トラブルシューティング</a></li>
+    <li><a href="#slides-js">12. slides.js の書き方リファレンス</a></li>
   </ul>
 </div>
 
 <hr>
 
-<!-- ===== 1. 縺薙・繧ｷ繧ｹ繝・Β縺ｧ縺ｧ縺阪ｋ縺薙→ ===== -->
-<h2 id="overview"><span class="num">1</span>縺薙・繧ｷ繧ｹ繝・Β縺ｧ縺ｧ縺阪ｋ縺薙→</h2>
+<!-- ===== 1. このシステムでできること ===== -->
+<h2 id="overview"><span class="num">1</span>このシステムでできること</h2>
 
 <div class="lead">
-繧ｻ繝溘リ繝ｼ繝・・繝槭ｒ Kai 縺ｫ謚輔￡繧九→縲∝女隰幄・↓蜈ｱ譛峨〒縺阪ｋ Web 繧ｹ繝ｩ繧､繝峨す繧ｹ繝・Β縺御ｸｸ縺斐→蜃ｺ譚･荳翫′繧翫∪縺吶１DF 繧・PowerPoint 縺ｮ莉｣繧上ｊ縺ｫ縲√ヶ繝ｩ繧ｦ繧ｶ縺ｧ蜍輔￥繝ｪ繧｢繝ｫ繧ｿ繧､繝縺ｮ繧ｹ繝ｩ繧､繝峨ｒ GitHub Pages 縺ｧ蜈ｬ髢九＠縺ｾ縺吶・</div>
-
-<h3>蜈ｨ菴灘ワ</h3>
-<div class="flow-row">
-  <div class="flow-box">/seminar-slide<br><small>繧ｹ繧ｭ繝ｫ襍ｷ蜍・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box">繝偵い繝ｪ繝ｳ繧ｰ<br><small>8蝠・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box green">slides.js<br><small>閾ｪ蜍慕函謌・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box orange">GitHub Pages<br><small>蜈ｬ髢・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box green">URL蜈ｱ譛・br><small>螳梧・</small></div>
+セミナーテーマを Kai に投げると、受講者に共有できる Web スライドシステムが丸ごと出来上がります。PDF や PowerPoint の代わりに、ブラウザで動くリアルタイムのスライドを GitHub Pages で公開します。
 </div>
 
-<h3>菴輔′菴懊ｉ繧後ｋ縺・/h3>
+<h3>全体像</h3>
+<div class="flow-row">
+  <div class="flow-box">/seminar-slide<br><small>スキル起動</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">ヒアリング<br><small>8問</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box green">slides.js<br><small>自動生成</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box orange">GitHub Pages<br><small>公開</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box green">URL共有<br><small>完成</small></div>
+</div>
+
+<h3>何が作られるか</h3>
 <div class="two-col">
   <div class="two-col-box">
-    <h4>蜿苓ｬ幄・髄縺繕RL</h4>
-    <p>繧ｨ繧ｯ繧ｹ繝昴・繝医・邱ｨ髮・ｩ溯・縺ｪ縺励る夢隕ｧ蟆ら畑縲６RL繧堤衍縺｣縺ｦ縺・ｋ蜈ｨ蜩｡縺瑚ｦ九ｉ繧後ｋ縲・/p>
+    <h4>受講者向けURL</h4>
+    <p>エクスポート・編集機能なし。閲覧専用。URLを知っている全員が見られる。</p>
   </div>
   <div class="two-col-box">
-    <h4>繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼ逕ｻ髱｢</h4>
-    <p>迴ｾ蝨ｨ繧ｹ繝ｩ繧､繝会ｼ区ｬ｡繧ｹ繝ｩ繧､繝会ｼ九ヨ繝ｼ繧ｯ繧ｹ繧ｯ繝ｪ繝励ヨ・九ち繧､繝槭・縲ゅヱ繧ｹ繝ｯ繝ｼ繝我ｿ晁ｭｷ縲ゅΞ繝ｼ繧ｶ繝ｼ繝昴う繝ｳ繧ｿ繝ｻ蜈ｨ逕ｻ髱｢騾｣蜍輔・/p>
+    <h4>プレゼンター画面</h4>
+    <p>現在スライド＋次スライド＋トークスクリプト＋タイマー。パスワード保護。レーザーポインタ・全画面連動。</p>
   </div>
   <div class="two-col-box">
-    <h4>邂｡逅・判髱｢</h4>
-    <p>蜈ｱ譛蔚RL縺ｮ遒ｺ隱阪・繧ｳ繝斐・縲√ヱ繧ｹ繝ｯ繝ｼ繝芽ｨｭ螳壹・/p>
+    <h4>管理画面</h4>
+    <p>共有URLの確認・コピー、パスワード設定。</p>
   </div>
   <div class="two-col-box">
-    <h4>繝輔Ν謫堺ｽ懃判髱｢</h4>
-    <p>繧ｹ繝ｩ繧､繝臥ｷｨ髮・・PDF蜃ｺ蜉帙・PPTX蜃ｺ蜉帙ら匱陦ｨ閠・・霄ｫ縺ｮ謇句・逕ｨ縲・/p>
+    <h4>フル操作画面</h4>
+    <p>スライド編集・PDF出力・PPTX出力。発表者自身の手元用。</p>
   </div>
 </div>
 
 <hr>
 
-<!-- ===== 2. 5遞ｮ鬘槭・繝壹・繧ｸ ===== -->
-<h2 id="pages"><span class="num">2</span>5遞ｮ鬘槭・繝壹・繧ｸ縺ｮ蠖ｹ蜑ｲ</h2>
+<!-- ===== 2. 5種類のページ ===== -->
+<h2 id="pages"><span class="num">2</span>5種類のページの役割</h2>
 
 <div class="page-card public">
-  <div class="pc-icon">早</div>
+  <div class="pc-icon">👁</div>
   <div>
-    <div class="pc-name">viewer.html <span class="badge badge-green">蜈ｬ髢・/span></div>
-    <div class="pc-file">蜿苓ｬ幄・畑 窶・URL繧貞・譛峨☆繧句髪荳縺ｮ繝輔ぃ繧､繝ｫ</div>
-    <div class="pc-desc">髢ｲ隕ｧ蟆ら畑縲ゅお繧ｯ繧ｹ繝昴・繝医・邱ｨ髮・ｩ溯・縺ｪ縺励・itHub Pages縺ｧ蜈ｬ髢区ｸ医∩縲６RL繧堤衍縺｣縺ｦ縺・ｋ莠ｺ蜈ｨ蜩｡縺瑚ｦ九ｉ繧後ｋ縲・/div>
+    <div class="pc-name">viewer.html <span class="badge badge-green">公開</span></div>
+    <div class="pc-file">受講者用 — URLを共有する唯一のファイル</div>
+    <div class="pc-desc">閲覧専用。エクスポート・編集機能なし。GitHub Pagesで公開済み。URLを知っている人全員が見られる。</div>
   </div>
 </div>
 
 <div class="page-card protected">
-  <div class="pc-icon">痔</div>
+  <div class="pc-icon">🎤</div>
   <div>
-    <div class="pc-name">presenter.html <span class="badge badge-orange">繝代せ繝ｯ繝ｼ繝我ｿ晁ｭｷ</span></div>
-    <div class="pc-file">繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼ蟆ら畑逕ｻ髱｢</div>
-    <div class="pc-desc">迴ｾ蝨ｨ繧ｹ繝ｩ繧､繝峨・谺｡繧ｹ繝ｩ繧､繝峨・繝医・繧ｯ繧ｹ繧ｯ繝ｪ繝励ヨ繝ｻ繧ｿ繧､繝槭・繧貞酔譎り｡ｨ遉ｺ縲Ｂdmin.html縺ｧ險ｭ螳壹＠縺溘ヱ繧ｹ繝ｯ繝ｼ繝峨′蠢・ｦ√ゅΞ繝ｼ繧ｶ繝ｼ繝昴う繝ｳ繧ｿ繝ｻ蜿苓ｬ幄・判髱｢縺ｮ蜈ｨ逕ｻ髱｢蛻・崛縺ｫ蟇ｾ蠢懊・/div>
+    <div class="pc-name">presenter.html <span class="badge badge-orange">パスワード保護</span></div>
+    <div class="pc-file">プレゼンター専用画面</div>
+    <div class="pc-desc">現在スライド・次スライド・トークスクリプト・タイマーを同時表示。admin.htmlで設定したパスワードが必要。レーザーポインタ・受講者画面の全画面切替に対応。</div>
   </div>
 </div>
 
 <div class="page-card protected">
-  <div class="pc-icon">笞呻ｸ・/div>
+  <div class="pc-icon">⚙️</div>
   <div>
-    <div class="pc-name">admin.html <span class="badge badge-orange">險ｭ螳夂判髱｢</span></div>
-    <div class="pc-file">邂｡逅・判髱｢ 窶・蛻晏屓縺ｫ蠢・★髢九￥</div>
-    <div class="pc-desc">蜿苓ｬ幄・髄縺繕RL縺ｮ繧ｳ繝斐・縲√・繝ｬ繧ｼ繝ｳ繧ｿ繝ｼ繝代せ繝ｯ繝ｼ繝峨・險ｭ螳壹・itHub縺ｧ蜈ｬ髢九＆繧後※縺・ｋ縺後ゞRL繧堤衍縺｣縺ｦ縺・ｋ莠ｺ縺縺代′髢九￠繧九・/div>
+    <div class="pc-name">admin.html <span class="badge badge-orange">設定画面</span></div>
+    <div class="pc-file">管理画面 — 初回に必ず開く</div>
+    <div class="pc-desc">受講者向けURLのコピー、プレゼンターパスワードの設定。GitHubで公開されているが、URLを知っている人だけが開ける。</div>
   </div>
 </div>
 
 <div class="page-card protected">
-  <div class="pc-icon">箕・・/div>
+  <div class="pc-icon">🖥️</div>
   <div>
-    <div class="pc-name">index.html <span class="badge badge-blue">繝輔Ν讖溯・</span></div>
-    <div class="pc-file">繝輔Ν謫堺ｽ懃判髱｢・育匱陦ｨ閠・焔蜈・畑・・/div>
-    <div class="pc-desc">繧ｹ繝ｩ繧､繝蛾夢隕ｧ繝ｻ邱ｨ髮・・PDF蜃ｺ蜉帙・PPTX蜃ｺ蜉帙ょ・讖溯・縺御ｽｿ縺医ｋ縲ょ女隰幄・↓貂｡縺輔↑縺・・/div>
+    <div class="pc-name">index.html <span class="badge badge-blue">フル機能</span></div>
+    <div class="pc-file">フル操作画面（発表者手元用）</div>
+    <div class="pc-desc">スライド閲覧・編集・PDF出力・PPTX出力。全機能が使える。受講者に渡さない。</div>
   </div>
 </div>
 
 <div class="page-card local">
-  <div class="pc-icon">白</div>
+  <div class="pc-icon">🔒</div>
   <div>
-    <div class="pc-name">manual.html <span class="badge badge-gray">繝ｭ繝ｼ繧ｫ繝ｫ蟆ら畑</span></div>
-    <div class="pc-file">蛻晄悄繝代せ繝ｯ繝ｼ繝芽ｨ倩ｼ・窶・.gitignore 縺ｧ髯､螟・/div>
-    <div class="pc-desc">GitHub縺ｫ縺ｯ邨ｶ蟇ｾ繧｢繝・・縺輔ｌ縺ｪ縺・ょ・譛溘ヱ繧ｹ繝ｯ繝ｼ繝峨・繧ｷ繧ｹ繝・Β讎りｦ√・驕狗畑謇矩・ｒ險倩ｼ峨ゅヱ繧ｹ繝ｯ繝ｼ繝峨ｒ螟画峩縺励◆繧峨％縺薙↓繝｡繝｢縺吶ｋ縲・/div>
+    <div class="pc-name">manual.html <span class="badge badge-gray">ローカル専用</span></div>
+    <div class="pc-file">初期パスワード記載 — .gitignore で除外</div>
+    <div class="pc-desc">GitHubには絶対アップされない。初期パスワード・システム概要・運用手順を記載。パスワードを変更したらここにメモする。</div>
   </div>
 </div>
 
 <hr>
 
-<!-- ===== 3. /seminar-slide 繧ｹ繧ｭ繝ｫ ===== -->
-<h2 id="skill"><span class="num">3</span>/seminar-slide 繧ｹ繧ｭ繝ｫ 窶・蜈ｨ閾ｪ蜍輔〒繧ｹ繝ｩ繧､繝峨ｒ菴懊ｋ</h2>
+<!-- ===== 3. /seminar-slide スキル ===== -->
+<h2 id="skill"><span class="num">3</span>/seminar-slide スキル — 全自動でスライドを作る</h2>
 
 <div class="skill-box">
   <div class="skill-cmd">/seminar-slide</div>
-  <div class="skill-desc">繝偵い繝ｪ繝ｳ繧ｰ 竊・slides.js逕滓・ 竊・繝励Ο繧ｸ繧ｧ繧ｯ繝育函謌・竊・GitHub Pages蜈ｬ髢・縺ｾ縺ｧ荳豌鈴夊ｲｫ縺ｧ螳溯｡後☆繧・/div>
+  <div class="skill-desc">ヒアリング → slides.js生成 → プロジェクト生成 → GitHub Pages公開 まで一気通貫で実行する</div>
 </div>
 
-<h3 id="skill-how">3-1. 蝓ｺ譛ｬ縺ｮ菴ｿ縺・婿</h3>
+<h3 id="skill-how">3-1. 基本の使い方</h3>
 
 <div class="step">
-  <span class="step-num">1</span> <strong>Claude Code 縺ｧ蜈･蜉帙☆繧・/strong><br>
-  <code>/seminar-slide</code> 縺ｨ謇薙▽縺縺代ゅせ繧ｭ繝ｫ縺瑚・蜍輔〒襍ｷ蜍輔＠縺ｾ縺吶・</div>
-
-<div class="step">
-  <span class="step-num">2</span> <strong>Kai 縺ｮ繝偵い繝ｪ繝ｳ繧ｰ縺ｫ遲斐∴繧・/strong><br>
-  譛螟ｧ8蝠上ｒ1蝗槭〒縺ｾ縺ｨ繧√※閨槭°繧後∪縺吶らｮ・擅譖ｸ縺阪〒遲斐∴繧後・OK縲ゅ後♀縺ｾ縺九○縲阪ｂ蜿ｯ縲・</div>
-
-<div class="step">
-  <span class="step-num">3</span> <strong>繝悶Μ繝ｼ繝輔ぅ繝ｳ繧ｰ繧堤｢ｺ隱阪＠縺ｦ謇ｿ隱・/strong><br>
-  Kai 縺悟・螳ｹ繧偵∪縺ｨ繧√※縲後％繧後〒騾ｲ繧√∪縺吶ゅｈ縺・〒縺吶°・溘阪→遒ｺ隱阪＠縺ｾ縺吶ゅ薫K縲阪〒螳溯｡碁幕蟋九・</div>
-
-<div class="step">
-  <span class="step-num">4</span> <strong>閾ｪ蜍輔〒螳梧・</strong><br>
-  slides.js 逕滓・ 竊・繝励Ο繧ｸ繧ｧ繧ｯ繝医ヵ繧ｩ繝ｫ繝菴懈・ 竊・GitHub 縺ｸ push 竊・Pages 譛牙柑蛹・竊・URL騾夂衍
+  <span class="step-num">1</span> <strong>Claude Code で入力する</strong><br>
+  <code>/seminar-slide</code> と打つだけ。スキルが自動で起動します。
 </div>
 
-<h3 id="skill-interview">3-2. 繝偵い繝ｪ繝ｳ繧ｰ蜀・ｮｹ・・蝠擾ｼ・/h3>
+<div class="step">
+  <span class="step-num">2</span> <strong>Kai のヒアリングに答える</strong><br>
+  最大8問を1回でまとめて聞かれます。箇条書きで答えればOK。「おまかせ」も可。
+</div>
+
+<div class="step">
+  <span class="step-num">3</span> <strong>ブリーフィングを確認して承認</strong><br>
+  Kai が内容をまとめて「これで進めます。よいですか？」と確認します。「OK」で実行開始。
+</div>
+
+<div class="step">
+  <span class="step-num">4</span> <strong>自動で完成</strong><br>
+  slides.js 生成 → プロジェクトフォルダ作成 → GitHub へ push → Pages 有効化 → URL通知
+</div>
+
+<h3 id="skill-interview">3-2. ヒアリング内容（8問）</h3>
 
 <table>
-<tr><th>#</th><th>雉ｪ蝠丞・螳ｹ</th><th>蝗樒ｭ比ｾ・/th></tr>
-<tr><td>1</td><td>繧ｻ繝溘リ繝ｼ繧ｿ繧､繝医Ν</td><td>謗｡逕ｨ諡・ｽ楢・髄縺羨I豢ｻ逕ｨ繧ｻ繝溘リ繝ｼ</td></tr>
-<tr><td>2</td><td>繧ｿ繝ｼ繧ｲ繝・ヨ蜿苓ｬ幄・/td><td>荳ｭ蟆丈ｼ∵･ｭ縺ｮ謗｡逕ｨ諡・ｽ薙・邨悟霧閠・10縲・0蜷・/td></tr>
-<tr><td>3</td><td>謇隕∵凾髢・/td><td>60蛻・/td></tr>
-<tr><td>4</td><td>繧ｻ繝溘リ繝ｼ縺ｮ譬ｸ蠢・Γ繝・そ繝ｼ繧ｸ</td><td>AI縺ｧ謗｡逕ｨ繧ｳ繧ｹ繝医ｒ蜊雁・縺ｫ縺ｧ縺阪ｋ</td></tr>
-<tr><td>5</td><td>繝代・繝域ｧ区・</td><td>蠎ｧ蟄ｦ20蛻・・螳滓ｼ・0蛻・・Q&A20蛻・√∪縺溘・縲後♀縺ｾ縺九○縲・/td></tr>
-<tr><td>6</td><td>繧ｹ繝ｩ繧､繝画椢謨ｰ縺ｮ逶ｮ螳・/td><td>30譫壹√∪縺溘・縲後♀縺ｾ縺九○縲・/td></tr>
-<tr><td>7</td><td>逶帙ｊ霎ｼ縺ｿ縺溘＞繝昴う繝ｳ繝・/td><td>繝ｻ螟ｱ謨嶺ｺ倶ｾ・縺､ 繝ｻ縺翫☆縺吶ａ繝・・繝ｫ 繝ｻ螳滄圀縺ｮ繝励Ο繝ｳ繝励ヨ</td></tr>
-<tr><td>8</td><td>GitHub繧ｹ繝ｩ繝・げ</td><td>sales-ai-seminar縲√∪縺溘・縲後♀縺ｾ縺九○縲・/td></tr>
+<tr><th>#</th><th>質問内容</th><th>回答例</th></tr>
+<tr><td>1</td><td>セミナータイトル</td><td>採用担当者向けAI活用セミナー</td></tr>
+<tr><td>2</td><td>ターゲット受講者</td><td>中小企業の採用担当・経営者 10〜20名</td></tr>
+<tr><td>3</td><td>所要時間</td><td>60分</td></tr>
+<tr><td>4</td><td>セミナーの核心メッセージ</td><td>AIで採用コストを半分にできる</td></tr>
+<tr><td>5</td><td>パート構成</td><td>座学20分→実演20分→Q&A20分、または「おまかせ」</td></tr>
+<tr><td>6</td><td>スライド枚数の目安</td><td>30枚、または「おまかせ」</td></tr>
+<tr><td>7</td><td>盛り込みたいポイント</td><td>・失敗事例3つ ・おすすめツール ・実際のプロンプト</td></tr>
+<tr><td>8</td><td>GitHubスラッグ</td><td>sales-ai-seminar、または「おまかせ」</td></tr>
 </table>
 
-<h3 id="skill-output">3-3. 逕滓・縺輔ｌ繧九ｂ縺ｮ</h3>
+<h3 id="skill-output">3-3. 生成されるもの</h3>
 
 <div class="ok">
-<span class="label">繧ｹ繧ｭ繝ｫ螳御ｺ・ｾ後↓謇九↓蜈･繧九ｂ縺ｮ</span>
+<span class="label">スキル完了後に手に入るもの</span>
 <ul>
-  <li><strong>蜿苓ｬ幄・RL:</strong> <code>https://artsoul-git.github.io/{繧ｹ繝ｩ繝・げ}/viewer.html</code></li>
-  <li><strong>邂｡逅・判髱｢:</strong> <code>https://artsoul-git.github.io/{繧ｹ繝ｩ繝・げ}/admin.html</code></li>
-  <li><strong>繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼ:</strong> <code>https://artsoul-git.github.io/{繧ｹ繝ｩ繝・げ}/presenter.html</code></li>
-  <li><strong>繝ｭ繝ｼ繧ｫ繝ｫ繝輔か繝ｫ繝:</strong> <span class="file-path">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\projects\{繧ｹ繝ｩ繝・げ}\</span></li>
+  <li><strong>受講者URL:</strong> <code>https://artsoul-git.github.io/{スラッグ}/viewer.html</code></li>
+  <li><strong>管理画面:</strong> <code>https://artsoul-git.github.io/{スラッグ}/admin.html</code></li>
+  <li><strong>プレゼンター:</strong> <code>https://artsoul-git.github.io/{スラッグ}/presenter.html</code></li>
+  <li><strong>ローカルフォルダ:</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\projects\{スラッグ}\</span></li>
 </ul>
 </div>
 
 <div class="warn">
-<span class="label">蛻晏屓縺ｮ縺ｿ蠢・井ｽ懈･ｭ</span>
-繧ｹ繧ｭ繝ｫ螳御ｺ・ｾ後・strong>admin.html 繧帝幕縺・※繝代せ繝ｯ繝ｼ繝峨ｒ險ｭ螳壹☆繧・/strong>縺薙→繧貞ｿ倥ｌ縺壹↓縲ょ・譛溘ヱ繧ｹ繝ｯ繝ｼ繝峨・ <span class="file-path">projects\{繧ｹ繝ｩ繝・げ}\manual.html</span>・医Ο繝ｼ繧ｫ繝ｫ縺ｮ縺ｿ・峨ｒ蜿ら・縲・</div>
+<span class="label">初回のみ必須作業</span>
+スキル完了後、<strong>admin.html を開いてパスワードを設定する</strong>ことを忘れずに。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span>（ローカルのみ）を参照。
+</div>
 
 <hr>
 
-<!-- ===== 4. 繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ 繧｢繝励Μ ===== -->
-<h2 id="builder"><span class="num">4</span>繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ 繧｢繝励Μ・・ndex.html・・/h2>
+<!-- ===== 4. スライドビルダー アプリ ===== -->
+<h2 id="builder"><span class="num">4</span>スライドビルダー アプリ（index.html）</h2>
 
 <div class="lead">
-/seminar-slide 繧ｹ繧ｭ繝ｫ繧剃ｽｿ繧上★謇句虚縺ｧ菴懈･ｭ縺励◆縺・ｴ蜷医√∪縺溘・譌｢蟄倥・ PowerPoint繝ｻPDF 縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ繧ゅ→縺ｫ繧ｹ繝ｩ繧､繝峨ｒ菴懊ｋ蝣ｴ蜷医↓菴ｿ縺・∪縺吶・</div>
+/seminar-slide スキルを使わず手動で作業したい場合、または既存の PowerPoint・PDF のコンテンツをもとにスライドを作る場合に使います。
+</div>
 
-<p><strong>蝣ｴ謇・・/strong> <span class="file-path">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\index.html</span> 繧偵ヶ繝ｩ繧ｦ繧ｶ縺ｧ逶ｴ謗･髢九￥</p>
+<p><strong>場所：</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\index.html</span> をブラウザで直接開く</p>
 
-<h3 id="builder-step1">4-1. Step 1: 繧ｻ繝溘リ繝ｼ諠・ｱ繧貞・蜉帙☆繧・/h3>
+<h3 id="builder-step1">4-1. Step 1: セミナー情報を入力する</h3>
 
 <table>
-<tr><th>鬆・岼</th><th>隱ｬ譏・/th></tr>
-<tr><td>繧ｻ繝溘リ繝ｼ繧ｿ繧､繝医Ν</td><td>蜈･蜉帙☆繧九→ GitHub繧ｹ繝ｩ繝・げ縺瑚・蜍慕函謌舌＆繧後ｋ</td></tr>
-<tr><td>GitHub繧ｹ繝ｩ繝・げ</td><td>闍ｱ謨ｰ蟄励・繝上う繝輔Φ縺ｮ縺ｿ縲ゅ％繧後′GitHub繝ｪ繝昴ず繝医Μ蜷阪・URL縺ｫ縺ｪ繧・/td></tr>
-<tr><td>繧ｿ繝ｼ繧ｲ繝・ヨ蜿苓ｬ幄・/td><td>Kai縺ｸ縺ｮ萓晞ｼ繝励Ο繝ｳ繝励ヨ縺ｫ蜷ｫ縺ｾ繧後ｋ</td></tr>
-<tr><td>謇隕∵凾髢・/td><td>蛻・腰菴阪〒蜈･蜉・/td></tr>
-<tr><td>繧ｹ繝ｩ繧､繝画椢謨ｰ</td><td>遨ｺ谺・〒縺翫∪縺九○</td></tr>
-<tr><td>繝・Φ繝励Ξ繝ｼ繝・/td><td>kawai-dark-v1・育樟蝨ｨ蜚ｯ荳縺ｮ繝・Φ繝励Ξ繝ｼ繝茨ｼ・/td></tr>
-<tr><td>譬ｸ蠢・Γ繝・そ繝ｼ繧ｸ</td><td>繧ｻ繝溘リ繝ｼ縺ｧ莨昴∴繧区怙驥崎ｦ√・1譁・/td></tr>
-<tr><td>繝代・繝域ｧ区・</td><td>遨ｺ谺・〒縺翫∪縺九○</td></tr>
-<tr><td>逶帙ｊ霎ｼ縺ｿ縺溘＞繝昴う繝ｳ繝・/td><td>邂・擅譖ｸ縺阪〒蜈･蜉帙・ai縺ｸ縺ｮ萓晞ｼ縺ｫ蜷ｫ縺ｾ繧後ｋ</td></tr>
+<tr><th>項目</th><th>説明</th></tr>
+<tr><td>セミナータイトル</td><td>入力すると GitHubスラッグが自動生成される</td></tr>
+<tr><td>GitHubスラッグ</td><td>英数字・ハイフンのみ。これがGitHubリポジトリ名・URLになる</td></tr>
+<tr><td>ターゲット受講者</td><td>Kaiへの依頼プロンプトに含まれる</td></tr>
+<tr><td>所要時間</td><td>分単位で入力</td></tr>
+<tr><td>スライド枚数</td><td>空欄でおまかせ</td></tr>
+<tr><td>テンプレート</td><td>kawai-dark-v1（現在唯一のテンプレート）</td></tr>
+<tr><td>核心メッセージ</td><td>セミナーで伝える最重要の1文</td></tr>
+<tr><td>パート構成</td><td>空欄でおまかせ</td></tr>
+<tr><td>盛り込みたいポイント</td><td>箇条書きで入力。Kaiへの依頼に含まれる</td></tr>
 </table>
 
-<h3 id="builder-step2">4-2. Step 2: PDF/PPTX 縺九ｉ繝・く繧ｹ繝医ｒ謚ｽ蜃ｺ縺吶ｋ・井ｻｻ諢擾ｼ・/h3>
+<h3 id="builder-step2">4-2. Step 2: PDF/PPTX からテキストを抽出する（任意）</h3>
 
-<p>譌｢蟄倥・雉・侭縺後≠繧句ｴ蜷医√％縺薙↓繝峨Ο繝・・縺吶ｋ縺ｨ繝・く繧ｹ繝医′謚ｽ蜃ｺ縺輔ｌ縺ｾ縺吶・ai縺ｸ縺ｮ萓晞ｼ繝励Ο繝ｳ繝励ヨ縺ｫ閾ｪ蜍輔〒豺ｻ莉倥＆繧後∪縺吶・/p>
+<p>既存の資料がある場合、ここにドロップするとテキストが抽出されます。Kaiへの依頼プロンプトに自動で添付されます。</p>
 
 <div class="two-col">
   <div class="two-col-box">
-    <h4>PPTX 縺ｮ蝣ｴ蜷・/h4>
-    <p>蜷・せ繝ｩ繧､繝峨・繝・く繧ｹ繝医ｒ縲・-- 繧ｹ繝ｩ繧､繝・N ---縲榊玄蛻・ｊ縺ｧ謚ｽ蜃ｺ縲・SZip 繧剃ｽｿ縺｣縺ｦ繝悶Λ繧ｦ繧ｶ蜀・〒蜃ｦ逅・・/p>
+    <h4>PPTX の場合</h4>
+    <p>各スライドのテキストを「--- スライド N ---」区切りで抽出。JSZip を使ってブラウザ内で処理。</p>
   </div>
   <div class="two-col-box">
-    <h4>PDF 縺ｮ蝣ｴ蜷・/h4>
-    <p>蜷・・繝ｼ繧ｸ縺ｮ繝・く繧ｹ繝医ｒ縲・-- 繝壹・繧ｸ N ---縲榊玄蛻・ｊ縺ｧ謚ｽ蜃ｺ縲１DF.js 繧剃ｽｿ逕ｨ縲・/p>
+    <h4>PDF の場合</h4>
+    <p>各ページのテキストを「--- ページ N ---」区切りで抽出。PDF.js を使用。</p>
   </div>
 </div>
 
 <div class="tip">
-<span class="label">謚ｽ蜃ｺ繝・く繧ｹ繝医・豢ｻ逕ｨ</span>
-譌｢蟄倥・ PowerPoint 縺ｮ蜀・ｮｹ繧偵ｂ縺ｨ縺ｫ繧ｹ繝ｩ繧､繝峨ｒ菴懊ｊ縺溘＞縺ｨ縺阪√ユ繧ｭ繧ｹ繝医ｒ謚ｽ蜃ｺ縺励※ Kai 縺ｫ貂｡縺吶→縲√◎縺ｮ繧ｳ繝ｳ繝・Φ繝・ｒ蜀肴ｧ区・縺励◆繧ｹ繝ｩ繧､繝峨ｒ菴懊▲縺ｦ縺上ｌ縺ｾ縺吶ゅョ繧ｶ繧､繝ｳ繧・ｧ区・縺ｯ繧ｼ繝ｭ縺九ｉ kawai-dark-v1 繧ｹ繧ｿ繧､繝ｫ縺ｧ菴懊ｊ逶ｴ縺輔ｌ縺ｾ縺吶・</div>
+<span class="label">抽出テキストの活用</span>
+既存の PowerPoint の内容をもとにスライドを作りたいとき、テキストを抽出して Kai に渡すと、そのコンテンツを再構成したスライドを作ってくれます。デザインや構成はゼロから kawai-dark-v1 スタイルで作り直されます。
+</div>
 
-<h3 id="builder-step3">4-3. Step 3: Kai縺ｸ縺ｮ萓晞ｼ繝励Ο繝ｳ繝励ヨ繧堤函謌舌☆繧・/h3>
+<h3 id="builder-step3">4-3. Step 3: Kaiへの依頼プロンプトを生成する</h3>
 
-<p>縲後・繝ｭ繝ｳ繝励ヨ逕滓・縲阪・繧ｿ繝ｳ繧呈款縺吶→縲∝・蜉帛・螳ｹ縺瑚・蜍慕噪縺ｫ Kai 縺ｸ縺ｮ萓晞ｼ譁・↓螟画鋤縺輔ｌ縺ｾ縺吶ゅ後さ繝斐・縲阪・繧ｿ繝ｳ縺ｧ Claude Code 縺ｫ雋ｼ繧贋ｻ倥￠繧九□縺代〒縺吶・/p>
+<p>「プロンプト生成」ボタンを押すと、入力内容が自動的に Kai への依頼文に変換されます。「コピー」ボタンで Claude Code に貼り付けるだけです。</p>
 
 <div class="prompt-box"><span class="highlight">/seminar-slide</span>
 
-莉･荳九・諠・ｱ縺ｧ繧ｻ繝溘リ繝ｼ繧ｹ繝ｩ繧､繝峨ｒ菴懊▲縺ｦ縺上□縺輔＞縲・
-1. 繧ｻ繝溘リ繝ｼ繧ｿ繧､繝医Ν: 謗｡逕ｨ諡・ｽ楢・髄縺羨I豢ｻ逕ｨ繧ｻ繝溘リ繝ｼ
-2. 繧ｿ繝ｼ繧ｲ繝・ヨ蜿苓ｬ幄・ 荳ｭ蟆丈ｼ∵･ｭ縺ｮ謗｡逕ｨ諡・ｽ・10縲・0蜷・3. 謇隕∵凾髢・ 60蛻・4. 譬ｸ蠢・Γ繝・そ繝ｼ繧ｸ: AI縺ｧ謗｡逕ｨ繧ｳ繧ｹ繝医ｒ蜊雁・縺ｫ縺ｧ縺阪ｋ
-5. 繝代・繝域ｧ区・: 縺翫∪縺九○
-6. 繧ｹ繝ｩ繧､繝画椢謨ｰ: 30譫・7. 逶帙ｊ霎ｼ縺ｿ縺溘＞繝昴う繝ｳ繝・
-   繝ｻ螟ｱ謨嶺ｺ倶ｾ・縺､
-   繝ｻ縺翫☆縺吶ａ繝・・繝ｫ
-8. GitHub繧ｹ繝ｩ繝・げ: sales-ai-seminar
-9. 繝・Φ繝励Ξ繝ｼ繝・ kawai-dark-v1</div>
+以下の情報でセミナースライドを作ってください。
 
-<h3 id="builder-step4">4-4. Step 4 & 5: 繧ｳ繝槭Φ繝峨ｒ遒ｺ隱阪＠縺ｦ繝・・繝ｭ繧､</h3>
+1. セミナータイトル: 採用担当者向けAI活用セミナー
+2. ターゲット受講者: 中小企業の採用担当 10〜20名
+3. 所要時間: 60分
+4. 核心メッセージ: AIで採用コストを半分にできる
+5. パート構成: おまかせ
+6. スライド枚数: 30枚
+7. 盛り込みたいポイント:
+   ・失敗事例3つ
+   ・おすすめツール
+8. GitHubスラッグ: sales-ai-seminar
+9. テンプレート: kawai-dark-v1</div>
 
-<p>繧｢繝励Μ縺瑚・蜍慕函謌舌☆繧九さ繝槭Φ繝峨ｒ繧ｳ繝斐・縺励※縲￣owerShell 縺ｧ鬆・分縺ｫ螳溯｡後☆繧九□縺代〒縺吶・/p>
+<h3 id="builder-step4">4-4. Step 4 & 5: コマンドを確認してデプロイ</h3>
+
+<p>アプリが自動生成するコマンドをコピーして、PowerShell で順番に実行するだけです。</p>
 
 <div class="tip">
-<span class="label">繧ｳ繝槭Φ繝峨・閾ｪ蜍戊ｨ育ｮ励＆繧後ｋ</span>
-蜈･蜉帙＠縺溘せ繝ｩ繝・げ繝ｻ繧ｿ繧､繝医Ν縺九ｉ縲］ew-seminar.py 繧ｳ繝槭Φ繝峨→ git 繝・・繝ｭ繧､繧ｳ繝槭Φ繝峨′閾ｪ蜍慕函謌舌＆繧後∪縺吶ゅさ繝斐・縺励※雋ｼ繧贋ｻ倥￠繧九□縺代〒OK縲・</div>
+<span class="label">コマンドは自動計算される</span>
+入力したスラッグ・タイトルから、new-seminar.py コマンドと git デプロイコマンドが自動生成されます。コピーして貼り付けるだけでOK。
+</div>
 
 <hr>
 
 <!-- ===== 5. CLI ===== -->
-<h2 id="cli"><span class="num">5</span>new-seminar.py CLI繝・・繝ｫ</h2>
+<h2 id="cli"><span class="num">5</span>new-seminar.py CLIツール</h2>
 
 <div class="lead">
-繝・Φ繝励Ξ繝ｼ繝医°繧画眠縺励＞繧ｹ繝ｩ繧､繝峨・繝ｭ繧ｸ繧ｧ繧ｯ繝医・繝輔か繝ｫ繝繧・繧ｳ繝槭Φ繝峨〒逕滓・縺吶ｋ繝・・繝ｫ縲・ai 縺・/seminar-slide 繧ｹ繧ｭ繝ｫ繧貞ｮ溯｡後☆繧九→縺榊・驛ｨ縺ｧ蜻ｼ縺ｶ縺ｻ縺九∵焔蜍輔〒繧ゆｽｿ縺医∪縺吶・</div>
+テンプレートから新しいスライドプロジェクトのフォルダを1コマンドで生成するツール。Kai が /seminar-slide スキルを実行するとき内部で呼ぶほか、手動でも使えます。
+</div>
 
-<h3>蝓ｺ譛ｬ繧ｳ繝槭Φ繝・/h3>
+<h3>基本コマンド</h3>
 
-<div class="prompt-box"><span class="comment"># 譁ｰ隕上せ繝ｩ繧､繝峨そ繝・ヨ繧堤函謌撰ｼ域怙菴朱剞・・/span>
-python 08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\new-seminar.py <span class="highlight">--slug</span> "my-seminar" <span class="highlight">--title</span> "繝槭う繧ｻ繝溘リ繝ｼ"
+<div class="prompt-box"><span class="comment"># 新規スライドセットを生成（最低限）</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py <span class="highlight">--slug</span> "my-seminar" <span class="highlight">--title</span> "マイセミナー"
 
-<span class="comment"># 繝・Φ繝励Ξ繝ｼ繝医ｒ謖・ｮ壹☆繧句ｴ蜷・/span>
-python 08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\new-seminar.py --slug "my-seminar" --title "繝槭う繧ｻ繝溘リ繝ｼ" <span class="highlight">--template</span> kawai-dark-v1
+<span class="comment"># テンプレートを指定する場合</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py --slug "my-seminar" --title "マイセミナー" <span class="highlight">--template</span> kawai-dark-v1
 
-<span class="comment"># 蛻ｩ逕ｨ蜿ｯ閭ｽ縺ｪ繝・Φ繝励Ξ繝ｼ繝医ｒ遒ｺ隱・/span>
-python 08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\new-seminar.py <span class="highlight">--list-templates</span></div>
+<span class="comment"># 利用可能なテンプレートを確認</span>
+python 08_アプリ開発事業部\slide-builder\new-seminar.py <span class="highlight">--list-templates</span></div>
 
-<h3>逕滓・縺輔ｌ繧九ｂ縺ｮ</h3>
+<h3>生成されるもの</h3>
 
-<p>繧ｳ繝槭Φ繝牙ｮ溯｡悟ｾ後∽ｻ･荳九・繝輔か繝ｫ繝縺御ｽ懊ｉ繧後∪縺呻ｼ・/p>
+<p>コマンド実行後、以下のフォルダが作られます：</p>
 
-<div class="prompt-box">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\projects\my-seminar\
-笏懌楳笏 css\
-笏・  笏懌楳笏 style.css        竊・kawai-dark-v1 縺ｮ繝・じ繧､繝ｳ
-笏・  笏披楳笏 presenter.css
-笏懌楳笏 js\
-笏・  笏懌楳笏 app.js           竊・繝薙Η繝ｼ繧｢繝ｭ繧ｸ繝・け
-笏・  笏懌楳笏 presenter.js     竊・繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼ繝ｭ繧ｸ繝・け
-笏・  笏披楳笏 slides.js        竊・竊・竊・縺薙％縺ｫ Kai 縺後さ繝ｳ繝・Φ繝・ｒ譖ｸ縺・笏懌楳笏 viewer.html
-笏懌楳笏 presenter.html
-笏懌楳笏 admin.html
-笏懌楳笏 index.html
-笏披楳笏 manual.html          竊・繝ｭ繝ｼ繧ｫ繝ｫ蟆ら畑・医ヱ繧ｹ繝ｯ繝ｼ繝芽ｨ倩ｼ会ｼ・/div>
+<div class="prompt-box">08_アプリ開発事業部\slide-builder\projects\my-seminar\
+├── css\
+│   ├── style.css        ← kawai-dark-v1 のデザイン
+│   └── presenter.css
+├── js\
+│   ├── app.js           ← ビューアロジック
+│   ├── presenter.js     ← プレゼンターロジック
+│   └── slides.js        ← ← ← ここに Kai がコンテンツを書く
+├── viewer.html
+├── presenter.html
+├── admin.html
+├── index.html
+└── manual.html          ← ローカル専用（パスワード記載）</div>
 
 <div class="tip">
-<span class="label">slides.js 縺縺題ｧｦ繧後・縺・＞</span>
-CSS繝ｻJS繝ｻHTML 縺ｯ蜈ｨ驛ｨ繝・Φ繝励Ξ繝ｼ繝医・繧ｳ繝斐・縲よｯ主屓螟峨∴繧九・縺ｯ <code>js/slides.js</code> 縺縺代〒縺吶・ai 縺瑚・蜍慕函謌舌☆繧九°縲∵焔縺ｧ譖ｸ縺上°縺ｮ縺ｩ縺｡繧峨°縲・</div>
+<span class="label">slides.js だけ触ればいい</span>
+CSS・JS・HTML は全部テンプレートのコピー。毎回変えるのは <code>js/slides.js</code> だけです。Kai が自動生成するか、手で書くかのどちらか。
+</div>
 
 <hr>
 
-<!-- ===== 6. 繝・Φ繝励Ξ繝ｼ繝育ｮ｡逅・===== -->
-<h2 id="template"><span class="num">6</span>繝・Φ繝励Ξ繝ｼ繝育ｮ｡逅・ｼ・awai-dark-v1・・/h2>
+<!-- ===== 6. テンプレート管理 ===== -->
+<h2 id="template"><span class="num">6</span>テンプレート管理（kawai-dark-v1）</h2>
 
-<h3 id="template-spec">6-1. 繝・じ繧､繝ｳ莉墓ｧ・/h3>
+<h3 id="template-spec">6-1. デザイン仕様</h3>
 
-<p><strong>蝣ｴ謇・・/strong> <span class="file-path">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\templates\kawai-dark-v1\</span></p>
+<p><strong>場所：</strong> <span class="file-path">08_アプリ開発事業部\slide-builder\templates\kawai-dark-v1\</span></p>
 
 <table>
-<tr><th>鬆・岼</th><th>蛟､</th></tr>
-<tr><td>繝励Λ繧､繝槭Μ繧ｫ繝ｩ繝ｼ</td><td><code>#6F911D</code>・医が繝ｪ繝ｼ繝悶げ繝ｪ繝ｼ繝ｳ・・/td></tr>
-<tr><td>繧｢繧ｯ繧ｻ繝ｳ繝医き繝ｩ繝ｼ</td><td><code>#FABE00</code>・医う繧ｨ繝ｭ繝ｼ・・ <code>#38B6FF</code>・医ヶ繝ｫ繝ｼ・・/td></tr>
-<tr><td>繧ｹ繝ｩ繧､繝芽レ譎ｯ</td><td><code>#ffffff</code></td></tr>
-<tr><td>繝懊ョ繧｣閭梧勹</td><td><code>#111</code>・磯ｻ抵ｼ・/td></tr>
-<tr><td>繝輔か繝ｳ繝・/td><td>Noto Sans JP / Hiragino Sans / Meiryo</td></tr>
-<tr><td>繝ｪ繧ｹ繧ｯ鬮・/td><td><code>#c0392b</code></td></tr>
-<tr><td>繝ｪ繧ｹ繧ｯ荳ｭ</td><td><code>#e67e22</code></td></tr>
-<tr><td>繝ｪ繧ｹ繧ｯ菴・/td><td><code>#27ae60</code></td></tr>
+<tr><th>項目</th><th>値</th></tr>
+<tr><td>プライマリカラー</td><td><code>#6F911D</code>（オリーブグリーン）</td></tr>
+<tr><td>アクセントカラー</td><td><code>#FABE00</code>（イエロー）/ <code>#38B6FF</code>（ブルー）</td></tr>
+<tr><td>スライド背景</td><td><code>#ffffff</code></td></tr>
+<tr><td>ボディ背景</td><td><code>#111</code>（黒）</td></tr>
+<tr><td>フォント</td><td>Noto Sans JP / Hiragino Sans / Meiryo</td></tr>
+<tr><td>リスク高</td><td><code>#c0392b</code></td></tr>
+<tr><td>リスク中</td><td><code>#e67e22</code></td></tr>
+<tr><td>リスク低</td><td><code>#27ae60</code></td></tr>
 </table>
 
 <div class="tip">
-<span class="label">隧ｳ邏ｰ莉墓ｧ倥・ template-spec.md 繧貞盾辣ｧ</span>
-<span class="file-path">templates\kawai-dark-v1\template-spec.md</span> 縺ｫ蜈ｨ繧ｹ繝ｩ繧､繝峨ち繧､繝励・繧ｳ繝ｳ繝昴・繝阪Φ繝医・HTML萓九′險倩ｼ峨＆繧後※縺・∪縺吶・</div>
+<span class="label">詳細仕様は template-spec.md を参照</span>
+<span class="file-path">templates\kawai-dark-v1\template-spec.md</span> に全スライドタイプ・コンポーネントのHTML例が記載されています。
+</div>
 
-<h3>繧ｹ繝ｩ繧､繝峨ち繧､繝嶺ｸ隕ｧ</h3>
-
-<table>
-<tr><th>繧ｿ繧､繝・/th><th>繧ｯ繝ｩ繧ｹ</th><th>逕ｨ騾・/th></tr>
-<tr><td>繧ｿ繧､繝医Ν繧ｹ繝ｩ繧､繝・/td><td><code>slide-cover</code></td><td>蜀帝ｭ縺ｮ繧ｿ繧､繝医Ν繝壹・繧ｸ縲ゅΟ繧ｴ繝ｻ譌･莉倥・繧ｭ繝｣繝・メ繧ｳ繝斐・縲・/td></tr>
-<tr><td>繧､繝ｳ繝代け繝・/td><td><code>slide-impact</code></td><td>螟ｧ縺阪↑荳險縲ゅ御ｻ頑律莨昴∴縺溘＞縺薙→縲阪↑縺ｩ縲・/td></tr>
-<tr><td>繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ蛹ｺ蛻・ｊ</td><td><code>slide-section</code></td><td>PART 01 / PART 02 縺ｪ縺ｩ縺ｮ蛹ｺ蛻・ｊ縲・/td></tr>
-<tr><td>謨ｰ蟄怜ｼｷ隱ｿ</td><td><code>slide-metric</code></td><td>繧ｳ繧ｹ繝医・蜑ｲ蜷医・蟷ｴ譛医↑縺ｩ謨ｰ蟄励ｒ螟ｧ縺阪￥隕九○繧九・/td></tr>
-<tr><td>蠑慕畑繝ｻ譬ｼ險</td><td><code>slide-quote</code></td><td>蜷崎ｨ繝ｻ螳夂ｾｩ繝ｻ譬ｼ險繧剃ｸｭ螟ｮ縺ｫ螟ｧ縺阪￥陦ｨ遉ｺ縲・/td></tr>
-<tr><td>讓呎ｺ悶せ繝ｩ繧､繝・/td><td>・医け繝ｩ繧ｹ縺ｪ縺暦ｼ・/td><td>H() 繝倥ャ繝繝ｼ + 繧ｳ繝ｳ繝・Φ繝・よ怙繧ょ､壹￥菴ｿ縺・・/td></tr>
-</table>
-
-<h3>繧ｳ繝ｳ繝・Φ繝・さ繝ｳ繝昴・繝阪Φ繝井ｸ隕ｧ</h3>
+<h3>スライドタイプ一覧</h3>
 
 <table>
-<tr><th>繧ｯ繝ｩ繧ｹ</th><th>逕ｨ騾・/th></tr>
-<tr><td><code>.s-list</code></td><td>邂・擅譖ｸ縺阪・code>.s-list-callout</code>・磯㍾隕・ｼ・ <code>.s-list-arrow</code>・磯壼ｸｸ・・ <code>.s-list-head</code>・郁ｦ句・縺暦ｼ・ <code>.s-list-sub</code>・郁｣懆ｶｳ・・/td></tr>
-<tr><td><code>.s-steps</code></td><td>謇矩・せ繝・ャ繝励・code>.s-step-row</code>・郁｡鯉ｼ俄・ <code>.s-step-num</code>竭竭｡竭｢ + <code>.s-step-text</code></td></tr>
-<tr><td><code>.s-risk-list</code></td><td>繝ｪ繧ｹ繧ｯ陦ｨ縲ゅヰ繝・ず濶ｲ・・code>high</code>・郁ｵ､・・ <code>medium</code>・域ｩ呻ｼ・ <code>low</code>・育ｷ托ｼ・/td></tr>
-<tr><td><code>.s-compare</code></td><td>2蛻玲ｯ碑ｼ・ゅき繝ｩ繝濶ｲ・・code>positive</code>・育ｷ托ｼ・ <code>neutral</code>・育・・・ <code>negative</code>・郁ｵ､・・/td></tr>
-<tr><td><code>.slide-content-center</code></td><td>繧ｳ繝ｳ繝・Φ繝・ｒ邵ｦ讓ｪ荳ｭ螟ｮ縺ｫ驟咲ｽｮ</td></tr>
+<tr><th>タイプ</th><th>クラス</th><th>用途</th></tr>
+<tr><td>タイトルスライド</td><td><code>slide-cover</code></td><td>冒頭のタイトルページ。ロゴ・日付・キャッチコピー。</td></tr>
+<tr><td>インパクト</td><td><code>slide-impact</code></td><td>大きな一言。「今日伝えたいこと」など。</td></tr>
+<tr><td>セクション区切り</td><td><code>slide-section</code></td><td>PART 01 / PART 02 などの区切り。</td></tr>
+<tr><td>数字強調</td><td><code>slide-metric</code></td><td>コスト・割合・年月など数字を大きく見せる。</td></tr>
+<tr><td>引用・格言</td><td><code>slide-quote</code></td><td>名言・定義・格言を中央に大きく表示。</td></tr>
+<tr><td>標準スライド</td><td>（クラスなし）</td><td>H() ヘッダー + コンテンツ。最も多く使う。</td></tr>
 </table>
 
-<h3 id="template-brush">6-2. 繝悶Λ繝・す繝･繧｢繝・・譁ｹ豕・/h3>
+<h3>コンテンツコンポーネント一覧</h3>
+
+<table>
+<tr><th>クラス</th><th>用途</th></tr>
+<tr><td><code>.s-list</code></td><td>箇条書き。<code>.s-list-callout</code>（重要）/ <code>.s-list-arrow</code>（通常）/ <code>.s-list-head</code>（見出し）/ <code>.s-list-sub</code>（補足）</td></tr>
+<tr><td><code>.s-steps</code></td><td>手順ステップ。<code>.s-step-row</code>（行）→ <code>.s-step-num</code>①②③ + <code>.s-step-text</code></td></tr>
+<tr><td><code>.s-risk-list</code></td><td>リスク表。バッジ色：<code>high</code>（赤）/ <code>medium</code>（橙）/ <code>low</code>（緑）</td></tr>
+<tr><td><code>.s-compare</code></td><td>2列比較。カラム色：<code>positive</code>（緑）/ <code>neutral</code>（灰）/ <code>negative</code>（赤）</td></tr>
+<tr><td><code>.slide-content-center</code></td><td>コンテンツを縦横中央に配置</td></tr>
+</table>
+
+<h3 id="template-brush">6-2. ブラッシュアップ方法</h3>
 
 <div class="step">
-  <span class="step-num">1</span> <strong>CSS螟画焚繧貞､峨∴繧九□縺代〒繧ｫ繝ｩ繝ｼ繧ｹ繧ｭ繝ｼ繝縺悟､峨ｏ繧・/strong><br>
-  <span class="file-path">templates\kawai-dark-v1\css\style.css</span> 縺ｮ <code>:root</code> 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ縺ｮ螟画焚蛟､繧貞､画峩縲・</div>
+  <span class="step-num">1</span> <strong>CSS変数を変えるだけでカラースキームが変わる</strong><br>
+  <span class="file-path">templates\kawai-dark-v1\css\style.css</span> の <code>:root</code> セクションの変数値を変更。
+</div>
 
 <div class="step">
-  <span class="step-num">2</span> <strong>template-spec.md 縺ｮ繝舌・繧ｸ繝ｧ繝ｳ螻･豁ｴ繧呈峩譁ｰ</strong><br>
-  螟画峩蜀・ｮｹ縺ｨ譌･莉倥ｒ險倬鹸縺吶ｋ・井ｾ・ v1.1 2026-06-01 繝輔か繝ｳ繝医し繧､繧ｺ隱ｿ謨ｴ・峨・</div>
+  <span class="step-num">2</span> <strong>template-spec.md のバージョン履歴を更新</strong><br>
+  変更内容と日付を記録する（例: v1.1 2026-06-01 フォントサイズ調整）。
+</div>
 
 <div class="step">
-  <span class="step-num">3</span> <strong>譌｢蟄倥・繝ｭ繧ｸ繧ｧ繧ｯ繝医↓縺ｯ蠖ｱ髻ｿ縺励↑縺・/strong><br>
-  蜷・・繝ｭ繧ｸ繧ｧ繧ｯ繝医・繝・Φ繝励Ξ繝ｼ繝医・迢ｬ遶九さ繝斐・繧呈戟縺､縺ｮ縺ｧ縲√ユ繝ｳ繝励Ξ繝ｼ繝医ｒ螟峨∴縺ｦ繧る℃蜴ｻ縺ｮ繧ｹ繝ｩ繧､繝峨・螟峨ｏ繧峨↑縺・よｬ｡蝗・new-seminar.py 繧貞ｮ溯｡後＠縺溘→縺阪°繧画眠繝・じ繧､繝ｳ縺御ｽｿ繧上ｌ繧九・</div>
+  <span class="step-num">3</span> <strong>既存プロジェクトには影響しない</strong><br>
+  各プロジェクトはテンプレートの独立コピーを持つので、テンプレートを変えても過去のスライドは変わらない。次回 new-seminar.py を実行したときから新デザインが使われる。
+</div>
 
-<h3 id="template-new">6-3. 譁ｰ繝・Φ繝励Ξ繝ｼ繝医ｒ霑ｽ蜉縺吶ｋ</h3>
+<h3 id="template-new">6-3. 新テンプレートを追加する</h3>
 
-<div class="prompt-box"><span class="comment"># 萓・ light-blue-v1 縺ｨ縺・≧譁ｰ繝・Φ繝励Ξ繝ｼ繝医ｒ菴懊ｋ</span>
-<span class="highlight">1.</span> templates\kawai-dark-v1\ 繧偵∪繧九＃縺ｨ繧ｳ繝斐・ 竊・templates\light-blue-v1\
-<span class="highlight">2.</span> css\style.css 縺ｮ CSS螟画焚繧呈眠縺励＞繧ｫ繝ｩ繝ｼ縺ｫ螟画峩
-<span class="highlight">3.</span> template-spec.md 繧呈峩譁ｰ・亥錐蜑阪・繝舌・繧ｸ繝ｧ繝ｳ繝ｻ繧ｫ繝ｩ繝ｼ陦ｨ・・<span class="highlight">4.</span> 谺｡蝗・new-seminar.py --template light-blue-v1 縺ｧ謖・ｮ壹〒縺阪ｋ</div>
+<div class="prompt-box"><span class="comment"># 例: light-blue-v1 という新テンプレートを作る</span>
+<span class="highlight">1.</span> templates\kawai-dark-v1\ をまるごとコピー → templates\light-blue-v1\
+<span class="highlight">2.</span> css\style.css の CSS変数を新しいカラーに変更
+<span class="highlight">3.</span> template-spec.md を更新（名前・バージョン・カラー表）
+<span class="highlight">4.</span> 次回 new-seminar.py --template light-blue-v1 で指定できる</div>
 
 <hr>
 
-<!-- ===== 7. 繝・・繝ｭ繧､謇矩・===== -->
-<h2 id="deploy"><span class="num">7</span>GitHub Pages 繝・・繝ｭ繧､謇矩・/h2>
+<!-- ===== 7. デプロイ手順 ===== -->
+<h2 id="deploy"><span class="num">7</span>GitHub Pages デプロイ手順</h2>
 
-<h3 id="deploy-new">7-1. 譁ｰ隕上ョ繝励Ο繧､・・seminar-slide 繧ｹ繧ｭ繝ｫ縺瑚・蜍輔〒繧・ｋ縺薙→・・/h3>
+<h3 id="deploy-new">7-1. 新規デプロイ（/seminar-slide スキルが自動でやること）</h3>
 
-<div class="prompt-box"><span class="comment"># 繝励Ο繧ｸ繧ｧ繧ｯ繝医ヵ繧ｩ繝ｫ繝縺ｫ遘ｻ蜍・/span>
-cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI蟆主・謾ｯ謠ｴ莠区･ｭ_cc\08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\projects\{繧ｹ繝ｩ繝・げ}"
+<div class="prompt-box"><span class="comment"># プロジェクトフォルダに移動</span>
+cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\{スラッグ}"
 
-<span class="comment"># Git繝ｪ繝昴ず繝医Μ蛻晄悄蛹・/span>
+<span class="comment"># Gitリポジトリ初期化</span>
 git init
 git config user.email "uemura@artsoul.jp"
 git config user.name "Kei Uemura"
 git add .
-git commit -m "蛻晄悄蜈ｬ髢・ {繧ｿ繧､繝医Ν}"
+git commit -m "初期公開: {タイトル}"
 
-<span class="comment"># GitHub繝ｪ繝昴ず繝医Μ菴懈・ 竊・push</span>
-gh repo create Artsoul-Git/{繧ｹ繝ｩ繝・げ} --public --description "{繧ｿ繧､繝医Ν}"
-git remote add origin https://github.com/Artsoul-Git/{繧ｹ繝ｩ繝・げ}.git
+<span class="comment"># GitHubリポジトリ作成 → push</span>
+gh repo create Artsoul-Git/{スラッグ} --public --description "{タイトル}"
+git remote add origin https://github.com/Artsoul-Git/{スラッグ}.git
 git push -u origin master
 
-<span class="comment"># gh-pages繝悶Λ繝ｳ繝∽ｽ懈・・・itHub Pages縺ｯ縺薙％縺九ｉ繝薙Ν繝峨＆繧後ｋURL縺ｫ縺ｪ繧具ｼ・/span>
+<span class="comment"># gh-pagesブランチ作成（GitHub PagesはここからビルドされるURLになる）</span>
 git checkout -b gh-pages
 git push origin gh-pages
 git checkout master</div>
 
-<p>1縲・蛻・ｾ後∽ｻ･荳九・URL縺ｧ繧｢繧ｯ繧ｻ繧ｹ縺ｧ縺阪ｋ繧医≧縺ｫ縺ｪ繧翫∪縺呻ｼ・/p>
+<p>1〜2分後、以下のURLでアクセスできるようになります：</p>
 
 <div class="url-card">
-  <div class="url-role">蜿苓ｬ幄・RL・亥・譛峨☆繧具ｼ・/div>
-  <div class="url-val">https://artsoul-git.github.io/{繧ｹ繝ｩ繝・げ}/viewer.html</div>
+  <div class="url-role">受講者URL（共有する）</div>
+  <div class="url-val">https://artsoul-git.github.io/{スラッグ}/viewer.html</div>
 </div>
 
-<h3 id="deploy-update">7-2. 繧ｹ繝ｩ繧､繝峨ｒ譖ｴ譁ｰ縺吶ｋ・亥・髢句ｾ後↓菫ｮ豁｣縺励◆縺・→縺搾ｼ・/h3>
+<h3 id="deploy-update">7-2. スライドを更新する（公開後に修正したいとき）</h3>
 
-<div class="prompt-box"><span class="comment"># slides.js 繧剃ｿｮ豁｣蠕後∽ｻ･荳九ｒ螳溯｡・/span>
-cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI蟆主・謾ｯ謠ｴ莠区･ｭ_cc\08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\projects\{繧ｹ繝ｩ繝・げ}"
+<div class="prompt-box"><span class="comment"># slides.js を修正後、以下を実行</span>
+cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\slide-builder\projects\{スラッグ}"
 
-<span class="comment"># master繝悶Λ繝ｳ繝√〒螟画峩繧偵さ繝溘ャ繝・/span>
+<span class="comment"># masterブランチで変更をコミット</span>
 git add js\slides.js
-git commit -m "繧ｹ繝ｩ繧､繝画峩譁ｰ: {菫ｮ豁｣蜀・ｮｹ}"
+git commit -m "スライド更新: {修正内容}"
 git push origin master
 
-<span class="comment"># gh-pages縺ｫ繧ょ渚譏</span>
+<span class="comment"># gh-pagesにも反映</span>
 git checkout gh-pages
 git merge master
 git push origin gh-pages
 git checkout master</div>
 
 <div class="tip">
-<span class="label">Kai 縺ｫ縲梧峩譁ｰ縺励※縲阪→險縺医・OK</span>
-Kai 縺ｫ縲鶏繧ｹ繝ｩ繝・げ} 縺ｮ繧ｹ繝ｩ繧､繝峨ｒ譖ｴ譁ｰ縺励※縲ゅ・・ｒ菫ｮ豁｣縺励※縲阪→莨昴∴繧後・縲゜ai 縺・slides.js 繧剃ｿｮ豁｣縺励※ push 縺ｾ縺ｧ閾ｪ蜍輔〒繧・▲縺ｦ縺上ｌ縺ｾ縺吶・</div>
+<span class="label">Kai に「更新して」と言えばOK</span>
+Kai に「{スラッグ} のスライドを更新して。〇〇を修正して」と伝えれば、Kai が slides.js を修正して push まで自動でやってくれます。
+</div>
 
 <hr>
 
-<!-- ===== 8. 蠖捺律縺ｮ謫堺ｽ・===== -->
-<h2 id="operation"><span class="num">8</span>繧ｻ繝溘リ繝ｼ蠖捺律縺ｮ謫堺ｽ・/h2>
+<!-- ===== 8. 当日の操作 ===== -->
+<h2 id="operation"><span class="num">8</span>セミナー当日の操作</h2>
 
-<h3>莠句燕遒ｺ隱搾ｼ亥燕譌･縺ｾ縺ｧ縺ｫ・・/h3>
-
-<div class="step">
-  <span class="step-num">1</span> <strong>admin.html 縺ｧ繝代せ繝ｯ繝ｼ繝峨ｒ遒ｺ隱阪・險ｭ螳・/strong><br>
-  繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼPC縺ｮ繝悶Λ繧ｦ繧ｶ縺ｧ <code>admin.html</code> 繧帝幕縺阪√ヱ繧ｹ繝ｯ繝ｼ繝峨′險ｭ螳壽ｸ医∩縺ｧ縺ゅｋ縺薙→繧堤｢ｺ隱阪・</div>
+<h3>事前確認（前日までに）</h3>
 
 <div class="step">
-  <span class="step-num">2</span> <strong>viewer.html 縺ｮ URL 繧貞女隰幄・↓蜈ｱ譛・/strong><br>
-  admin.html 縺ｮ縲袈RL繧偵さ繝斐・縲阪・繧ｿ繝ｳ縺九ｉ蜈ｱ譛峨２R繧ｳ繝ｼ繝牙喧縺励※繧ｹ繝ｩ繧､繝峨↓霈峨○縺ｦ繧０K縲・</div>
+  <span class="step-num">1</span> <strong>admin.html でパスワードを確認・設定</strong><br>
+  プレゼンターPCのブラウザで <code>admin.html</code> を開き、パスワードが設定済みであることを確認。
+</div>
 
 <div class="step">
-  <span class="step-num">3</span> <strong>繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼPC縺ｧ presenter.html 繧帝幕縺・※縺翫￥</strong><br>
-  繝代せ繝ｯ繝ｼ繝峨ｒ蜈･蜉帙＠縺ｦ繝ｭ繧ｰ繧､繝ｳ縲ゅち繧､繝槭・繝ｻ繝医・繧ｯ繧ｹ繧ｯ繝ｪ繝励ヨ繧堤｢ｺ隱阪・</div>
+  <span class="step-num">2</span> <strong>viewer.html の URL を受講者に共有</strong><br>
+  admin.html の「URLをコピー」ボタンから共有。QRコード化してスライドに載せてもOK。
+</div>
 
-<h3>蠖捺律縺ｮ謫堺ｽ懶ｼ・resenter.html・・/h3>
+<div class="step">
+  <span class="step-num">3</span> <strong>プレゼンターPCで presenter.html を開いておく</strong><br>
+  パスワードを入力してログイン。タイマー・トークスクリプトを確認。
+</div>
+
+<h3>当日の操作（presenter.html）</h3>
 
 <table>
-<tr><th>謫堺ｽ・/th><th>譁ｹ豕・/th></tr>
-<tr><td>繧ｹ繝ｩ繧､繝峨ｒ騾ｲ繧√ｋ</td><td>竊偵く繝ｼ / 逕ｻ髱｢蜿ｳ荳九梧ｬ｡縺ｸ縲阪・繧ｿ繝ｳ</td></tr>
-<tr><td>繧ｹ繝ｩ繧､繝峨ｒ謌ｻ縺・/td><td>竊舌く繝ｼ / 逕ｻ髱｢蜿ｳ荳九悟燕縺ｸ縲阪・繧ｿ繝ｳ</td></tr>
-<tr><td>逶ｮ谺｡繧帝幕縺・/td><td>蟾ｦ荳翫娯于 逶ｮ谺｡縲阪・繧ｿ繝ｳ・亥女隰幄・判髱｢縺ｫ繧る｣蜍輔＠縺ｦ髢九￥・・/td></tr>
-<tr><td>蜿苓ｬ幄・判髱｢繧貞・逕ｻ髱｢縺ｫ縺吶ｋ</td><td>繝・・繝ｫ繝舌・縲娯峺 蜈ｨ逕ｻ髱｢縲・ F繧ｭ繝ｼ</td></tr>
-<tr><td>繝ｬ繝ｼ繧ｶ繝ｼ繝昴う繝ｳ繧ｿ</td><td>繝励Ξ繧ｼ繝ｳ繧ｿ繝ｼ逕ｻ髱｢縺ｮ迴ｾ蝨ｨ繧ｹ繝ｩ繧､繝峨お繝ｪ繧｢縺ｫ繝槭え繧ｹ繧堤ｧｻ蜍包ｼ亥女隰幄・判髱｢縺ｫ襍､轤ｹ縺悟・繧具ｼ・/td></tr>
-<tr><td>繧ｿ繧､繝槭・繧偵せ繧ｿ繝ｼ繝・/td><td>蜿ｳ蛛ｴ縲娯霧 繧ｹ繧ｿ繝ｼ繝医阪・繧ｿ繝ｳ</td></tr>
-<tr><td>PDF蜃ｺ蜉・/td><td>繝・・繝ｫ繝舌・縲訓DF蜃ｺ蜉帙・/td></tr>
-<tr><td>PPTX蜃ｺ蜉・/td><td>繝・・繝ｫ繝舌・縲訓PTX蜃ｺ蜉帙・/td></tr>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>スライドを進める</td><td>→キー / 画面右下「次へ」ボタン</td></tr>
+<tr><td>スライドを戻す</td><td>←キー / 画面右下「前へ」ボタン</td></tr>
+<tr><td>目次を開く</td><td>左上「☰ 目次」ボタン（受講者画面にも連動して開く）</td></tr>
+<tr><td>受講者画面を全画面にする</td><td>ツールバー「⛶ 全画面」/ Fキー</td></tr>
+<tr><td>レーザーポインタ</td><td>プレゼンター画面の現在スライドエリアにマウスを移動（受講者画面に赤点が出る）</td></tr>
+<tr><td>タイマーをスタート</td><td>右側「▶ スタート」ボタン</td></tr>
+<tr><td>PDF出力</td><td>ツールバー「PDF出力」</td></tr>
+<tr><td>PPTX出力</td><td>ツールバー「PPTX出力」</td></tr>
 </table>
 
 <div class="tip">
-<span class="label">2逕ｻ髱｢驕狗畑</span>
-繧ｵ繝悶ョ繧｣繧ｹ繝励Ξ繧､・亥女隰幄・↓隕九○繧具ｼ峨↓ viewer.html 縺ｾ縺溘・ index.html 繧貞・逕ｻ髱｢陦ｨ遉ｺ縺励√Γ繧､繝ｳ繝・ぅ繧ｹ繝励Ξ繧､・域焔蜈・ｼ峨〒 presenter.html 繧呈桃菴懊☆繧九・縺檎炊諠ｳ縺ｮ菴ｿ縺・婿縺ｧ縺吶・</div>
+<span class="label">2画面運用</span>
+サブディスプレイ（受講者に見せる）に viewer.html または index.html を全画面表示し、メインディスプレイ（手元）で presenter.html を操作するのが理想の使い方です。
+</div>
 
 <hr>
 
-<!-- ===== 9. 繝代せ繝ｯ繝ｼ繝峨・縺励￥縺ｿ ===== -->
-<h2 id="password"><span class="num">9</span>繝代せ繝ｯ繝ｼ繝峨・縺励￥縺ｿ</h2>
+<!-- ===== 9. パスワードのしくみ ===== -->
+<h2 id="password"><span class="num">9</span>パスワードのしくみ</h2>
 
 <div class="lead">
-繝代せ繝ｯ繝ｼ繝峨・繝悶Λ繧ｦ繧ｶ縺ｮ localStorage 縺ｫ菫晏ｭ倥＆繧後ｋ縲ゅた繝ｼ繧ｹ繧ｳ繝ｼ繝峨↓縺ｯ荳蛻・嶌縺九ｌ縺ｦ縺・↑縺・ゅ□縺九ｉ GitHub 縺ｫ蜈ｬ髢九＠縺ｦ繧ゅヱ繧ｹ繝ｯ繝ｼ繝峨・貍上ｌ縺ｪ縺・・</div>
+パスワードはブラウザの localStorage に保存される。ソースコードには一切書かれていない。だから GitHub に公開してもパスワードは漏れない。
+</div>
 
-<h3>莉慕ｵ・∩繧・陦後〒</h3>
+<h3>仕組みを3行で</h3>
 
 <ol>
-  <li><strong>admin.html 縺ｧ繝代せ繝ｯ繝ｼ繝峨ｒ險ｭ螳・/strong> 竊・縺昴・PC縺ｮ繝悶Λ繧ｦ繧ｶ縺ｮ localStorage 縺ｫ菫晏ｭ・/li>
-  <li><strong>presenter.html 繧帝幕縺・/strong> 竊・localStorage 縺九ｉ繝代せ繝ｯ繝ｼ繝峨ｒ蜿悶ｊ蜃ｺ縺励※辣ｧ蜷・/li>
-  <li><strong>蛻･縺ｮPC縺ｧ縺ｯ</strong> 竊・縺昴・PC縺ｫ繝代せ繝ｯ繝ｼ繝峨′菫晏ｭ倥＆繧後※縺・↑縺・・縺ｧ蜈･繧後↑縺・ょ・蠎ｦ admin.html 縺ｧ險ｭ螳壹′蠢・ｦ√・/li>
+  <li><strong>admin.html でパスワードを設定</strong> → そのPCのブラウザの localStorage に保存</li>
+  <li><strong>presenter.html を開く</strong> → localStorage からパスワードを取り出して照合</li>
+  <li><strong>別のPCでは</strong> → そのPCにパスワードが保存されていないので入れない。再度 admin.html で設定が必要。</li>
 </ol>
 
 <div class="two-col">
   <div class="two-col-box">
-    <h4>繝代せ繝ｯ繝ｼ繝峨ｒ螟峨∴縺溘＞縺ｨ縺・/h4>
-    <p>admin.html 繧帝幕縺・※譁ｰ縺励＞繝代せ繝ｯ繝ｼ繝峨ｒ蜈･蜉・竊・縲瑚ｨｭ螳壹・螟画峩縲阪よｬ｡縺ｫ presenter.html 繧帝幕縺・◆縺ｨ縺阪°繧画眠繝代せ繝ｯ繝ｼ繝峨′譛牙柑縲・/p>
+    <h4>パスワードを変えたいとき</h4>
+    <p>admin.html を開いて新しいパスワードを入力 → 「設定・変更」。次に presenter.html を開いたときから新パスワードが有効。</p>
   </div>
   <div class="two-col-box">
-    <h4>蛻･繝・ヰ繧､繧ｹ縺ｧ presenter.html 繧剃ｽｿ縺・◆縺・→縺・/h4>
-    <p>縺昴・繝・ヰ繧､繧ｹ縺ｮ繝悶Λ繧ｦ繧ｶ縺ｧ admin.html 繧帝幕縺・※繝代せ繝ｯ繝ｼ繝峨ｒ險ｭ螳壹☆繧九ゆｽ募ｺｦ縺ｧ繧ょ酔縺倥ヱ繧ｹ繝ｯ繝ｼ繝峨ｒ險ｭ螳壹＠縺ｦOK縲・/p>
+    <h4>別デバイスで presenter.html を使いたいとき</h4>
+    <p>そのデバイスのブラウザで admin.html を開いてパスワードを設定する。何度でも同じパスワードを設定してOK。</p>
   </div>
 </div>
 
 <div class="warn">
-<span class="label">繝悶Λ繧ｦ繧ｶ縺ｮ繧ｭ繝｣繝・す繝･繧偵け繝ｪ繧｢縺吶ｋ縺ｨ</span>
-localStorage 繧ゅけ繝ｪ繧｢縺輔ｌ繧九Ｑresenter.html 縺碁幕縺代↑縺上↑縺｣縺溘ｉ admin.html 縺ｧ蜀崎ｨｭ螳壹☆繧九ょ・譛溘ヱ繧ｹ繝ｯ繝ｼ繝峨・ <span class="file-path">projects\{繧ｹ繝ｩ繝・げ}\manual.html</span> 縺ｫ險倩ｼ峨・</div>
+<span class="label">ブラウザのキャッシュをクリアすると</span>
+localStorage もクリアされる。presenter.html が開けなくなったら admin.html で再設定する。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span> に記載。
+</div>
 
 <hr>
 
-<!-- ===== 10. 繝輔ぃ繧､繝ｫ繝ｻ繝輔か繝ｫ繝蜷阪Ν繝ｼ繝ｫ ===== -->
-<h2 id="naming"><span class="num">10</span>繝輔ぃ繧､繝ｫ繝ｻ繝輔か繝ｫ繝蜷阪Ν繝ｼ繝ｫ</h2>
+<!-- ===== 10. ファイル・フォルダ名ルール ===== -->
+<h2 id="naming"><span class="num">10</span>ファイル・フォルダ名ルール</h2>
 
 <div class="warn">
-<span class="label">GitHub Pages 縺ｧ縺ｯ譌･譛ｬ隱槭ヵ繧｡繧､繝ｫ蜷阪′菴ｿ縺医↑縺・/span>
-URL繧ｨ繝ｳ繧ｳ繝ｼ繝峨＆繧後※豎壹￥縺ｪ繧翫√Μ繝ｳ繧ｯ縺悟｣翫ｌ繧九％縺ｨ縺後≠繧九り恭謨ｰ蟄励・繝上う繝輔Φ縺ｮ縺ｿ縺ｧ蜻ｽ蜷阪☆繧九％縺ｨ縲・</div>
+<span class="label">GitHub Pages では日本語ファイル名が使えない</span>
+URLエンコードされて汚くなり、リンクが壊れることがある。英数字・ハイフンのみで命名すること。
+</div>
 
 <table>
-<tr><th>蟇ｾ雎｡</th><th>繝ｫ繝ｼ繝ｫ</th><th>OK萓・/th><th>NG萓・/th></tr>
-<tr><td>GitHub繧ｹ繝ｩ繝・げ・医Μ繝昴ず繝医Μ蜷搾ｼ・/td><td>闍ｱ謨ｰ蟄・+ 繝上う繝輔Φ縲∝ｰ乗枚蟄励∝・鬆ｭ縺ｯ闍ｱ蟄・/td><td><code>sales-ai-seminar</code></td><td><code>謗｡逕ｨAI遐比ｿｮ</code></td></tr>
-<tr><td>繝励Ο繧ｸ繧ｧ繧ｯ繝医ヵ繧ｩ繝ｫ繝蜷・/td><td>繧ｹ繝ｩ繝・げ縺ｨ蜷後§</td><td><code>projects/sales-ai-seminar/</code></td><td><code>projects/謗｡逕ｨAI/</code></td></tr>
-<tr><td>JS/CSS 繝輔ぃ繧､繝ｫ蜷・/td><td>闍ｱ謨ｰ蟄・+ 繝上う繝輔Φ + 繝峨ャ繝・/td><td><code>slides.js</code></td><td><code>繧ｹ繝ｩ繧､繝・js</code></td></tr>
-<tr><td>繝・Φ繝励Ξ繝ｼ繝亥錐</td><td>闍ｱ謨ｰ蟄・+ 繝上う繝輔Φ + 繝舌・繧ｸ繝ｧ繝ｳ</td><td><code>kawai-dark-v1</code></td><td><code>繝繝ｼ繧ｯv1</code></td></tr>
+<tr><th>対象</th><th>ルール</th><th>OK例</th><th>NG例</th></tr>
+<tr><td>GitHubスラッグ（リポジトリ名）</td><td>英数字 + ハイフン、小文字、先頭は英字</td><td><code>sales-ai-seminar</code></td><td><code>採用AI研修</code></td></tr>
+<tr><td>プロジェクトフォルダ名</td><td>スラッグと同じ</td><td><code>projects/sales-ai-seminar/</code></td><td><code>projects/採用AI/</code></td></tr>
+<tr><td>JS/CSS ファイル名</td><td>英数字 + ハイフン + ドット</td><td><code>slides.js</code></td><td><code>スライド.js</code></td></tr>
+<tr><td>テンプレート名</td><td>英数字 + ハイフン + バージョン</td><td><code>kawai-dark-v1</code></td><td><code>ダークv1</code></td></tr>
 </table>
 
-<h3>繧ｹ繝ｩ繝・げ蜻ｽ蜷阪・繧ｳ繝・/h3>
+<h3>スラッグ命名のコツ</h3>
 
 <ul>
-  <li>繝・・繝橸ｼ句ｯｾ雎｡・虐eminar 縺ｮ邨・∩蜷医ｏ縺帙′蛻・°繧翫ｄ縺吶＞</li>
-  <li>萓具ｼ・code>keiyaku-ai-check</code> / <code>sales-ai-seminar</code> / <code>hr-ai-intro</code></li>
-  <li>蜷後§蜷榊燕縺ｮ繝ｪ繝昴ず繝医Μ縺ｯ菴懊ｌ縺ｪ縺・ょｹｴ繧・椌逡ｪ繧偵▽縺代ｋ・・code>keiyaku-ai-2026</code></li>
+  <li>テーマ＋対象＋seminar の組み合わせが分かりやすい</li>
+  <li>例：<code>keiyaku-ai-check</code> / <code>sales-ai-seminar</code> / <code>hr-ai-intro</code></li>
+  <li>同じ名前のリポジトリは作れない。年や枝番をつける：<code>keiyaku-ai-2026</code></li>
 </ul>
 
 <hr>
 
-<!-- ===== 11. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ ===== -->
-<h2 id="trouble"><span class="num">11</span>繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</h2>
+<!-- ===== 11. トラブルシューティング ===== -->
+<h2 id="trouble"><span class="num">11</span>トラブルシューティング</h2>
 
 <details>
-<summary><span class="acc-num">Q</span>presenter.html 縺碁幕縺代↑縺・ｼ医ヱ繧ｹ繝ｯ繝ｼ繝峨′蜉ｹ縺九↑縺・ｼ・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">Q</span>presenter.html が開けない（パスワードが効かない）<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<p><strong>蜴溷屏・・/strong>縺薙・繝悶Λ繧ｦ繧ｶ縺ｮ localStorage 縺ｫ繝代せ繝ｯ繝ｼ繝峨′菫晏ｭ倥＆繧後※縺・↑縺・・/p>
-<p><strong>蟇ｾ蜃ｦ・・/strong>admin.html 繧帝幕縺・※縲後・繝ｬ繧ｼ繝ｳ繧ｿ繝ｼ繝代せ繝ｯ繝ｼ繝峨肴ｬ・↓蛻晄悄繝代せ繝ｯ繝ｼ繝峨ｒ蜈･蜉帙＠縺ｦ縲瑚ｨｭ螳壹・螟画峩縲阪ょ・譛溘ヱ繧ｹ繝ｯ繝ｼ繝峨・ <span class="file-path">projects\{繧ｹ繝ｩ繝・げ}\manual.html</span> 繧貞盾辣ｧ縲・/p>
+<p><strong>原因：</strong>このブラウザの localStorage にパスワードが保存されていない。</p>
+<p><strong>対処：</strong>admin.html を開いて「プレゼンターパスワード」欄に初期パスワードを入力して「設定・変更」。初期パスワードは <span class="file-path">projects\{スラッグ}\manual.html</span> を参照。</p>
 </div>
 </details>
 
 <details>
-<summary><span class="acc-num">Q</span>GitHub Pages 縺ｮ URL 繧帝幕縺上→ 404 縺ｫ縺ｪ繧・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">Q</span>GitHub Pages の URL を開くと 404 になる<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<p><strong>蜴溷屏竭・・/strong>GitHub Pages 縺後∪縺繝薙Ν繝我ｸｭ・・ush蠕・縲・蛻・°縺九ｋ・峨・/p>
-<p><strong>蟇ｾ蜃ｦ竭・・/strong>2蛻・ｾ・▲縺ｦ縺九ｉ蜀榊ｺｦ繧｢繧ｯ繧ｻ繧ｹ縲・/p>
-<p><strong>蜴溷屏竭｡・・/strong>gh-pages 繝悶Λ繝ｳ繝√′蟄伜惠縺励↑縺・・/p>
-<p><strong>蟇ｾ蜃ｦ竭｡・・/strong>莉･荳九ｒ螳溯｡鯉ｼ・/p>
+<p><strong>原因①：</strong>GitHub Pages がまだビルド中（push後1〜2分かかる）。</p>
+<p><strong>対処①：</strong>2分待ってから再度アクセス。</p>
+<p><strong>原因②：</strong>gh-pages ブランチが存在しない。</p>
+<p><strong>対処②：</strong>以下を実行：</p>
 <div class="prompt-box">git checkout -b gh-pages
 git push origin gh-pages
 git checkout master</div>
@@ -666,46 +694,46 @@ git checkout master</div>
 </details>
 
 <details>
-<summary><span class="acc-num">Q</span>繝ｬ繝ｼ繧ｶ繝ｼ繝昴う繝ｳ繧ｿ縺悟女隰幄・判髱｢縺ｫ陦ｨ遉ｺ縺輔ｌ縺ｪ縺・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">Q</span>レーザーポインタが受講者画面に表示されない<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<p><strong>蜴溷屏・・/strong>presenter.html 縺ｨ viewer.html・医∪縺溘・ index.html・峨′蛻･繝悶Λ繧ｦ繧ｶ繧ｿ繝悶・蛻･繧ｦ繧｣繝ｳ繝峨え縺ｧ髢九°繧後※縺・↑縺・・roadcastChannel 縺ｯ蜷御ｸ繝悶Λ繧ｦ繧ｶ蜀・・繧ｿ繝夜俣縺ｧ縺ｮ縺ｿ蜍穂ｽ懊＠縺ｾ縺吶・/p>
-<p><strong>蟇ｾ蜃ｦ・・/strong>蜿苓ｬ幄・判髱｢・・iewer.html・峨ｒ蜷後§PC縺ｮ蜷後§繝悶Λ繧ｦ繧ｶ縺ｧ蛻･繧ｿ繝悶・蛻･繧ｦ繧｣繝ｳ繝峨え縺ｧ髢九￥縲ょ挨縺ｮPC縺ｧ髢九＞縺ｦ縺・ｋ蝣ｴ蜷医・蜍穂ｽ懊＠縺ｾ縺帙ｓ・亥酔縺倥ョ繝舌う繧ｹ縺ｮ縺ｿ譛牙柑・峨・/p>
+<p><strong>原因：</strong>presenter.html と viewer.html（または index.html）が別ブラウザタブ・別ウィンドウで開かれていない。BroadcastChannel は同一ブラウザ内のタブ間でのみ動作します。</p>
+<p><strong>対処：</strong>受講者画面（viewer.html）を同じPCの同じブラウザで別タブ・別ウィンドウで開く。別のPCで開いている場合は動作しません（同じデバイスのみ有効）。</p>
 </div>
 </details>
 
 <details>
-<summary><span class="acc-num">Q</span>繧ｹ繝ｩ繧､繝峨ｒ譖ｴ譁ｰ縺励◆縺ｮ縺ｫ URL 繧帝幕縺上→蜿､縺・∪縺ｾ<span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">Q</span>スライドを更新したのに URL を開くと古いまま<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<p><strong>蜴溷屏竭・・/strong>gh-pages 繝悶Λ繝ｳ繝√↓蜿肴丐縺励※縺・↑縺・・/p>
-<p><strong>蟇ｾ蜃ｦ竭・・/strong>莉･荳九ｒ螳溯｡鯉ｼ・/p>
+<p><strong>原因①：</strong>gh-pages ブランチに反映していない。</p>
+<p><strong>対処①：</strong>以下を実行：</p>
 <div class="prompt-box">git checkout gh-pages
 git merge master
 git push origin gh-pages
 git checkout master</div>
-<p><strong>蜴溷屏竭｡・・/strong>繝悶Λ繧ｦ繧ｶ縺ｮ繧ｭ繝｣繝・す繝･縲・/p>
-<p><strong>蟇ｾ蜃ｦ竭｡・・/strong>Ctrl+Shift+R・亥ｼｷ蛻ｶ繝ｪ繝ｭ繝ｼ繝会ｼ峨・/p>
+<p><strong>原因②：</strong>ブラウザのキャッシュ。</p>
+<p><strong>対処②：</strong>Ctrl+Shift+R（強制リロード）。</p>
 </div>
 </details>
 
 <details>
-<summary><span class="acc-num">Q</span>slides.js 縺ｧ譁・ｭ励′陦ｨ遉ｺ縺輔ｌ縺ｪ縺・・繝ｬ繧､繧｢繧ｦ繝医′蟠ｩ繧後ｋ<span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">Q</span>slides.js で文字が表示されない・レイアウトが崩れる<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<p><strong>蜴溷屏・・/strong>slides.js 縺ｮ JavaScript 讒区枚繧ｨ繝ｩ繝ｼ縲ら音縺ｫ <code>data-notes</code> 蜀・・繧ｷ繝ｳ繧ｰ繝ｫ繧ｯ繧ｩ繝ｼ繝茨ｼ・code>'</code>・峨・繧ｨ繧ｹ繧ｱ繝ｼ繝玲ｼ上ｌ縲・/p>
-<p><strong>蟇ｾ蜃ｦ・・/strong>繝悶Λ繧ｦ繧ｶ縺ｮ髢狗匱閠・ヤ繝ｼ繝ｫ・・12・俄・ Console 繧ｿ繝悶〒繧ｨ繝ｩ繝ｼ繧堤｢ｺ隱阪・code>data-notes</code> 蜀・・繧ｷ繝ｳ繧ｰ繝ｫ繧ｯ繧ｩ繝ｼ繝医ｒ <code>&#39;</code> 縺ｫ鄂ｮ謠帙☆繧九・/p>
-<div class="prompt-box"><span class="comment">// NG: 繧ｷ繝ｳ繧ｰ繝ｫ繧ｯ繧ｩ繝ｼ繝医′繧ｨ繧ｹ繧ｱ繝ｼ繝励＆繧後※縺・↑縺・/span>
-data-notes="莉頑律縺ｯAI縺ｫ縺､縺・※蟄ｦ繧薙〒縺・◆縺縺代∪縺吶・
+<p><strong>原因：</strong>slides.js の JavaScript 構文エラー。特に <code>data-notes</code> 内のシングルクォート（<code>'</code>）のエスケープ漏れ。</p>
+<p><strong>対処：</strong>ブラウザの開発者ツール（F12）→ Console タブでエラーを確認。<code>data-notes</code> 内のシングルクォートを <code>&#39;</code> に置換する。</p>
+<div class="prompt-box"><span class="comment">// NG: シングルクォートがエスケープされていない</span>
+data-notes="今日はAIについて学んでいただけます。"
 
-<span class="comment">// OK: 譁・ｭ怜盾辣ｧ縺ｧ繧ｨ繧ｹ繧ｱ繝ｼ繝・/span>
-data-notes="莉頑律縺ｯAI&#39;s豢ｻ逕ｨ豕輔ｒ蟄ｦ繧薙〒縺・◆縺縺代∪縺吶・</div>
+<span class="comment">// OK: 文字参照でエスケープ</span>
+data-notes="今日はAI&#39;s活用法を学んでいただけます。"</div>
 </div>
 </details>
 
 <hr>
 
-<!-- ===== 12. slides.js 繝ｪ繝輔ぃ繝ｬ繝ｳ繧ｹ ===== -->
-<h2 id="slides-js"><span class="num">12</span>slides.js 縺ｮ譖ｸ縺肴婿繝ｪ繝輔ぃ繝ｬ繝ｳ繧ｹ</h2>
+<!-- ===== 12. slides.js リファレンス ===== -->
+<h2 id="slides-js"><span class="num">12</span>slides.js の書き方リファレンス</h2>
 
-<h3>蝓ｺ譛ｬ讒矩</h3>
+<h3>基本構造</h3>
 
 <div class="prompt-box">(function () {
 
@@ -716,73 +744,73 @@ data-notes="莉頑律縺ｯAI&#39;s豢ｻ逕ｨ豕輔ｒ蟄ｦ繧薙〒縺・◆
   function slide01() {
     return &#39;&lt;section class="slide slide-cover"
       data-section="cover"
-      data-title="繧ｿ繧､繝医Ν"
-      data-notes="繝医・繧ｯ繧ｹ繧ｯ繝ｪ繝励ヨ縲・#39;繧ｷ繝ｳ繧ｰ繝ｫ繧ｯ繧ｩ繝ｼ繝・#39;縺ｯ&#39;&amp;#39;縺ｧ繧ｨ繧ｹ繧ｱ繝ｼ繝・&gt;
-      &lt;!-- 繧ｹ繝ｩ繧､繝峨さ繝ｳ繝・Φ繝・--&gt;
+      data-title="タイトル"
+      data-notes="トークスクリプト。&#39;シングルクォート&#39;は&#39;&amp;#39;でエスケープ"&gt;
+      &lt;!-- スライドコンテンツ --&gt;
     &lt;/section&gt;&#39;;
   }
 
-  <span class="comment">/* ... 莉悶・繧ｹ繝ｩ繧､繝蛾未謨ｰ ... */</span>
+  <span class="comment">/* ... 他のスライド関数 ... */</span>
 
   window.SLIDES = [slide01, slide02, ...];
 
 })();</div>
 
-<h3>蠢・医Ν繝ｼ繝ｫ・・ai 繧ょｮ医ｋ縲∵焔譖ｸ縺阪ｂ螳医ｋ・・/h3>
+<h3>必須ルール（Kai も守る、手書きも守る）</h3>
 
 <ol>
-  <li>蜈ｨ菴薙ｒ IIFE・亥叉譎ょｮ溯｡碁未謨ｰ・峨〒蛹・・</li>
-  <li><code>H()</code> 繝倥Ν繝代・繧貞・鬆ｭ縺ｧ螳夂ｾｩ</li>
-  <li>蜷・せ繝ｩ繧､繝峨・ <code>slideNN()</code> 髢｢謨ｰ・医ぞ繝ｭ蝓九ａ2譯・ｼ・/li>
-  <li>蜈ｨ繧ｹ繝ｩ繧､繝峨↓ <code>data-section</code> / <code>data-title</code> / <code>data-notes</code> 繧定ｨｭ螳・/li>
-  <li><code>data-notes</code> 蜀・・ <code>'</code> 縺ｯ <code>&amp;#39;</code> 縺ｧ繧ｨ繧ｹ繧ｱ繝ｼ繝・/li>
-  <li>譎る俣陦ｨ險假ｼ・0蛻・・20蛻・ｼ峨ｒ繧ｹ繝ｩ繧､繝画悽譁・↓譖ｸ縺九↑縺・/li>
-  <li>譛蠕後↓ <code>window.SLIDES = [slide01, slide02, ...];</code> 縺ｧ驟榊・繧堤匳骭ｲ</li>
+  <li>全体を IIFE（即時実行関数）で包む</li>
+  <li><code>H()</code> ヘルパーを冒頭で定義</li>
+  <li>各スライドは <code>slideNN()</code> 関数（ゼロ埋め2桁）</li>
+  <li>全スライドに <code>data-section</code> / <code>data-title</code> / <code>data-notes</code> を設定</li>
+  <li><code>data-notes</code> 内の <code>'</code> は <code>&amp;#39;</code> でエスケープ</li>
+  <li>時間表記（60分・20分）をスライド本文に書かない</li>
+  <li>最後に <code>window.SLIDES = [slide01, slide02, ...];</code> で配列を登録</li>
 </ol>
 
-<h3>繧ｹ繝ｩ繧､繝峨ち繧､繝怜挨 HTML 繝・Φ繝励Ξ繝ｼ繝・/h3>
+<h3>スライドタイプ別 HTML テンプレート</h3>
 
 <details>
-<summary><span class="acc-num">竊・/span>slide-cover・医ち繧､繝医Ν繧ｹ繝ｩ繧､繝会ｼ・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">→</span>slide-cover（タイトルスライド）<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<div class="prompt-box">&#39;&lt;section class="slide slide-cover" data-section="cover" data-title="繧ｿ繧､繝医Ν" data-notes=""&gt;&#39; +
+<div class="prompt-box">&#39;&lt;section class="slide slide-cover" data-section="cover" data-title="タイトル" data-notes=""&gt;&#39; +
   &#39;&lt;div class="slide-cover-bar"&gt;&#39; +
-    &#39;&lt;div class="slide-cover-tag"&gt;譛蛾剞莨夂､ｾ繧｢繝ｼ繝医た繧ｦ繝ｫ AI蟆主・謾ｯ謠ｴ莠区･ｭ&lt;/div&gt;&#39; +
-    &#39;&lt;h1 class="slide-cover-title"&gt;繧ｻ繝溘リ繝ｼ繧ｿ繧､繝医Ν&lt;/h1&gt;&#39; +
+    &#39;&lt;div class="slide-cover-tag"&gt;有限会社アートソウル AI導入支援事業&lt;/div&gt;&#39; +
+    &#39;&lt;h1 class="slide-cover-title"&gt;セミナータイトル&lt;/h1&gt;&#39; +
   &#39;&lt;/div&gt;&#39; +
   &#39;&lt;div class="slide-cover-body"&gt;&#39; +
-    &#39;&lt;p class="slide-cover-sub"&gt;繧ｵ繝悶ち繧､繝医Ν&lt;/p&gt;&#39; +
-    &#39;&lt;div class="slide-cover-meta"&gt;YYYY.MM ・・髢句ぎ諠・ｱ&lt;/div&gt;&#39; +
+    &#39;&lt;p class="slide-cover-sub"&gt;サブタイトル&lt;/p&gt;&#39; +
+    &#39;&lt;div class="slide-cover-meta"&gt;YYYY.MM ｜ 開催情報&lt;/div&gt;&#39; +
   &#39;&lt;/div&gt;&#39; +
 &#39;&lt;/section&gt;&#39;</div>
 </div>
 </details>
 
 <details>
-<summary><span class="acc-num">竊・/span>slide-section・医そ繧ｯ繧ｷ繝ｧ繝ｳ蛹ｺ蛻・ｊ・・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">→</span>slide-section（セクション区切り）<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<div class="prompt-box">&#39;&lt;section class="slide slide-section" data-section="part1" data-title="繝代・繝亥錐" data-notes=""&gt;&#39; +
+<div class="prompt-box">&#39;&lt;section class="slide slide-section" data-section="part1" data-title="パート名" data-notes=""&gt;&#39; +
   &#39;&lt;div class="slide-content"&gt;&#39; +
     &#39;&lt;div class="s-section-accent-bar"&gt;&lt;/div&gt;&#39; +
     &#39;&lt;div class="s-section-chapter"&gt;PART 01&lt;/div&gt;&#39; +
-    &#39;&lt;h1 class="s-section-title"&gt;繝代・繝医ち繧､繝医Ν&lt;/h1&gt;&#39; +
-    &#39;&lt;p class="s-section-lead"&gt;繧ｵ繝悶ち繧､繝医Ν&lt;/p&gt;&#39; +
+    &#39;&lt;h1 class="s-section-title"&gt;パートタイトル&lt;/h1&gt;&#39; +
+    &#39;&lt;p class="s-section-lead"&gt;サブタイトル&lt;/p&gt;&#39; +
   &#39;&lt;/div&gt;&#39; +
 &#39;&lt;/section&gt;&#39;</div>
 </div>
 </details>
 
 <details>
-<summary><span class="acc-num">竊・/span>讓呎ｺ悶せ繝ｩ繧､繝会ｼ・() + 邂・擅譖ｸ縺搾ｼ・span class="acc-arrow">笆ｼ</span></summary>
+<summary><span class="acc-num">→</span>標準スライド（H() + 箇条書き）<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
-<div class="prompt-box">&#39;&lt;section class="slide" data-section="part1" data-title="繧ｿ繧､繝医Ν" data-notes="繧ｹ繧ｯ繝ｪ繝励ヨ"&gt;&#39; +
-  H(&#39;繧ｹ繝ｩ繧､繝峨ち繧､繝医Ν&#39;) +
+<div class="prompt-box">&#39;&lt;section class="slide" data-section="part1" data-title="タイトル" data-notes="スクリプト"&gt;&#39; +
+  H(&#39;スライドタイトル&#39;) +
   &#39;&lt;div class="slide-content"&gt;&#39; +
     &#39;&lt;ul class="s-list"&gt;&#39; +
-      &#39;&lt;li class="s-list-callout"&gt;驥崎ｦ√・繧､繝ｳ繝・lt;/li&gt;&#39; +
-      &#39;&lt;li class="s-list-arrow"&gt;騾壼ｸｸ鬆・岼&lt;/li&gt;&#39; +
-      &#39;&lt;li class="s-list-head"&gt;隕句・縺鈴・岼&lt;/li&gt;&#39; +
-      &#39;&lt;li class="s-list-sub"&gt;竊・陬懆ｶｳ隱ｬ譏・lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-callout"&gt;重要ポイント&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-arrow"&gt;通常項目&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-head"&gt;見出し項目&lt;/li&gt;&#39; +
+      &#39;&lt;li class="s-list-sub"&gt;→ 補足説明&lt;/li&gt;&#39; +
     &#39;&lt;/ul&gt;&#39; +
   &#39;&lt;/div&gt;&#39; +
 &#39;&lt;/section&gt;&#39;</div>
@@ -792,11 +820,11 @@ data-notes="莉頑律縺ｯAI&#39;s豢ｻ逕ｨ豕輔ｒ蟄ｦ繧薙〒縺・◆
 <hr>
 
 <div class="ok">
-<span class="label">縺薙・繧ｬ繧､繝峨↓縺､縺・※</span>
-譛邨よ峩譁ｰ・・026蟷ｴ5譛・2譌･ / 繝舌・繧ｸ繝ｧ繝ｳ・嘛1.0<br>
-蝣ｴ謇・・span class="file-path">07_繝槭ル繝･繧｢繝ｫ\繧ｹ繝ｩ繧､繝峨ン繝ｫ繝繝ｼ螳悟・繧ｬ繧､繝・html</span><br>
-髢｢騾｣・・span class="file-path">07_繝槭ル繝･繧｢繝ｫ\繧ｨ繝ｼ繧ｸ繧ｧ繝ｳ繝域桃菴懊・繝九Η繧｢繝ｫ.html</span> PART 6<br>
-繝・Φ繝励Ξ繝ｼ繝井ｻ墓ｧ假ｼ・span class="file-path">08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\slide-builder\templates\kawai-dark-v1\template-spec.md</span>
+<span class="label">このガイドについて</span>
+最終更新：2026年5月12日 / バージョン：v1.0<br>
+場所：<span class="file-path">07_マニュアル\スライドビルダー完全ガイド.html</span><br>
+関連：<span class="file-path">07_マニュアル\エージェント操作マニュアル.html</span> PART 6<br>
+テンプレート仕様：<span class="file-path">08_アプリ開発事業部\slide-builder\templates\kawai-dark-v1\template-spec.md</span>
 </div>
 
 </div>
@@ -805,16 +833,16 @@ data-notes="莉頑律縺ｯAI&#39;s豢ｻ逕ｨ豕輔ｒ蟄ｦ繧薙〒縺・◆
   function addCopyBtn(el) {
     var btn = document.createElement('button');
     btn.className = 'copy-btn';
-    btn.textContent = '繧ｳ繝斐・';
+    btn.textContent = 'コピー';
     el.appendChild(btn);
     btn.addEventListener('click', function() {
       var clone = el.cloneNode(true);
       clone.querySelectorAll('.copy-btn').forEach(function(b) { b.remove(); });
       var text = clone.innerText.trim();
       var ok = function() {
-        btn.textContent = '繧ｳ繝斐・貂医∩ 笨・;
+        btn.textContent = 'コピー済み ✓';
         btn.classList.add('copied');
-        setTimeout(function() { btn.textContent = '繧ｳ繝斐・'; btn.classList.remove('copied'); }, 2000);
+        setTimeout(function() { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(ok).catch(function() { fallback(text); ok(); });

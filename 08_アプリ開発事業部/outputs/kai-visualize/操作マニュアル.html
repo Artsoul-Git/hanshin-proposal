@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kai Visualize 謫堺ｽ懊・繝九Η繧｢繝ｫ</title>
+<title>Kai Visualize 操作マニュアル</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif;line-height:1.8;color:#2D3748;background:#FAFBFC}
@@ -58,249 +58,257 @@ hr{border:none;border-top:2px dashed #E2E8F0;margin:40px 0}
 <div class="wrap">
 
 <div class="cover">
-  <h1>醗 Kai Visualize</h1>
-  <div class="sub">繝槭Φ繝繝ｩ繝√Ε繝ｼ繝・ﾃ・AI閾ｪ蜍慕函謌舌ン繧ｸ繝･繧｢繝ｩ繧､繧ｶ繝ｼ</div>
+  <h1>🔮 Kai Visualize</h1>
+  <div class="sub">マンダラチャート × AI自動生成ビジュアライザー</div>
   <div class="meta">
-    蟇ｾ雎｡・壻ｸ頑搗譯ょ承・育､ｾ蜀・茜逕ｨ・峨縲繝昴・繝茨ｼ嗟ocalhost:3458<br>
-    菴ｿ逕ｨAPI・哦roq API・・lama-3.3-70b-versatile・峨縲譛邨よ峩譁ｰ・・026-05-15 v2.0
+    対象：上村桂右（社内利用）　　ポート：localhost:3458<br>
+    使用API：Groq API（llama-3.3-70b-versatile）　　最終更新：2026-05-15 v2.0
   </div>
 </div>
 
 <div class="toc">
-  <h3 style="border:none;padding-left:0;margin-top:0">逶ｮ谺｡</h3>
+  <h3 style="border:none;padding-left:0;margin-top:0">目次</h3>
   <ul>
-    <li><a href="#sec1">1. 繧｢繝励Μ讎りｦ・/a></li>
-    <li><a href="#sec2">2. 蛻晏屓繧ｻ繝・ヨ繧｢繝・・・・roq API繧ｭ繝ｼ・・/a></li>
-    <li><a href="#sec3">3. 襍ｷ蜍墓婿豕・/a></li>
-    <li><a href="#sec4">4. 謫堺ｽ懊ヵ繝ｭ繝ｼ</a></li>
-    <li><a href="#sec5">5. 逕ｻ髱｢縺ｮ隕区婿</a></li>
-    <li><a href="#sec6">6. 繧ｻ繝・す繝ｧ繝ｳ縺ｮ邂｡逅・ｼ亥ｱ･豁ｴ繝ｻ蜑企勁繝ｻ繝ｪ繝阪・繝・・/a></li>
-    <li><a href="#sec7">7. API繧ｭ繝ｼ縺ｮ譖ｴ譁ｰ</a></li>
-    <li><a href="#sec8">8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</a></li>
-    <li><a href="#sec9">9. 繝輔ぃ繧､繝ｫ讒区・</a></li>
+    <li><a href="#sec1">1. アプリ概要</a></li>
+    <li><a href="#sec2">2. 初回セットアップ（Groq APIキー）</a></li>
+    <li><a href="#sec3">3. 起動方法</a></li>
+    <li><a href="#sec4">4. 操作フロー</a></li>
+    <li><a href="#sec5">5. 画面の見方</a></li>
+    <li><a href="#sec6">6. セッションの管理（履歴・削除・リネーム）</a></li>
+    <li><a href="#sec7">7. APIキーの更新</a></li>
+    <li><a href="#sec8">8. トラブルシューティング</a></li>
+    <li><a href="#sec9">9. ファイル構成</a></li>
   </ul>
 </div>
 
-<!-- ===== 1. 讎りｦ・===== -->
-<h2 id="sec1">1. 繧｢繝励Μ讎りｦ・/h2>
-<p>繝・・繝槭ｒ蜈･蜉帙☆繧九□縺代〒縲、I縺後・繝ｳ繝繝ｩ繝√Ε繝ｼ繝医°繧蛾・↓豺ｱ謗倥ｊ繝薙ず繝･繧｢繝ｫ繧定・蜍慕函謌舌＠縺ｾ縺吶ゅユ繝ｼ繝槭・隍・焚菴懈・繝ｻ菫晏ｭ倥〒縺阪∝ｱ･豁ｴ縺九ｉ縺・▽縺ｧ繧らｶ壹″繧貞・髢九〒縺阪∪縺吶・/p>
+<!-- ===== 1. 概要 ===== -->
+<h2 id="sec1">1. アプリ概要</h2>
+<p>テーマを入力するだけで、AIがマンダラチャートから順に深掘りビジュアルを自動生成します。テーマは複数作成・保存でき、履歴からいつでも続きを再開できます。</p>
 <div class="flow-row">
-  <div class="flow-box">繝・・繝槫・蜉・br><small>螂ｽ縺阪↑繝・・繝槭ｒ蜈･蜉・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box">繝槭Φ繝繝ｩ繝√Ε繝ｼ繝・br><small>8繝・・繝榲・繧ｿ繧ｹ繧ｯ</small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box">4雎｡髯舌・繝医Μ繧ｯ繧ｹ<br><small>蜆ｪ蜈亥ｺｦ繝ｻ髮｣譏灘ｺｦ</small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box">繝輔Ο繝ｼ蝗ｳ<br><small>螳溯｡梧焔鬆・/small></div>
-  <div class="flow-arrow">竊・/div>
-  <div class="flow-box">繧ｬ繝ｳ繝医メ繝｣繝ｼ繝・br><small>繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ・・br>繧ｿ繧ｹ繧ｯ隧ｳ邏ｰ</small></div>
+  <div class="flow-box">テーマ入力<br><small>好きなテーマを入力</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">マンダラチャート<br><small>8テーマ×8タスク</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">4象限マトリクス<br><small>優先度・難易度</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">フロー図<br><small>実行手順</small></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-box">ガントチャート<br><small>スケジュール＋<br>タスク詳細</small></div>
 </div>
 <ul>
-  <li><strong>繧ｻ繝・す繝ｧ繝ｳ邂｡逅・/strong>・壹ユ繝ｼ繝槭＃縺ｨ縺ｫ繧ｻ繝・す繝ｧ繝ｳ縺御ｽ懈・縺輔ｌ縲√・繝ｼ繝逕ｻ髱｢縺九ｉ荳隕ｧ繝ｻ蜀埼幕縺ｧ縺阪∪縺・/li>
-  <li><strong>繝槭Φ繝繝ｩ繧・I逕滓・</strong>・壼・蜉帙ユ繝ｼ繝槭↓蜷医ｏ縺帙※8繧ｵ繝悶ユ繝ｼ繝榲・4繧ｿ繧ｹ繧ｯ繧但I縺瑚・蜍墓ｧ狗ｯ峨＠縺ｾ縺・/li>
-  <li>4雎｡髯舌・<strong>縺吶∋縺ｦ縺ｮ繧｢繧､繝・Β</strong>縺九ｉ繝輔Ο繝ｼ蝗ｳ繧堤函謌舌〒縺阪∪縺・/li>
-  <li>繧ｬ繝ｳ繝医メ繝｣繝ｼ繝医↓縺ｯ繧ｿ繧ｹ繧ｯ縺斐→縺ｮ讎りｦ√・豕ｨ諢冗せ縺御ｸ隕ｧ陦ｨ遉ｺ縺輔ｌ縺ｾ縺・/li>
-  <li>逕滓・貂医∩繧ｳ繝ｳ繝・Φ繝・・ <code>state.json</code> 縺ｫ菫晏ｭ倥＆繧後∵ｬ｡蝗櫁ｵｷ蜍墓凾繧らｶｭ謖√＆繧後∪縺・/li>
+  <li><strong>セッション管理</strong>：テーマごとにセッションが作成され、ホーム画面から一覧・再開できます</li>
+  <li><strong>マンダラもAI生成</strong>：入力テーマに合わせて8サブテーマ×64タスクをAIが自動構築します</li>
+  <li>4象限の<strong>すべてのアイテム</strong>からフロー図を生成できます</li>
+  <li>ガントチャートにはタスクごとの概要・注意点が一覧表示されます</li>
+  <li>生成済みコンテンツは <code>state.json</code> に保存され、次回起動時も維持されます</li>
 </ul>
 
-<!-- ===== 2. 繧ｻ繝・ヨ繧｢繝・・ ===== -->
-<h2 id="sec2">2. 蛻晏屓繧ｻ繝・ヨ繧｢繝・・・・roq API繧ｭ繝ｼ・・/h2>
+<!-- ===== 2. セットアップ ===== -->
+<h2 id="sec2">2. 初回セットアップ（Groq APIキー）</h2>
 <div class="warn">
-  <span class="label">笞・・API繧ｭ繝ｼ繧偵メ繝｣繝・ヨ繧・ち繝ｼ繝溘リ繝ｫ縺ｫ逶ｴ謗･雋ｼ繧贋ｻ倥￠縺ｪ縺・/span>
-  繧ｭ繝ｼ縺ｯ蠢・★Windows縺ｮGUI・育腸蠅・､画焚縺ｮ邱ｨ髮・判髱｢・峨°繧臥匳骭ｲ縺励※縺上□縺輔＞縲・</div>
+  <span class="label">⚠️ APIキーをチャットやターミナルに直接貼り付けない</span>
+  キーは必ずWindowsのGUI（環境変数の編集画面）から登録してください。
+</div>
 
-<h3>STEP 1 窶・API繧ｭ繝ｼ繧貞叙蠕励☆繧・/h3>
+<h3>STEP 1 — APIキーを取得する</h3>
 <ol>
-  <li><code>console.groq.com</code> 縺ｫ繧｢繧ｯ繧ｻ繧ｹ・・oogle / GitHub / 繝｡繝ｼ繝ｫ縺ｧ逋ｻ骭ｲ・・/li>
-  <li>蟾ｦ繝｡繝九Η繝ｼ縲・strong>API Keys</strong>縲坂・縲・strong>Create API key</strong>縲・/li>
-  <li>蜷榊燕縺ｯ莉ｻ諢・竊・縲郡ubmit縲・/li>
-  <li><code>gsk_</code> 縺ｧ蟋九∪繧九く繝ｼ繧偵さ繝斐・・・strong>縺薙・逕ｻ髱｢繧帝哩縺倥ｋ縺ｨ莠悟ｺｦ縺ｨ陦ｨ遉ｺ縺輔ｌ縺ｪ縺・/strong>・・/li>
+  <li><code>console.groq.com</code> にアクセス（Google / GitHub / メールで登録）</li>
+  <li>左メニュー「<strong>API Keys</strong>」→「<strong>Create API key</strong>」</li>
+  <li>名前は任意 → 「Submit」</li>
+  <li><code>gsk_</code> で始まるキーをコピー（<strong>この画面を閉じると二度と表示されない</strong>）</li>
 </ol>
 <div class="tip">
-  <span class="label">庁 Groq辟｡譁呎棧</span>
-  1譌･14,400繝ｪ繧ｯ繧ｨ繧ｹ繝医∵ｯ主・6,000繝医・繧ｯ繝ｳ縲ゅ％縺ｮ繧｢繝励Μ縺ｮ騾壼ｸｸ蛻ｩ逕ｨ縺ｧ縺ｯ荳企剞縺ｫ驕斐＠縺ｾ縺帙ｓ縲・</div>
+  <span class="label">💡 Groq無料枠</span>
+  1日14,400リクエスト、毎分6,000トークン。このアプリの通常利用では上限に達しません。
+</div>
 
-<h3>STEP 2 窶・Windows縺ｮ迺ｰ蠅・､画焚縺ｫ逋ｻ骭ｲ縺吶ｋ</h3>
+<h3>STEP 2 — Windowsの環境変数に登録する</h3>
 <ol>
-  <li>Windows繧ｭ繝ｼ 竊・縲檎腸蠅・､画焚縲阪〒讀懃ｴ｢ 竊・縲・strong>繧ｷ繧ｹ繝・Β迺ｰ蠅・､画焚縺ｮ邱ｨ髮・/strong>縲阪ｒ髢九￥</li>
-  <li>縲・strong>迺ｰ蠅・､画焚(N)...</strong>縲阪・繧ｿ繝ｳ繧偵け繝ｪ繝・け</li>
-  <li>荳頑ｮｵ縲後Θ繝ｼ繧ｶ繝ｼ迺ｰ蠅・､画焚縲阪・縲・strong>譁ｰ隕・N)</strong>縲阪ｒ繧ｯ繝ｪ繝・け</li>
-  <li>螟画焚蜷搾ｼ・code>GROQ_API_KEY</code>縲蛟､・壹さ繝斐・縺励◆繧ｭ繝ｼ繧定ｲｼ繧贋ｻ倥￠ 竊・OK 竊・OK 竊・OK</li>
+  <li>Windowsキー → 「環境変数」で検索 → 「<strong>システム環境変数の編集</strong>」を開く</li>
+  <li>「<strong>環境変数(N)...</strong>」ボタンをクリック</li>
+  <li>上段「ユーザー環境変数」の「<strong>新規(N)</strong>」をクリック</li>
+  <li>変数名：<code>GROQ_API_KEY</code>　値：コピーしたキーを貼り付け → OK → OK → OK</li>
 </ol>
 <div class="ok">
-  <span class="label">笨・逋ｻ骭ｲ螳御ｺ・・遒ｺ隱・/span>
-  PowerShell繧帝幕縺・※ <code>[System.Environment]::GetEnvironmentVariable('GROQ_API_KEY','User')</code> 繧貞ｮ溯｡後＠縲・code>gsk_</code> 縺九ｉ蟋九∪繧区枚蟄怜・縺瑚ｿ斐ｌ縺ｰ豁｣蟶ｸ縺ｧ縺吶・</div>
+  <span class="label">✅ 登録完了の確認</span>
+  PowerShellを開いて <code>[System.Environment]::GetEnvironmentVariable('GROQ_API_KEY','User')</code> を実行し、<code>gsk_</code> から始まる文字列が返れば正常です。
+</div>
 
-<!-- ===== 3. 襍ｷ蜍墓婿豕・===== -->
-<h2 id="sec3">3. 襍ｷ蜍墓婿豕・/h2>
+<!-- ===== 3. 起動方法 ===== -->
+<h2 id="sec3">3. 起動方法</h2>
 
-<h3>譁ｹ豕柊・壹ム繝悶Ν繧ｯ繝ｪ繝・け縺ｧ襍ｷ蜍包ｼ磯壼ｸｸ蛻ｩ逕ｨ・・/h3>
+<h3>方法A：ダブルクリックで起動（通常利用）</h3>
 <div class="file-card">
-  <div class="icon">笆ｶ・・/div>
+  <div class="icon">▶️</div>
   <div>
-    <div><span class="path">襍ｷ蜍輔＠縺ｦ繝悶Λ繧ｦ繧ｶ繧帝幕縺・vbs</span>・医％縺ｮ繝槭ル繝･繧｢繝ｫ縺ｨ蜷後§繝輔か繝ｫ繝・・/div>
-    <div class="desc">繝繝悶Ν繧ｯ繝ｪ繝・け縺吶ｋ縺縺代・ROQ_API_KEY繧定・蜍戊ｪｭ縺ｿ霎ｼ縺ｿ縺励√し繝ｼ繝舌・繧定ｵｷ蜍補・繝悶Λ繧ｦ繧ｶ繧定・蜍輔が繝ｼ繝励Φ縺励∪縺吶・/div>
+    <div><span class="path">起動してブラウザを開く.vbs</span>（このマニュアルと同じフォルダ）</div>
+    <div class="desc">ダブルクリックするだけ。GROQ_API_KEYを自動読み込みし、サーバーを起動→ブラウザを自動オープンします。</div>
     <div style="margin-top:10px">
-      <a href="襍ｷ蜍輔＠縺ｦ繝悶Λ繧ｦ繧ｶ繧帝幕縺・vbs" class="launch-btn">笆ｶ 襍ｷ蜍輔☆繧具ｼ医け繝ｪ繝・け縺ｾ縺溘・繝繝悶Ν繧ｯ繝ｪ繝・け・・/a>
+      <a href="起動してブラウザを開く.vbs" class="launch-btn">▶ 起動する（クリックまたはダブルクリック）</a>
     </div>
   </div>
 </div>
 <div class="tip">
-  <span class="label">庁 縲桑ai Visualize Server縲阪・PowerShell繧ｦ繧｣繝ｳ繝峨え縺碁幕縺阪∪縺・/span>
-  縺薙・繧ｦ繧｣繝ｳ繝峨え縺ｯ繧ｵ繝ｼ繝舌・繝ｭ繧ｰ繧定｡ｨ遉ｺ縺励※縺・∪縺吶ゅい繝励Μ繧剃ｽｿ縺｣縺ｦ縺・ｋ髢薙・髢峨§縺ｪ縺・〒縺上□縺輔＞縲・br>
-  邨ゆｺ・☆繧九→縺阪・ <code>Ctrl+C</code> 縺ｧ蛛懈ｭ｢縺ｧ縺阪∪縺吶・</div>
+  <span class="label">💡 「Kai Visualize Server」のPowerShellウィンドウが開きます</span>
+  このウィンドウはサーバーログを表示しています。アプリを使っている間は閉じないでください。<br>
+  終了するときは <code>Ctrl+C</code> で停止できます。
+</div>
 
-<h3>譁ｹ豕稗・啀owerShell縺九ｉ謇句虚襍ｷ蜍包ｼ育｢ｺ螳滂ｼ・/h3>
-<p>莉･荳九ｒ1陦後★縺､螳溯｡後＠縺ｦ縺上□縺輔＞・郁､・焚陦後ｒ縺ｾ縺ｨ繧√※雋ｼ繧贋ｻ倥￠繧九→隴ｦ蜻翫′蜃ｺ縺ｾ縺呻ｼ峨・/p>
+<h3>方法B：PowerShellから手動起動（確実）</h3>
+<p>以下を1行ずつ実行してください（複数行をまとめて貼り付けると警告が出ます）。</p>
 <pre><code>$env:GROQ_API_KEY = [System.Environment]::GetEnvironmentVariable('GROQ_API_KEY','User')</code></pre>
-<pre><code>cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI蟆主・謾ｯ謠ｴ莠区･ｭ_cc\08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\outputs\kai-visualize"</code></pre>
+<pre><code>cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize"</code></pre>
 <pre><code>py -3 server.py</code></pre>
-<p>襍ｷ蜍募ｾ後√ヶ繝ｩ繧ｦ繧ｶ縺ｧ <code>http://localhost:3458</code> 繧帝幕縺・※縺上□縺輔＞縲・/p>
+<p>起動後、ブラウザで <code>http://localhost:3458</code> を開いてください。</p>
 
-<!-- ===== 4. 謫堺ｽ懊ヵ繝ｭ繝ｼ ===== -->
-<h2 id="sec4">4. 謫堺ｽ懊ヵ繝ｭ繝ｼ</h2>
+<!-- ===== 4. 操作フロー ===== -->
+<h2 id="sec4">4. 操作フロー</h2>
 
 <div class="step-box">
-  <div class="step-row"><span class="step-num">1</span><div><strong>繝帙・繝逕ｻ髱｢縺ｧ縲鯉ｼ・譁ｰ隕丈ｽ懈・縲阪ｒ繧ｯ繝ｪ繝・け</strong><br>襍ｷ蜍輔☆繧九→繝帙・繝逕ｻ髱｢縺瑚｡ｨ遉ｺ縺輔ｌ縺ｾ縺吶ゅユ繝ｼ繝槭ｒ蜈･蜉幢ｼ井ｾ具ｼ壼憶讌ｭ蜿主・繧｢繝・・縲∵眠隕丈ｺ区･ｭ險育判・峨＠縺ｦ縲後・繝ｳ繝繝ｩ繧堤函謌・竊偵阪ｒ繧ｯ繝ｪ繝・け縲・/div></div>
-  <div class="step-row"><span class="step-num">2</span><div><strong>縲娯惠 繝槭Φ繝繝ｩ繧堤函謌舌☆繧九阪・繧ｿ繝ｳ繧偵け繝ｪ繝・け</strong><br>AI縺悟・蜉帙ユ繝ｼ繝槭°繧・繧ｵ繝悶ユ繝ｼ繝榲・4繧ｿ繧ｹ繧ｯ縺ｮ繝槭Φ繝繝ｩ繧呈ｧ狗ｯ峨＠縺ｾ縺呻ｼ・5縲・5遘抵ｼ峨・/div></div>
-  <div class="step-row"><span class="step-num">3</span><div><strong>繝槭Φ繝繝ｩ逕ｻ髱｢縺ｧ繧ｻ繝ｫ繧偵け繝ｪ繝・け 竊・4雎｡髯舌・繝医Μ繧ｯ繧ｹ逕滓・</strong><br>濶ｲ縺ｮ縺､縺・◆繧ｻ繝ｫ繧偵け繝ｪ繝・け縺吶ｋ縺ｨ4雎｡髯舌・繝医Μ繧ｯ繧ｹ縺檎函謌舌＆繧後∪縺呻ｼ・0縲・0遘抵ｼ峨・/div></div>
-  <div class="step-row"><span class="step-num">4</span><div><strong>4雎｡髯舌・繧｢繧､繝・Β繧偵け繝ｪ繝・け 竊・繝輔Ο繝ｼ蝗ｳ逕滓・</strong><br>縺ｩ縺ｮ繧｢繧､繝・Β縺ｧ繧ゅ娯霧 繝輔Ο繝ｼ蝗ｳ繧堤函謌舌阪°繧峨け繝ｪ繝・け縺励※螳溯｡梧焔鬆・ヵ繝ｭ繝ｼ蝗ｳ繧堤函謌舌〒縺阪∪縺吶・/div></div>
-  <div class="step-row"><span class="step-num">5</span><div><strong>縲後ぎ繝ｳ繝医メ繝｣繝ｼ繝医∈ 竊偵阪〒繧ｬ繝ｳ繝医メ繝｣繝ｼ繝育函謌・/strong><br>繧ｹ繧ｱ繧ｸ繝･繝ｼ繝ｫ陦ｨ・九ち繧ｹ繧ｯ隧ｳ邏ｰ・域ｦりｦ√・豕ｨ諢冗せ・峨′閾ｪ蜍戊｡ｨ遉ｺ縺輔ｌ縺ｾ縺吶・/div></div>
+  <div class="step-row"><span class="step-num">1</span><div><strong>ホーム画面で「＋ 新規作成」をクリック</strong><br>起動するとホーム画面が表示されます。テーマを入力（例：副業収入アップ、新規事業計画）して「マンダラを生成 →」をクリック。</div></div>
+  <div class="step-row"><span class="step-num">2</span><div><strong>「✨ マンダラを生成する」ボタンをクリック</strong><br>AIが入力テーマから8サブテーマ×64タスクのマンダラを構築します（15〜25秒）。</div></div>
+  <div class="step-row"><span class="step-num">3</span><div><strong>マンダラ画面でセルをクリック → 4象限マトリクス生成</strong><br>色のついたセルをクリックすると4象限マトリクスが生成されます（10〜20秒）。</div></div>
+  <div class="step-row"><span class="step-num">4</span><div><strong>4象限のアイテムをクリック → フロー図生成</strong><br>どのアイテムでも「▶ フロー図を生成」からクリックして実行手順フロー図を生成できます。</div></div>
+  <div class="step-row"><span class="step-num">5</span><div><strong>「ガントチャートへ →」でガントチャート生成</strong><br>スケジュール表＋タスク詳細（概要・注意点）が自動表示されます。</div></div>
 </div>
 
 <div class="tip">
-  <span class="label">庁 邯壹″縺ｯ縺・▽縺ｧ繧ょ・髢九〒縺阪∪縺・/span>
-  逕滓・貂医∩繧ｳ繝ｳ繝・Φ繝・・繧ｻ繝・す繝ｧ繝ｳ縺ｨ縺励※ <code>state.json</code> 縺ｫ菫晏ｭ倥＆繧後∪縺吶ゅ・繝ｼ繝逕ｻ髱｢縺ｮ螻･豁ｴ縺九ｉ驕ｸ謚槭☆繧後・縲∝燕蝗槭・邯壹″繧偵☆縺舌↓蜀埼幕縺ｧ縺阪∪縺吶・</div>
+  <span class="label">💡 続きはいつでも再開できます</span>
+  生成済みコンテンツはセッションとして <code>state.json</code> に保存されます。ホーム画面の履歴から選択すれば、前回の続きをすぐに再開できます。
+</div>
 <div class="tip">
-  <span class="label">庁 隍・焚繝・・繝槭ｒ荳ｦ陦後＠縺ｦ邂｡逅・〒縺阪∪縺・/span>
-  縲鯉ｼ・譁ｰ隕丈ｽ懈・縲阪〒蛻･繝・・繝槭・繧ｻ繝・す繝ｧ繝ｳ繧剃ｽ懈・縺ｧ縺阪∪縺吶ょ推繧ｻ繝・す繝ｧ繝ｳ縺ｯ迢ｬ遶九＠縺ｦ縺翫ｊ縲√・繝ｼ繝逕ｻ髱｢縺九ｉ縺・▽縺ｧ繧ょ・繧頑崛縺医ｉ繧後∪縺吶・</div>
+  <span class="label">💡 複数テーマを並行して管理できます</span>
+  「＋ 新規作成」で別テーマのセッションを作成できます。各セッションは独立しており、ホーム画面からいつでも切り替えられます。
+</div>
 
-<!-- ===== 5. 逕ｻ髱｢縺ｮ隕区婿 ===== -->
-<h2 id="sec5">5. 逕ｻ髱｢縺ｮ隕区婿</h2>
+<!-- ===== 5. 画面の見方 ===== -->
+<h2 id="sec5">5. 画面の見方</h2>
 
-<h3>繝帙・繝逕ｻ髱｢</h3>
+<h3>ホーム画面</h3>
 <ul>
-  <li><strong>・・譁ｰ隕丈ｽ懈・</strong>・壹ユ繝ｼ繝槫・蜉帙Δ繝ｼ繝繝ｫ繧帝幕縺・※譁ｰ縺励＞繧ｻ繝・す繝ｧ繝ｳ繧剃ｽ懈・</li>
-  <li><strong>搭 蜈ｨ螻･豁ｴ</strong>・壼ｱ･豁ｴ荳隕ｧ逕ｻ髱｢縺ｸ遘ｻ蜍包ｼ亥・繧ｻ繝・す繝ｧ繝ｳ繧堤ｮ｡逅・ｼ・/li>
-  <li><strong>痘 繝槭ル繝･繧｢繝ｫ</strong>・壹％縺ｮ繝輔ぃ繧､繝ｫ繧帝幕縺・/li>
-  <li><strong>譛霑代・繧ｻ繝・す繝ｧ繝ｳ</strong>・壽怙譁ｰ6莉ｶ縺ｮ繧ｫ繝ｼ繝峨′陦ｨ遉ｺ縲ゅけ繝ｪ繝・け縺ｧ邯壹″繧貞・髢・/li>
+  <li><strong>＋ 新規作成</strong>：テーマ入力モーダルを開いて新しいセッションを作成</li>
+  <li><strong>📋 全履歴</strong>：履歴一覧画面へ移動（全セッションを管理）</li>
+  <li><strong>📗 マニュアル</strong>：このファイルを開く</li>
+  <li><strong>最近のセッション</strong>：最新6件のカードが表示。クリックで続きを再開</li>
 </ul>
 
-<h3>螻･豁ｴ荳隕ｧ逕ｻ髱｢</h3>
+<h3>履歴一覧画面</h3>
 <ul>
-  <li>蜈ｨ繧ｻ繝・す繝ｧ繝ｳ繧呈峩譁ｰ譌･譎ゅ・譁ｰ縺励＞鬆・〒陦ｨ遉ｺ</li>
-  <li><strong>繧ｿ繧､繝医Ν繧偵け繝ｪ繝・け / 笨擾ｸ・繧｢繧､繧ｳ繝ｳ</strong>・壹う繝ｳ繝ｩ繧､繝ｳ縺ｧ繝ｪ繝阪・繝・郁｡ｨ遉ｺ蜷榊､画峩・・/li>
-  <li><strong>繝｡繝｢谺・ｒ繧ｯ繝ｪ繝・け</strong>・壹そ繝・す繝ｧ繝ｳ縺ｸ縺ｮ繝｡繝｢繝ｻ蛯吝ｿ倬鹸繧堤ｷｨ髮・/li>
-  <li><strong>髢九￥</strong>・壹◎縺ｮ繧ｻ繝・す繝ｧ繝ｳ縺ｮ繝槭Φ繝繝ｩ逕ｻ髱｢繧定｡ｨ遉ｺ</li>
-  <li><strong>卵 蜑企勁</strong>・壹そ繝・す繝ｧ繝ｳ縺ｨ逕滓・貂医∩繝・・繧ｿ繧偵☆縺ｹ縺ｦ蜑企勁</li>
+  <li>全セッションを更新日時の新しい順で表示</li>
+  <li><strong>タイトルをクリック / ✏️ アイコン</strong>：インラインでリネーム（表示名変更）</li>
+  <li><strong>メモ欄をクリック</strong>：セッションへのメモ・備忘録を編集</li>
+  <li><strong>開く</strong>：そのセッションのマンダラ画面を表示</li>
+  <li><strong>🗑 削除</strong>：セッションと生成済みデータをすべて削除</li>
 </ul>
 
-<h3>騾ｲ謐励ヰ繝・ず</h3>
-<p>蜷・そ繝・す繝ｧ繝ｳ繧ｫ繝ｼ繝峨↓縺ｯ <span class="badge-green">笨・繝槭Φ繝繝ｩ</span> <span class="badge-green">笨・4雎｡髯・/span> <span class="badge-purple">繝輔Ο繝ｼ</span> 縺ｮ繧医≧縺ｫ騾ｲ謐励′陦ｨ遉ｺ縺輔ｌ縺ｾ縺吶・/p>
+<h3>進捗バッジ</h3>
+<p>各セッションカードには <span class="badge-green">✓ マンダラ</span> <span class="badge-green">✓ 4象限</span> <span class="badge-purple">フロー</span> のように進捗が表示されます。</p>
 
-<h3>繧ｵ繝ｼ繝舌・謗･邯壹ヰ繝・ず・亥承荳奇ｼ・/h3>
+<h3>サーバー接続バッジ（右上）</h3>
 <table class="status-table">
-  <tr><th>陦ｨ遉ｺ</th><th>迥ｶ諷・/th></tr>
-  <tr><td>笳・謗･邯壻ｸｭ (AI閾ｪ蜍・</td><td>豁｣蟶ｸ縲・ROQ_API_KEY縺瑚ｪｭ縺ｿ霎ｼ縺ｾ繧後※縺翫ｊ縲√け繝ｪ繝・け縺ｧ閾ｪ蜍慕函謌舌＆繧後∪縺・/td></tr>
-  <tr><td>笳・謗･邯壻ｸｭ</td><td>繧ｵ繝ｼ繝舌・縺ｯ蜍穂ｽ應ｸｭ縺ｧ縺吶′API繧ｭ繝ｼ縺瑚ｪｭ縺ｿ霎ｼ縺ｾ繧後※縺・∪縺帙ｓ</td></tr>
-  <tr><td>蜀肴磁邯壻ｸｭ...</td><td>SSE謗･邯壹′荳譎ょ・譁ｭ縺輔ｌ縺ｾ縺励◆縲り・蜍慕噪縺ｫ蠕ｩ蟶ｰ縺励∪縺・/td></tr>
-  <tr><td>笨・繧ｨ繝ｩ繝ｼ</td><td>繧ｵ繝ｼ繝舌・縺瑚ｵｷ蜍輔＠縺ｦ縺・∪縺帙ｓ</td></tr>
+  <tr><th>表示</th><th>状態</th></tr>
+  <tr><td>● 接続中 (AI自動)</td><td>正常。GROQ_API_KEYが読み込まれており、クリックで自動生成されます</td></tr>
+  <tr><td>● 接続中</td><td>サーバーは動作中ですがAPIキーが読み込まれていません</td></tr>
+  <tr><td>再接続中...</td><td>SSE接続が一時切断されました。自動的に復帰します</td></tr>
+  <tr><td>✗ エラー</td><td>サーバーが起動していません</td></tr>
 </table>
 
-<h3>繝代Φ縺上★繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳ</h3>
-<p>逕ｻ髱｢荳企Κ縺ｫ <code>匠 窶ｺ 繧ｻ繝・す繝ｧ繝ｳ蜷・窶ｺ 繧ｵ繝悶ユ繝ｼ繝槫錐 窶ｺ 繝輔Ο繝ｼ蝗ｳ</code> 縺ｮ繧医≧縺ｫ陦ｨ遉ｺ縺輔ｌ縺ｾ縺吶ゅけ繝ｪ繝・け縺ｧ蜑阪・逕ｻ髱｢縺ｫ謌ｻ繧後∪縺吶・/p>
+<h3>パンくずナビゲーション</h3>
+<p>画面上部に <code>🏠 › セッション名 › サブテーマ名 › フロー図</code> のように表示されます。クリックで前の画面に戻れます。</p>
 
-<!-- ===== 6. 繧ｻ繝・す繝ｧ繝ｳ邂｡逅・===== -->
-<h2 id="sec6">6. 繧ｻ繝・す繝ｧ繝ｳ縺ｮ邂｡逅・ｼ亥ｱ･豁ｴ繝ｻ蜑企勁繝ｻ繝ｪ繝阪・繝・・/h2>
+<!-- ===== 6. セッション管理 ===== -->
+<h2 id="sec6">6. セッションの管理（履歴・削除・リネーム）</h2>
 
-<h3>繧ｻ繝・す繝ｧ繝ｳ縺ｮ繝ｪ繝阪・繝</h3>
+<h3>セッションのリネーム</h3>
 <ol>
-  <li>繝帙・繝逕ｻ髱｢縺ｮ縲交沒・蜈ｨ螻･豁ｴ縲阪・繧ｿ繝ｳ繧偵け繝ｪ繝・け</li>
-  <li>蟇ｾ雎｡繧ｻ繝・す繝ｧ繝ｳ縺ｮ繧ｿ繧､繝医Ν譁・ｭ励∪縺溘・ 笨擾ｸ・繧｢繧､繧ｳ繝ｳ繧偵け繝ｪ繝・け</li>
-  <li>繝・く繧ｹ繝医・繝・け繧ｹ縺ｫ譁ｰ縺励＞蜷榊燕繧貞・蜉・竊・縲御ｿ晏ｭ倥・/li>
+  <li>ホーム画面の「📋 全履歴」ボタンをクリック</li>
+  <li>対象セッションのタイトル文字または ✏️ アイコンをクリック</li>
+  <li>テキストボックスに新しい名前を入力 → 「保存」</li>
 </ol>
 <div class="tip">
-  <span class="label">庁 繝・・繝槭→繧ｿ繧､繝医Ν縺ｯ蛻･縲・/span>
-  繝・・繝槭・AI逕滓・縺ｮ繝励Ο繝ｳ繝励ヨ・亥､画峩荳榊庄・峨ゅち繧､繝医Ν縺ｯ陦ｨ遉ｺ蜷搾ｼ郁・逕ｱ縺ｫ螟画峩蜿ｯ・峨・</div>
+  <span class="label">💡 テーマとタイトルは別々</span>
+  テーマはAI生成のプロンプト（変更不可）。タイトルは表示名（自由に変更可）。
+</div>
 
-<h3>繝｡繝｢縺ｮ霑ｽ蜉繝ｻ邱ｨ髮・/h3>
+<h3>メモの追加・編集</h3>
 <ol>
-  <li>螻･豁ｴ荳隕ｧ縺ｧ繝｡繝｢谺・ｼ医後Γ繝｢繧定ｿｽ蜉...縲阪→陦ｨ遉ｺ縺輔ｌ縺ｦ縺・ｋ驛ｨ蛻・ｼ峨ｒ繧ｯ繝ｪ繝・け</li>
-  <li>繝・く繧ｹ繝医ｒ蜈･蜉・竊・縲御ｿ晏ｭ倥・/li>
+  <li>履歴一覧でメモ欄（「メモを追加...」と表示されている部分）をクリック</li>
+  <li>テキストを入力 → 「保存」</li>
 </ol>
 
-<h3>繧ｻ繝・す繝ｧ繝ｳ縺ｮ蜑企勁</h3>
+<h3>セッションの削除</h3>
 <ol>
-  <li>螻･豁ｴ荳隕ｧ縺ｧ蟇ｾ雎｡繧ｻ繝・す繝ｧ繝ｳ縺ｮ縲交泓・蜑企勁縲阪・繧ｿ繝ｳ繧偵け繝ｪ繝・け</li>
-  <li>遒ｺ隱阪ム繧､繧｢繝ｭ繧ｰ縺ｧ縲薫K縲・/li>
+  <li>履歴一覧で対象セッションの「🗑 削除」ボタンをクリック</li>
+  <li>確認ダイアログで「OK」</li>
 </ol>
 <div class="warn">
-  <span class="label">笞・・蜑企勁縺ｯ蜿悶ｊ豸医○縺ｾ縺帙ｓ</span>
-  縺昴・繧ｻ繝・す繝ｧ繝ｳ縺ｧ逕滓・縺励◆繝槭Φ繝繝ｩ繝ｻ4雎｡髯舌・繝輔Ο繝ｼ蝗ｳ繝ｻ繧ｬ繝ｳ繝医メ繝｣繝ｼ繝医・繝・・繧ｿ縺後☆縺ｹ縺ｦ蜑企勁縺輔ｌ縺ｾ縺吶・</div>
+  <span class="label">⚠️ 削除は取り消せません</span>
+  そのセッションで生成したマンダラ・4象限・フロー図・ガントチャートのデータがすべて削除されます。
+</div>
 
-<h3>蜈ｨ繝・・繧ｿ繧偵Μ繧ｻ繝・ヨ縺吶ｋ蝣ｴ蜷・/h3>
-<p>縺吶∋縺ｦ縺ｮ繧ｻ繝・す繝ｧ繝ｳ繧剃ｸ諡ｬ蜑企勁縺吶ｋ縺ｫ縺ｯ縲√し繝ｼ繝舌・繧貞●豁｢縺励※縺九ｉ <code>state.json</code> 繧貞炎髯､縺励※縺上□縺輔＞縲・/p>
-<pre><code>Remove-Item "C:\Users\kei\Dropbox\00_Antigravity\AS_AI蟆主・謾ｯ謠ｴ莠区･ｭ_cc\08_繧｢繝励Μ髢狗匱莠区･ｭ驛ｨ\outputs\kai-visualize\state.json"</code></pre>
+<h3>全データをリセットする場合</h3>
+<p>すべてのセッションを一括削除するには、サーバーを停止してから <code>state.json</code> を削除してください。</p>
+<pre><code>Remove-Item "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\kai-visualize\state.json"</code></pre>
 
-<!-- ===== 7. API繧ｭ繝ｼ譖ｴ譁ｰ ===== -->
-<h2 id="sec7">7. API繧ｭ繝ｼ縺ｮ譖ｴ譁ｰ</h2>
+<!-- ===== 7. APIキー更新 ===== -->
+<h2 id="sec7">7. APIキーの更新</h2>
 <ol>
-  <li><code>console.groq.com</code> 竊・API Keys 竊・譁ｰ縺励＞繧ｭ繝ｼ繧堤匱陦・/li>
-  <li>Windows繧ｭ繝ｼ 竊・縲後す繧ｹ繝・Β迺ｰ蠅・､画焚縺ｮ邱ｨ髮・坂・縲檎腸蠅・､画焚縲坂・ 繝ｦ繝ｼ繧ｶ繝ｼ迺ｰ蠅・､画焚縺ｮ <code>GROQ_API_KEY</code> 繧帝∈謚・竊・縲檎ｷｨ髮・坂・ 蛟､繧呈峩譁ｰ 竊・OK</li>
-  <li>譁ｹ豕稗・・owerShell・峨〒繧ｵ繝ｼ繝舌・繧貞・襍ｷ蜍・/li>
+  <li><code>console.groq.com</code> → API Keys → 新しいキーを発行</li>
+  <li>Windowsキー → 「システム環境変数の編集」→「環境変数」→ ユーザー環境変数の <code>GROQ_API_KEY</code> を選択 → 「編集」→ 値を更新 → OK</li>
+  <li>方法B（PowerShell）でサーバーを再起動</li>
 </ol>
 
-<!-- ===== 8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ ===== -->
-<h2 id="sec8">8. 繝医Λ繝悶Ν繧ｷ繝･繝ｼ繝・ぅ繝ｳ繧ｰ</h2>
+<!-- ===== 8. トラブルシューティング ===== -->
+<h2 id="sec8">8. トラブルシューティング</h2>
 
 <table>
-  <tr><th>繧ｨ繝ｩ繝ｼ</th><th>蜴溷屏</th><th>蟇ｾ蜃ｦ</th></tr>
+  <tr><th>エラー</th><th>原因</th><th>対処</th></tr>
   <tr>
-    <td>縲梧焔蜍慕函謌舌Δ繝ｼ繝会ｼ・PI繧ｭ繝ｼ縺ｪ縺暦ｼ峨阪→襍ｷ蜍墓凾縺ｫ陦ｨ遉ｺ</td>
-    <td>GROQ_API_KEY縺檎腸蠅・､画焚縺九ｉ隱ｭ縺ｿ霎ｼ縺ｾ繧後※縺・↑縺・/td>
-    <td>譁ｹ豕稗縺ｧ襍ｷ蜍包ｼ・code>$env:GROQ_API_KEY = ...</code>繧呈怙蛻昴↓螳溯｡鯉ｼ峨ゅ∪縺溘・VBS縺ｧ襍ｷ蜍・/td>
+    <td>「手動生成モード（APIキーなし）」と起動時に表示</td>
+    <td>GROQ_API_KEYが環境変数から読み込まれていない</td>
+    <td>方法Bで起動（<code>$env:GROQ_API_KEY = ...</code>を最初に実行）。またはVBSで起動</td>
   </tr>
   <tr>
-    <td>逕滓・繧ｨ繝ｩ繝ｼ: HTTP Error 429</td>
-    <td>Groq API縺ｮ繝ｬ繝ｼ繝亥宛髯撰ｼ亥・縺ゅ◆繧翫Μ繧ｯ繧ｨ繧ｹ繝郁ｶ・℃・・/td>
-    <td>1縲・蛻・ｾ・▲縺ｦ縺九ｉ1繝槭せ縺縺代け繝ｪ繝・け縲る｣邯壹け繝ｪ繝・け縺励↑縺・/td>
+    <td>生成エラー: HTTP Error 429</td>
+    <td>Groq APIのレート制限（分あたりリクエスト超過）</td>
+    <td>1〜2分待ってから1マスだけクリック。連続クリックしない</td>
   </tr>
   <tr>
-    <td>逕滓・繧ｨ繝ｩ繝ｼ: HTTP Error 403</td>
-    <td>API繧ｭ繝ｼ縺檎┌蜉ｹ縺ｾ縺溘・Cloudflare繝悶Ο繝・け</td>
-    <td>console.groq縺ｧ繧ｭ繝ｼ縺ｮ譛牙柑諤ｧ繧堤｢ｺ隱阪よ眠縺励＞繧ｭ繝ｼ繧貞叙蠕励＠縺ｦ迺ｰ蠅・､画焚繧呈峩譁ｰ</td>
+    <td>生成エラー: HTTP Error 403</td>
+    <td>APIキーが無効またはCloudflareブロック</td>
+    <td>console.groqでキーの有効性を確認。新しいキーを取得して環境変数を更新</td>
   </tr>
   <tr>
     <td>Syntax error in text (Mermaid)</td>
-    <td>繝輔Ο繝ｼ蝗ｳ縺ｾ縺溘・繧ｬ繝ｳ繝医・讒区枚繧ｨ繝ｩ繝ｼ</td>
-    <td>繧ゅ≧荳蠎ｦ繧ｯ繝ｪ繝・け縺励※蜀咲函謌舌ｒ隧ｦ縺呻ｼ・LM縺ｮ蜃ｺ蜉帙′豈主屓逡ｰ縺ｪ繧翫∪縺呻ｼ・/td>
+    <td>フロー図またはガントの構文エラー</td>
+    <td>もう一度クリックして再生成を試す（LLMの出力が毎回異なります）</td>
   </tr>
   <tr>
-    <td>繧ｹ繝斐リ繝ｼ縺梧ｭ｢縺ｾ繧峨↑縺・/td>
-    <td>API繧ｨ繝ｩ繝ｼ蠕後↓繝悶Λ繧ｦ繧ｶ縺梧峩譁ｰ縺輔ｌ縺ｦ縺・↑縺・/td>
-    <td>繝悶Λ繧ｦ繧ｶ繝壹・繧ｸ繧偵Μ繝ｭ繝ｼ繝会ｼ・5・峨ゅし繝ｼ繝舌・繧貞・襍ｷ蜍輔＠縺ｦstate.json繧貞炎髯､</td>
+    <td>スピナーが止まらない</td>
+    <td>APIエラー後にブラウザが更新されていない</td>
+    <td>ブラウザページをリロード（F5）。サーバーを再起動してstate.jsonを削除</td>
   </tr>
   <tr>
-    <td>繝悶Λ繧ｦ繧ｶ縺碁幕縺九↑縺・ｼ・BS襍ｷ蜍募ｾ鯉ｼ・/td>
-    <td>繧ｵ繝ｼ繝舌・縺ｮ襍ｷ蜍輔↓2.5遘剃ｻ･荳翫°縺九▲縺・/td>
-    <td>謇句虚縺ｧ <code>http://localhost:3458</code> 繧偵ヶ繝ｩ繧ｦ繧ｶ縺ｧ髢九￥</td>
+    <td>ブラウザが開かない（VBS起動後）</td>
+    <td>サーバーの起動に2.5秒以上かかった</td>
+    <td>手動で <code>http://localhost:3458</code> をブラウザで開く</td>
   </tr>
 </table>
 
-<!-- ===== 9. 繝輔ぃ繧､繝ｫ讒区・ ===== -->
-<h2 id="sec9">9. 繝輔ぃ繧､繝ｫ讒区・</h2>
+<!-- ===== 9. ファイル構成 ===== -->
+<h2 id="sec9">9. ファイル構成</h2>
 
 <table>
-  <tr><th>繝輔ぃ繧､繝ｫ</th><th>蠖ｹ蜑ｲ</th></tr>
-  <tr><td><code>襍ｷ蜍輔＠縺ｦ繝悶Λ繧ｦ繧ｶ繧帝幕縺・vbs</code></td><td><strong>騾壼ｸｸ襍ｷ蜍慕畑縲ゅム繝悶Ν繧ｯ繝ｪ繝・け縺ｧ襍ｷ蜍・/strong>縲・ROQ_API_KEY繧定・蜍戊ｪｭ縺ｿ霎ｼ縺ｿ</td></tr>
-  <tr><td><code>server.py</code></td><td>繝ｭ繝ｼ繧ｫ繝ｫHTTP繧ｵ繝ｼ繝舌・・医・繝ｼ繝・458・会ｼ季roq API蜻ｼ縺ｳ蜃ｺ縺暦ｼ九そ繝・す繝ｧ繝ｳ邂｡逅・PI</td></tr>
-  <tr><td><code>index.html</code></td><td>繝悶Λ繧ｦ繧ｶUI・医・繝ｼ繝繝ｻ螻･豁ｴ繝ｻ繝槭Φ繝繝ｩ繝ｻ4雎｡髯舌・繝輔Ο繝ｼ繝ｻ繧ｬ繝ｳ繝茨ｼ・/td></tr>
-  <tr><td><code>state.json</code></td><td>繧ｻ繝・す繝ｧ繝ｳ繝ｻ逕滓・繧ｳ繝ｳ繝・Φ繝・・繧ｭ繝･繝ｼ縺ｮ菫晏ｭ倥ヵ繧｡繧､繝ｫ・郁・蜍慕函謌撰ｼ・/td></tr>
-  <tr><td><code>謫堺ｽ懊・繝九Η繧｢繝ｫ.html</code></td><td>縺薙・繝輔ぃ繧､繝ｫ</td></tr>
+  <tr><th>ファイル</th><th>役割</th></tr>
+  <tr><td><code>起動してブラウザを開く.vbs</code></td><td><strong>通常起動用。ダブルクリックで起動</strong>。GROQ_API_KEYを自動読み込み</td></tr>
+  <tr><td><code>server.py</code></td><td>ローカルHTTPサーバー（ポート3458）＋Groq API呼び出し＋セッション管理API</td></tr>
+  <tr><td><code>index.html</code></td><td>ブラウザUI（ホーム・履歴・マンダラ・4象限・フロー・ガント）</td></tr>
+  <tr><td><code>state.json</code></td><td>セッション・生成コンテンツ・キューの保存ファイル（自動生成）</td></tr>
+  <tr><td><code>操作マニュアル.html</code></td><td>このファイル</td></tr>
 </table>
 
 <hr>
-<p style="color:#718096;font-size:13px;text-align:center">Kai Visualize 窶・譛蛾剞莨夂､ｾ繧｢繝ｼ繝医た繧ｦ繝ｫ 遉ｾ蜀・ヤ繝ｼ繝ｫ縲窶ｻ Groq API 繧剃ｽｿ逕ｨ・・lama-3.3-70b-versatile・・/p>
+<p style="color:#718096;font-size:13px;text-align:center">Kai Visualize — 有限会社アートソウル 社内ツール　※ Groq API を使用（llama-3.3-70b-versatile）</p>
 
 </div>
 </body>

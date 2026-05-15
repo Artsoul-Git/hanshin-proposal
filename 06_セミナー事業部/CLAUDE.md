@@ -12,7 +12,7 @@
 ---
 
 ## 親階層との関係
-- 所属：AS株式会社（D:\Google Antigravity\AS_AI導入支援事業_cc\）
+- 所属：AS株式会社（C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\）
 - 経営統括：01_経営統括\
 - 共有ナレッジ：knowledge\
 - 案件管理：05_クライアント案件\
