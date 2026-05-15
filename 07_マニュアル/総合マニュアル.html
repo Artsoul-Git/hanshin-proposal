@@ -873,8 +873,8 @@
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button><span class="comment"># 見積書</span><br>〇〇株式会社向けAIアドバイザリー月額30万円の見積書を作成して<br><span class="comment"># 請求書</span><br>〇〇株式会社への5月分の請求書を作って（AI支援業務・税抜20万円）</div>
 <table>
   <tr><th>トリガー</th><th>生成物</th></tr>
-  <tr><td>請求書・インボイス・請求</td><td>請求書（INV-YYYYMM-XXX）</td></tr>
-  <tr><td>見積書・見積もり・御見積</td><td>見積書（QUO-YYYYMM-XXX）</td></tr>
+  <tr><td>請求書・インボイス・請求</td><td>請求書（AR-YYYYMM-NNN）</td></tr>
+  <tr><td>見積書・見積もり・御見積</td><td>見積書（EST-YYYYMM-NNN）</td></tr>
 </table>
 <div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#billing-docs" target="_blank">▶ billing-docs 完全ガイド</a></div>
 </div>
@@ -886,7 +886,7 @@
 <div class="agent-card" style="border-left-color:#3182CE">
   <div class="agent-name">/nda</div>
   <div class="agent-phase">新規クライアントとの機密情報の取り交わし前</div>
-  <p>損害賠償上限（標準500万円）と秘密保持期間（終了後5年）を明示したリスクバランス型。生成AI・クラウドサービス利用条項など現代的な条項を含む。</p>
+  <p>損害賠償上限は取引規模連動の変動型（月額対価の3〜6ヶ月相当・最低50万円）。秘密保持期間は原則3年（情報の性質で延長可）。生成AI・クラウドサービス利用条項など現代的な条項を含む。</p>
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>NDAを作成して。開示者：有限会社アートソウル、受領者：〇〇株式会社<br>目的：AI導入支援コンサルティング</div>
@@ -896,12 +896,12 @@
 </details>
 
 <details id="sk-biz-contract">
-<summary><span class="acc-num">SK</span>/biz-contract — コンサル・AI支援向け業務委託契約書（18条・知財共有型）をWord形式で生成<span class="acc-arrow">▼</span></summary>
+<summary><span class="acc-num">SK</span>/biz-contract — コンサル・AI支援向け業務委託契約書（15条・受託者帰属＋包括ライセンス型）をWord形式で生成<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
 <div class="agent-card" style="border-left-color:#3182CE">
   <div class="agent-name">/biz-contract</div>
   <div class="agent-phase">受注決定後・正式契約の締結前</div>
-  <p>月額顧問型を標準とし、知的財産権の共有・再委託許可・損害賠償上限のバランス型条項を採用した18条構成の業務委託契約書。AI支援・コンサル・DX推進業務全般に対応。</p>
+  <p>月額顧問型を標準とし、知財は受託者帰属＋委託者への包括ライセンス型・損害賠償は月額最大6ヶ月・間接損害除外の15条構成。AI支援・コンサル・DX推進業務全般に対応。</p>
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円、1年間</div>
@@ -925,15 +925,15 @@
 </details>
 
 <details id="sk-daily-report">
-<summary><span class="acc-num">SK</span>/daily-report — 音声・自然文の業務内容を5列Excel日報に自動変換<span class="acc-arrow">▼</span></summary>
+<summary><span class="acc-num">SK</span>/daily-report — 音声・自然文の業務内容を6列Excel日報に自動変換<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
 <div class="agent-card" style="border-left-color:#3182CE">
   <div class="agent-name">/daily-report</div>
   <div class="agent-phase">毎日の業務終了後・日報記録</div>
-  <p>話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・課題・次回予定の5列Excelに自動変換。月次レポートのデータ源として蓄積していく。</p>
+  <p>話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・工数・課題・翌日計画の6列Excelに自動変換。月次レポートのデータ源として蓄積していく。</p>
 </div>
 <h3>呼び出し方</h3>
-<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>今日の日報を記録して。<br>「今日はA社のシステム設計を3時間実施しました。<br>データベース設計で課題が発生しています。<br>明日はB社との要件定義会議の予定です。」</div>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>今日の日報を記録して。<br>「今日はA社向けのAI導入支援提案書を4時間かけて作成しました。<br>要件定義の認識ずれが課題です。<br>明日はB社との定例ミーティングと議事録作成の予定です。」</div>
 <div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#daily-report" target="_blank">▶ daily-report 完全ガイド</a></div>
 </div>
 </details>
@@ -958,7 +958,7 @@
 <div class="agent-card" style="border-left-color:#3182CE">
   <div class="agent-name">/doc-compare</div>
   <div class="agent-phase">就業規則・契約書・規程の改訂履歴管理</div>
-  <p>2つのWord/PDFをアップロードするだけで新旧対比表を生成。14種類の見出しパターンを自動認識し、条文番号がずれた場合も見出し名の類似度で正確に対応付け。</p>
+  <p>2つのWord/PDFをアップロードするだけで新旧対比表を生成。12種類の見出しパターンを自動認識し、条文番号がずれた場合もテキスト類似度スコアで正確に対応付け。</p>
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>[変更前.docx と 変更後.docx をアップロード]<br>新旧対比表を作成して</div>

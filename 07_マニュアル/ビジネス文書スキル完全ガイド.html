@@ -197,7 +197,7 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   <div class="skill-card"><div class="cmd">/nda</div><div class="name">NDA生成</div><div class="desc">損害賠償上限・秘密保持期間明示のバランス型NDA。現代的条項含む。</div></div>
   <div class="skill-card"><div class="cmd">/biz-contract</div><div class="name">業務委託契約書生成</div><div class="desc">コンサル・AI支援に特化した15条構成の業務委託契約書。受託者帰属＋包括ライセンス型標準。</div></div>
   <div class="skill-card"><div class="cmd">/wbs-gantt</div><div class="name">WBS・ガントチャート生成</div><div class="desc">日付変更でバーが自動伸縮する動的関数版ガントチャート。3シート構成。</div></div>
-  <div class="skill-card"><div class="cmd">/daily-report</div><div class="name">音声入力日報</div><div class="desc">自然文を5列Excelに自動変換。月次レポートのデータ源として蓄積。</div></div>
+  <div class="skill-card"><div class="cmd">/daily-report</div><div class="name">音声入力日報</div><div class="desc">自然文を6列Excelに自動変換（工数列追加）。月次レポートのデータ源として蓄積。</div></div>
   <div class="skill-card"><div class="cmd">/monthly-report</div><div class="name">月次活動レポート</div><div class="desc">日報から月次レポートを自動生成。A4縦2ページのコンパクト設計。</div></div>
   <div class="skill-card"><div class="cmd">/doc-compare</div><div class="name">新旧対比表生成</div><div class="desc">2つのWord/PDFを比較し、変更箇所を色分けした新旧対比表を生成。</div></div>
 </div>
@@ -360,12 +360,12 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   <li>消費税：10%（端数切り捨て）</li>
   <li>支払期限：請求月末</li>
   <li>有効期限：発行日から30日後（デフォルト）</li>
-  <li>番号形式：見積書 <code>QUO-YYYYMM-XXX</code> / 請求書 <code>INV-YYYYMM-XXX</code></li>
+  <li>番号形式：見積書 <code>EST-YYYYMM-NNN</code> / 請求書 <code>AR-YYYYMM-NNN</code></li>
 </ul>
 
 <div class="tip"><span class="label">PDF送付の場合</span>Excelで開いて「ファイル → 印刷 → PDF保存」で変換してください。</div>
 
-<p><strong>出力ファイル名：</strong><code>御見積書_QUO-YYYYMM-XXX.xlsx</code> / <code>請求書_INV-YYYYMM-XXX.xlsx</code></p>
+<p><strong>出力ファイル名：</strong><code>御見積書_EST-YYYYMM-NNN.xlsx</code> / <code>請求書_AR-YYYYMM-NNN.xlsx</code></p>
 
 <hr>
 
@@ -375,7 +375,7 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   <div><div class="skill-title">機密保持契約書（NDA）生成</div><div class="skill-desc">損害賠償上限・秘密保持期間を明示したバランス型NDA</div></div>
 </div>
 
-<div class="lead">片方向・双方向どちらにも対応。損害賠償上限（標準500万円）と秘密保持期間（終了後5年）を明示したリスクバランス型。生成AI利用条項など現代的な条項を含む。</div>
+<div class="lead">片方向・双方向どちらにも対応。損害賠償上限は取引規模に連動する変動型（月額対価の3〜6ヶ月相当・最低50万円）。秘密保持期間は原則3年（情報の性質で延長可）。生成AI利用条項など現代的な条項を含む。</div>
 
 <h3>呼び出し方</h3>
 <div class="prompt-box">
@@ -383,20 +383,20 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   NDAを作成して。開示者は自社（有限会社アートソウル）、受領者は〇〇株式会社。<br>目的はAI導入支援コンサルティング。
 </div>
 
-<h3>標準構成（13条）</h3>
+<h3>標準構成（11条）</h3>
 <table>
   <tr><th>条項</th><th>内容</th><th>特徴</th></tr>
   <tr><td>第2条</td><td>機密情報の定義</td><td>書面・口頭・電磁的方法すべて対象</td></tr>
-  <tr><td>第5条</td><td>外部サービスの利用</td><td>クラウド・生成AI利用条項（現代的）</td></tr>
-  <tr><td>第8条</td><td>契約期間</td><td>3年・自動更新・<strong>秘密保持は終了後5年</strong></td></tr>
-  <tr><td>第9条</td><td>損害賠償</td><td><strong>上限500万円・故意重過失は除外</strong></td></tr>
+  <tr><td>第5条</td><td>デジタルツールの利用</td><td>クラウド・生成AI利用条項（現代的）</td></tr>
+  <tr><td>第8条</td><td>有効期間と存続義務</td><td>2年・自動更新・<strong>秘密保持は終了後3年</strong></td></tr>
+  <tr><td>第9条</td><td>損害賠償と責任制限</td><td><strong>月額対価の3〜6ヶ月相当（最低50万円）</strong></td></tr>
 </table>
 
 <h3>カスタマイズ</h3>
 <table>
   <tr><th>項目</th><th>選択肢</th></tr>
-  <tr><td>損害賠償上限</td><td>300万円 / <strong>500万円（標準）</strong> / 1,000万円</td></tr>
-  <tr><td>秘密保持期間</td><td>3年 / <strong>5年（標準）</strong> / 7年</td></tr>
+  <tr><td>損害賠償上限</td><td>変動型（月額×3〜6ヶ月・最低50万円）／プロジェクト型は総額の20〜30%</td></tr>
+  <tr><td>秘密保持期間</td><td>1〜2年 / <strong>3年（標準）</strong> / 5年（個人情報）/ 7年（特許前技術）</td></tr>
   <tr><td>情報の流れ</td><td>片方向 / 双方向</td></tr>
 </table>
 
@@ -409,10 +409,10 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
 <!-- ===== biz-contract ===== -->
 <div class="skill-header" id="biz-contract">
   <div><div class="skill-cmd">/biz-contract</div></div>
-  <div><div class="skill-title">業務委託契約書生成</div><div class="skill-desc">コンサル・AI支援に特化した18条構成のバランス型契約書</div></div>
+  <div><div class="skill-title">業務委託契約書生成</div><div class="skill-desc">コンサル・AI支援に特化した15条構成の業務委託契約書</div></div>
 </div>
 
-<div class="lead">月額顧問型を標準とし、知的財産権の共有・再委託許可・損害賠償上限のバランス型条項を採用。AI支援・DX推進・コンサルティング業務全般に対応。</div>
+<div class="lead">月額顧問型を標準とし、知的財産権は「受託者帰属＋委託者への包括ライセンス」のプロ型を採用。損害賠償は月額対価の最大6ヶ月・間接損害除外。AI支援・DX推進・コンサルティング業務全般に対応。</div>
 
 <h3>呼び出し方</h3>
 <div class="prompt-box">
@@ -420,20 +420,20 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円（税抜）、契約期間1年
 </div>
 
-<h3>標準18条構成のポイント</h3>
+<h3>標準15条構成のポイント</h3>
 <table>
   <tr><th>条項</th><th>内容</th><th>設定</th></tr>
-  <tr><td>第6条 知的財産権</td><td>成果物の著作権帰属</td><td><strong>共有型（デフォルト）</strong></td></tr>
-  <tr><td>第7条 再委託</td><td>外注の可否</td><td><strong>事前書面承諾で可（デフォルト）</strong></td></tr>
-  <tr><td>第12条 損害賠償</td><td>上限・範囲</td><td><strong>月額×3〜6ヶ月・直接損害のみ</strong></td></tr>
+  <tr><td>第7条 知的財産権</td><td>成果物の著作権帰属</td><td><strong>受託者帰属＋委託者包括ライセンス（デフォルト）</strong></td></tr>
+  <tr><td>第9条 再委託</td><td>外注の可否</td><td><strong>事前書面承諾で可（デフォルト）</strong></td></tr>
+  <tr><td>第12条 損害賠償と責任制限</td><td>上限・範囲</td><td><strong>月額の最大6ヶ月・間接損害除外</strong></td></tr>
 </table>
 
 <h3>知的財産権の帰属パターン</h3>
 <table>
   <tr><th>タイプ</th><th>内容</th><th>向いているケース</th></tr>
-  <tr><td><strong>共有型（標準）</strong></td><td>委託者・受託者の共有</td><td>AI支援・コンサル一般</td></tr>
-  <tr><td>委託者帰属型</td><td>委託者に帰属、受託者は実績公表権のみ</td><td>クライアントが強く要求する場合</td></tr>
-  <tr><td>受託者帰属型</td><td>受託者に帰属、委託者に使用許諾</td><td>汎用ツール・テンプレート開発</td></tr>
+  <tr><td><strong>受託者帰属＋包括ライセンス（標準）</strong></td><td>著作権は受託者。委託者は委託目的内で無制限に利用可</td><td>コンサル・教育・ノウハウ提供</td></tr>
+  <tr><td>共有型</td><td>双方が共同著作者として共有</td><td>共同開発・双方のリソースを投じる場合</td></tr>
+  <tr><td>委託者帰属型</td><td>著作権は委託者に帰属、受託者は実績公表権のみ</td><td>システム開発・委託者専用ツール制作</td></tr>
 </table>
 
 <div class="warn"><span class="label">重要</span>本スキルが生成する契約書は標準ひな形です。実際の締結前に専門家（弁護士等）に確認してください。</div>
@@ -469,15 +469,15 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
 
 <h3>ステータスとバー色</h3>
 <table>
-  <tr><th>ステータス</th><th>バー色</th></tr>
-  <tr><td>未着手</td><td>ペールグレー（目立たない）</td></tr>
-  <tr><td>進行中</td><td>ミディアムグレー（注目すべき）</td></tr>
-  <tr><td>完了</td><td>ダークグレー（確定・安定）</td></tr>
-  <tr><td>保留</td><td>ホワイト＋枠線（「空」の状態）</td></tr>
-  <tr><td>マイルストーン</td><td>アクセントブルー（唯一の色）</td></tr>
+  <tr><th>ステータス</th><th>バーカラー</th></tr>
+  <tr><td>未着手</td><td>#CECECE（ライトグレー）</td></tr>
+  <tr><td>進行中</td><td>#707070（ミッドグレー）</td></tr>
+  <tr><td>完了</td><td>#2A2A2A（チャコール）</td></tr>
+  <tr><td>保留</td><td>なし（枠線のみ）</td></tr>
+  <tr><td>マイルストーン</td><td>#3D7A5C（グリーンアクセント・唯一の色）</td></tr>
 </table>
 
-<div class="tip"><span class="label">バッファ自動確保</span>契約期間とフェーズ構成を伝えると、全体の10%をバッファとして自動確保してスケジューリングします。</div>
+<div class="tip"><span class="label">予備工程の自動確保</span>契約期間とフェーズ構成を伝えると、予備工程（デフォルト5〜15%）を自動で確保してスケジューリングします。</div>
 
 <p><strong>出力ファイル名：</strong><code>WBS_ガントチャート_{プロジェクト名}_{日付}.xlsx</code></p>
 
@@ -486,25 +486,26 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
 <!-- ===== daily-report ===== -->
 <div class="skill-header" id="daily-report">
   <div><div class="skill-cmd">/daily-report</div></div>
-  <div><div class="skill-title">音声入力日報</div><div class="skill-desc">自然文を5列Excelに自動変換</div></div>
+  <div><div class="skill-title">音声入力日報</div><div class="skill-desc">自然文を6列Excelに自動変換</div></div>
 </div>
 
-<div class="lead">話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・課題・次回予定の5列Excelに自動変換。月次レポートのデータ源として蓄積していく。</div>
+<div class="lead">話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・工数・課題・翌日計画の6列Excelに自動変換。月次レポートのデータ源として蓄積していく。</div>
 
 <h3>呼び出し方</h3>
 <div class="prompt-box">
   <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
-  今日の日報を記録して。<br>「今日はA社のシステム設計を3時間実施しました。<br>データベース設計で課題が発生しています。<br>明日はB社との要件定義会議の予定です。」
+  今日の日報を記録して。<br>「今日はA社向けのAI導入支援提案書を4時間かけて作成しました。<br>要件定義の認識ずれが課題です。<br>明日はB社との定例ミーティングと議事録作成の予定です。」
 </div>
 
-<h3>自動抽出する5項目</h3>
+<h3>自動抽出する6項目</h3>
 <table>
   <tr><th>列</th><th>内容</th><th>取得方法</th></tr>
   <tr><td>日付</td><td>本日の日付</td><td>自動取得</td></tr>
   <tr><td>報告者</td><td>担当者名</td><td>不明時はヒアリング</td></tr>
-  <tr><td>作業内容</td><td>顧客名・業務内容・工数</td><td>発話から自動抽出</td></tr>
+  <tr><td>作業内容</td><td>顧客名・業務の概要</td><td>発話から自動抽出</td></tr>
+  <tr><td>工数（h）</td><td>作業にかけた時間</td><td>発話から自動抽出</td></tr>
   <tr><td>課題</td><td>発生した問題・懸念事項</td><td>発話から自動抽出</td></tr>
-  <tr><td>次回予定</td><td>翌日以降の予定</td><td>発話から自動抽出</td></tr>
+  <tr><td>翌日計画</td><td>翌日以降の予定</td><td>発話から自動抽出</td></tr>
 </table>
 
 <div class="ok"><span class="label">/monthly-report との連携</span>日報を蓄積することで、月末に月次レポートを自動集計できます。「毎日記録 → 月末にまとめる」の習慣が定着すると最も効果的です。</div>
@@ -551,7 +552,7 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   <div><div class="skill-title">新旧対比表生成</div><div class="skill-desc">2文書の変更箇所を色分け表示したWord形式の対比表を生成</div></div>
 </div>
 
-<div class="lead">就業規則・契約書・社内規程の改訂前後をWord形式で比較。14種類の見出しパターンを自動認識し、階層構造を解析して正確に対応付ける。</div>
+<div class="lead">就業規則・契約書・社内規程の改訂前後をWord形式で比較。12種類の見出しパターンを自動認識し、階層構造を解析して正確に対応付ける。</div>
 
 <h3>呼び出し方</h3>
 <div class="prompt-box">
@@ -572,10 +573,10 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   <tr><td>変更なし</td><td>表示しない（変更箇所のみ抽出）</td></tr>
 </table>
 
-<h3>対応する見出しパターン（14種）</h3>
-<p>第○条 / 第○章 / 番号付き見出し / 階層番号（1.1.2等） / ハイフン番号（3-2等） / 括弧番号（(1)等） / 附則 / 英語（Article等） 他</p>
+<h3>対応する見出しパターン（12種）</h3>
+<p>第○条 / 第○章 / 番号付き見出し / 階層番号（1.1.2等） / ハイフン番号（3-2等） / 括弧番号（(1)等） / 角括弧（【1】等） / 英語（Article等） / 枝番条文（第3条の2等） / 記号（§等） 他</p>
 
-<div class="tip"><span class="label">条文番号ずれへの対応</span>章の挿入・削除で条文番号がずれた場合でも、見出し名の類似度でマッチングするため正確に対応付けられます。</div>
+<div class="tip"><span class="label">条文番号ずれへの対応</span>章の挿入・削除で条文番号がずれた場合でも、見出し名のテキスト類似度スコアでマッチングするため正確に対応付けられます。</div>
 
 <p><strong>出力ファイル名：</strong><code>新旧対比表_{文書名}_{日付}.docx</code></p>
 
