@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ビジネス文書スキル 完全ガイド — Kai</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+.sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+.sb-sec { padding: 10px 14px 4px; }
+.sb-sec-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+.sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.5; transition: background 0.15s; }
+.sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* Main */
+.main { margin-left: 230px; flex: 1; padding: 40px 24px 100px; }
+.container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+/* Cover */
+.cover { background: linear-gradient(135deg,#0F172A 0%,#1A365D 60%,#1E40AF 100%); color: white; border-radius: 12px; padding: 60px; margin-bottom: 48px; }
+.cover .badge { display: inline-block; background: rgba(255,255,255,0.12); color: #93C5FD; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+.cover h1 { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
+.cover .tagline { font-size: 17px; color: #93C5FD; margin-bottom: 28px; }
+.cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 28px; }
+.cover .meta-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 16px; }
+.cover .meta-item .label { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.cover .meta-item .val { font-size: 15px; font-weight: 700; }
+
+/* Skill header */
+.skill-header { background: #1A365D; color: white; border-radius: 10px; padding: 20px 28px; margin: 48px 0 20px; display: flex; align-items: center; gap: 16px; }
+.skill-cmd { background: #ED8936; color: white; font-size: 14px; font-weight: 900; padding: 6px 18px; border-radius: 20px; font-family: monospace; white-space: nowrap; }
+.skill-title { font-size: 20px; font-weight: bold; }
+.skill-desc { font-size: 13px; color: #93C5FD; margin-top: 4px; }
+
+/* Typography */
+h2 { font-size: 22px; color: #1A365D; border-bottom: 3px solid #ED8936; padding-bottom: 10px; margin: 40px 0 18px; }
+h3 { font-size: 18px; color: #1A365D; padding-left: 14px; border-left: 5px solid #ED8936; margin: 28px 0 12px; }
+h4 { font-size: 15px; color: #1A365D; font-weight: 700; margin: 20px 0 8px; }
+p { margin: 12px 0; }
+
+/* Callouts */
+.lead { font-size: 16px; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+.tip { background: #FFFAF0; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; border-left: 5px solid #ED8936; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 13px; display: block; margin-bottom: 6px; }
+.ok { background: #F0FFF4; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; border-left: 5px solid #38A169; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 13px; display: block; margin-bottom: 6px; }
+.warn { background: #FFF5F5; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; border-left: 5px solid #E53E3E; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 13px; display: block; margin-bottom: 6px; }
+
+/* Code */
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 32px 22px 20px; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; margin: 16px 0; position: relative; }
+.prompt-box .comment { color: #718096; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.1); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 3px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 10px 14px; text-align: left; }
+td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+ul, ol { padding-left: 24px; margin: 12px 0; }
+li { margin: 6px 0; }
+
+/* Flow */
+.flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+.flow-box { background: #EDF2F7; border: 2px solid #1A365D; border-radius: 8px; padding: 10px 16px; font-size: 14px; font-weight: 600; color: #1A365D; }
+.flow-arrow { color: #ED8936; font-size: 20px; font-weight: 700; }
+
+/* Step */
+.step { background: #EDF2F7; border-top: 4px solid #1A365D; border-radius: 8px; padding: 20px 24px; margin: 18px 0; }
+.step-num { display: inline-block; background: #ED8936; color: white; width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-weight: 700; margin-right: 10px; font-size: 14px; }
+
+/* TOC */
+.toc { background: #F7FAFC; border-radius: 10px; padding: 24px 28px; margin: 28px 0; border: 1px solid #E2E8F0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; font-size: 16px; color: #1A365D; margin-bottom: 12px; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+.toc a:hover { color: #ED8936; }
+.toc li { padding: 4px 0; font-size: 14px; border-bottom: 1px dashed #E2E8F0; }
+.toc li:last-child { border: none; }
+
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+
+/* Skill index cards */
+.skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 14px; margin: 24px 0; }
+.skill-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 18px 20px; border-left: 6px solid #1A365D; }
+.skill-card .cmd { font-family: monospace; font-size: 13px; font-weight: 700; color: #ED8936; margin-bottom: 6px; }
+.skill-card .name { font-size: 15px; font-weight: 700; color: #1A365D; margin-bottom: 6px; }
+.skill-card .desc { font-size: 13px; color: #4A5568; }
+.skill-card a { text-decoration: none; }
+.skill-card a:hover .name { color: #ED8936; }
+
+/* Workflow chain */
+.chain { background: #F0FFF4; border: 2px solid #38A169; border-radius: 10px; padding: 24px 28px; margin: 24px 0; }
+.chain h4 { color: #2F855A; margin-top: 0; margin-bottom: 14px; }
+.chain-steps { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chain-step { background: white; border: 2px solid #38A169; border-radius: 6px; padding: 6px 14px; font-size: 13px; font-weight: 700; color: #276749; font-family: monospace; }
+.chain-arrow { color: #38A169; font-weight: 700; }
+
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+  .container { padding: 28px 20px; }
+  .cover { padding: 36px 24px; }
+  .cover h1 { font-size: 26px; }
+  .cover .meta-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo">有限会社アートソウル<span>ビジネス文書スキル ガイド</span></div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">概要</div>
+    <a class="sb-link" href="#overview">スキル一覧</a>
+    <a class="sb-link" href="#workflow">ワークフロー全体</a>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">営業フェーズ</div>
+    <a class="sb-link" href="#hearing-sheet">/hearing-sheet</a>
+    <a class="sb-link" href="#proposal-outline">/proposal-outline</a>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">契約フェーズ</div>
+    <a class="sb-link" href="#billing-docs">/billing-docs</a>
+    <a class="sb-link" href="#nda">/nda</a>
+    <a class="sb-link" href="#biz-contract">/biz-contract</a>
+    <a class="sb-link" href="#wbs-gantt">/wbs-gantt</a>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">実行フェーズ</div>
+    <a class="sb-link" href="#daily-report">/daily-report</a>
+    <a class="sb-link" href="#monthly-report">/monthly-report</a>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">汎用ツール</div>
+    <a class="sb-link" href="#doc-compare">/doc-compare</a>
+  </div>
+  <div class="sb-sec">
+    <div class="sb-sec-label">リンク</div>
+    <a class="sb-link" href="総合マニュアル.html">← 総合マニュアルへ</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="badge">SKILL GUIDE</div>
+  <h1>ビジネス文書スキル<br>完全ガイド</h1>
+  <div class="tagline">営業〜契約〜実行まで — 9スキルで文書作業を自動化</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">スキル数</div><div class="val">9スキル</div></div>
+    <div class="meta-item"><div class="label">対応フェーズ</div><div class="val">営業〜月次</div></div>
+    <div class="meta-item"><div class="label">出力形式</div><div class="val">Excel / Word</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>目次</h3>
+  <ol>
+    <li><a href="#overview">スキル一覧と概要</a></li>
+    <li><a href="#workflow">ワークフロー全体像</a></li>
+    <li><a href="#hearing-sheet">/hearing-sheet — ヒアリングシート生成</a></li>
+    <li><a href="#proposal-outline">/proposal-outline — 提案骨子生成</a></li>
+    <li><a href="#billing-docs">/billing-docs — 見積書・請求書生成</a></li>
+    <li><a href="#nda">/nda — 機密保持契約書生成</a></li>
+    <li><a href="#biz-contract">/biz-contract — 業務委託契約書生成</a></li>
+    <li><a href="#wbs-gantt">/wbs-gantt — WBS・ガントチャート生成</a></li>
+    <li><a href="#daily-report">/daily-report — 音声入力日報</a></li>
+    <li><a href="#monthly-report">/monthly-report — 月次活動レポート</a></li>
+    <li><a href="#doc-compare">/doc-compare — 新旧対比表生成</a></li>
+  </ol>
+</div>
+
+<!-- ===== Overview ===== -->
+<h2 id="overview">スキル一覧と概要</h2>
+<div class="lead">コンサルティング案件の<strong>営業フェーズ → 契約フェーズ → 実行フェーズ</strong>をカバーする9スキル。「ヒアリングシートを作って」など自然な言葉で呼び出せる。</div>
+
+<div class="skill-grid">
+  <div class="skill-card"><div class="cmd">/hearing-sheet</div><div class="name">ヒアリングシート生成</div><div class="desc">業種×部門に合わせた質問項目を自動生成。文字起こし自動記入にも対応。</div></div>
+  <div class="skill-card"><div class="cmd">/proposal-outline</div><div class="name">提案骨子生成</div><div class="desc">ヒアリング結果から1〜2ページの提案アウトラインをWord形式で生成。</div></div>
+  <div class="skill-card"><div class="cmd">/billing-docs</div><div class="name">見積書・請求書生成</div><div class="desc">見積書・請求書をExcelで自動生成。消費税自動計算・インボイス番号採番。</div></div>
+  <div class="skill-card"><div class="cmd">/nda</div><div class="name">NDA生成</div><div class="desc">損害賠償上限・秘密保持期間明示のバランス型NDA。現代的条項含む。</div></div>
+  <div class="skill-card"><div class="cmd">/biz-contract</div><div class="name">業務委託契約書生成</div><div class="desc">コンサル・AI支援に特化した18条構成の業務委託契約書。知財共有型標準。</div></div>
+  <div class="skill-card"><div class="cmd">/wbs-gantt</div><div class="name">WBS・ガントチャート生成</div><div class="desc">日付変更でバーが自動伸縮する動的関数版ガントチャート。3シート構成。</div></div>
+  <div class="skill-card"><div class="cmd">/daily-report</div><div class="name">音声入力日報</div><div class="desc">自然文を5列Excelに自動変換。月次レポートのデータ源として蓄積。</div></div>
+  <div class="skill-card"><div class="cmd">/monthly-report</div><div class="name">月次活動レポート</div><div class="desc">日報から月次レポートを自動生成。A4縦2ページのコンパクト設計。</div></div>
+  <div class="skill-card"><div class="cmd">/doc-compare</div><div class="name">新旧対比表生成</div><div class="desc">2つのWord/PDFを比較し、変更箇所を色分けした新旧対比表を生成。</div></div>
+</div>
+
+<!-- ===== Workflow ===== -->
+<h2 id="workflow">ワークフロー全体像</h2>
+
+<h3>案件受注〜実行の流れ</h3>
+<div class="chain">
+  <h4>標準ワークフロー（受注まで）</h4>
+  <div class="chain-steps">
+    <div class="chain-step">/hearing-sheet</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/proposal-outline</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/billing-docs（見積）</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/nda</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/biz-contract</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/wbs-gantt</div>
+  </div>
+</div>
+
+<div class="chain">
+  <h4>実行〜月次の流れ</h4>
+  <div class="chain-steps">
+    <div class="chain-step">/daily-report（毎日）</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">/monthly-report（月末）</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-step">クライアントへ送付</div>
+  </div>
+</div>
+
+<h3>マスタートリガー</h3>
+<table>
+  <tr><th>トリガー</th><th>実行内容</th></tr>
+  <tr><td><code>提案準備</code></td><td>ヒアリングシート → 提案骨子</td></tr>
+  <tr><td><code>契約準備</code></td><td>見積書 → NDA → 業務委託契約書 → WBS</td></tr>
+  <tr><td><code>月締め</code></td><td>日報集計 → 月次レポート → 請求書</td></tr>
+</table>
+
+<hr>
+
+<!-- ===== hearing-sheet ===== -->
+<div class="skill-header" id="hearing-sheet">
+  <div><div class="skill-cmd">/hearing-sheet</div></div>
+  <div><div class="skill-title">ヒアリングシート生成</div><div class="skill-desc">業種×部門に合わせた質問項目をExcelで動的生成</div></div>
+</div>
+
+<div class="lead">初回商談・現状把握に使うヒアリングシートを自動生成。業種（14種）と部門（5種）を指定すると、業種特有の質問項目が自動追加される。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># 基本</span><br>
+  ヒアリングシートを作成して<br><br>
+  <span class="comment"># 詳細指定</span><br>
+  〇〇株式会社（製造業）の経理と営業部門のヒアリングシートを作って<br><br>
+  <span class="comment"># 文字起こし自動記入</span><br>
+  このヒアリングメモからシートに自動記入して<br>[文字起こしを貼り付け]
+</div>
+
+<h3>業種選択肢（14種）</h3>
+<p>製造業 / 小売業 / 卸売業 / 建設業 / 福祉・介護 / 医療 / 金融・保険 / 不動産 / 運輸・物流 / 飲食・宿泊 / 情報通信・IT / その他サービス業 / 農林水産業 / 公共・団体（農協・商工会等）</p>
+
+<h3>部門選択肢（5種）</h3>
+<p>経理 / 人事・総務 / 営業 / 現場・製造 / 情報システム</p>
+
+<h3>シート構成</h3>
+<table>
+  <tr><th>シート</th><th>内容</th><th>生成条件</th></tr>
+  <tr><td>基本情報</td><td>会社概要・担当者・従業員数</td><td>常時</td></tr>
+  <tr><td>IT環境</td><td>使用システム・インフラ</td><td>常時</td></tr>
+  <tr><td>【部門名】</td><td>部門別質問項目</td><td>選択部門ごと</td></tr>
+  <tr><td>優先度・ゴール整理</td><td>課題優先順位・予算感・意思決定</td><td>常時</td></tr>
+</table>
+
+<h3>自動記入機能（確信度による色分け）</h3>
+<table>
+  <tr><th>確信度</th><th>セル背景</th><th>表示</th></tr>
+  <tr><td>高</td><td>白（標準）</td><td>そのまま記入</td></tr>
+  <tr><td>中</td><td>薄黄</td><td>推測根拠をコメントに記載</td></tr>
+  <tr><td>低</td><td>薄オレンジ</td><td>複数候補をコメントに記載</td></tr>
+  <tr><td>不明</td><td>薄グレー</td><td>「該当発言なし」</td></tr>
+</table>
+
+<div class="warn"><span class="label">注意</span>自動記入結果は必ず人間がレビューすること。黄色・オレンジのセルを優先確認。</div>
+
+<p><strong>出力ファイル名：</strong><code>ヒアリングシート_{企業名}_{日付}.xlsx</code></p>
+
+<hr>
+
+<!-- ===== proposal-outline ===== -->
+<div class="skill-header" id="proposal-outline">
+  <div><div class="skill-cmd">/proposal-outline</div></div>
+  <div><div class="skill-title">提案骨子生成</div><div class="skill-desc">ヒアリング結果から1〜2ページの提案アウトラインを自動生成</div></div>
+</div>
+
+<div class="lead">hearing-sheetのExcel・文字起こし・手書きメモのいずれかから課題を抽出し、AI/DX提案または汎用IT導入提案の骨子をWord形式で生成する。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># hearing-sheetから</span><br>
+  このヒアリングシートから提案骨子を作って<br>[Excelをアップロード]<br><br>
+  <span class="comment"># 文字起こしから</span><br>
+  「うちは社員5人で経理が1人で請求書を毎月100枚手入力してます…」<br>この内容で提案のたたきを作って
+</div>
+
+<h3>提案タイプの自動判定</h3>
+<table>
+  <tr><th>検出キーワード</th><th>提案タイプ</th></tr>
+  <tr><td>AI・生成AI・自動化・DX・デジタル化</td><td>AI/DX支援提案</td></tr>
+  <tr><td>システム導入・ツール導入・Excel脱却</td><td>IT導入提案</td></tr>
+  <tr><td>両方混在・不明</td><td>両方を含む提案</td></tr>
+</table>
+
+<h3>出力フォーマット（1〜2ページ）</h3>
+<ol>
+  <li>現状課題の整理（3課題・具体的な数値・影響付き）</li>
+  <li>ご提案の方向性（アプローチ・なぜこのアプローチか）</li>
+  <li>期待効果（工数削減・コスト・品質向上）</li>
+  <li>次のステップ（詳細ヒアリング・見積・PoC）</li>
+</ol>
+
+<p><strong>出力ファイル名：</strong><code>提案骨子_{クライアント名}_{日付}.docx</code></p>
+
+<hr>
+
+<!-- ===== billing-docs ===== -->
+<div class="skill-header" id="billing-docs">
+  <div><div class="skill-cmd">/billing-docs</div></div>
+  <div><div class="skill-title">見積書・請求書生成</div><div class="skill-desc">Excel形式で見積書・請求書を自動生成</div></div>
+</div>
+
+<div class="lead">「見積書を作成して」「請求書が必要」など自然な言葉でトリガー。消費税10%自動計算・インボイス番号自動採番。月額顧問型・時間単価型・プロジェクト型に対応。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># 見積書</span><br>
+  〇〇株式会社向けにAIアドバイザリー月額30万円の見積書を作成して<br><br>
+  <span class="comment"># 請求書</span><br>
+  〇〇株式会社への5月分の請求書を作って（AIコンサル業務・税抜20万円）
+</div>
+
+<h3>見積タイプ別の設定</h3>
+<table>
+  <tr><th>タイプ</th><th>備考のデフォルト</th></tr>
+  <tr><td>月額顧問型</td><td>月末締め翌月末払い・契約期間1年（自動更新）</td></tr>
+  <tr><td>時間単価型</td><td>稼働時間は実績に応じて精算</td></tr>
+  <tr><td>プロジェクト型</td><td>着手金30%・中間金40%・完了時30%</td></tr>
+</table>
+
+<h3>共通仕様</h3>
+<ul>
+  <li>消費税：10%（端数切り捨て）</li>
+  <li>支払期限：請求月末</li>
+  <li>有効期限：発行日から30日後（デフォルト）</li>
+  <li>番号形式：見積書 <code>QUO-YYYYMM-XXX</code> / 請求書 <code>INV-YYYYMM-XXX</code></li>
+</ul>
+
+<div class="tip"><span class="label">PDF送付の場合</span>Excelで開いて「ファイル → 印刷 → PDF保存」で変換してください。</div>
+
+<p><strong>出力ファイル名：</strong><code>御見積書_QUO-YYYYMM-XXX.xlsx</code> / <code>請求書_INV-YYYYMM-XXX.xlsx</code></p>
+
+<hr>
+
+<!-- ===== nda ===== -->
+<div class="skill-header" id="nda">
+  <div><div class="skill-cmd">/nda</div></div>
+  <div><div class="skill-title">機密保持契約書（NDA）生成</div><div class="skill-desc">損害賠償上限・秘密保持期間を明示したバランス型NDA</div></div>
+</div>
+
+<div class="lead">片方向・双方向どちらにも対応。損害賠償上限（標準500万円）と秘密保持期間（終了後5年）を明示したリスクバランス型。生成AI利用条項など現代的な条項を含む。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  NDAを作成して。開示者は自社（有限会社アートソウル）、受領者は〇〇株式会社。<br>目的はAI導入支援コンサルティング。
+</div>
+
+<h3>標準構成（13条）</h3>
+<table>
+  <tr><th>条項</th><th>内容</th><th>特徴</th></tr>
+  <tr><td>第2条</td><td>機密情報の定義</td><td>書面・口頭・電磁的方法すべて対象</td></tr>
+  <tr><td>第5条</td><td>外部サービスの利用</td><td>クラウド・生成AI利用条項（現代的）</td></tr>
+  <tr><td>第8条</td><td>契約期間</td><td>3年・自動更新・<strong>秘密保持は終了後5年</strong></td></tr>
+  <tr><td>第9条</td><td>損害賠償</td><td><strong>上限500万円・故意重過失は除外</strong></td></tr>
+</table>
+
+<h3>カスタマイズ</h3>
+<table>
+  <tr><th>項目</th><th>選択肢</th></tr>
+  <tr><td>損害賠償上限</td><td>300万円 / <strong>500万円（標準）</strong> / 1,000万円</td></tr>
+  <tr><td>秘密保持期間</td><td>3年 / <strong>5年（標準）</strong> / 7年</td></tr>
+  <tr><td>情報の流れ</td><td>片方向 / 双方向</td></tr>
+</table>
+
+<div class="warn"><span class="label">重要</span>本スキルが生成するNDAは標準ひな形です。実際の締結前に専門家（弁護士等）に確認してください。</div>
+
+<p><strong>出力ファイル名：</strong><code>機密保持契約書_{相手先企業名}_{日付}.docx</code></p>
+
+<hr>
+
+<!-- ===== biz-contract ===== -->
+<div class="skill-header" id="biz-contract">
+  <div><div class="skill-cmd">/biz-contract</div></div>
+  <div><div class="skill-title">業務委託契約書生成</div><div class="skill-desc">コンサル・AI支援に特化した18条構成のバランス型契約書</div></div>
+</div>
+
+<div class="lead">月額顧問型を標準とし、知的財産権の共有・再委託許可・損害賠償上限のバランス型条項を採用。AI支援・DX推進・コンサルティング業務全般に対応。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円（税抜）、契約期間1年
+</div>
+
+<h3>標準18条構成のポイント</h3>
+<table>
+  <tr><th>条項</th><th>内容</th><th>設定</th></tr>
+  <tr><td>第6条 知的財産権</td><td>成果物の著作権帰属</td><td><strong>共有型（デフォルト）</strong></td></tr>
+  <tr><td>第7条 再委託</td><td>外注の可否</td><td><strong>事前書面承諾で可（デフォルト）</strong></td></tr>
+  <tr><td>第12条 損害賠償</td><td>上限・範囲</td><td><strong>月額×3〜6ヶ月・直接損害のみ</strong></td></tr>
+</table>
+
+<h3>知的財産権の帰属パターン</h3>
+<table>
+  <tr><th>タイプ</th><th>内容</th><th>向いているケース</th></tr>
+  <tr><td><strong>共有型（標準）</strong></td><td>委託者・受託者の共有</td><td>AI支援・コンサル一般</td></tr>
+  <tr><td>委託者帰属型</td><td>委託者に帰属、受託者は実績公表権のみ</td><td>クライアントが強く要求する場合</td></tr>
+  <tr><td>受託者帰属型</td><td>受託者に帰属、委託者に使用許諾</td><td>汎用ツール・テンプレート開発</td></tr>
+</table>
+
+<div class="warn"><span class="label">重要</span>本スキルが生成する契約書は標準ひな形です。実際の締結前に専門家（弁護士等）に確認してください。</div>
+
+<p><strong>出力ファイル名：</strong><code>業務委託契約書_{クライアント名}_{日付}.docx</code></p>
+
+<hr>
+
+<!-- ===== wbs-gantt ===== -->
+<div class="skill-header" id="wbs-gantt">
+  <div><div class="skill-cmd">/wbs-gantt</div></div>
+  <div><div class="skill-title">WBS・ガントチャート生成</div><div class="skill-desc">日付変更でバーが自動伸縮する動的関数版ガントチャート</div></div>
+</div>
+
+<div class="lead">日付を変えるとバーが自動で伸縮、ステータスを選ぶと色が自動変化する動的関数版。契約書・提案書からプロジェクト情報を自動抽出することも可能。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># 自然言語で</span><br>
+  〇〇社のAI導入支援プロジェクトのガントチャートを作って。<br>開始：2026/6/1、終了：2026/11/30、フェーズ：現状分析→システム設計→実装→定着支援<br><br>
+  <span class="comment"># 契約書から自動抽出</span><br>
+  この契約書からガントチャートを生成して<br>[契約書PDFをアップロード]
+</div>
+
+<h3>動的機能の詳細</h3>
+<table>
+  <tr><th>機能</th><th>操作方法</th><th>自動更新内容</th></tr>
+  <tr><td>日数自動計算</td><td>開始日または終了日を編集</td><td>日数セルが自動更新</td></tr>
+  <tr><td>バー自動伸縮</td><td>開始日または終了日を編集</td><td>ガントバーの幅が自動変化</td></tr>
+  <tr><td>ステータス色変化</td><td>G列のドロップダウンを変更</td><td>バー色が自動変化</td></tr>
+</table>
+
+<h3>ステータスとバー色</h3>
+<table>
+  <tr><th>ステータス</th><th>バー色</th></tr>
+  <tr><td>未着手</td><td>ペールグレー（目立たない）</td></tr>
+  <tr><td>進行中</td><td>ミディアムグレー（注目すべき）</td></tr>
+  <tr><td>完了</td><td>ダークグレー（確定・安定）</td></tr>
+  <tr><td>保留</td><td>ホワイト＋枠線（「空」の状態）</td></tr>
+  <tr><td>マイルストーン</td><td>アクセントブルー（唯一の色）</td></tr>
+</table>
+
+<div class="tip"><span class="label">バッファ自動確保</span>契約期間とフェーズ構成を伝えると、全体の10%をバッファとして自動確保してスケジューリングします。</div>
+
+<p><strong>出力ファイル名：</strong><code>WBS_ガントチャート_{プロジェクト名}_{日付}.xlsx</code></p>
+
+<hr>
+
+<!-- ===== daily-report ===== -->
+<div class="skill-header" id="daily-report">
+  <div><div class="skill-cmd">/daily-report</div></div>
+  <div><div class="skill-title">音声入力日報</div><div class="skill-desc">自然文を5列Excelに自動変換</div></div>
+</div>
+
+<div class="lead">話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・課題・次回予定の5列Excelに自動変換。月次レポートのデータ源として蓄積していく。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  今日の日報を記録して。<br>「今日はA社のシステム設計を3時間実施しました。<br>データベース設計で課題が発生しています。<br>明日はB社との要件定義会議の予定です。」
+</div>
+
+<h3>自動抽出する5項目</h3>
+<table>
+  <tr><th>列</th><th>内容</th><th>取得方法</th></tr>
+  <tr><td>日付</td><td>本日の日付</td><td>自動取得</td></tr>
+  <tr><td>報告者</td><td>担当者名</td><td>不明時はヒアリング</td></tr>
+  <tr><td>作業内容</td><td>顧客名・業務内容・工数</td><td>発話から自動抽出</td></tr>
+  <tr><td>課題</td><td>発生した問題・懸念事項</td><td>発話から自動抽出</td></tr>
+  <tr><td>次回予定</td><td>翌日以降の予定</td><td>発話から自動抽出</td></tr>
+</table>
+
+<div class="ok"><span class="label">/monthly-report との連携</span>日報を蓄積することで、月末に月次レポートを自動集計できます。「毎日記録 → 月末にまとめる」の習慣が定着すると最も効果的です。</div>
+
+<p><strong>出力ファイル名：</strong><code>日報_YYYY-MM-DD.xlsx</code></p>
+
+<hr>
+
+<!-- ===== monthly-report ===== -->
+<div class="skill-header" id="monthly-report">
+  <div><div class="skill-cmd">/monthly-report</div></div>
+  <div><div class="skill-title">月次活動レポート生成</div><div class="skill-desc">日報から月次レポートをA4縦2ページで自動生成</div></div>
+</div>
+
+<div class="lead">日報データをもとに、クライアントへ送付する月次活動レポートを自動生成。A4縦2ページに収まる「読まれる」設計。数値で成果を証明し、継続契約の判断材料に。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  〇〇株式会社への5月分の月次レポートを作って。<br>稼働：18日・稼働時間：144時間<br>主要活動：AI戦略策定・社員研修実施・業務自動化提案<br>成果：研修参加率95%・月40時間削減見込み<br>課題：一部部署の活用遅延 → 次月に追加説明会実施予定
+</div>
+
+<h3>A4縦2ページの構成</h3>
+<table>
+  <tr><th>ページ</th><th>セクション</th><th>内容</th></tr>
+  <tr><td rowspan="3">1ページ目</td><td>ヘッダー</td><td>タイトル・対象月・クライアント名</td></tr>
+  <tr><td>稼働実績</td><td>稼働日数・稼働時間</td></tr>
+  <tr><td>活動内訳</td><td>業務別日数リスト＋円グラフ（2カラム）</td></tr>
+  <tr><td rowspan="4">2ページ目</td><td>成果</td><td>達成事項と定量数値（✓マーク付き）</td></tr>
+  <tr><td>課題と対応</td><td>課題と対応策をセットで記載</td></tr>
+  <tr><td>次月の計画</td><td>3〜5項目のアクションリスト</td></tr>
+  <tr><td>フッター</td><td>自社名（小さく）</td></tr>
+</table>
+
+<div class="tip"><span class="label">設計哲学</span>「間延びせず、詰め込みすぎず」——1ページ版は要点のみで物足りなく、5〜7ページ版は読まれない。2ページが「見てもらえる適切な分量」です。</div>
+
+<p><strong>出力ファイル名：</strong><code>月次レポート_{クライアント名}_{YYYYMM}.docx</code></p>
+
+<hr>
+
+<!-- ===== doc-compare ===== -->
+<div class="skill-header" id="doc-compare">
+  <div><div class="skill-cmd">/doc-compare</div></div>
+  <div><div class="skill-title">新旧対比表生成</div><div class="skill-desc">2文書の変更箇所を色分け表示したWord形式の対比表を生成</div></div>
+</div>
+
+<div class="lead">就業規則・契約書・社内規程の改訂前後をWord形式で比較。14種類の見出しパターンを自動認識し、階層構造を解析して正確に対応付ける。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># ファイルをアップロードして指示</span><br>
+  [変更前.docx と 変更後.docx をアップロード]<br>新旧対比表を作成して<br><br>
+  <span class="comment"># 列順序を指定する場合</span><br>
+  旧→新の順で対比表を作って（デフォルトは新→旧）
+</div>
+
+<h3>変更の表示ルール</h3>
+<table>
+  <tr><th>種別</th><th>表示方法</th></tr>
+  <tr><td>変更後テキスト</td><td>赤字・太字・下線</td></tr>
+  <tr><td>変更前テキスト</td><td>黒字・太字・下線</td></tr>
+  <tr><td>新規追加</td><td>青字・太字、左セルに「(新規追加)」</td></tr>
+  <tr><td>削除</td><td>赤字・取り消し線、右セルに「(削除)」</td></tr>
+  <tr><td>変更なし</td><td>表示しない（変更箇所のみ抽出）</td></tr>
+</table>
+
+<h3>対応する見出しパターン（14種）</h3>
+<p>第○条 / 第○章 / 番号付き見出し / 階層番号（1.1.2等） / ハイフン番号（3-2等） / 括弧番号（(1)等） / 附則 / 英語（Article等） 他</p>
+
+<div class="tip"><span class="label">条文番号ずれへの対応</span>章の挿入・削除で条文番号がずれた場合でも、見出し名の類似度でマッチングするため正確に対応付けられます。</div>
+
+<p><strong>出力ファイル名：</strong><code>新旧対比表_{文書名}_{日付}.docx</code></p>
+
+<hr>
+
+<div class="ok">
+  <span class="label">総合マニュアルへ</span>
+  他のスキルや運用ガイドは <a href="総合マニュアル.html">総合マニュアル</a> を参照してください。
+</div>
+
+</div><!-- /container -->
+</div><!-- /main -->
+
+<script>
+function copyPrompt(btn) {
+  const box = btn.parentElement;
+  const text = box.innerText.replace(/^コピー\n/, '').replace(/^# .*\n/gm, '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'コピー済み';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

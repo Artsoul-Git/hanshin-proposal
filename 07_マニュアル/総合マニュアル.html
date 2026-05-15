@@ -163,6 +163,19 @@
   </div>
 
   <div class="sb-section">
+    <div class="sb-section-label">📄 ビジネス文書スキル</div>
+    <a class="sb-link" href="#sk-hearing-sheet">/hearing-sheet</a>
+    <a class="sb-link" href="#sk-proposal-outline">/proposal-outline</a>
+    <a class="sb-link" href="#sk-billing-docs">/billing-docs</a>
+    <a class="sb-link" href="#sk-nda">/nda</a>
+    <a class="sb-link" href="#sk-biz-contract">/biz-contract</a>
+    <a class="sb-link" href="#sk-wbs-gantt">/wbs-gantt</a>
+    <a class="sb-link" href="#sk-daily-report">/daily-report</a>
+    <a class="sb-link" href="#sk-monthly-report">/monthly-report</a>
+    <a class="sb-link" href="#sk-doc-compare">/doc-compare</a>
+  </div>
+
+  <div class="sb-section">
     <div class="sb-section-label">🤖 エージェント活用</div>
     <a class="sb-link" href="#agent-ecosystem">エコシステム概要</a>
     <a class="sb-link" href="エージェント活かし方マニュアル.html" target="_blank">活かし方マニュアル↗</a>
@@ -249,6 +262,7 @@
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
+<tr><td>v3.5</td><td>2026-05-16</td><td>ビジネス文書スキル9本追加（/hearing-sheet・/proposal-outline・/billing-docs・/nda・/biz-contract・/wbs-gantt・/daily-report・/monthly-report・/doc-compare）。完全ガイド連携。</td></tr>
 <tr><td>v2.2</td><td>2026-05-10</td><td>第21章「自動完了指示の最短フォーマット」追加。</td></tr>
 <tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。</td></tr>
 <tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・全面改訂・アコーディオン化。</td></tr>
@@ -279,6 +293,16 @@
     <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
     <li class="sub-item"><a href="#sk-content-burst">/content-burst — テーマ→6チャネル発信物を並列生成</a></li>
     <li class="sub-item"><a href="#sk-deck-sprint">/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成</a></li>
+    <li><strong>PART 1-B: ビジネス文書スキル（営業〜月次）</strong></li>
+    <li class="sub-item"><a href="#sk-hearing-sheet">/hearing-sheet — ヒアリングシート生成</a></li>
+    <li class="sub-item"><a href="#sk-proposal-outline">/proposal-outline — 提案骨子生成</a></li>
+    <li class="sub-item"><a href="#sk-billing-docs">/billing-docs — 見積書・請求書生成</a></li>
+    <li class="sub-item"><a href="#sk-nda">/nda — NDA生成</a></li>
+    <li class="sub-item"><a href="#sk-biz-contract">/biz-contract — 業務委託契約書生成</a></li>
+    <li class="sub-item"><a href="#sk-wbs-gantt">/wbs-gantt — WBS・ガントチャート生成</a></li>
+    <li class="sub-item"><a href="#sk-daily-report">/daily-report — 音声入力日報</a></li>
+    <li class="sub-item"><a href="#sk-monthly-report">/monthly-report — 月次活動レポート</a></li>
+    <li class="sub-item"><a href="#sk-doc-compare">/doc-compare — 新旧対比表生成</a></li>
     <li><strong>エージェント活用ガイド</strong></li>
     <li class="sub-item"><a href="#agent-ecosystem">Kaiエージェントエコシステム概要（19体）</a></li>
     <li class="sub-item"><a href="エージェント活かし方マニュアル.html" target="_blank">↗ エージェント活かし方マニュアル（独立ガイド）</a></li>
@@ -791,6 +815,161 @@
   <a href="../skill/deck-sprint/使い倒しガイド.html" target="_blank">▶ deck-sprint 徹底使い倒しガイド</a> |
   <a href="../.claude/agents/エージェントガイド.html" target="_blank">▶ エージェントガイド（スキル用）</a>
 </div>
+</div>
+</details>
+
+<!-- ===== ビジネス文書スキル ===== -->
+<div class="part-header" id="biz-doc-skills">PART <span>1-B</span>　ビジネス文書スキル（営業〜月次）</div>
+
+<div class="lead" style="margin:16px 0;">コンサルティング案件の<strong>営業フェーズ → 契約フェーズ → 実行フェーズ</strong>をカバーする9スキル。<a href="ビジネス文書スキル完全ガイド.html" target="_blank">▶ 完全ガイドはこちら</a></div>
+
+<details id="sk-hearing-sheet">
+<summary><span class="acc-num">SK</span>/hearing-sheet — 業種×部門に合わせたヒアリングシートをExcelで動的生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/hearing-sheet</div>
+  <div class="agent-phase">初回商談前・現状把握ヒアリング準備</div>
+  <p>業種（14種）と対象部門（5種）を指定すると、業種特有の質問項目を自動追加したExcelヒアリングシートを生成。文字起こしテキストからの自動記入にも対応。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>ヒアリングシートを作成して<br><span class="comment"># 詳細指定</span><br>〇〇株式会社（製造業）の経理・営業部門のヒアリングシートを作って</div>
+<h3>シート構成</h3>
+<table>
+  <tr><th>シート</th><th>内容</th><th>生成</th></tr>
+  <tr><td>基本情報</td><td>会社概要・担当者・従業員数</td><td>常時</td></tr>
+  <tr><td>IT環境</td><td>使用システム・インフラ</td><td>常時</td></tr>
+  <tr><td>【部門名】</td><td>部門別質問項目（業種特有の質問自動追加）</td><td>選択部門ごと</td></tr>
+  <tr><td>優先度・ゴール整理</td><td>課題優先順位・予算感・意思決定プロセス</td><td>常時</td></tr>
+</table>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#hearing-sheet" target="_blank">▶ hearing-sheet 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-proposal-outline">
+<summary><span class="acc-num">SK</span>/proposal-outline — ヒアリング結果から提案骨子（1〜2ページWord）を自動生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/proposal-outline</div>
+  <div class="agent-phase">商談後の提案準備 / ヒアリング→提案を素早くまとめたい時</div>
+  <p>hearing-sheetのExcel・文字起こしテキスト・手書きメモのいずれかから顧客課題を抽出し、AI/DX提案または汎用IT導入提案のアウトラインをWord形式で生成。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>このヒアリングシートから提案骨子を作って<br>[Excelをアップロード]</div>
+<h3>出力構成（1〜2ページ）</h3>
+<ol><li>現状課題の整理（3課題・数値付き）</li><li>ご提案の方向性（アプローチ・理由）</li><li>期待効果（定量・定性）</li><li>次のステップ（詳細ヒアリング・見積・PoC）</li></ol>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#proposal-outline" target="_blank">▶ proposal-outline 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-billing-docs">
+<summary><span class="acc-num">SK</span>/billing-docs — 見積書・請求書をExcelで自動生成（消費税10%・インボイス対応）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/billing-docs</div>
+  <div class="agent-phase">見積もり・請求書が必要な時</div>
+  <p>「見積書を作成して」「請求書が必要」など自然な言葉でトリガー。消費税10%自動計算・インボイス番号自動採番。月額顧問型・時間単価型・プロジェクト型に対応。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button><span class="comment"># 見積書</span><br>〇〇株式会社向けAIアドバイザリー月額30万円の見積書を作成して<br><span class="comment"># 請求書</span><br>〇〇株式会社への5月分の請求書を作って（AI支援業務・税抜20万円）</div>
+<table>
+  <tr><th>トリガー</th><th>生成物</th></tr>
+  <tr><td>請求書・インボイス・請求</td><td>請求書（INV-YYYYMM-XXX）</td></tr>
+  <tr><td>見積書・見積もり・御見積</td><td>見積書（QUO-YYYYMM-XXX）</td></tr>
+</table>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#billing-docs" target="_blank">▶ billing-docs 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-nda">
+<summary><span class="acc-num">SK</span>/nda — 損害賠償上限・秘密保持期間明示のバランス型NDAをWord形式で生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/nda</div>
+  <div class="agent-phase">新規クライアントとの機密情報の取り交わし前</div>
+  <p>損害賠償上限（標準500万円）と秘密保持期間（終了後5年）を明示したリスクバランス型。生成AI・クラウドサービス利用条項など現代的な条項を含む。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>NDAを作成して。開示者：有限会社アートソウル、受領者：〇〇株式会社<br>目的：AI導入支援コンサルティング</div>
+<div class="warn"><span class="label">注意</span>本スキルのNDAは標準ひな形です。締結前に専門家（弁護士等）へのご確認を推奨します。</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#nda" target="_blank">▶ NDA 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-biz-contract">
+<summary><span class="acc-num">SK</span>/biz-contract — コンサル・AI支援向け業務委託契約書（18条・知財共有型）をWord形式で生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/biz-contract</div>
+  <div class="agent-phase">受注決定後・正式契約の締結前</div>
+  <p>月額顧問型を標準とし、知的財産権の共有・再委託許可・損害賠償上限のバランス型条項を採用した18条構成の業務委託契約書。AI支援・コンサル・DX推進業務全般に対応。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円、1年間</div>
+<div class="warn"><span class="label">注意</span>本スキルの契約書は標準ひな形です。締結前に専門家（弁護士等）へのご確認を推奨します。</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#biz-contract" target="_blank">▶ biz-contract 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-wbs-gantt">
+<summary><span class="acc-num">SK</span>/wbs-gantt — 日付変更でバー自動伸縮・ステータスで色自動変化の動的ガントチャートをExcel生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/wbs-gantt</div>
+  <div class="agent-phase">プロジェクト開始前・スケジュール共有が必要な時</div>
+  <p>開始日・終了日の変更でガントバーが自動伸縮、ステータス変更でバー色が自動変化する動的関数版Excel。契約書・提案書からプロジェクト情報を自動抽出することも可能。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>〇〇社AIプロジェクトのガントチャートを作って。<br>開始：2026/6/1、終了：2026/11/30<br>フェーズ：現状分析→設計→実装→定着支援</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#wbs-gantt" target="_blank">▶ wbs-gantt 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-daily-report">
+<summary><span class="acc-num">SK</span>/daily-report — 音声・自然文の業務内容を5列Excel日報に自動変換<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/daily-report</div>
+  <div class="agent-phase">毎日の業務終了後・日報記録</div>
+  <p>話した内容をそのまま貼り付けるだけで、日付・報告者・作業内容・課題・次回予定の5列Excelに自動変換。月次レポートのデータ源として蓄積していく。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>今日の日報を記録して。<br>「今日はA社のシステム設計を3時間実施しました。<br>データベース設計で課題が発生しています。<br>明日はB社との要件定義会議の予定です。」</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#daily-report" target="_blank">▶ daily-report 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-monthly-report">
+<summary><span class="acc-num">SK</span>/monthly-report — 日報からA4縦2ページの月次活動レポートをWord形式で自動生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/monthly-report</div>
+  <div class="agent-phase">月末・クライアントへの活動報告</div>
+  <p>日報データをもとにA4縦2ページのクライアント向け月次レポートを生成。稼働実績・業務内訳（円グラフ）・成果・課題・次月計画を数値で証明。継続契約の判断材料に。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>〇〇株式会社への5月分の月次レポートを作って。<br>稼働18日、主要活動：AI戦略策定・研修実施、成果：参加率95%・月40時間削減見込み</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#monthly-report" target="_blank">▶ monthly-report 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-doc-compare">
+<summary><span class="acc-num">SK</span>/doc-compare — 2文書を比較・変更箇所を色分けした新旧対比表をWord形式で生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/doc-compare</div>
+  <div class="agent-phase">就業規則・契約書・規程の改訂履歴管理</div>
+  <p>2つのWord/PDFをアップロードするだけで新旧対比表を生成。14種類の見出しパターンを自動認識し、条文番号がずれた場合も見出し名の類似度で正確に対応付け。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>[変更前.docx と 変更後.docx をアップロード]<br>新旧対比表を作成して</div>
+<h3>変更の表示ルール</h3>
+<table>
+  <tr><th>種別</th><th>表示</th></tr>
+  <tr><td>変更後テキスト</td><td>赤字・太字・下線</td></tr>
+  <tr><td>新規追加</td><td>青字・「(新規追加)」</td></tr>
+  <tr><td>削除</td><td>赤字・取り消し線・「(削除)」</td></tr>
+</table>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#doc-compare" target="_blank">▶ doc-compare 完全ガイド</a></div>
 </div>
 </details>
 
