@@ -5,117 +5,354 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AIエージェント「Kai」安全・快適運用ガイド</title>
 <style>
-  /* 総合マニュアルと共通のスタイルを適用 */
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; }
-  .container { max-width: 920px; margin: 40px auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
-  h1 { font-size: 30px; color: #1A365D; margin-bottom: 20px; border-bottom: 4px solid #ED8936; padding-bottom: 10px; }
-  h2 { font-size: 24px; color: #1A365D; margin-top: 40px; margin-bottom: 20px; padding-left: 15px; border-left: 8px solid #ED8936; }
-  h3 { font-size: 19px; color: #2D3748; margin: 25px 0 10px; font-weight: bold; }
-  p { margin: 15px 0; }
-  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
-  .tip { background: #FFFAF0; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #ED8936; }
-  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 14px; }
-  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
-  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
-  .step { background: #F7FAFC; padding: 20px 25px; border-radius: 8px; border: 1px solid #E2E8F0; margin: 15px 0; }
-  .step-num { display: inline-block; background: #1A365D; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 10px; }
-  code { background: #2D3748; color: #F6AD55; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
-  ul { padding-left: 25px; margin: 15px 0; }
-  li { margin: 8px 0; }
-  .back-link { display: inline-block; margin-bottom: 20px; color: #3182CE; text-decoration: none; font-weight: bold; }
+  .container { max-width: 960px; margin: 40px auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+  h1 { font-size: 30px; color: #1A365D; margin-bottom: 8px; border-bottom: 4px solid #ED8936; padding-bottom: 12px; }
+  .subtitle { font-size: 15px; color: #718096; margin-bottom: 28px; }
+  h2 { font-size: 22px; color: #1A365D; margin-top: 50px; margin-bottom: 18px; padding: 10px 18px; border-left: 8px solid #ED8936; background: #FFFBF5; border-radius: 0 6px 6px 0; }
+  h3 { font-size: 17px; color: #2D3748; margin: 28px 0 10px; font-weight: bold; padding-left: 12px; border-left: 3px solid #CBD5E0; }
+  p { margin: 12px 0; }
+  .lead { font-size: 16px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 13px; }
+  .warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 13px; }
+  .good { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; }
+  .good .label { font-weight: bold; color: #276749; display: block; margin-bottom: 6px; font-size: 13px; }
+  .info { background: #EBF8FF; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #3182CE; }
+  .info .label { font-weight: bold; color: #2B6CB0; display: block; margin-bottom: 6px; font-size: 13px; }
+  .step { background: #F7FAFC; padding: 18px 22px; border-radius: 8px; border: 1px solid #E2E8F0; margin: 12px 0; }
+  .step-num { display: inline-block; background: #1A365D; color: white; width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-weight: bold; margin-right: 10px; font-size: 13px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: "Consolas", "Courier New", monospace; font-size: 0.88em; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 18px 22px; border-radius: 8px; font-family: "Consolas", "Courier New", monospace; font-size: 0.88em; line-height: 1.7; margin: 14px 0; overflow-x: auto; }
+  pre code { background: none; color: #F6AD55; padding: 0; }
+  pre .comment { color: #68D391; }
+  pre .cmd { color: #90CDF4; }
+  ul { padding-left: 22px; margin: 12px 0; }
+  li { margin: 7px 0; }
+  .back-link { display: inline-block; margin-bottom: 24px; color: #3182CE; text-decoration: none; font-weight: bold; font-size: 14px; }
   .back-link:hover { text-decoration: underline; }
+  .toc { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px 28px; margin: 24px 0; }
+  .toc h4 { font-size: 14px; color: #718096; margin-bottom: 10px; font-weight: bold; }
+  .toc ol { padding-left: 20px; }
+  .toc li { margin: 5px 0; font-size: 14px; }
+  .toc a { color: #3182CE; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding: 8px 12px; margin: 6px 0; background: #F7FAFC; border-radius: 6px; border: 1px solid #E2E8F0; display: flex; align-items: flex-start; gap: 10px; }
+  .checklist li::before { content: "☐"; font-size: 18px; color: #A0AEC0; line-height: 1.4; flex-shrink: 0; }
+  .checklist li.done::before { content: "☑"; color: #38A169; }
+  .badge { display: inline-block; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+  .badge-auto { background: #C6F6D5; color: #276749; }
+  .badge-manual { background: #BEE3F8; color: #2B6CB0; }
+  .badge-once { background: #FEEBC8; color: #C05621; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .compare-card { padding: 18px 20px; border-radius: 8px; border: 1px solid #E2E8F0; }
+  .compare-card h4 { font-size: 15px; margin-bottom: 10px; }
+  .compare-card.manual { border-top: 4px solid #3182CE; }
+  .compare-card.auto { border-top: 4px solid #38A169; }
+  .changelog-entry { border-left: 3px solid #CBD5E0; padding: 12px 20px; margin: 14px 0; }
+  .changelog-date { font-weight: bold; color: #1A365D; font-size: 14px; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 40px 0; }
+  @media (max-width: 700px) {
+    .container { padding: 30px 20px; }
+    .compare { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
   <a href="総合マニュアル.html" class="back-link">← 総合マニュアルに戻る</a>
-  
+
   <h1>AIエージェント「Kai」安全・快適運用ガイド</h1>
-  
-  <p class="lead">このガイドでは、AIエージェント「Kai（Antigravity）」を、より速く、より安全に、そしてストレスなく使い続けるための設定とコツを解説します。</p>
+  <p class="subtitle">大切なデータを守りながら、安心してAIと働くための完全ガイド</p>
 
-  <h2>1. PC環境の引越し手順（Dドライブ → Dropbox）</h2>
-  <p>外付けSSD（Dドライブ）での作業は、通信の遅れや暗号化の負担で動作が重くなりがちです。CドライブにあるDropboxフォルダへ移動させることで、爆速かつ自動バックアップ付きの環境になります。</p>
-  
-  <div class="step">
-    <p><span class="step-num">1</span> <strong>Kaiを完全に終了する</strong><br>動いているターミナル（黒い画面）をすべて閉じます。</p>
-  </div>
-  
-  <div class="step">
-    <p><span class="step-num">2</span> <strong>Dropbox内に専用フォルダを作る</strong><br><code>C:\Users\kei\Dropbox\Dev\Antigravity</code> のように、分かりやすい場所にフォルダを作成します。</p>
-  </div>
-  
-  <div class="step">
-    <p><span class="step-num">3</span> <strong>フォルダを「コピー」する</strong><br>Dドライブの <code>AS_AI導入支援事業_cc</code> フォルダを、今作ったDropbox内の場所へコピーします。<br><span class="tip"><span class="label">コツ</span>「切り取り」ではなく「コピー」を使うと、万が一失敗しても元のデータが残るので安全です。</span></p>
-  </div>
-  
-  <div class="step">
-    <p><span class="step-num">4</span> <strong>動作を確認する</strong><br>コピー先のフォルダでKaiを起動し、いつものように動くか確認します。</p>
+  <p class="lead">AIは強力です。その分、操作ミスや誤指示があると大量のファイルが一瞬で変わることもあります。このガイドでは「何かあっても1秒で元に戻せる」環境を作る方法を、ゼロから丁寧に解説します。</p>
+
+  <div class="toc">
+    <h4>目次</h4>
+    <ol>
+      <li><a href="#sec1">使い始める前に：はじめの一歩チェックリスト</a></li>
+      <li><a href="#sec2">Gitとは？タイムマシンの仕組みを理解する</a></li>
+      <li><a href="#sec3">Gitのセットアップ（初回のみ）</a></li>
+      <li><a href="#sec4">自動コミットの仕組み：Kaiが自動でセーブする</a></li>
+      <li><a href="#sec5">手動コミット vs Kaiに任せる：使い分けガイド</a></li>
+      <li><a href="#sec6">緊急時の復元方法</a></li>
+      <li><a href="#sec7">既存作業の引越し手順（フォルダ移動）</a></li>
+      <li><a href="#sec8">日々の運用ノウハウ</a></li>
+      <li><a href="#sec9">作業履歴・変更ログ</a></li>
+    </ol>
   </div>
 
-  <div class="step">
-    <p><span class="step-num">5</span> <strong>Kaiに「住所の書き換え」を頼む</strong><br>引越しで住所が変わったので、Kaiに以下のようにお願いしてください。<br>
-    <code>「フォルダの引越しをしたので、全てのファイルの中にある C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc という文字を、新しい場所のパス（ C:\Users\kei\Dropbox\Dev\Antigravity\AS_AI導入支援事業_cc ）に一括で書き換えて」</code><br>
-    これで全てのリンクが元通りになります。</p>
-  </div>
+  <!-- ===================== -->
+  <h2 id="sec1">1. 使い始める前に：はじめの一歩チェックリスト</h2>
 
-  <h2>2. Git（ギット）を「防波堤」にする手順</h2>
-  <p>「Git（ギット）」とは、一言で言うと**「ファイルのタイムマシン」**です。AIに大きな修正を頼む前に、今の状態を「セーブ（保存）」しておくことで、もし失敗しても1秒で元の状態に巻き戻すことができます。</p>
-  
-  <h3>ステップ0：Gitが入っているか確認する</h3>
-  <p>黒い画面（ターミナル）で <code>git --version</code> と打ってみてください。数字が表示されれば準備完了です。<br>
-  エラーが出る場合は、以下の手順でインストールしましょう。</p>
+  <p>Kaiを使い始める前に、以下の3つが揃っているか確認してください。どれも5〜10分でできます。</p>
+
+  <ul class="checklist">
+    <li><div><strong>Gitがインストールされている</strong><br><span style="font-size:14px;color:#718096;">ターミナルで <code>git --version</code> と打って数字が出ればOK。→ <a href="#sec3-install">インストール手順</a></span></div></li>
+    <li><div><strong>Gitに名前・メールアドレスが登録されている</strong><br><span style="font-size:14px;color:#718096;">一度だけ必要な設定。→ <a href="#sec3-config">設定手順</a></span></div></li>
+    <li><div><strong>作業フォルダがDropboxなどクラウド同期フォルダ内にある</strong><br><span style="font-size:14px;color:#718096;">外付けドライブより速く、自動バックアップになるので安心。推奨パス：<code>C:\Users\kei\Dropbox\00_Antigravity\</code></span></div></li>
+  </ul>
 
   <div class="tip">
-    <span class="label">インストール方法（Windowsの場合）</span>
-    1. <a href="https://git-for-windows.github.io/" target="_blank">Git for Windows</a> の公式サイトからダウンロードします。<br>
-    2. インストーラーを起動し、基本的に全て「Next（次へ）」を押して進めればOKです。<br>
-    3. インストール後、PCを一度再起動してください。
+    <span class="label">このガイドで使う「ターミナル」とは？</span>
+    Kaiとのチャット画面（Claude Code）のこと、またはWindowsの「PowerShell」のことです。<br>
+    Claude Code内では先頭に <code>!</code> を付けて打てばそのまま実行できます。例：<code>! git --version</code>
   </div>
 
-  <h3>ステップ1：最初の1回だけ必要な設定（名前の登録）</h3>
-  <p>Gitを使うには「誰が保存したか」を登録する必要があります。以下の2行をターミナルで1回ずつ入力してください。（名前とメールは自分のものでOKです）</p>
-  <pre><code>git config --global user.name "Your Name"
-git config --global user.email "your@example.com"</code></pre>
+  <!-- ===================== -->
+  <h2 id="sec2">2. Gitとは？タイムマシンの仕組みを理解する</h2>
 
-  <h3>ステップ2：実際に「防波堤」を作る（作業前）</h3>
-  <p>Kaiに「〇〇をやって」と頼む直前に、以下の2つを打つのがプロのコツです。</p>
+  <p>「Git（ギット）」は、ファイルの変更履歴をずっと記録し続けてくれるツールです。ゲームで言えば「セーブデータ」、家で言えば「防犯カメラ付きの金庫」のイメージです。</p>
+
+  <h3>Gitでできること</h3>
+  <ul>
+    <li><strong>「セーブ」（コミット）</strong>：今の状態に名前をつけて保存する</li>
+    <li><strong>「巻き戻し」（リストア）</strong>：過去のセーブ地点にいつでも戻れる</li>
+    <li><strong>「履歴確認」（ログ）</strong>：いつ・何を・どう変えたかを一覧で見られる</li>
+    <li><strong>「差分確認」（diff）</strong>：変更前と変更後の違いを比較できる</li>
+  </ul>
+
+  <h3>AIを使うときに特にGitが重要な理由</h3>
+
+  <div class="warn">
+    <span class="label">AIの特性：大量・高速・不可逆</span>
+    Kaiは1回の指示で数十〜数百のファイルを一度に変更できます。指示の解釈が少しズレると、意図しない変更が大量に発生することも。「元に戻す」ボタンは存在しないので、<strong>Gitが唯一の安全網</strong>になります。
+  </div>
+
+  <div class="good">
+    <span class="label">Gitがあれば</span>
+    「Kaiに頼んだら全部おかしくなった！」という事態でも、コマンド1行で作業前の状態に完全復元できます。<br>
+    <strong>→ これが整っていれば、Kaiへの指示を躊躇なく出せるようになります。</strong>
+  </div>
+
+  <!-- ===================== -->
+  <h2 id="sec3">3. Gitのセットアップ（初回のみ）</h2>
+
+  <h3 id="sec3-install">ステップ① Gitのインストール確認</h3>
+  <p>ターミナルで以下を実行してください：</p>
+  <pre><code>git --version</code></pre>
+  <p>バージョン番号（例：<code>git version 2.54.0.windows.1</code>）が表示されればOKです。</p>
+
+  <div class="tip">
+    <span class="label">表示されない場合のインストール方法（Windows）</span>
+    1. <a href="https://git-for-windows.github.io/" target="_blank">Git for Windows</a> の公式サイトからダウンロード<br>
+    2. インストーラーを起動し、すべて「Next（次へ）」で進む<br>
+    3. インストール後、PCを一度再起動する
+  </div>
+
+  <h3 id="sec3-config">ステップ② 名前・メールの登録（最初の1回だけ）</h3>
+  <p>「誰がセーブしたか」をGitに覚えさせます。以下を1行ずつ実行してください：</p>
+  <pre><span class="comment"># 名前を登録（自分の名前でOK）</span>
+<span class="cmd">git config --global user.name "Kei Uemura"</span>
+
+<span class="comment"># メールを登録（自分のメールでOK）</span>
+<span class="cmd">git config --global user.email "uemura@artsoul.jp"</span></pre>
+
+  <h3>ステップ③ フォルダをGit管理下に置く（新規フォルダの場合のみ）</h3>
+  <p>既存フォルダをコピーしてきた場合はすでにGit管理済みのことが多いので、まず以下で確認：</p>
+  <pre><span class="cmd">git status</span></pre>
+  <p>「On branch master」のように表示されれば管理済みです。「fatal: not a git repository」が出た場合は初期化します：</p>
+  <pre><span class="comment"># Git管理を開始する（フォルダの中で実行）</span>
+<span class="cmd">git init</span>
+<span class="cmd">git add .</span>
+<span class="cmd">git commit -m "初回セーブ"</span></pre>
+
+  <!-- ===================== -->
+  <h2 id="sec4">4. 自動コミットの仕組み：Kaiが自動でセーブする</h2>
+
+  <p>このプロジェクトには「自動コミット」の仕組みがすでに組み込まれています。Kaiが作業を完了するたびに、自動的にGitへセーブが行われます。</p>
+
+  <h3>自動コミットとは何か</h3>
+  <div class="info">
+    <span class="label">自動コミットの動き</span>
+    Kaiがファイルを変更するたびに、以下のような名前でセーブが記録されます：<br><br>
+    <code>auto: 20260515_081729 ["ファイル名1", "ファイル名2", ...]</code><br><br>
+    日時 + 変更したファイル名が自動で記録されるので、「いつ何を変えたか」が後からすぐわかります。
+  </div>
+
+  <h3>自動コミットを確認する方法</h3>
+  <p>ターミナルで以下を実行すると、最近のセーブ履歴が一覧で見られます：</p>
+  <pre><span class="comment"># 最新10件の履歴を表示</span>
+<span class="cmd">git log --oneline -10</span></pre>
+  <p>以下のように表示されます：</p>
+  <pre style="background:#F7FAFC;color:#2D3748;">e8ac368 引越し作業前バックアップ（パス書き換え前）
+c142007 auto: 20260515_081729 ["server.py"]
+64f47b4 auto: 20260515_074257 ["state.json"]
+283ff58 auto: 20260515_073510 ["AI運用ガイド.html"]</pre>
+
+  <div class="tip">
+    <span class="label">確認ポイント</span>
+    <code>auto:</code> で始まるコミットが積み重なっていれば、自動コミットが正常に動作しています。
+  </div>
+
+  <!-- ===================== -->
+  <h2 id="sec5">5. 手動コミット vs Kaiに任せる：使い分けガイド</h2>
+
+  <div class="compare">
+    <div class="compare-card auto">
+      <h4>✅ Kaiが自動でやること <span class="badge badge-auto">AUTO</span></h4>
+      <ul>
+        <li>通常の作業中のセーブ（auto: コミット）</li>
+        <li>ファイル作成・編集ごとの記録</li>
+        <li>セッション終了時のまとめコミット</li>
+      </ul>
+      <p style="font-size:13px;margin-top:12px;color:#718096;">→ 普段はこれで十分。何もしなくてOK。</p>
+    </div>
+    <div class="compare-card manual">
+      <h4>🖐 あなたが手動でやること <span class="badge badge-manual">MANUAL</span></h4>
+      <ul>
+        <li>「大きな変更をKaiに頼む<strong>直前</strong>」のセーブ</li>
+        <li>「これが完成版」というマイルストーン保存</li>
+        <li>万が一の備えとして自分でセーブしたい時</li>
+      </ul>
+      <p style="font-size:13px;margin-top:12px;color:#718096;">→ 大きな作業の前だけ意識すればOK。</p>
+    </div>
+  </div>
+
+  <h3>手動コミットのコマンド（コピペで使えます）</h3>
+
   <div class="step">
-    <p><span class="step-num">1</span> <strong><code>git add .</code></strong><br>（「全ての変更を保存する準備をして」という意味）</p>
-    <p><span class="step-num">2</span> <strong><code>git commit -m "作業前バックアップ"</code></strong><br>（「今の状態に名前をつけて保存して」という意味）</p>
+    <p><span class="step-num">1</span> <strong>作業前のセーブ <span class="badge badge-once">これが一番大事</span></strong></p>
+    <pre><span class="cmd">git add .</span>
+<span class="cmd">git commit -m "作業前バックアップ"</span></pre>
+    <p style="font-size:14px;color:#718096;">Kaiに大きな作業を頼む直前に実行。万が一失敗しても確実に戻せます。</p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">2</span> <strong>マイルストーンのセーブ</strong></p>
+    <pre><span class="cmd">git add .</span>
+<span class="cmd">git commit -m "〇〇提案書v2 完成"</span></pre>
+    <p style="font-size:14px;color:#718096;">「この状態は完璧」と思ったタイミングで名前をつけて保存。</p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">3</span> <strong>Kaiに頼む場合</strong></p>
+    <pre style="background:#F7FAFC;color:#2D3748;font-style:italic;">「今の状態をGitでセーブしてから、〇〇をやって」</pre>
+    <p style="font-size:14px;color:#718096;">この一言を添えるだけでKaiが自動でコミットしてから作業を開始します。</p>
+  </div>
+
+  <!-- ===================== -->
+  <h2 id="sec6">6. 緊急時の復元方法</h2>
+
+  <div class="warn">
+    <span class="label">【緊急事態！】Kaiが失敗してファイルがおかしくなったら？</span>
+    落ち着いて以下のどれかを実行してください。
+  </div>
+
+  <h3>パターンA：直前のセーブ地点に戻す（一番よく使う）</h3>
+  <pre><span class="comment"># 全ファイルを最後のコミット時点に戻す</span>
+<span class="cmd">git restore .</span></pre>
+  <p>コミット後に変更したものが全てなかったことになります。一瞬で完了します。</p>
+
+  <h3>パターンB：特定のコミットまで丸ごと戻す</h3>
+  <pre><span class="comment"># まず履歴を見て、戻りたいコミットのIDを確認</span>
+<span class="cmd">git log --oneline -10</span>
+
+<span class="comment"># 特定のコミット時点のファイルを取り出す（例：e8ac368 のとき）</span>
+<span class="cmd">git restore --source=e8ac368 .</span></pre>
+
+  <h3>パターンC：何が変わったか確認してから判断する</h3>
+  <pre><span class="comment"># 変更されたファイルの一覧を見る</span>
+<span class="cmd">git status</span>
+
+<span class="comment"># 特定ファイルの変更前後の差分を見る</span>
+<span class="cmd">git diff ファイル名.md</span></pre>
+
+  <div class="good">
+    <span class="label">安心のポイント</span>
+    Gitに記録されたコミットは、上書きや削除しない限りずっと残り続けます。「あの時の状態」にはいつでも戻れます。
+  </div>
+
+  <!-- ===================== -->
+  <h2 id="sec7">7. 既存作業の引越し手順（フォルダ移動）</h2>
+
+  <p>作業環境を別の場所（例：外付けドライブ→Dropbox）に移動する場合の手順です。<strong>Kaiに丸ごと任せることができます。</strong></p>
+
+  <h3>なぜDropboxが推奨なのか</h3>
+  <ul>
+    <li>外付けSSD（Dドライブ）より読み書きが速い</li>
+    <li>Dropboxが自動でクラウドにバックアップしてくれる</li>
+    <li>PCが壊れてもデータが残る</li>
+  </ul>
+
+  <h3>引越しの全手順</h3>
+
+  <div class="step">
+    <p><span class="step-num">1</span> <strong>Kaiを終了する</strong><br>Claude Codeのウィンドウをすべて閉じます。</p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">2</span> <strong>フォルダを「コピー」する（切り取りはNG）</strong><br>
+    旧フォルダを新しい場所へコピー。切り取りは失敗時にデータが消えるリスクがあるので必ずコピーで。<br>
+    例：<code>D:\Google Antigravity\AS_AI導入支援事業_cc</code> → <code>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc</code>
+    </p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">3</span> <strong>新しい場所でKaiを起動する</strong><br>
+    Dropbox内のフォルダをClaude Codeで開いて起動します。
+    </p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">4</span> <strong>ファイルの完全性をKaiに確認してもらう</strong><br>
+    Kaiに以下のように伝えてください：
+    <pre style="background:#F7FAFC;color:#2D3748;font-style:italic;margin-top:10px;">「旧フォルダと新フォルダのファイル数・サイズを比較して、コピーが完全かどうか確認して」</pre>
+    </p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">5</span> <strong>内部リンク（パス）の一括書き換えをKaiに頼む</strong><br>
+    ファイルの中に旧フォルダのパスが書かれているものを、Kaiが一括で新パスに書き換えます：
+    <pre style="background:#F7FAFC;color:#2D3748;font-style:italic;margin-top:10px;">「フォルダの引越しをしたので、全ファイル内の旧パスを新パスに一括書き換えして。作業前にGitでセーブしてから進めて」</pre>
+    </p>
+  </div>
+
+  <div class="step">
+    <p><span class="step-num">6</span> <strong>動作確認してOKなら旧フォルダを削除</strong><br>
+    数日使って問題なければ旧フォルダを削除してOKです。迷ったらそのまま残しておいても構いません。
+    </p>
   </div>
 
   <div class="warn">
-    <span class="label">【緊急事態！】Kaiが失敗して、ファイルが壊れたら？</span>
-    落ち着いて <strong><code>git restore .</code></strong> と打ってください。一瞬で、さっき保存した「作業前」の状態に完全に元通りになります。
+    <span class="label">注意：Gitフォルダ（.git）も一緒にコピーする</span>
+    フォルダをコピーするとGitの履歴（.git フォルダ）もそのまま引き継がれます。コピー後も「あの時の状態に戻す」ができます。
   </div>
 
-  <h2>3. 日々の運用の注意点とアドバイス</h2>
-  
-  <h3>① Dropboxの「同期完了」を待つ</h3>
-  <p>ファイルを保存した後、Dropboxのアイコンが「青いぐるぐる」から「緑のチェック」になるのを待ってからPCを閉じたり移動したりしましょう。これだけで、データの食い違いを防げます。</p>
-  
-  <h3>② 大量ファイルの時は少し休憩</h3>
-  <p>一度に100個以上のファイルを一気に作った時は、Dropboxの同期に数分かかることがあります。その間は少し休憩して、同期が終わってから次の指示を出すとスムーズです。</p>
-  
-  <h3>③ Kaiに「迷ったら聞いて」と伝える</h3>
-  <p>Kaiは非常に優秀ですが、時々勝手に想像して進めてしまうことがあります。指示の最後に**「やり方がいくつかある場合は、勝手に進めずに一旦相談して」**と添えると、より確実な仕事をしてくれます。</p>
+  <!-- ===================== -->
+  <h2 id="sec8">8. 日々の運用ノウハウ</h2>
 
-  <h3>④ パスワード管理</h3>
-  <p>DropboxやGitHubなど、大事なツールのパスワードは使い回さず、安全な場所に保管しておきましょう。PC環境をCドライブに集約することで、セキュリティ対策も一箇所で済むようになります。</p>
+  <h3>① 大きな作業の前は必ず一言添える</h3>
+  <p>Kaiに大きな変更を頼むときは「作業前にGitでセーブしてから進めて」と添えるだけで安心度が格段に上がります。</p>
 
-  <h2>4. 作業履歴・変更ログ</h2>
+  <h3>② Dropboxの「同期完了」を待ってから閉じる</h3>
+  <p>Dropboxのアイコンが「青いぐるぐる」→「緑のチェック」になったのを確認してからPCを閉じましょう。同期中に閉じると、次回起動時にファイルが古いままのことがあります。</p>
 
-  <div class="step">
-    <p><strong>2026-05-15</strong> — PC環境の引越し完了（DドライブからDropboxへ）</p>
-    <ul style="margin-top:10px;">
+  <h3>③ 「迷ったら聞いて」と伝える習慣</h3>
+  <p>指示の最後に「やり方が複数ある場合は一旦確認して」と添えると、Kaiが勝手に解釈して進むのを防げます。特に削除・大幅変更・公開系の作業では有効です。</p>
+
+  <h3>④ 大量ファイル生成後は少し待つ</h3>
+  <p>100個以上のファイルを一気に作成した後は、Dropboxの同期に数分かかることがあります。次の指示を出す前に少し待つとスムーズです。</p>
+
+  <h3>⑤ パスワードとアクセスキーは安全に</h3>
+  <p>DropboxやGitHubなど重要ツールのパスワードは使い回さず、パスワードマネージャーで管理しましょう。Kaiにパスワードを直接伝える必要はありません。</p>
+
+  <!-- ===================== -->
+  <h2 id="sec9">9. 作業履歴・変更ログ</h2>
+
+  <div class="changelog-entry">
+    <p class="changelog-date">2026-05-15 — PC環境の引越し完了（Dドライブ → Dropbox）</p>
+    <ul style="margin-top:8px;font-size:14px;">
       <li>移行先：<code>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc</code></li>
       <li>ファイル検証：1,947ファイル・298.17MB 完全一致確認済み</li>
-      <li>内部パス一括更新：22ファイル（旧Dドライブパス → 新Dropboxパス）</li>
+      <li>内部パス一括更新：22ファイル（旧Dドライブパス → 新Dropboxパス）をKaiが自動更新</li>
       <li>Git防波堤：Dropbox環境でGit履歴を引き継ぎ設定完了</li>
-      <li>CLAUDE.md 書き込み制限を Dropbox パスのみに更新</li>
+      <li>CLAUDE.md 書き込み制限を Dropboxパスのみに更新</li>
+      <li>本ガイドを全面改訂（構成・内容を大幅拡充）</li>
     </ul>
   </div>
 
