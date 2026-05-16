@@ -1063,7 +1063,13 @@ function goFlow(ti,qid,itemTx){
     if(guideBtn)guideBtn.style.display='none';
     const noFlowEl=document.getElementById('flNoFlow');
     noFlowEl.style.display='block';
-    document.getElementById('flNoFlowItem').textContent=`「${itemTx}」の実行ステップをAIが設計します。`;
+    const _mx=DATA.matrices[ti];const _qd=_mx?.quadrants.find(q=>q.id===qid);
+    const _isHold=_qd&&_qd.pos==='bl';const _itd=_qd?.items?.find(it=>it.text===itemTx);
+    if(_isHold){
+      noFlowEl.innerHTML=`<div class="fl-noflow-t">⚪ このアクションは現在保留中です</div><div class="fl-noflow-d">${_itd?.detail?'📌 保留理由: '+_itd.detail:'現時点では着手不要です。状況が変わった時点で再検討してください。'}</div><div class="fl-noflow-d" style="margin-top:8px;font-size:12px;color:var(--muted)">必要になった時点でフローを作成できます。</div><button class="fl-create-btn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
+    }else{
+      noFlowEl.innerHTML=`<div class="fl-noflow-t">このアクションのフローはまだ作成されていません</div><div class="fl-noflow-d" id="flNoFlowItem">「${itemTx}」の実行ステップをAIが設計します。</div><button class="fl-create-btn" id="flCreateBtn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
+    }
   }
   go('flow',null);
 }
@@ -1133,7 +1139,8 @@ function renderMandala(){
       d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,`mandala.themes.${cell.ti}.name`,cell.th.name);});
     }
     else if(cell.t==='item'){
-      d.classList.add('item');d.style.background=cell.th.bgLight||TBG[cell.ti];d.style.color='var(--dim)';d.textContent=cell.item.text;d.title='ダブルクリックで編集 | '+cell.item.text;
+      d.classList.add('item','cp');d.style.background=cell.th.bgLight||TBG[cell.ti];d.style.color='var(--dim)';d.textContent=cell.item.text;d.title='クリック→マトリクス | ダブルクリックで編集 | '+cell.item.text;
+      d.onclick=()=>goMatrix(cell.ti);
       d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,`mandala.themes.${cell.ti}.items.${cell.ii}.text`,cell.item.text);});
     }
     else{d.classList.add('empty');}
