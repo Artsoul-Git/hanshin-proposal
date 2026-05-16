@@ -409,10 +409,10 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
 <!-- ===== biz-contract ===== -->
 <div class="skill-header" id="biz-contract">
   <div><div class="skill-cmd">/biz-contract</div></div>
-  <div><div class="skill-title">業務委託契約書生成</div><div class="skill-desc">コンサル・AI支援に特化した15条構成の業務委託契約書</div></div>
+  <div><div class="skill-title">業務委託契約書生成</div><div class="skill-desc">コンサル・AI支援に特化した17条構成の業務委託契約書</div></div>
 </div>
 
-<div class="lead">月額顧問型を標準とし、知的財産権は「受託者帰属＋委託者への包括ライセンス」のプロ型を採用。損害賠償は月額対価の最大6ヶ月・間接損害除外。AI支援・DX推進・コンサルティング業務全般に対応。</div>
+<div class="lead">月額顧問型を標準とし、知的財産権は「受託者帰属＋委託者への包括ライセンス」のプロ型を採用。個人情報取扱（第9条）・不可抗力（第14条）を標準装備。損害賠償は月額対価の最大6ヶ月・間接損害除外。AI支援・DX推進・コンサルティング業務全般に対応。</div>
 
 <h3>呼び出し方</h3>
 <div class="prompt-box">
@@ -420,12 +420,14 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
   業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円（税抜）、契約期間1年
 </div>
 
-<h3>標準15条構成のポイント</h3>
+<h3>標準17条構成のポイント</h3>
 <table>
   <tr><th>条項</th><th>内容</th><th>設定</th></tr>
   <tr><td>第7条 知的財産権</td><td>成果物の著作権帰属</td><td><strong>受託者帰属＋委託者包括ライセンス（デフォルト）</strong></td></tr>
-  <tr><td>第9条 再委託</td><td>外注の可否</td><td><strong>事前書面承諾で可（デフォルト）</strong></td></tr>
-  <tr><td>第12条 損害賠償と責任制限</td><td>上限・範囲</td><td><strong>月額の最大6ヶ月・間接損害除外</strong></td></tr>
+  <tr><td>第9条 個人情報の取扱い</td><td>APPI対応の管理義務</td><td><strong>目的外禁止・漏洩速報・廃棄義務を明示</strong></td></tr>
+  <tr><td>第10条 再委託</td><td>外注の可否</td><td><strong>事前書面承諾で可（デフォルト）</strong></td></tr>
+  <tr><td>第13条 損害賠償と責任制限</td><td>上限・範囲</td><td><strong>月額の最大6ヶ月・間接損害除外</strong></td></tr>
+  <tr><td>第14条 不可抗力</td><td>免責事由と手続き</td><td><strong>天災・感染症・クラウド停止等。2ヶ月継続で終了可</strong></td></tr>
 </table>
 
 <h3>知的財産権の帰属パターン</h3>
