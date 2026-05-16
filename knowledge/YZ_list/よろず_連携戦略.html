@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>よろず支援拠点 岡山 | 上村CO 連携戦略マップ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F0F4F8;
+  --navy: #1A2744;
+  --teal: #00B4D8;
+  --amber: #F59E0B;
+  --green: #10B981;
+  --red: #EF4444;
+  --purple: #8B5CF6;
+  --pink: #EC4899;
+  --orange: #F97316;
+  --card: #FFFFFF;
+  --muted: #64748B;
+  --border: #E2E8F0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--navy); font-size: 14px; }
+
+/* NAV */
+.top-nav { background: var(--navy); padding: 0 24px; display: flex; align-items: center; gap: 0; overflow-x: auto; }
+.top-nav .logo { color: var(--teal); font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 13px; padding: 16px 20px 16px 0; border-right: 1px solid #2D3F66; margin-right: 8px; white-space: nowrap; }
+.nav-tab { padding: 16px 18px; color: #94A3B8; font-size: 13px; font-weight: 500; cursor: pointer; border: none; background: none; border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; }
+.nav-tab:hover { color: white; }
+.nav-tab.active { color: white; border-bottom-color: var(--teal); }
+
+/* MAIN */
+.main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 60px; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* CARD */
+.card { background: var(--card); border-radius: 16px; padding: 28px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+h2 { font-size: 20px; font-weight: 900; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin: 20px 0 10px; }
+.icon { font-size: 22px; }
+
+/* CALLOUT */
+.callout { border-radius: 10px; padding: 14px 18px; font-size: 13px; line-height: 1.7; margin: 12px 0; }
+.callout-teal { background: #E0F7FA; border-left: 4px solid var(--teal); }
+.callout-amber { background: #FFFBEB; border-left: 4px solid var(--amber); }
+.callout-red { background: #FEF2F2; border-left: 4px solid var(--red); }
+.callout-green { background: #ECFDF5; border-left: 4px solid var(--green); }
+.callout-navy { background: #EEF2FF; border-left: 4px solid #6366F1; }
+.callout-purple { background: #F5F3FF; border-left: 4px solid var(--purple); }
+
+/* TAG */
+.tag { display: inline-block; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
+.tag-teal { background: #E0F7FA; color: #0077A8; }
+.tag-amber { background: #FFFBEB; color: #B45309; }
+.tag-green { background: #ECFDF5; color: #065F46; }
+.tag-red { background: #FEF2F2; color: #991B1B; }
+.tag-purple { background: #F5F3FF; color: #5B21B6; }
+.tag-navy { background: #EEF2FF; color: #3730A3; }
+.tag-gray { background: #F1F5F9; color: #475569; }
+.tag-orange { background: #FFF7ED; color: #C2410C; }
+.tag-pink { background: #FDF2F8; color: #9D174D; }
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th { background: var(--navy); color: white; padding: 10px 12px; font-size: 12px; font-weight: 700; text-align: left; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+tr:hover td { background: #F8FAFC; }
+
+/* ══════════ MAP ══════════ */
+.map-container { position: relative; width: 100%; min-height: 520px; display: flex; align-items: center; justify-content: center; }
+.map-inner { position: relative; width: 620px; height: 520px; }
+
+/* Center node */
+.map-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 110px; height: 110px; border-radius: 50%; background: linear-gradient(135deg, var(--teal), #0077A8); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: 900; text-align: center; box-shadow: 0 0 0 8px rgba(0,180,216,.2); z-index: 10; cursor: default; }
+.map-center .mc-name { font-size: 13px; line-height: 1.3; }
+.map-center .mc-label { font-size: 10px; color: rgba(255,255,255,.7); margin-top: 3px; }
+
+/* Group rings */
+.co-node { position: absolute; width: 80px; height: 80px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-size: 10px; font-weight: 700; cursor: pointer; transition: transform .2s, box-shadow .2s; z-index: 5; border: 2px solid transparent; }
+.co-node:hover { transform: scale(1.12); box-shadow: 0 6px 20px rgba(0,0,0,.18); z-index: 20; }
+.co-node .co-name { font-size: 10.5px; line-height: 1.3; }
+.co-node .co-role { font-size: 9px; opacity: .75; margin-top: 2px; }
+
+.co-it { background: linear-gradient(135deg, #E0F7FA, #B2EBF2); border-color: var(--teal); color: #006064; }
+.co-design { background: linear-gradient(135deg, #FCE4EC, #F8BBD9); border-color: var(--pink); color: #880E4F; }
+.co-mkt { background: linear-gradient(135deg, #FFF3E0, #FFE0B2); border-color: var(--orange); color: #BF360C; }
+.co-mgmt { background: linear-gradient(135deg, #E8EAF6, #C5CAE9); border-color: #5C6BC0; color: #1A237E; }
+.co-legal { background: linear-gradient(135deg, #F3E5F5, #E1BEE7); border-color: var(--purple); color: #4A148C; }
+.co-labor { background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-color: var(--green); color: #1B5E20; }
+.co-finance { background: linear-gradient(135deg, #FFFDE7, #FFF9C4); border-color: #FDD835; color: #827717; }
+.co-industry { background: linear-gradient(135deg, #FBE9E7, #FFCCBC); border-color: #FF5722; color: #BF360C; }
+
+/* SVG lines */
+.map-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+/* Popup */
+.co-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 360px; background: white; border-radius: 16px; box-shadow: 0 8px 40px rgba(0,0,0,.25); z-index: 1000; padding: 24px; }
+.co-popup.show { display: block; }
+.popup-close { position: absolute; top: 14px; right: 16px; cursor: pointer; font-size: 20px; color: var(--muted); border: none; background: none; }
+.popup-title { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
+.popup-role { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.popup-body { font-size: 13px; line-height: 1.7; }
+.popup-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.popup-scenario { background: #F0F9FF; border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 10px 12px; font-size: 12px; margin-top: 12px; }
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 999; }
+.overlay.show { display: block; }
+
+/* Legend */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.legend-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+/* ══════════ SCENARIO TABLE ══════════ */
+.scenario-card { background: white; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,.07); display: grid; grid-template-columns: 260px 1fr; gap: 16px; align-items: start; }
+.sc-theme { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.sc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.sc-co { font-weight: 700; font-size: 14px; color: var(--teal); margin-bottom: 4px; }
+.sc-reason { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.sc-script { background: #F0F9FF; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #0277A8; margin-top: 8px; line-height: 1.6; }
+
+/* ══════════ BRANDING ══════════ */
+.strategy-phase { background: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 16px; border-left: 5px solid var(--teal); }
+.phase-label { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .08em; margin-bottom: 6px; }
+.phase-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; }
+.strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.seminar-card { background: var(--bg); border-radius: 10px; padding: 14px 16px; }
+.seminar-no { font-size: 10px; font-weight: 700; color: var(--teal); margin-bottom: 4px; }
+.seminar-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.seminar-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ══════════ CO LIST ══════════ */
+.co-card { background: white; border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; border-left: 4px solid; }
+.co-card-name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.co-card-org { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.co-card-desc { font-size: 13px; line-height: 1.7; color: #334155; }
+.co-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+
+/* FILTER */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.filter-btn { padding: 7px 16px; border-radius: 20px; border: 2px solid var(--border); background: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; }
+.filter-btn.active { border-color: var(--teal); background: var(--teal); color: white; }
+
+/* RULE */
+.rule-box { background: linear-gradient(135deg, #1A2744, #0F172A); color: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 20px; }
+.rule-title { font-size: 13px; font-weight: 900; color: var(--amber); margin-bottom: 10px; letter-spacing: .05em; }
+.rule-list { list-style: none; padding: 0; }
+.rule-list li { padding: 5px 0 5px 20px; position: relative; font-size: 13px; color: #CBD5E0; line-height: 1.6; }
+.rule-list li::before { content: "⚠"; position: absolute; left: 0; color: var(--amber); }
+
+@media(max-width: 700px) {
+  .map-inner { width: 340px; height: 380px; }
+  .strategy-grid { grid-template-columns: 1fr; }
+  .scenario-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <div class="logo">よろず連携MAP<br>上村CO</div>
+  <button class="nav-tab active" onclick="show('map')">🗺 連携マップ</button>
+  <button class="nav-tab" onclick="show('scenario')">📋 紹介シナリオ</button>
+  <button class="nav-tab" onclick="show('reverse')">🔄 逆紹介</button>
+  <button class="nav-tab" onclick="show('colist')">👥 COリスト</button>
+  <button class="nav-tab" onclick="show('branding')">🚀 ブランディング戦略</button>
+</nav>
+
+<div class="main">
+
+<!-- ══════════ MAP ══════════ -->
+<div id="map" class="section active">
+  <div class="card">
+    <h2><span class="icon">🗺</span>上村CO 中心の連携関係マップ</h2>
+    <div class="callout callout-teal">
+      各COをクリックすると専門分野・連携シナリオが表示されます。上村COは「AI活用・業務改善」専門として中央に位置し、各専門領域のCOと連携します。
+    </div>
+
+    <div class="map-container">
+      <div class="map-inner" id="mapInner">
+        <!-- SVG connections -->
+        <svg class="map-svg" id="mapSvg"></svg>
+
+        <!-- Center node -->
+        <div class="map-center">
+          <div class="mc-name">上村 桂右<br>CO</div>
+          <div class="mc-label">AI活用・業務改善</div>
+        </div>
+
+        <!-- IT系 -->
+        <div class="co-node co-it" style="top:8%;left:42%;" onclick="showPopup('ishii')">
+          <div class="co-name">石井 慎八</div>
+          <div class="co-role">IT/Web集客</div>
+        </div>
+        <div class="co-node co-it" style="top:18%;left:68%;" onclick="showPopup('yamahata')">
+          <div class="co-name">山畑 和久</div>
+          <div class="co-role">動画/AI発信</div>
+        </div>
+        <div class="co-node co-it" style="top:42%;left:78%;" onclick="showPopup('kitagawa')">
+          <div class="co-name">北川 知裕</div>
+          <div class="co-role">SNS/Instagram</div>
+        </div>
+        <div class="co-node co-it" style="top:65%;left:72%;" onclick="showPopup('tokunaga')">
+          <div class="co-name">徳永 真美子</div>
+          <div class="co-role">AI/人材育成</div>
+        </div>
+        <div class="co-node co-it" style="top:75%;left:48%;" onclick="showPopup('katsura')">
+          <div class="co-name">桂 知奈美</div>
+          <div class="co-role">Instagram専門</div>
+        </div>
+
+        <!-- Design -->
+        <div class="co-node co-design" style="top:18%;left:16%;" onclick="showPopup('imaoka')">
+          <div class="co-name">今岡 優菜</div>
+          <div class="co-role">デザイン</div>
+        </div>
+
+        <!-- Marketing -->
+        <div class="co-node co-mkt" style="top:8%;left:22%;" onclick="showPopup('kato')">
+          <div class="co-name">加藤 学</div>
+          <div class="co-role">観光/販促</div>
+        </div>
+        <div class="co-node co-mkt" style="top:55%;left:10%;" onclick="showPopup('yabe')">
+          <div class="co-name">矢部 久智</div>
+          <div class="co-role">商店街/小売</div>
+        </div>
+        <div class="co-node co-mkt" style="top:35%;left:6%;" onclick="showPopup('mitsuoka')">
+          <div class="co-name">光岡 敏括</div>
+          <div class="co-role">経営/販路</div>
+        </div>
+
+        <!-- Management -->
+        <div class="co-node co-mgmt" style="top:78%;left:22%;" onclick="showPopup('kondo')">
+          <div class="co-name">近藤 厚志</div>
+          <div class="co-role">創業/補助金</div>
+        </div>
+        <div class="co-node co-mgmt" style="top:78%;left:4%;" onclick="showPopup('murakawa')">
+          <div class="co-name">村川 智博</div>
+          <div class="co-role">経営/起業</div>
+        </div>
+
+        <!-- Labor -->
+        <div class="co-node co-labor" style="top:60%;left:2%;" onclick="showPopup('kobayashi')">
+          <div class="co-name">小林 裕司</div>
+          <div class="co-role">社労士/組織</div>
+        </div>
+
+        <!-- Finance -->
+        <div class="co-node co-finance" style="top:75%;left:62%;" onclick="showPopup('tanabe')">
+          <div class="co-name">田邉 上智</div>
+          <div class="co-role">会計/税務</div>
+        </div>
+
+        <!-- Legal -->
+        <div class="co-node co-legal" style="top:48%;left:92%;" onclick="showPopup('kawai')">
+          <div class="co-name">河合 直哉</div>
+          <div class="co-role">行政書士</div>
+        </div>
+
+        <!-- Chief -->
+        <div class="co-node co-mgmt" style="top:28%;left:44%;border-color:#F59E0B;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);" onclick="showPopup('suzuka')">
+          <div class="co-name" style="color:#92400E;">鈴鹿 和彦</div>
+          <div class="co-role" style="color:#92400E;">チーフ</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#B2EBF2;border:2px solid #00B4D8;"></div><span>IT・デジタル</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#F8BBD9;border:2px solid #EC4899;"></div><span>デザイン</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FFE0B2;border:2px solid #F97316;"></div><span>販促・マーケ</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C5CAE9;border:2px solid #5C6BC0;"></div><span>経営・診断士</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#C8E6C9;border:2px solid #10B981;"></div><span>労務</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FFF9C4;border:2px solid #FDD835;"></div><span>財務・税務</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#E1BEE7;border:2px solid #8B5CF6;"></div><span>法律・行政</span></div>
+      <div class="legend-item"><div class="legend-dot" style="background:#FFF9C4;border:2px solid #F59E0B;"></div><span>チーフ</span></div>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">⚠ よろず支援拠点の基本ルール（厳守）</div>
+    <ul class="rule-list">
+      <li>よろずの相談者を自分の本業（有限会社アートソウル）の顧客に誘導することは禁止</li>
+      <li>よろずCOとして受けた相談をよろずの範囲外でサービス提供することは禁止</li>
+      <li>よろずでの活動はブランディング・実績積み上げ・他機関への認知が主目的</li>
+      <li>ミニセミナー・名刺代わりの強みPRはOK。直接営業はNG</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════ SCENARIO: 上村→他CO ══════════ -->
+<div id="scenario" class="section">
+  <div class="card">
+    <h2><span class="icon">📋</span>紹介シナリオ：AI相談者 → 他COへ</h2>
+    <div class="callout callout-teal">
+      AI活用・業務改善で相談に来た経営者が「実はこんな課題も…」となった時、どのCOに橋渡しするかの一覧。紹介はあくまで相談者の利益のため。
+    </div>
+  </div>
+
+  <!-- デジタル・集客系 -->
+  <div class="card">
+    <h3>📱 デジタル・集客・広告系</h3>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">Meta広告（Facebook・Instagram広告）を始めたい</div>
+        <div class="sc-tags">
+          <span class="tag tag-orange">広告</span>
+          <span class="tag tag-teal">SNS</span>
+        </div>
+      </div>
+      <div>
+        <div class="sc-co">→ 石井 慎八 CO</div>
+        <div class="sc-reason">集客・SNS広告のワンストップ支援が専門。Meta広告（Facebook/Instagram広告）に特に強み。</div>
+        <div class="sc-script">紹介文例：「広告運用については石井COが専門です。Web集客からSNS広告の設計まで一貫してサポートしてくれます。ご紹介しますね」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">Webサイトの改善・Web集客の戦略を立てたい</div>
+        <div class="sc-tags"><span class="tag tag-teal">Web</span><span class="tag tag-orange">集客</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 石井 慎八 CO</div>
+        <div class="sc-reason">Web活用・広報戦略のワンストップ支援。経営者視点での実践的サポート。</div>
+        <div class="sc-script">紹介文例：「Webの戦略的な活用は石井COが専門です。広告からサイト改善まで対応できます」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">Instagramアカウントを育てたい・SNS集客を強化したい</div>
+        <div class="sc-tags"><span class="tag tag-pink">Instagram</span><span class="tag tag-teal">SNS</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 桂 知奈美 CO（観光・飲食・地域系）</div>
+        <div class="sc-reason">Instagramフォロワー75,000以上のSNSマーケター。アカウント設計から運用まで一貫支援。</div>
+        <div class="sc-script">紹介文例：「Instagram運用は桂COが専門です。7.5万フォロワーを持つ方で、地域ビジネスのSNS戦略に詳しいです」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">飲食業・美容業でSNS・インフルエンサー施策を使いたい</div>
+        <div class="sc-tags"><span class="tag tag-pink">SNS</span><span class="tag tag-orange">飲食</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 北川 知裕 CO</div>
+        <div class="sc-reason">インフルエンサーとして12年活動・鍼灸サロン経営・飲食2,500件訪問経験。SNS集客支援会社代表。</div>
+        <div class="sc-script">紹介文例：「飲食・サロン業でのSNS活用なら北川COが経験豊富です。インフルエンサーとして45,000フォロワーを持つ方です」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">動画でビジネスをPRしたい・動画制作を始めたい</div>
+        <div class="sc-tags"><span class="tag tag-purple">動画</span><span class="tag tag-teal">PR</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 山畑 和久 CO（生成AI活用に理解あり）または 今岡 優菜 CO</div>
+        <div class="sc-reason">山畑CO：映像・動画×生成AI活用の情報発信が専門。今岡CO：動画制作＋デザイン＋印刷物まで対応。</div>
+        <div class="sc-script">紹介文例：「動画制作と発信戦略は山畑COが詳しいです。生成AIを活用した効率的な動画発信も提案できます」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">チラシ・パンフレット・名刺・パッケージデザインが必要</div>
+        <div class="sc-tags"><span class="tag tag-pink">デザイン</span><span class="tag tag-gray">印刷</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 今岡 優菜 CO</div>
+        <div class="sc-reason">DTPデザイン専門。チラシ・名刺・パンフ・観光資料・動画制作まで対応。印刷業界出身でライター経験も。</div>
+        <div class="sc-script">紹介文例：「販促ツールのデザイン・制作は今岡COが専門です。チラシから動画まで地域に合わせた制作ができます」</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">AI×動画発信・AI×情報発信で効率化したい</div>
+        <div class="sc-tags"><span class="tag tag-teal">AI</span><span class="tag tag-purple">動画</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 徳永 真美子 CO</div>
+        <div class="sc-reason">動画×IT×AI活用のハイブリッド支援。人材育成・採用支援も対応。IT初心者にわかりやすく説明が得意。</div>
+        <div class="sc-script">紹介文例：「動画を使った情報発信とAI活用を組み合わせるなら徳永COが相性いいです。丁寧にサポートしてくれます」</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 販促・経営系 -->
+  <div class="card">
+    <h3>📈 販路・経営・創業系</h3>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">観光業・宿泊業・旅館の経営・販促を改善したい</div>
+        <div class="sc-tags"><span class="tag tag-orange">観光</span><span class="tag tag-orange">宿泊</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 加藤 学 CO</div>
+        <div class="sc-reason">リクルート「じゃらん」経験＋独立16年。宿泊事業者支援に特化。ホテル建設の施設設計まで対応経験。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">商店街・小売店・実店舗の集客・販促を改善したい</div>
+        <div class="sc-tags"><span class="tag tag-orange">小売</span><span class="tag tag-orange">商店街</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 矢部 久智 CO</div>
+        <div class="sc-reason">190年以上続く老舗小売経営者。商店街よろずアドバイザー10年。創業支援〜集客イベント企画まで。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">新規事業・創業・起業の相談</div>
+        <div class="sc-tags"><span class="tag tag-navy">創業</span><span class="tag tag-navy">補助金</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 近藤 厚志 CO または 田邉 上智 CO</div>
+        <div class="sc-reason">近藤CO：創業・商品企画・補助金活用。田邉CO：税務・資金調達・M&A財務。どちらも創業支援実績あり。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">補助金・助成金を活用したい</div>
+        <div class="sc-tags"><span class="tag tag-green">補助金</span><span class="tag tag-green">助成金</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 鈴鹿 和彦 CO（チーフ）または 近藤 厚志 CO</div>
+        <div class="sc-reason">鈴鹿チーフ：27年の行政経験で国の支援施策に精通。近藤CO：補助金活用ノウハウと商工会経験。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">経営全般の見直し・改善計画を立てたい</div>
+        <div class="sc-tags"><span class="tag tag-navy">経営改善</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 光岡 敏括 CO または 近藤 厚志 CO</div>
+        <div class="sc-reason">光岡CO：電力会社〜経営コンサル経験。経営改善・販路・広報戦略。近藤CO：事業コンセプト〜売上拡大。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 専門職系 -->
+  <div class="card">
+    <h3>⚖️ 法務・労務・財務系</h3>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">従業員問題・労務・就業規則の整備</div>
+        <div class="sc-tags"><span class="tag tag-green">労務</span><span class="tag tag-green">組織</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 小林 裕司 CO または 鈴鹿 和彦 CO</div>
+        <div class="sc-reason">小林CO：15年以上の労務経験＋組織改善専門。鈴鹿CO：特定社労士＋働き方改革対応。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">人材育成・組織力強化・採用改善</div>
+        <div class="sc-tags"><span class="tag tag-green">人材</span><span class="tag tag-green">組織</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 小林 裕司 CO または 徳永 真美子 CO</div>
+        <div class="sc-reason">小林CO：組織コミュニケーション改善・職場環境改革。徳永CO：AI×人材育成の組み合わせ支援。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">税務・会計・資金調達・財務相談</div>
+        <div class="sc-tags"><span class="tag tag-amber">税務</span><span class="tag tag-amber">財務</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 田邉 上智 CO（公認会計士・税理士）</div>
+        <div class="sc-reason">約160社の法人税務顧問・年10件の創業支援・M&Aアドバイザリー。監査法人出身の実績。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">法的トラブル・契約書の確認・労働問題の法的解決</div>
+        <div class="sc-tags"><span class="tag tag-purple">法律</span><span class="tag tag-purple">契約</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 弁護士CO（池田・鹿室・横田のいずれか）</div>
+        <div class="sc-reason">法的判断が必要な問題。AI活用でも契約書や利用規約の法的確認が発生する場面で橋渡し。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">許認可申請・事業承継・外国人雇用・M&A手続き</div>
+        <div class="sc-tags"><span class="tag tag-purple">許認可</span><span class="tag tag-purple">承継</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 河合 直哉 CO（行政書士）</div>
+        <div class="sc-reason">運送業・建設業・農業の許認可＋事業承継・外国人雇用・M&A許認可申請支援の実績。</div>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div>
+        <div class="sc-theme">飲食店・カフェ・喫茶業の経営全般</div>
+        <div class="sc-tags"><span class="tag tag-red">飲食</span></div>
+      </div>
+      <div>
+        <div class="sc-co">→ 柿内 慶教 CO または 三宅 翔史 CO</div>
+        <div class="sc-reason">飲食業専門COが2名在籍。飲食業のDX・AI化と業種特有の経営課題を組み合わせて橋渡し。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ REVERSE SCENARIO ══════════ -->
+<div id="reverse" class="section">
+  <div class="card">
+    <h2><span class="icon">🔄</span>逆紹介シナリオ：他CO → 上村CO</h2>
+    <div class="callout callout-green">
+      他のCOが相談者を上村COに紹介してくれる場面。「AI活用は上村さん」という認知を組織内で定着させるための設計。
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>上村CO自己PR文（他COへの一言）</h3>
+    <div style="background:linear-gradient(135deg,#1A2744,#0E2233);color:white;border-radius:14px;padding:20px 24px;margin:12px 0;">
+      <div style="font-size:11px;color:#64B5F6;font-weight:700;margin-bottom:8px;">他COへ伝える「一言PR」</div>
+      <div style="font-size:16px;line-height:1.8;font-weight:700;">
+        「AI活用・業務効率化の相談は上村にください。<br>
+        月に何時間・何万円の無駄を可視化して、現場で続けられる改善に落とし込むのが専門です。<br>
+        難しいシステムではなく、今あるツールで動かします」
+      </div>
+    </div>
+
+    <table style="margin-top:16px;">
+      <tr>
+        <th width="20%">紹介元CO</th>
+        <th width="35%">こんな相談が来た時</th>
+        <th>上村COを紹介する理由</th>
+      </tr>
+      <tr>
+        <td><strong>石井 慎八 CO</strong><br><span style="font-size:11px;color:var(--muted);">IT/Web集客</span></td>
+        <td>Webプロモーション中で「そもそも業務がバタバタで…」「書類作成が大変で」という声が出た時</td>
+        <td>業務の根本整理（属人化・効率化）はAIを使った業務改善が専門の上村CO</td>
+      </tr>
+      <tr>
+        <td><strong>徳永 真美子 CO</strong><br><span style="font-size:11px;color:var(--muted);">AI/人材育成</span></td>
+        <td>AI活用で業務改善の相談を受けたが「もっと深く業務設計から整理したい」という場合</td>
+        <td>業務フロー整理×AI活用の組み合わせは上村COが詳しい</td>
+      </tr>
+      <tr>
+        <td><strong>光岡 敏括 CO</strong><br><span style="font-size:11px;color:var(--muted);">経営/診断士</span></td>
+        <td>経営改善支援中に「業務効率化・デジタル化・AI化」が課題として浮上した時</td>
+        <td>デジタル化・AI導入の具体的な実装は上村COが専門</td>
+      </tr>
+      <tr>
+        <td><strong>小林 裕司 CO</strong><br><span style="font-size:11px;color:var(--muted);">社労士/組織</span></td>
+        <td>人材育成・生産性向上の支援中に「AIで業務を楽にしたい」「研修にAI活用したい」と相談された時</td>
+        <td>AIを使った業務改善・研修サポートは上村CO</td>
+      </tr>
+      <tr>
+        <td><strong>近藤 厚志 CO</strong><br><span style="font-size:11px;color:var(--muted);">診断士/創業</span></td>
+        <td>新事業・創業支援で「AIをどう活用すればいいか」という質問が出た時</td>
+        <td>スタートアップ段階でのAI活用設計は上村CO</td>
+      </tr>
+      <tr>
+        <td><strong>鈴鹿 和彦 CO</strong><br><span style="font-size:11px;color:var(--muted);">チーフ/社労士</span></td>
+        <td>「IT化・デジタル化を進めたいが何から始めればいいか」という初期相談</td>
+        <td>IT化の第一歩・AI導入の入口として上村COが対応</td>
+      </tr>
+      <tr>
+        <td><strong>今岡 優菜 CO</strong><br><span style="font-size:11px;color:var(--muted);">デザイナー</span></td>
+        <td>販促制作の相談で「AIで文章や写真を効率化したい」という声が出た時</td>
+        <td>生成AIを使った販促素材作成効率化は上村CO</td>
+      </tr>
+      <tr>
+        <td><strong>村川 智博 CO</strong><br><span style="font-size:11px;color:var(--muted);">経営/起業家</span></td>
+        <td>急成長企業が「社内のAI活用体制を整えたい」「業務が追いつかない」と相談した時</td>
+        <td>急成長フェーズでのAI活用体制設計は上村CO</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>「よろず内の認知」を高める行動リスト</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;border-left:4px solid var(--teal);">
+        <strong>① 月1回・他COへの近況共有</strong><br>
+        <span style="font-size:12px;color:var(--muted);">「今月はこんなAI活用相談がありました。もし同じような課題をお持ちの相談者さんがいたらぜひ声かけください」という一言を他COに共有する</span>
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;border-left:4px solid var(--amber);">
+        <strong>② 専門外の相談を積極的に紹介（先に与える）</strong><br>
+        <span style="font-size:12px;color:var(--muted);">自分から他COに相談者を紹介することで「上村は信頼できる」という認知が広まり、逆紹介が自然に増える</span>
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;border-left:4px solid var(--green);">
+        <strong>③ 「AI相談は上村さんへ」という一言をお願いする</strong><br>
+        <span style="font-size:12px;color:var(--muted);">特に連携しやすい石井CO・徳永CO・光岡COに「AI活用が出たら紹介してください」と直接伝える</span>
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;border-left:4px solid var(--purple);">
+        <strong>④ チーフ（鈴鹿CO）との関係を最優先で構築</strong><br>
+        <span style="font-size:12px;color:var(--muted);">チーフからの認知が高まると、よろず内全体での存在感が上がる。相談があれば素早く対応して信頼を積む</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CO LIST ══════════ -->
+<div id="colist" class="section">
+  <div class="card">
+    <h2><span class="icon">👥</span>COプロフィール一覧</h2>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterCo('all',this)">すべて</button>
+      <button class="filter-btn" onclick="filterCo('it',this)">IT・デジタル</button>
+      <button class="filter-btn" onclick="filterCo('design',this)">デザイン</button>
+      <button class="filter-btn" onclick="filterCo('mkt',this)">販促・マーケ</button>
+      <button class="filter-btn" onclick="filterCo('mgmt',this)">経営・診断士</button>
+      <button class="filter-btn" onclick="filterCo('labor',this)">労務</button>
+      <button class="filter-btn" onclick="filterCo('finance',this)">財務・税務</button>
+      <button class="filter-btn" onclick="filterCo('legal',this)">法律・行政</button>
+    </div>
+    <div id="coListContainer"></div>
+  </div>
+</div>
+
+<!-- ══════════ BRANDING ══════════ -->
+<div id="branding" class="section">
+  <div class="card">
+    <h2><span class="icon">🚀</span>よろず活用ブランディング戦略</h2>
+    <div class="callout callout-navy">
+      よろず支援拠点は「本業の営業の場」ではない。しかし<strong>金融機関・商工会議所・士業から「こんなAI専門家がいますよ」と紹介してもらえる最高のブランディング舞台</strong>として活用する。
+    </div>
+  </div>
+
+  <div class="strategy-phase">
+    <div class="phase-label">PHASE 1 ／ 基盤構築</div>
+    <div class="phase-title">よろず内での「AI専門CO」ポジションの確立</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="font-size:13px;line-height:1.7;">▶ <strong>相談受付で成果を出す</strong>：AI活用の相談を受けたら「月何時間・何万円の削減」を数値で示す支援を徹底</div>
+      <div style="font-size:13px;line-height:1.7;">▶ <strong>他COへの先紹介を積極的に行う</strong>：「上村は信頼できる」という評判を構築</div>
+      <div style="font-size:13px;line-height:1.7;">▶ <strong>チーフ・サブチーフとの関係を最優先</strong>：運営の信頼を早期に獲得する</div>
+    </div>
+  </div>
+
+  <div class="strategy-phase" style="border-left-color:var(--amber);">
+    <div class="phase-label" style="color:var(--amber);">PHASE 2 ／ 存在感の拡大</div>
+    <div class="phase-title">ミニセミナーで「名前と専門」を広げる</div>
+    <h3>セミナー企画案（年4回推奨）</h3>
+    <div class="strategy-grid" style="margin-top:12px;">
+      <div class="seminar-card">
+        <div class="seminar-no">セミナー ①</div>
+        <div class="seminar-title">「今日から始める生成AI活用」</div>
+        <div class="seminar-desc">初心者向け。ChatGPT・Geminiの基本操作から「使い続けるコツ」まで。相談者獲得の入口として設計。</div>
+      </div>
+      <div class="seminar-card">
+        <div class="seminar-no">セミナー ②</div>
+        <div class="seminar-title">「AI導入で月30時間を削減した実例紹介」</div>
+        <div class="seminar-desc">まる様などの実例をベースに「ビフォーアフター」を数字で示す。よろず経由事例も追加していく。</div>
+      </div>
+      <div class="seminar-card">
+        <div class="seminar-no">セミナー ③</div>
+        <div class="seminar-title">「ChatGPTで販促文章を10分で作る」</div>
+        <div class="seminar-desc">今岡CO・山畑COと連携した合同セミナーも可。デザイン×AI×発信の連携として打ち出す。</div>
+      </div>
+      <div class="seminar-card">
+        <div class="seminar-no">セミナー ④</div>
+        <div class="seminar-title">「少人数で回る現場のAI活用術」</div>
+        <div class="seminar-desc">1〜10名の小規模事業者に特化。業種を問わない「業務フロー × AI」設計のハウツー。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strategy-phase" style="border-left-color:var(--green);">
+    <div class="phase-label" style="color:var(--green);">PHASE 3 ／ 外部機関への波及</div>
+    <div class="phase-title">金融機関・商工会議所・士業への間接PR</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
+        <strong>金融機関（銀行・信金）への波及ルート</strong><br>
+        よろず経由でAI支援事例が積み上がる → 鈴鹿チーフや光岡COが金融機関に「こんな専門家がいます」と自然に紹介 → 金融機関が融資先企業に上村COを推薦
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
+        <strong>商工会議所への波及ルート</strong><br>
+        よろずのセミナー実績 → 商工会議所での登壇依頼 → 会員企業への認知 → 本業への紹介流入
+      </div>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
+        <strong>士業（税理士・社労士）への波及ルート</strong><br>
+        田邉CO・小林COとよろず内で実績を積む → 「うちのクライアントにも紹介したい」という関係値を構築 → 本業への紹介流入
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>上村CO「よろずプロフィール」強化提案</h3>
+    <div class="callout callout-teal">
+      現在のよろずプロフィール（業務改善/AI活用支援）に以下を追加すると認知が高まる
+    </div>
+    <table>
+      <tr><th>項目</th><th>現在</th><th>強化案</th></tr>
+      <tr>
+        <td>キャッチコピー</td>
+        <td>現場で無理なく続けられる改善</td>
+        <td>「月○時間削減の実績あり」「数字で見えるAI活用」</td>
+      </tr>
+      <tr>
+        <td>支援事例</td>
+        <td>少人数でも回る現場づくり支援</td>
+        <td>「月116時間・年間約184万円削減（福祉事業所事例）」として具体化</td>
+      </tr>
+      <tr>
+        <td>対応業種</td>
+        <td>サービス・小売・美容・個人事業</td>
+        <td>福祉・医療・士業・製造を追加（まる様事例ベース）</td>
+      </tr>
+      <tr>
+        <td>強みPR</td>
+        <td>生成AI・既存ツール活用</td>
+        <td>「カイ（AI）との協業モデルで提案書〜実行計画を最速生成」</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div class="overlay" id="overlay" onclick="closePopup()"></div>
+<div class="co-popup" id="popup">
+  <button class="popup-close" onclick="closePopup()">✕</button>
+  <div class="popup-title" id="pName"></div>
+  <div class="popup-role" id="pRole"></div>
+  <div class="popup-tags" id="pTags"></div>
+  <div class="popup-body" id="pDesc"></div>
+  <div class="popup-scenario" id="pScenario"></div>
+</div>
+
+<script>
+// Navigation
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// CO Data
+const coProfiles = {
+  ishii: {
+    name: '石井 慎八',
+    role: 'ITコンサルタント | 株式会社あるとみ / HASH TECH',
+    tags: ['Meta広告', 'Facebook広告', 'Web集客', 'SNS戦略', '広報戦略'],
+    tagClass: 'tag-teal',
+    desc: '集客や収益拡大に関する戦略立案から、Web・SNS・広告を活用したプロモーションの実行までワンストップで支援。<br><br>担当日：火曜日・水曜日（倉敷 第2週）',
+    scenario: '上村COからの紹介場面：AI活用を進めた後、「もっとSNS広告・Web集客を強化したい」という相談。特にMeta広告（Facebook/Instagram広告）が必要な場合は石井COへ。',
+    category: 'it'
+  },
+  yamahata: {
+    name: '山畑 和久',
+    role: 'ITコンサルタント | 株式会社エイトヴィジョン 代表',
+    tags: ['動画制作', 'SNS活用', 'ブランディング', '生成AI×発信'],
+    tagClass: 'tag-teal',
+    desc: '映像・動画・SNSを活用した情報伝達サポート。生成AIを活用した効率的な情報発信も提案。<br><br>担当日：木曜日',
+    scenario: '上村COからの紹介場面：AI化が進み「次は動画で発信したい」「生成AIで動画コンテンツを効率化したい」というニーズ。AI×動画の連携で相互補完可能。',
+    category: 'it'
+  },
+  kitagawa: {
+    name: '北川 知裕',
+    role: 'ITコンサルタント | Key Promotion㈱ 代表 / はり師きゅう師',
+    tags: ['Instagram', 'SNS集客', 'インフルエンサー', '飲食業', 'コンテンツ制作'],
+    tagClass: 'tag-teal',
+    desc: 'インフルエンサーとして12年活動、鍼灸整体サロン7年経営、飲食店2,500件訪問。SNSフォロワー45,000以上。<br>SNS運用サポート・集客支援・コンテンツ制作を提供。',
+    scenario: '上村COからの紹介場面：飲食・美容・サロン業でSNSを使った集客強化を望む相談者。インフルエンサー経験からの実践的アドバイスが強み。',
+    category: 'it'
+  },
+  tokunaga: {
+    name: '徳永 真美子',
+    role: 'ITコンサルタント | Happy Life Tec',
+    tags: ['AI活用', '動画発信', '生産性向上', '人材育成', '採用支援'],
+    tagClass: 'tag-teal',
+    desc: '動画・IT・AI・採用育成の知見を活かし、AI活用による業務改善・人手不足対策を支援。IT初心者にも丁寧に対応。<br><br>担当日：月曜日・金曜日',
+    scenario: '上村COからの紹介場面：AI活用と人材育成・採用改善を組み合わせたい相談者。または、AI活用支援の中で「動画研修・動画マニュアル」へのニーズが出た場合。',
+    category: 'it'
+  },
+  katsura: {
+    name: '桂 知奈美',
+    role: 'ITコンサルタント | SNSマーケター',
+    tags: ['Instagram専門', 'フォロワー75,000+', '観光・飲食', '地域ビジネス', 'SNS戦略'],
+    tagClass: 'tag-teal',
+    desc: 'Instagramを軸に活動するSNSマーケター。地域観光アカウントでフォロワー75,000以上。観光・飲食・地域ビジネスのSNS戦略支援。<br><br>担当日：水曜日',
+    scenario: '上村COからの紹介場面：Instagram運用・地域観光・飲食業のSNS集客に特化したサポートが必要な場合。',
+    category: 'it'
+  },
+  imaoka: {
+    name: '今岡 優菜',
+    role: 'デザイナー | IMAOKA DESIGN 代表',
+    tags: ['広告デザイン', 'チラシ制作', 'パンフレット', '動画制作', '地域PR'],
+    tagClass: 'tag-pink',
+    desc: 'DTPデザイン・タウン情報誌編集・ライター・カメラマン経験から独立。チラシ・名刺・パンフ・観光資料・動画制作まで対応。地域に合わせた広告デザインが強み。<br><br>担当日：月曜日',
+    scenario: '上村COからの紹介場面：AI化後に「販促ツール（チラシ・パンフ・動画）を作りたい」というニーズ。AI生成コンテンツの仕上げ・デザイン化に最適。',
+    category: 'design'
+  },
+  kato: {
+    name: '加藤 学',
+    role: '販促コンサルタント | 一般社団法人誘客マネジメンツ 代表理事',
+    tags: ['観光業', '宿泊業', '販路開拓', '広報戦略', 'リクルート出身'],
+    tagClass: 'tag-orange',
+    desc: 'リクルート「じゃらん」担当を経て独立16年。宿泊事業者を中心に観光業・小売業の経営支援・販売促進計画。ホテル建設の施設規模設定〜動線設計まで経験。<br><br>担当日：金曜日（第1・4・5週）',
+    scenario: '上村COからの紹介場面：観光業・宿泊業・旅館が「AI活用の次に集客・販路拡大を強化したい」という相談。',
+    category: 'mkt'
+  },
+  yabe: {
+    name: '矢部 久智',
+    role: '商店街アドバイザー | 有限会社ソバラ屋 / 表町エリアマネジメント㈱',
+    tags: ['商店街', '小売', '190年老舗', '創業支援', '集客イベント'],
+    tagClass: 'tag-orange',
+    desc: '190年以上続く小売店経営者。全国商店街アドバイザー10年、中心市街地・商店街サポートアドバイザー。創業支援・店舗集客・販促イベント企画が専門。',
+    scenario: '上村COからの紹介場面：商店街・小売店・実店舗の経営者が「デジタル化後にもっと集客したい」という段階での橋渡し。',
+    category: 'mkt'
+  },
+  mitsuoka: {
+    name: '光岡 敏括',
+    role: '中小企業診断士 | 光岡コンサルティング 代表',
+    tags: ['経営改善', '販路開拓', '広報戦略', '電力会社出身'],
+    tagClass: 'tag-navy',
+    desc: '電力会社で営業・広報・危機管理・物流子会社経営を経験。売上につながる発信と販路開拓、経営と現場をつなぐ仕組みづくりで経営改善を支援。<br><br>担当日：火・木・金曜日',
+    scenario: '上村COからの紹介場面：経営全般の見直しが必要な相談者。AI活用で業務効率化した後に「次は経営戦略・販路」という段階。',
+    category: 'mgmt'
+  },
+  kondo: {
+    name: '近藤 厚志',
+    role: '中小企業診断士 | 未来創造コンサルティング 代表',
+    tags: ['創業支援', '補助金活用', '売上拡大', '商品企画', '展示会支援'],
+    tagClass: 'tag-navy',
+    desc: 'アパレル業界〜商工会経営指導員を経て独立。事業コンセプト立案・商品企画・販路開拓・補助金活用ノウハウを提供。創業・新事業・6次産業化を支援。',
+    scenario: '上村COからの紹介場面：創業・新事業立ち上げでAI活用の次に「補助金・事業計画・販路」が必要な相談者。',
+    category: 'mgmt'
+  },
+  murakawa: {
+    name: '村川 智博',
+    role: '経営者 | 株式会社ベクトル 代表取締役（売上60億・従業員340名）',
+    tags: ['大規模経営', '起業家育成', '村川塾', 'スケールアップ'],
+    tagClass: 'tag-navy',
+    desc: '創業16年で売上60億・従業員340名の企業を統括。起業家育成プログラム「村川塾」「ベクトル大学」を運営。岡山発の国際的起業家育成を目指す。<br><br>担当日：土曜日',
+    scenario: '上村COからの紹介場面：急成長フェーズで「AI導入後に更なるスケールアップを目指したい」「起業家マインドを高めたい」という相談者。',
+    category: 'mgmt'
+  },
+  kobayashi: {
+    name: '小林 裕司',
+    role: '社会保険労務士 | 株式会社グロウスリー / 小林裕司社会保険労務士事務所',
+    tags: ['人材育成', '組織改善', '就業規則', '職場環境改革', '15年以上の経験'],
+    tagClass: 'tag-green',
+    desc: '15年以上の会計・労務経験。組織内コミュニケーション不足・価値観相違による問題を解消し、職場環境の革新をサポート。継続的な成長を実現する組織構築支援。',
+    scenario: '上村COからの紹介場面：AI活用で業務改善した後、「人材定着・組織の仕組みを整えたい」「就業規則を作りたい」という段階の相談者。',
+    category: 'labor'
+  },
+  tanabe: {
+    name: '田邉 上智',
+    role: '公認会計士・税理士 | 鹿鳴コンサルティング㈱ / 田邉公認会計士税理士事務所',
+    tags: ['税務', '公認会計士', '資金調達', '創業支援', 'M&Aアドバイザリー'],
+    tagClass: 'tag-amber',
+    desc: '大手監査法人7年勤務後、約160社の法人税務顧問。年間10件の創業・資金調達支援、M&Aアドバイザリー業務も対応。',
+    scenario: '上村COからの紹介場面：AI活用コスト・投資対効果の財務的な相談。税務・会計・創業融資・M&A財務が必要な相談者への橋渡し。',
+    category: 'finance'
+  },
+  kawai: {
+    name: '河合 直哉',
+    role: '行政書士 | 河合直哉行政書士事務所',
+    tags: ['許認可', '事業承継', '外国人雇用', 'M&A許認可', '運送・建設・農業'],
+    tagClass: 'tag-purple',
+    desc: '運送業・建設業・農業の許認可を中心に、外国人雇用支援・事業承継実務・M&A関連許認可申請支援まで対応。経営の視点からの許認可業務が強み。<br><br>担当日：月曜日',
+    scenario: '上村COからの紹介場面：AI活用で業務整理した際に許認可・事業承継・外国人雇用の問題が浮上した相談者への橋渡し。',
+    category: 'legal'
+  },
+  suzuka: {
+    name: '鈴鹿 和彦（チーフ）',
+    role: '中小企業診断士・特定社会保険労務士 | 株式会社リンク経営研究所 代表',
+    tags: ['チーフ', '27年行政経験', '補助金・助成金', '働き方改革', '人事評価制度'],
+    tagClass: 'tag-amber',
+    desc: '27年間の行政経験を活かし、補助金・助成金・国の支援施策をわかりやすく提供。IT活用・生産性向上・働き方改革・就業規則・人事評価制度導入まで対応。',
+    scenario: '連携のポイント：チーフとの良好な関係がよろず内での信頼構築の土台。補助金活用・労務の初期相談はチーフへ、AI活用の具体化は上村COへという流れを設計。',
+    category: 'mgmt'
+  }
+};
+
+function showPopup(id) {
+  const p = coProfiles[id];
+  if (!p) return;
+  document.getElementById('pName').textContent = p.name;
+  document.getElementById('pRole').textContent = p.role;
+  document.getElementById('pDesc').innerHTML = p.desc;
+  document.getElementById('pScenario').textContent = p.scenario;
+  const tagsEl = document.getElementById('pTags');
+  tagsEl.innerHTML = p.tags.map(t => `<span class="tag ${p.tagClass}">${t}</span>`).join('');
+  document.getElementById('popup').classList.add('show');
+  document.getElementById('overlay').classList.add('show');
+}
+function closePopup() {
+  document.getElementById('popup').classList.remove('show');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// CO List
+const coListData = [
+  { name:'石井 慎八', org:'株式会社あるとみ / HASH TECH', cat:'it', tags:['Meta広告','Web集客','SNS戦略','広報戦略'], desc:'集客・収益拡大のWeb・SNS・広告をワンストップ支援。Meta広告（Facebook/Instagram広告）に特に強み。', day:'火・水' },
+  { name:'山畑 和久', org:'株式会社エイトヴィジョン', cat:'it', tags:['動画制作','生成AI×発信','SNS活用','ブランディング'], desc:'映像・動画×生成AI活用の情報発信専門。何から始めるべきか不明・PR方法に課題がある事業者を支援。', day:'木' },
+  { name:'北川 知裕', org:'Key Promotion㈱', cat:'it', tags:['Instagram','SNS集客','インフルエンサー','飲食業'], desc:'インフルエンサー12年・サロン経営7年・飲食2,500件訪問。SNSフォロワー45,000以上。SNS集客支援会社代表。', day:'要確認' },
+  { name:'徳永 真美子', org:'Happy Life Tec', cat:'it', tags:['AI活用','動画発信','人材育成','採用支援','IT初心者対応'], desc:'動画×IT×AI活用×人材育成のハイブリッド支援。業務改善・人手不足対策・採用育成に対応。', day:'月・金' },
+  { name:'桂 知奈美', org:'SNSマーケター（個人）', cat:'it', tags:['Instagram専門','75,000+フォロワー','観光・飲食','地域ビジネス'], desc:'Instagramフォロワー75,000以上のSNSマーケター。観光・飲食・地域ビジネスのアカウント設計〜運用まで一貫支援。', day:'水' },
+  { name:'山下 蒼馬', org:'岡山大学大学院', cat:'it', tags:['SNS発信','集客設計','採用支援'], desc:'SNS発信しているが集客・採用に繋がらない事業者を支援。認知拡大から購買導線の整理が専門。', day:'木' },
+  { name:'吉川 洋平', org:'詳細調査予定', cat:'it', tags:['ITコンサルタント'], desc:'ITコンサルタント。詳細は個別確認予定。', day:'要確認' },
+  { name:'正田 真澄', org:'詳細調査予定', cat:'it', tags:['ITコンサルタント'], desc:'ITコンサルタント。詳細は個別確認予定。', day:'要確認' },
+  { name:'今岡 優菜', org:'IMAOKA DESIGN', cat:'design', tags:['広告デザイン','チラシ制作','パンフレット','動画制作','地域PR'], desc:'DTPデザイン・ライター・カメラマン経験から独立。チラシ・名刺・パンフ・観光資料・動画制作まで対応。', day:'月' },
+  { name:'加藤 学', org:'一般社団法人誘客マネジメンツ', cat:'mkt', tags:['観光業','宿泊業','販路開拓','広報戦略'], desc:'リクルート「じゃらん」経験・独立16年。宿泊事業者を中心に観光業・小売業の経営支援・販売促進計画。', day:'金（第1・4・5週）' },
+  { name:'矢部 久智', org:'有限会社ソバラ屋 / 表町エリアマネジメント㈱', cat:'mkt', tags:['商店街','小売','190年老舗','創業支援','集客'], desc:'190年以上続く老舗小売経営者。商店街よろずアドバイザー10年。創業支援・店舗集客・販促イベント企画。', day:'要確認' },
+  { name:'光岡 敏括', org:'光岡コンサルティング', cat:'mgmt', tags:['中小企業診断士','経営改善','販路開拓','広報戦略'], desc:'電力会社で営業・広報・危機管理・物流子会社経営経験。売上につながる発信と販路開拓・経営改善支援。', day:'火・木・金' },
+  { name:'近藤 厚志', org:'未来創造コンサルティング', cat:'mgmt', tags:['中小企業診断士','創業支援','補助金活用','売上拡大'], desc:'アパレル業界〜商工会経営指導員を経て独立。事業コンセプト立案・商品企画・補助金活用・展示会支援。', day:'要確認' },
+  { name:'村川 智博', org:'株式会社ベクトル（売上60億）', cat:'mgmt', tags:['経営者','起業家育成','スケールアップ'], desc:'創業16年で売上60億・従業員340名の企業統括。起業家育成プログラム「村川塾」「ベクトル大学」運営。', day:'土' },
+  { name:'鈴鹿 和彦', org:'株式会社リンク経営研究所（チーフ）', cat:'mgmt', tags:['チーフ','中小企業診断士','特定社労士','27年行政経験','補助金'], desc:'27年の行政経験で補助金・助成金・国の支援施策をわかりやすく提供。IT活用・働き方改革・就業規則・人事評価制度。', day:'要確認' },
+  { name:'小林 裕司', org:'株式会社グロウスリー / 小林裕司社会保険労務士事務所', cat:'labor', tags:['社労士','人材育成','組織改善','就業規則','15年以上'], desc:'15年以上の労務経験。組織コミュニケーション改善・職場環境改革・継続的成長を実現する組織構築支援。', day:'要確認' },
+  { name:'島根 みずき', org:'詳細調査予定', cat:'labor', tags:['社会保険労務士'], desc:'社会保険労務士。詳細は個別確認予定。', day:'要確認' },
+  { name:'田邉 上智', org:'鹿鳴コンサルティング㈱ / 田邉公認会計士税理士事務所', cat:'finance', tags:['公認会計士','税理士','税務','資金調達','M&A'], desc:'大手監査法人7年・約160社の法人税務顧問・年間10件の創業支援・M&Aアドバイザリー。', day:'要確認' },
+  { name:'杉野 令', org:'詳細調査予定', cat:'finance', tags:['公認会計士','税理士'], desc:'公認会計士・税理士。詳細は個別確認予定。', day:'要確認' },
+  { name:'池田 曜生', org:'弁護士', cat:'legal', tags:['弁護士','法的トラブル','契約'], desc:'弁護士。詳細は個別確認予定。', day:'要確認' },
+  { name:'鹿室 辰義', org:'弁護士', cat:'legal', tags:['弁護士','法的トラブル','契約'], desc:'弁護士。詳細は個別確認予定。', day:'要確認' },
+  { name:'横田 藍花', org:'弁護士', cat:'legal', tags:['弁護士','法的トラブル','契約'], desc:'弁護士。詳細は個別確認予定。', day:'要確認' },
+  { name:'河合 直哉', org:'河合直哉行政書士事務所', cat:'legal', tags:['行政書士','許認可','事業承継','外国人雇用','M&A'], desc:'運送業・建設業・農業の許認可＋事業承継・外国人雇用・M&A許認可申請支援の実績。', day:'月' },
+];
+
+const catColors = { it:'#00B4D8', design:'#EC4899', mkt:'#F97316', mgmt:'#5C6BC0', labor:'#10B981', finance:'#D97706', legal:'#8B5CF6' };
+const catNames = { it:'IT・デジタル', design:'デザイン', mkt:'販促・マーケ', mgmt:'経営・診断士', labor:'労務', finance:'財務・税務', legal:'法律・行政' };
+const tagClassMap = { it:'tag-teal', design:'tag-pink', mkt:'tag-orange', mgmt:'tag-navy', labor:'tag-green', finance:'tag-amber', legal:'tag-purple' };
+
+function renderCoList(filter='all') {
+  const container = document.getElementById('coListContainer');
+  const filtered = filter === 'all' ? coListData : coListData.filter(c => c.cat === filter);
+  container.innerHTML = filtered.map(c => `
+    <div class="co-card" style="border-color:${catColors[c.cat]}" data-cat="${c.cat}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div class="co-card-name">${c.name}</div>
+          <div class="co-card-org">${c.org}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span class="tag" style="background:${catColors[c.cat]}22;color:${catColors[c.cat]};border:1px solid ${catColors[c.cat]}44;">${catNames[c.cat]}</span>
+          <span style="font-size:11px;color:var(--muted);">📅 ${c.day}</span>
+        </div>
+      </div>
+      <div class="co-card-desc">${c.desc}</div>
+      <div class="co-card-tags">${c.tags.map(t => `<span class="tag ${tagClassMap[c.cat]}">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function filterCo(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCoList(cat);
+}
+
+renderCoList();
+
+// Draw SVG lines from center to nodes
+window.addEventListener('load', () => {
+  const mapInner = document.getElementById('mapInner');
+  const svg = document.getElementById('mapSvg');
+  const cx = mapInner.offsetWidth / 2;
+  const cy = mapInner.offsetHeight / 2;
+  const nodes = mapInner.querySelectorAll('.co-node');
+  nodes.forEach(node => {
+    const nx = node.offsetLeft + node.offsetWidth / 2;
+    const ny = node.offsetTop + node.offsetHeight / 2;
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+    line.setAttribute('x2', nx); line.setAttribute('y2', ny);
+    line.setAttribute('stroke', '#CBD5E0');
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('stroke-dasharray', '4 3');
+    line.setAttribute('opacity', '0.6');
+    svg.appendChild(line);
+  });
+});
+</script>
+</body>
+</html>
