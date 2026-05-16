@@ -74,7 +74,8 @@
   .agent-name { font-size: 20px; font-weight: bold; color: #1A365D; margin-bottom: 6px; }
   .agent-phase { font-size: 13px; color: #718096; background: #EDF2F7; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
   .prompt-box { background: #1A202C; color: #E2E8F0; padding: 38px 26px 22px; border-radius: 8px; margin: 18px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.8; position: relative; }
-  .prompt-box .comment { color: #718096; }
+  .prompt-box * { color: inherit; } /* インライン color 上書きを防ぐ */
+  .prompt-box .comment { color: #A0AEC0; } /* コメント：コントラスト比5.3:1確保 */
   .prompt-box .highlight { color: #F6AD55; }
   .copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 11px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; white-space: nowrap; z-index: 1; }
   .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
