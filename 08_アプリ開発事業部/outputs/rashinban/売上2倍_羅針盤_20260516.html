@@ -1064,9 +1064,13 @@ function goFlow(ti,qid,itemTx){
     const noFlowEl=document.getElementById('flNoFlow');
     noFlowEl.style.display='block';
     const _mx=DATA.matrices[ti];const _qd=_mx?.quadrants.find(q=>q.id===qid);
-    const _isHold=_qd&&_qd.pos==='bl';const _itd=_qd?.items?.find(it=>it.text===itemTx);
-    if(_isHold){
-      noFlowEl.innerHTML=`<div class="fl-noflow-t">⚪ このアクションは現在保留中です</div><div class="fl-noflow-d">${_itd?.detail?'📌 保留理由: '+_itd.detail:'現時点では着手不要です。状況が変わった時点で再検討してください。'}</div><div class="fl-noflow-d" style="margin-top:8px;font-size:12px;color:var(--muted)">必要になった時点でフローを作成できます。</div><button class="fl-create-btn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
+    const _pos=_qd?.pos;const _itd=_qd?.items?.find(it=>it.text===itemTx);const _detail=_itd?.detail||'';
+    if(_pos==='bl'){
+      noFlowEl.innerHTML=`<div class="fl-noflow-t">⚪ このアクションは現在保留中です</div><div class="fl-noflow-d">${_detail?'📌 保留理由: '+_detail:'現時点では着手不要です。状況が変わった時点で再検討してください。'}</div><div class="fl-noflow-d" style="margin-top:8px;font-size:12px;color:var(--muted)">必要になった時点でフローを作成できます。</div><button class="fl-create-btn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
+    }else if(_pos==='tl'){
+      noFlowEl.innerHTML=`<div class="fl-noflow-t">🔵 このアクションは計画的推進フェーズです</div><div class="fl-noflow-d">${_detail?'📅 着手タイミング: '+_detail:'重要ですが今すぐではなく、計画的に進める項目です。'}</div><div class="fl-noflow-d" style="margin-top:8px;font-size:12px;color:var(--muted)">準備が整った時点でフローを作成できます。</div><button class="fl-create-btn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
+    }else if(_pos==='br'){
+      noFlowEl.innerHTML=`<div class="fl-noflow-t">🟡 このアクションは委任・効率化フェーズです</div><div class="fl-noflow-d">${_detail?'📌 メモ: '+_detail:'他の作業と並行して進められる項目です。'}</div><div class="fl-noflow-d" style="margin-top:8px;font-size:12px;color:var(--muted)">フローを作成して実行ステップを設計できます。</div><button class="fl-create-btn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
     }else{
       noFlowEl.innerHTML=`<div class="fl-noflow-t">このアクションのフローはまだ作成されていません</div><div class="fl-noflow-d" id="flNoFlowItem">「${itemTx}」の実行ステップをAIが設計します。</div><button class="fl-create-btn" id="flCreateBtn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>`;
     }
