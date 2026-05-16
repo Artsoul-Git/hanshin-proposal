@@ -33,31 +33,37 @@ h2 { font-size:18px; font-weight:700; }
 .tab { padding:10px 16px; border-radius:0; cursor:pointer; font-size:12px; font-weight:500; color:var(--muted); border:none; border-bottom:2px solid transparent; white-space:nowrap; transition:all .15s; }
 .tab:hover { color:var(--dim); }
 .tab.on { color:var(--primary-light); border-bottom-color:var(--primary); font-weight:600; }
-.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view { display:none; padding:22px 20px; max-width:1320px; margin:0 auto; width:100%; }
 .view.on { display:block; }
-.goal-card { background:linear-gradient(135deg,var(--surface),rgba(99,102,241,.12)); border:1px solid rgba(99,102,241,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
-.goal-tag { display:inline-block; background:rgba(99,102,241,.18); color:#A5B4FC; padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
-.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
-.goal-meta { font-size:12px; color:var(--dim); }
-.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
-.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(91,110,245,.1)); border:1px solid rgba(91,110,245,.3); border-radius:14px; padding:22px; margin-bottom:18px; box-shadow:var(--card-shadow); }
+.goal-tag { display:inline-block; background:rgba(91,110,245,.2); color:#A5B4FC; padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; letter-spacing:.3px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; color:var(--text); }
+.goal-meta { font-size:11px; color:var(--muted); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.75; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:18px; }
 @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
-.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
-.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
-.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
-.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px; padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
-.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%); }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 14px; position:relative; overflow:hidden; transition:border-color .2s; }
+.stat:hover { border-color:var(--border2); }
+.stat::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; border-radius:12px 12px 0 0; }
+.stat:nth-child(1)::before { background:linear-gradient(90deg,#5B6EF5,#818CF8); }
+.stat:nth-child(2)::before { background:linear-gradient(90deg,#0FBA81,#34D399); }
+.stat:nth-child(3)::before { background:linear-gradient(90deg,#06C4D4,#22D3EE); }
+.stat:nth-child(4)::before { background:linear-gradient(90deg,#F5A623,#FBBF24); }
+.stat-v { font-size:28px; font-weight:800; color:var(--text); margin-top:4px; }
+.stat-l { font-size:11px; color:var(--muted); margin-top:3px; }
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:14px; padding:18px; margin-bottom:18px; position:relative; overflow:hidden; box-shadow:var(--glow-primary); }
+.kai-card::before { content:''; position:absolute; top:-80px; right:-80px; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,rgba(91,110,245,.07) 0%,transparent 70%); }
 .kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#8B5CF6); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-av { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,#5B6EF5,#9B6EF5); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; box-shadow:0 0 12px rgba(91,110,245,.4); }
 .kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
 .kai-rl { font-size:11px; color:var(--kai-text); }
-.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
-.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(239,68,68,.1); border-left:3px solid var(--danger); border-radius:0 6px 6px 0; color:#FCA5A5; font-size:13px; font-style:italic; }
+.kai-sum { color:var(--kai-text); line-height:1.8; font-size:13px; }
+.kai-verd { margin-top:12px; padding:10px 14px; background:rgba(239,68,85,.08); border-left:3px solid var(--danger); border-radius:0 8px 8px 0; color:#FCA5A5; font-size:13px; font-style:italic; }
 .kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
-.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
-.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
-.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
-.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.ktag { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(15,186,129,.1); color:#6EE7B7; border:1px solid rgba(15,186,129,.2); }
+.ktag.ng { background:rgba(239,68,85,.1); color:#FCA5A5; border:1px solid rgba(239,68,85,.2); }
+.sec { font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; margin-top:4px; display:flex; align-items:center; gap:8px; }
 .sec::after { content:''; flex:1; height:1px; background:var(--border); }
 .act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
 .act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px; transition:all .15s; }
@@ -88,55 +94,92 @@ h2 { font-size:18px; font-weight:700; }
 .t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer; border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
 .t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
 .mx-wrap { display:flex; gap:8px; align-items:stretch; }
-.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted); display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-ay { writing-mode:vertical-lr; transform:rotate(180deg); font-size:11px; color:var(--muted); display:flex; align-items:center; justify-content:center; padding:8px 2px; flex-shrink:0; white-space:nowrap; text-align:center; }
 .mx-inner { flex:1; }
-.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px; overflow:hidden; position:relative; }
-.mx-cross::before,.mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:2px; min-height:460px; border:1px solid var(--border); border-radius:10px; overflow:hidden; position:relative; background:var(--border); }
+.mx-cross::before,.mx-cross::after { content:''; position:absolute; background:var(--border2); z-index:1; pointer-events:none; }
 .mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
 .mx-cross::after { top:50%; left:0; right:0; height:1px; }
-.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad { padding:14px; display:flex; flex-direction:column; gap:6px; min-height:200px; background:var(--bg); }
 .quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
 .quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
-.quad.q-tr { background:rgba(239,68,68,.06); }
-.quad.q-tl { background:rgba(99,102,241,.06); }
-.quad.q-br { background:rgba(245,158,11,.06); }
-.quad.q-bl { background:rgba(100,116,139,.04); }
-.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px; padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s; display:flex; align-items:flex-start; gap:6px; }
-.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.quad.q-tr { background:rgba(239,68,85,.05); }
+.quad.q-tl { background:rgba(91,110,245,.05); }
+.quad.q-br { background:rgba(245,166,35,.05); }
+.quad.q-bl { background:rgba(100,116,139,.03); }
+.qi { background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:8px 10px; cursor:pointer; font-size:12px; transition:all .15s; display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface3); transform:translateX(2px); border-color:var(--primary); box-shadow:0 2px 12px rgba(91,110,245,.15); }
 .qi-tx { flex:1; line-height:1.4; }
 .qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
-.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
-.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
-.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px; padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; transition:color .15s; }
+.qi:hover .qi-ar { color:var(--primary-light); }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:6px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:10px; padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
 .mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
-.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 14px; margin-bottom:18px; }
-.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+.fl-hdr h3 { font-size:15px; font-weight:700; }
+.guide-btn { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border-radius:7px; background:rgba(15,186,129,.12); border:1px solid rgba(15,186,129,.25); color:#6EE7B7; cursor:pointer; font-size:12px; font-weight:600; transition:all .15s; }
+.guide-btn:hover { background:rgba(15,186,129,.22); box-shadow:0 0 12px rgba(15,186,129,.15); }
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:10px 14px; margin-bottom:18px; border-left:3px solid var(--primary); }
+.fl-ctx-l { font-size:10px; color:var(--muted); margin-bottom:3px; text-transform:uppercase; letter-spacing:.5px; }
 .fl-ctx-t { font-size:15px; font-weight:700; }
-.fl-steps { position:relative; padding-left:38px; }
+.fl-steps { position:relative; padding-left:42px; }
 .fl-step { position:relative; margin-bottom:14px; }
-.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px; width:2px; background:var(--border); }
+.fl-step::before { content:''; position:absolute; left:-24px; top:32px; bottom:-14px; width:2px; background:var(--border); border-radius:1px; }
 .fl-step:last-child::before { display:none; }
-.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; z-index:1; font-weight:700; }
-.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
-.fl-card.done { opacity:.55; }
+.fl-icon { position:absolute; left:-42px; top:8px; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; z-index:1; font-weight:800; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:13px 15px; transition:all .15s; }
+.fl-card:hover { border-color:var(--border2); box-shadow:var(--card-shadow); }
+.fl-card.done { opacity:.5; }
 .fl-card.done .fl-title { text-decoration:line-through; }
-.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; text-transform:uppercase; letter-spacing:.5px; }
 .fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
-.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
-.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
-.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
-.fb-act { background:rgba(99,102,241,.14); color:#A5B4FC; }
-.fb-dec { background:rgba(245,158,11,.14); color:#FCD34D; }
-.fb-mil { background:rgba(16,185,129,.14); color:#6EE7B7; }
-.fb-wrn { background:rgba(239,68,68,.14); color:#FCA5A5; }
-.fb-dur { background:rgba(100,116,139,.14); color:var(--muted); }
-.fb-out { background:rgba(6,182,212,.14); color:#67E8F9; }
-.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer; font-size:12px; color:var(--muted); padding:2px 0; }
-.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.7; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; font-weight:500; }
+.fb-act { background:rgba(91,110,245,.14); color:#A5B4FC; }
+.fb-dec { background:rgba(245,166,35,.14); color:#FCD34D; }
+.fb-mil { background:rgba(15,186,129,.14); color:#6EE7B7; }
+.fb-wrn { background:rgba(239,68,85,.14); color:#FCA5A5; }
+.fb-dur { background:rgba(100,116,139,.12); color:var(--dim); }
+.fb-out { background:rgba(6,196,212,.12); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:8px; cursor:pointer; font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; width:14px; height:14px; }
 .fl-check.done { text-decoration:line-through; opacity:.5; }
-.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px; padding:12px 14px; margin-top:18px; }
-.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
-.fk-tx { font-size:13px; color:var(--kai-text); line-height:1.7; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:10px; padding:14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:6px; }
+.fk-tx { font-size:13px; color:var(--kai-text); line-height:1.75; }
+/* ===== NO FLOW EMPTY STATE ===== */
+.fl-noflow { text-align:center; padding:40px 20px; border:2px dashed var(--border2); border-radius:12px; margin:16px 0; }
+.fl-noflow-t { font-size:15px; font-weight:600; margin-bottom:8px; color:var(--dim); }
+.fl-noflow-d { font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6; }
+.fl-create-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 18px; border-radius:8px; background:linear-gradient(135deg,rgba(91,110,245,.2),rgba(155,110,245,.2)); border:1px solid rgba(91,110,245,.4); color:#A5B4FC; cursor:pointer; font-size:13px; font-weight:600; transition:all .2s; }
+.fl-create-btn:hover { background:linear-gradient(135deg,rgba(91,110,245,.35),rgba(155,110,245,.35)); box-shadow:var(--glow-primary); }
+/* ===== TASK GUIDE ===== */
+.guide-panel { margin-top:18px; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.guide-panel-hdr { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:linear-gradient(135deg,rgba(15,186,129,.08),rgba(6,196,212,.06)); border-bottom:1px solid var(--border); cursor:pointer; }
+.guide-panel-title { font-size:13px; font-weight:700; color:#6EE7B7; display:flex; align-items:center; gap:7px; }
+.guide-toggle { font-size:11px; color:var(--muted); }
+.guide-body { display:none; padding:16px; }
+.guide-body.on { display:block; }
+.guide-step { background:var(--surface2); border:1px solid var(--border); border-radius:9px; padding:14px; margin-bottom:12px; border-left:3px solid var(--success); }
+.guide-step-num { font-size:10px; color:var(--success); font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:5px; }
+.guide-step-title { font-size:13px; font-weight:700; margin-bottom:8px; }
+.guide-step-body { font-size:12px; color:var(--dim); line-height:1.75; white-space:pre-wrap; }
+.guide-meta-row { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.guide-badge { font-size:11px; padding:2px 9px; border-radius:4px; font-weight:500; }
+.gb-time { background:rgba(91,110,245,.12); color:#A5B4FC; }
+.gb-effort { background:rgba(245,166,35,.12); color:#FCD34D; }
+.guide-prompt-box { background:var(--bg); border:1px solid rgba(91,110,245,.2); border-radius:7px; padding:10px 12px; margin-top:8px; }
+.guide-prompt-lbl { font-size:10px; color:var(--primary-light); font-weight:600; margin-bottom:5px; text-transform:uppercase; letter-spacing:.5px; }
+.guide-prompt-tx { font-size:11px; color:var(--dim); line-height:1.7; font-family:monospace; white-space:pre-wrap; }
+.guide-checklist { margin-top:10px; }
+.guide-cl-item { display:flex; align-items:flex-start; gap:7px; padding:4px 0; font-size:12px; color:var(--dim); cursor:pointer; }
+.guide-cl-item input { accent-color:var(--success); margin-top:2px; flex-shrink:0; }
+.guide-generate { text-align:center; padding:28px; }
+.guide-gen-t { font-size:13px; color:var(--dim); margin-bottom:12px; }
+.guide-gen-btn { display:inline-flex; align-items:center; gap:6px; padding:9px 20px; border-radius:8px; background:linear-gradient(135deg,rgba(15,186,129,.15),rgba(6,196,212,.1)); border:1px solid rgba(15,186,129,.3); color:#6EE7B7; cursor:pointer; font-size:13px; font-weight:700; transition:all .2s; }
+.guide-gen-btn:hover { background:linear-gradient(135deg,rgba(15,186,129,.28),rgba(6,196,212,.2)); box-shadow:0 0 16px rgba(15,186,129,.2); }
 .gt-wrap { overflow-x:auto; }
 .gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
 .gt-wk { flex:1; text-align:center; font-size:10px; color:var(--muted); padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
@@ -169,11 +212,44 @@ h2 { font-size:18px; font-weight:700; }
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
-@media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+@media print {
+  .hdr-btn,.hdr-edit-count,#kai-float,#editBadge,#toast,.modal-ov,.fl-status-row,.fl-note-ta,.fl-ai-btn,.guide-btn,.guide-gen-btn,#editPopover { display:none !important; }
+  body { background:#fff !important; color:#000 !important; }
+  .view { background:#fff !important; color:#000 !important; }
+  .hdr { display:none !important; }
+  .nav { display:none !important; }
+}
+@media print and (not (--print-view: all)) {
+  body[data-print="dashboard"] #v-mandala,
+  body[data-print="dashboard"] #v-matrix,
+  body[data-print="dashboard"] #v-flow,
+  body[data-print="dashboard"] #v-gantt { display:none !important; }
+  body[data-print="dashboard"] #v-dashboard { display:block !important; }
+  body[data-print="mandala"] #v-dashboard,
+  body[data-print="mandala"] #v-matrix,
+  body[data-print="mandala"] #v-flow,
+  body[data-print="mandala"] #v-gantt { display:none !important; }
+  body[data-print="mandala"] #v-mandala { display:block !important; }
+  body[data-print="matrix"] #v-dashboard,
+  body[data-print="matrix"] #v-mandala,
+  body[data-print="matrix"] #v-flow,
+  body[data-print="matrix"] #v-gantt { display:none !important; }
+  body[data-print="matrix"] #v-matrix { display:block !important; }
+  body[data-print="flow"] #v-dashboard,
+  body[data-print="flow"] #v-mandala,
+  body[data-print="flow"] #v-matrix,
+  body[data-print="flow"] #v-gantt { display:none !important; }
+  body[data-print="flow"] #v-flow { display:block !important; }
+  body[data-print="gantt"] #v-dashboard,
+  body[data-print="gantt"] #v-mandala,
+  body[data-print="gantt"] #v-matrix,
+  body[data-print="gantt"] #v-flow { display:none !important; }
+  body[data-print="gantt"] #v-gantt { display:block !important; }
+}
 /* ===== EDIT POPOVER ===== */
-#editPopover { position:fixed;z-index:600;background:#1A2332;border:1px solid var(--primary);border-radius:9px;padding:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);min-width:220px;max-width:360px; }
-#editPopover input,#editPopover textarea { width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 9px;border-radius:5px;font-size:13px;font-family:inherit;line-height:1.5; }
-#editPopover textarea { resize:vertical; }
+#editPopover { position:fixed;z-index:600;background:#131E2E;border:1px solid var(--primary);border-radius:10px;padding:12px;box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 0 1px rgba(91,110,245,.15);min-width:240px;max-width:420px;width:auto; }
+#editPopover input,#editPopover textarea { width:100%;min-width:220px;background:var(--bg);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:6px;font-size:13px;font-family:inherit;line-height:1.6; }
+#editPopover textarea { resize:both;min-height:70px;max-height:320px;min-width:220px; }
 #editPopover input:focus,#editPopover textarea:focus { border-color:var(--primary);outline:none; }
 .ep-row { display:flex;gap:6px;margin-top:8px;justify-content:flex-end; }
 .ep-save { padding:5px 14px;border-radius:5px;border:none;background:var(--primary);color:#fff;cursor:pointer;font-size:12px;font-weight:600; }
@@ -242,7 +318,7 @@ h2 { font-size:18px; font-weight:700; }
     <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
   </div>
   <button class="hdr-edit-count" id="editCountBtn" onclick="openEditLog()" style="display:none">✏️ <span id="editCountNum">0</span>件編集済み</button>
-  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+  <button class="hdr-btn" id="printBtn" onclick="printView()">🖨️</button>
 </header>
 
 <nav class="nav">
@@ -311,19 +387,34 @@ h2 { font-size:18px; font-weight:700; }
 </div>
 
 <div id="v-flow" class="view">
-  <div class="bc">
+  <div class="fl-hdr">
+    <div class="bc" style="margin:0">
     <a onclick="go('mandala',null)">マンダラ</a>
     <span class="bc-sep">›</span>
     <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
     <span class="bc-sep">›</span>
     <span class="cur" id="flBcIt">フロー</span>
+    </div>
+    <button class="guide-btn" id="guideTopBtn" onclick="toggleGuidePanel()" style="display:none">📖 タスクガイド</button>
   </div>
   <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
   <div id="flEmpty" class="empty-s"><div class="empty-s-i">→</div><div>マトリクスの項目をクリックするとフローが表示されます</div></div>
+  <div id="flNoFlow" class="fl-noflow" style="display:none">
+    <div class="fl-noflow-t">このアクションのフローはまだ作成されていません</div>
+    <div class="fl-noflow-d" id="flNoFlowItem">選択した項目に対して、実行ステップのフローを作成します。</div>
+    <button class="fl-create-btn" id="flCreateBtn" onclick="requestCreateFlow()">🤖 このアクションのフローを作成する</button>
+  </div>
   <div class="fl-steps" id="flSteps"></div>
   <div class="fl-kai" id="flKai" style="display:none;">
     <div class="fk-lbl">🧭 Kai アドバイス</div>
     <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+  <div class="guide-panel" id="guidePanel" style="display:none">
+    <div class="guide-panel-hdr" onclick="toggleGuideBody()">
+      <div class="guide-panel-title">📖 タスクガイド <span id="guidePanelTitle" style="font-weight:400;color:var(--kai-text);font-size:12px"></span></div>
+      <span class="guide-toggle" id="guideToggleIcon">▼ 開く</span>
+    </div>
+    <div class="guide-body" id="guideBody"></div>
   </div>
 </div>
 
@@ -802,6 +893,7 @@ function doCopyAIPrompt(){
 
 /* ================================================================ NAV ================================================================ */
 function go(name,tabEl){
+  curViewName=name;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById('v-'+name).classList.add('on');
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
@@ -809,17 +901,46 @@ function go(name,tabEl){
   if(name==='mandala')renderMandala();
   if(name==='matrix')renderMatrix(curTheme);
   if(name==='gantt')renderGantt();
+  if(name==='dashboard')renderAnalytics();
+  const printNames={dashboard:'ダッシュ',mandala:'マンダラ',matrix:'マトリクス',flow:'フロー',gantt:'ガント'};
+  const pb=document.getElementById('printBtn');if(pb)pb.textContent='🖨️ '+(printNames[name]||'');
 }
+let curFlowContext={ti:0,qid:'',itemTx:''};
 function goMatrix(ti){curTheme=ti;go('matrix',null);}
 function goFlow(ti,qid,itemTx){
-  const fl=DATA.flows.find(f=>f.themeIndex===ti&&f.quadrant===qid&&f.sourceItem===itemTx)||DATA.flows.find(f=>f.themeIndex===ti)||DATA.flows[0];
+  const fl=DATA.flows.find(f=>f.themeIndex===ti&&f.quadrant===qid&&f.sourceItem===itemTx)
+          ||DATA.flows.find(f=>f.themeIndex===ti&&f.sourceItem===itemTx);
+  curFlowContext={ti,qid,itemTx,fl};
   const th=DATA.mandala.themes[ti];
   document.getElementById('flBcTh').textContent=th?th.name:'マトリクス';
   document.getElementById('flBcIt').textContent=itemTx||'フロー';
   document.getElementById('flCtx').textContent=itemTx;
-  if(fl){document.getElementById('flEmpty').style.display='none';renderFlow(fl);}
-  else{document.getElementById('flEmpty').style.display='block';document.getElementById('flSteps').innerHTML='';document.getElementById('flKai').style.display='none';}
+  const guideBtn=document.getElementById('guideTopBtn');
+  if(fl){
+    document.getElementById('flEmpty').style.display='none';
+    document.getElementById('flNoFlow').style.display='none';
+    renderFlow(fl);
+    if(guideBtn)guideBtn.style.display='';
+    loadGuidePanel(fl);
+  }else{
+    document.getElementById('flEmpty').style.display='none';
+    document.getElementById('flSteps').innerHTML='';
+    document.getElementById('flKai').style.display='none';
+    document.getElementById('guidePanel').style.display='none';
+    if(guideBtn)guideBtn.style.display='none';
+    const noFlowEl=document.getElementById('flNoFlow');
+    noFlowEl.style.display='block';
+    document.getElementById('flNoFlowItem').textContent=`「${itemTx}」の実行ステップをAIが設計します。`;
+  }
   go('flow',null);
+}
+function requestCreateFlow(){
+  const ctx=curFlowContext;
+  const th=DATA.mandala.themes[ctx.ti];
+  const mx=DATA.matrices[ctx.ti];
+  const qd=mx?.quadrants.find(q=>q.id===ctx.qid);
+  const prompt=`## 新しいフロー作成依頼\n\nファイル: 売上2倍_羅針盤_20260516.html\nテーマ: ${th?.name||ctx.ti}\n象限: ${qd?.label||ctx.qid}\n対象アクション: 「${ctx.itemTx}」\n\n上記アクションのDATAにflowsエントリを追加してください。\n形式は既存のflowsオブジェクト（steps配列, themeIndex, quadrant, sourceItem, kaiComment）に従い、\n実行に必要な5〜7ステップを詳細に設計してHTMLを更新してください。`;
+  navigator.clipboard.writeText(prompt).then(()=>showToast('✅ コピーしました — Claude Codeに貼り付けてください')).catch(()=>{showToast('コピー失敗 — 手動でコピーしてください');});
 }
 
 /* ================================================================ DASHBOARD ================================================================ */
@@ -1027,6 +1148,102 @@ function buildKaiPanel(){
   p.innerHTML=h;
 }
 function toggleKai(){const p=document.getElementById('kfPanel'),a=document.getElementById('kfArr');p.classList.toggle('on');a.textContent=p.classList.contains('on')?'▼':'▲';}
+
+/* ================================================================ GUIDE SYSTEM ================================================================ */
+const GK='rsh_guide_'+encodeURIComponent(DATA.meta.theme||'x');
+let guideStore={};
+try{guideStore=JSON.parse(localStorage.getItem(GK)||'{}')}catch(e){guideStore={};}
+function saveGuide(flId,data){guideStore[flId]=data;localStorage.setItem(GK,JSON.stringify(guideStore));}
+function getGuide(flId){return guideStore[flId]||null;}
+
+let curGuideFlId=null;
+function loadGuidePanel(fl){
+  curGuideFlId=fl.id;
+  const panel=document.getElementById('guidePanel');
+  const titleEl=document.getElementById('guidePanelTitle');
+  panel.style.display='block';
+  titleEl.textContent='— '+fl.title;
+  const body=document.getElementById('guideBody');
+  const guide=getGuide(fl.id);
+  if(guide){renderGuide(fl,guide,body);}
+  else{renderGuideGenerate(fl,body);}
+}
+function toggleGuidePanel(){
+  const panel=document.getElementById('guidePanel');
+  panel.style.display=panel.style.display==='none'?'block':'none';
+}
+function toggleGuideBody(){
+  const body=document.getElementById('guideBody');
+  const icon=document.getElementById('guideToggleIcon');
+  const on=body.classList.toggle('on');
+  icon.textContent=on?'▲ 閉じる':'▼ 開く';
+}
+function renderGuideGenerate(fl,container){
+  container.classList.add('on');
+  document.getElementById('guideToggleIcon').textContent='▲ 閉じる';
+  container.innerHTML=`<div class="guide-generate">
+    <div class="guide-gen-t">このフローの詳細タスクガイドがまだ作成されていません。<br>AIに依頼して生成します。</div>
+    <button class="guide-gen-btn" onclick="requestGuideGeneration('${fl.id}')">🤖 タスクガイドを生成する</button>
+  </div>`;
+}
+function renderGuide(fl,guide,container){
+  container.classList.add('on');
+  document.getElementById('guideToggleIcon').textContent='▲ 閉じる';
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div style="font-size:12px;color:var(--muted)">生成日: ${guide.createdAt||'—'} | 総工数: ${guide.totalTime||'—'} | 難易度: ${guide.difficulty||'—'}</div>
+    <button class="guide-gen-btn" style="padding:4px 12px;font-size:11px" onclick="requestGuideGeneration('${fl.id}')">🔄 再生成</button>
+  </div>`;
+  if(guide.overview){h+=`<div style="background:var(--kai-bg);border:1px solid var(--kai-border);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--kai-text);line-height:1.7">${guide.overview}</div>`;}
+  (guide.steps||[]).forEach((gs,si)=>{
+    const stepRef=fl.steps.find(s=>s.order===gs.stepRef)||fl.steps[si]||{};
+    const GK2='guide_cl_'+fl.id+'_'+(gs.stepRef||si);
+    let clData={};try{clData=JSON.parse(localStorage.getItem(GK2)||'{}')}catch(e){}
+    h+=`<div class="guide-step">
+      <div class="guide-step-num">STEP ${gs.stepRef||si+1}</div>
+      <div class="guide-step-title editable-hint" ondblclick="showEditPopover(this,'guide_${fl.id}_step_${si}_title',this.textContent)" title="ダブルクリックで編集">${gs.title||stepRef.title||''}</div>
+      <div class="guide-meta-row">
+        ${gs.timeEstimate?`<span class="guide-badge gb-time">⏱ ${gs.timeEstimate}</span>`:''}
+        ${gs.effortLevel?`<span class="guide-badge gb-effort">💪 ${gs.effortLevel}</span>`:''}
+      </div>
+      <div class="guide-step-body editable-hint" ondblclick="showEditPopover(this,'guide_${fl.id}_step_${si}_body',this.textContent)" title="ダブルクリックで編集">${gs.detailedInstructions||''}</div>`;
+    if(gs.workTemplate){h+=`<div class="guide-prompt-box"><div class="guide-prompt-lbl">📝 作業テンプレート</div><div class="guide-prompt-tx editable-hint" ondblclick="showEditPopover(this,'guide_${fl.id}_step_${si}_template',this.textContent)" title="ダブルクリックで編集">${gs.workTemplate}</div></div>`;}
+    if(gs.claudePrompt){h+=`<div class="guide-prompt-box" style="border-color:rgba(155,110,245,.25)"><div class="guide-prompt-lbl" style="color:#C4B5FD">🤖 Claude プロンプト（コピーして使用）</div><div class="guide-prompt-tx">${gs.claudePrompt}</div><button class="guide-gen-btn" style="padding:3px 10px;font-size:11px;margin-top:6px" onclick="copyText(this.previousElementSibling.textContent)">📋 コピー</button></div>`;}
+    if(gs.checklist?.length){
+      h+=`<div class="guide-checklist">`;
+      gs.checklist.forEach((cl,ci)=>{
+        const ck=clData[ci]?'checked':'';
+        h+=`<label class="guide-cl-item"><input type="checkbox" ${ck} onchange="saveGuideCl('${GK2}',${ci},this.checked)"> ${cl}</label>`;
+      });
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  });
+  container.innerHTML=h;
+}
+function saveGuideCl(key,idx,val){let d={};try{d=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}d[idx]=val;localStorage.setItem(key,JSON.stringify(d));}
+function requestGuideGeneration(flId){
+  const fl=DATA.flows.find(f=>f.id===flId);
+  if(!fl)return;
+  const th=DATA.mandala.themes[fl.themeIndex];
+  const prompt=`## タスクガイド生成依頼\n\nファイル: 売上2倍_羅針盤_20260516.html\nフローID: ${fl.id}\nテーマ: ${th?.name||fl.themeIndex}\nフロー名: ${fl.title}\n\n以下の形式でguideStoreデータを生成し、localStorageキー "${GK}" に保存するJavaScriptコードを生成してください。\n\n各ステップ(${fl.steps.length}ステップ)に対して:\n- detailedInstructions: 初心者でも実行できる詳細な手順（200字以上）\n- workTemplate: 使用可能な作業テンプレート（該当する場合）\n- claudePrompt: AIに依頼できるプロンプト（該当する場合）\n- timeEstimate: 現実的な所要時間\n- effortLevel: 低/中/高\n- checklist: 完了確認チェックリスト（3〜5項目）\n\n既存フローデータ:\n${JSON.stringify(fl,null,2)}\n\n生成後はlocalStorageに保存するコードをブラウザのコンソールで実行すれば反映されます。\nまたはHTMLのguideStoreに直接データを挿入してファイルを更新してください。`;
+  navigator.clipboard.writeText(prompt).then(()=>showToast('✅ コピーしました')).catch(()=>showToast('コピー失敗'));
+}
+function copyText(txt){navigator.clipboard.writeText(txt).then(()=>showToast('✅ コピーしました')).catch(()=>showToast('コピー失敗'));}
+
+/* ================================================================ PRINT ================================================================ */
+let curViewName='dashboard';
+function printView(viewName){
+  const v=viewName||curViewName;
+  document.body.setAttribute('data-print',v);
+  // Show all views temporarily for printing
+  document.querySelectorAll('.view').forEach(x=>x.style.display='');
+  window.print();
+  // Restore
+  document.querySelectorAll('.view').forEach(x=>x.style.display='none');
+  document.querySelector('.view.on')?.style.removeProperty('display');
+  document.querySelector('.view.on').style.display='block';
+  document.body.removeAttribute('data-print');
+}
 
 /* ================================================================ ANALYTICS ================================================================ */
 function renderAnalytics(){
