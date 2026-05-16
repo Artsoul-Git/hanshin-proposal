@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaiスキル 使い倒し完全ガイド — 有限会社アートソウル</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; background: #FAFBFC; color: #2D3748; line-height: 1.8; display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+.sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+.sb-sec { padding: 10px 14px 4px; }
+.sb-sec-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+.sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.5; transition: background 0.15s; }
+.sb-link:hover, .sb-link.active { background: rgba(255,255,255,0.12); color: #fff; }
+.sb-link.back { color: #ED8936; font-weight: bold; margin-bottom: 8px; }
+
+/* Main */
+.main { margin-left: 230px; flex: 1; padding: 40px 24px 100px; }
+.container { max-width: 960px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+/* Cover */
+.cover { background: linear-gradient(135deg,#0F172A 0%,#1A365D 60%,#2D3748 100%); color: white; border-radius: 12px; padding: 60px; margin-bottom: 48px; }
+.cover .badge { display: inline-block; background: rgba(255,255,255,0.12); color: #93C5FD; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 14px; border-radius: 20px; margin-bottom: 20px; }
+.cover h1 { font-size: 36px; font-weight: 900; line-height: 1.2; margin-bottom: 12px; }
+.cover .tagline { font-size: 17px; color: #93C5FD; margin-bottom: 28px; }
+.cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 28px; }
+.cover .meta-item { background: rgba(255,255,255,0.08); border-radius: 8px; padding: 14px 16px; }
+.cover .meta-item .label { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.cover .meta-item .val { font-size: 15px; font-weight: 700; }
+
+/* Typography */
+h2 { font-size: 24px; color: #1A365D; border-bottom: 3px solid #ED8936; padding-bottom: 10px; margin: 50px 0 20px; }
+h3 { font-size: 18px; color: #1A365D; padding-left: 14px; border-left: 5px solid #ED8936; margin: 32px 0 14px; }
+h4 { font-size: 15px; color: #1A365D; font-weight: 700; margin: 20px 0 8px; }
+p { margin: 12px 0; font-size: 15px; }
+hr { border: none; border-top: 2px dashed #E2E8F0; margin: 50px 0; }
+
+/* Callouts */
+.lead { font-size: 16px; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+.tip { background: #FFFAF0; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 14px 0; border-left: 5px solid #ED8936; font-size: 14px; }
+.tip .label { font-weight: 700; color: #C05621; font-size: 13px; display: block; margin-bottom: 6px; }
+.ok { background: #F0FFF4; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 14px 0; border-left: 5px solid #38A169; font-size: 14px; }
+.ok .label { font-weight: 700; color: #2F855A; font-size: 13px; display: block; margin-bottom: 6px; }
+.warn { background: #FFF5F5; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 14px 0; border-left: 5px solid #E53E3E; font-size: 14px; }
+.warn .label { font-weight: 700; color: #C53030; font-size: 13px; display: block; margin-bottom: 6px; }
+
+/* Code */
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: monospace; font-size: 13px; }
+.prompt-box { background: #1A202C; color: #E2E8F0; padding: 32px 22px 20px; border-radius: 8px; font-family: monospace; font-size: 13px; line-height: 1.8; margin: 16px 0; position: relative; white-space: pre-wrap; word-break: break-all; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.1); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; padding: 3px 10px; font-size: 11px; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.copy-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 10px 14px; text-align: left; }
+td { padding: 10px 14px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) td { background: #F7FAFC; }
+ul, ol { padding-left: 24px; margin: 12px 0; }
+li { margin: 6px 0; font-size: 14px; }
+
+/* Category Header */
+.cat-header { background: #1A365D; color: white; padding: 14px 22px; border-radius: 10px; margin: 44px 0 18px; font-size: 18px; font-weight: bold; letter-spacing: 0.04em; display: flex; align-items: center; gap: 12px; }
+.cat-header .emoji { font-size: 22px; }
+
+/* Skill Card */
+.skill-card { border: 2px solid #E2E8F0; border-radius: 10px; margin: 16px 0; overflow: hidden; }
+.skill-card-head { background: #EDF2F7; padding: 14px 20px; display: flex; align-items: center; gap: 14px; border-bottom: 2px solid #E2E8F0; }
+.cmd-badge { background: #1A365D; color: white; font-family: monospace; font-size: 13px; font-weight: bold; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+.cmd-badge.orange { background: #ED8936; }
+.skill-card-title { font-size: 16px; font-weight: bold; color: #1A365D; }
+.skill-card-sub { font-size: 12px; color: #718096; margin-top: 2px; }
+.skill-card-body { padding: 18px 20px; }
+.skill-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.skill-meta-item { background: #F7FAFC; border-radius: 6px; padding: 10px 12px; }
+.skill-meta-item .mk { font-size: 10px; font-weight: bold; color: #718096; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.skill-meta-item .mv { font-size: 13px; color: #2D3748; }
+
+/* Scenario Recipe */
+.recipe { background: #FAF5FF; border: 2px solid #B794F4; border-radius: 10px; padding: 22px 26px; margin: 20px 0; }
+.recipe-title { font-size: 17px; font-weight: bold; color: #553C9A; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.recipe-flow { display: flex; flex-direction: column; gap: 8px; }
+.recipe-step { display: flex; align-items: flex-start; gap: 12px; }
+.step-num { background: #553C9A; color: white; width: 26px; height: 26px; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.step-cmd { background: #1A365D; color: #ED8936; font-family: monospace; font-size: 12px; font-weight: bold; padding: 2px 10px; border-radius: 4px; margin-right: 6px; white-space: nowrap; }
+.step-desc { font-size: 13px; color: #4A5568; flex: 1; }
+.step-arrow { color: #B794F4; font-size: 16px; text-align: center; padding-left: 13px; }
+
+/* Flow Map */
+.flow-map { background: #1A202C; border-radius: 10px; padding: 28px; margin: 20px 0; overflow-x: auto; }
+.flow-map pre { color: #E2E8F0; font-family: monospace; font-size: 13px; line-height: 1.8; white-space: pre; }
+.flow-map .hl { color: #ED8936; }
+.flow-map .arrow { color: #68D391; }
+
+/* Tip card */
+.tip-card { background: #EDF2F7; border-radius: 10px; padding: 20px 24px; margin: 14px 0; border-top: 4px solid #1A365D; }
+.tip-card .tip-num { background: #ED8936; color: white; display: inline-block; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 13px; font-weight: bold; margin-right: 8px; }
+.tip-card .tip-title { font-size: 15px; font-weight: bold; color: #1A365D; }
+.tip-card .tip-body { font-size: 14px; color: #4A5568; margin-top: 8px; }
+
+/* Failure table */
+.fail-table th { background: #742A2A; }
+.fail-table td:nth-child(2) { color: #C53030; font-size: 13px; }
+.fail-table td:nth-child(3) { color: #276749; font-size: 13px; }
+
+/* TOC */
+.toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; margin-bottom: 14px; font-size: 16px; }
+.toc ul { list-style: none; padding-left: 0; }
+.toc > ul > li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+.toc > ul > li:last-child { border: none; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; font-size: 14px; }
+.toc a:hover { color: #ED8936; }
+.toc .sub { padding-left: 20px; font-size: 13px; color: #4A5568; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo">有限会社アートソウル<span>Kaiスキル 使い倒し完全ガイド</span></div>
+
+  <div class="sb-sec">
+    <a class="sb-link back" href="総合マニュアル.html">← 総合マニュアルに戻る</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">📋 クイックリファレンス</div>
+    <a class="sb-link" href="#ref-content">コンテンツ制作</a>
+    <a class="sb-link" href="#ref-proposal">提案・営業</a>
+    <a class="sb-link" href="#ref-strategy">戦略・分析</a>
+    <a class="sb-link" href="#ref-legal">財務・法務</a>
+    <a class="sb-link" href="#ref-org">組織・HR</a>
+    <a class="sb-link" href="#ref-quality">品質・整文</a>
+    <a class="sb-link" href="#ref-ops">業務効率・PM</a>
+    <a class="sb-link" href="#ref-eval">自己評価・成長</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">🍳 シナリオ別レシピ</div>
+    <a class="sb-link" href="#sc-client">新規クライアント獲得</a>
+    <a class="sb-link" href="#sc-seminar">セミナー・研修制作</a>
+    <a class="sb-link" href="#sc-legal">契約・法務処理</a>
+    <a class="sb-link" href="#sc-content">コンテンツ量産</a>
+    <a class="sb-link" href="#sc-strategy">戦略を立てる</a>
+    <a class="sb-link" href="#sc-daily">日々の業務を回す</a>
+    <a class="sb-link" href="#sc-ma">M&A・事業承継</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">🔗 スキル連携マップ</div>
+    <a class="sb-link" href="#map">全体連携図</a>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-sec-label">💡 使い倒しのコツ</div>
+    <a class="sb-link" href="#tips">コツ10選</a>
+    <a class="sb-link" href="#failures">失敗パターンと回避法</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="badge">SKILL GUIDE v1.0 — 2026-05-17</div>
+  <h1>Kaiスキル<br>使い倒し完全ガイド</h1>
+  <div class="tagline">「どのスキルを、どの順で、どう組み合わせて使うか」がわかる実践リファレンス</div>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="label">総スキル数</div><div class="val">40本</div></div>
+    <div class="meta-item"><div class="label">シナリオ数</div><div class="val">7シナリオ</div></div>
+    <div class="meta-item"><div class="label">定義ファイル格納先</div><div class="val">rules/skills/</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#quickref">1. スキル全一覧クイックリファレンス</a></li>
+    <li><a href="#scenarios">2. シナリオ別スキルレシピ</a>
+      <ul>
+        <li class="sub"><a href="#sc-client">新規クライアント獲得フル装備レシピ</a></li>
+        <li class="sub"><a href="#sc-seminar">セミナー・研修を0から作るレシピ</a></li>
+        <li class="sub"><a href="#sc-legal">契約・法務処理レシピ</a></li>
+        <li class="sub"><a href="#sc-content">コンテンツ量産レシピ</a></li>
+        <li class="sub"><a href="#sc-strategy">戦略を立てるレシピ</a></li>
+        <li class="sub"><a href="#sc-daily">日々の業務を回すレシピ</a></li>
+        <li class="sub"><a href="#sc-ma">M&amp;A・事業承継レシピ</a></li>
+      </ul>
+    </li>
+    <li><a href="#map">3. スキル連携マップ</a></li>
+    <li><a href="#tips">4. 使い倒しのコツ10選</a></li>
+    <li><a href="#failures">5. よくある失敗と回避法</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ===== SECTION 1: Quick Reference ===== -->
+<h2 id="quickref">1. スキル全一覧クイックリファレンス</h2>
+
+<p>「入力」「出力」「いつ使うか」を一行で把握できる早見表。カテゴリごとに整理。</p>
+
+<div class="cat-header" id="ref-content"><span class="emoji">✍️</span> コンテンツ制作</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/course-build</code></td><td>カリキュラム設計書を作る。受講者診断→マイルストーン→レクチャー構造まで</td><td>テーマ・対象者・ゴール</td><td>curriculum.md</td></tr>
+<tr><td><code>/seminar-slide</code></td><td>ヒアリング→スライド生成→GitHub Pages公開を一気通貫</td><td>テーマ + ヒアリング回答</td><td>HTML + GitHub URL</td></tr>
+<tr><td><code>/talk-script</code></td><td>既存スライドのトーク台本を作る</td><td>スライドPDF等</td><td>トークスクリプト</td></tr>
+<tr><td><code>/write-brain-article</code></td><td>Brain記事（有料コンテンツ）を書く</td><td>テーマ + 参考記事</td><td>記事.md</td></tr>
+<tr><td><code>/content-burst</code></td><td>テーマ1つから6種コンテンツを並列生成</td><td>テーマ1つ</td><td>レポート/ブログ/X/台本/メルマガ/ビジュアル</td></tr>
+<tr><td><code>/deck-sprint</code></td><td>資料3点セット（レポート+スライド+アジェンダ）を5分で生成</td><td>テーマ1つ</td><td>レポート+HTML+アジェンダ</td></tr>
+<tr><td><code>/beginner-guide</code></td><td>初心者向けHTMLガイドを作る</td><td>テーマ・対象者</td><td>HTML</td></tr>
+</table>
+
+<div class="cat-header" id="ref-proposal"><span class="emoji">📁</span> 提案・営業</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/sme-ai-proposal</code></td><td>中小企業AI導入支援提案書を生成（Knowledge連動）</td><td>Knowledgeフォルダ + 要件定義</td><td>提案書HTML</td></tr>
+<tr><td><code>/publish-proposal</code></td><td>提案書をパスワード保護してURL発行</td><td>HTML + パスワード</td><td>GitHub Pages URL</td></tr>
+<tr><td><code>/proposal-outline</code></td><td>ヒアリング結果から提案骨子を即生成（4タイプ自動判定）</td><td>Excel/文字起こし/メモ</td><td>骨子Word (1〜2p)</td></tr>
+<tr><td><code>/hearing-sheet</code></td><td>業種×部門別ヒアリングシートを作る（文字起こし自動記入対応）</td><td>業種+部門指定</td><td>Excel</td></tr>
+<tr><td><code>/persona-review</code></td><td>ターゲットペルソナ視点で「伝わるか」を検証する</td><td>成果物</td><td>レビューレポート</td></tr>
+</table>
+
+<div class="cat-header" id="ref-strategy"><span class="emoji">🧭</span> 戦略・分析</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/rashinban</code></td><td>目標→マンダラ→マトリクス→ロードマップHTMLを一発生成（迷ったらこれ）</td><td>テーマ・目標</td><td>インタラクティブHTML</td></tr>
+<tr><td><code>/research</code></td><td>市場・競合をWebで実調査する</td><td>業種・テーマ</td><td>調査レポート</td></tr>
+<tr><td><code>/marketing</code></td><td>DRM戦略・LP設計・コピーの壁打ち（神崎潤ペルソナ）</td><td>テーマ・現状</td><td>戦略案・LP骨子</td></tr>
+<tr><td><code>/profit-plan</code></td><td>EPDCARサイクルで「儲けのプラン」を設計する</td><td>テーマ・情報</td><td>収益計画</td></tr>
+<tr><td><code>/issue-tree</code></td><td>問題をWhy/How/Whatロジックツリーで分解する</td><td>問い・課題</td><td>ツリー構造+イシュー</td></tr>
+<tr><td><code>/stakeholder</code></td><td>意思決定者・抵抗勢力を整理して攻略シナリオを作る</td><td>案件・関係者情報</td><td>攻略シナリオ</td></tr>
+<tr><td><code>/kpi-design</code></td><td>KGI→KPI→OKR体系を設計する</td><td>事業・目標</td><td>KPI体系+OKR+ダッシュボード設計</td></tr>
+<tr><td><code>/visualize</code></td><td>4象限/マンダラ/フロー/ガントをHTMLで生成する</td><td>テーマ + 図種</td><td>インタラクティブHTML</td></tr>
+</table>
+
+<div class="cat-header" id="ref-legal"><span class="emoji">⚖️</span> 財務・法務</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/finance</code></td><td>損益シミュレーション・DCF・BEP・価格戦略を設計する（6モード）</td><td>事業数値</td><td>P&amp;L/DCF/BEP等</td></tr>
+<tr><td><code>/billing-docs</code></td><td>見積書・請求書をExcelで生成（インボイス番号自動採番）</td><td>内容・金額・クライアント</td><td>Excel</td></tr>
+<tr><td><code>/nda</code></td><td>NDA（機密保持契約書）を生成する（11条・AI利用条項付き）</td><td>クライアント・月額</td><td>Word (11条)</td></tr>
+<tr><td><code>/biz-contract</code></td><td>業務委託契約書を生成する（17条・立場設定対応）</td><td>クライアント・立場</td><td>Word (17条)</td></tr>
+<tr><td><code>/contract-check</code></td><td>受領した契約書を立場別にレビューする</td><td>契約書ファイル・立場</td><td>Excel比較表+Wordレポート</td></tr>
+<tr><td><code>/doc-compare</code></td><td>2文書の差分を新旧対比表（Word）で出力する</td><td>旧ファイル+新ファイル</td><td>Word対比表</td></tr>
+<tr><td><code>/ma</code></td><td>M&amp;A企業価値評価・DD・LOI支援（6モード）</td><td>財務情報・事業概要</td><td>評価レポート+チェックリスト</td></tr>
+<tr><td><code>/fact-check</code></td><td>成果物のファクト・法的リスクを独立検証する</td><td>成果物</td><td>検証レポート</td></tr>
+</table>
+
+<div class="cat-header" id="ref-org"><span class="emoji">🏢</span> 組織・HR</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/company-setup</code></td><td>AI前提の組織をゼロから設計する</td><td>業種・現状・目標</td><td>組織設計書</td></tr>
+<tr><td><code>/hr-transform</code></td><td>AI導入の人材マネジメントを5フェーズで設計する</td><td>組織情報・課題</td><td>変革計画</td></tr>
+</table>
+
+<div class="cat-header" id="ref-quality"><span class="emoji">✨</span> 品質・整文</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/text-refine</code></td><td>音声整文・校正・メール・X投稿を自動振り分け（4モード）</td><td>テキスト or 音声</td><td>整理済みテキスト</td></tr>
+<tr><td><code>/ai-news-digest</code></td><td>AIニュースダイジェストを生成する</td><td>（自動取得）</td><td>ダイジェスト</td></tr>
+</table>
+
+<div class="cat-header" id="ref-ops"><span class="emoji">⚙️</span> 業務効率・プロジェクト管理</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/wbs-gantt</code></td><td>WBS・ガントチャートをExcelで自動生成（動的関数版）</td><td>タスクリスト・期間</td><td>Excel（動的関数）</td></tr>
+<tr><td><code>/daily-report</code></td><td>音声・自然文で話すだけで日報Excelを自動生成</td><td>音声 or 自然文</td><td>Excel（6列）</td></tr>
+<tr><td><code>/monthly-report</code></td><td>日報データから月次レポートWordを自動生成（円グラフ付き）</td><td>日報Excel + クライアント名</td><td>Word（A4×2p）</td></tr>
+</table>
+
+<div class="cat-header" id="ref-eval"><span class="emoji">📈</span> 自己評価・成長管理</div>
+<table>
+<tr><th width="160">コマンド</th><th>一言説明</th><th width="200">入力</th><th width="160">出力</th></tr>
+<tr><td><code>/eval-daily</code></td><td>今日の作業とロードマップ5本柱の整合を自動評価（追加コスト0）</td><td>（git/Tasks自動取得）</td><td>JSONスコア</td></tr>
+<tr><td><code>/eval-weekly</code></td><td>Stop/Scale評価＋翌週タスク候補を生成する</td><td>（自動収集）</td><td>評価+タスク候補</td></tr>
+<tr><td><code>/eval-monthly</code></td><td>月次総括とロードマップ見直し提案を生成する</td><td>（自動収集）</td><td>総括レポート</td></tr>
+</table>
+
+<hr>
+
+<!-- ===== SECTION 2: Scenario Recipes ===== -->
+<h2 id="scenarios">2. シナリオ別スキルレシピ</h2>
+
+<p>「このとき何を使うか」がすぐわかる実践レシピ集。スキルを単体で使うより<strong>組み合わせると価値が10倍</strong>になる。</p>
+
+<!-- Scenario 1 -->
+<div class="recipe" id="sc-client">
+  <div class="recipe-title">🎯 新規クライアント獲得フル装備レシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">セミナーで見込み客を集め、ヒアリング→提案書→URL送付まで当日完結させる</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/research</span>業界・競合を調査してセミナーテーマを決める</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/course-build</span>カリキュラムを設計する（体験セミナー形式）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/seminar-slide</span>スライドを生成してGitHub Pagesで公開</div></div>
+    <div class="step-arrow">↓ ← セミナー当日 →</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/hearing-sheet</span>ヒアリングシートを事前準備して当日持参</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/proposal-outline</span>ヒアリング後すぐ（15分）に提案骨子を生成</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">6</div><div class="step-desc"><span class="step-cmd">/sme-ai-proposal</span>骨子をインプットに提案書HTMLを生成</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">7</div><div class="step-desc"><span class="step-cmd">/publish-proposal</span>URL発行してクライアントに当日夜に送付</div></div>
+  </div>
+</div>
+
+<!-- Scenario 2 -->
+<div class="recipe" id="sc-seminar">
+  <div class="recipe-title">🎓 セミナー・研修を0から作るレシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">テーマだけあれば当日のスライドから集客まで全部カバーする</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/research</span>競合セミナー・受講者ニーズを調査</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/course-build</span>カリキュラム設計書を作成（受講者診断→アウトライン→レクチャー構造）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/seminar-slide</span>course-buildの出力を渡してスライド+トークスクリプトを生成</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/persona-review</span>ターゲット視点で品質確認（刺さらない箇所を修正）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/marketing</span>集客LP・コピーを設計する</div></div>
+  </div>
+  <div class="tip" style="margin-top:16px;">
+    <span class="label">多回シリーズの場合</span>
+    /wbs-gantt で研修スケジュールをExcel管理 → /hr-transform で定着計画 → /kpi-design で効果測定KPIを設計する
+  </div>
+</div>
+
+<!-- Scenario 3 -->
+<div class="recipe" id="sc-legal">
+  <div class="recipe-title">📜 契約・法務処理レシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">新規取引開始〜月次請求までの法務フローを自動化する</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/billing-docs</span>まず見積書を発行（EST-番号で自動採番）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/nda</span>個人情報・業務機密を扱う場合はNDA締結</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/biz-contract</span>業務委託契約書を生成（立場：乙有利）</div></div>
+    <div class="step-arrow">↓ ← 相手から契約書が届いた場合 →</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/contract-check</span>「乙有利」でレビュー → リスク条項・欠落条項を確認</div></div>
+    <div class="step-arrow">↓ ← 修正版が届いた場合 →</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/doc-compare</span>前版との差分を新旧対比表で確認</div></div>
+    <div class="step-arrow">↓ ← 納品後 →</div>
+    <div class="recipe-step"><div class="step-num">6</div><div class="step-desc"><span class="step-cmd">/billing-docs</span>請求書を発行（AR-番号で自動採番）</div></div>
+  </div>
+</div>
+
+<!-- Scenario 4 -->
+<div class="recipe" id="sc-content">
+  <div class="recipe-title">📢 コンテンツ量産レシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">テーマ1つから複数フォーマットに展開してSNS・ブログ・動画を同時に回す</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/research</span>テーマの市場・需要・根拠を固める（エビデントが取れたら次へ）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/content-burst</span>テーマ1つ渡すだけで6種コンテンツ（レポート/ブログ/X/台本/メルマガ/ビジュアル）を並列生成</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/text-refine</span>各コンテンツのトーン・文体をチャネルに合わせて調整</div></div>
+    <div class="step-arrow">↓ ← Brain記事（有料）の場合 →</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/write-brain-article</span>参考記事スタイルを分析して有料コンテンツを執筆</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/fact-check</span>事実確認・法的リスクを独立検証してから公開</div></div>
+  </div>
+</div>
+
+<!-- Scenario 5 -->
+<div class="recipe" id="sc-strategy">
+  <div class="recipe-title">🧭 戦略を立てるレシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">「何をすべきかわからない」から「数字付きの実行計画」まで</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/rashinban</span>目標を入力してマンダラ→ロードマップHTMLを生成（まず全体像を掴む）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/issue-tree</span>課題を分解してクリティカルイシューを特定する</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/stakeholder</span>関係者の整理と提案を通すための攻略シナリオを設計</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/profit-plan</span>EPDCARサイクルで収益計画を短中長期で構築</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/finance</span>P&amp;L・DCF・損益分岐点で数値を検証する</div></div>
+    <div class="step-arrow">↓ ← クライアントへの提案の場合 →</div>
+    <div class="recipe-step"><div class="step-num">6</div><div class="step-desc"><span class="step-cmd">/sme-ai-proposal</span>上記をすべて反映した提案書HTMLを生成</div></div>
+  </div>
+</div>
+
+<!-- Scenario 6 -->
+<div class="recipe" id="sc-daily">
+  <div class="recipe-title">📅 日々の業務を回すレシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">毎日5分の習慣で月末の振り返りが自動で完成する</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">毎日</div><div class="step-desc"><span class="step-cmd">/daily-report</span>音声で「今日やったこと」を話すだけでExcel日報化（5分）</div></div>
+    <div class="step-arrow">+</div>
+    <div class="recipe-step"><div class="step-num">毎日</div><div class="step-desc"><span class="step-cmd">/eval-daily</span>git履歴+Tasksを自動読み込みしてロードマップ整合スコアを確認（1分）</div></div>
+    <div class="step-arrow">↓ 週末</div>
+    <div class="recipe-step"><div class="step-num">週次</div><div class="step-desc"><span class="step-cmd">/eval-weekly</span>Stop/Scale評価と翌週タスク候補を確認→承認するだけでTasks自動登録</div></div>
+    <div class="step-arrow">↓ 月末</div>
+    <div class="recipe-step"><div class="step-num">月次</div><div class="step-desc"><span class="step-cmd">/monthly-report</span>日報データから月次レポートWord（円グラフ付き）を自動生成</div></div>
+    <div class="step-arrow">+</div>
+    <div class="recipe-step"><div class="step-num">月次</div><div class="step-desc"><span class="step-cmd">/eval-monthly</span>月次総括→翌月ロードマップ見直し提案→/rashinbanで翌月計画を更新</div></div>
+  </div>
+</div>
+
+<!-- Scenario 7 -->
+<div class="recipe" id="sc-ma">
+  <div class="recipe-title">🤝 M&A・事業承継レシピ</div>
+  <p style="font-size:13px;color:#553C9A;margin-bottom:16px;">対象企業の発見から意向表明まで</p>
+  <div class="recipe-flow">
+    <div class="recipe-step"><div class="step-num">1</div><div class="step-desc"><span class="step-cmd">/research</span>対象業界・市場環境を実調査する</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">2</div><div class="step-desc"><span class="step-cmd">/ma</span>企業価値評価（3手法）・DDチェックリスト・ストラクチャー比較</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">3</div><div class="step-desc"><span class="step-cmd">/finance</span>DCF・感応度分析で数値を独立検証する</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">4</div><div class="step-desc"><span class="step-cmd">/stakeholder</span>キーパーソンの整理と交渉戦略を設計する</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">5</div><div class="step-desc"><span class="step-cmd">/nda</span>NDA締結（情報開示前に必ず）</div></div>
+    <div class="step-arrow">↓</div>
+    <div class="recipe-step"><div class="step-num">6</div><div class="step-desc"><span class="step-cmd">/ma</span>LOI骨子・価格交渉論点を整理して意向表明書へ</div></div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== SECTION 3: Connection Map ===== -->
+<h2 id="map">3. スキル連携マップ</h2>
+
+<p>どのスキルがどのスキルに繋がるか。<strong>出力を次のスキルのインプットにする</strong>のが使い倒しの鉄則。</p>
+
+<div class="flow-map">
+<pre>
+<span class="hl">【インプット収集フロー】</span>
+<span class="hl">/hearing-sheet</span> <span class="arrow">──→</span> <span class="hl">/proposal-outline</span> <span class="arrow">──→</span> <span class="hl">/sme-ai-proposal</span> <span class="arrow">──→</span> <span class="hl">/publish-proposal</span>
+<span class="hl">/research</span>      <span class="arrow">──→</span> <span class="hl">/marketing</span>        <span class="arrow">──→</span> <span class="hl">/profit-plan</span>
+                               <span class="arrow">──→</span> <span class="hl">/sme-ai-proposal</span>
+
+<span class="hl">【分析・設計フロー】</span>
+<span class="hl">/rashinban</span> <span class="arrow">──→</span> <span class="hl">/issue-tree</span> <span class="arrow">──→</span> <span class="hl">/stakeholder</span> <span class="arrow">──→</span> <span class="hl">/sme-ai-proposal</span>
+                              <span class="arrow">──→</span> <span class="hl">/kpi-design</span>
+                              <span class="arrow">──→</span> <span class="hl">/hr-transform</span>
+
+<span class="hl">【コンテンツ制作フロー】</span>
+<span class="hl">/course-build</span> <span class="arrow">──→</span> <span class="hl">/seminar-slide</span> <span class="arrow">──→</span> <span class="hl">/persona-review</span>
+<span class="hl">/research</span>     <span class="arrow">──→</span> <span class="hl">/content-burst</span>
+              <span class="arrow">──→</span> <span class="hl">/write-brain-article</span>
+
+<span class="hl">【財務・法務フロー】</span>
+<span class="hl">/finance</span>           <span class="arrow">──→</span> <span class="hl">/profit-plan</span>
+<span class="hl">/billing-docs（見積）</span> <span class="arrow">──→</span> <span class="hl">/nda</span> <span class="arrow">──→</span> <span class="hl">/biz-contract</span> <span class="arrow">──→</span> <span class="hl">/billing-docs（請求）</span>
+<span class="hl">/contract-check</span>    <span class="arrow">──→</span> <span class="hl">/doc-compare</span>（修正版が来るたびに）
+
+<span class="hl">【業務管理フロー】</span>
+<span class="hl">/daily-report</span> <span class="arrow">──→</span> <span class="hl">/monthly-report</span>
+<span class="hl">/eval-daily</span>   <span class="arrow">──→</span> <span class="hl">/eval-weekly</span> <span class="arrow">──→</span> <span class="hl">/eval-monthly</span> <span class="arrow">──→</span> <span class="hl">/rashinban</span>（翌月ロードマップ）
+
+<span class="hl">【品質保証（どこにでも挟める）】</span>
+[任意の成果物] <span class="arrow">──→</span> <span class="hl">/fact-check</span>
+[任意の成果物] <span class="arrow">──→</span> <span class="hl">/persona-review</span>
+[任意のテキスト] <span class="arrow">──→</span> <span class="hl">/text-refine</span>
+</pre>
+</div>
+
+<hr>
+
+<!-- ===== SECTION 4: Tips ===== -->
+<h2 id="tips">4. 使い倒しのコツ10選</h2>
+
+<div class="tip-card">
+  <div><span class="tip-num">1</span><span class="tip-title">「迷ったら /rashinban」がデフォルト起動</span></div>
+  <div class="tip-body">何をすべきか迷ったとき、まず <code>/rashinban</code> に目標を投げる。マンダラとロードマップが出るので、そこから使うスキルが自然に見えてくる。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">2</span><span class="tip-title">スキルはチェーンして使う</span></div>
+  <div class="tip-body">1コマンドで終わりにせず、出力を次のスキルのインプットにする。<code>/research → /profit-plan → /finance</code> の流れが戦略の精度を段違いに上げる。単体使用と連携使用では品質がまるで違う。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">3</span><span class="tip-title">Knowledge に入れれば入れるほど提案書が「現場の言葉」になる</span></div>
+  <div class="tip-body">ヒアリング後すぐに Knowledge フォルダへ文字起こしを投入すること。次回の <code>/sme-ai-proposal</code> がまるで違う。架空数値・推測が入らない。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">4</span><span class="tip-title">「要件定義に追加して」が1番コスパが高い</span></div>
+  <div class="tip-body">新情報が来るたびにこの一言を言うだけで要件定義.mdが更新され続ける。次回の提案書はそれを自動で参照する。積み重ねが提案書の深さになる。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">5</span><span class="tip-title">/course-build は /seminar-slide の前工程として使う</span></div>
+  <div class="tip-body"><code>/seminar-slide</code> 単体で起動すると「説明スライド」になりがち。<code>/course-build</code> でカリキュラム設計書を先に作り、受講者のゴールと各レクチャーの主張を明確にしてから渡すと、スライドとトークスクリプトの品質が格段に上がる。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">6</span><span class="tip-title">文書系スキルは「立場」を最初に言う</span></div>
+  <div class="tip-body"><code>/biz-contract</code>・<code>/contract-check</code> は「甲有利/乙有利/公平」を最初に明示する。省くと微妙な仕上がりになる。受託者として仕事をするなら「乙有利」が基本。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">7</span><span class="tip-title">評価スキルは感情を切り離すために使う</span></div>
+  <div class="tip-body"><code>/eval-weekly</code> の Stop候補は「やめる理由を理論化してくれる」ツール。感情でズルズル続けているものを整理するのに使う。出てきた候補は素直に受け取る。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">8</span><span class="tip-title">ペルソナレビューは提出前の最終防衛</span></div>
+  <div class="tip-body"><code>/persona-review</code> はターゲットに「刺さらない箇所」を客観的に指摘する。提案書・セミナー・LP など重要成果物は必ず通す。自己評価は甘くなるので客観的な視点が必要。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">9</span><span class="tip-title">/text-refine は「Kaiへの話しかけ」として使う</span></div>
+  <div class="tip-body">完成した文章ではなく、音声のような雑な入力でも <code>/text-refine</code> が整えてくれる。「今日○○やった、あとこれ確認して、明日までに返信したい」だけでメールになる。</div>
+</div>
+
+<div class="tip-card">
+  <div><span class="tip-num">10</span><span class="tip-title">月末の「棚卸し」を /eval-monthly に任せる</span></div>
+  <div class="tip-body">git履歴・Tasks・セッションログを自動で読むので自分で振り返らなくていい。出てきた「翌月重点テーマ」をそのまま <code>/rashinban</code> に渡すと翌月ロードマップが完成する。</div>
+</div>
+
+<hr>
+
+<!-- ===== SECTION 5: Failure Patterns ===== -->
+<h2 id="failures">5. よくある失敗と回避法</h2>
+
+<table class="fail-table">
+<tr><th>失敗パターン</th><th>原因</th><th>回避法</th></tr>
+<tr>
+  <td>提案書に架空の数字が入る</td>
+  <td>Knowledgeが空のまま生成した</td>
+  <td>ヒアリング後すぐKnowledgeに文字起こしを投入する</td>
+</tr>
+<tr>
+  <td>スキルを起動したが何も返ってこない</td>
+  <td>Kai Tasksサーバーが未起動</td>
+  <td><code>ensure-server</code> コマンドを先に実行する</td>
+</tr>
+<tr>
+  <td>契約書のレビューが甘い</td>
+  <td>「公平」で依頼した</td>
+  <td>受託者として不利な条件は「乙有利」で強めに見てもらう</td>
+</tr>
+<tr>
+  <td>セミナーが「説明会」になった</td>
+  <td>/course-build を省いてスライド生成した</td>
+  <td>必ず <code>/course-build</code> でカリキュラム設計してから <code>/seminar-slide</code> に渡す</td>
+</tr>
+<tr>
+  <td>収益計画が楽観的すぎる</td>
+  <td>/profit-plan を単独で使った</td>
+  <td><code>/research</code> で市場を調べ <code>/finance</code> で数値検証してから使う</td>
+</tr>
+<tr>
+  <td>自己評価が甘くなる</td>
+  <td>自己評価で感情が入る</td>
+  <td><code>/eval-weekly</code> の自動評価に任せる。Stop候補は素直に受け取る</td>
+</tr>
+<tr>
+  <td>コンテンツが薄い</td>
+  <td>テーマが抽象的すぎた</td>
+  <td><code>/research</code> を先に走らせてエビデンスを固める。テーマは「1文で言えるくらい絞る」</td>
+</tr>
+<tr>
+  <td>文書の差分が追えない</td>
+  <td>修正版を手動で比較していた</td>
+  <td>修正版が来たら必ず <code>/doc-compare</code> に通す</td>
+</tr>
+<tr>
+  <td>レクチャーのトークが薄くなる</td>
+  <td>主張だけ決めて説明を省いた</td>
+  <td><code>/course-build</code> の「主張+4要素（Why/What/How/事例）」を各レクチャーに設計する</td>
+</tr>
+<tr>
+  <td>M&A評価が甘い</td>
+  <td>/ma だけで完結させた</td>
+  <td><code>/finance</code> で独立してDCF・感応度分析を実施して数値を二重確認する</td>
+</tr>
+</table>
+
+<div class="warn" style="margin-top:28px;">
+  <span class="label">⚠ 法的注意事項</span>
+  <code>/nda</code>・<code>/biz-contract</code>・<code>/contract-check</code> が生成する文書は参考資料であり、法的拘束力のある書類の最終確認は弁護士・司法書士に依頼すること。Kaiはレビューの補助であり法律相談ではない。
+</div>
+
+<hr>
+
+<p style="text-align:center;color:#718096;font-size:13px;margin-top:40px;">
+  Kaiスキル 使い倒し完全ガイド v1.0 — 2026-05-17<br>
+  有限会社アートソウル × Kai（AS AI導入支援事業部）<br>
+  <a href="総合マニュアル.html" style="color:#1A365D;">← 総合マニュアルに戻る</a>
+</p>
+
+</div><!-- /container -->
+</div><!-- /main -->
+
+<script>
+// Copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const box = btn.parentElement;
+    const text = box.innerText.replace(btn.innerText, '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ コピー済み';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+});
+
+// Active sidebar link highlight
+const links = document.querySelectorAll('.sb-link[href^="#"]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = [...links].find(l => l.getAttribute('href') === '#' + e.target.id);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('h2[id], h3[id]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
