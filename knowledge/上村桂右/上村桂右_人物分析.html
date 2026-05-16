@@ -178,6 +178,37 @@ tr:nth-child(even) td { background: #F8FAFC; }
 .to-top { position:fixed; bottom:28px; right:28px; width:44px; height:44px; background:var(--navy); color:white; border:none; border-radius:50%; font-size:18px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,0.18); opacity:0; transform:translateY(12px); transition:opacity .25s, transform .25s; z-index:1000; display:flex; align-items:center; justify-content:center; }
 .to-top.visible { opacity:1; transform:translateY(0); }
 .to-top:hover { background:#2B6CB0; }
+
+/* ── YOROZU LINK BUTTON ── */
+.yorozu-link-btn { display:inline-block; background:var(--navy); color:white; padding:12px 28px; border-radius:8px; text-decoration:none; font-size:14px; font-weight:700; transition:background .2s; }
+.yorozu-link-btn:hover { background:#1A3A5C; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px) {
+  .nav-top { height:auto; flex-direction:column; align-items:flex-start; padding:10px 12px 0; gap:4px; }
+  .nav-tabs { width:100%; padding-bottom:8px; gap:2px; }
+  .nav-tab { padding:5px 8px; font-size:11px; }
+  main { padding:115px 12px 60px; }
+  .hero { padding:24px 16px; }
+  .hero h1 { font-size:20px; }
+  .hero .tagline { font-size:12px; }
+  .hero-cards { grid-template-columns:1fr 1fr; gap:10px; }
+  .hero-card .num { font-size:20px; }
+  .wall-grid { grid-template-columns:1fr; }
+  .compare-grid { grid-template-columns:1fr; }
+  .team-map { grid-template-columns:1fr 1fr; }
+  .trait-list { grid-template-columns:1fr; }
+  .strength-label { min-width:100px; font-size:12px; }
+  .income-label { min-width:130px; font-size:12px; }
+  table { display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  th, td { padding:8px 10px; font-size:12px; }
+  .card { padding:16px 14px; }
+  .card h2 { font-size:15px; }
+  .card h3 { font-size:13px; }
+  .timeline { padding-left:20px; }
+  .tl-dot { left:-18px; }
+  .yorozu-link-btn { font-size:13px; padding:10px 20px; }
+}
 </style>
 </head>
 <body>
@@ -980,6 +1011,11 @@ tr:nth-child(even) td { background: #F8FAFC; }
     <div class="callout callout-amber" style="margin-top:10px;">
       <strong>⚠ 基本ルール（厳守）</strong>：よろず相談者を本業に誘導することは禁止。よろずCOとして純粋に支援する。強みPR・ミニセミナー・CO間連携がブランディング手段。
     </div>
+
+    <div style="text-align:center;margin-top:20px;margin-bottom:4px;">
+      <a href="よろず_連携戦略.html" target="_blank" class="yorozu-link-btn">🗺 よろず連携マップ（CO連携・セミナー10本・勉強会10本）を開く →</a>
+    </div>
+    <div style="text-align:center;font-size:12px;color:var(--muted);margin-top:6px;">CO連携シナリオ・紹介トーク文・Kaiへのプロンプトはすべて連携マップに集約しています</div>
   </div>
 
   <div class="card">
@@ -1022,7 +1058,7 @@ tr:nth-child(even) td { background: #F8FAFC; }
 
   <div class="card">
     <h2><span class="icon">🔗</span>CO連携マップ（主要連携先）</h2>
-    <div style="margin-top:4px; font-size:12px; color:var(--muted);">詳細は <code>knowledge/YZ_list/よろず_連携戦略.html</code> で確認</div>
+    <div style="margin-top:4px; font-size:12px; color:var(--muted);">詳細・紹介トーク文は <a href="よろず_連携戦略.html" target="_blank" style="color:var(--teal);">よろず連携マップ</a> で確認</div>
 
     <h3 style="margin-top:16px;">上村CO → 他COへの紹介シナリオ（主要パターン）</h3>
     <table style="margin-top:10px;">
@@ -1112,28 +1148,19 @@ tr:nth-child(even) td { background: #F8FAFC; }
   <div class="card">
     <h2><span class="icon">📣</span>よろず活用セルフブランディング戦略</h2>
 
-    <h3>ミニセミナー企画案（年4回）</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+    <h3>セミナー10本 ＋ 1on1勉強会10本（詳細は連携マップへ）</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
       <div style="background:var(--bg);border-radius:10px;padding:14px 16px;">
-        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:4px;">セミナー ①</div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">今日から始める生成AI活用</div>
-        <div style="font-size:12px;color:var(--muted);">初心者向け。ChatGPT・Geminiの基本操作から「使い続けるコツ」まで。相談者獲得の入口。</div>
+        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:6px;">セミナー（30分＋Q&A）10本</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;">①メディア設計入門 ②コスト削減 ③マニュアルAI化 ④口コミ資産化 ⑤HP改善 ⑥コンテンツ量産 ⑦補助金戦略 ⑧AI文化づくり ⑨AI時代の経営 ⑩紹介連鎖設計</div>
       </div>
       <div style="background:var(--bg);border-radius:10px;padding:14px 16px;">
-        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:4px;">セミナー ②</div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">AI導入で月30時間削減した実例紹介</div>
-        <div style="font-size:12px;color:var(--muted);">ビフォーアフターを数字で示す。よろず支援経由の事例も追加していく。</div>
+        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:6px;">1on1勉強会（30分）10本</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.8;">①業務フロー設計 ②ChatGPT入門 ③プロモ素材制作 ④プレスリリース設計 ⑤マニュアル構造化 ⑥HP改善 ⑦口コミ活用 ⑧補助金課題整理 ⑨スタッフAI展開 ⑩発信仕組み化</div>
       </div>
-      <div style="background:var(--bg);border-radius:10px;padding:14px 16px;">
-        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:4px;">セミナー ③</div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">ChatGPTで販促文章を10分で作る</div>
-        <div style="font-size:12px;color:var(--muted);">今岡CO・山畑COと合同開催も可。デザイン×AI×発信の連携として打ち出す。</div>
-      </div>
-      <div style="background:var(--bg);border-radius:10px;padding:14px 16px;">
-        <div style="font-size:10px;font-weight:700;color:var(--teal);margin-bottom:4px;">セミナー ④</div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:4px;">少人数で回る現場のAI活用術</div>
-        <div style="font-size:12px;color:var(--muted);">1〜10名の小規模事業者特化。業種を問わない業務フロー×AI設計のハウツー。</div>
-      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <a href="よろず_連携戦略.html" target="_blank" class="yorozu-link-btn" style="font-size:13px;padding:10px 22px;">詳細・Kaiへのプロンプトを見る →</a>
     </div>
 
     <h3 style="margin-top:22px;">外部機関への波及（本業ブランディング）</h3>
