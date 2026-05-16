@@ -166,6 +166,66 @@ h2 { font-size:18px; font-weight:700; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 @media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+/* ===== EDIT POPOVER ===== */
+#editPopover { position:fixed;z-index:600;background:#1A2332;border:1px solid var(--primary);border-radius:9px;padding:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);min-width:220px;max-width:360px; }
+#editPopover input,#editPopover textarea { width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 9px;border-radius:5px;font-size:13px;font-family:inherit;line-height:1.5; }
+#editPopover textarea { resize:vertical; }
+#editPopover input:focus,#editPopover textarea:focus { border-color:var(--primary);outline:none; }
+.ep-row { display:flex;gap:6px;margin-top:8px;justify-content:flex-end; }
+.ep-save { padding:5px 14px;border-radius:5px;border:none;background:var(--primary);color:#fff;cursor:pointer;font-size:12px;font-weight:600; }
+.ep-cancel { padding:5px 10px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px; }
+.editable-hint { cursor:pointer;position:relative; }
+.editable-hint:hover { outline:1px dashed rgba(99,102,241,.5);outline-offset:2px;border-radius:3px; }
+/* ===== EDIT BADGE ===== */
+#editBadge { display:none;position:fixed;top:60px;right:14px;background:rgba(99,102,241,.92);color:#fff;padding:4px 10px;border-radius:20px;font-size:11px;z-index:300;pointer-events:none; }
+#editBadge.on { display:block; }
+/* ===== TOAST ===== */
+#toast { position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--surface2);border:1px solid var(--primary);color:var(--text);padding:7px 16px;border-radius:8px;font-size:12px;opacity:0;transition:all .25s;z-index:700;pointer-events:none;white-space:nowrap; }
+#toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
+/* ===== AI MODAL ===== */
+.modal-ov { display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;align-items:center;justify-content:center; }
+.modal-ov.on { display:flex; }
+.modal-box { background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;width:min(520px,94vw);max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.6); }
+.modal-title { font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px; }
+.modal-sec { margin-bottom:14px; }
+.modal-lbl { font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px; }
+.modal-val { background:var(--surface2);border-radius:6px;padding:8px 10px;font-size:12px;color:var(--dim);line-height:1.6; }
+.modal-ds { display:flex;flex-direction:column;gap:4px; }
+.modal-ds-item { background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:6px;padding:6px 10px;font-size:12px;color:#FCD34D; }
+.modal-ta { width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;padding:8px 10px;resize:vertical;min-height:80px;font-family:inherit; }
+.modal-ta:focus { border-color:var(--primary);outline:none; }
+.modal-hint { font-size:11px;color:var(--muted);line-height:1.7;margin-top:8px;padding:7px 10px;background:var(--surface2);border-radius:6px; }
+.modal-acts { display:flex;gap:8px;justify-content:flex-end;margin-top:16px; }
+.modal-copy { background:linear-gradient(135deg,#4C1D95,#6366F1);border:none;color:#fff;padding:9px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px; }
+.modal-close { background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px; }
+/* ===== FLOW STATUS / NOTES ===== */
+.fl-status-row { display:flex;gap:5px;margin-top:8px;flex-wrap:wrap;align-items:center; }
+.fl-st-btn { font-size:10px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s; }
+.fl-st-btn.active-todo { border-color:var(--muted);color:var(--muted); }
+.fl-st-btn.active-doing { border-color:var(--warn);color:var(--warn);background:rgba(245,158,11,.08); }
+.fl-st-btn.active-done { border-color:var(--success);color:var(--success);background:rgba(16,185,129,.08); }
+.fl-st-btn.active-block { border-color:var(--danger);color:var(--danger);background:rgba(239,68,68,.08); }
+.fl-ai-btn { font-size:10px;padding:2px 9px;border-radius:4px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);color:#A5B4FC;cursor:pointer;margin-left:auto;transition:all .15s; }
+.fl-ai-btn:hover { background:rgba(99,102,241,.25); }
+.fl-note-ta { width:100%;background:transparent;border:none;border-top:1px solid var(--border);color:var(--dim);font-size:11px;padding:6px 0 2px;margin-top:7px;font-family:inherit;resize:none;line-height:1.5; }
+.fl-note-ta:focus { outline:none;color:var(--text); }
+.fl-note-ta::placeholder { color:var(--muted);font-style:italic; }
+/* ===== ANALYTICS ===== */
+.ana-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;margin-bottom:20px; }
+.ana-card { background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px; }
+.ana-card-t { font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:5px; }
+.ana-row { display:flex;align-items:center;gap:7px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px; }
+.ana-row:last-child { border-bottom:none; }
+.ana-bw { flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden; }
+.ana-bf { height:100%;border-radius:3px; }
+.ana-pct { font-size:10px;color:var(--muted);min-width:28px;text-align:right; }
+.af { display:inline-flex;align-items:center;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:500; }
+.af-ok { background:rgba(16,185,129,.1);color:#6EE7B7; }
+.af-w { background:rgba(245,158,11,.1);color:#FCD34D; }
+.af-bad { background:rgba(239,68,68,.1);color:#FCA5A5; }
+/* ===== EDIT CHANGE COUNT ===== */
+.hdr-edit-count { font-size:10px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.25);color:#A5B4FC;padding:2px 8px;border-radius:20px;cursor:pointer;transition:all .15s; }
+.hdr-edit-count:hover { background:rgba(99,102,241,.3); }
 </style>
 </head>
 <body>
@@ -177,6 +237,7 @@ h2 { font-size:18px; font-weight:700; }
     <span class="prog-pct" id="hPct">0%</span>
     <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
   </div>
+  <button class="hdr-edit-count" id="editCountBtn" onclick="openEditLog()" style="display:none">✏️ <span id="editCountNum">0</span>件編集済み</button>
   <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
 </header>
 
@@ -212,6 +273,7 @@ h2 { font-size:18px; font-weight:700; }
   </div>
   <div class="sec">最優先で着手すべきアクション</div>
   <div class="act-grid" id="dActs"></div>
+  <div id="dAnalytics"></div>
 </div>
 
 <div id="v-mandala" class="view">
@@ -271,6 +333,33 @@ h2 { font-size:18px; font-weight:700; }
     </div>
   </div>
   <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<div id="editBadge">✏️ 編集モード — ダブルクリックで各項目を編集できます</div>
+<div id="toast"></div>
+
+<!-- AI Instruction Modal -->
+<div class="modal-ov" id="aiModal">
+  <div class="modal-box">
+    <div class="modal-title">🤖 AIへの指示を送る</div>
+    <div class="modal-sec">
+      <div class="modal-lbl">変更・相談内容</div>
+      <div class="modal-val" id="modalSummary">—</div>
+    </div>
+    <div class="modal-sec" id="modalDsSec">
+      <div class="modal-lbl">影響する下流項目（自動調整が必要な箇所）</div>
+      <div class="modal-ds" id="modalDsList"></div>
+    </div>
+    <div class="modal-sec">
+      <div class="modal-lbl">カスタム指示（任意）</div>
+      <textarea class="modal-ta" id="modalCustom" placeholder="例：この変更に合わせてガントのタイムラインも2週間ずらしてください。財務シナリオも見直してほしい。"></textarea>
+    </div>
+    <div class="modal-hint">① コピーボタンを押す → ② Claude Codeのチャット欄にペースト → ③ Enter で実行<br>実行後、Kaiがこのファイルを更新します。</div>
+    <div class="modal-acts">
+      <button class="modal-close" onclick="closeAIModal()">閉じる</button>
+      <button class="modal-copy" onclick="doCopyAIPrompt()">📋 Claude Codeにコピー</button>
+    </div>
+  </div>
 </div>
 
 <div id="kai-float">
@@ -602,6 +691,111 @@ const SK='rsh_'+encodeURIComponent(DATA.meta.theme||'x');
 const checks=()=>{try{return JSON.parse(localStorage.getItem(SK)||'{}')}catch{return{}}};
 const saveCheck=(id,v)=>{const c=checks();c[id]=v;localStorage.setItem(SK,JSON.stringify(c));updatePct()};
 
+/* ================================================================ EDIT SYSTEM ================================================================ */
+const EK='rsh_edits_'+encodeURIComponent(DATA.meta.theme||'x');
+const SK_ST='rsh_st_'+encodeURIComponent(DATA.meta.theme||'x');
+let editStore={};let statusStore={};
+try{editStore=JSON.parse(localStorage.getItem(EK)||'{}')}catch(e){editStore={};}
+try{statusStore=JSON.parse(localStorage.getItem(SK_ST)||'{}')}catch(e){statusStore={};}
+
+// Apply stored edits to DATA on load
+function applyEdits(){
+  Object.entries(editStore).forEach(([path,val])=>{
+    if(path.startsWith('notes_'))return;
+    try{setNested(DATA,path,val);}catch(e){}
+  });
+}
+function setNested(obj,path,val){
+  const parts=path.split('.');let cur=obj;
+  for(let i=0;i<parts.length-1;i++){const k=isNaN(parts[i])?parts[i]:+parts[i];if(cur[k]===undefined)return;cur=cur[k];}
+  const last=isNaN(parts[parts.length-1])?parts[parts.length-1]:+parts[parts.length-1];cur[last]=val;
+}
+
+function saveEdit(path,val){
+  editStore[path]=val;localStorage.setItem(EK,JSON.stringify(editStore));
+  setNested(DATA,path,val);updateEditCount();showToast('保存しました ✓');
+}
+function getEditNote(stepId){return editStore['notes_'+stepId]||'';}
+function saveEditNote(stepId,val){editStore['notes_'+stepId]=val;localStorage.setItem(EK,JSON.stringify(editStore));}
+function getStatus(cid){return statusStore[cid]||'todo';}
+function saveStatus(cid,status){statusStore[cid]=status;localStorage.setItem(SK_ST,JSON.stringify(statusStore));}
+
+function updateEditCount(){
+  const n=Object.keys(editStore).filter(k=>!k.startsWith('notes_')).length;
+  const btn=document.getElementById('editCountBtn'),num=document.getElementById('editCountNum');
+  if(btn){btn.style.display=n>0?'':'none';if(num)num.textContent=n;}
+  document.getElementById('editBadge').classList.toggle('on',n>0);
+}
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+/* Downstream dependency graph */
+function getDownstream(path){
+  const ds=[];
+  const mTheme=path.match(/^mandala\.themes\.(\d+)\.name$/);
+  if(mTheme){const i=+mTheme[1];ds.push({label:`マトリクス[${i}]「${DATA.mandala.themes[i]?.name}」のタイトル`,path:`matrices.${i}.title`});ds.push({label:`Kaiテーマ別アドバイス[${i}]`,path:`kai.themeInsights.${i}.insight`});}
+  const mItem=path.match(/^mandala\.themes\.(\d+)\.items\.(\d+)\.text$/);
+  if(mItem){const ti=+mItem[1],ii=+mItem[2];const oldTxt=DATA.mandala.themes[ti]?.items?.[ii]?.text;if(oldTxt){DATA.matrices[ti]?.quadrants.forEach((q,qi)=>{q.items?.forEach((it,li)=>{if(it.text===oldTxt)ds.push({label:`マトリクス[${ti}] ${q.label||q.pos}: "${it.text}"`,path:`matrices.${ti}.quadrants.${qi}.items.${li}.text`});});});}}
+  const mxItem=path.match(/^matrices\.(\d+)\.quadrants\.(\d+)\.items\.(\d+)\.text$/);
+  if(mxItem){const ti=+mxItem[1],qi=+mxItem[2],li=+mxItem[3];const oldTxt=DATA.matrices[ti]?.quadrants?.[qi]?.items?.[li]?.text;if(oldTxt){DATA.flows.forEach((fl,fi)=>{if(fl.sourceItem===oldTxt)ds.push({label:`フロー「${fl.title}」の対象アクション`,path:`flows.${fi}.sourceItem`});});}}
+  return ds;
+}
+
+/* Edit popover */
+function showEditPopover(el,path,currentVal){
+  document.getElementById('editPopover')?.remove();
+  const pop=document.createElement('div');pop.id='editPopover';
+  const isLong=currentVal.length>50||currentVal.includes('\n');
+  const inp=document.createElement(isLong?'textarea':'input');
+  inp.value=currentVal;if(isLong){inp.rows=Math.max(2,Math.min(6,(currentVal.match(/\n/g)||[]).length+2));}
+  const row=document.createElement('div');row.className='ep-row';
+  const cb=document.createElement('button');cb.className='ep-cancel';cb.textContent='キャンセル';cb.onclick=()=>pop.remove();
+  const sb=document.createElement('button');sb.className='ep-save';sb.textContent='保存';
+  sb.onclick=()=>{
+    const nv=inp.value.trim();pop.remove();
+    if(nv&&nv!==currentVal){
+      saveEdit(path,nv);
+      el.textContent=nv;
+      const ds=getDownstream(path);
+      if(ds.length>0){openAIModal({summary:`<strong>${path.split('.').slice(-2).join('.')}</strong><br>"${currentVal.substring(0,40)}${currentVal.length>40?'…':''}" → "${nv.substring(0,40)}${nv.length>40?'…':''}"`,changes:[{label:path,oldVal:currentVal,newVal:nv}],downstream:ds});}
+    }
+  };
+  row.appendChild(cb);row.appendChild(sb);pop.appendChild(inp);pop.appendChild(row);
+  document.body.appendChild(pop);
+  const rect=el.getBoundingClientRect();
+  pop.style.top=Math.min(rect.bottom+5,window.innerHeight-160)+'px';
+  pop.style.left=Math.min(Math.max(rect.left,4),window.innerWidth-370)+'px';
+  inp.focus();inp.select();
+  inp.addEventListener('keydown',e=>{if(!isLong&&e.key==='Enter'){e.preventDefault();sb.click();}if(e.key==='Escape')pop.remove();});
+  setTimeout(()=>document.addEventListener('click',function h(e){if(!pop.contains(e.target)&&e.target!==el){pop.remove();document.removeEventListener('click',h);}},),120);
+}
+
+/* AI Modal */
+let _modalCtx=null;
+function openAIModal(ctx){
+  _modalCtx=ctx;
+  document.getElementById('modalSummary').innerHTML=ctx.summary||'—';
+  const dl=document.getElementById('modalDsList'),ds=ctx.downstream||[];
+  document.getElementById('modalDsSec').style.display=ds.length?'block':'none';
+  dl.innerHTML='';ds.forEach(d=>{const x=document.createElement('div');x.className='modal-ds-item';x.textContent='↓ '+d.label;dl.appendChild(x);});
+  document.getElementById('modalCustom').value='';
+  document.getElementById('aiModal').classList.add('on');
+}
+function closeAIModal(){document.getElementById('aiModal').classList.remove('on');_modalCtx=null;}
+function openEditLog(){
+  const ctx={summary:`現在 ${Object.keys(editStore).filter(k=>!k.startsWith('notes_')).length}件の手動編集があります。<br>この内容を全てClaudeに渡してHTMLを再生成します。`,changes:Object.entries(editStore).filter(([k])=>!k.startsWith('notes_')).map(([k,v])=>({label:k,oldVal:'',newVal:v})),downstream:[]};
+  openAIModal(ctx);
+}
+function doCopyAIPrompt(){
+  const custom=document.getElementById('modalCustom').value.trim();
+  const ctx=_modalCtx;if(!ctx)return;
+  const changesText=(ctx.changes||[]).map(c=>`- ${c.label}: "${c.oldVal}" → "${c.newVal}"`).join('\n')||'（変更なし）';
+  const dsText=(ctx.downstream||[]).map(d=>`- ${d.label} (path: ${d.path})`).join('\n')||'（なし）';
+  const prompt=`## 羅針盤HTML 更新依頼\n\nファイル: 売上2倍_羅針盤_20260516.html\nテーマ: ${DATA.meta.theme}\n\n### 手動編集した変更\n${changesText}\n\n### 影響する下流項目（一貫性を保つよう自動調整してください）\n${dsText}\n\n### カスタム指示\n${custom||'（なし）'}\n\n### 現在の全編集記録 (editStore)\n${JSON.stringify(editStore,null,2)}\n\n上記に基づき、DATAオブジェクトの関連箇所を更新し、HTMLファイルを保存してください。`;
+  navigator.clipboard.writeText(prompt).then(()=>{showToast('✅ コピーしました — Claude Codeに貼り付けてください');closeAIModal();}).catch(()=>{const ta=document.createElement('textarea');ta.value=prompt;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();showToast('✅ コピーしました');closeAIModal();});
+}
+
 /* ================================================================ NAV ================================================================ */
 function go(name,tabEl){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
@@ -661,15 +855,29 @@ function renderMandala(){
   DATA.mandala.themes.forEach((th,ti)=>{
     const[cr,cc]=CP[ti];grid[cr][cc]={t:'theme',th,ti};
     const[sr,sc]=SG[ti];grid[sr+1][sc+1]={t:'tr',th,ti};
-    th.items.forEach((item,ii)=>{const[or,oc]=IO[ii];grid[sr+or][sc+oc]={t:'item',item,th,ti};});
+    th.items.forEach((item,ii)=>{const[or,oc]=IO[ii];grid[sr+or][sc+oc]={t:'item',item,th,ti,ii};});
   });
   const g=document.getElementById('mGrid');g.innerHTML='';
   for(let r=0;r<9;r++)for(let c=0;c<9;c++){
     const cell=grid[r][c],d=document.createElement('div');d.className='mc';
-    if(cell.t==='center'){d.classList.add('center');d.textContent=DATA.mandala.center;}
-    else if(cell.t==='theme'){const col=cell.th.color||TC[cell.ti];d.classList.add('theme','cp');d.style.background=col;d.textContent=cell.th.name;d.title=cell.th.description||'';d.onclick=()=>goMatrix(cell.ti);}
-    else if(cell.t==='tr'){const col=cell.th.color||TC[cell.ti];d.classList.add('tr','cp');d.style.background=col;d.textContent=cell.th.name;d.onclick=()=>goMatrix(cell.ti);}
-    else if(cell.t==='item'){d.classList.add('item');d.style.background=cell.th.bgLight||TBG[cell.ti];d.style.color='var(--dim)';d.textContent=cell.item.text;d.title=cell.item.description||cell.item.text;}
+    if(cell.t==='center'){
+      d.classList.add('center');d.textContent=DATA.mandala.center;d.title='ダブルクリックで編集';
+      d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,'mandala.center',DATA.mandala.center);});
+    }
+    else if(cell.t==='theme'){
+      const col=cell.th.color||TC[cell.ti];d.classList.add('theme','cp');d.style.background=col;d.textContent=cell.th.name;d.title='クリック→マトリクス / ダブルクリック→編集';
+      d.onclick=()=>goMatrix(cell.ti);
+      d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,`mandala.themes.${cell.ti}.name`,cell.th.name);});
+    }
+    else if(cell.t==='tr'){
+      const col=cell.th.color||TC[cell.ti];d.classList.add('tr','cp');d.style.background=col;d.textContent=cell.th.name;
+      d.onclick=()=>goMatrix(cell.ti);
+      d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,`mandala.themes.${cell.ti}.name`,cell.th.name);});
+    }
+    else if(cell.t==='item'){
+      d.classList.add('item');d.style.background=cell.th.bgLight||TBG[cell.ti];d.style.color='var(--dim)';d.textContent=cell.item.text;d.title='ダブルクリックで編集 | '+cell.item.text;
+      d.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(d,`mandala.themes.${cell.ti}.items.${cell.ii}.text`,cell.item.text);});
+    }
     else{d.classList.add('empty');}
     g.appendChild(d);
   }
@@ -688,36 +896,89 @@ function renderMatrix(ti){
   document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'')+'｜ '+(mx.xAxis?.highLabel||'高')+'→';
   const g=document.getElementById('mxGrid');Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
   ['tl','tr','bl','br'].forEach(pos=>{
-    const qd=mx.quadrants.find(q=>q.pos===pos);const d=document.createElement('div');d.className='quad q-'+pos;
+    const qIdx=mx.quadrants.findIndex(q=>q.pos===pos);const qd=mx.quadrants[qIdx];const d=document.createElement('div');d.className='quad q-'+pos;
     if(qd){
-      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
-      (qd.items||[]).forEach(item=>{const it=document.createElement('div');it.className='qi';it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}</div><div class="qi-ar">→</div>`;it.onclick=()=>goFlow(ti,qd.id,item.text);d.appendChild(it);});
+      const lbl=document.createElement('div');lbl.className='quad-lbl';lbl.textContent=qd.label;
+      const desc=document.createElement('div');desc.className='quad-desc';desc.textContent=qd.desc||'';
+      d.appendChild(lbl);d.appendChild(desc);
+      (qd.items||[]).forEach((item,liIdx)=>{
+        const it=document.createElement('div');it.className='qi';
+        const txDiv=document.createElement('div');txDiv.className='qi-tx';
+        const mainTxt=document.createElement('span');mainTxt.textContent=item.text;mainTxt.title='ダブルクリックで編集';
+        mainTxt.className='editable-hint';
+        mainTxt.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(mainTxt,`matrices.${ti}.quadrants.${qIdx}.items.${liIdx}.text`,item.text);});
+        txDiv.appendChild(mainTxt);
+        if(item.detail){const dt=document.createElement('div');dt.className='qi-dt';dt.textContent=item.detail;dt.title='ダブルクリックで詳細を編集';dt.className='qi-dt editable-hint';dt.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(dt,`matrices.${ti}.quadrants.${qIdx}.items.${liIdx}.detail`,item.detail);});txDiv.appendChild(dt);}
+        const ar=document.createElement('div');ar.className='qi-ar';ar.textContent='→';
+        it.appendChild(txDiv);it.appendChild(ar);
+        it.onclick=(e)=>{if(!e.target.classList.contains('editable-hint')&&e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA')goFlow(ti,qd.id,item.text);};
+        d.appendChild(it);
+      });
     }
     g.appendChild(d);
   });
-  if(mx.kaiInsight){document.getElementById('mxKaiTx').textContent=mx.kaiInsight;document.getElementById('mxKai').style.display='block';}
-  else{document.getElementById('mxKai').style.display='none';}
+  if(mx.kaiInsight){
+    const kaiTx=document.getElementById('mxKaiTx');kaiTx.textContent=mx.kaiInsight;kaiTx.title='ダブルクリックで編集';kaiTx.className='editable-hint';
+    kaiTx.addEventListener('dblclick',()=>showEditPopover(kaiTx,`matrices.${ti}.kaiInsight`,mx.kaiInsight));
+    document.getElementById('mxKai').style.display='block';
+  }else{document.getElementById('mxKai').style.display='none';}
 }
 
 /* ================================================================ FLOW ================================================================ */
 const SICO={action:{bg:'rgba(99,102,241,.2)',col:'#A5B4FC',ic:'▶',cls:'fb-act',lbl:'アクション'},decision:{bg:'rgba(245,158,11,.2)',col:'#FCD34D',ic:'◆',cls:'fb-dec',lbl:'判断'},milestone:{bg:'rgba(16,185,129,.2)',col:'#6EE7B7',ic:'★',cls:'fb-mil',lbl:'マイルストーン'},warning:{bg:'rgba(239,68,68,.2)',col:'#FCA5A5',ic:'!',cls:'fb-wrn',lbl:'注意'}};
+const ST_LABELS={todo:'未着手',doing:'進行中',done:'完了',block:'ブロック'};
+const ST_CLS={todo:'active-todo',doing:'active-doing',done:'active-done',block:'active-block'};
+
 function renderFlow(fl){
   const c=checks(),con=document.getElementById('flSteps');con.innerHTML='';
-  fl.steps.forEach(step=>{
+  const flIdx=DATA.flows.indexOf(fl);
+  fl.steps.forEach((step,stepIdx)=>{
     const si=SICO[step.type]||SICO.action,cid=fl.id+'-s'+step.order,ck=c[cid]||false;
     const d=document.createElement('div');d.className='fl-step';
-    d.innerHTML=`<div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
-    <div class="fl-card${ck?' done':''}">
-      <div class="fl-ord">STEP ${step.order}</div>
-      <div class="fl-title">${step.title}</div>
-      <div class="fl-desc">${step.description}</div>
-      <div class="fl-meta"><span class="fbg ${si.cls}">${si.lbl}</span>${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}</div>
-      <label class="fl-check${ck?' done':''}"><input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)"> 完了としてマーク</label>
-    </div>`;
-    con.appendChild(d);
+    // icon
+    const icon=document.createElement('div');icon.className='fl-icon';icon.style.background=si.bg;icon.style.color=si.col;icon.textContent=si.ic;
+    // card
+    const card=document.createElement('div');card.className='fl-card'+(ck?' done':'');
+    // ord
+    const ord=document.createElement('div');ord.className='fl-ord';ord.textContent='STEP '+step.order;
+    // title (editable)
+    const title=document.createElement('div');title.className='fl-title editable-hint';title.textContent=step.title;title.title='ダブルクリックで編集';
+    title.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(title,`flows.${flIdx}.steps.${stepIdx}.title`,step.title);});
+    // desc (editable)
+    const desc=document.createElement('div');desc.className='fl-desc editable-hint';desc.textContent=step.description;desc.title='ダブルクリックで説明を編集';
+    desc.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(desc,`flows.${flIdx}.steps.${stepIdx}.description`,step.description);});
+    // meta badges
+    const meta=document.createElement('div');meta.className='fl-meta';
+    const typeBadge=document.createElement('span');typeBadge.className='fbg '+si.cls;typeBadge.textContent=si.lbl;meta.appendChild(typeBadge);
+    if(step.duration){const dur=document.createElement('span');dur.className='fbg fb-dur editable-hint';dur.textContent='⏱ '+step.duration;dur.title='ダブルクリックで編集';dur.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(dur,`flows.${flIdx}.steps.${stepIdx}.duration`,step.duration);});meta.appendChild(dur);}
+    if(step.output){const out=document.createElement('span');out.className='fbg fb-out editable-hint';out.textContent='📄 '+step.output;out.title='ダブルクリックで編集';out.addEventListener('dblclick',e=>{e.stopPropagation();showEditPopover(out,`flows.${flIdx}.steps.${stepIdx}.output`,step.output);});meta.appendChild(out);}
+    // complete checkbox
+    const lbl=document.createElement('label');lbl.className='fl-check'+(ck?' done':'');
+    const chk=document.createElement('input');chk.type='checkbox';chk.checked=ck;chk.dataset.cid=cid;chk.addEventListener('change',()=>onCk(chk));
+    lbl.appendChild(chk);lbl.appendChild(document.createTextNode(' 完了としてマーク'));
+    // status row
+    const stRow=document.createElement('div');stRow.className='fl-status-row';
+    const curSt=getStatus(cid);
+    Object.entries(ST_LABELS).forEach(([st,lbTxt])=>{
+      const btn=document.createElement('button');btn.className='fl-st-btn'+(curSt===st?' '+ST_CLS[st]:'');btn.textContent=lbTxt;
+      btn.onclick=(e)=>{e.stopPropagation();saveStatus(cid,st);stRow.querySelectorAll('.fl-st-btn').forEach(b=>{b.className='fl-st-btn';});btn.className='fl-st-btn '+ST_CLS[st];};
+      stRow.appendChild(btn);
+    });
+    const aiBtn=document.createElement('button');aiBtn.className='fl-ai-btn';aiBtn.textContent='🤖 AIへの指示';
+    aiBtn.onclick=(e)=>{e.stopPropagation();openAIModal({summary:`フロー「${fl.title}」<br>STEP ${step.order}: <strong>${step.title}</strong>`,changes:[],downstream:[],context:{flowId:fl.id,step:step.order}});};
+    stRow.appendChild(aiBtn);
+    // notes textarea
+    const noteEl=document.createElement('textarea');noteEl.className='fl-note-ta';noteEl.placeholder='メモ・作業ログを追加...';noteEl.value=getEditNote(cid);noteEl.rows=1;
+    noteEl.addEventListener('input',()=>{noteEl.rows=Math.max(1,noteEl.value.split('\n').length);});
+    noteEl.addEventListener('blur',()=>saveEditNote(cid,noteEl.value));
+    card.appendChild(ord);card.appendChild(title);card.appendChild(desc);card.appendChild(meta);card.appendChild(lbl);card.appendChild(stRow);card.appendChild(noteEl);
+    d.appendChild(icon);d.appendChild(card);con.appendChild(d);
   });
-  if(fl.kaiComment){document.getElementById('flKaiTx').textContent=fl.kaiComment;document.getElementById('flKai').style.display='block';}
-  else{document.getElementById('flKai').style.display='none';}
+  if(fl.kaiComment){
+    const kt=document.getElementById('flKaiTx');kt.textContent=fl.kaiComment;kt.title='ダブルクリックで編集';kt.className='editable-hint';
+    kt.addEventListener('dblclick',()=>showEditPopover(kt,`flows.${DATA.flows.indexOf(fl)}.kaiComment`,fl.kaiComment));
+    document.getElementById('flKai').style.display='block';
+  }else{document.getElementById('flKai').style.display='none';}
 }
 function onCk(el){
   saveCheck(el.dataset.cid,el.checked);
@@ -763,13 +1024,59 @@ function buildKaiPanel(){
 }
 function toggleKai(){const p=document.getElementById('kfPanel'),a=document.getElementById('kfArr');p.classList.toggle('on');a.textContent=p.classList.contains('on')?'▼':'▲';}
 
+/* ================================================================ ANALYTICS ================================================================ */
+function renderAnalytics(){
+  const c=checks();
+  const thComp=DATA.mandala.themes.map((th,ti)=>{
+    const fls=DATA.flows.filter(f=>f.themeIndex===ti);
+    const total=fls.reduce((s,f)=>s+f.steps.length,0);
+    if(!total)return{ti,name:th.name,color:th.color||TC[ti],pct:0,total:0,done:0,hasFlow:false};
+    const done=fls.reduce((s,f)=>s+f.steps.filter(st=>c[f.id+'-s'+st.order]).length,0);
+    return{ti,name:th.name,color:th.color||TC[ti],pct:Math.round(done/total*100),total,done,hasFlow:true};
+  });
+  const bottlenecks=thComp.filter(t=>t.hasFlow&&t.pct===0);
+  const noFlow=DATA.mandala.themes.filter((_,ti)=>!DATA.flows.some(f=>f.themeIndex===ti));
+  const active=thComp.filter(t=>t.pct>0&&t.pct<100).length;
+  const totalDone=Object.values(c).filter(Boolean).length;
+  const totalSteps=DATA.flows.reduce((s,f)=>s+f.steps.length,0);
+  const editCount=Object.keys(editStore).filter(k=>!k.startsWith('notes_')).length;
+  const suggestions=[];
+  if(bottlenecks.length>=3)suggestions.push(`フロー未着手のテーマが${bottlenecks.length}件あります。まず1テーマだけ着手を開始しましょう。`);
+  if(noFlow.length)suggestions.push(`${noFlow.map(t=>t.name).join('・')} にはフローが未設計です。AIへの指示で追加依頼できます。`);
+  if(active===0&&totalDone===0&&totalSteps>0)suggestions.push('進行中のステップがゼロです。まず最優先テーマのSTEP 1から始めましょう。');
+  if(editCount>0)suggestions.push(`${editCount}件の手動編集があります。「編集済み」ボタンからAIへ一括反映を依頼できます。`);
+  const el=document.getElementById('dAnalytics');if(!el)return;
+  let h=`<div class="sec">📊 進捗分析 & 改善ポイント</div><div class="ana-grid">`;
+  // theme progress
+  h+=`<div class="ana-card"><div class="ana-card-t">🎯 テーマ別進捗</div>`;
+  thComp.forEach(t=>{
+    const flag=!t.hasFlow?`<span class="af af-w">フローなし</span>`:t.pct===100?`<span class="af af-ok">完了</span>`:t.pct===0?`<span class="af af-bad">未着手</span>`:'';
+    h+=`<div class="ana-row"><div style="width:8px;height:8px;border-radius:50%;background:${t.color};flex-shrink:0"></div><div style="flex:1;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</div><div class="ana-bw"><div class="ana-bf" style="width:${t.pct}%;background:${t.color}"></div></div><div class="ana-pct">${t.pct}%</div>${flag}</div>`;
+  });h+='</div>';
+  // bottlenecks
+  if(bottlenecks.length){
+    h+=`<div class="ana-card"><div class="ana-card-t">🚧 詰まり検出（フロー未着手）</div>`;
+    bottlenecks.forEach(b=>{h+=`<div class="ana-row"><div style="width:8px;height:8px;border-radius:50%;background:${b.color};flex-shrink:0"></div><div style="flex:1;font-size:12px">${b.name}</div><button class="fl-ai-btn" style="margin-left:auto" onclick="goMatrix(${b.ti})">マトリクスへ→</button></div>`;});
+    h+='</div>';
+  }
+  // suggestions
+  if(suggestions.length){
+    h+=`<div class="ana-card"><div class="ana-card-t">💡 Kai 改善サジェスト</div>`;
+    suggestions.forEach(s=>{h+=`<div class="ana-row" style="align-items:flex-start"><span style="color:var(--warn);margin-right:6px;flex-shrink:0">→</span><div style="font-size:12px;line-height:1.5">${s}</div></div>`;});
+    h+='</div>';
+  }
+  h+='</div>';el.innerHTML=h;
+}
+
 /* ================================================================ INIT ================================================================ */
 document.addEventListener('DOMContentLoaded',()=>{
-  initDash();renderMandala();buildKaiPanel();
+  applyEdits();
+  initDash();renderAnalytics();renderMandala();buildKaiPanel();
   if(DATA.matrices.length)renderMatrix(0);
   document.getElementById('flEmpty').style.display='block';
   document.getElementById('flSteps').innerHTML='';
   document.getElementById('flKai').style.display='none';
+  updateEditCount();
 });
 </script>
 </body>
