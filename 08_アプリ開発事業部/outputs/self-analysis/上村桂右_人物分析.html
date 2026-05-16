@@ -286,6 +286,20 @@ tr:nth-child(even) td { background: #F8FAFC; }
       <tr><td><strong>整理力</strong></td><td>「何からやればいいかわからない」状態を構造化する</td></tr>
       <tr><td><strong>リアリスト</strong></td><td>理想論ではなく「今できること」から設計する</td></tr>
     </table>
+
+    <h3 style="margin-top:20px;">🐒 5アニマルサマリー</h3>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; align-items:center;">
+      <div style="background:linear-gradient(135deg,#1A3A5C,#0E2233); color:var(--teal); border:1.5px solid var(--teal); border-radius:8px; padding:8px 14px; font-size:13px; font-weight:700;">🐒 本質：サル</div>
+      <div style="color:#64748B; font-size:16px;">×</div>
+      <div style="background:var(--navy); color:#94A3B8; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:700;">🐘 表面：ゾウ</div>
+      <div style="color:#64748B; font-size:16px;">×</div>
+      <div style="background:var(--navy); color:#4ADE80; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:700;">🐒 希望：サル（一致）</div>
+      <div style="color:#64748B; font-size:16px;">×</div>
+      <div style="background:var(--navy); color:#60A5FA; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:700;">🐨 判断：コアラ</div>
+      <div style="color:#64748B; font-size:16px;">×</div>
+      <div style="background:var(--navy); color:#F97316; border-radius:8px; padding:8px 14px; font-size:13px; font-weight:700;">🦁 隠れ：ライオン</div>
+    </div>
+    <div style="font-size:12px; color:var(--muted); margin-top:8px;">詳細分析は「動物占い」タブを参照</div>
   </div>
 </div>
 
@@ -525,55 +539,107 @@ tr:nth-child(even) td { background: #F8FAFC; }
 <!-- ══════════ ANIMAL ══════════ -->
 <div id="animal" class="section">
   <div class="card">
-    <h2><span class="icon">🐆</span>動物占い分析（1975年2月20日）</h2>
-    <div class="callout callout-amber">
-      ⚠️ 以下は性格特性との照合による考察です。正確な結果は専門の動物占いサービスでご確認ください。
-    </div>
+    <h2><span class="icon">🐒</span>動物占い分析（1975年2月20日）</h2>
 
-    <div class="animal-box" style="margin-top:16px;">
-      <div class="label2">12分類 / 推定</div>
-      <div class="name">🐆 チーター</div>
-      <div class="sub">1975年2月20日（乙卯年）/ 独自路線を突き進む強い個性</div>
-      <div class="trait-list">
-        <div class="trait-item">独自の美学・価値観で動く</div>
-        <div class="trait-item">一度決めたら突き進む</div>
-        <div class="trait-item">「おかしい」に正直に向き合う</div>
-        <div class="trait-item">人間関係は選択的・深い</div>
-        <div class="trait-item">スピード感がある</div>
-        <div class="trait-item">準備は丁寧に行う</div>
+    <!-- 5アニマルマップ -->
+    <h3 style="margin-bottom:14px;">5アニマル分類（確定）</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
+      <!-- 本質 -->
+      <div style="background:linear-gradient(135deg,#1A3A5C,#0E2233); border-radius:14px; padding:20px; color:white; grid-column:1/2; border:2px solid var(--teal);">
+        <div style="font-size:11px; color:var(--teal); font-weight:700; letter-spacing:.08em; margin-bottom:6px;">本質キャラ</div>
+        <div style="font-size:34px; font-weight:900; color:var(--teal); font-family:'Montserrat',sans-serif; line-height:1;">🐒 サル</div>
+        <div style="font-size:12px; color:#A0AEC0; margin-top:6px;">これが本当の自分</div>
+      </div>
+      <!-- 希望 -->
+      <div style="background:linear-gradient(135deg,#0E3322,#05200E); border-radius:14px; padding:20px; color:white; grid-column:2/3; border:2px solid #4ADE80;">
+        <div style="font-size:11px; color:#4ADE80; font-weight:700; letter-spacing:.08em; margin-bottom:6px;">希望キャラ</div>
+        <div style="font-size:34px; font-weight:900; color:#4ADE80; font-family:'Montserrat',sans-serif; line-height:1;">🐒 サル</div>
+        <div style="font-size:12px; color:#A0AEC0; margin-top:6px;">本質と一致 = ブレない人</div>
+      </div>
+      <!-- 表面 -->
+      <div style="background:var(--navy); border-radius:12px; padding:16px 18px; color:white; border-left:4px solid #94A3B8;">
+        <div style="font-size:11px; color:#94A3B8; font-weight:700; margin-bottom:4px;">表面キャラ（他者から見た印象）</div>
+        <div style="font-size:20px; font-weight:800;">🐘 ゾウ — 信頼・安定・どっしり</div>
+      </div>
+      <!-- 意思決定 -->
+      <div style="background:var(--navy); border-radius:12px; padding:16px 18px; color:white; border-left:4px solid #60A5FA;">
+        <div style="font-size:11px; color:#60A5FA; font-weight:700; margin-bottom:4px;">意思決定キャラ（判断スタイル）</div>
+        <div style="font-size:20px; font-weight:800;">🐨 コアラ — 慎重・情報収集・確実</div>
+      </div>
+      <!-- 隠れ -->
+      <div style="background:var(--navy); border-radius:12px; padding:16px 18px; color:white; border-left:4px solid #F97316; grid-column:1/3;">
+        <div style="font-size:11px; color:#F97316; font-weight:700; margin-bottom:4px;">隠れキャラ（内に秘めた力）</div>
+        <div style="font-size:20px; font-weight:800;">🦁 ライオン — リーダーシップ・決断力・カリスマ</div>
       </div>
     </div>
 
-    <h3>上村さんへの当てはまり検証</h3>
-    <table style="margin-top:10px;">
-      <tr><th>チーターの特性</th><th>上村さんの実例</th><th>適合度</th></tr>
-      <tr><td>独自の価値観で動く</td><td>浄水器を「信頼に疑問」で利益があっても撤退</td><td><span class="tag tag-green">高</span></td></tr>
-      <tr><td>一貫した軸がある</td><td>美術〜AI支援まで「支援動機」が変わらない</td><td><span class="tag tag-green">高</span></td></tr>
-      <tr><td>拡大より独自基準</td><td>24年間、持続性を優先してきた経営スタイル</td><td><span class="tag tag-green">高</span></td></tr>
-      <tr><td>スピード×丁寧な準備</td><td>段階的な導入設計（小さく始めて成功体験を積む）</td><td><span class="tag tag-teal">中高</span></td></tr>
-      <tr><td>独自路線（孤立リスク）</td><td>カイとの協業でこれを補っている</td><td><span class="tag tag-amber">補完済</span></td></tr>
+    <!-- 最重要ポイント -->
+    <div class="callout callout-teal" style="margin-bottom:24px;">
+      <strong>本質（サル）= 希望（サル）</strong>という一致が最大の強み。「本当の自分」と「なりたい自分」が重なっている。自己矛盾がなく、等身大で全力を出せる構造。<strong>「サルらしく生きること」自体が戦略になっている人。</strong>
+    </div>
+
+    <!-- 各キャラ詳細 -->
+    <h3>🐒 本質キャラ：サル — 上村さんの「本当の姿」</h3>
+    <div class="trait-list" style="margin:10px 0 16px;">
+      <div class="trait-item">知的好奇心旺盛・常に学び続ける</div>
+      <div class="trait-item">情報収集と整理・分析が得意</div>
+      <div class="trait-item">変化に強く臨機応変</div>
+      <div class="trait-item">人の役に立つことが好き</div>
+      <div class="trait-item">次のフロンティアを求める</div>
+    </div>
+    <table style="margin-top:8px;">
+      <tr><th>サルの特性</th><th>上村さんの実例</th><th>適合度</th></tr>
+      <tr><td>知的好奇心・常に学ぶ</td><td>美術→防災→AIと業態を横断しながら習得し続けた</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>情報収集・整理力</td><td>ChatGPTで徹底的な自己分析・壁打ちを行う</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>変化への適応力</td><td>震災を機に防災業界へ即座に軸足を移す</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>役に立つことが好き</td><td>「支援」が動機の軸として24年変わらない</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>次のフロンティアを求める</td><td>防災→AI支援へと新領域を開拓し続ける</td><td><span class="tag tag-teal">中高</span></td></tr>
     </table>
 
-    <h3>5アニマル（参考考察）</h3>
+    <h3 style="margin-top:22px;">🐘 表面キャラ：ゾウ × 🐒 本質キャラ：サル — このギャップが武器</h3>
     <div class="callout callout-navy" style="margin-top:10px;">
-      チーター型は<strong>「自律・革新」のエネルギー</strong>を持つ動物に分類されやすい。<br>
-      上村さんの場合、その自律性を<strong>「支援の仕組みを作る」という形で外に向けている</strong>ことが際立った特徴。<br>
-      個人の自律性 × 支援への動機 という組み合わせが、Fractional CAIOという「内側に入り込む支援者」ポジションと非常に相性が良い。
+      外から見るとゾウのように<strong>「落ち着いた・信頼できる専門家」</strong>に見える。しかし内側ではサルのように知的好奇心が常に動いている。<br>
+      このギャップが「安心感を与えながら次々と新しいソリューションを提案できる」強さを生んでいる。クライアントは「この人は信頼できる」と感じながら「なぜこんなに新しいアイデアが出てくるんだろう」と驚く。
     </div>
 
-    <h3>チーター型への具体的なアドバイス</h3>
+    <h3 style="margin-top:22px;">🐨 意思決定キャラ：コアラ — 慎重な判断スタイル</h3>
+    <table style="margin-top:10px;">
+      <tr><th>コアラの特性</th><th>上村さんの実例</th><th>適合度</th></tr>
+      <tr><td>慎重に情報を集めてから決断</td><td>浄水器を「信頼に疑問」で時間をかけて撤退判断</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>リスク管理重視</td><td>M&Aの条件整理・交渉・引継ぎを丁寧に実施</td><td><span class="tag tag-green">高</span></td></tr>
+      <tr><td>一度決めたら粘り強い</td><td>よろず支援コーディネーター採用まで実績を積み上げ続けた</td><td><span class="tag tag-green">高</span></td></tr>
+    </table>
+    <div style="background:var(--bg); border-radius:8px; padding:12px 16px; font-size:13px; margin-top:10px; border-left:4px solid #60A5FA;">
+      「無理のない改善」「現場に合った支援」というよろず支援での自己PR文はコアラ的慎重さから生まれている。これがそのままセールスコピーになっている。
+    </div>
+
+    <h3 style="margin-top:22px;">🦁 隠れキャラ：ライオン — Fractional CAIOの本質</h3>
+    <div class="callout callout-amber" style="margin-top:10px;">
+      普段は前面に出さないが、内側には強いリーダーシップと決断力がある。<br>
+      顧問・コンサルではなく<strong>「経営幹部として責任を持つ」</strong>というFractional CAIOのスタンスは、このライオンから来ている。普段はサルの好奇心・ゾウの安定感で動いているが、クライアント企業に着任する瞬間にライオンが発動する。
+    </div>
+
+    <h3 style="margin-top:22px;">5アニマル統合：サルとして生きる戦略</h3>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:12px;">
-      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid var(--amber);">
-        <strong>孤立しやすい傾向</strong>への対処<br>
-        → パートナーを「自分の延長」として設計する。「一人で突き進む」ではなく「カイとパートナーと走る」を意識的に選ぶ。
-      </div>
-      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid var(--amber);">
-        <strong>熱中するとのめり込む</strong>への対処<br>
-        → カイに「全体進捗の俯瞰・警告」を担当させる。深みにはまる前に止めるシステムを作る。
-      </div>
       <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid var(--teal);">
-        <strong>価値観での撤退判断</strong>は正しい<br>
-        → その判断基準を言語化して「私はこういう基準で仕事を選ぶ人間です」という信頼資産にする。クライアントへの安心感になる。
+        <strong>①「好奇心」をビジネスエンジンにする</strong><br>
+        AI分野の最新動向を常にキャッチアップし続けることが直接の差別化になる。飽き性ではなく「領域を広げ続ける人」として設計する。
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid #94A3B8;">
+        <strong>②「ゾウの表面」を戦略的に使う</strong><br>
+        クライアントの前では「落ち着いた専門家」の印象を意図的に維持する。サルの内側は提案の質で示す。
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid #60A5FA;">
+        <strong>③「コアラの慎重さ」を言語化する</strong><br>
+        「無理のない改善」「現場に合った支援」がそのままセールスコピーになる。コアラらしさを強みとして前面に出す。
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid #F97316;">
+        <strong>④「ライオン」を着任の瞬間に出す</strong><br>
+        外部顧問ではなくCAIOとして「責任を持って入る」と宣言する瞬間がライオン発動のタイミング。その後はサルとゾウで運営する。
+      </div>
+      <div style="background:var(--bg); border-radius:8px; padding:14px 16px; font-size:13px; border-left:4px solid #4ADE80;">
+        <strong>⑤「本質と希望の一致」を守る</strong><br>
+        「サルらしく生きる＝好奇心・学習・適応・支援」を事業モデルの核に置く。ここを曲げない限り、ブレない人になれる。
       </div>
     </div>
   </div>
@@ -735,7 +801,7 @@ tr:nth-child(even) td { background: #F8FAFC; }
         <div class="wall-grid">
           <div class="wall-card">
             <div class="wall-head problem">🧱 孤立・のめり込みリスク</div>
-            <div class="wall-body">チーター型の特性として、独自路線で突き進む力がある一方で孤立しやすい。熱中するとのめり込む傾向も。</div>
+            <div class="wall-body">サルの特性として、次の刺激を求めて深掘りしすぎる傾向がある。新しい案件・ツール・分野に興味が広がりすぎると、進行中のものへの集中が薄れるリスクも。</div>
           </div>
           <div class="wall-card">
             <div class="wall-head solution">✅ 向いている超え方</div>
