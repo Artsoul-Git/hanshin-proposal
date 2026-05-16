@@ -169,6 +169,8 @@
     <a class="sb-link" href="#sk-billing-docs">/billing-docs</a>
     <a class="sb-link" href="#sk-nda">/nda</a>
     <a class="sb-link" href="#sk-biz-contract">/biz-contract</a>
+    <a class="sb-link" href="#sk-contract-check">/contract-check</a>
+    <a class="sb-link" href="#contract-workflow">契約業務フロー</a>
     <a class="sb-link" href="#sk-wbs-gantt">/wbs-gantt</a>
     <a class="sb-link" href="#sk-daily-report">/daily-report</a>
     <a class="sb-link" href="#sk-monthly-report">/monthly-report</a>
@@ -298,7 +300,9 @@
     <li class="sub-item"><a href="#sk-proposal-outline">/proposal-outline — 提案骨子生成</a></li>
     <li class="sub-item"><a href="#sk-billing-docs">/billing-docs — 見積書・請求書生成</a></li>
     <li class="sub-item"><a href="#sk-nda">/nda — NDA生成</a></li>
-    <li class="sub-item"><a href="#sk-biz-contract">/biz-contract — 業務委託契約書生成</a></li>
+    <li class="sub-item"><a href="#sk-biz-contract">/biz-contract — 業務委託契約書生成（立場設定対応）</a></li>
+    <li class="sub-item"><a href="#sk-contract-check">/contract-check — 受領契約書レビュー（Excel比較表）</a></li>
+    <li class="sub-item"><a href="#contract-workflow">📋 契約業務でのKai活用フロー</a></li>
     <li class="sub-item"><a href="#sk-wbs-gantt">/wbs-gantt — WBS・ガントチャート生成</a></li>
     <li class="sub-item"><a href="#sk-daily-report">/daily-report — 音声入力日報</a></li>
     <li class="sub-item"><a href="#sk-monthly-report">/monthly-report — 月次活動レポート</a></li>
@@ -907,6 +911,59 @@
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円、1年間</div>
 <div class="warn"><span class="label">注意</span>本スキルの契約書は標準ひな形です。締結前に専門家（弁護士等）へのご確認を推奨します。</div>
 <div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#biz-contract" target="_blank">▶ biz-contract 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="sk-contract-check">
+<summary><span class="acc-num">SK</span>/contract-check — 受領した契約書を立場指定でレビュー。リスク条項・改善提案をExcel比較表＋Wordレポートで出力<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#3182CE">
+  <div class="agent-name">/contract-check</div>
+  <div class="agent-phase">相手先からドラフトを受け取った時・締結前の最終確認</div>
+  <p>受領した契約書を「甲有利／乙有利／公平」の立場で分析。問題点・改善提案を7列Excel比較表（条文/問題点/リスクレベル/改善提案/立場への影響/対応優先度）とWordレポートで出力。業務委託・NDA・売買・利用規約等に対応。</p>
+</div>
+<h3>呼び出し方</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>この契約書をチェックして。<br>立場：乙（受託者）側で不利な条件がないか確認してください。<br>[契約書ファイルをアップロードまたはテキストを貼り付け]</div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#contract-check" target="_blank">▶ contract-check 完全ガイド</a></div>
+</div>
+</details>
+
+<details id="contract-workflow">
+<summary><span class="acc-num">📋</span>契約業務でのKai活用フロー（作成・受領・レビューの使い分け）<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<h3>シーン別の使い分け</h3>
+<table>
+  <tr><th>シーン</th><th>使うスキル</th><th>出力</th></tr>
+  <tr><td>契約書を新規作成する</td><td>/biz-contract または /nda</td><td>.docx（甲有利/乙有利/公平を指定）</td></tr>
+  <tr><td>相手先からドラフトを受け取った</td><td>/contract-check</td><td>Excel比較表＋Wordレポート</td></tr>
+  <tr><td>修正前後の変更箇所を可視化</td><td>/doc-compare</td><td>新旧対比表 .docx</td></tr>
+  <tr><td>プライバシーポリシーを確認したい</td><td>/research → /fact-check</td><td>分析レポート（下記参照）</td></tr>
+</table>
+
+<h3>典型的な業務フロー</h3>
+<div class="prompt-box" style="background:#f0f4f8;font-size:0.9em">
+【受注確定から契約締結まで】<br>
+① /hearing-sheet → ヒアリング実施<br>
+② /proposal-outline → 提案骨子作成<br>
+③ /billing-docs → 見積書（EST-）発行<br>
+④ /nda → 機密保持契約書の締結（甲有利/乙有利/公平を指定）<br>
+⑤ /biz-contract → 業務委託契約書の締結（立場指定）<br>
+⑥ /wbs-gantt → プロジェクトスケジュール作成<br>
+⑦ /billing-docs → 請求書（AR-）発行<br><br>
+【相手先からドラフトを受け取った場合】<br>
+① /contract-check → 立場指定でリスク確認（Excel比較表）<br>
+② 交渉・修正<br>
+③ /doc-compare → 修正前後の新旧対比表を生成<br>
+④ 合意内容をもとに /biz-contract で最終版を生成
+</div>
+
+<h3>プライバシーポリシー分析の使い方</h3>
+<p>AIサービスやSaaSのプライバシーポリシーを確認したい場合は、<code>/research</code> と <code>/fact-check</code> を組み合わせて使います。</p>
+<div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button><span class="comment"># プライバシーポリシー分析</span><br>
+以下のサービスのプライバシーポリシーを分析して。<br>特に確認したいのは：①入力データがAI学習に使われるか ②第三者への提供条件 ③データ保存場所。<br>ビジネス利用の可否を判断できる形でまとめて。<br>[ポリシーのURLまたはテキストを貼り付け]</div>
+<p>Webリサーチが必要な場合は <code>/research 「企業名 セキュリティ インシデント」</code> で実調査した上でファクトチェックができます。</p>
+
 </div>
 </details>
 

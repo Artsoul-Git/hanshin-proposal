@@ -444,6 +444,58 @@ hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
 
 <hr>
 
+<!-- ===== contract-check ===== -->
+<div class="skill-header" id="contract-check">
+  <div><div class="skill-cmd">/contract-check</div></div>
+  <div><div class="skill-title">契約書レビュー</div><div class="skill-desc">受領した契約書を立場指定でレビュー。Excel比較表＋Wordレポートで出力</div></div>
+</div>
+
+<div class="lead">受け取った契約書・覚書・規約を「甲有利／乙有利／公平」の立場で分析。リスク条項・曖昧条項・欠落条項を特定し、改善提案をExcel比較表（7列）とWordレポートで出力。作成ではなく<strong>受領・確認フェーズ</strong>に特化したスキル。</div>
+
+<h3>呼び出し方</h3>
+<div class="prompt-box">
+  <button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+  <span class="comment"># 立場を指定してレビュー</span><br>
+  この契約書をチェックして。<br>立場：乙（受託者）側の有利な条件で確認してください。<br>[契約書ファイルをアップロードまたはテキストを貼り付け]<br><br>
+  <span class="comment"># 特定条項を重点確認</span><br>
+  受け取った業務委託契約書の知財条項と損害賠償条項が乙側に不利でないか確認して
+</div>
+
+<h3>Excel比較表の出力列</h3>
+<table>
+  <tr><th>列</th><th>内容</th></tr>
+  <tr><td>A 条文番号</td><td>第○条、前文、附則 等</td></tr>
+  <tr><td>B 元の条文（要約）</td><td>問題となる箇所を抜粋</td></tr>
+  <tr><td>C 問題点・懸念事項</td><td>何が問題か・なぜリスクか</td></tr>
+  <tr><td>D リスクレベル</td><td>高🔴 / 中🟡 / 低🟢（オートフィルタ付き）</td></tr>
+  <tr><td>E 改善提案</td><td>修正案または代替表現</td></tr>
+  <tr><td>F 立場への影響</td><td>甲-不利 / 乙-不利 / 双方 / 中立</td></tr>
+  <tr><td>G 対応優先度</td><td>要対応 / 検討 / 参考</td></tr>
+</table>
+
+<h3>立場設定の使い分け</h3>
+<table>
+  <tr><th>立場</th><th>いつ使う？</th></tr>
+  <tr><td><strong>甲-有利</strong></td><td>発注側として受け取った契約書の確認（甲＝発注側・委託者）</td></tr>
+  <tr><td><strong>乙-有利</strong></td><td>受注側・コンサルタントとして受け取った契約書の確認（乙＝受注側・受託者）</td></tr>
+  <tr><td><strong>公平</strong></td><td>社内確認・第三者チェック・雛形の精査</td></tr>
+</table>
+
+<h3>他スキルとの連携フロー</h3>
+<div class="prompt-box" style="background:#f0f4f8">
+相手先から契約書ドラフト受領<br>
+→ <strong>/contract-check</strong>：問題点・改善提案をExcel比較表で可視化<br>
+→ 交渉・修正<br>
+→ <strong>/doc-compare</strong>：修正前後の新旧対比表を生成<br>
+→ <strong>/biz-contract</strong> または <strong>/nda</strong>：合意内容をもとに最終版を新規生成
+</div>
+
+<div class="warn"><span class="label">重要</span>本スキルのレビューは実務的なリスク把握が目的です。高額・高リスクな取引は弁護士等の専門家に確認してください。</div>
+
+<p><strong>出力ファイル名：</strong><code>契約書チェック_{相手先}_{日付}.xlsx</code> / <code>契約書レビューレポート_{相手先}_{日付}.docx</code></p>
+
+<hr>
+
 <!-- ===== wbs-gantt ===== -->
 <div class="skill-header" id="wbs-gantt">
   <div><div class="skill-cmd">/wbs-gantt</div></div>
