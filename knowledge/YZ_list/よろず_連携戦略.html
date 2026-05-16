@@ -154,6 +154,25 @@ tr:hover td { background: #F8FAFC; }
   .strategy-grid { grid-template-columns: 1fr; }
   .scenario-card { grid-template-columns: 1fr; }
 }
+
+/* ══════════ SEMINAR DETAIL ══════════ */
+.seminar-detail-card { background: white; border-radius: 14px; padding: 22px 26px; margin-bottom: 16px; border-left: 5px solid var(--teal); }
+.seminar-detail-no { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .08em; margin-bottom: 4px; }
+.seminar-detail-title { font-size: 16px; font-weight: 900; margin-bottom: 8px; color: var(--navy); line-height: 1.4; }
+.seminar-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.seminar-body { font-size: 13px; line-height: 1.8; color: #334155; margin-bottom: 12px; }
+.co-link-box { background: #E0F7FA; border-radius: 8px; padding: 10px 14px; font-size: 12px; margin-bottom: 10px; line-height: 1.7; }
+.co-link-label { font-weight: 700; color: #006064; margin-bottom: 4px; font-size: 12px; }
+.talk-script { background: #0F172A; border-radius: 8px; padding: 14px 16px; font-size: 12px; color: #94A3B8; line-height: 1.9; font-family: 'Courier New', monospace; margin-top: 6px; white-space: pre-wrap; }
+.talk-script-label { font-size: 11px; font-weight: 700; color: var(--amber); margin-bottom: 4px; margin-top: 10px; }
+
+/* ══════════ STUDY CARD ══════════ */
+.study-card { background: white; border-radius: 14px; padding: 20px 24px; margin-bottom: 14px; display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; border-left: 5px solid var(--purple); }
+.study-no { font-size: 10px; font-weight: 700; color: var(--purple); letter-spacing: .08em; }
+.study-title { font-size: 14px; font-weight: 900; margin: 4px 0 8px; line-height: 1.4; }
+.study-body { font-size: 13px; color: #334155; line-height: 1.7; margin-bottom: 10px; }
+.study-outcome { background: #F5F3FF; border-radius: 6px; padding: 8px 12px; font-size: 12px; line-height: 1.6; }
+@media(max-width: 700px) { .study-card { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -164,7 +183,8 @@ tr:hover td { background: #F8FAFC; }
   <button class="nav-tab" onclick="show('scenario')">📋 紹介シナリオ</button>
   <button class="nav-tab" onclick="show('reverse')">🔄 逆紹介</button>
   <button class="nav-tab" onclick="show('colist')">👥 COリスト</button>
-  <button class="nav-tab" onclick="show('branding')">🚀 ブランディング戦略</button>
+  <button class="nav-tab" onclick="show('branding')">🚀 セミナー10本</button>
+  <button class="nav-tab" onclick="show('study')">📚 勉強会10本</button>
 </nav>
 
 <div class="main">
@@ -636,98 +656,456 @@ tr:hover td { background: #F8FAFC; }
 <!-- ══════════ BRANDING ══════════ -->
 <div id="branding" class="section">
   <div class="card">
-    <h2><span class="icon">🚀</span>よろず活用ブランディング戦略</h2>
+    <h2><span class="icon">🚀</span>セミナー企画 10本 — 上村CO よろずブランディング戦略</h2>
     <div class="callout callout-navy">
-      よろず支援拠点は「本業の営業の場」ではない。しかし<strong>金融機関・商工会議所・士業から「こんなAI専門家がいますよ」と紹介してもらえる最高のブランディング舞台</strong>として活用する。
+      よろず支援拠点は「本業の営業の場」ではない。しかし<strong>金融機関・商工会議所・士業から「こんなAI専門家がいますよ」と紹介してもらえる最高のブランディング舞台</strong>として活用する。各セミナーには「他CO紹介のポイント」を組み込み、<strong>紹介の連鎖</strong>を設計している。
+    </div>
+    <div class="callout callout-amber" style="margin-top:12px;">
+      ⏱ 各セミナー：<strong>30分講義 ＋ 10分Q&A ＋ 個別アドバイス15分</strong>の計55分構成。金融機関・商工会議所が取引先の経営者に勧めたくなる内容として設計。
     </div>
   </div>
 
-  <div class="strategy-phase">
-    <div class="phase-label">PHASE 1 ／ 基盤構築</div>
-    <div class="phase-title">よろず内での「AI専門CO」ポジションの確立</div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="font-size:13px;line-height:1.7;">▶ <strong>相談受付で成果を出す</strong>：AI活用の相談を受けたら「月何時間・何万円の削減」を数値で示す支援を徹底</div>
-      <div style="font-size:13px;line-height:1.7;">▶ <strong>他COへの先紹介を積極的に行う</strong>：「上村は信頼できる」という評判を構築</div>
-      <div style="font-size:13px;line-height:1.7;">▶ <strong>チーフ・サブチーフとの関係を最優先</strong>：運営の信頼を早期に獲得する</div>
+  <!-- S01 -->
+  <div class="seminar-detail-card">
+    <div class="seminar-detail-no">セミナー 01 ／ メディア戦略</div>
+    <div class="seminar-detail-title">取材を呼び込む「メディア設計」入門 — プレスリリースは発信後の準備が9割</div>
+    <div class="seminar-meta">
+      <span class="tag tag-teal">広報・PR</span><span class="tag tag-navy">AI活用</span><span class="tag tag-amber">初級〜中級</span>
     </div>
+    <div class="seminar-body">
+      「プレスリリースを書いたのにメディアに取り上げられない」という経営者向け。書き方の基本ではなく、<strong>「取材されやすい状況設計」と「AIを使ったメディア対応準備」</strong>に特化。NHKや地方紙から実際に取材が来たときの受け答え設計まで、上村の実体験を元に解説。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>内山 健太 CO（プレスリリース基礎）</strong>：「書き方の基礎を学びたい方は内山COの勉強会へ。私のセミナーは"発信後"の戦略設計です。内山CO→上村COの二段階で完璧なPR体制ができます。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">プレスリリースを書いて終わり、という経営者が9割。
+取材が来た時に「えっ、今日ですか？」と慌てているようでは、
+せっかくのチャンスを活かせません。
+このセミナーでは、AIを使った「メディア対応の仕組みづくり」と
+「NHKが選ぶプレスリリースの共通点」をお伝えします。
+広報初心者でも、30分で戦略的なメディア設計ができるようになります。</div>
   </div>
 
-  <div class="strategy-phase" style="border-left-color:var(--amber);">
-    <div class="phase-label" style="color:var(--amber);">PHASE 2 ／ 存在感の拡大</div>
-    <div class="phase-title">ミニセミナーで「名前と専門」を広げる</div>
-    <h3>セミナー企画案（年4回推奨）</h3>
-    <div class="strategy-grid" style="margin-top:12px;">
-      <div class="seminar-card">
-        <div class="seminar-no">セミナー ①</div>
-        <div class="seminar-title">「今日から始める生成AI活用」</div>
-        <div class="seminar-desc">初心者向け。ChatGPT・Geminiの基本操作から「使い続けるコツ」まで。相談者獲得の入口として設計。</div>
-      </div>
-      <div class="seminar-card">
-        <div class="seminar-no">セミナー ②</div>
-        <div class="seminar-title">「AI導入で月30時間を削減した実例紹介」</div>
-        <div class="seminar-desc">まる様などの実例をベースに「ビフォーアフター」を数字で示す。よろず経由事例も追加していく。</div>
-      </div>
-      <div class="seminar-card">
-        <div class="seminar-no">セミナー ③</div>
-        <div class="seminar-title">「ChatGPTで販促文章を10分で作る」</div>
-        <div class="seminar-desc">今岡CO・山畑COと連携した合同セミナーも可。デザイン×AI×発信の連携として打ち出す。</div>
-      </div>
-      <div class="seminar-card">
-        <div class="seminar-no">セミナー ④</div>
-        <div class="seminar-title">「少人数で回る現場のAI活用術」</div>
-        <div class="seminar-desc">1〜10名の小規模事業者に特化。業種を問わない「業務フロー × AI」設計のハウツー。</div>
-      </div>
+  <!-- S02 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--amber);">
+    <div class="seminar-detail-no" style="color:var(--amber);">セミナー 02 ／ コスト削減</div>
+    <div class="seminar-detail-title">"今すぐ削れる業務コスト"の見つけ方 — 月10時間を取り戻す棚卸しワーク</div>
+    <div class="seminar-meta">
+      <span class="tag tag-amber">業務改善</span><span class="tag tag-navy">AI活用</span><span class="tag tag-green">初級</span>
     </div>
+    <div class="seminar-body">
+      「どこから手をつければいいかわからない」という経営者が最も多い課題。業務の棚卸しワークシートをその場で記入しながら、<strong>AIで削れる工程・人に任せるべき工程・そのまま続けていい工程</strong>の3つに仕分けするライブワーク形式。よろず経由の実例（月116時間・184万円削減事例）を交えて解説。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>徳永 真美子 CO（AI活用・人材育成）</strong>：「人手不足の観点では徳永COが採用・育成含めてサポートします。AI化と並行して採用戦略を見直したい方はぜひ。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「忙しいのに利益が出ない」——その原因の多くは
+"見えないコスト"が積み上がっているからです。
+このセミナーでは、実際に現場で使えるワークシートを使いながら
+30分で「削れる業務」をその場で特定します。
+AIで自動化・簡略化できる業務を見つけて、
+今週から変えられるアクションをお持ち帰りください。</div>
   </div>
 
-  <div class="strategy-phase" style="border-left-color:var(--green);">
-    <div class="phase-label" style="color:var(--green);">PHASE 3 ／ 外部機関への波及</div>
-    <div class="phase-title">金融機関・商工会議所・士業への間接PR</div>
+  <!-- S03 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--green);">
+    <div class="seminar-detail-no" style="color:var(--green);">セミナー 03 ／ 属人化解消</div>
+    <div class="seminar-detail-title">AIで作る"現場の取扱説明書" — 属人化を終わらせる業務マニュアル設計</div>
+    <div class="seminar-meta">
+      <span class="tag tag-green">マニュアル化</span><span class="tag tag-navy">AI活用</span><span class="tag tag-amber">初級〜中級</span>
+    </div>
+    <div class="seminar-body">
+      「ベテランが辞めたら現場が回らない」という問題をAIで解決するセミナー。ChatGPTを使って業務手順書を30分で作る方法を実演。<strong>音声録音→文字起こし→AI整形→マニュアル完成</strong>という最速フローを体験してもらう。小規模事業所でも今日から始められる設計。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>徳永 真美子 CO（動画研修・AI活用）</strong>：「テキストマニュアルをさらに動画化したい場合は徳永COと連携します。動画×AI×マニュアルの三位一体が最強の属人化解消策です。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「あの人がいないと現場が止まる」——これは経営リスクです。
+マニュアルを作ろうとして挫折した経験はありませんか？
+このセミナーでは、AIを使えば30分で現場マニュアルが完成する
+具体的な手順をライブで実演します。
+参加後すぐに「うちのマニュアル作り」をスタートできます。</div>
+  </div>
+
+  <!-- S04 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--pink);">
+    <div class="seminar-detail-no" style="color:var(--pink);">セミナー 04 ／ 口コミ活用</div>
+    <div class="seminar-detail-title">お客様の声を"稼ぐ資産"に変える — AI×口コミで集客素材を自動生成</div>
+    <div class="seminar-meta">
+      <span class="tag tag-pink">集客</span><span class="tag tag-navy">AI活用</span><span class="tag tag-teal">初級</span>
+    </div>
+    <div class="seminar-body">
+      お客様の感想・口コミはそのまま眠らせると宝の持ち腐れ。AIを使って<strong>LP文章・SNS投稿・チラシコピー・Googleビジネスプロフィール</strong>へと自動展開する方法を解説。30分で「お客様の声活用システム」の設計図が完成する実践型セミナー。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>山畑 和久 CO（動画・SNS）</strong>：「お客様インタビューを動画にしてSNS発信したい方は山畑COへ。」<br>
+      <strong>桂 知奈美 CO（Instagram）</strong>：「Instagramを使った口コミ集客の運用は桂COが専門です。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「うちはお客様の声が溜まっているけど使えていない」——
+実はそれ、最強の集客素材です。
+このセミナーでは、お客様のひと言からLP・チラシ・SNS投稿を
+AIで一気に生成する方法をお伝えします。
+広告費をかけずに「口コミが営業してくれる状態」を作りましょう。</div>
+  </div>
+
+  <!-- S05 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--orange);">
+    <div class="seminar-detail-no" style="color:var(--orange);">セミナー 05 ／ HP改善</div>
+    <div class="seminar-detail-title">問い合わせが増えるHPの"問題解決設計" — 読まれるより「行動させる」コピー術</div>
+    <div class="seminar-meta">
+      <span class="tag tag-orange">Webマーケ</span><span class="tag tag-navy">AI活用</span><span class="tag tag-amber">中級</span>
+    </div>
+    <div class="seminar-body">
+      「HPはある。でも問い合わせが来ない」という最も多いWeb相談を解決するセミナー。AIを使った<strong>ユーザーの行動設計→問題解決型コピーライティング→CTA最適化</strong>の3ステップを解説。Webデザインの話はしない。文章と構成だけで問い合わせを増やす方法を30分で習得。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>石井 慎八 CO（Web集客・Meta広告）</strong>：「HPを整えたら次はWeb広告での集客強化を。石井COが戦略設計から実行まで一貫して支援します。HPとWeb広告を組み合わせると効果が倍になります。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">HPがあるのに問い合わせがゼロ——
+それはデザインの問題でも、SEOの問題でもありません。
+「お客様が次に何をすればいいか」が書かれていないだけです。
+このセミナーでは、AIを使って「行動を促す文章」に
+30分でHPを改修する具体的な手順をお伝えします。</div>
+  </div>
+
+  <!-- S06 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--purple);">
+    <div class="seminar-detail-no" style="color:var(--purple);">セミナー 06 ／ コンテンツ設計</div>
+    <div class="seminar-detail-title">1本のインタビューから10コンテンツを生む — AI時代のコンテンツ量産術</div>
+    <div class="seminar-meta">
+      <span class="tag tag-purple">コンテンツ</span><span class="tag tag-navy">AI活用</span><span class="tag tag-teal">初級〜中級</span>
+    </div>
+    <div class="seminar-body">
+      ブログ・SNS・YouTube台本・メルマガ・チラシ…発信チャネルが多すぎて「何から手をつければ」という経営者へ。<strong>1回のお客様インタビュー（10分）からAIで10種のコンテンツを生成する</strong>フローをライブ実演。月1回の取材で発信素材が3ヶ月分確保できる仕組みを設計する。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>山畑 和久 CO（動画コンテンツ）</strong>：「インタビューを動画化したい場合は山畑COが最適。」<br>
+      <strong>今岡 優菜 CO（デザイン素材）</strong>：「AI生成テキストをビジュアル化・デザイン化するには今岡COと連携を。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「発信したいけど時間がない」——
+発信できない本当の理由は、ネタを毎回ゼロから作っているからです。
+このセミナーでは、たった1回のインタビュー音声から
+ブログ・SNS・YouTube台本・メルマガを同時に生成する
+AIワークフローをお伝えします。</div>
+  </div>
+
+  <!-- S07 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--green);">
+    <div class="seminar-detail-no" style="color:var(--green);">セミナー 07 ／ 補助金戦略</div>
+    <div class="seminar-detail-title">補助金を"とる側"の思考法 — AI×課題可視化で採択率を上げる申請設計</div>
+    <div class="seminar-meta">
+      <span class="tag tag-green">補助金</span><span class="tag tag-navy">AI活用</span><span class="tag tag-amber">中級</span>
+    </div>
+    <div class="seminar-body">
+      「補助金に興味があるがどこから始めればいいかわからない」という経営者向け。AIを使った<strong>自社の課題可視化→補助金マッチング→申請書骨子の自動生成</strong>の流れを解説。IT導入補助金・ものづくり補助金・事業再構築補助金の使い分けと、採択される事業計画の書き方のポイントを上村の経験から解説。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>田邉 光彦 CO（税理士・補助金支援）</strong>：「補助金採択後の事業計画・財務管理・税務処理については田邉COが専門です。上村と田邉COのツーセットで採択から実施まで対応します。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">補助金の採択率が低い理由のほとんどは
+「課題の書き方」と「事業計画のストーリー」にあります。
+このセミナーでは、AIを使って自社の課題を整理し、
+補助金審査員が「採択したい」と思う申請書の構造を
+30分で設計する方法をお伝えします。</div>
+  </div>
+
+  <!-- S08 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--teal);">
+    <div class="seminar-detail-no" style="color:var(--teal);">セミナー 08 ／ AI組織文化</div>
+    <div class="seminar-detail-title">スタッフが自然にAIを使い始める"AI文化"の作り方 — 強制ゼロ・環境設計で定着</div>
+    <div class="seminar-meta">
+      <span class="tag tag-teal">組織設計</span><span class="tag tag-navy">AI活用</span><span class="tag tag-green">中級</span>
+    </div>
+    <div class="seminar-body">
+      「AIを導入したがスタッフが使わない」という最も多い失敗パターンを解決するセミナー。<strong>「強制」ではなく「使いたくなる環境」の設計</strong>が鍵。成功事例（福祉事業所・美容室・小売店）を交えながら、スタッフが自発的にAIを使い始めるオンボーディング設計を解説。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>徳永 真美子 CO（人材育成・採用支援）</strong>：「AI活用の定着と人材育成・採用戦略を組み合わせたい場合は徳永COと連携。スタッフのAI活用能力を採用評価軸にする方法も提案できます。」
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「ChatGPTを導入したけど、結局自分しか使っていない」——
+これはAIの問題ではなく、「環境設計」の問題です。
+このセミナーでは、スタッフが強制されなくても
+自然とAIを使い始める職場環境の作り方を
+実例とともにお伝えします。</div>
+  </div>
+
+  <!-- S09 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--amber);">
+    <div class="seminar-detail-no" style="color:var(--amber);">セミナー 09 ／ AI時代の経営（金融機関推薦筆頭）</div>
+    <div class="seminar-detail-title">AI時代に「選ばれ続ける」中小企業の条件 — 24年の支援経験×AIが見つけた共通項</div>
+    <div class="seminar-meta">
+      <span class="tag tag-amber">経営戦略</span><span class="tag tag-navy">AI活用</span><span class="tag tag-red">経営者向け</span>
+    </div>
+    <div class="seminar-body">
+      コンサル・広報・プロモーション・AI活用を24年間で手がけてきた上村が、<strong>「AI化の波の中で生き残る中小企業の共通点」</strong>を解説する経営者向けセミナー。大企業に真似できない小さな企業の強みをAIで増幅する方法を、最新事例と共に解説。金融機関が融資先企業に最も紹介しやすい内容として設計。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO</div>
+      <strong>石井 慎八 CO（Webデジタル戦略）</strong>：「デジタル戦略の実装支援は石井CO。」<br>
+      <strong>内山 健太 CO（広報戦略）</strong>：「選ばれ続けるための広報・PR戦略は内山COと連携。」<br>
+      ※このセミナーは金融機関・商工会議所への波及を最も意識した設計。
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">AIが仕事を変えていく中で、
+「自分の会社はどうなるのか？」という不安を感じていませんか？
+24年間で1,000社超の経営者を支援してきた上村が、
+AI時代に選ばれ続ける中小企業に共通する「3つの条件」を
+わかりやすく解説します。今日から使える経営の視点をお届けします。</div>
+  </div>
+
+  <!-- S10 -->
+  <div class="seminar-detail-card" style="border-left-color:var(--red);">
+    <div class="seminar-detail-no" style="color:var(--red);">セミナー 10 ／ 紹介連鎖設計（集大成）</div>
+    <div class="seminar-detail-title">AI×プロモーションで"紹介が連鎖する"ビジネス設計 — 広告費ゼロで売上が増え続ける仕組み</div>
+    <div class="seminar-meta">
+      <span class="tag tag-red">集大成</span><span class="tag tag-navy">AI活用</span><span class="tag tag-amber">経営者向け</span>
+    </div>
+    <div class="seminar-body">
+      上村の専門領域「プロモーション×支援×AI」の集大成セミナー。<strong>広告費をかけずに紹介が紹介を呼ぶビジネス構造</strong>の作り方を解説。AI活用で口コミ・事例・コンテンツを自動的に再利用し、既存顧客が自然に新規顧客を連れてくるシステムの設計図をその場で作る。
+    </div>
+    <div class="co-link-box">
+      <div class="co-link-label">🤝 セミナー内で紹介するCO（全CO連携の総まとめ）</div>
+      「AIで業務を効率化（上村CO）→ 発信力を高める（山畑CO・桂CO）→ 広告で拡大（石井CO）→ 採用で体制強化（徳永CO）→ 税務・補助金（田邉CO）」という<strong>成長の連鎖シナリオ</strong>を可視化して説明。
+    </div>
+    <div class="talk-script-label">📢 セミナー告知トーク文</div>
+    <div class="talk-script">「紹介で仕事が来ているが、それ以上に増えない」——
+実は紹介を"仕組み"にしていないだけです。
+AIを使ってお客様の声・実績・事例を自動的に展開し、
+紹介が紹介を呼ぶシステムを構築する方法を解説します。
+24年間のプロモーション経験をAIと組み合わせた
+「広告費ゼロで売上が増え続ける設計図」をお持ち帰りください。</div>
+  </div>
+
+  <!-- 外部機関波及ルート -->
+  <div class="card">
+    <h3>外部機関への波及ルート（セミナー経由）</h3>
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;">
       <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
-        <strong>金融機関（銀行・信金）への波及ルート</strong><br>
-        よろず経由でAI支援事例が積み上がる → 鈴鹿チーフや光岡COが金融機関に「こんな専門家がいます」と自然に紹介 → 金融機関が融資先企業に上村COを推薦
+        <strong>金融機関（銀行・信金）への波及</strong><br>
+        セミナー⑨は金融機関が融資先企業に紹介しやすい内容として設計。よろず経由のAI支援実績 → 鈴鹿チーフ・光岡COが自然に紹介 → 金融機関担当者への認知 → 取引先企業への推薦
       </div>
       <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
-        <strong>商工会議所への波及ルート</strong><br>
-        よろずのセミナー実績 → 商工会議所での登壇依頼 → 会員企業への認知 → 本業への紹介流入
+        <strong>商工会議所への波及</strong><br>
+        セミナー①③⑦の実績 → 商工会議所での登壇依頼 → 会員企業への認知拡大 → 本業（有限会社アートソウル）への紹介流入
       </div>
       <div style="background:var(--bg);border-radius:10px;padding:14px 18px;font-size:13px;">
-        <strong>士業（税理士・社労士）への波及ルート</strong><br>
-        田邉CO・小林COとよろず内で実績を積む → 「うちのクライアントにも紹介したい」という関係値を構築 → 本業への紹介流入
+        <strong>士業（税理士・社労士）への波及</strong><br>
+        田邉CO・小林COとよろず内での連携実績 → 「うちのクライアントにも紹介したい」という関係構築 → 本業への紹介流入
       </div>
     </div>
   </div>
 
   <div class="card">
     <h3>上村CO「よろずプロフィール」強化提案</h3>
-    <div class="callout callout-teal">
-      現在のよろずプロフィール（業務改善/AI活用支援）に以下を追加すると認知が高まる
-    </div>
+    <div class="callout callout-teal">現在のよろずプロフィール（業務改善/AI活用支援）に以下を追加すると認知が高まる</div>
     <table>
       <tr><th>項目</th><th>現在</th><th>強化案</th></tr>
-      <tr>
-        <td>キャッチコピー</td>
-        <td>現場で無理なく続けられる改善</td>
-        <td>「月○時間削減の実績あり」「数字で見えるAI活用」</td>
-      </tr>
-      <tr>
-        <td>支援事例</td>
-        <td>少人数でも回る現場づくり支援</td>
-        <td>「月116時間・年間約184万円削減（福祉事業所事例）」として具体化</td>
-      </tr>
-      <tr>
-        <td>対応業種</td>
-        <td>サービス・小売・美容・個人事業</td>
-        <td>福祉・医療・士業・製造を追加（まる様事例ベース）</td>
-      </tr>
-      <tr>
-        <td>強みPR</td>
-        <td>生成AI・既存ツール活用</td>
-        <td>「カイ（AI）との協業モデルで提案書〜実行計画を最速生成」</td>
-      </tr>
+      <tr><td>キャッチコピー</td><td>現場で無理なく続けられる改善</td><td>「月○時間削減の実績あり」「数字で見えるAI活用」</td></tr>
+      <tr><td>支援事例</td><td>少人数でも回る現場づくり支援</td><td>「月116時間・年間約184万円削減（福祉事業所事例）」として具体化</td></tr>
+      <tr><td>対応業種</td><td>サービス・小売・美容・個人事業</td><td>福祉・医療・士業・製造を追加（まる様事例ベース）</td></tr>
+      <tr><td>強みPR</td><td>生成AI・既存ツール活用</td><td>「カイ（AI）との協業モデルで提案書〜実行計画を最速生成」</td></tr>
     </table>
   </div>
+</div>
+
+<!-- ══════════ STUDY ══════════ -->
+<div id="study" class="section">
+  <div class="card">
+    <h2><span class="icon">📚</span>勉強会 10本 — 1on1実践セッション設計</h2>
+    <div class="callout callout-purple">
+      よろず相談の中で「もう少し深く学びたい」「個別に設計を手伝ってほしい」というニーズに応える<strong>1対1の実践勉強会</strong>。30分のミニ講義＋相談者の事業に即したアドバイス。相談者が「次のアクション」を持ち帰れる設計。各セッションに次の専門COへの橋渡しを組み込む。
+    </div>
+    <div class="callout callout-amber" style="margin-top:12px;">
+      ⚠ よろずルール：1on1勉強会はよろず支援の枠内で実施。本業サービスの案内・誘導は行わない。相談者の課題解決が唯一の目的。
+    </div>
+  </div>
+
+  <!-- 勉強会01 -->
+  <div class="study-card">
+    <div>
+      <div class="study-no">勉強会 01</div>
+      <div class="study-title">業務フロー × AI導入の個別設計相談</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-teal">業務改善</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">相談者の現在の業務フローを聞き取り、どの工程にAIを入れると最も効果的かを個別設計する。セミナー②の個別版。実際に「どこから始めるか」を一緒に決めるまでをゴールとする。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「最初の3日間でやること」リスト（AI導入ロードマップ簡易版）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：IT補助金 → 田邉CO。採用も課題 → 徳永CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会02 -->
+  <div class="study-card" style="border-left-color:var(--amber);">
+    <div>
+      <div class="study-no" style="color:var(--amber);">勉強会 02</div>
+      <div class="study-title">ChatGPT 使い方スタート相談</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-amber">AI入門</span>
+        <span class="tag tag-green">初心者</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">「ChatGPTを聞いたことはある。でも何に使えばいいかわからない」という初心者を対象に、相談者の業種・業態に合った最初の使い方を一緒に設定する。無料版で今日から使えるプロンプト3本をその場で作る。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「今日から使えるプロンプト集」（相談者の業種専用版・3本）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：SNS活用に興味 → 石井CO・桂CO。動画発信に興味 → 山畑CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会03 -->
+  <div class="study-card" style="border-left-color:var(--pink);">
+    <div>
+      <div class="study-no" style="color:var(--pink);">勉強会 03</div>
+      <div class="study-title">プロモーション素材のAI制作相談</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-pink">プロモーション</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">チラシ文章・LP・Instagram投稿・ニュースレターなど、相談者が「作りたい」と思っているプロモーション素材をAIで制作する実践セッション。その場で完成品または骨子まで作ることをゴールとする。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>当日完成したプロモーション素材の下書き（テキスト形式）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：デザイン化・印刷 → 今岡CO。SNS運用・広告化 → 石井CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会04 -->
+  <div class="study-card" style="border-left-color:var(--teal);">
+    <div>
+      <div class="study-no" style="color:var(--teal);">勉強会 04</div>
+      <div class="study-title">取材用プレスリリースの個別設計</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-teal">広報・PR</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー①の個別版。相談者の事業・商品・サービスを聞き取り、その場でプレスリリース骨子を共同設計する。「どのメディアに、何を、どのタイミングで」という戦略設計まで行う。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>プレスリリース骨子（タイトル・リード・本文構成・送付先メディアリスト）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：プレスリリース基礎から始めたい → 内山CO。広報の継続支援 → 上村フォロー。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会05 -->
+  <div class="study-card" style="border-left-color:var(--green);">
+    <div>
+      <div class="study-no" style="color:var(--green);">勉強会 05</div>
+      <div class="study-title">業務マニュアルの構造化相談</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-green">マニュアル化</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー③の個別版。相談者の「一番属人化している業務」を1つ選んで、その場でAIを使いながらマニュアルの骨子を完成させる。音声録音→文字起こし→AI整形の実演も含む。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>業務マニュアル第1号（A4・1〜2ページの実用版）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：マニュアルを動画化したい → 徳永CO。IT補助金でシステム化 → 田邉CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会06 -->
+  <div class="study-card" style="border-left-color:var(--orange);">
+    <div>
+      <div class="study-no" style="color:var(--orange);">勉強会 06</div>
+      <div class="study-title">HP・LPの文章個別改善セッション</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-orange">Webマーケ</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー⑤の個別版。相談者の現在のHP・LPを一緒に見ながら、問い合わせが増える文章に改修する。AIでリライト案をその場で生成し、「今日中に変更できる箇所」から優先順位をつけて提案する。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「即日実装できるHP改修案」リスト（最大5項目、優先順付き）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：HP全体のリデザイン → 今岡CO。Web広告で集客強化 → 石井CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会07 -->
+  <div class="study-card" style="border-left-color:var(--purple);">
+    <div>
+      <div class="study-no" style="color:var(--purple);">勉強会 07</div>
+      <div class="study-title">お客様の声のマーケ活用設計</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-purple">集客</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー④の個別版。相談者が持っている口コミ・感謝のメッセージ・Googleレビューを素材に、AIでSNS投稿・LP文章・チラシコピーを生成するセッション。「口コミが勝手に営業してくれる状態」の設計図を共同作成する。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「口コミ→コンテンツ変換フロー」（相談者の事業専用版）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：Instagramで口コミ発信 → 桂CO。動画インタビューに → 山畑CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会08 -->
+  <div class="study-card" style="border-left-color:var(--green);">
+    <div>
+      <div class="study-no" style="color:var(--green);">勉強会 08</div>
+      <div class="study-title">IT導入補助金申請の課題整理セッション</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-green">補助金</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー⑦の個別版。IT導入補助金・ものづくり補助金・小規模事業者持続化補助金のうち、相談者にマッチするものを特定し、申請に必要な「自社の課題整理」をAIを使いながら行う。申請書骨子の初稿まで仕上げることをゴールとする。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>補助金申請書骨子（課題→解決策→期待効果の3段構成）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：採択後の財務・税務処理 → 田邉CO。申請手続きの詳細 → 商工会議所担当。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会09 -->
+  <div class="study-card" style="border-left-color:var(--teal);">
+    <div>
+      <div class="study-no" style="color:var(--teal);">勉強会 09</div>
+      <div class="study-title">スタッフへのAI展開計画の個別設計</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-teal">組織設計</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー⑧の個別版。相談者の職場構成（人数・年齢・IT習熟度）を聞き取り、「どのスタッフに・どのAIツールを・どの順番で」展開するかの計画を設計する。「最初の2週間でやること」まで具体化することをゴールとする。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「スタッフAI展開ロードマップ」（2週間・1ヶ月・3ヶ月の行動計画）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：AI活用と採用・育成を同時進行 → 徳永CO。動画研修の作成 → 徳永CO×山畑CO。</div>
+    </div>
+  </div>
+
+  <!-- 勉強会10 -->
+  <div class="study-card" style="border-left-color:var(--red);">
+    <div>
+      <div class="study-no" style="color:var(--red);">勉強会 10</div>
+      <div class="study-title">コンテンツ発信の仕組み化相談</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <span class="tag tag-red">仕組み化</span>
+        <span class="tag tag-navy">AI活用</span>
+      </div>
+    </div>
+    <div>
+      <div class="study-body">セミナー⑥の個別版。相談者が「毎月続けられる発信の仕組み」を設計する。月1回のインタビュー→AI展開→10コンテンツ生成という流れを、相談者の業種・リソースに合わせてカスタマイズする。継続できる最小単位の発信システムを共同設計する。</div>
+      <div class="study-outcome"><strong>持ち帰り：</strong>「月1回でできるコンテンツ発信カレンダー」（3ヶ月分の発信計画）</div>
+      <div style="margin-top:10px;font-size:12px;color:var(--muted);">🔗 次の紹介先：SNS運用サポート → 石井CO・桂CO・北川CO。デザイン素材 → 今岡CO。動画制作 → 山畑CO。</div>
+    </div>
+  </div>
+
 </div>
 
 </div>
