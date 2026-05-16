@@ -306,7 +306,18 @@ h2 { font-size:18px; font-weight:700; }
 /* ===== EDIT CHANGE COUNT ===== */
 .hdr-edit-count { font-size:10px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.25);color:#A5B4FC;padding:2px 8px;border-radius:20px;cursor:pointer;transition:all .15s; }
 .hdr-edit-count:hover { background:rgba(99,102,241,.3); }
+/* ===== MERMAID VIEW TOGGLE ===== */
+.fl-view-toggle { display:flex;gap:6px;margin-bottom:16px;align-items:center;flex-wrap:wrap; }
+.fl-vt-btn { background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:5px 13px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;transition:all .15s; }
+.fl-vt-btn:hover { background:var(--surface3);color:var(--text); }
+.fl-vt-btn.on { background:rgba(91,110,245,.15);border-color:var(--primary);color:var(--primary-light); }
+.fl-vt-copy { margin-left:auto;background:rgba(15,186,129,.08);border-color:rgba(15,186,129,.25);color:#6EE7B7; }
+.fl-vt-copy:hover { background:rgba(15,186,129,.18); }
+.fl-mermaid-wrap { background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 16px;overflow-x:auto;min-height:180px;display:flex;justify-content:center;align-items:flex-start; }
+.fl-mermaid-wrap svg { max-width:100%;height:auto; }
+.fl-mermaid-msg { color:var(--muted);font-size:12px;text-align:center;padding:40px 20px; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 </head>
 <body>
 
@@ -318,6 +329,7 @@ h2 { font-size:18px; font-weight:700; }
     <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
   </div>
   <button class="hdr-edit-count" id="editCountBtn" onclick="openEditLog()" style="display:none">✏️ <span id="editCountNum">0</span>件編集済み</button>
+  <button class="hdr-btn" onclick="goHome()" title="ホーム（ファイル一覧）へ">🏠 ホーム</button>
   <button class="hdr-btn" id="printBtn" onclick="printView()">🖨️</button>
 </header>
 
@@ -398,6 +410,14 @@ h2 { font-size:18px; font-weight:700; }
     <button class="guide-btn" id="guideTopBtn" onclick="toggleGuidePanel()" style="display:none">📖 タスクガイド</button>
   </div>
   <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
+  <div id="flViewToggle" class="fl-view-toggle" style="display:none">
+    <button class="fl-vt-btn on" id="btnFlCard" onclick="setFlowView('card')">📋 カード</button>
+    <button class="fl-vt-btn" id="btnFlMermaid" onclick="setFlowView('mermaid')">🔀 Mermaid図</button>
+    <button class="fl-vt-btn fl-vt-copy" onclick="copyMermaidCode()">📋 コードをコピー</button>
+  </div>
+  <div id="flMermaidWrap" class="fl-mermaid-wrap" style="display:none">
+    <div id="flMermaidEl"><div class="fl-mermaid-msg">Mermaid図を表示するには「🔀 Mermaid図」を選択してください</div></div>
+  </div>
   <div id="flEmpty" class="empty-s"><div class="empty-s-i">→</div><div>マトリクスの項目をクリックするとフローが表示されます</div></div>
   <div id="flNoFlow" class="fl-noflow" style="display:none">
     <div class="fl-noflow-t">このアクションのフローはまだ作成されていません</div>
@@ -1055,11 +1075,21 @@ function goFlow(ti,qid,itemTx){
     renderFlow(fl);
     if(guideBtn)guideBtn.style.display='';
     loadGuidePanel(fl);
+    curFlowMermaidCode=buildMermaidCode(fl);
+    document.getElementById('flViewToggle').style.display='';
+    document.getElementById('flMermaidWrap').style.display='none';
+    document.getElementById('flSteps').style.display='';
+    document.getElementById('btnFlCard').classList.add('on');
+    document.getElementById('btnFlMermaid').classList.remove('on');
+    flViewMode='card';
   }else{
     document.getElementById('flEmpty').style.display='none';
     document.getElementById('flSteps').innerHTML='';
     document.getElementById('flKai').style.display='none';
     document.getElementById('guidePanel').style.display='none';
+    document.getElementById('flViewToggle').style.display='none';
+    document.getElementById('flMermaidWrap').style.display='none';
+    curFlowMermaidCode='';
     if(guideBtn)guideBtn.style.display='none';
     const noFlowEl=document.getElementById('flNoFlow');
     noFlowEl.style.display='block';
@@ -1193,6 +1223,92 @@ function renderMatrix(ti){
   }else{document.getElementById('mxKai').style.display='none';}
 }
 
+/* ================================================================ MERMAID ================================================================ */
+let curFlowMermaidCode='';
+let flViewMode='card';
+let _flKaiVis=false;
+let _mmdReady=false;
+
+function initMermaid(){
+  if(_mmdReady||typeof mermaid==='undefined')return;
+  try{
+    mermaid.initialize({startOnLoad:false,theme:'dark',
+      flowchart:{htmlLabels:true,curve:'basis'},
+      themeVariables:{darkMode:true,background:'#0D1521',primaryColor:'#1a2a4a',
+        primaryBorderColor:'#5B6EF5',primaryTextColor:'#E8EEF6',
+        lineColor:'#5A7A9A',secondaryColor:'#192840',tertiaryColor:'#0D1521'}});
+    _mmdReady=true;
+  }catch(e){}
+}
+
+function buildMermaidCode(fl){
+  if(!fl)return'';
+  const esc=s=>(s||'').replace(/"/g,"'");
+  const lines=['flowchart TD'];
+  fl.steps.forEach((step,i)=>{
+    const id='S'+step.order;
+    const type=step.type||'action';
+    const title=esc(step.title||'');
+    let node;
+    if(type==='decision') node=`  ${id}{"STEP ${step.order}<br/>${title}"}`;
+    else if(type==='milestone') node=`  ${id}(["★ STEP ${step.order}<br/>${title}"])`;
+    else if(type==='warning') node=`  ${id}["⚠ STEP ${step.order}<br/>${title}"]`;
+    else node=`  ${id}["STEP ${step.order}<br/>${title}"]`;
+    lines.push(node);
+    if(i<fl.steps.length-1)lines.push(`  S${step.order} --> S${step.order+1}`);
+  });
+  const styleMap={
+    action:'fill:#1a2a4a,stroke:#5B6EF5,color:#A5B4FC',
+    decision:'fill:#2d1f00,stroke:#F5A623,color:#FCD34D',
+    milestone:'fill:#0d2a1f,stroke:#0FBA81,color:#6EE7B7',
+    warning:'fill:#2a0d0d,stroke:#EF4455,color:#FCA5A5'
+  };
+  fl.steps.forEach(step=>{
+    lines.push(`  style S${step.order} ${styleMap[step.type||'action']||styleMap.action}`);
+  });
+  return lines.join('\n');
+}
+
+function setFlowView(mode){
+  flViewMode=mode;
+  const isCard=mode==='card';
+  document.getElementById('flSteps').style.display=isCard?'':'none';
+  document.getElementById('flKai').style.display=(isCard&&_flKaiVis)?'':'none';
+  document.getElementById('flMermaidWrap').style.display=isCard?'none':'';
+  document.getElementById('btnFlCard').classList.toggle('on',isCard);
+  document.getElementById('btnFlMermaid').classList.toggle('on',!isCard);
+  if(!isCard&&curFlowMermaidCode)renderMermaidDiagram(curFlowMermaidCode);
+}
+
+function renderMermaidDiagram(code){
+  initMermaid();
+  const wrap=document.getElementById('flMermaidEl');
+  wrap.innerHTML='<div class="fl-mermaid-msg">レンダリング中...</div>';
+  const pre=document.createElement('pre');
+  pre.className='mermaid';pre.textContent=code;
+  wrap.innerHTML='';wrap.appendChild(pre);
+  if(_mmdReady)requestAnimationFrame(()=>{
+    try{mermaid.run({nodes:[pre]});}catch(e){
+      wrap.innerHTML=`<div class="fl-mermaid-msg" style="color:var(--danger)">エラー: ${e.message}</div>`;
+    }
+  });
+}
+
+function copyMermaidCode(){
+  if(!curFlowMermaidCode){showToast('コピーするコードがありません');return;}
+  navigator.clipboard.writeText(curFlowMermaidCode)
+    .then(()=>showToast('✅ Mermaidコードをコピーしました'))
+    .catch(()=>showToast('コピー失敗 — 手動でコピーしてください'));
+}
+
+function goHome(){
+  if(window.location.protocol.startsWith('http')){
+    window.location.href=window.location.origin+'/';
+  }else{
+    showToast('🏠 ホーム機能はサーバー経由でアクセスした場合に使えます（起動してブラウザを開く.vbs を実行してください）');
+  }
+}
+
 /* ================================================================ FLOW ================================================================ */
 const SICO={action:{bg:'rgba(99,102,241,.2)',col:'#A5B4FC',ic:'▶',cls:'fb-act',lbl:'アクション'},decision:{bg:'rgba(245,158,11,.2)',col:'#FCD34D',ic:'◆',cls:'fb-dec',lbl:'判断'},milestone:{bg:'rgba(16,185,129,.2)',col:'#6EE7B7',ic:'★',cls:'fb-mil',lbl:'マイルストーン'},warning:{bg:'rgba(239,68,68,.2)',col:'#FCA5A5',ic:'!',cls:'fb-wrn',lbl:'注意'}};
 const ST_LABELS={todo:'未着手',doing:'進行中',done:'完了',block:'ブロック'};
@@ -1247,7 +1363,8 @@ function renderFlow(fl){
     const kt=document.getElementById('flKaiTx');kt.textContent=fl.kaiComment;kt.title='ダブルクリックで編集';kt.className='editable-hint';
     kt.addEventListener('dblclick',()=>showEditPopover(kt,`flows.${DATA.flows.indexOf(fl)}.kaiComment`,fl.kaiComment));
     document.getElementById('flKai').style.display='block';
-  }else{document.getElementById('flKai').style.display='none';}
+    _flKaiVis=true;
+  }else{document.getElementById('flKai').style.display='none';_flKaiVis=false;}
 }
 function onCk(el){
   saveCheck(el.dataset.cid,el.checked);
@@ -1573,6 +1690,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('flSteps').innerHTML='';
   document.getElementById('flKai').style.display='none';
   updateEditCount();
+  initMermaid();
 });
 </script>
 </body>
