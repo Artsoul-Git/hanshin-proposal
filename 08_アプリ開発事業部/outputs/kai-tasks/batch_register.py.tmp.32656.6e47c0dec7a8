@@ -1,0 +1,252 @@
+"""git履歴から抽出した直近10プロジェクトをKai Tasksに一括登録する"""
+import json, urllib.request, uuid
+from datetime import datetime
+
+BASE = "http://localhost:3456"
+
+def api(method, path, body=None):
+    data = json.dumps(body, ensure_ascii=False).encode("utf-8") if body else None
+    req = urllib.request.Request(
+        f"{BASE}{path}", data=data,
+        headers={"Content-Type": "application/json"} if data else {},
+        method=method
+    )
+    with urllib.request.urlopen(req, timeout=10) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+def now():
+    return datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+
+PROJECTS = [
+    {
+        "name": "Kai Tasks Groq AI機能実装",
+        "goal": "Groq無料APIでタスク分解・推奨タスク機能をKai Tasksに組み込みコスト0で実現する",
+        "status": "active",
+        "memo": "2026-05-17 実装完了。server.py Groq連携・index.html AI Modal・✂️分解ボタン・💡推奨タスクボタン追加済み",
+        "big": ("Groq API連携完全実装", "done"),
+        "meds": [
+            ("server.py Groq連携追加（.env・groq_chat・2エンドポイント）", "done"),
+            ("index.html AI Modal UI実装（CSS・HTML・JS4関数）", "done"),
+            ("動作確認・Cloudflare回避（User-Agent対応）", "done"),
+        ],
+        "smalls": [
+            ("decompose エンドポイント実装", "done"),
+            ("recommend エンドポイント実装", "done"),
+            (".env作成・.gitignore追加", "done"),
+            ("✂️分解ボタンをタスクカードに追加", "done"),
+            ("Groq-env完全ガイド.html新設", "done"),
+        ],
+    },
+    {
+        "name": "総合マニュアル Groq/skill-craft整備",
+        "goal": "Groq APIマニュアル・skill-craft完全ガイド・スキル使い倒し完全ガイドを総合マニュアルに統合する",
+        "status": "active",
+        "memo": "2026-05-17 v4.1まで完成。ch27新設・Groq-env完全ガイド別ページ・スキル系2ガイド追加",
+        "big": ("総合マニュアルv4系リリース", "done"),
+        "meds": [
+            ("第27章 Groq API無料運用マニュアル追加", "done"),
+            ("Groq-env完全ガイド.html別ページ新設", "done"),
+            ("skill-craft完全ガイド・スキル使い倒し完全ガイド連携", "done"),
+        ],
+        "smalls": [
+            ("サイドバー・目次・用語集更新", "done"),
+            ("PART5に.env完全ガイドリンクカード追加", "done"),
+            ("コピーボタン・折り図・タブUI実装", "done"),
+            ("v4.0〜v4.1 changelog更新", "done"),
+            ("第27章セクション4簡略化", "done"),
+        ],
+    },
+    {
+        "name": "/skill-craft スキル開発",
+        "goal": "文字起こし・書籍などの素材からスキル定義→HTMLマニュアル→総合マニュアル連携まで一気通貫自動化する",
+        "status": "active",
+        "memo": "2026-05-17 スキル新設。rules/skills/skill-craft.md・skill-craft完全ガイド.html完成",
+        "big": ("skill-craftスキル本番リリース", "done"),
+        "meds": [
+            ("スキル定義（rules/skills/skill-craft.md）作成", "done"),
+            ("skill-craft完全ガイド.html作成", "done"),
+            ("CLAUDE.md・総合マニュアル・サイドバー登録", "done"),
+        ],
+        "smalls": [
+            ("著作権セーフな概念抽出プロセス設計", "done"),
+            ("第三者コンテンツ転用ルール整備", "done"),
+            ("スキル使い倒し完全ガイド新設（全40スキル）", "done"),
+            ("/course-build スキル同時新設", "done"),
+            ("総合マニュアルPART1リンク追加", "done"),
+        ],
+    },
+    {
+        "name": "契約書AIチェック勉強会11 セミナースライド",
+        "goal": "契約書AIチェックセミナーのHTMLスライドを完成させ受講者に届けられる状態にする",
+        "status": "active",
+        "memo": "2026-05-17 チラシ内容取り込み完了。06_セミナー事業部/outputs/契約書AIチェックセミナー/",
+        "big": ("勉強会11スライド完成・公開準備", "done"),
+        "meds": [
+            ("チラシ情報からスライド内容構成", "done"),
+            ("HTMLスライド生成（slides.js）", "done"),
+            ("受講者向けURL設定・manual.html管理", "done"),
+        ],
+        "smalls": [
+            ("セミナーコンテンツ企画", "done"),
+            ("契約書AIチェックフロー解説スライド", "done"),
+            ("CSS配色・レイアウト調整", "done"),
+            ("勉強会一覧にch11追加", "done"),
+            ("GitHub Pages公開確認", "todo"),
+        ],
+    },
+    {
+        "name": "よろず連携戦略 + 上村桂右 人物分析",
+        "goal": "よろず支援拠点との連携戦略を策定し上村桂右の人物・強みを分析したガイドを作成する",
+        "status": "active",
+        "memo": "2026-05-17 knowledge/上村桂右/ 配下に2ファイル完成。よろず_連携戦略.html・上村桂右_人物分析.html",
+        "big": ("よろず連携戦略ドキュメント完成", "done"),
+        "meds": [
+            ("ChatGPT自己分析履歴の取り込み・分析", "done"),
+            ("よろず連携戦略HTML作成", "done"),
+            ("上村桂右_人物分析HTML作成", "done"),
+        ],
+        "smalls": [
+            ("強み・弱み・機会・脅威の整理", "done"),
+            ("よろず向けアプローチシナリオ設計", "done"),
+            ("スマホ対応・プロンプト追加", "done"),
+            ("COプロフィール一覧連携", "done"),
+            ("完全人物ガイドブック.md作成", "done"),
+        ],
+    },
+    {
+        "name": "羅針盤（/rashinban）アプリ開発",
+        "goal": "目標・課題ヒアリング→マンダラ→マトリクス→フロー→ガントを1ファイルで生成するインタラクティブHTMLアプリを作る",
+        "status": "active",
+        "memo": "2026-05-16〜17 完成。08_アプリ開発/outputs/rashinban/ server.py + 売上2倍_羅針盤_20260516.html",
+        "big": ("羅針盤アプリ本番稼働", "done"),
+        "meds": [
+            ("rashinban-template.html設計", "done"),
+            ("server.py実装（/rashinban エンドポイント）", "done"),
+            ("generate_flows.py フロー自動生成", "done"),
+        ],
+        "smalls": [
+            ("マンダラチャート64項目生成", "done"),
+            ("マトリクス8枚生成", "done"),
+            ("フロー図生成", "done"),
+            ("ガントチャート生成", "done"),
+            ("Kai分析・警告コメント埋め込み", "done"),
+        ],
+    },
+    {
+        "name": "上村桂右 完全人物ガイドブック",
+        "goal": "ChatGPT自己分析履歴・書籍知識・対話履歴を統合して上村桂右の完全人物ガイドブックを作成する",
+        "status": "active",
+        "memo": "2026-05-16〜17 08_アプリ開発/outputs/self-analysis/ に完成。人物分析HTML＋Markdown",
+        "big": ("完全人物ガイドブック完成", "done"),
+        "meds": [
+            ("ChatGPT自己分析履歴インポート", "done"),
+            ("書籍知識（3冊）ナレッジ化", "done"),
+            ("ガイドブックHTML・Markdown生成", "done"),
+        ],
+        "smalls": [
+            ("強み・価値観・行動パターン分析", "done"),
+            ("ビジネスモデル・収益源整理", "done"),
+            ("人物分析HTML（インタラクティブ）", "done"),
+            ("Markdown版ガイドブック", "done"),
+            ("よろず人物分析と連携", "done"),
+        ],
+    },
+    {
+        "name": "ビジネス文書スキル9本 + /contract-check",
+        "goal": "見積・請求・NDA・契約・WBS・日報・月報・比較など業務文書を自動生成する9スキルを実装しcontract-checkも追加する",
+        "status": "active",
+        "memo": "2026-05-16 全10スキル完成。rules/skills/ 配下・ビジネス文書スキル完全ガイド.html作成",
+        "big": ("ビジネス文書スキル10本リリース", "done"),
+        "meds": [
+            ("hearing-sheet/proposal-outline/billing-docs/nda実装", "done"),
+            ("biz-contract/wbs-gantt/daily-report/monthly-report/doc-compare実装", "done"),
+            ("/contract-check追加・立場設定（甲有利/乙有利/公平）", "done"),
+        ],
+        "smalls": [
+            ("スキル定義SKILL.md 10本作成", "done"),
+            ("ビジネス文書スキル完全ガイド.html新設", "done"),
+            ("biz-contract 17条構成（個人情報・不可抗力追加）", "done"),
+            ("doc-compare附則13種パターン対応", "done"),
+            ("総合マニュアルPART1-Bに登録", "done"),
+        ],
+    },
+    {
+        "name": "kai-review 日次評価システム",
+        "goal": "git履歴・セッションログからKaiの作業を自動評価しロードマップ整合スコアをJSONに保存する仕組みを作る",
+        "status": "active",
+        "memo": "2026-05-16 kai-review.py実装。reviews/daily/2026-05-16.json 初回評価保存済み",
+        "big": ("kai-review自動評価システム稼働", "done"),
+        "meds": [
+            ("kai-review.py設計・実装", "done"),
+            ("日次評価JSON生成（reviews/daily/）", "done"),
+            ("/eval-daily・/eval-weekly・/eval-monthly スキル設計", "in_progress"),
+        ],
+        "smalls": [
+            ("ロードマップ5本柱との整合スコア算出", "done"),
+            ("git履歴自動取得", "done"),
+            ("セッションログ連携", "done"),
+            ("週次・月次集計機能", "in_progress"),
+            ("ダッシュボード表示", "todo"),
+        ],
+    },
+    {
+        "name": "まる様 AI記録自動生成システム（GAS）",
+        "goal": "合同会社まる様の介護記録業務をGAS+ライモBizで自動化し職員の記録作業を大幅削減する",
+        "status": "active",
+        "memo": "2026-05-08〜09 GAS Mode A MVP実装。提案書v8完成。ライモBiz×GASシステム設計分析済み",
+        "big": ("まる様AIシステム納品・稼働開始", "in_progress"),
+        "meds": [
+            ("要件定義・システム設計（AI記録自動生成）", "done"),
+            ("GAS Mode A MVP実装（スプレッドシート＋サイドバー）", "done"),
+            ("提案書v8完成・クライアント確認", "done"),
+        ],
+        "smalls": [
+            ("ライモBizアプリ説明FAQナレッジ化", "done"),
+            ("doGet自動セットアップ＋URL表示モーダル", "done"),
+            ("Gemini APIサイドバーガイド実装", "done"),
+            ("Mode B（LINE連携）設計", "todo"),
+            ("現場テスト・フィードバック対応", "todo"),
+        ],
+    },
+]
+
+def create_project(p):
+    # プロジェクト作成
+    proj = api("POST", "/api/projects", {
+        "name": p["name"],
+        "goal": p["goal"],
+        "memo": p["memo"],
+        "status": p["status"],
+    })
+    pid = proj["id"]
+
+    # 大タスク
+    bt_title, bt_status = p["big"]
+    bt = api("POST", f"/api/projects/{pid}/big-task", {"title": bt_title})
+    api("PUT", f"/api/tasks/{bt['id']}", {"status": bt_status})
+
+    # 中タスク
+    for title, status in p["meds"]:
+        t = api("POST", f"/api/projects/{pid}/medium-tasks", {"title": title})
+        api("PUT", f"/api/tasks/{t['id']}", {"status": status})
+
+    # 小タスク
+    for title, status in p["smalls"]:
+        t = api("POST", f"/api/projects/{pid}/small-tasks", {"title": title})
+        api("PUT", f"/api/tasks/{t['id']}", {"status": status})
+
+    return pid, p["name"]
+
+print("=== Kai Tasks 一括登録開始 ===")
+for i, proj in enumerate(PROJECTS, 1):
+    try:
+        pid, name = create_project(proj)
+        tasks_done = sum(1 for s in proj["smalls"] if s[1]=="done") + \
+                     sum(1 for m in proj["meds"] if m[1]=="done") + \
+                     (1 if proj["big"][1]=="done" else 0)
+        total = 1 + len(proj["meds"]) + len(proj["smalls"])
+        print(f"[{i:02d}] ✅ {name}  ID:{pid}  {tasks_done}/{total}完了")
+    except Exception as e:
+        print(f"[{i:02d}] ❌ {proj['name']}  エラー: {e}")
+
+print("\n=== 完了 ===")
