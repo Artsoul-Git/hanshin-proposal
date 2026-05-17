@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-18T01:33:24",
+  "last_updated": "2026-05-18T01:44:17",
   "projects": [
     {
       "id": "sample-001",
@@ -8,7 +8,7 @@
       "goal": "タスク管理アプリを完成させて運用開始する",
       "status": "archived",
       "created_at": "2026-05-11T00:00:00",
-      "updated_at": "2026-05-18T01:33:24",
+      "updated_at": "2026-05-18T01:44:17",
       "memo": "これはサンプルです。使い方を確認したら削除してください。",
       "big_task": {
         "id": "t-big-001",
@@ -112,14 +112,16 @@
           "status": "in_progress",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-11T03:50:26",
+          "updated_at": "2026-05-18T01:44:16",
           "history": [
             {
               "timestamp": "2026-05-11T03:50:26",
               "action": "ステータス変更",
               "detail": "「todo」→「in_progress」"
             }
-          ]
+          ],
+          "mindmap_mmd": "mindmap\n  root((\"サンプルプロジェクトを削除する\"))\n    Step1: タスクの確認\n      約5分\n    Step2: サンプルプロジェクトの確認\n      約3分\n    Step3: サンプルプロジェクトの削除\n      約2分\n    Step4: 削除後の確認\n      約2分",
+          "roadmap_mmd": "graph LR\n  S0([\"🎯 サンプルプロジェクトを削除する\"])\n  S1[\"タスクの確認 (5分)\"]\n  S2[\"サンプルプロジェクトの確認 (3分)\"]\n  S3[\"サンプルプロジェクトの削除 (2分)\"]\n  S4[\"削除後の確認 (2分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
         },
         {
           "id": "t-sm-003",
@@ -182,6 +184,13 @@
           "type": "decision",
           "summary": "✂️ 「完了プロジェクトのアーカイブ運用を決める」を 5 ステップに分解",
           "detail": "Step1: プロジェクトのゴールとメモの確認 (約10分)\nStep2: 現在のプロジェクトステータス確認 (約5分)\nStep3: アーカイブ運用の条件検討 (約15分)\nStep4: ステータス変更の検討 (約10分)\nStep5: アーカイブ運用のルールの作成 (約20分)"
+        },
+        {
+          "id": "mpa0959b",
+          "timestamp": "2026-05-17T16:44:16.991Z",
+          "type": "decision",
+          "summary": "✂️ 「サンプルプロジェクトを削除する」を 4 ステップに分解",
+          "detail": "Step1: タスクの確認 (約5分)\nStep2: サンプルプロジェクトの確認 (約3分)\nStep3: サンプルプロジェクトの削除 (約2分)\nStep4: 削除後の確認 (約2分)"
         }
       ]
     },
