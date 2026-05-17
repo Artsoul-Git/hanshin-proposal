@@ -403,6 +403,33 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .zbtn.close:hover { background: var(--red); color: #fff; }
 #mmdZoomScaleDisplay { font-size: 11px; color: var(--text2); min-width: 42px; text-align: center; font-family: monospace; }
 
+/* ── AI アシスト モーダル ── */
+#aiModalOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: flex; align-items: center; justify-content: center; z-index: 5000; backdrop-filter: blur(6px); }
+.ai-modal-box { background: var(--surface); border: 1px solid var(--accent); border-radius: 16px; width: min(580px, 94vw); max-height: 88vh; display: flex; flex-direction: column; box-shadow: 0 8px 40px rgba(108,99,255,.3); }
+.ai-modal-head { padding: 14px 18px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.ai-modal-head h3 { font-size: 15px; font-weight: 700; color: var(--accent); }
+.ai-modal-body { padding: 16px 18px; overflow-y: auto; flex: 1; min-height: 80px; }
+.ai-modal-foot { padding: 10px 18px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.ai-step-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.ai-step-title { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.ai-step-num { display: inline-flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; width: 22px; height: 22px; min-width: 22px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.ai-step-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.ai-step-time { font-size: 11px; color: var(--text2); margin-top: 5px; }
+.ai-rec-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start; }
+.ai-rec-priority { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; margin-top: 2px; white-space: nowrap; }
+.ai-rec-priority.high { background: rgba(255,107,107,.2); color: var(--red); }
+.ai-rec-priority.medium { background: rgba(249,202,36,.15); color: var(--yellow); }
+.ai-rec-priority.low { background: rgba(67,233,123,.12); color: var(--green); }
+.ai-rec-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.ai-rec-reason { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.ai-loading { text-align: center; padding: 36px 20px; color: var(--text2); font-size: 13px; }
+.ai-spin { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 10px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-ai { background: rgba(108,99,255,.15); color: var(--accent); border: 1px solid rgba(108,99,255,.4); }
+.btn-ai:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn-recommend { background: rgba(249,202,36,.12); color: var(--yellow); border: 1px solid rgba(249,202,36,.4); }
+.btn-recommend:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
+
 /* ── AI Input Focus Overlay ── */
 #aiFocusOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
 .ai-focus-box { background: var(--surface); border: 1px solid var(--accent); border-radius: 14px; width: min(720px, 94vw); display: flex; flex-direction: column; box-shadow: 0 8px 40px rgba(108,99,255,.25); }
@@ -585,6 +612,20 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
       <button class="btn btn-ghost btn-sm" onclick="closeAiFocus(false)">キャンセル</button>
       <button class="btn btn-primary btn-sm" onclick="closeAiFocus(true)">✅ 適用</button>
     </div>
+  </div>
+</div>
+
+<!-- AI アシスト モーダル -->
+<div id="aiModalOverlay" style="display:none;" onclick="if(event.target===this)closeAiModal()">
+  <div class="ai-modal-box">
+    <div class="ai-modal-head">
+      <h3 id="aiModalTitle">🤖 AI アシスト</h3>
+      <button onclick="closeAiModal()" style="background:none;border:none;color:var(--text2);cursor:pointer;font-size:20px;line-height:1;padding:2px 6px;">×</button>
+    </div>
+    <div class="ai-modal-body" id="aiModalBody">
+      <div class="ai-loading"><div class="ai-spin"></div><br>分析中...</div>
+    </div>
+    <div class="ai-modal-foot" id="aiModalFoot"></div>
   </div>
 </div>
 
@@ -1075,6 +1116,7 @@ function renderProject(p) {
         <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
       </div>
       <div class="header-actions">
+        <button class="btn btn-recommend btn-sm" onclick="openRecommendModal('${p.id}')">💡 推奨タスク</button>
         <button class="btn btn-ghost btn-sm" onclick="openEditProjectModal('${p.id}')">✏️ 編集</button>
         ${p.status !== 'completed' ? `<button class="btn btn-success btn-sm" onclick="markProjectDone('${p.id}')">✅ 完了</button>` : ''}
         ${p.status !== 'archived' ? `<button class="btn btn-ghost btn-sm" onclick="archiveProject('${p.id}')">📁 アーカイブ</button>` : ''}
@@ -1202,6 +1244,7 @@ function taskCard(t, sizeClass, pid) {
           <button class="icon-btn links ${links.length?'has-badge':''}" ${links.length?`data-count="${links.length}"`:''} onclick="openLinksModal('${t.id}')" title="関連リンク">🔗</button>
           <button class="icon-btn" onclick="openEditTaskModal('${t.id}')" title="編集">✏️</button>
           <button class="icon-btn del" onclick="deleteTask('${t.id}')" title="削除">🗑</button>
+          ${!isDone ? `<button class="icon-btn btn-ai" onclick="openDecomposeModal('${t.id}')" title="タスクを分解">✂️</button>` : ''}
         </div>
       </div>
       ${linksHtml}
@@ -2622,6 +2665,144 @@ async function cycleDashStatus(taskId) {
   const p = state.data?.projects.find(p => p.id === state.projectId);
   if (p) { const tc = document.getElementById('tabContent'); if (tc) tc.innerHTML = renderTabContent(p); }
   toast(`→ ${taskStatusLabel(next)}`, 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  AI Modal
+// ══════════════════════════════════════════════
+function closeAiModal() {
+  document.getElementById('aiModalOverlay').style.display = 'none';
+}
+
+async function openDecomposeModal(taskId) {
+  const task = findTask(taskId);
+  if (!task) return;
+  const proj = data.projects.find(p =>
+    (p.big_task?.id === taskId) ||
+    (p.medium_tasks||[]).some(t => t.id === taskId) ||
+    (p.small_tasks||[]).some(t => t.id === taskId)
+  );
+
+  const overlay = document.getElementById('aiModalOverlay');
+  const title   = document.getElementById('aiModalTitle');
+  const body    = document.getElementById('aiModalBody');
+  const foot    = document.getElementById('aiModalFoot');
+
+  title.textContent = `✂️ タスク分解：${task.title}`;
+  body.innerHTML = `<div class="ai-loading"><div class="ai-spin"></div>分解中…</div>`;
+  foot.innerHTML = '';
+  overlay.style.display = 'flex';
+
+  try {
+    const res = await fetch('/api/ai/decompose', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: task.title,
+        description: task.description || '',
+        project_goal: proj?.goal || '',
+        project_memo: proj?.memo || '',
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const json = await res.json();
+    const steps = json.steps || [];
+    if (!steps.length) { body.innerHTML = '<p>ステップを生成できませんでした。</p>'; return; }
+    body.innerHTML = steps.map((s, i) => `
+      <div class="ai-step-card">
+        <div class="ai-step-num">Step ${i + 1}</div>
+        <div>
+          <div class="ai-step-title">${esc(s.title)}</div>
+          ${s.description ? `<div class="ai-step-desc">${esc(s.description)}</div>` : ''}
+          ${s.estimated_minutes ? `<div class="ai-step-time">⏱ 約 ${s.estimated_minutes} 分</div>` : ''}
+        </div>
+      </div>`).join('');
+    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+  } catch (e) {
+    body.innerHTML = `<p style="color:var(--red);">エラー：${esc(e.message)}</p>`;
+    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+  }
+}
+
+async function openRecommendModal(projectId) {
+  const proj = data.projects.find(p => p.id === projectId);
+  if (!proj) return;
+
+  const all = [];
+  if (proj.big_task) all.push(proj.big_task);
+  (proj.medium_tasks||[]).forEach(t => all.push(t));
+  (proj.small_tasks||[]).forEach(t => all.push(t));
+  const completed = all.filter(t => t.status === 'done').map(t => t.title);
+  const pending   = all.filter(t => t.status !== 'done').map(t => t.title);
+
+  const overlay = document.getElementById('aiModalOverlay');
+  const title   = document.getElementById('aiModalTitle');
+  const body    = document.getElementById('aiModalBody');
+  const foot    = document.getElementById('aiModalFoot');
+
+  title.textContent = `💡 推奨タスク：${proj.name}`;
+  body.innerHTML = `<div class="ai-loading"><div class="ai-spin"></div>推奨タスクを生成中…</div>`;
+  foot.innerHTML = '';
+  overlay.style.display = 'flex';
+
+  try {
+    const res = await fetch('/api/ai/recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        project_name: proj.name,
+        goal: proj.goal || '',
+        memo: proj.memo || '',
+        completed_tasks: completed,
+        pending_tasks: pending,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+    const json = await res.json();
+    const recs = json.recommendations || [];
+    if (!recs.length) { body.innerHTML = '<p>推奨タスクを生成できませんでした。</p>'; return; }
+    body.innerHTML = recs.map((r, i) => `
+      <div class="ai-rec-card">
+        <div class="ai-rec-priority ${r.priority}">${r.priority === 'high' ? '🔴 高' : r.priority === 'medium' ? '🟡 中' : '🟢 低'}</div>
+        <div style="flex:1">
+          <div class="ai-step-title">${esc(r.title)}</div>
+          ${r.reason ? `<div class="ai-step-desc">${esc(r.reason)}</div>` : ''}
+          <div style="font-size:10px;color:var(--text2);margin-top:4px;">種別：${r.type === 'big' ? '大タスク' : r.type === 'medium' ? '中タスク' : '小タスク'}</div>
+        </div>
+        <button class="btn btn-primary" style="font-size:11px;padding:4px 10px;white-space:nowrap;"
+          onclick="addRecommendedTask('${projectId}','${esc(r.title).replace(/'/g,"\\'")}','${r.type||'small'}','${esc(r.reason||'').replace(/'/g,"\\'")}')">＋追加</button>
+      </div>`).join('');
+    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+  } catch (e) {
+    body.innerHTML = `<p style="color:var(--red);">エラー：${esc(e.message)}</p>`;
+    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+  }
+}
+
+async function addRecommendedTask(projectId, title, type, reason) {
+  const sizeMap = { big: 'big_task', medium: 'medium_tasks', small: 'small_tasks' };
+  const endpoint = type === 'big' ? `/api/projects/${projectId}/big-task`
+                 : type === 'medium' ? `/api/projects/${projectId}/medium-tasks`
+                 : `/api/projects/${projectId}/small-tasks`;
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, description: reason }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    await loadData();
+    toast('タスクを追加しました', 'ok');
+    closeAiModal();
+  } catch (e) {
+    toast(`追加失敗：${e.message}`, 'error');
+  }
 }
 
 // ══════════════════════════════════════════════
