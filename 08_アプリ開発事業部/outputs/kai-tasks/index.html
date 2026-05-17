@@ -689,9 +689,9 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
 let mmdSeq = 0;
 
 // ── MindMeister-style mindmap coloring ──
-// Strategy: append CSS *inside* the SVG's own <style> element, after Mermaid's rules.
-// Same stylesheet position → same specificity → LAST rule wins.
-// Using #svgId scoping to match Mermaid's own selector scope.
+// Strategy: append a <style> to document.body AFTER the SVG is inserted.
+// By document order, our stylesheet comes after the SVG's internal <style>,
+// so for equal specificity + !important, ours wins (last rule wins).
 const _MM_P = ['#3b82f6','#10b981','#f97316','#8b5cf6','#ef4444','#06b6d4','#ec4899','#f59e0b'];
 
 function applyMindmapColors(svgEl) {
@@ -699,32 +699,37 @@ function applyMindmapColors(svgEl) {
   const id = svgEl.id;
   if (!id) return;
 
-  // Find (or create) the SVG's internal <style> element
-  let styleEl = svgEl.querySelector('defs style') || svgEl.querySelector('style');
-  if (!styleEl) {
-    styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-    svgEl.insertBefore(styleEl, svgEl.firstChild);
-  }
+  // Remove any previous override for this SVG
+  const prev = document.getElementById('mm-ov-' + id);
+  if (prev) prev.remove();
 
   let css = '';
   _MM_P.forEach((col, i) => {
-    // Cover both SVG structures: .section-N.mindmap-node (same el) and .section-N > .mindmap-node
+    const s = `svg#${id} g.section-${i}`;
     css += `
-      #${id} .section-${i} rect, #${id} .mindmap-node.section-${i} rect { fill: ${col} !important; stroke: ${col} !important; }
-      #${id} .section-${i} circle, #${id} .mindmap-node.section-${i} circle { fill: ${col} !important; stroke: ${col} !important; }
-      #${id} .section-${i} ellipse, #${id} .mindmap-node.section-${i} ellipse { fill: ${col} !important; stroke: ${col} !important; }
-      #${id} .section-${i} polygon, #${id} .mindmap-node.section-${i} polygon { fill: ${col} !important; stroke: ${col} !important; }
-      #${id} .section-${i} path { stroke: ${col} !important; stroke-width: 2px !important; }
-      #${id} .section-${i} text, #${id} .section-${i} tspan { fill: #ffffff !important; font-weight: 600 !important; }
+      ${s} rect { fill: ${col} !important; stroke: ${col} !important; }
+      ${s} circle { fill: ${col} !important; stroke: ${col} !important; }
+      ${s} ellipse { fill: ${col} !important; stroke: ${col} !important; }
+      ${s} polygon { fill: ${col} !important; stroke: ${col} !important; }
+      ${s} g.mindmap-node path { fill: ${col} !important; stroke: ${col} !important; }
+      ${s} path { stroke: ${col} !important; stroke-width: 2.5px !important; }
+      ${s} text { fill: #fff !important; font-weight: 700 !important; }
+      ${s} tspan { fill: #fff !important; }
     `;
   });
-  // Root node (last so it wins over any section color)
+  // Root node — higher specificity wins over any section color
+  const r = `svg#${id} g.mindmap-node--root`;
   css += `
-    #${id} .mindmap-node--root circle, #${id} .mindmap-node--root ellipse { fill: #1e293b !important; stroke: #1e293b !important; }
-    #${id} .mindmap-node--root rect, #${id} .mindmap-node--root polygon { fill: #1e293b !important; stroke: #1e293b !important; }
-    #${id} .mindmap-node--root text, #${id} .mindmap-node--root tspan { fill: #f8fafc !important; font-weight: 700 !important; }
+    ${r} rect, ${r} circle, ${r} ellipse, ${r} polygon { fill: #1e293b !important; stroke: #334155 !important; }
+    ${r} g.mindmap-node path { fill: #1e293b !important; stroke: #334155 !important; }
+    ${r} text, ${r} tspan { fill: #f8fafc !important; font-weight: 700 !important; }
   `;
-  styleEl.textContent += css;
+
+  const st = document.createElement('style');
+  st.id = 'mm-ov-' + id;
+  st.textContent = css;
+  // Appended to body after SVG — wins document-order cascade vs SVG-internal <style>
+  document.body.appendChild(st);
 }
 
 const API = 'http://localhost:3456/api';
