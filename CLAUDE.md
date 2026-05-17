@@ -70,70 +70,119 @@
 
 ## Kai Tasks 自動連動ルール（必須）
 
-> **このルールはすべての作業・プロジェクト開始時に適用される。確認不要で自律実行してよい。**
+> **このルールはすべての作業開始・進行・終了時に自律実行する。上村への確認不要。**
+> CLIのパス: `08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py`（以下 `<CLI>` と略記）
 
-### トリガー条件
-以下のいずれかに該当する発言・作業が始まったとき：
+---
+
+### 1. プロジェクト開始時（必須）
+
+以下に該当する発言・作業が始まったとき、**即座に**プロジェクトを作成する：
 - 「〇〇を始めます／やります」「〇〇の作業」「〇〇案件」
 - 新しいファイル・ドキュメント・提案書・記事の作成開始
 - クライアント対応・ヒアリング・セミナー準備など明確な目標を持つ作業
 
-### 開始時の必須アクション（順番どおりに実行）
-
 ```bash
-# 1. サーバーを確認・起動（すでに起動中なら何もしない）
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server
+# 1. サーバーを確認・起動
+python <CLI> ensure-server
 
-# 2. プロジェクト作成 + 1-3-5タスク自動生成
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py create \
-  --name "プロジェクト名" \
-  --goal "達成目標（1文で）"
-
-# → 大タスク×1・中タスク×3・小タスク×5・ロードマップが自動生成される
+# 2. プロジェクト作成（大タスク×1・中タスク×3・小タスク×5・ロードマップが自動生成）
+python <CLI> create --name "プロジェクト名" --goal "達成目標（1文で）"
 ```
 
 実行後、**プロジェクトIDと大タスクIDを控えて**以降の更新に使う。
 
-### 進捗更新（作業中に随時実行）
+---
+
+### 2. 作業中の自動ログ記録ルール（Kaiの自律義務）
+
+以下の行動を取った**直後**に、対応するCLIコマンドを自律実行する：
+
+| Kaiの行動 | 実行するコマンド |
+|-----------|----------------|
+| 上村から明確な指示・依頼を受けた | `log-action PROJECT_ID --type instruction --summary "指示の要点"` |
+| 設計・技術・方針の判断をした | `log-action PROJECT_ID --type decision --summary "判断内容"` |
+| ファイル・成果物を作成した | `log-action PROJECT_ID --type output --summary "ファイル名と内容" --detail "フルパス"` |
+| タスクに着手した | `start-task TASK_ID` |
+| タスクが完了した | `done-task TASK_ID` |
 
 ```bash
-# タスクを開始するとき
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py start-task <TASK_ID>
-
-# タスクが完了したとき
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py done-task <TASK_ID>
-
-# タイトル・説明・期日を変更するとき
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py update-task <TASK_ID> \
-  --title "新タイトル" --desc "新説明"
-
-# ロードマップを更新するとき（mermaidコードを直接渡す）
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py set-roadmap <TASK_ID> \
-  --code "graph LR\n  A-->B-->C"
-
-# 現在の進捗を確認する
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py status
-
-# プロジェクト完了時
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py project-done <PROJECT_ID>
+# 活動ログ記録（毎回必ず実行）
+python <CLI> log-action PROJECT_ID \
+  --type instruction|decision|output|note \
+  --summary "1行の要点" \
+  --detail "詳細（省略可）"
 ```
 
-### その他のよく使うコマンド
+---
+
+### 3. 思考転換（ピボット）の自動記録ルール
+
+以下に該当する場合、**即座に**ピボットを記録する：
+
+- 技術選定が変わった（例: 別のAPIに切り替えた）
+- 上村の要件・方針が変わった
+- 実現不可能と判断して別アプローチに転換した
+- スコープが大きく変わった
 
 ```bash
-# プロジェクト一覧（IDを調べるとき）
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py list
-
-# プロジェクト名で検索
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py find "コーデ"
-
-# ブラウザで開く
-python 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py open
+python <CLI> pivot PROJECT_ID \
+  --type strategic|technical|scope|conceptual \
+  --from "転換前の方針" \
+  --to "転換後の方針" \
+  --reason "理由" \
+  --impact high|medium|low
 ```
 
-### CLIから呼ぶ場合の作業ディレクトリ
+---
 
-このプロジェクト（`AS_AI導入支援事業_cc`）のルートから実行するか、`cd` でルートに移動してから実行する。
+### 4. セッション終了時の必須アクション
+
+まとまった作業が終わったとき（次のトピックに移る前・会話が途切れる前）に実行する：
+
+```bash
+# セッション要約ログを記録（+ スナップショットも作成する場合は --snapshot を追加）
+python <CLI> session-end PROJECT_ID \
+  --summary "このセッションで達成したこと（1〜2文）" \
+  --detail "作成ファイル・決定事項・残課題" \
+  --snapshot
+```
+
+`--snapshot` フラグ：重要なマイルストーン（機能実装完了・方針確定など）の後は必ず付ける。
+
+---
+
+### 5. 進捗更新コマンド（随時使用）
+
+```bash
+python <CLI> start-task TASK_ID              # タスク着手
+python <CLI> done-task TASK_ID               # タスク完了
+python <CLI> update-task TASK_ID --title "新タイトル" --desc "新説明"
+python <CLI> set-roadmap TASK_ID --code "graph LR\n  A-->B-->C"
+python <CLI> set-mindmap TASK_ID --code "mindmap\n  root((題目))\n    ..."
+python <CLI> snapshot PROJECT_ID --label "ラベル"  # 任意タイミングのスナップショット
+python <CLI> project-done PROJECT_ID         # プロジェクト完了
+python <CLI> status                          # 全プロジェクト進捗確認
+```
+
+---
+
+### 6. 検索・参照コマンド
+
+```bash
+python <CLI> list                    # プロジェクト一覧（ID付き）
+python <CLI> find "キーワード"        # プロジェクト名で検索
+python <CLI> show PROJECT_ID         # プロジェクト詳細
+python <CLI> today                   # 今日のフォーカス（進行中・期限切れ）
+python <CLI> log --limit 20          # 直近の変更履歴
+python <CLI> open                    # ブラウザで開く
+```
+
+---
+
+### CLIの実行ディレクトリ
+
+`AS_AI導入支援事業_cc` のルートから実行する（`cd` 不要）。
 
 ---
 

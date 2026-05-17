@@ -473,6 +473,32 @@ def cmd_log_action(a):
         print(f"  {GRAY}{body['detail']}{RESET}")
     print()
 
+def cmd_session_end(a):
+    """セッション終了時に要約ログを記録し、必要に応じてスナップショットを作成する"""
+    body = {
+        "type": "output",
+        "summary": a.summary,
+        "detail": getattr(a, "detail", "") or "",
+    }
+    result = _req("POST", f"/projects/{a.project_id}/logs", body)
+    print(f"\n{BOLD}[Kai Tasks] セッション終了ログ [{result.get('id','?')}]{RESET}")
+    print(f"  📦 {a.summary}")
+    if body["detail"]:
+        print(f"  {GRAY}{body['detail']}{RESET}")
+    if getattr(a, "snapshot", False):
+        snap = _req("POST", f"/projects/{a.project_id}/snapshot",
+                    {"label": f"セッション終了 — {datetime.now().strftime('%Y-%m-%d %H:%M')}"})
+        print(f"  {GREEN}📸 スナップショット保存: [{snap.get('id','?')}]{RESET}")
+    print()
+
+def cmd_snapshot(a):
+    """プロジェクトの現在状態をスナップショットとして永続保存する"""
+    label = getattr(a, "label", None) or f"スナップショット {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    snap = _req("POST", f"/projects/{a.project_id}/snapshot", {"label": label})
+    print(f"\n{BOLD}[Kai Tasks] スナップショット作成 [{snap.get('id','?')}]{RESET}")
+    print(f"  {GREEN}📸{RESET} {snap.get('label','')}")
+    print(f"  {GRAY}{snap.get('timestamp','')}{RESET}\n")
+
 def cmd_log(a):
     """最近の変更履歴を全プロジェクトから表示"""
     data  = _req("GET", "/tasks")
@@ -596,6 +622,16 @@ def main():
     c.add_argument("--summary", required=True)
     c.add_argument("--detail", default="")
 
+    c = sub.add_parser("session-end")
+    c.add_argument("project_id")
+    c.add_argument("--summary", required=True)
+    c.add_argument("--detail", default="")
+    c.add_argument("--snapshot", action="store_true", help="スナップショットも作成する")
+
+    c = sub.add_parser("snapshot")
+    c.add_argument("project_id")
+    c.add_argument("--label", default="")
+
     args = p.parse_args()
 
     # ensure-server は常に最初に実行
@@ -632,6 +668,8 @@ def main():
         "attach-file":     cmd_attach_file,
         "check-files":     cmd_check_files,
         "log-action":      cmd_log_action,
+        "session-end":     cmd_session_end,
+        "snapshot":        cmd_snapshot,
     }
     fn = dispatch.get(args.command)
     if fn:

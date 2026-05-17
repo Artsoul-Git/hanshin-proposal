@@ -344,6 +344,29 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             save_data(data)
             self.send_json(201, log)
 
+        elif path.startswith("/api/projects/") and path.endswith("/snapshot"):
+            project_id = path.split("/")[3]
+            data = load_data()
+            project = next((p for p in data["projects"] if p["id"] == project_id), None)
+            if not project:
+                return self.send_json(404, {"error": "Project not found"})
+            if "snapshots" not in project:
+                project["snapshots"] = []
+            state_copy = json.loads(json.dumps(project))
+            state_copy.pop("snapshots", None)
+            snap = {
+                "id": str(uuid.uuid4())[:8],
+                "timestamp": now_iso(),
+                "label": body.get("label", "スナップショット"),
+                "state": state_copy,
+            }
+            project["snapshots"].append(snap)
+            if len(project["snapshots"]) > 10:
+                project["snapshots"] = project["snapshots"][-10:]
+            project["updated_at"] = now_iso()
+            save_data(data)
+            self.send_json(201, {"id": snap["id"], "timestamp": snap["timestamp"], "label": snap["label"]})
+
         elif path.startswith("/api/projects/") and path.endswith("/restore"):
             project_id = path.split("/")[3]
             data = load_data()
@@ -352,7 +375,10 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 return self.send_json(400, {"error": "snapshot required"})
             idx = next((i for i, p in enumerate(data["projects"]) if p["id"] == project_id), None)
             if idx is not None:
+                # preserve snapshots list from current project
+                current_snaps = data["projects"][idx].get("snapshots", [])
                 data["projects"][idx] = snapshot
+                data["projects"][idx]["snapshots"] = current_snaps
             else:
                 data["projects"].append(snapshot)
             save_data(data)
@@ -455,7 +481,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 return self.send_json(404, {"error": "Project not found"})
 
             old_status = project["status"]
-            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags", "session_logs"]:
+            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags", "session_logs", "pivots"]:
                 if key in body:
                     project[key] = body[key]
             project["updated_at"] = now_iso()

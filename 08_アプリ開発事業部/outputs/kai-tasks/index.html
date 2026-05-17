@@ -1130,6 +1130,7 @@ function renderProject(p) {
       <button class="tab ${state.tab==='logs'?'active':''}" onclick="switchTab('logs','${p.id}')">📋 活動ログ${(p.session_logs||[]).length>0?` <span style="font-size:10px;background:var(--med);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.session_logs||[]).length}</span>`:''}</button>
       <button class="tab ${state.tab==='history'?'active':''}" onclick="switchTab('history','${p.id}')">履歴</button>
       <button class="tab ${state.tab==='memo'?'active':''}" onclick="switchTab('memo','${p.id}')">メモ</button>
+      <button class="tab ${state.tab==='timemachine'?'active':''}" onclick="switchTab('timemachine','${p.id}')">⏰ タイムマシン${(p.snapshots||[]).length>0?` <span style="font-size:10px;background:var(--text2);color:#fff;border-radius:99px;padding:1px 6px;margin-left:3px;">${(p.snapshots||[]).length}</span>`:''}</button>
     </div>
     <div id="tabContent">${renderTabContent(p)}</div>`;
   if (state.tab === 'pivots') {
@@ -1144,11 +1145,12 @@ function switchTab(tab, pid) {
 }
 
 function renderTabContent(p) {
-  if (state.tab === 'kanban')  return renderKanban(p);
-  if (state.tab === 'history') return renderHistory(p);
-  if (state.tab === 'memo')    return renderMemo(p);
-  if (state.tab === 'pivots')  return renderPivots(p);
-  if (state.tab === 'logs')    return renderActivityLog(p);
+  if (state.tab === 'kanban')      return renderKanban(p);
+  if (state.tab === 'history')     return renderHistory(p);
+  if (state.tab === 'memo')        return renderMemo(p);
+  if (state.tab === 'pivots')      return renderPivots(p);
+  if (state.tab === 'logs')        return renderActivityLog(p);
+  if (state.tab === 'timemachine') return renderTimeMachine(p);
   return renderTasks(p);
 }
 
@@ -1906,6 +1908,7 @@ function renderPivots(p) {
             </div>
             <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
               <span class="pivot-impact ${pv.impact}">${impactLabel[pv.impact] || pv.impact}</span>
+              <button class="icon-btn btn-sm" style="width:22px;height:22px;font-size:11px;" onclick="openEditPivotModal('${p.id}','${pv.id}')" title="編集">✏️</button>
               <button class="icon-btn del btn-sm" style="width:22px;height:22px;font-size:11px;" onclick="deletePivot('${p.id}','${pv.id}')" title="削除">🗑</button>
             </div>
           </div>
@@ -2365,7 +2368,10 @@ function renderActivityLog(p) {
         ${l.detail ? `<div class="act-log-detail">${esc(l.detail)}</div>` : ''}
         <div class="act-log-meta">${l.timestamp.replace('T',' ')} · ${timeAgo(l.timestamp)}</div>
       </div>
-      <button class="file-del-btn" onclick="deleteActivityLog('${p.id}','${l.id}')" title="削除">✕</button>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+        <button class="icon-btn btn-sm" style="width:22px;height:22px;font-size:11px;" onclick="openEditLogModal('${p.id}','${l.id}')" title="編集">✏️</button>
+        <button class="file-del-btn" onclick="deleteActivityLog('${p.id}','${l.id}')" title="削除">✕</button>
+      </div>
     </div>`).join('') :
     `<div style="color:var(--text2);font-size:13px;padding:20px 0;text-align:center;">
       活動ログがありません<br>
@@ -2432,6 +2438,166 @@ async function deleteActivityLog(pid, logId) {
     document.getElementById('tabContent').innerHTML = renderActivityLog(pp);
   }
   toast('削除しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Edit Activity Log
+// ══════════════════════════════════════════════
+function openEditLogModal(pid, logId) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  const log = (p?.session_logs || []).find(l => l.id === logId);
+  if (!log) { toast('ログが見つかりません', 'err'); return; }
+  const html = `
+    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">✏️ 活動ログを編集</div>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">種別</label>
+    <select id="editLogType" class="form-input" style="margin-bottom:10px;">
+      <option value="instruction" ${log.type==='instruction'?'selected':''}>📝 指示</option>
+      <option value="decision" ${log.type==='decision'?'selected':''}>✅ 決定</option>
+      <option value="output" ${log.type==='output'?'selected':''}>📦 成果物</option>
+      <option value="note" ${log.type==='note'?'selected':''}>💬 メモ</option>
+    </select>
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">概要 <span style="color:var(--red)">*</span></label>
+    <input id="editLogSummary" class="form-input" value="${esc(log.summary)}" style="margin-bottom:10px;">
+    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">詳細</label>
+    <textarea id="editLogDetail" class="form-input" rows="3" style="resize:vertical;margin-bottom:14px;">${esc(log.detail||'')}</textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary btn-sm" onclick="saveEditedLog('${pid}','${logId}')">保存</button>
+    </div>`;
+  openModal(html);
+}
+
+async function saveEditedLog(pid, logId) {
+  const summary = document.getElementById('editLogSummary')?.value.trim();
+  if (!summary) { toast('概要を入力してください', 'err'); return; }
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+  const updated = (p.session_logs || []).map(l => l.id === logId ? {
+    ...l,
+    type: document.getElementById('editLogType').value,
+    summary,
+    detail: document.getElementById('editLogDetail')?.value.trim() || '',
+  } : l);
+  captureSnapshot(pid, '活動ログ編集');
+  closeModal();
+  await api('PUT', `/projects/${pid}`, { session_logs: updated });
+  await loadData(true);
+  const pp = state.data?.projects.find(x => x.id === pid);
+  if (pp && state.tab === 'logs') document.getElementById('tabContent').innerHTML = renderActivityLog(pp);
+  toast('ログを更新しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Edit Pivot
+// ══════════════════════════════════════════════
+function openEditPivotModal(pid, pivotId) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  const pv = (p?.pivots || []).find(v => v.id === pivotId);
+  if (!pv) { toast('ピボットが見つかりません', 'err'); return; }
+  const typeLabel = { strategic:'方針転換', technical:'技術転換', scope:'スコープ変更', conceptual:'概念転換' };
+  const html = `
+    <h2>✏️ 思考転換を編集</h2>
+    <div class="form-group">
+      <label>転換タイプ</label>
+      <select id="editPvType">
+        <option value="strategic" ${pv.type==='strategic'?'selected':''}>方針転換</option>
+        <option value="technical" ${pv.type==='technical'?'selected':''}>技術転換</option>
+        <option value="scope" ${pv.type==='scope'?'selected':''}>スコープ変更</option>
+        <option value="conceptual" ${pv.type==='conceptual'?'selected':''}>概念転換</option>
+      </select>
+    </div>
+    <div class="form-group"><label>転換前の状態</label><input id="editPvFrom" value="${esc(pv.from||'')}"></div>
+    <div class="form-group"><label>転換後の状態 *</label><input id="editPvTo" value="${esc(pv.to||'')}"></div>
+    <div class="form-group"><label>転換の理由</label><textarea id="editPvReason" style="min-height:60px;">${esc(pv.reason||'')}</textarea></div>
+    <div class="form-group">
+      <label>影響度</label>
+      <select id="editPvImpact">
+        <option value="high" ${pv.impact==='high'?'selected':''}>大</option>
+        <option value="medium" ${pv.impact==='medium'?'selected':''}>中</option>
+        <option value="low" ${pv.impact==='low'?'selected':''}>小</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveEditedPivot('${pid}','${pivotId}')">保存</button>
+    </div>`;
+  openModal(html);
+}
+
+async function saveEditedPivot(pid, pivotId) {
+  const to = document.getElementById('editPvTo')?.value.trim();
+  if (!to) { toast('転換後の状態を入力してください', 'err'); return; }
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+  const updated = (p.pivots || []).map(pv => pv.id === pivotId ? {
+    ...pv,
+    type:   document.getElementById('editPvType').value,
+    from:   document.getElementById('editPvFrom')?.value.trim() || '',
+    to,
+    reason: document.getElementById('editPvReason')?.value.trim() || '',
+    impact: document.getElementById('editPvImpact').value,
+  } : pv);
+  captureSnapshot(pid, 'ピボット編集');
+  closeModal();
+  await api('PUT', `/projects/${pid}`, { pivots: updated });
+  await loadData(true);
+  const pp = state.data?.projects.find(x => x.id === pid);
+  if (pp) { renderProject(pp); setTimeout(() => { renderPivotDiagram(pp); renderPivotCompare(pp); }, 100); }
+  toast('思考転換を更新しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Time Machine
+// ══════════════════════════════════════════════
+function renderTimeMachine(p) {
+  const snaps = (p.snapshots || []).slice().reverse();
+  const snapListHtml = snaps.length ? snaps.map(s => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:22px;flex-shrink:0;">📸</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:600;color:var(--text);">${esc(s.label)}</div>
+        <div style="font-size:11px;color:var(--text2);margin-top:3px;">${s.timestamp.replace('T',' ')}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="restoreSnapshot('${p.id}','${s.id}')" style="flex-shrink:0;">⏪ ここに戻る</button>
+    </div>`).join('') :
+    `<div style="text-align:center;padding:32px 16px;border:2px dashed var(--border);border-radius:12px;color:var(--text2);">
+      <div style="font-size:32px;margin-bottom:10px;">📸</div>
+      <div style="font-size:13px;margin-bottom:8px;">スナップショットがありません</div>
+      <div style="font-size:11px;">「スナップショットを作成」ボタンで現在の状態を保存できます</div>
+    </div>`;
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <h2 style="font-size:16px;font-weight:700;">⏰ タイムマシン</h2>
+        <div style="font-size:11px;color:var(--text2);margin-top:2px;">過去の状態に戻せるスナップショット。開発中の分岐点・重要決断の前後に作成推奨</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="createSnapshot('${p.id}')">📸 スナップショットを作成</button>
+    </div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px;">最大10件保存 · 最新順に表示 · 復元するとタスク・ログ・ピボットがその時点の状態に戻ります</div>
+    ${snapListHtml}`;
+}
+
+async function createSnapshot(pid) {
+  const label = prompt('スナップショットのラベル（例: Groq連携実装前）', `スナップショット ${new Date().toLocaleString('ja-JP')}`);
+  if (label === null) return;
+  await api('POST', `/projects/${pid}/snapshot`, { label: label || 'スナップショット' });
+  await loadData(true);
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (p && state.tab === 'timemachine') document.getElementById('tabContent').innerHTML = renderTimeMachine(p);
+  toast('スナップショットを作成しました', 'ok');
+}
+
+async function restoreSnapshot(pid, snapId) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  const snap = (p?.snapshots || []).find(s => s.id === snapId);
+  if (!snap) { toast('スナップショットが見つかりません', 'err'); return; }
+  if (!confirm(`「${snap.label}」(${snap.timestamp.replace('T',' ')}) の状態に戻しますか？\n現在の状態は失われます（先にスナップショットを作成することを推奨します）`)) return;
+  await api('POST', `/projects/${pid}/restore`, { snapshot: snap.state });
+  await loadData(true);
+  const updated = state.data?.projects.find(x => x.id === pid);
+  if (updated) renderProject(updated);
+  toast('スナップショットを復元しました', 'ok');
 }
 
 // ══════════════════════════════════════════════
