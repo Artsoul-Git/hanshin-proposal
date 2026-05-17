@@ -1409,7 +1409,7 @@ function openDiagramModal(taskId, activeTab = 'roadmap') {
         <div class="ai-sep"></div>
         <div class="ai-panel-section">📥 コードを直接貼り付け</div>
         <textarea class="ai-textarea" id="aiResponse"
-          placeholder="MermaidコードまたはClaudeの返答を貼り付け&#10;（```mermaid...```を自動抽出）"
+          placeholder="MermaidコードまたはClaudeの返答を貼り付け&#10;（\`\`\`mermaid...\`\`\`を自動抽出）"
           onfocus="openAiFocus('aiResponse','📥 コードを貼り付け')"></textarea>
         <button class="btn-ai" onclick="applyAiCode('diagEditor','diagPreview')">📥 コードに適用</button>
       </div>
