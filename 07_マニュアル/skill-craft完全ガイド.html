@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/skill-craft 完全ガイド — 有限会社アートソウル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+  /* ===== Sidebar ===== */
+  .sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+  .sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+  .sb-section { padding: 10px 14px 4px; }
+  .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+  .sb-link { display: block; padding: 5px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+  .sb-link:hover, .sb-link.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+  /* ===== Main ===== */
+  .main-content { margin-left: 230px; flex: 1; padding: 40px 20px; min-width: 0; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* ===== Cover ===== */
+  .cover { text-align: center; padding: 80px 0 60px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; background: linear-gradient(135deg, #EDF2F7 0%, #E2E8F0 100%); border-radius: 8px; margin: -20px -20px 50px; padding: 70px 40px 60px; }
+  .cover .skill-badge { display: inline-block; background: #ED8936; color: white; font-size: 13px; font-weight: bold; padding: 4px 16px; border-radius: 20px; margin-bottom: 18px; letter-spacing: 0.05em; }
+  .cover h1 { font-size: 36px; color: #1A365D; margin-bottom: 14px; line-height: 1.3; }
+  .cover .tagline { font-size: 17px; color: #4A5568; margin-bottom: 32px; }
+  .cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 540px; margin: 0 auto; }
+  .cover .meta-item { background: white; border-radius: 8px; padding: 14px 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .cover .meta-num { font-size: 26px; font-weight: bold; color: #ED8936; line-height: 1; }
+  .cover .meta-label { font-size: 11px; color: #718096; margin-top: 4px; }
+
+  /* ===== Typography ===== */
+  h2 { font-size: 24px; color: #1A365D; padding: 48px 0 14px; margin-top: 36px; border-bottom: 3px solid #ED8936; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 18px; color: #2D3748; margin: 28px 0 10px; padding-left: 14px; border-left: 5px solid #ED8936; line-height: 1.5; }
+  h4 { font-size: 15px; color: #1A365D; margin: 18px 0 6px; font-weight: bold; }
+  p { margin: 10px 0; }
+
+  /* ===== Components ===== */
+  .lead { font-size: 16px; color: #1A365D; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 5px; font-size: 13px; }
+  .warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 5px; font-size: 13px; }
+  .ok { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 5px; font-size: 13px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 24px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 26px; margin: 10px 0; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+
+  /* ===== TOC ===== */
+  .toc { background: #F7FAFC; padding: 26px 32px; border-radius: 8px; margin: 26px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #ED8936; }
+  .toc .sub { padding-left: 20px; font-size: 13px; color: #4A5568; }
+
+  /* ===== Step card ===== */
+  .step-card { background: #EDF2F7; padding: 22px 26px; border-radius: 8px; margin: 20px 0; border-top: 4px solid #1A365D; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; background: #ED8936; color: white; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 14px; margin-right: 10px; flex-shrink: 0; }
+  .step-title { font-size: 16px; font-weight: bold; color: #1A365D; display: flex; align-items: center; margin-bottom: 12px; }
+
+  /* ===== Prompt box ===== */
+  .prompt-box { background: #1A202C; color: #E2E8F0; padding: 38px 22px 20px; border-radius: 8px; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.8; position: relative; white-space: pre-wrap; }
+  .prompt-box .comment { color: #A0AEC0; }
+  .prompt-box .highlight { color: #F6AD55; }
+  .copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 10px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+  .copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+
+  /* ===== Failure table ===== */
+  .fail-table td:nth-child(1) { color: #C53030; font-weight: bold; width: 35%; }
+  .fail-table td:nth-child(2) { width: 65%; }
+
+  /* ===== Check list ===== */
+  .check-list { background: #F0FFF4; padding: 20px 26px; border-radius: 8px; margin: 20px 0; }
+  .check-list li { list-style: none; padding-left: 26px; position: relative; }
+  .check-list li::before { content: "□"; position: absolute; left: 0; color: #2F855A; font-size: 17px; line-height: 1.4; }
+
+  /* ===== Flow diagram ===== */
+  .flow-box { background: #1A202C; color: #E2E8F0; padding: 28px 32px; border-radius: 8px; margin: 20px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 2; }
+  .flow-box .arrow { color: #ED8936; }
+  .flow-box .node { color: #90CDF4; }
+  .flow-box .note { color: #A0AEC0; font-size: 11px; }
+
+  /* ===== Changelog ===== */
+  .changelog th { background: #2D3748; }
+</style>
+</head>
+<body>
+
+<!-- ===== Sidebar ===== -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    有限会社アートソウル<br>
+    <span>/skill-craft 完全ガイド</span>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">ナビゲーション</div>
+    <a class="sb-link" href="総合マニュアル.html" target="_blank">← 総合マニュアルへ</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">このガイド</div>
+    <a class="sb-link" href="#overview">概要・できること</a>
+    <a class="sb-link" href="#trigger">呼び出し方</a>
+    <a class="sb-link" href="#flow">7ステップの全フロー</a>
+    <a class="sb-link" href="#copyright">著作権セーフ抽出</a>
+    <a class="sb-link" href="#skill-def">スキル定義の書き方</a>
+    <a class="sb-link" href="#html-manual">HTMLマニュアル生成</a>
+    <a class="sb-link" href="#integration">総合マニュアル連携</a>
+    <a class="sb-link" href="#checklist">品質チェックリスト</a>
+    <a class="sb-link" href="#failures">よくある失敗</a>
+    <a class="sb-link" href="#related">関連スキル</a>
+  </div>
+</nav>
+
+<!-- ===== Main ===== -->
+<div class="main-content">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="skill-badge">/skill-craft</div>
+  <h1>素材 → スキル → マニュアル<br>一気通貫 自動化ガイド</h1>
+  <p class="tagline">文字起こし・書籍・ノウハウ素材を受け取り、即戦力スキルに変換する</p>
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-num">7</div>
+      <div class="meta-label">自動化ステップ</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">4</div>
+      <div class="meta-label">生成ファイル</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">0</div>
+      <div class="meta-label">verbatim copy</div>
+    </div>
+  </div>
+</div>
+
+<!-- 変更履歴 -->
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v1.0</td><td>2026-05-17</td><td>初版作成。/course-build スキル化の実績を元に、素材→スキル→マニュアル→連携の一気通貫フローを定義。</td></tr>
+</table>
+
+<hr>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#overview">Section 1: /skill-craft とは（概要・できること）</a></li>
+    <li><a href="#trigger">Section 2: 呼び出し方</a></li>
+    <li><a href="#flow">Section 3: 7ステップの全フロー</a></li>
+    <li class="sub"><a href="#flow-s1">STEP 1 素材の読み込み</a></li>
+    <li class="sub"><a href="#flow-s2">STEP 2 著作権セーフ概念抽出</a></li>
+    <li class="sub"><a href="#flow-s3">STEP 3 スキル設計ヒアリング</a></li>
+    <li class="sub"><a href="#flow-s4">STEP 4 スキル定義ファイル生成</a></li>
+    <li class="sub"><a href="#flow-s5">STEP 5 CLAUDE.md 更新</a></li>
+    <li class="sub"><a href="#flow-s6">STEP 6 HTML マニュアル生成</a></li>
+    <li class="sub"><a href="#flow-s7">STEP 7 総合マニュアル連携</a></li>
+    <li><a href="#copyright">Section 4: 著作権セーフ抽出の詳細ルール</a></li>
+    <li><a href="#skill-def">Section 5: スキル定義ファイルの書き方</a></li>
+    <li><a href="#html-manual">Section 6: HTML マニュアル生成の仕様</a></li>
+    <li><a href="#integration">Section 7: 総合マニュアル連携の手順</a></li>
+    <li><a href="#checklist">Section 8: 品質チェックリスト</a></li>
+    <li><a href="#failures">Section 9: よくある失敗と回避法</a></li>
+    <li><a href="#related">Section 10: 関連スキルとの連携</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Section 1 -->
+<h2 id="overview">Section 1 &nbsp;/skill-craft とは</h2>
+
+<div class="lead">
+  ノウハウ素材を受け取り、<strong>著作権セーフな概念抽出 → スキル定義 → HTML マニュアル → 総合マニュアル連携</strong> まで自動で一気通貫実行するメタスキル。「今やった流れ」を毎回再現できるようにした自動化プロセスです。
+</div>
+
+<h3>このスキルが生まれた背景</h3>
+<p>2026年5月、音声文字起こし素材（<em>オンライン講座カリキュラム制作の重要性と設計方法</em>）から <code>/course-build</code> スキルを作成したプロセスがありました。このプロセスは：</p>
+<ol>
+  <li>素材を読み込む</li>
+  <li>著作権に配慮しながら「概念」だけを抽出する</li>
+  <li>会社固有の要件（顧客プロファイル等）を組み込んでスキル定義を書く</li>
+  <li>HTML マニュアルを既存スタイルで作成する</li>
+  <li>総合マニュアルの4箇所にリンクを追加する</li>
+</ol>
+<p>このフローを毎回手動でやるのは非効率です。<code>/skill-craft</code> はこの一連の流れをスキルとして定義し、次回から呼び出すだけで自動実行できるようにしました。</p>
+
+<h3>できること・できないこと</h3>
+<table>
+  <tr><th>できること</th><th>できないこと（境界）</th></tr>
+  <tr>
+    <td>音声文字起こしからの概念抽出</td>
+    <td>著作権のある文章のそのままコピー</td>
+  </tr>
+  <tr>
+    <td>スキル定義ファイル（.md）の自動生成</td>
+    <td>スキルのロジック・アルゴリズム自体の発明</td>
+  </tr>
+  <tr>
+    <td>CLAUDE.md スキルテーブルへの追記</td>
+    <td>スキルの実動作テスト・検証</td>
+  </tr>
+  <tr>
+    <td>HTML マニュアルの生成（既存スタイル統一）</td>
+    <td>外部への公開（GitHub Pages 等）→ 別途確認</td>
+  </tr>
+  <tr>
+    <td>総合マニュアルへの4箇所連携</td>
+    <td>素材ファイルの削除（確認なしに行わない）</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Section 2 -->
+<h2 id="trigger">Section 2 &nbsp;呼び出し方</h2>
+
+<h3>基本トリガー</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button>/skill-craft
+[ファイルパスを貼り付け or テキストを貼り付け]</div>
+
+<h3>よく使うトリガーパターン</h3>
+
+<table>
+  <tr><th>シーン</th><th>プロンプト例</th></tr>
+  <tr>
+    <td>音声文字起こしから</td>
+    <td><code>/skill-craft knowledge/Book/〇〇.txt</code></td>
+  </tr>
+  <tr>
+    <td>テキストを直接渡す</td>
+    <td><code>/skill-craft</code> → 次のメッセージでテキスト貼り付け</td>
+  </tr>
+  <tr>
+    <td>スキル名まで決まっている</td>
+    <td><code>/skill-craft /talk-script 素材はこれ：[テキスト]</code></td>
+  </tr>
+  <tr>
+    <td>評価・採用判断も含めて</td>
+    <td><code>/skill-craft [ファイル] 採用判断もして</code></td>
+  </tr>
+</table>
+
+<div class="tip">
+  <span class="label">ヒント</span>
+  スキル名が未確定でも問題ありません。STEP 3 のヒアリングで一緒に決定します。
+</div>
+
+<hr>
+
+<!-- Section 3 -->
+<h2 id="flow">Section 3 &nbsp;7ステップの全フロー</h2>
+
+<div class="flow-box">
+<span class="node">[素材ファイル / テキスト]</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 1: 素材読み込み</span>       <span class="note">← Read ツール / offset-limit 分割</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 2: 概念抽出</span>            <span class="note">← verbatim copy 禁止・What/Why/How のみ</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 3: ヒアリング（1回）</span>  <span class="note">← スキル名・用途・顧客要件</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 4: rules/skills/&lt;name&gt;.md 生成</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 5: CLAUDE.md スキルテーブル追記</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 6: 07_マニュアル/&lt;name&gt;完全ガイド.html 生成</span>
+<span class="arrow">  ↓</span>
+<span class="node">STEP 7: 総合マニュアル.html 4箇所更新</span>
+<span class="arrow">  ↓</span>
+<span class="node">[完成] スキルが即戦力として稼働開始</span>
+</div>
+
+<h3 id="flow-s1">STEP 1 — 素材の読み込み</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">1</span>ファイルを Read ツールで読み込む</div>
+  <p>ファイルパスが渡された場合は <code>Read</code> ツールを使って読み込む。大きいファイルは <code>offset</code> と <code>limit</code> で分割読み込みし、コンテキストを圧迫しない。</p>
+  <p>読み込み完了後、以下を確認・表示する：</p>
+  <ul>
+    <li>素材の種別（音声文字起こし / 書籍 / 記事 / インタビュー）</li>
+    <li>テーマの概要（1〜2行）</li>
+    <li>文字数・分量の見積もり</li>
+  </ul>
+</div>
+
+<h3 id="flow-s2">STEP 2 — 著作権セーフ概念抽出</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">2</span>What / Why / How の構造だけを抽出する</div>
+  <p>著作権はアイデアを保護しない。表現を保護する。概念・構造・フローの抽出は合法。</p>
+  <table>
+    <tr><th>抽出する（OK）</th><th>抽出しない（NG）</th></tr>
+    <tr><td>フレームワークの構造・ステップ</td><td>著者の文章そのまま</td></tr>
+    <tr><td>問題と解決策の因果関係</td><td>著者固有の比喩・言い回し</td></tr>
+    <tr><td>判断基準・優先順位の考え方</td><td>固有名詞（社名・人名・商品名）</td></tr>
+    <tr><td>チェックリストの観点</td><td>具体的な数値（引用元不明なもの）</td></tr>
+  </table>
+</div>
+
+<h3 id="flow-s3">STEP 3 — スキル設計ヒアリング</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">3</span>1回のメッセージで必要情報を全部聞く</div>
+  <div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button>スキルを設計します。以下を確認させてください。
+
+■ 基本情報
+1. スキル名（/コマンド名）: 例 /course-build
+2. 用途（1行）: 「〇〇を受け取り、〇〇を生成する」
+3. 主な使用シーン
+4. 想定ユーザー（上村さん / 担当者 / 外部）
+
+■ 設計方針
+5. 既存スキルとの連携（入力元・出力先）
+6. 会社固有の要件（中小企業経営者・現場担当者向けにどう特化するか）
+7. HTML マニュアルのファイル名
+8. 参考にする既存スキル定義（あれば）</div>
+</div>
+
+<h3 id="flow-s4">STEP 4 — スキル定義ファイル生成</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">4</span><code>rules/skills/&lt;name&gt;.md</code> を生成する</div>
+  <p>必須セクション構成：</p>
+  <ol>
+    <li>スキル名・担当部署・用途・保存先</li>
+    <li>設計哲学（3行以内）</li>
+    <li>顧客プロファイル表（3層：経営者 / 現場担当者 / AI推進担当者）</li>
+    <li>フロー（STEP 1〜N）</li>
+    <li>品質チェックリスト</li>
+    <li>関連スキル</li>
+  </ol>
+  <div class="tip"><span class="label">重要</span>顧客プロファイル表は省略不可。すべてのスキルに「うちの顧客の文脈」を必ず組み込む。</div>
+</div>
+
+<h3 id="flow-s5">STEP 5 — CLAUDE.md 更新</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">5</span>スキルテーブルに1行追加する</div>
+  <p>追加ルール：</p>
+  <ul>
+    <li>テーマが近い既存スキルの直後に追加</li>
+    <li>説明は50字以内・体言止め</li>
+    <li>スキル名は <code>`/name`</code> 形式</li>
+  </ul>
+</div>
+
+<h3 id="flow-s6">STEP 6 — HTML マニュアル生成</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">6</span><code>07_マニュアル/&lt;name&gt;完全ガイド.html</code> を生成する</div>
+  <p>デザイン仕様は <a href="#html-manual">Section 6</a> 参照。既存マニュアルと色・フォント・レイアウトを完全に統一する。</p>
+</div>
+
+<h3 id="flow-s7">STEP 7 — 総合マニュアル連携</h3>
+<div class="step-card">
+  <div class="step-title"><span class="step-num">7</span>総合マニュアル.html の4箇所を必ず更新する</div>
+  <p>詳細は <a href="#integration">Section 7</a> 参照。4箇所すべてを更新しないと「完成」とみなさない。</p>
+</div>
+
+<hr>
+
+<!-- Section 4 -->
+<h2 id="copyright">Section 4 &nbsp;著作権セーフ抽出の詳細ルール</h2>
+
+<div class="lead">
+  著作権は「アイデア・概念・事実」を保護しない。保護するのは「具体的な表現」だけ。
+  だから、フレームワークの構造・ステップ・判断基準は自由に抽出できる。
+</div>
+
+<h3>抽出の3ステップ</h3>
+<ol>
+  <li><strong>テーマを一言で要約する</strong>（著者の言葉を使わず、自分の言葉で）</li>
+  <li><strong>構造を図解する</strong>（ステップ数・分岐・チェックポイントを整理）</li>
+  <li><strong>自社の文脈で言い換える</strong>（著者の用語 → 業界標準語 or 社内用語）</li>
+</ol>
+
+<h3>著者用語の言い換え例</h3>
+<table>
+  <tr><th>素材内の著者用語（例）</th><th>スキル定義での言い換え</th></tr>
+  <tr><td>「カリキュラム設計の重要性」</td><td>「受講者が確実にゴールへ到達する設計」</td></tr>
+  <tr><td>「3軸思考法」</td><td>「マインドセット / ノウハウ / ツールの3軸マイルストーン法」</td></tr>
+  <tr><td>「結論ファースト」</td><td>「結論サンドイッチ構造（主張→説明→主張再提示）」</td></tr>
+</table>
+
+<div class="warn">
+  <span class="label">NG 例</span>
+  「著者は〇〇と述べています」「（著者名）の〇〇メソッドでは」のような形で、著者への直接言及をスキル定義に組み込まない。概念として消化してから使う。
+</div>
+
+<hr>
+
+<!-- Section 5 -->
+<h2 id="skill-def">Section 5 &nbsp;スキル定義ファイルの書き方</h2>
+
+<h3>必須セクション構成</h3>
+<pre><code># /&lt;スキル名&gt; スキル
+**[担当部署] — [役割の一言説明]**
+
+**用途:** [1〜2文で何をするスキルか]
+**保存先:** [出力ファイルのパス]
+
+---
+
+## この担当者の設計哲学
+> [スキルの核となる考え方・3行以内]
+
+---
+
+## 会社の顧客プロファイル（必ず念頭に置くこと）
+| 層 | 特徴 | 学習上の障壁 |
+|----|------|------------|
+| 中小企業 経営者 | ... | ... |
+| 現場担当者（事務・営業・総務） | ... | ... |
+| AI推進担当者 | ... | ... |
+
+---
+
+## フロー
+### STEP 1: [ステップ名]
+...
+
+---
+
+## 品質チェックリスト
+### 設計チェック
+- [ ] ...
+
+### 顧客視点チェック
+- [ ] ...
+
+---
+
+## 関連スキル
+- **[関連スキル名]:** `/スキル名`（[用途]）</code></pre>
+
+<h3>スキル名の命名規則</h3>
+<table>
+  <tr><th>パターン</th><th>例</th><th>使いどころ</th></tr>
+  <tr><td>動詞-目的語</td><td>/skill-craft, /course-build</td><td>何かを「作る」スキル</td></tr>
+  <tr><td>名詞-動詞</td><td>/text-refine, /fact-check</td><td>何かを「磨く・検証する」スキル</td></tr>
+  <tr><td>単純名詞</td><td>/rashinban, /marketing</td><td>概念名そのものがスキル名になる場合</td></tr>
+  <tr><td>略語+意味</td><td>/nda, /ma</td><td>業界標準略語が定着している場合</td></tr>
+</table>
+
+<hr>
+
+<!-- Section 6 -->
+<h2 id="html-manual">Section 6 &nbsp;HTML マニュアル生成の仕様</h2>
+
+<h3>デザイン仕様（必須・変更不可）</h3>
+<table>
+  <tr><th>要素</th><th>値</th></tr>
+  <tr><td>サイドバー背景</td><td><code>#1A365D</code>（navy）</td></tr>
+  <tr><td>アクセントカラー</td><td><code>#ED8936</code>（orange）</td></tr>
+  <tr><td>本文背景</td><td><code>#FAFBFC</code></td></tr>
+  <tr><td>カード背景</td><td><code>white</code></td></tr>
+  <tr><td>サイドバー幅</td><td><code>230px</code>（fixed）</td></tr>
+  <tr><td>メインコンテナ</td><td>max-width: 920px, white card, box-shadow</td></tr>
+  <tr><td>フォント</td><td>"Yu Gothic UI", "Hiragino Sans", "Meiryo"</td></tr>
+</table>
+
+<h3>必須コンテンツ要素</h3>
+<ul>
+  <li><strong>サイドバー:</strong> ロゴ・総合マニュアルへの戻りリンク・目次アンカーリンク</li>
+  <li><strong>カバー:</strong> グラデーション背景・スキルバッジ・タイトル・meta-grid（統計3項目）</li>
+  <li><strong>変更履歴テーブル:</strong> v1.0から記録</li>
+  <li><strong>TOC:</strong> 全セクションのアンカーリンク付き目次</li>
+  <li><strong>コピーボタン:</strong> すべての <code>prompt-box</code> に必須</li>
+</ul>
+
+<h3>コンテンツ構成（推奨）</h3>
+<table>
+  <tr><th>Section</th><th>内容</th><th>目安行数</th></tr>
+  <tr><td>Section 1</td><td>スキルの概要・できること・背景</td><td>20〜40行</td></tr>
+  <tr><td>Section 2</td><td>呼び出し方・サンプルプロンプト</td><td>10〜20行</td></tr>
+  <tr><td>Section 3</td><td>フロー詳解（各ステップを step-card で）</td><td>40〜80行</td></tr>
+  <tr><td>Section 4〜N</td><td>スキル固有のノウハウ・ルール</td><td>可変</td></tr>
+  <tr><td>最後から2番目</td><td>品質チェックリスト</td><td>15〜30行</td></tr>
+  <tr><td>最後</td><td>関連スキルとの連携マップ</td><td>10〜20行</td></tr>
+</table>
+
+<hr>
+
+<!-- Section 7 -->
+<h2 id="integration">Section 7 &nbsp;総合マニュアル連携の手順</h2>
+
+<div class="lead">
+  <strong>4箇所すべてを更新しないと「完成」とみなさない。</strong><br>
+  どれか1箇所でも漏れた場合、次のセッションで継続作業として記録する。
+</div>
+
+<h3>編集箇所 1：サイドバー（スキルリファレンスセクション）</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button><span class="comment"><!-- /deck-sprint の後に追加 --></span>
+&lt;a class="sb-link" href="&lt;スキル名&gt;完全ガイド.html" target="_blank"&gt;&lt;スキル表示名&gt;↗&lt;/a&gt;</div>
+
+<h3>編集箇所 2：目次（TOC）</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button>&lt;li class="sub-item"&gt;
+  &lt;a href="&lt;スキル名&gt;完全ガイド.html" target="_blank"&gt;
+    ↗ [スキル表示名]（[1行のキャッチコピー]）
+  &lt;/a&gt;
+&lt;/li&gt;</div>
+
+<h3>編集箇所 3：本文 PART 1 の .lead ブロック</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button><span class="comment"><!-- 既存の lead ブロックを更新 or 新規追加 --></span>
+&lt;div class="lead"&gt;
+  [説明文]&lt;a href="&lt;スキル名&gt;完全ガイド.html" target="_blank"&gt;▶ 完全ガイドはこちら&lt;/a&gt;
+&lt;/div&gt;</div>
+
+<h3>編集箇所 4：変更履歴テーブル</h3>
+<div class="prompt-box"><button class="copy-btn" onclick="copyBtn(this)">コピー</button>&lt;tr&gt;
+  &lt;td&gt;v[N+1]&lt;/td&gt;
+  &lt;td&gt;[YYYY-MM-DD]&lt;/td&gt;
+  &lt;td&gt;/[スキル名] スキル新設・HTMLマニュアル追加・CLAUDE.md 更新。&lt;/td&gt;
+&lt;/tr&gt;</div>
+
+<div class="tip">
+  <span class="label">バージョン番号のルール</span>
+  変更履歴の最新バージョンに +0.1 してください。カバーの「バージョン：」表記も同時に更新する。
+</div>
+
+<hr>
+
+<!-- Section 8 -->
+<h2 id="checklist">Section 8 &nbsp;品質チェックリスト</h2>
+
+<h3>著作権チェック</h3>
+<ul class="check-list">
+  <li>verbatim copy（逐語コピー）が一切ないか</li>
+  <li>著者固有の表現・比喩・用語を言い換えているか</li>
+  <li>固有名詞（社名・人名・商品名）がスキル定義に混入していないか</li>
+</ul>
+
+<h3>スキル定義チェック</h3>
+<ul class="check-list">
+  <li>会社の顧客プロファイル（3層）が組み込まれているか</li>
+  <li>既存スキルとの重複・矛盾がないか</li>
+  <li>品質チェックリストが含まれているか</li>
+  <li>関連スキルのリンクが記載されているか</li>
+  <li>スキル名が命名規則に沿っているか</li>
+</ul>
+
+<h3>HTML マニュアルチェック</h3>
+<ul class="check-list">
+  <li>デザインが既存マニュアルと統一されているか（navy / orange）</li>
+  <li>総合マニュアルへの戻りリンクがサイドバーにあるか</li>
+  <li>コピーボタンがすべての prompt-box にあるか</li>
+  <li>変更履歴テーブルに v1.0 から記録されているか</li>
+  <li>meta-grid の数値が正確か</li>
+</ul>
+
+<h3>連携チェック</h3>
+<ul class="check-list">
+  <li>CLAUDE.md のスキルテーブルに追加したか</li>
+  <li>総合マニュアルのサイドバー・目次・本文・変更履歴の4箇所すべてを更新したか</li>
+  <li>総合マニュアルのカバーバージョン番号を更新したか</li>
+</ul>
+
+<hr>
+
+<!-- Section 9 -->
+<h2 id="failures">Section 9 &nbsp;よくある失敗と回避法</h2>
+
+<table class="fail-table">
+  <tr><th>失敗パターン</th><th>回避法</th></tr>
+  <tr>
+    <td>素材の著者用語をそのままスキル名に使う</td>
+    <td>抽出メモで言い換えを明示してから命名する</td>
+  </tr>
+  <tr>
+    <td>会社固有要件（顧客プロファイル）を省略する</td>
+    <td>スキル定義テンプレートに「顧客プロファイル表」を必須として組み込む</td>
+  </tr>
+  <tr>
+    <td>総合マニュアルの連携を「最後でいい」と後回しにする</td>
+    <td>STEP 7 を完了しないとセッションを終わらない、とルール化する</td>
+  </tr>
+  <tr>
+    <td>HTML マニュアルのデザインを既存と合わせず作ってしまう</td>
+    <td>既存ファイルの CSS を先に確認してから書き始める</td>
+  </tr>
+  <tr>
+    <td>スキル評価（採用判断）をしないまま定義ファイルを作る</td>
+    <td>STEP 3 ヒアリングで「本当に必要か」を一緒に確認してから進む</td>
+  </tr>
+  <tr>
+    <td>CLAUDE.md のバージョン・更新日の更新を忘れる</td>
+    <td>総合マニュアル連携と同時に確認するチェックリストに含める</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Section 10 -->
+<h2 id="related">Section 10 &nbsp;関連スキルとの連携</h2>
+
+<table>
+  <tr><th>スキル</th><th>連携シーン</th></tr>
+  <tr>
+    <td><code>/seminar-slide</code></td>
+    <td>新しく作ったスキルをセミナーコンテンツとして展開したい時</td>
+  </tr>
+  <tr>
+    <td><code>/course-build</code></td>
+    <td>スキルを研修・講座として体系化したい時</td>
+  </tr>
+  <tr>
+    <td><code>/persona-review</code></td>
+    <td>完成したスキル定義を「中小企業の現場担当者視点」で検証したい時</td>
+  </tr>
+  <tr>
+    <td><code>/fact-check</code></td>
+    <td>抽出した概念に著作権リスクや事実誤認がないか独立検証したい時</td>
+  </tr>
+  <tr>
+    <td><code>/profit-plan</code></td>
+    <td>新スキルを有料サービス・コンテンツとして収益化する計画を立てたい時</td>
+  </tr>
+</table>
+
+<div class="ok">
+  <span class="label">推奨フロー：新ノウハウ素材が手に入った時</span>
+  <code>/skill-craft</code> で即座にスキル化 → 必要に応じて <code>/seminar-slide</code> でセミナー化 → <code>/course-build</code> で講座展開 → <code>/profit-plan</code> で収益設計
+</div>
+
+</div><!-- /container -->
+</div><!-- /main-content -->
+
+<script>
+function copyBtn(btn) {
+  const box = btn.closest('.prompt-box');
+  const text = box.innerText.replace('コピー\n','').replace('コピー済み\n','');
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'コピー済み';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// Active sidebar link
+const links = document.querySelectorAll('.sb-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const match = document.querySelector(`.sb-link[href="#${id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>
