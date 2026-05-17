@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-17T21:08:14",
+  "last_updated": "2026-05-17T21:25:29",
   "projects": [
     {
       "id": "sample-001",
@@ -2984,7 +2984,7 @@
       "goal": "ChatGPT自己分析履歴・書籍知識・対話履歴を統合して上村桂右の完全人物ガイドブックを作成する",
       "status": "active",
       "created_at": "2026-05-17T20:07:44",
-      "updated_at": "2026-05-17T21:08:14",
+      "updated_at": "2026-05-17T21:25:29",
       "memo": "2026-05-16〜17 08_アプリ開発/outputs/self-analysis/ に完成。人物分析HTML＋Markdown",
       "big_task": {
         "id": "c58aa226",
@@ -3044,8 +3044,8 @@
           "status": "done",
           "due_date": null,
           "created_at": "2026-05-17T20:07:55",
-          "updated_at": "2026-05-17T20:07:57",
-          "mindmap_mmd": "",
+          "updated_at": "2026-05-17T21:12:04",
+          "mindmap_mmd": "mindmap\n  root((書籍知識（3冊）ナレッジ化))\n    計画フェーズ\n      要件整理\n      スケジュール確定\n      関係者調整\n    実行フェーズ\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了・検証\n      テスト\n      レビュー\n      振り返り\n      テスト２",
           "roadmap_mmd": "",
           "related_links": [],
           "output_files": [],
@@ -3235,7 +3235,7 @@
         }
       ],
       "linked_projects": [],
-      "initial_mindmap_mmd": "",
+      "initial_mindmap_mmd": "mindmap\n  root((\"完全人物\\nガイドブック\"))\n    インプット\n      ChatGPT自己分析履歴\n      書籍3冊ナレッジ\n        オンライン講座カリキュラム\n        ガーバー流経営\n        バナナの魅力100文字\n    分析軸\n      強み・価値観\n      行動パターン\n      ビジネスモデル\n      収益源\n    成果物\n      上村桂右_人物分析.html\n      完全人物ガイドブック.md\n      よろず人物分析連携",
       "tags": [],
       "session_logs": [
         {
