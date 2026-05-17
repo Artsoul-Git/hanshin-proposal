@@ -262,6 +262,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 "updated_at": now_iso(),
                 "mindmap_mmd": "",
                 "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
                 "related_links": [],
                 "output_files": [],
                 "history": [{"timestamp": now_iso(), "action": "作成", "detail": "タスクを作成しました"}]
@@ -503,7 +505,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                         if t and t["id"] == task_id:
                             old_status = t["status"]
                             for key in ["title", "description", "status", "due_date",
-                                        "mindmap_mmd", "roadmap_mmd", "related_links", "output_files"]:
+                                        "mindmap_mmd", "roadmap_mmd", "gantt_mmd", "flow_mmd",
+                                        "related_links", "output_files"]:
                                 if key in body:
                                     t[key] = body[key]
                             t["updated_at"] = now_iso()
@@ -518,7 +521,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                             if t["id"] == task_id:
                                 old_status = t["status"]
                                 for key in ["title", "description", "status", "due_date",
-                                            "mindmap_mmd", "roadmap_mmd", "related_links"]:
+                                            "mindmap_mmd", "roadmap_mmd", "gantt_mmd", "flow_mmd",
+                                            "related_links"]:
                                     if key in body:
                                         t[key] = body[key]
                                 t["updated_at"] = now_iso()

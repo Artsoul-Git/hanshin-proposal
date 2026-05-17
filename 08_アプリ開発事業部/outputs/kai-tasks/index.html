@@ -436,6 +436,11 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .step-input:focus { border-color: var(--accent); }
 .step-del { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 18px; padding: 0 3px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
 .step-del:hover { color: var(--red); }
+/* ── Diagram unified modal tabs ── */
+.diag-tab-bar { display: flex; gap: 2px; margin-top: 10px; }
+.diag-tab { padding: 5px 13px; border-radius: 7px 7px 0 0; border: 1px solid transparent; border-bottom: none; background: transparent; color: var(--text2); cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; transition: all .15s; }
+.diag-tab:hover { background: var(--surface2); color: var(--text); }
+.diag-tab.active { background: var(--surface2); color: var(--text); border-color: var(--border); }
 
 /* ── AI Input Focus Overlay ── */
 #aiFocusOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
@@ -1347,139 +1352,155 @@ async function onKanbanDrop(e, toStatus) {
 }
 
 // ══════════════════════════════════════════════
-//  Mindmap modal
+//  Unified Diagram Modal (マインドマップ / ロードマップ / ガント / フロー)
 // ══════════════════════════════════════════════
-function openMindmapModal(taskId) {
+let _diagCtx = { taskId: null, tab: 'roadmap' };
+
+const DIAG_TABS = {
+  mindmap: { label: '🧠 マインドマップ', field: 'mindmap_mmd', showAI: false, templates: [] },
+  roadmap: { label: '🗺️ ロードマップ',  field: 'roadmap_mmd', showAI: true,
+    templates: [['🌿 WBS分解','wbs'], ['📊 縦型TD','td']] },
+  gantt:   { label: '📅 ガント',         field: 'gantt_mmd',   showAI: true,
+    templates: [['📅 デフォルト','gantt']] },
+  flow:    { label: '🔀 フロー',         field: 'flow_mmd',    showAI: true,
+    templates: [['🔀 状態フロー','flow']] },
+};
+
+const DIAG_TEMPLATE_CODES = {
+  wbs:   `graph LR\n  A(["🎯 ゴール設定"]) --> B["📋 計画"]\n  B --> C["⚙️ 実行"]\n  C --> D(["✅ 完了"])\n\n  B --> B1["要件整理"]\n  B --> B2["リソース確認"]\n  B --> B3["スケジュール確定"]\n\n  C --> C1["フェーズ1"]\n  C --> C2["フェーズ2"]\n  C --> C3["フェーズ3"]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000`,
+  td:    `graph TD\n  A(["🎯 ゴール"]) --> B["📋 計画"]\n  B --> C["⚙️ 実行"]\n  C --> D(["✅ 完了"])\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000`,
+  gantt: `gantt\n  title ロードマップ\n  dateFormat YYYY-MM-DD\n  section 計画\n    要件整理         :a1, 2026-06-01, 7d\n    スケジュール確定  :a2, after a1, 3d\n  section 実行\n    フェーズ1        :b1, after a2, 14d\n    フェーズ2        :b2, after b1, 14d\n  section 完了\n    テスト・レビュー  :c1, after b2, 7d\n    振り返り         :c2, after c1, 3d`,
+  flow:  `stateDiagram-v2\n  [*] --> Todo\n  Todo --> Doing : 開始\n  Doing --> Review : 完成\n  Review --> Done : 承認\n  Review --> Doing : 差し戻し\n  Done --> [*]\n\n  Todo : 未着手\n  Doing : 進行中\n  Review : レビュー中\n  Done : 完了`,
+};
+
+function _diagDefaultCode(tab, title) {
+  if (tab === 'mindmap') return `mindmap\n  root(("${title.slice(0,26)}"))\n    計画フェーズ\n      要件整理\n      スケジュール確定\n      関係者調整\n    実行フェーズ\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了・検証\n      テスト\n      レビュー\n      振り返り`;
+  if (tab === 'roadmap') return `graph LR\n  A(["🎯 ${title.slice(0,20)}"]) --> B["📋 計画フェーズ"]\n  B --> C["⚙️ 実行フェーズ"]\n  C --> D(["✅ 完了・定着"])\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style D fill:#43e97b,color:#000,stroke:#43e97b`;
+  if (tab === 'gantt')   return DIAG_TEMPLATE_CODES.gantt;
+  if (tab === 'flow')    return DIAG_TEMPLATE_CODES.flow;
+  return '';
+}
+
+function openDiagramModal(taskId, activeTab = 'roadmap') {
+  _diagCtx = { taskId, tab: activeTab };
   const t = findTask(taskId);
-  const defaultCode = t.mindmap_mmd || defaultMindmapCode(t.title);
   const titleEsc = esc(t.title);
+  const tabBarHtml = Object.entries(DIAG_TABS).map(([key, info]) =>
+    `<button class="diag-tab ${key === activeTab ? 'active' : ''}" onclick="switchDiagTab('${key}')">${info.label}</button>`
+  ).join('');
+
   document.getElementById('wideContent').innerHTML = `
     <div class="wide-header">
       <div class="wide-header-left">
-        <h2>🧠 マインドマップ — ${titleEsc}</h2>
-        <div class="subtitle">タスクの細分化・関係性を可視化。プレビューをクリックで拡大ズーム。</div>
+        <h2 id="diagTitle">${DIAG_TABS[activeTab].label} — ${titleEsc}</h2>
+        <div class="diag-tab-bar">${tabBarHtml}</div>
       </div>
       <div class="wide-header-right">
-        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')">🔍 拡大表示</button>
+        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('diagPreview','${titleEsc}')">🔍 拡大表示</button>
       </div>
     </div>
-    <div class="wide-body wide-body-2col">
-      <div class="wide-editor" style="border-left:none;">
-        <div class="wide-editor-label">Mermaid コード（mindmap）</div>
-        <textarea class="mmd-editor" id="mmdMindmapEditor" spellcheck="false" oninput="previewMmd('mmdMindmapEditor','mmdMindmapPreview')">${esc(defaultCode)}</textarea>
-      </div>
-      <div class="wide-preview">
-        <div class="wide-preview-label">プレビュー <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
-        <div class="mmd-preview" id="mmdMindmapPreview" onclick="openMmdPopupFromPreview('mmdMindmapPreview','🧠 ${titleEsc}')"></div>
-      </div>
-    </div>
-    <div class="wide-footer">
-      <div class="wide-footer-left">
-        <span class="tmpl-label">💡 Kaiに「このタスクのマインドマップを作って」と依頼 → ロードマップのAIアシストで適用</span>
-      </div>
-      <div class="wide-footer-right">
-        <button class="btn-tmpl" onclick="resetMindmap('${taskId}')">↩ リセット</button>
-        <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
-        <button class="btn btn-primary btn-sm" onclick="saveMindmap('${taskId}')">💾 保存</button>
-      </div>
-    </div>`;
-  document.getElementById('wideOverlay').style.display = 'flex';
-  previewMmd('mmdMindmapEditor', 'mmdMindmapPreview');
-}
-
-async function saveMindmap(taskId) {
-  const code = document.getElementById('mmdMindmapEditor').value.trim();
-  captureSnapshotForTask(taskId, 'マインドマップ保存');
-  await api('PUT', `/tasks/${taskId}`, { mindmap_mmd: code });
-  closeWide(); await loadData(true);
-  const p = state.data?.projects.find(p => p.id === state.projectId);
-  if (p) renderProject(p);
-  toast('マインドマップを保存しました', 'ok');
-}
-
-function resetMindmap(taskId) {
-  const t = findTask(taskId);
-  document.getElementById('mmdMindmapEditor').value = defaultMindmapCode(t.title);
-  previewMmd('mmdMindmapEditor', 'mmdMindmapPreview');
-}
-
-function defaultMindmapCode(title) {
-  return `mindmap\n  root((${title}))\n    計画フェーズ\n      要件整理\n      スケジュール確定\n      関係者調整\n    実行フェーズ\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了・検証\n      テスト\n      レビュー\n      振り返り`;
-}
-
-// ══════════════════════════════════════════════
-//  Roadmap modal
-// ══════════════════════════════════════════════
-function openRoadmapModal(taskId) {
-  const t = findTask(taskId);
-  const defaultCode = t.roadmap_mmd || defaultRoadmapCode(t.title);
-  const titleEsc = esc(t.title);
-  document.getElementById('wideContent').innerHTML = `
-    <div class="wide-header">
-      <div class="wide-header-left">
-        <h2>🗺️ ロードマップ — ${titleEsc}</h2>
-        <div class="subtitle">graph LR / TD / gantt / stateDiagram-v2 に対応。テンプレートから選んで編集、プレビューをクリックで拡大。</div>
-      </div>
-      <div class="wide-header-right">
-        <button class="btn-tmpl" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')">🔍 拡大表示</button>
-      </div>
-    </div>
-    <div class="wide-body wide-body-3col">
-      <div class="ai-panel">
+    <div class="wide-body wide-body-3col" id="diagBody">
+      <div class="ai-panel" id="diagAiPanel">
         <div class="ai-panel-section">🤖 Kaiへ指示</div>
         <textarea class="ai-textarea" id="aiInstruction"
-          placeholder="例：&#10;フェーズを5段階にして&#10;各フェーズに期間を追加して"
+          placeholder="例：&#10;ステップを追加して&#10;期間を加えて"
           onfocus="openAiFocus('aiInstruction','🤖 Kaiへの指示')"></textarea>
-        <button class="btn-ai" onclick="copyAiPrompt('mmdRoadmapEditor')">📋 プロンプトをコピー</button>
+        <button class="btn-ai" onclick="copyAiPrompt('diagEditor')">📋 プロンプトをコピー</button>
         <div class="ai-sep"></div>
         <div class="ai-panel-section">📥 Kaiの返答を貼り付け</div>
         <textarea class="ai-textarea" id="aiResponse"
           placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"
           onfocus="openAiFocus('aiResponse','📥 Kaiの返答を貼り付け')"></textarea>
-        <button class="btn-ai btn-ai-apply" onclick="applyAiCode('mmdRoadmapEditor','mmdRoadmapPreview')">✨ コードに適用</button>
+        <button class="btn-ai btn-ai-apply" onclick="applyAiCode('diagEditor','diagPreview')">✨ コードに適用</button>
       </div>
       <div class="wide-editor">
         <div class="wide-editor-label">Mermaid コード</div>
-        <textarea class="mmd-editor" id="mmdRoadmapEditor" spellcheck="false" oninput="previewMmd('mmdRoadmapEditor','mmdRoadmapPreview')">${esc(defaultCode)}</textarea>
+        <textarea class="mmd-editor" id="diagEditor" spellcheck="false" oninput="previewMmd('diagEditor','diagPreview')"></textarea>
       </div>
       <div class="wide-preview">
         <div class="wide-preview-label">プレビュー（リアルタイム） <span style="font-size:9px;color:var(--text2);">クリックで拡大</span></div>
-        <div class="mmd-preview" id="mmdRoadmapPreview" onclick="openMmdPopupFromPreview('mmdRoadmapPreview','🗺️ ${titleEsc}')"></div>
+        <div class="mmd-preview" id="diagPreview" onclick="openMmdPopupFromPreview('diagPreview','${titleEsc}')"></div>
       </div>
     </div>
     <div class="wide-footer">
-      <div class="wide-footer-left">
-        <span class="tmpl-label">テンプレート：</span>
-        <button class="btn-tmpl" onclick="insertTemplate('roadmap-gantt')">📅 ガント</button>
-        <button class="btn-tmpl" onclick="insertTemplate('roadmap-status')">🔀 フロー</button>
-      </div>
+      <div class="wide-footer-left" id="diagTemplateBtns"></div>
       <div class="wide-footer-right">
         <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
-        <button class="btn btn-primary btn-sm" onclick="saveRoadmap('${taskId}')">💾 保存</button>
+        <button class="btn btn-primary btn-sm" onclick="saveDiagram()">💾 保存</button>
       </div>
     </div>`;
   document.getElementById('wideOverlay').style.display = 'flex';
-  previewMmd('mmdRoadmapEditor', 'mmdRoadmapPreview');
+  _applyDiagTab(activeTab);
 }
 
-async function saveRoadmap(taskId) {
-  const code = document.getElementById('mmdRoadmapEditor').value.trim();
-  captureSnapshotForTask(taskId, 'ロードマップ保存');
-  await api('PUT', `/tasks/${taskId}`, { roadmap_mmd: code });
-  closeWide(); await loadData(true);
-  const p = state.data?.projects.find(p => p.id === state.projectId);
-  if (p) renderProject(p);
-  toast('ロードマップを保存しました', 'ok');
+function _applyDiagTab(tab) {
+  const t = findTask(_diagCtx.taskId);
+  const info = DIAG_TABS[tab];
+  // title
+  const titleEl = document.getElementById('diagTitle');
+  if (titleEl) titleEl.textContent = `${info.label} — ${t.title}`;
+  // tab active class
+  document.querySelectorAll('.diag-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === `switchDiagTab('${tab}')`);
+  });
+  // AI panel visibility
+  const aiPanel = document.getElementById('diagAiPanel');
+  const body    = document.getElementById('diagBody');
+  if (aiPanel && body) {
+    aiPanel.style.display = info.showAI ? '' : 'none';
+    body.className = `wide-body ${info.showAI ? 'wide-body-3col' : 'wide-body-2col'}`;
+  }
+  // editor content
+  const code = (t[info.field] || '').trim() || _diagDefaultCode(tab, t.title);
+  const editor = document.getElementById('diagEditor');
+  if (editor) { editor.value = code; previewMmd('diagEditor', 'diagPreview'); }
+  // templates
+  const tmplEl = document.getElementById('diagTemplateBtns');
+  if (tmplEl) {
+    if (info.templates.length) {
+      tmplEl.innerHTML = `<span class="tmpl-label">テンプレート：</span>` +
+        info.templates.map(([lbl, key]) => `<button class="btn-tmpl" onclick="insertDiagTemplate('${key}')">${lbl}</button>`).join('');
+    } else {
+      tmplEl.innerHTML = `<span class="tmpl-label">💡 Kaiに指示して生成 → 返答を貼り付け → コードに適用</span>`;
+    }
+  }
 }
+
+function switchDiagTab(tab) {
+  _diagCtx.tab = tab;
+  _applyDiagTab(tab);
+}
+
+function insertDiagTemplate(key) {
+  const code = DIAG_TEMPLATE_CODES[key];
+  if (!code) return;
+  const editor = document.getElementById('diagEditor');
+  if (editor) { editor.value = code; previewMmd('diagEditor', 'diagPreview'); }
+}
+
+async function saveDiagram() {
+  const editor = document.getElementById('diagEditor');
+  const code = editor?.value?.trim();
+  if (!code) { toast('コードが空です', 'err'); return; }
+  const info = DIAG_TABS[_diagCtx.tab];
+  captureSnapshotForTask(_diagCtx.taskId, `${info.label}保存`);
+  await api('PUT', `/tasks/${_diagCtx.taskId}`, { [info.field]: code });
+  await loadData(true);
+  const p = state.data?.projects.find(x => x.id === state.projectId);
+  if (p) renderProject(p);
+  toast(`${info.label}を保存しました ✓`, 'ok');
+}
+
+// 後方互換：既存の呼び出し元を統合モーダルへリダイレクト
+function openMindmapModal(taskId) { openDiagramModal(taskId, 'mindmap'); }
+function openRoadmapModal(taskId)  { openDiagramModal(taskId, 'roadmap'); }
+
+function defaultMindmapCode(title) { return _diagDefaultCode('mindmap', title); }
+function defaultRoadmapCode(title) { return _diagDefaultCode('roadmap', title); }
 
 function insertTemplate(type) {
-  const templates = {
-    'roadmap-flow': `graph LR\n  A([🎯 ゴール設定]) --> B[📋 計画]\n  B --> C[⚙️ 実行]\n  C --> D([✅ 完了])\n\n  B --> B1[要件整理]\n  B --> B2[リソース確認]\n  B --> B3[スケジュール確定]\n\n  C --> C1[フェーズ1]\n  C --> C2[フェーズ2]\n  C --> C3[フェーズ3]\n\n  style A fill:#6c63ff,color:#fff\n  style D fill:#43e97b,color:#000`,
-    'roadmap-gantt': `gantt\n  title タスクロードマップ\n  dateFormat YYYY-MM-DD\n  section 計画\n    要件整理         :a1, 2026-05-01, 7d\n    スケジュール確定  :a2, after a1, 3d\n  section 実行\n    フェーズ1        :b1, after a2, 14d\n    フェーズ2        :b2, after b1, 14d\n  section 完了\n    テスト・レビュー  :c1, after b2, 7d\n    振り返り         :c2, after c1, 3d`,
-    'roadmap-status': `stateDiagram-v2\n  [*] --> Todo\n  Todo --> Doing : 開始\n  Doing --> Review : 完成\n  Review --> Done : 承認\n  Review --> Doing : 差し戻し\n  Done --> [*]\n\n  Todo : 未着手\n  Doing : 進行中\n  Review : レビュー中\n  Done : 完了`
-  };
-  const editor = document.getElementById('mmdRoadmapEditor');
-  if (editor) { editor.value = templates[type] || editor.value; previewMmd('mmdRoadmapEditor','mmdRoadmapPreview'); }
+  const map = { 'roadmap-flow': 'wbs', 'roadmap-gantt': 'gantt', 'roadmap-status': 'flow' };
+  insertDiagTemplate(map[type] || type);
 }
 
 function openA4Preview(previewId, title, autoPrint = false) {
@@ -3003,6 +3024,7 @@ function renderDecomposeStepHtml(s, i) {
       <div class="ai-step-num">${i + 1}</div>
       <div class="ai-step-inputs">
         <input class="step-input step-title" placeholder="ステップのタイトル" value="${esc(s.title || '')}">
+        <textarea class="step-input step-desc" placeholder="説明・手順（省略可）" rows="2" style="resize:vertical;">${esc(s.description || '')}</textarea>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:11px;color:var(--text2);">⏱</span>
           <input class="step-input step-time" type="number" min="1" placeholder="—" value="${s.estimated_minutes || ''}" style="width:64px;text-align:right;">
@@ -3036,9 +3058,12 @@ function renumberDecomposeSteps() {
 function collectDecomposeSteps() {
   return Array.from(document.querySelectorAll('.ai-step-editable')).map(card => ({
     title: card.querySelector('.step-title')?.value?.trim() || '',
+    description: card.querySelector('.step-desc')?.value?.trim() || '',
     estimated_minutes: parseInt(card.querySelector('.step-time')?.value || '0', 10) || null,
   })).filter(s => s.title);
 }
+
+function _mmdLabel(str) { return str.replace(/"/g, "'").replace(/[<>{}|]/g, ' ').trim(); }
 
 async function confirmDecompose(taskId) {
   const steps = collectDecomposeSteps();
@@ -3077,11 +3102,11 @@ async function confirmDecompose(taskId) {
 }
 
 function stepsToRoadmapMmd(title, steps) {
-  const t = title.length > 22 ? title.slice(0, 22) + '…' : title;
+  const t = _mmdLabel(title.slice(0, 22));
   const nodes = [`  S0(["🎯 ${t}"])`];
   steps.forEach((s, i) => {
-    const lbl = s.title.length > 22 ? s.title.slice(0, 22) + '…' : s.title;
-    const time = s.estimated_minutes ? `｜${s.estimated_minutes}分` : '';
+    const lbl = _mmdLabel(s.title.slice(0, 22));
+    const time = s.estimated_minutes ? ` (${s.estimated_minutes}分)` : '';
     nodes.push(`  S${i+1}["${lbl}${time}"]`);
   });
   nodes.push(`  DONE(["✅ 完了"])`);
@@ -3091,12 +3116,11 @@ function stepsToRoadmapMmd(title, steps) {
 }
 
 function stepsToMindmapMmd(title, steps) {
-  const t = title.length > 26 ? title.slice(0, 26) + '…' : title;
+  const t = _mmdLabel(title.slice(0, 26));
   const lines = steps.map((s, i) => {
-    const lbl = s.title.length > 24 ? s.title.slice(0, 24) + '…' : s.title;
-    return s.estimated_minutes
-      ? `    Step${i+1}: ${lbl}\n      約${s.estimated_minutes}分`
-      : `    Step${i+1}: ${lbl}`;
+    const lbl = _mmdLabel(s.title.slice(0, 24));
+    const sub = s.estimated_minutes ? `\n      約${s.estimated_minutes}分` : '';
+    return `    Step${i+1}: ${lbl}${sub}`;
   });
   return `mindmap\n  root(("${t}"))\n${lines.join('\n')}`;
 }
