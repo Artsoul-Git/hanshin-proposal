@@ -1116,6 +1116,7 @@ function renderProject(p) {
         <div class="progress-bar"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
       </div>
       <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" style="color:var(--green);border-color:var(--green);" onclick="openResumeModal('${p.id}')">▶ 再開</button>
         <button class="btn btn-recommend btn-sm" onclick="openRecommendModal('${p.id}')">💡 推奨タスク</button>
         <button class="btn btn-ghost btn-sm" onclick="openEditProjectModal('${p.id}')">✏️ 編集</button>
         ${p.status !== 'completed' ? `<button class="btn btn-success btn-sm" onclick="markProjectDone('${p.id}')">✅ 完了</button>` : ''}
@@ -2447,24 +2448,29 @@ function openEditLogModal(pid, logId) {
   const p = state.data?.projects.find(x => x.id === pid);
   const log = (p?.session_logs || []).find(l => l.id === logId);
   if (!log) { toast('ログが見つかりません', 'err'); return; }
-  const html = `
-    <div style="font-size:16px;font-weight:700;margin-bottom:14px;">✏️ 活動ログを編集</div>
-    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">種別</label>
-    <select id="editLogType" class="form-input" style="margin-bottom:10px;">
-      <option value="instruction" ${log.type==='instruction'?'selected':''}>📝 指示</option>
-      <option value="decision" ${log.type==='decision'?'selected':''}>✅ 決定</option>
-      <option value="output" ${log.type==='output'?'selected':''}>📦 成果物</option>
-      <option value="note" ${log.type==='note'?'selected':''}>💬 メモ</option>
-    </select>
-    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">概要 <span style="color:var(--red)">*</span></label>
-    <input id="editLogSummary" class="form-input" value="${esc(log.summary)}" style="margin-bottom:10px;">
-    <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);display:block;margin-bottom:5px;">詳細</label>
-    <textarea id="editLogDetail" class="form-input" rows="3" style="resize:vertical;margin-bottom:14px;">${esc(log.detail||'')}</textarea>
-    <div style="display:flex;gap:8px;justify-content:flex-end;">
-      <button class="btn btn-ghost btn-sm" onclick="closeModal()">キャンセル</button>
-      <button class="btn btn-primary btn-sm" onclick="saveEditedLog('${pid}','${logId}')">保存</button>
-    </div>`;
-  openModal(html);
+  openModal(`
+    <h2>✏️ 活動ログを編集</h2>
+    <div class="form-group">
+      <label>種別</label>
+      <select id="editLogType">
+        <option value="instruction" ${log.type==='instruction'?'selected':''}>📝 指示（上村からの指示内容）</option>
+        <option value="decision" ${log.type==='decision'?'selected':''}>✅ 決定（Kaiが行った判断・決定）</option>
+        <option value="output" ${log.type==='output'?'selected':''}>📦 成果物（作成したファイル・成果）</option>
+        <option value="note" ${log.type==='note'?'selected':''}>💬 メモ（その他のメモ）</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>概要 <span style="color:var(--red)">*</span></label>
+      <input id="editLogSummary" value="${esc(log.summary)}" placeholder="1行で要約">
+    </div>
+    <div class="form-group">
+      <label>詳細（省略可）</label>
+      <textarea id="editLogDetail" rows="3" placeholder="詳細な内容・ファイルパス・コマンドなど">${esc(log.detail||'')}</textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveEditedLog('${pid}','${logId}')">保存</button>
+    </div>`);
 }
 
 async function saveEditedLog(pid, logId) {
@@ -2555,7 +2561,10 @@ function renderTimeMachine(p) {
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;">
       <div style="font-size:22px;flex-shrink:0;">📸</div>
       <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;font-weight:600;color:var(--text);">${esc(s.label)}</div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;font-weight:600;color:var(--text);">${esc(s.label)}</span>
+          <button class="icon-btn btn-sm" style="width:20px;height:20px;font-size:10px;opacity:.6;" onclick="editSnapshotLabel('${p.id}','${s.id}','${esc(s.label)}')" title="ラベルを編集">✏️</button>
+        </div>
         <div style="font-size:11px;color:var(--text2);margin-top:3px;">${s.timestamp.replace('T',' ')}</div>
       </div>
       <button class="btn btn-ghost btn-sm" onclick="restoreSnapshot('${p.id}','${s.id}')" style="flex-shrink:0;">⏪ ここに戻る</button>
@@ -2578,6 +2587,19 @@ function renderTimeMachine(p) {
     ${snapListHtml}`;
 }
 
+async function editSnapshotLabel(pid, snapId, currentLabel) {
+  const newLabel = prompt('スナップショットのラベルを変更', currentLabel);
+  if (newLabel === null || newLabel.trim() === currentLabel) return;
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+  const updated = (p.snapshots || []).map(s => s.id === snapId ? { ...s, label: newLabel.trim() || currentLabel } : s);
+  await api('PUT', `/projects/${pid}`, { snapshots: updated });
+  await loadData(true);
+  const pp = state.data?.projects.find(x => x.id === pid);
+  if (pp && state.tab === 'timemachine') document.getElementById('tabContent').innerHTML = renderTimeMachine(pp);
+  toast('ラベルを更新しました', 'ok');
+}
+
 async function createSnapshot(pid) {
   const label = prompt('スナップショットのラベル（例: Groq連携実装前）', `スナップショット ${new Date().toLocaleString('ja-JP')}`);
   if (label === null) return;
@@ -2598,6 +2620,63 @@ async function restoreSnapshot(pid, snapId) {
   const updated = state.data?.projects.find(x => x.id === pid);
   if (updated) renderProject(updated);
   toast('スナップショットを復元しました', 'ok');
+}
+
+// ══════════════════════════════════════════════
+//  Resume Modal（再開指示生成）
+// ══════════════════════════════════════════════
+function openResumeModal(pid) {
+  const p = state.data?.projects.find(x => x.id === pid);
+  if (!p) return;
+
+  const allTasks = getAllTasks(p);
+  const inProgress = allTasks.filter(t => t.status === 'in_progress');
+  const todo = allTasks.filter(t => t.status === 'todo');
+  const lastLog = (p.session_logs || []).slice(-1)[0];
+  const lastPivot = (p.pivots || []).slice(-1)[0];
+
+  const taskLines = [
+    ...inProgress.map(t => `  - [進行中] ${t.title}`),
+    ...todo.slice(0, 3).map(t => `  - [未着手] ${t.title}`),
+  ].join('\n') || '  - タスクなし';
+
+  const cliBase = `py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py`;
+  const cliBlock = `cd "C:\\Users\\kei\\Dropbox\\00_Antigravity\\AS_AI導入支援事業_cc"
+${cliBase} ensure-server
+${cliBase} show ${p.id}
+${cliBase} log-action ${p.id} --type note --summary "セッション再開"`;
+
+  const contextBlock = `## プロジェクト再開: ${p.name}
+**ゴール:** ${p.goal || '未設定'}
+**ステータス:** ${p.status}
+**進行中・次のタスク:**
+${taskLines}
+${lastLog ? `**前回の活動:** [${lastLog.type}] ${lastLog.summary}` : ''}
+${lastPivot ? `**最新の思考転換:** ${lastPivot.from || '?'} → ${lastPivot.to}` : ''}
+**プロジェクトID:** ${p.id}
+
+このプロジェクトを上記の状態から再開してください。`;
+
+  openModal(`
+    <h2>▶ 再開指示を生成</h2>
+    <p style="font-size:12px;color:var(--text2);margin-bottom:16px;">以下をターミナルまたはKaiへの指示としてコピーしてください。</p>
+    <div class="form-group">
+      <label>① ターミナルコマンド（現在の状態を確認）</label>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:monospace;font-size:11px;color:var(--text);white-space:pre-wrap;line-height:1.7;">${esc(cliBlock)}</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:6px;" onclick="copyText(${JSON.stringify(cliBlock)})">📋 コピー</button>
+    </div>
+    <div class="form-group">
+      <label>② Kaiへの再開コンテキスト（新しい会話に貼り付け）</label>
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:11px;color:var(--text);white-space:pre-wrap;line-height:1.7;">${esc(contextBlock)}</div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:6px;" onclick="copyText(${JSON.stringify(contextBlock)})">📋 コピー</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">閉じる</button>
+    </div>`);
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => toast('クリップボードにコピーしました', 'ok')).catch(() => toast('コピーできませんでした', 'err'));
 }
 
 // ══════════════════════════════════════════════

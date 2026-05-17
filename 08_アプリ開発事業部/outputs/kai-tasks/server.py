@@ -481,7 +481,7 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
                 return self.send_json(404, {"error": "Project not found"})
 
             old_status = project["status"]
-            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags", "session_logs", "pivots"]:
+            for key in ["name", "goal", "status", "memo", "initial_mindmap_mmd", "tags", "session_logs", "pivots", "snapshots"]:
                 if key in body:
                     project[key] = body[key]
             project["updated_at"] = now_iso()
