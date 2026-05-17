@@ -16,6 +16,8 @@ import uuid
 import queue
 import threading
 import socketserver
+import urllib.request
+import urllib.error
 from datetime import datetime
 from urllib.parse import urlparse
 
@@ -23,6 +25,24 @@ PORT = 3456
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILE = os.path.join(BASE_DIR, "data", "tasks.json")
 INDEX_FILE = os.path.join(BASE_DIR, "index.html")
+
+# ─── .env 読み込み ────────────────────────────────────────────
+def _load_env():
+    env_path = os.path.join(BASE_DIR, ".env")
+    if not os.path.exists(env_path):
+        return
+    with open(env_path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, _, val = line.partition("=")
+                os.environ[key.strip()] = val.strip()  # .envを優先して上書き
+
+_load_env()
+GROQ_API_KEY  = os.environ.get("GROQ_API_KEY", "")
+print(f"[Groq] APIキー: {'✅ 読込済 (' + GROQ_API_KEY[:8] + '...)' if GROQ_API_KEY else '❌ 未設定'}")
+GROQ_API_URL  = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL    = "llama-3.3-70b-versatile"
 
 # ─── SSE Live Broadcast ──────────────────────────────────────
 _subscribers = []
@@ -64,6 +84,31 @@ def save_data(data):
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
     _broadcast({"type": "update", "ts": ts})
+
+
+# ─── Groq API 呼び出し ────────────────────────────────────────
+def groq_chat(messages, max_tokens=1000):
+    if not GROQ_API_KEY:
+        raise ValueError("GROQ_API_KEY が .env に設定されていません")
+    payload = json.dumps({
+        "model": GROQ_MODEL,
+        "messages": messages,
+        "response_format": {"type": "json_object"},
+        "max_tokens": max_tokens,
+        "temperature": 0.7,
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        GROQ_API_URL,
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {GROQ_API_KEY}",
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        }
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        result = json.loads(resp.read().decode("utf-8"))
+    return json.loads(result["choices"][0]["message"]["content"])
 
 
 class TaskHandler(http.server.BaseHTTPRequestHandler):
@@ -317,6 +362,82 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             paths = body.get("paths", [])
             results = {p: os.path.exists(p) for p in paths}
             self.send_json(200, results)
+
+        elif path == "/api/ai/decompose":
+            # タスクを具体的な実行ステップに分解する
+            title   = body.get("title", "")
+            desc    = body.get("description", "")
+            goal    = body.get("project_goal", "")
+            memo    = body.get("project_memo", "")
+            if not title:
+                return self.send_json(400, {"error": "title は必須です"})
+            if not GROQ_API_KEY:
+                return self.send_json(503, {"error": "GROQ_API_KEY が未設定です。.env を確認してください"})
+            try:
+                context = f"プロジェクトゴール：{goal}" if goal else ""
+                if memo:
+                    context += f"\nプロジェクトメモ：{memo}"
+                messages = [
+                    {"role": "system", "content": (
+                        "あなたはプロジェクト管理の専門家です。与えられたタスクを、"
+                        "誰でもすぐに取り掛かれる具体的な実行ステップ3〜5個に分解してください。"
+                        "必ずJSON形式で返してください。形式：{\"steps\": ["
+                        "{\"title\": \"ステップ名\", \"description\": \"具体的な作業内容\", \"estimated_minutes\": 所要時間（数値）}"
+                        ", ...]}"
+                    )},
+                    {"role": "user", "content": (
+                        f"タスク名：{title}\n"
+                        f"タスク説明：{desc}\n"
+                        f"{context}\n\n"
+                        "このタスクを今すぐ実行できる具体的なステップに分解してください。"
+                    )}
+                ]
+                result = groq_chat(messages)
+                self.send_json(200, result)
+            except urllib.error.HTTPError as e:
+                body_err = e.read().decode("utf-8", errors="replace")
+                self.send_json(502, {"error": f"Groq APIエラー: {e.code} {e.reason}", "detail": body_err})
+            except Exception as e:
+                self.send_json(500, {"error": str(e)})
+
+        elif path == "/api/ai/recommend":
+            # プロジェクトの状況から次のタスクを提案する
+            goal      = body.get("goal", "")
+            memo      = body.get("memo", "")
+            done      = body.get("completed_tasks", [])
+            pending   = body.get("pending_tasks", [])
+            proj_name = body.get("project_name", "")
+            if not goal and not proj_name:
+                return self.send_json(400, {"error": "goal または project_name は必須です"})
+            if not GROQ_API_KEY:
+                return self.send_json(503, {"error": "GROQ_API_KEY が未設定です。.env を確認してください"})
+            try:
+                done_text    = "\n".join(f"・{t}" for t in done)    if done    else "（まだなし）"
+                pending_text = "\n".join(f"・{t}" for t in pending) if pending else "（まだなし）"
+                messages = [
+                    {"role": "system", "content": (
+                        "あなたはプロジェクト管理コンサルタントです。"
+                        "プロジェクトの状況を分析し、今すぐ着手すべき推奨タスクを3件提案してください。"
+                        "必ずJSON形式で返してください。形式：{\"recommendations\": ["
+                        "{\"title\": \"タスク名\", \"reason\": \"なぜ今必要か\", "
+                        "\"priority\": \"high/medium/low\", \"type\": \"big/medium/small\"}"
+                        ", ...]}"
+                    )},
+                    {"role": "user", "content": (
+                        f"プロジェクト名：{proj_name}\n"
+                        f"ゴール：{goal}\n"
+                        f"メモ・背景：{memo}\n\n"
+                        f"【完了済みタスク】\n{done_text}\n\n"
+                        f"【未完了タスク】\n{pending_text}\n\n"
+                        "この状況を踏まえて、次に取り組むべき重要なタスクを3件提案してください。"
+                    )}
+                ]
+                result = groq_chat(messages)
+                self.send_json(200, result)
+            except urllib.error.HTTPError as e:
+                self.send_json(502, {"error": f"Groq APIエラー: {e.code} {e.reason}"})
+            except Exception as e:
+                self.send_json(500, {"error": str(e)})
 
         else:
             self.send_json(404, {"error": "Not found"})
