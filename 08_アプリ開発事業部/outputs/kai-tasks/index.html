@@ -7,27 +7,43 @@
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
 :root {
-  --bg: #0f0f13;
-  --surface: #1a1a24;
-  --surface2: #22222f;
-  --border: #2e2e40;
-  --accent: #6c63ff;
-  --green: #43e97b;
-  --yellow: #f9ca24;
-  --red: #ff6b6b;
-  --orange: #ff9f43;
-  --text: #e8e8f0;
-  --text2: #8888aa;
-  --big: #ff9f43;
-  --med: #54a0ff;
-  --small: #a29bfe;
+  --bg: #f0f3f8;
+  --surface: #ffffff;
+  --surface2: #f4f7fb;
+  --border: #dce3ef;
+  --accent: #5b5bd6;
+  --green: #10b981;
+  --yellow: #f59e0b;
+  --red: #ef4444;
+  --orange: #f97316;
+  --text: #1e2d40;
+  --text2: #6b7c93;
+  --big: #f97316;
+  --med: #3b82f6;
+  --small: #8b5cf6;
+  --shadow-sm: 0 1px 3px rgba(30,45,64,.07), 0 1px 2px rgba(30,45,64,.04);
+  --shadow: 0 4px 12px rgba(30,45,64,.09), 0 1px 4px rgba(30,45,64,.05);
+  --shadow-lg: 0 8px 30px rgba(30,45,64,.13), 0 2px 8px rgba(30,45,64,.06);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; min-height: 100vh; }
 
 /* ── Layout ── */
 .app { display: grid; grid-template-columns: 268px 1fr; min-height: 100vh; }
-.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 16px 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+/* Sidebar: dark scope — overrides :root vars for all child elements */
+.sidebar {
+  --bg: #141f2f;
+  --surface: #1b2a3d;
+  --surface2: #233348;
+  --border: #2d4060;
+  --text: #dce8f5;
+  --text2: #7a9bbf;
+  --accent: #818cf8;
+  background: var(--surface);
+  border-right: 1px solid rgba(0,0,0,.25);
+  padding: 16px 14px;
+  display: flex; flex-direction: column; gap: 10px; overflow: hidden;
+}
 .main { padding: 28px 32px; overflow-y: auto; min-height: 100vh; }
 
 /* ── Logo + Live ── */
@@ -93,18 +109,26 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .dash-hero { margin-bottom: 28px; }
 .dash-hero h1 { font-size: 26px; font-weight: 800; }
 .dash-hero p { color: var(--text2); font-size: 13px; margin-top: 6px; }
-.dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; transition: border-color .15s; }
-.stat-card:hover { border-color: var(--accent); }
-.stat-card.warn { border-color: rgba(255,107,107,.4); }
+.dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; transition: all .15s; box-shadow: var(--shadow-sm); }
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.stat-card.warn { border-color: rgba(239,68,68,.35); }
+.stat-card-blue   { background: linear-gradient(135deg, #4a6cf7 0%, #6366f1 100%); border: none; }
+.stat-card-amber  { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); border: none; }
+.stat-card-green  { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); border: none; }
+.stat-card-red    { background: linear-gradient(135deg, #ef4444 0%, #f87171 100%); border: none; }
+.stat-card-colored .stat-num  { color: #fff; font-size: 34px; }
+.stat-card-colored .stat-sub  { color: rgba(255,255,255,.7); font-size: 18px; font-weight: 400; }
+.stat-card-colored .stat-label { color: rgba(255,255,255,.82); }
+.stat-card-colored .stat-icon { font-size: 22px; margin-bottom: 8px; opacity: .85; }
 .stat-num { font-size: 32px; font-weight: 800; line-height: 1; }
 .stat-num.green { color: var(--green); }
 .stat-num.yellow { color: var(--yellow); }
 .stat-num.red { color: var(--red); }
-.stat-label { font-size: 11px; color: var(--text2); margin-top: 6px; font-weight: 600; letter-spacing: .5px; }
+.stat-label { font-size: 11px; color: var(--text2); margin-top: 6px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
 .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.dash-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-.dash-panel-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); margin-bottom: 14px; }
+.dash-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow-sm); }
+.dash-panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text2); margin-bottom: 14px; }
 .active-proj-item { padding: 10px 12px; background: var(--surface2); border-radius: 8px; margin-bottom: 8px; cursor: pointer; border: 1px solid transparent; transition: border-color .15s; }
 .active-proj-item:hover { border-color: var(--accent); }
 .active-proj-name { font-size: 13px; font-weight: 600; }
@@ -131,9 +155,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .main-header h1 { font-size: 21px; font-weight: 700; }
 .goal-text { margin-top: 6px; font-size: 13px; color: var(--text2); line-height: 1.6; }
 .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-left: 10px; }
-.status-badge.active { background: rgba(67,233,123,.15); color: var(--green); }
-.status-badge.completed { background: rgba(136,136,170,.15); color: var(--text2); }
-.status-badge.archived { background: rgba(46,46,64,.5); color: var(--border); }
+.status-badge.active { background: rgba(16,185,129,.12); color: var(--green); border: 1px solid rgba(16,185,129,.25); }
+.status-badge.completed { background: rgba(107,124,147,.12); color: var(--text2); border: 1px solid rgba(107,124,147,.2); }
+.status-badge.archived { background: rgba(107,124,147,.08); color: var(--text2); border: 1px solid var(--border); }
 .progress-bar-wrap { margin-top: 12px; }
 .progress-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-bottom: 5px; }
 .progress-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
@@ -141,9 +165,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .header-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
 
 /* ── Tabs ── */
-.tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 8px; padding: 3px; margin-bottom: 22px; width: fit-content; }
-.tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text2); transition: all .15s; border: none; background: transparent; }
-.tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 9px; padding: 3px; margin-bottom: 22px; width: fit-content; border: 1px solid var(--border); }
+.tab { padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text2); transition: all .15s; border: none; background: transparent; }
+.tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(30,45,64,.12); }
 
 /* ── 1-3-5 ── */
 .task-section { margin-bottom: 28px; }
@@ -159,8 +183,8 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 
 /* ── Task Cards ── */
 .task-cards { display: flex; flex-direction: column; gap: 8px; }
-.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; transition: border-color .15s; position: relative; }
-.task-card:hover { border-color: var(--accent); }
+.task-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; transition: all .15s; position: relative; box-shadow: var(--shadow-sm); }
+.task-card:hover { border-color: var(--accent); box-shadow: var(--shadow); transform: translateY(-1px); }
 .task-card.done { opacity: .55; }
 .task-card.big { border-left: 3px solid var(--big); }
 .task-card.med { border-left: 3px solid var(--med); }
@@ -249,7 +273,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 
 /* ── Modal (small) ── */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
-.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 22px; width: 480px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 26px 22px; width: 480px; max-width: 95vw; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
 .modal h2 { font-size: 17px; font-weight: 700; margin-bottom: 18px; }
 .form-group { margin-bottom: 14px; }
 .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
@@ -276,10 +300,10 @@ body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -appl
 .wide-body-3col { grid-template-columns: 210px 1fr 1fr; }
 .wide-editor { border-left: 1px solid var(--border); border-right: 1px solid var(--border); display: flex; flex-direction: column; min-height: 0; }
 .wide-editor-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
-.mmd-editor { flex: 1; min-height: 0; background: var(--bg); color: var(--text); border: none; padding: 8px 12px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
+.mmd-editor { flex: 1; min-height: 0; background: #f8fafc; color: #1e2d40; border: none; padding: 8px 12px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 12px; line-height: 1.7; resize: none; outline: none; }
 .wide-preview { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
 .wide-preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); padding: 7px 14px 4px; flex-shrink: 0; }
-.mmd-preview { flex: 1; min-height: 0; overflow: hidden; padding: 12px; display: flex; align-items: center; justify-content: center; background: var(--bg); position: relative; cursor: zoom-in; }
+.mmd-preview { flex: 1; min-height: 0; overflow: hidden; padding: 12px; display: flex; align-items: center; justify-content: center; background: #ffffff; position: relative; cursor: zoom-in; }
 .mmd-preview svg { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; pointer-events: none; }
 .mmd-preview-hint { position: absolute; bottom: 8px; right: 8px; font-size: 10px; color: var(--text2); background: rgba(15,15,19,.7); padding: 2px 7px; border-radius: 99px; pointer-events: none; }
 .mmd-error { color: var(--red); font-size: 11px; padding: 14px; font-family: monospace; line-height: 1.6; white-space: pre-wrap; }
@@ -328,7 +352,8 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #c8d3e0; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a0b0c4; }
 
 /* ── Pivot / Thinking Transition ── */
 .pivot-timeline { position: relative; padding-left: 26px; }
@@ -895,20 +920,24 @@ function renderDashboard() {
     </div>
 
     <div class="dash-stats">
-      <div class="stat-card">
-        <div class="stat-num">${active.length}</div>
-        <div class="stat-label">進行中プロジェクト / 計${projects.length}</div>
+      <div class="stat-card stat-card-blue stat-card-colored">
+        <div class="stat-icon">📋</div>
+        <div class="stat-num">${active.length}<span class="stat-sub"> / ${projects.length}</span></div>
+        <div class="stat-label">進行中プロジェクト</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num yellow">${inProg}</div>
+      <div class="stat-card stat-card-amber stat-card-colored">
+        <div class="stat-icon">⚙️</div>
+        <div class="stat-num">${inProg}</div>
         <div class="stat-label">作業中タスク</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num green">${done}<span style="font-size:18px;color:var(--text2)">/${total}</span></div>
+      <div class="stat-card stat-card-green stat-card-colored">
+        <div class="stat-icon">✅</div>
+        <div class="stat-num">${done}<span class="stat-sub"> / ${total}</span></div>
         <div class="stat-label">完了タスク（${pct}%）</div>
       </div>
-      <div class="stat-card ${overdue > 0 ? 'warn' : ''}">
-        <div class="stat-num ${overdue > 0 ? 'red' : ''}">${overdue}</div>
+      <div class="stat-card stat-card-red stat-card-colored">
+        <div class="stat-icon">${overdue > 0 ? '🔴' : '📅'}</div>
+        <div class="stat-num">${overdue}</div>
         <div class="stat-label">期限切れタスク</div>
       </div>
     </div>
