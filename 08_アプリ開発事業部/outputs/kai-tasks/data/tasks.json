@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-18T05:20:22",
+  "last_updated": "2026-05-18T07:45:05",
   "projects": [
     {
       "id": "sample-001",
@@ -7153,6 +7153,623 @@
           "timestamp": "2026-05-17T20:10:12",
           "action": "タスク追加",
           "detail": "現場テスト・フィードバック対応 を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "8dd7b126",
+      "name": "seminar-dna: Google Workspace系セミナーDNA抽出",
+      "goal": "90分ウェビナー文字起こしからセミナーDNAを抽出・命名・パターンライブラリに登録する",
+      "status": "active",
+      "created_at": "2026-05-18T07:01:48",
+      "updated_at": "2026-05-18T07:45:05",
+      "memo": "",
+      "big_task": {
+        "id": "21cfea6a",
+        "title": "「90分ウェビナー文字起こしからセミナーDNAを抽出・命名…」を達成する",
+        "description": "このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。",
+        "status": "todo",
+        "due_date": null,
+        "created_at": "2026-05-18T07:01:50",
+        "updated_at": "2026-05-18T07:01:52",
+        "mindmap_mmd": "mindmap\n  root((\"「90分ウェビナー文字起こしからセミナーDNAを…\"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ",
+        "roadmap_mmd": "graph LR\n  A([\"🎯 90分ウェビナー文字起こしからセミナーDNA…\"]) --> B[\"📋 計画フェーズ\"]\n  B --> C[\"⚙️ 実行フェーズ\"]\n  C --> D([\"✅ 完了・定着\"])\n\n  B --> B1[\"現状把握\"]\n  B --> B2[\"要件整理\"]\n  B --> B3[\"リソース確保\"]\n\n  C --> C1[\"フェーズ1: 着手\"]\n  C --> C2[\"フェーズ2: 展開\"]\n  C --> C3[\"フェーズ3: 仕上げ\"]\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style D fill:#43e97b,color:#000,stroke:#43e97b",
+        "gantt_mmd": "",
+        "flow_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-18T07:01:50",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "8e779399",
+          "title": "現状把握・要件整理",
+          "description": "現在の状況を正確に把握し、達成に必要な要件を明確にする",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:01:54",
+          "updated_at": "2026-05-18T07:01:54",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:01:54",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "7d7bc9d5",
+          "title": "計画立案・実行",
+          "description": "具体的なアクションプランを立て、確実に実行する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:01:56",
+          "updated_at": "2026-05-18T07:01:56",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:01:56",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "b1d9db04",
+          "title": "検証・改善・定着化",
+          "description": "結果を確認し、改善サイクルを回して定着させる",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:01:58",
+          "updated_at": "2026-05-18T07:01:58",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:01:58",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "9e74020e",
+          "title": "キックオフ・関係者共有",
+          "description": "プロジェクト開始を関係者に伝え、役割分担と協力体制を整える",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:02:00",
+          "updated_at": "2026-05-18T07:02:00",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:02:00",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "2fb81449",
+          "title": "ツール・リソースの準備",
+          "description": "作業に必要なツール・情報・人員・予算を事前に確保する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:02:02",
+          "updated_at": "2026-05-18T07:02:02",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:02:02",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "055fe701",
+          "title": "進捗確認・中間レビュー",
+          "description": "定期的に進捗を確認し、目標とのズレを早期に修正する",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:02:04",
+          "updated_at": "2026-05-18T07:02:04",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:02:04",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "470283a0",
+          "title": "課題の洗い出しと対処",
+          "description": "リスクや障害を早期に発見し、影響が出る前に手を打つ",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:02:06",
+          "updated_at": "2026-05-18T07:02:06",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:02:06",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "2000aec4",
+          "title": "最終確認・完了報告",
+          "description": "成果物・達成度を確認し、引き継ぎ・報告を行って完了とする",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-18T07:02:08",
+          "updated_at": "2026-05-18T07:02:08",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "gantt_mmd": "",
+          "flow_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-18T07:02:08",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [
+        {
+          "id": "ae514f06",
+          "timestamp": "2026-05-18T07:02:17",
+          "type": "instruction",
+          "summary": "素材読み込み完了：90分ウェビナー文字起こし（Google Workspace活用・チーム生産性向上）を分析。DNA7軸分析を実施中",
+          "detail": ""
+        },
+        {
+          "id": "65ba82f9",
+          "timestamp": "2026-05-18T07:44:54",
+          "type": "output",
+          "summary": "パターン定義・テンプレート・INDEX生成完了：課題積み上げ体感実演型",
+          "detail": "rules/seminar-patterns/課題積み上げ体感実演型.md / 課題積み上げ体感実演型_template.md / INDEX.md更新"
+        },
+        {
+          "id": "8832bee9",
+          "timestamp": "2026-05-18T07:45:03",
+          "type": "output",
+          "summary": "seminar-dna extractモード完了。90分ウェビナーからDNA抽出し「課題積み上げ体感実演型」として命名・保存。",
+          "detail": "作成ファイル: 課題積み上げ体感実演型.md / 課題積み上げ体感実演型_template.md / INDEX.md更新。次回はapplyモードで別テーマへの展開が可能。"
+        }
+      ],
+      "history": [
+        {
+          "timestamp": "2026-05-18T07:01:48",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:01:50",
+          "action": "タスク追加",
+          "detail": "「90分ウェビナー文字起こしからセミナーDNAを抽出・命名…」を達成する を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:01:54",
+          "action": "タスク追加",
+          "detail": "現状把握・要件整理 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:01:56",
+          "action": "タスク追加",
+          "detail": "計画立案・実行 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:01:58",
+          "action": "タスク追加",
+          "detail": "検証・改善・定着化 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:00",
+          "action": "タスク追加",
+          "detail": "キックオフ・関係者共有 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:02",
+          "action": "タスク追加",
+          "detail": "ツール・リソースの準備 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:04",
+          "action": "タスク追加",
+          "detail": "進捗確認・中間レビュー を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:06",
+          "action": "タスク追加",
+          "detail": "課題の洗い出しと対処 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:08",
+          "action": "タスク追加",
+          "detail": "最終確認・完了報告 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-18T07:02:17",
+          "action": "ログ追加",
+          "detail": "[instruction] 素材読み込み完了：90分ウェビナー文字起こし（Google Workspace活用・チーム生産性向上）を分析。DNA7軸分析を実施中"
+        },
+        {
+          "timestamp": "2026-05-18T07:44:54",
+          "action": "ログ追加",
+          "detail": "[output] パターン定義・テンプレート・INDEX生成完了：課題積み上げ体感実演型"
+        },
+        {
+          "timestamp": "2026-05-18T07:45:03",
+          "action": "ログ追加",
+          "detail": "[output] seminar-dna extractモード完了。90分ウェビナーからDNA抽出し「課題積み上げ体感実演型」として命名・保存。"
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "9603e28c",
+          "timestamp": "2026-05-18T07:45:05",
+          "label": "セッション終了 — 2026-05-18 07:45",
+          "state": {
+            "id": "8dd7b126",
+            "name": "seminar-dna: Google Workspace系セミナーDNA抽出",
+            "goal": "90分ウェビナー文字起こしからセミナーDNAを抽出・命名・パターンライブラリに登録する",
+            "status": "active",
+            "created_at": "2026-05-18T07:01:48",
+            "updated_at": "2026-05-18T07:45:03",
+            "memo": "",
+            "big_task": {
+              "id": "21cfea6a",
+              "title": "「90分ウェビナー文字起こしからセミナーDNAを抽出・命名…」を達成する",
+              "description": "このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。",
+              "status": "todo",
+              "due_date": null,
+              "created_at": "2026-05-18T07:01:50",
+              "updated_at": "2026-05-18T07:01:52",
+              "mindmap_mmd": "mindmap\n  root((\"「90分ウェビナー文字起こしからセミナーDNAを…\"))\n    計画\n      現状把握\n      要件整理\n      スケジュール確定\n    実行\n      フェーズ1\n      フェーズ2\n      フェーズ3\n    完了\n      検証・テスト\n      改善\n      定着化・引き継ぎ",
+              "roadmap_mmd": "graph LR\n  A([\"🎯 90分ウェビナー文字起こしからセミナーDNA…\"]) --> B[\"📋 計画フェーズ\"]\n  B --> C[\"⚙️ 実行フェーズ\"]\n  C --> D([\"✅ 完了・定着\"])\n\n  B --> B1[\"現状把握\"]\n  B --> B2[\"要件整理\"]\n  B --> B3[\"リソース確保\"]\n\n  C --> C1[\"フェーズ1: 着手\"]\n  C --> C2[\"フェーズ2: 展開\"]\n  C --> C3[\"フェーズ3: 仕上げ\"]\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style D fill:#43e97b,color:#000,stroke:#43e97b",
+              "gantt_mmd": "",
+              "flow_mmd": "",
+              "related_links": [],
+              "output_files": [],
+              "history": [
+                {
+                  "timestamp": "2026-05-18T07:01:50",
+                  "action": "作成",
+                  "detail": "タスクを作成しました"
+                }
+              ]
+            },
+            "medium_tasks": [
+              {
+                "id": "8e779399",
+                "title": "現状把握・要件整理",
+                "description": "現在の状況を正確に把握し、達成に必要な要件を明確にする",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:01:54",
+                "updated_at": "2026-05-18T07:01:54",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:01:54",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "7d7bc9d5",
+                "title": "計画立案・実行",
+                "description": "具体的なアクションプランを立て、確実に実行する",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:01:56",
+                "updated_at": "2026-05-18T07:01:56",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:01:56",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "b1d9db04",
+                "title": "検証・改善・定着化",
+                "description": "結果を確認し、改善サイクルを回して定着させる",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:01:58",
+                "updated_at": "2026-05-18T07:01:58",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:01:58",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              }
+            ],
+            "small_tasks": [
+              {
+                "id": "9e74020e",
+                "title": "キックオフ・関係者共有",
+                "description": "プロジェクト開始を関係者に伝え、役割分担と協力体制を整える",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:02:00",
+                "updated_at": "2026-05-18T07:02:00",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:02:00",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "2fb81449",
+                "title": "ツール・リソースの準備",
+                "description": "作業に必要なツール・情報・人員・予算を事前に確保する",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:02:02",
+                "updated_at": "2026-05-18T07:02:02",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:02:02",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "055fe701",
+                "title": "進捗確認・中間レビュー",
+                "description": "定期的に進捗を確認し、目標とのズレを早期に修正する",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:02:04",
+                "updated_at": "2026-05-18T07:02:04",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:02:04",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "470283a0",
+                "title": "課題の洗い出しと対処",
+                "description": "リスクや障害を早期に発見し、影響が出る前に手を打つ",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:02:06",
+                "updated_at": "2026-05-18T07:02:06",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:02:06",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "2000aec4",
+                "title": "最終確認・完了報告",
+                "description": "成果物・達成度を確認し、引き継ぎ・報告を行って完了とする",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-18T07:02:08",
+                "updated_at": "2026-05-18T07:02:08",
+                "mindmap_mmd": "",
+                "roadmap_mmd": "",
+                "gantt_mmd": "",
+                "flow_mmd": "",
+                "related_links": [],
+                "output_files": [],
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T07:02:08",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              }
+            ],
+            "pivots": [],
+            "linked_projects": [],
+            "initial_mindmap_mmd": "",
+            "tags": [],
+            "session_logs": [
+              {
+                "id": "ae514f06",
+                "timestamp": "2026-05-18T07:02:17",
+                "type": "instruction",
+                "summary": "素材読み込み完了：90分ウェビナー文字起こし（Google Workspace活用・チーム生産性向上）を分析。DNA7軸分析を実施中",
+                "detail": ""
+              },
+              {
+                "id": "65ba82f9",
+                "timestamp": "2026-05-18T07:44:54",
+                "type": "output",
+                "summary": "パターン定義・テンプレート・INDEX生成完了：課題積み上げ体感実演型",
+                "detail": "rules/seminar-patterns/課題積み上げ体感実演型.md / 課題積み上げ体感実演型_template.md / INDEX.md更新"
+              },
+              {
+                "id": "8832bee9",
+                "timestamp": "2026-05-18T07:45:03",
+                "type": "output",
+                "summary": "seminar-dna extractモード完了。90分ウェビナーからDNA抽出し「課題積み上げ体感実演型」として命名・保存。",
+                "detail": "作成ファイル: 課題積み上げ体感実演型.md / 課題積み上げ体感実演型_template.md / INDEX.md更新。次回はapplyモードで別テーマへの展開が可能。"
+              }
+            ],
+            "history": [
+              {
+                "timestamp": "2026-05-18T07:01:48",
+                "action": "作成",
+                "detail": "プロジェクトを作成しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:01:50",
+                "action": "タスク追加",
+                "detail": "「90分ウェビナー文字起こしからセミナーDNAを抽出・命名…」を達成する を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:01:54",
+                "action": "タスク追加",
+                "detail": "現状把握・要件整理 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:01:56",
+                "action": "タスク追加",
+                "detail": "計画立案・実行 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:01:58",
+                "action": "タスク追加",
+                "detail": "検証・改善・定着化 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:00",
+                "action": "タスク追加",
+                "detail": "キックオフ・関係者共有 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:02",
+                "action": "タスク追加",
+                "detail": "ツール・リソースの準備 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:04",
+                "action": "タスク追加",
+                "detail": "進捗確認・中間レビュー を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:06",
+                "action": "タスク追加",
+                "detail": "課題の洗い出しと対処 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:08",
+                "action": "タスク追加",
+                "detail": "最終確認・完了報告 を追加しました"
+              },
+              {
+                "timestamp": "2026-05-18T07:02:17",
+                "action": "ログ追加",
+                "detail": "[instruction] 素材読み込み完了：90分ウェビナー文字起こし（Google Workspace活用・チーム生産性向上）を分析。DNA7軸分析を実施中"
+              },
+              {
+                "timestamp": "2026-05-18T07:44:54",
+                "action": "ログ追加",
+                "detail": "[output] パターン定義・テンプレート・INDEX生成完了：課題積み上げ体感実演型"
+              },
+              {
+                "timestamp": "2026-05-18T07:45:03",
+                "action": "ログ追加",
+                "detail": "[output] seminar-dna extractモード完了。90分ウェビナーからDNA抽出し「課題積み上げ体感実演型」として命名・保存。"
+              }
+            ]
+          }
         }
       ]
     }
