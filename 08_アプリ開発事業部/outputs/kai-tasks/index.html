@@ -688,48 +688,73 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
   mindmap: { padding: 16, curve: 'linear' } });
 let mmdSeq = 0;
 
-// ── MindMeister-style mindmap coloring ──
-// Strategy: append a <style> to document.body AFTER the SVG is inserted.
-// By document order, our stylesheet comes after the SVG's internal <style>,
-// so for equal specificity + !important, ours wins (last rule wins).
-const _MM_P = ['#3b82f6','#10b981','#f97316','#8b5cf6','#ef4444','#06b6d4','#ec4899','#f59e0b'];
+// ── MindMeister-style coloring for mindmap SVG ──
+const MM_PALETTE = [
+  '#3b82f6',  // blue
+  '#10b981',  // emerald
+  '#f97316',  // orange
+  '#8b5cf6',  // purple
+  '#ef4444',  // red
+  '#06b6d4',  // cyan
+  '#ec4899',  // pink
+  '#f59e0b',  // amber
+];
 
 function applyMindmapColors(svgEl) {
   if (!svgEl || !svgEl.querySelector('.mindmap-node')) return;
-  const id = svgEl.id;
-  if (!id) return;
 
-  // Remove any previous override for this SVG
-  const prev = document.getElementById('mm-ov-' + id);
-  if (prev) prev.remove();
+  // Inject override CSS into SVG
+  let styleEl = svgEl.querySelector('defs style') || svgEl.querySelector('style');
+  if (!styleEl) {
+    styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    svgEl.insertBefore(styleEl, svgEl.firstChild);
+  }
 
-  let css = '';
-  _MM_P.forEach((col, i) => {
-    const s = `svg#${id} g.section-${i}`;
-    css += `
-      ${s} rect { fill: ${col} !important; stroke: ${col} !important; }
-      ${s} circle { fill: ${col} !important; stroke: ${col} !important; }
-      ${s} ellipse { fill: ${col} !important; stroke: ${col} !important; }
-      ${s} polygon { fill: ${col} !important; stroke: ${col} !important; }
-      ${s} g.mindmap-node path { fill: ${col} !important; stroke: ${col} !important; }
-      ${s} path { stroke: ${col} !important; stroke-width: 2.5px !important; }
-      ${s} text { fill: #fff !important; font-weight: 700 !important; }
-      ${s} tspan { fill: #fff !important; }
-    `;
-  });
-  // Root node — higher specificity wins over any section color
-  const r = `svg#${id} g.mindmap-node--root`;
-  css += `
-    ${r} rect, ${r} circle, ${r} ellipse, ${r} polygon { fill: #1e293b !important; stroke: #334155 !important; }
-    ${r} g.mindmap-node path { fill: #1e293b !important; stroke: #334155 !important; }
-    ${r} text, ${r} tspan { fill: #f8fafc !important; font-weight: 700 !important; }
+  // Root node — dark navy
+  let css = `
+    .mindmap-node--root rect, .mindmap-node--root circle,
+    .mindmap-node--root ellipse, .mindmap-node--root polygon {
+      fill: #1e293b !important; stroke: #334155 !important; rx: 99;
+    }
+    .mindmap-node--root text, .mindmap-node--root tspan { fill: #f1f5f9 !important; font-weight: 700 !important; }
+    /* Edge lines to neutral subtle color */
+    .mindmap-node path { fill: none !important; }
   `;
 
-  const st = document.createElement('style');
-  st.id = 'mm-ov-' + id;
-  st.textContent = css;
-  // Appended to body after SVG — wins document-order cascade vs SVG-internal <style>
-  document.body.appendChild(st);
+  MM_PALETTE.forEach((col, i) => {
+    css += `
+      .section-${i} rect, .section-${i} circle,
+      .section-${i} ellipse, .section-${i} polygon {
+        fill: ${col} !important; stroke: ${col} !important; rx: 8;
+      }
+      .section-${i} text, .section-${i} tspan { fill: #ffffff !important; font-weight: 600 !important; }
+      .section-${i} line { stroke: ${col} !important; stroke-width: 2px !important; }
+    `;
+  });
+
+  styleEl.textContent += css;
+
+  // Directly color paths (edges) inside each section group
+  MM_PALETTE.forEach((col, i) => {
+    svgEl.querySelectorAll(`.section-${i}`).forEach(g => {
+      g.querySelectorAll('path').forEach(p => {
+        if (p.getAttribute('fill') !== 'none' && !p.getAttribute('fill')) return;
+        p.setAttribute('stroke', col);
+        p.setAttribute('stroke-width', '2.5');
+        p.setAttribute('fill', 'none');
+      });
+      g.querySelectorAll('line').forEach(l => { l.setAttribute('stroke', col); l.setAttribute('stroke-width', '2'); });
+    });
+  });
+
+  // Color standalone SVG-root paths (cross-section connector lines)
+  const allPaths = Array.from(svgEl.querySelectorAll('path, line'));
+  allPaths.forEach(p => {
+    if (!p.closest('.mindmap-node') && !p.getAttribute('stroke')) {
+      p.setAttribute('stroke', '#94a3b8');
+      p.setAttribute('stroke-width', '2');
+    }
+  });
 }
 
 const API = 'http://localhost:3456/api';
