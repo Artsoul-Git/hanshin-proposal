@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-18T03:31:16",
+  "last_updated": "2026-05-18T04:24:45",
   "projects": [
     {
       "id": "sample-001",
@@ -8,7 +8,7 @@
       "goal": "タスク管理アプリを完成させて運用開始する",
       "status": "archived",
       "created_at": "2026-05-11T00:00:00",
-      "updated_at": "2026-05-18T03:31:16",
+      "updated_at": "2026-05-18T04:24:45",
       "memo": "これはサンプルです。使い方を確認したら削除してください。",
       "big_task": {
         "id": "t-big-001",
@@ -155,7 +155,7 @@
           "status": "in_progress",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-18T03:31:01",
+          "updated_at": "2026-05-18T04:24:44",
           "history": [
             {
               "timestamp": "2026-05-18T03:31:01",
@@ -163,8 +163,8 @@
               "detail": "「todo」→「in_progress」"
             }
           ],
-          "mindmap_mmd": "mindmap\n  root((\"CLAUDE.md にタスク管理アプリの場所を記載す\"))\n    Step1: CLAUDE.md ファイルの作成\n      約5分\n    Step2: タスク管理アプリの場所を記載\n      約10分\n    Step3: 使い方の記載\n      約15分\n    Step4: 確認と保存\n      約5分",
-          "roadmap_mmd": "graph TD\n  S0([\"🎯 CLAUDE.md にタスク管理アプリの場所\"])\n  S1[\"CLAUDE.md ファイルの作成 (5分)\"]\n  S2[\"タスク管理アプリの場所を記載 (10分)\"]\n  S3[\"使い方の記載 (15分)\"]\n  S4[\"確認と保存 (5分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
+          "mindmap_mmd": "mindmap\n  root((\"CLAUDE.md にタスク管理アプリの場所を記載す\"))\n    Step1: CLAUDE.md ファイルの作成\n      約2分\n    Step2: タスク管理アプリの場所の記述\n      約5分\n    Step3: 使い方のドキュメント作成\n      約10分\n    Step4: ファイルの確認と保存\n      約1分\n    Step5: Kai に通知\n      約2分",
+          "roadmap_mmd": "graph TD\n  S0([\"🎯 CLAUDE.md にタスク管理アプリの場所\"])\n  S1[\"CLAUDE.md ファイルの作成 (2分)\"]\n  S2[\"タスク管理アプリの場所の記述 (5分)\"]\n  S3[\"使い方のドキュメント作成 (10分)\"]\n  S4[\"ファイルの確認と保存 (1分)\"]\n  S5[\"Kai に通知 (2分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n  S5 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
         }
       ],
       "history": [
@@ -207,6 +207,13 @@
           "type": "decision",
           "summary": "✂️ 「CLAUDE.md にタスク管理アプリの場所を記載する」を 4 ステップに分解",
           "detail": "Step1: CLAUDE.md ファイルの作成 (約5分)\nStep2: タスク管理アプリの場所を記載 (約10分)\nStep3: 使い方の記載 (約15分)\nStep4: 確認と保存 (約5分)"
+        },
+        {
+          "id": "mpa5zi7y",
+          "timestamp": "2026-05-17T19:24:44.926Z",
+          "type": "decision",
+          "summary": "✂️ 「CLAUDE.md にタスク管理アプリの場所を記載する」を 5 ステップに分解",
+          "detail": "Step1: CLAUDE.md ファイルの作成 (約2分)\nStep2: タスク管理アプリの場所の記述 (約5分)\nStep3: 使い方のドキュメント作成 (約10分)\nStep4: ファイルの確認と保存 (約1分)\nStep5: Kai に通知 (約2分)"
         }
       ],
       "snapshots": [

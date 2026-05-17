@@ -3,59 +3,41 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
   mindmap: { padding: 16, curve: 'linear' } });
 let mmdSeq = 0;
 
-// ── MindMeister branch annotation — inject :::mmN before mermaid.render ──
-// NOTE: Mermaid mindmap does NOT support ::: on the root node → skip root
-function annotateMindmap(code) {
-  if (!code || !code.trim().startsWith('mindmap')) return code;
-  const lines = code.split('\n');
-  const out = [];
-  const stack = []; // {indent, branch}
-  let branchCount = 0;
-  let rootIndent = null;
+// ── MindMeister-style coloring via post-render DOM manipulation ──
+// (Mermaid mindmap :::className is NOT supported — treated as literal text)
+const _MM_P = ['#3b82f6','#10b981','#f97316','#8b5cf6','#ef4444','#06b6d4','#ec4899','#f59e0b'];
 
-  for (const line of lines) {
-    const trimmed = line.trimStart();
-    // Pass through keyword / empty lines / already-annotated lines
-    if (!trimmed || trimmed === 'mindmap' || trimmed.includes(':::')) {
-      out.push(line);
-      continue;
-    }
-    const indent = line.length - trimmed.length;
+function applyMindmapColors(svgEl) {
+  if (!svgEl || !svgEl.querySelector('.mindmap-node')) return;
 
-    // Root: first indented node — do NOT annotate (Mermaid rejects ::: on root)
-    if (rootIndent === null) {
-      rootIndent = indent;
-      stack.push({ indent, branch: -1 });
-      out.push(line);
-      continue;
-    }
-
-    // Continuation lines (indent < rootIndent) = wrapped root label → pass through
-    if (indent < rootIndent) { out.push(line); continue; }
-
-    // Pop stack until we find the parent
-    while (stack.length > 0 && stack[stack.length - 1].indent >= indent) stack.pop();
-    const parent = stack[stack.length - 1];
-
-    // Direct child of root → new branch; deeper → inherit parent branch
-    const isDirectChildOfRoot = !parent || parent.branch === -1;
-    const branch = isDirectChildOfRoot ? (branchCount++ % 8) : parent.branch;
-
-    stack.push({ indent, branch });
-    out.push(line + `:::mm${branch}`);
+  function paint(el, bg, txt) {
+    // Shapes: rect, circle, ellipse, polygon
+    el.querySelectorAll('rect, circle, ellipse, polygon').forEach(s => {
+      s.style.setProperty('fill', bg, 'important');
+      s.style.setProperty('stroke', bg, 'important');
+    });
+    // Paths: only those with an existing fill (node background paths, not edge-only paths)
+    el.querySelectorAll('path').forEach(p => {
+      const f = p.getAttribute('fill') || p.style.fill || '';
+      if (f && f !== 'none') p.style.setProperty('fill', bg, 'important');
+      p.style.setProperty('stroke', bg, 'important');
+    });
+    // Text
+    el.querySelectorAll('text, tspan').forEach(t => t.style.setProperty('fill', txt, 'important'));
   }
-  return out.join('\n');
-}
 
-// Render mindmap with :::mmN colors, falling back to plain if annotation fails
-async function renderMindmapSvg(id, code) {
-  const annotated = annotateMindmap(code);
-  try {
-    return (await mermaid.render(id, annotated)).svg;
-  } catch(e) {
-    // :::className may not be supported in this build — fall back to plain
-    return (await mermaid.render(id + '_plain', code)).svg;
+  // Color each branch section (section-0 … section-7)
+  for (let i = 0; i < 8; i++) {
+    const els = svgEl.querySelectorAll(`.section-${i}`);
+    if (!els.length) break;
+    els.forEach(el => paint(el, _MM_P[i], '#fff'));
   }
+
+  // Root node — paint last so it overrides any inherited section color
+  const allNodes = Array.from(svgEl.querySelectorAll('.mindmap-node'));
+  const rootEl = svgEl.querySelector('.mindmap-node--root')
+    || allNodes.find(n => n.querySelector('circle, ellipse'));
+  if (rootEl) paint(rootEl, '#1e293b', '#f8fafc');
 }
 
 const API = 'http://localhost:3456/api';
@@ -1003,18 +985,17 @@ function previewMmd(editorId, previewId) {
     if (!code || !container) return;
     try {
       const id = `mmd-${++mmdSeq}`;
-      const isMindmap = code.trim().startsWith('mindmap');
-      const svg = isMindmap ? await renderMindmapSvg(id, code) : (await mermaid.render(id, code)).svg;
+      const { svg } = await mermaid.render(id, code);
       container.innerHTML = svg + '<div class="mmd-preview-hint">クリックで拡大</div>';
       const svgEl = container.querySelector('svg');
       if (svgEl) {
-        // Preserve viewBox for PDF, remove fixed size so CSS controls display
         const w = svgEl.getAttribute('width');
         const h = svgEl.getAttribute('height');
         if (w && h && !svgEl.getAttribute('viewBox')) {
           svgEl.setAttribute('viewBox', `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
         }
         svgEl.setAttribute('style', 'max-width:100%;max-height:100%;width:auto;height:auto;display:block;');
+        if (code.trim().startsWith('mindmap')) applyMindmapColors(svgEl);
       }
     } catch(e) {
       container.innerHTML = `<div class="mmd-error">構文エラー:\n${e.message || e}</div>`;
@@ -1470,9 +1451,10 @@ async function renderPivotCompare(p) {
     if (!el) continue;
     try {
       const id = `pmc-${++mmdSeq}`;
-      const svg = await renderMindmapSvg(id, code);
+      const { svg } = await mermaid.render(id, code);
       el.innerHTML = svg;
-      el.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+      const s = el.querySelector('svg');
+      if (s) { s.setAttribute('style', 'max-width:100%;height:auto;'); applyMindmapColors(s); }
     } catch(e) {
       el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`;
     }
@@ -2285,11 +2267,13 @@ function renderTaskDashboard(taskId) {
       if (!el) continue;
       try {
         const id = `td-${++mmdSeq}`;
-        const isMindmap = code.trim().startsWith('mindmap');
-        const svg = isMindmap ? await renderMindmapSvg(id, code) : (await mermaid.render(id, code)).svg;
+        const { svg } = await mermaid.render(id, code);
         el.innerHTML = svg + '<div class="mmd-preview-hint" style="position:absolute;bottom:6px;right:6px;">クリックで拡大</div>';
         const s = el.querySelector('svg');
-        if (s) s.style.cssText = 'max-width:100%;height:auto;display:block;';
+        if (s) {
+          s.style.cssText = 'max-width:100%;height:auto;display:block;';
+          if (code.trim().startsWith('mindmap')) applyMindmapColors(s);
+        }
         el.style.position = 'relative';
       } catch(e) { el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`; }
     }
