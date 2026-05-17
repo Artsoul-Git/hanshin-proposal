@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-17T20:12:59",
+  "last_updated": "2026-05-17T20:15:08",
   "projects": [
     {
       "id": "sample-001",
@@ -11869,7 +11869,7 @@
       "goal": "ChatGPT?????????????????????????????????????????",
       "status": "active",
       "created_at": "2026-05-17T20:12:39",
-      "updated_at": "2026-05-17T20:12:59",
+      "updated_at": "2026-05-17T20:13:16",
       "memo": "2026-05-16?17 08_?????/outputs/self-analysis/ ????????HTML?Markdown",
       "big_task": {
         "id": "85beea17",
@@ -11998,6 +11998,106 @@
               "detail": "「todo」→「done」"
             }
           ]
+        },
+        {
+          "id": "32c23f31",
+          "title": "?????????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:01",
+          "updated_at": "2026-05-17T20:13:03",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:01",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:03",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "404b10bb",
+          "title": "????HTML??????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:05",
+          "updated_at": "2026-05-17T20:13:08",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:05",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:08",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "8db4acfc",
+          "title": "Markdown???????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:10",
+          "updated_at": "2026-05-17T20:13:12",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:10",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:12",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "25b6513c",
+          "title": "??????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:14",
+          "updated_at": "2026-05-17T20:13:16",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:14",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:16",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
         }
       ],
       "pivots": [],
@@ -12033,6 +12133,896 @@
         },
         {
           "timestamp": "2026-05-17T20:12:57",
+          "action": "タスク追加",
+          "detail": "??????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:01",
+          "action": "タスク追加",
+          "detail": "????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:05",
+          "action": "タスク追加",
+          "detail": "????HTML?????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:10",
+          "action": "タスク追加",
+          "detail": "Markdown??????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:14",
+          "action": "タスク追加",
+          "detail": "?????????? を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "861fd0aa",
+      "name": "?????????9? + /contract-check",
+      "goal": "??????NDA????WBS??????????????????????9???????contract-check?????",
+      "status": "active",
+      "created_at": "2026-05-17T20:13:18",
+      "updated_at": "2026-05-17T20:13:55",
+      "memo": "2026-05-16 ?10??????rules/skills/ ?????????????????.html??",
+      "big_task": {
+        "id": "0aee5222",
+        "title": "?????????10?????",
+        "description": "",
+        "status": "done",
+        "due_date": null,
+        "created_at": "2026-05-17T20:13:20",
+        "updated_at": "2026-05-17T20:13:22",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:13:20",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:13:22",
+            "action": "ステータス変更",
+            "detail": "「todo」→「done」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "0eba55f6",
+          "title": "hearing-sheet/proposal-outline/billing-docs/nda??",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:24",
+          "updated_at": "2026-05-17T20:13:26",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:24",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:26",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "7a95d811",
+          "title": "biz-contract/wbs-gantt/daily-report/monthly-report/doc-compare??",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:28",
+          "updated_at": "2026-05-17T20:13:30",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:28",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:30",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "5de9d710",
+          "title": "/contract-check???????????/???/???",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:32",
+          "updated_at": "2026-05-17T20:13:34",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:32",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:34",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "09621bc5",
+          "title": "?????SKILL.md 10???",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:36",
+          "updated_at": "2026-05-17T20:13:39",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:36",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:39",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "50440d1f",
+          "title": "??????????????.html??",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:41",
+          "updated_at": "2026-05-17T20:13:43",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:41",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:43",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "2b6f4dbc",
+          "title": "biz-contract 17????????????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:45",
+          "updated_at": "2026-05-17T20:13:47",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:45",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:47",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "33cf0370",
+          "title": "doc-compare??13???????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:49",
+          "updated_at": "2026-05-17T20:13:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:49",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:51",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "f8d9b892",
+          "title": "???????PART1-B???",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:13:53",
+          "updated_at": "2026-05-17T20:13:55",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:13:53",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:13:55",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:13:18",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:20",
+          "action": "タスク追加",
+          "detail": "?????????10????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:24",
+          "action": "タスク追加",
+          "detail": "hearing-sheet/proposal-outline/billing-docs/nda?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:28",
+          "action": "タスク追加",
+          "detail": "biz-contract/wbs-gantt/daily-report/monthly-report/doc-compare?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:32",
+          "action": "タスク追加",
+          "detail": "/contract-check???????????/???/??? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:36",
+          "action": "タスク追加",
+          "detail": "?????SKILL.md 10??? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:41",
+          "action": "タスク追加",
+          "detail": "??????????????.html?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:45",
+          "action": "タスク追加",
+          "detail": "biz-contract 17???????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:49",
+          "action": "タスク追加",
+          "detail": "doc-compare??13??????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:53",
+          "action": "タスク追加",
+          "detail": "???????PART1-B??? を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "5825fb5d",
+      "name": "kai-review ????????",
+      "goal": "git????????????Kai?????????????????????JSON???????????",
+      "status": "active",
+      "created_at": "2026-05-17T20:13:57",
+      "updated_at": "2026-05-17T20:14:32",
+      "memo": "2026-05-16 kai-review.py???reviews/daily/2026-05-16.json ????????",
+      "big_task": {
+        "id": "31dec4a7",
+        "title": "kai-review??????????",
+        "description": "",
+        "status": "done",
+        "due_date": null,
+        "created_at": "2026-05-17T20:13:59",
+        "updated_at": "2026-05-17T20:14:01",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:13:59",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:14:01",
+            "action": "ステータス変更",
+            "detail": "「todo」→「done」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "b9c2e9cd",
+          "title": "kai-review.py?????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:03",
+          "updated_at": "2026-05-17T20:14:05",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:03",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:05",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "549ecaf6",
+          "title": "????JSON???reviews/daily/?",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:08",
+          "updated_at": "2026-05-17T20:14:10",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:08",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:10",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "a965fb2b",
+          "title": "/eval-daily?/eval-weekly?/eval-monthly ?????",
+          "description": "",
+          "status": "in_progress",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:12",
+          "updated_at": "2026-05-17T20:14:14",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:12",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:14",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "657be534",
+          "title": "??????5???????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:16",
+          "updated_at": "2026-05-17T20:14:18",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:16",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:18",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "de74a36b",
+          "title": "git??????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:20",
+          "updated_at": "2026-05-17T20:14:22",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:20",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:22",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "7aba9350",
+          "title": "?????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:24",
+          "updated_at": "2026-05-17T20:14:26",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:24",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:26",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "38579b0f",
+          "title": "?????????",
+          "description": "",
+          "status": "in_progress",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:28",
+          "updated_at": "2026-05-17T20:14:30",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:28",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:30",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ]
+        },
+        {
+          "id": "86b9e867",
+          "title": "?????????",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:32",
+          "updated_at": "2026-05-17T20:14:32",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:32",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:13:57",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:13:59",
+          "action": "タスク追加",
+          "detail": "kai-review?????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:03",
+          "action": "タスク追加",
+          "detail": "kai-review.py????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:08",
+          "action": "タスク追加",
+          "detail": "????JSON???reviews/daily/? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:12",
+          "action": "タスク追加",
+          "detail": "/eval-daily?/eval-weekly?/eval-monthly ????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:16",
+          "action": "タスク追加",
+          "detail": "??????5??????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:20",
+          "action": "タスク追加",
+          "detail": "git?????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:24",
+          "action": "タスク追加",
+          "detail": "????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:28",
+          "action": "タスク追加",
+          "detail": "????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:32",
+          "action": "タスク追加",
+          "detail": "????????? を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "26b1937e",
+      "name": "??? AI???????????GAS?",
+      "goal": "???????????????GAS+???Biz???????????????????",
+      "status": "active",
+      "created_at": "2026-05-17T20:14:34",
+      "updated_at": "2026-05-17T20:15:08",
+      "memo": "2026-05-08?09 GAS Mode A MVP??????v8??????Biz?GAS??????????",
+      "big_task": {
+        "id": "b340f44d",
+        "title": "???AI???????????",
+        "description": "",
+        "status": "in_progress",
+        "due_date": null,
+        "created_at": "2026-05-17T20:14:37",
+        "updated_at": "2026-05-17T20:14:39",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:14:37",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:14:39",
+            "action": "ステータス変更",
+            "detail": "「todo」→「in_progress」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "16fcff96",
+          "title": "????????????AI???????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:41",
+          "updated_at": "2026-05-17T20:14:43",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:41",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:43",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "226cf4cc",
+          "title": "GAS Mode A MVP??????????????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:45",
+          "updated_at": "2026-05-17T20:14:47",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:45",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:47",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "3c90a9e6",
+          "title": "???v8???????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:49",
+          "updated_at": "2026-05-17T20:14:51",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:49",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:51",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "be418a04",
+          "title": "???Biz?????FAQ?????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:53",
+          "updated_at": "2026-05-17T20:14:55",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:53",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:55",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "9791bac6",
+          "title": "doGet?????????URL??????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:14:57",
+          "updated_at": "2026-05-17T20:14:59",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:14:57",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:14:59",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "acf80035",
+          "title": "Gemini API??????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:15:01",
+          "updated_at": "2026-05-17T20:15:03",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:15:01",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:15:03",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "fbc6b58f",
+          "title": "Mode B?LINE?????",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:15:05",
+          "updated_at": "2026-05-17T20:15:05",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:15:05",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "131e8900",
+          "title": "???????????????",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:15:08",
+          "updated_at": "2026-05-17T20:15:08",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:15:08",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:14:34",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:37",
+          "action": "タスク追加",
+          "detail": "???AI??????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:41",
+          "action": "タスク追加",
+          "detail": "????????????AI??????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:45",
+          "action": "タスク追加",
+          "detail": "GAS Mode A MVP?????????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:49",
+          "action": "タスク追加",
+          "detail": "???v8??????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:53",
+          "action": "タスク追加",
+          "detail": "???Biz?????FAQ????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:14:57",
+          "action": "タスク追加",
+          "detail": "doGet?????????URL?????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:15:01",
+          "action": "タスク追加",
+          "detail": "Gemini API?????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:15:05",
+          "action": "タスク追加",
+          "detail": "Mode B?LINE????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:15:08",
           "action": "タスク追加",
           "detail": "??????????????? を追加しました"
         }
