@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/knowledge-craft 完全ガイド — 有限会社アートソウル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+  .sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+  .sb-section { padding: 10px 14px 4px; }
+  .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+  .sb-link { display: block; padding: 5px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+  .sb-link:hover, .sb-link.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+  /* Main */
+  .main-content { margin-left: 230px; flex: 1; padding: 40px 20px; min-width: 0; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* Cover */
+  .cover { background: linear-gradient(135deg, #EDF2F7 0%, #E2E8F0 100%); border-radius: 8px; margin: -20px -20px 50px; padding: 70px 40px 60px; text-align: center; }
+  .skill-badge { display: inline-block; background: #ED8936; color: white; font-size: 13px; font-weight: bold; padding: 4px 16px; border-radius: 20px; margin-bottom: 18px; letter-spacing: 0.05em; }
+  .cover h1 { font-size: 36px; color: #1A365D; margin-bottom: 14px; line-height: 1.3; }
+  .cover .tagline { font-size: 17px; color: #4A5568; margin-bottom: 32px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 540px; margin: 0 auto; }
+  .meta-item { background: white; border-radius: 8px; padding: 14px 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .meta-num { font-size: 26px; font-weight: bold; color: #ED8936; line-height: 1; }
+  .meta-label { font-size: 11px; color: #718096; margin-top: 4px; }
+
+  /* Typography */
+  h2 { font-size: 24px; color: #1A365D; padding: 48px 0 14px; margin-top: 36px; border-bottom: 3px solid #ED8936; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 18px; color: #2D3748; margin: 28px 0 10px; padding-left: 14px; border-left: 5px solid #ED8936; line-height: 1.5; }
+  h4 { font-size: 15px; color: #1A365D; margin: 18px 0 6px; font-weight: bold; }
+  p { margin: 10px 0; }
+
+  /* Components */
+  .lead { font-size: 16px; color: #1A365D; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 5px; font-size: 13px; }
+  .warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 5px; font-size: 13px; }
+  .ok { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 5px; font-size: 13px; }
+  .diff { background: #FAF5FF; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #805AD5; }
+  .diff .label { font-weight: bold; color: #553C9A; display: block; margin-bottom: 5px; font-size: 13px; }
+
+  code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 24px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 26px; margin: 10px 0; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+
+  /* TOC */
+  .toc { background: #F7FAFC; padding: 26px 32px; border-radius: 8px; margin: 26px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #ED8936; }
+  .toc .sub { padding-left: 20px; font-size: 13px; color: #4A5568; }
+
+  /* Step card */
+  .step-card { background: #EDF2F7; padding: 22px 26px; border-radius: 8px; margin: 20px 0; border-top: 4px solid #1A365D; }
+  .step-title { font-size: 16px; font-weight: bold; color: #1A365D; display: flex; align-items: center; margin-bottom: 12px; gap: 10px; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; background: #ED8936; color: white; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 14px; flex-shrink: 0; }
+
+  /* Prompt box */
+  .prompt-box { background: #1A202C; color: #E2E8F0; padding: 38px 22px 20px; border-radius: 8px; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.8; position: relative; white-space: pre-wrap; }
+  .prompt-box .comment { color: #A0AEC0; }
+  .prompt-box .highlight { color: #F6AD55; }
+  .copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 10px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+  .copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+
+  /* Check list */
+  .check-list { background: #F0FFF4; padding: 20px 26px; border-radius: 8px; margin: 20px 0; }
+  .check-list li { list-style: none; padding-left: 26px; position: relative; }
+  .check-list li::before { content: "□"; position: absolute; left: 0; color: #2F855A; font-size: 17px; line-height: 1.4; }
+
+  /* Flow box */
+  .flow-box { background: #1A202C; color: #E2E8F0; padding: 28px 32px; border-radius: 8px; margin: 20px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 2.2; }
+  .flow-box .arrow { color: #ED8936; }
+  .flow-box .node { color: #90CDF4; }
+  .flow-box .note { color: #A0AEC0; font-size: 11px; }
+
+  /* Internal memo */
+  .internal-preview { background: #FFF8E1; padding: 20px 24px; border-radius: 8px; margin: 16px 0; border: 2px dashed #F6AD55; position: relative; }
+  .internal-preview::before { content: "🔒 内部参照用"; position: absolute; top: -12px; left: 16px; background: #F6AD55; color: white; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 10px; }
+  .internal-preview .label { font-weight: bold; color: #975A16; display: block; margin-bottom: 6px; font-size: 13px; margin-top: 6px; }
+
+  /* Diff table */
+  .diff-table td:first-child { width: 40%; font-weight: bold; }
+  .changelog th { background: #2D3748; }
+
+  /* Badge */
+  .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+  .badge-a { background: #F0FFF4; color: #276749; }
+  .badge-b { background: #FFFAF0; color: #C05621; }
+  .badge-c { background: #FFF5F5; color: #C53030; }
+
+  /* Value axis */
+  .axis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .axis-card { border: 2px solid #E2E8F0; border-radius: 8px; padding: 14px 16px; }
+  .axis-card .axis-label { font-size: 12px; color: #718096; margin-bottom: 4px; }
+  .axis-card .axis-q { font-size: 14px; font-weight: bold; color: #1A365D; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    有限会社アートソウル<br>
+    <span>/knowledge-craft 完全ガイド</span>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">ナビゲーション</div>
+    <a class="sb-link" href="総合マニュアル.html">← 総合マニュアルへ</a>
+    <a class="sb-link" href="skill-craft完全ガイド.html" target="_blank">姉妹スキル: /skill-craft↗</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">このガイド</div>
+    <a class="sb-link" href="#overview">概要・できること</a>
+    <a class="sb-link" href="#difference">skill-craft との違い</a>
+    <a class="sb-link" href="#trigger">呼び出し方</a>
+    <a class="sb-link" href="#flow">6ステップの全フロー</a>
+    <a class="sb-link" href="#flow-s1"> └ STEP 1 素材の読み込み</a>
+    <a class="sb-link" href="#flow-s2"> └ STEP 2 コンサル価値判断</a>
+    <a class="sb-link" href="#flow-s3"> └ STEP 3 概念抽出</a>
+    <a class="sb-link" href="#flow-s4"> └ STEP 4 knowledge MD生成</a>
+    <a class="sb-link" href="#flow-s5"> └ STEP 5 HTMLマニュアル生成</a>
+    <a class="sb-link" href="#flow-s6"> └ STEP 6 総合マニュアル連携</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">詳細解説</div>
+    <a class="sb-link" href="#value-check">価値判定の4軸</a>
+    <a class="sb-link" href="#copyright">著作権セーフ抽出</a>
+    <a class="sb-link" href="#two-doc">2ドキュメント方針</a>
+    <a class="sb-link" href="#internal-memo">内部メモの設計</a>
+    <a class="sb-link" href="#html-spec">HTMLマニュアル仕様</a>
+    <a class="sb-link" href="#checklist">品質チェックリスト</a>
+    <a class="sb-link" href="#failures">よくある失敗</a>
+    <a class="sb-link" href="#related">関連スキル連携</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<div class="main-content">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="skill-badge">/knowledge-craft</div>
+  <h1>外部資料 → コンサル知識資産<br>2ドキュメント自動生成ガイド</h1>
+  <p class="tagline">事例の具体性を捨てずに、著作権をクリアする。外部公開版と内部参照版を同時に生成する。</p>
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-num">6</div>
+      <div class="meta-label">自動化ステップ</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">2</div>
+      <div class="meta-label">生成ドキュメント</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">4</div>
+      <div class="meta-label">価値判定軸</div>
+    </div>
+  </div>
+</div>
+
+<!-- 変更履歴 -->
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v1.0</td><td>2026-05-18</td><td>初版。AI定着支援事例のknowledge化フローを原型として設計。third-party-adaptation.md §8「2ドキュメント方針」と連動。</td></tr>
+</table>
+
+<hr>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#overview">Section 1: /knowledge-craft とは（概要・できること）</a></li>
+    <li><a href="#difference">Section 2: /skill-craft との違い</a></li>
+    <li><a href="#trigger">Section 3: 呼び出し方</a></li>
+    <li><a href="#flow">Section 4: 6ステップの全フロー</a></li>
+    <li class="sub"><a href="#flow-s1">STEP 1 素材の読み込み</a></li>
+    <li class="sub"><a href="#flow-s2">STEP 2 コンサル価値の事前判断</a></li>
+    <li class="sub"><a href="#flow-s3">STEP 3 著作権セーフな概念抽出</a></li>
+    <li class="sub"><a href="#flow-s4">STEP 4 knowledge MD生成（外部公開版）</a></li>
+    <li class="sub"><a href="#flow-s5">STEP 5 HTMLマニュアル生成（内部メモ付き）</a></li>
+    <li class="sub"><a href="#flow-s6">STEP 6 総合マニュアル連携</a></li>
+    <li><a href="#value-check">Section 5: 価値判定の4軸（詳解）</a></li>
+    <li><a href="#copyright">Section 6: 著作権セーフ抽出の詳細ルール</a></li>
+    <li><a href="#two-doc">Section 7: 2ドキュメント方針とは</a></li>
+    <li><a href="#internal-memo">Section 8: 内部メモの設計</a></li>
+    <li><a href="#html-spec">Section 9: HTMLマニュアルの仕様</a></li>
+    <li><a href="#checklist">Section 10: 品質チェックリスト</a></li>
+    <li><a href="#failures">Section 11: よくある失敗と回避法</a></li>
+    <li><a href="#related">Section 12: 関連スキルとの連携マップ</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Section 1 -->
+<h2 id="overview">Section 1 &nbsp;/knowledge-craft とは</h2>
+
+<div class="lead">
+  外部資料（文字起こし・記事・セミナー体験談など）を受け取り、<strong>著作権セーフな概念抽出 → 外部公開版 knowledge MD → Kai評価・内部メモ付き HTML マニュアル → 総合マニュアル連携</strong>まで一気通貫で実行するメタスキル。「事例の具体性を捨てずに、著作権をクリアする」2ドキュメント方式が最大の特徴。
+</div>
+
+<h3>このスキルが生まれた背景</h3>
+<p>クライアント提案には「実際にこんな成果が出た」という具体的な事例が欠かせない。しかし外部資料をそのまま使うと著作権・識別可能性の問題が生じる。かといって一般化しすぎると「ある会社でうまくいきました」という根拠のない話になり、提案力が落ちる。</p>
+<p>この矛盾を解決するために設計した。<strong>外部に出す情報は完全に一般化し、内部参照用には元の具体情報を保持する</strong>。使い分けることで、両方の価値を同時に持てる。</p>
+
+<h3>生成されるもの</h3>
+<table>
+  <tr><th>成果物</th><th>保存先</th><th>用途</th></tr>
+  <tr>
+    <td>knowledge MD（外部公開版）</td>
+    <td><code>knowledge/指標/&lt;テーマ名&gt;.md</code></td>
+    <td>ブログ・提案書・セミナー資料への転用OK</td>
+  </tr>
+  <tr>
+    <td>HTML マニュアル（内部メモ付き）</td>
+    <td><code>07_マニュアル/&lt;テーマ名&gt;マニュアル.html</code></td>
+    <td>Kai が提案設計・ヒアリング時に参照。PART 9 は外部非公開</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Section 2 -->
+<h2 id="difference">Section 2 &nbsp;/skill-craft との違い</h2>
+
+<div class="diff">
+<span class="label">姉妹スキルとの位置づけ</span>
+<code>/skill-craft</code> と <code>/knowledge-craft</code> はどちらも「外部素材を社内資産に変換する」メタスキル。用途が異なる。
+</div>
+
+<table class="diff-table">
+  <tr><th>比較軸</th><th>/skill-craft</th><th>/knowledge-craft</th></tr>
+  <tr>
+    <td>変換先</td>
+    <td>再利用可能なスキル定義（<code>rules/skills/</code>）</td>
+    <td>コンサル支援に使う知識資産（<code>knowledge/指標/</code>）</td>
+  </tr>
+  <tr>
+    <td>主な素材</td>
+    <td>ノウハウ・手法・フレームワーク素材</td>
+    <td>事例・体験談・調査結果・インタビュー</td>
+  </tr>
+  <tr>
+    <td>生成物</td>
+    <td>SKILL.md + HTML ガイド + CLAUDE.md 更新</td>
+    <td>knowledge MD（外部公開版）+ HTML マニュアル（内部メモ付き）</td>
+  </tr>
+  <tr>
+    <td>最大の特徴</td>
+    <td>スキルとして何度でも呼び出せる「型」の生成</td>
+    <td>事例の具体性を保持しながら著作権をクリアする「2ドキュメント方式」</td>
+  </tr>
+  <tr>
+    <td>連携方向</td>
+    <td>knowledge-craft で蓄積した知識を、スキルに昇華させる際に使う</td>
+    <td>skill-craft の前段として、素材の知識化に使う</td>
+  </tr>
+</table>
+
+<div class="tip">
+<span class="label">使い分けの判断基準</span>
+「このノウハウを Kai のスキルとして自動実行させたい」→ <strong>/skill-craft</strong><br>
+「このノウハウを提案・営業の根拠として蓄積したい」→ <strong>/knowledge-craft</strong>
+</div>
+
+<hr>
+
+<!-- Section 3 -->
+<h2 id="trigger">Section 3 &nbsp;呼び出し方</h2>
+
+<h3>トリガーフレーズ</h3>
+<table>
+  <tr><th>フレーズ</th><th>動作</th></tr>
+  <tr><td><code>/knowledge-craft</code> ファイルパスを渡す</td><td>フルフロー（6ステップ）実行</td></tr>
+  <tr><td>「この資料をknowledgeとしてストックして」</td><td>自動的に /knowledge-craft を起動</td></tr>
+  <tr><td>「この事例から提案書用の知識を抽出して」</td><td>同上</td></tr>
+  <tr><td>「この文字起こしをコンサル知識に変換して」</td><td>同上</td></tr>
+</table>
+
+<h3>サンプルプロンプト</h3>
+<div class="prompt-box"><span class="comment"># パターン1：ファイルパス指定</span>
+<span class="highlight">knowledge/100_資料受け渡し/セミナー参考/○○セミナー.txt</span>
+これはAI活用に関するセミナーの文字起こしです。
+当社のコンサルティング事業として参照して顧客支援に役立つポイントを
+抽出して事業部のknowledgeとしてストックして。
+
+<span class="comment"># パターン2：テキスト直接貼り付け</span>
+以下の記事から、中小企業のAI導入支援に活かせる知識を抽出して
+knowledge/指標/ に保存してください。
+
+[記事テキストをここに貼り付け]
+
+<span class="comment"># パターン3：マニュアルも含めてフル生成</span>
+この体験談から knowledge MD とマニュアルを生成して、
+総合マニュアルにも連携しておいて。</div>
+
+<hr>
+
+<!-- Section 4 -->
+<h2 id="flow">Section 4 &nbsp;6ステップの全フロー</h2>
+
+<div class="flow-box"><span class="node">[ 素材ファイル / テキスト ]</span>
+        <span class="arrow">↓ STEP 1</span>
+<span class="node">[ 読み込み & 出所確認 ]</span>    <span class="note">← 大きいファイルは offset/limit で分割</span>
+        <span class="arrow">↓ STEP 2</span>
+<span class="node">[ コンサル価値判定 A/B/C ]</span>  <span class="note">← C判定ならスキップを提案</span>
+        <span class="arrow">↓ STEP 3</span>
+<span class="node">[ 著作権セーフ概念抽出 ]</span>    <span class="note">← third-party-adaptation.md §3 適用</span>
+        <span class="arrow">↓ STEP 4</span>
+<span class="node">[ knowledge MD 生成 ]</span>       <span class="note">← knowledge/指標/ に保存。認識テスト必須</span>
+        <span class="arrow">↓ STEP 5</span>
+<span class="node">[ HTML マニュアル生成 ]</span>      <span class="note">← PART 8（Kai評価）+ PART 9（内部メモ🔒）必須</span>
+        <span class="arrow">↓ STEP 6</span>
+<span class="node">[ 総合マニュアル連携 ]</span>       <span class="note">← サイドバー + 変更履歴の2箇所</span></div>
+
+<!-- STEP 1 -->
+<div class="step-card" id="flow-s1">
+  <div class="step-title"><span class="step-num">1</span>素材の読み込み &amp; 出所確認</div>
+
+  <p>ファイルパスまたは貼り付けテキストを受け取る。読み込み後、Kai は以下を自分で確認して明示する。</p>
+
+  <table>
+    <tr><th>確認項目</th><th>理由</th></tr>
+    <tr><td>テーマ（何についての情報か）</td><td>価値判定・抽出軸の設定に使う</td></tr>
+    <tr><td>出所の種別</td><td>著作権・識別可能性の扱いが変わる</td></tr>
+    <tr><td>ファイルサイズ</td><td>大きい場合は offset/limit で分割読み込み</td></tr>
+  </table>
+
+  <table>
+    <tr><th>出所種別</th><th>扱い</th></tr>
+    <tr><td>公開セミナー・YouTube等</td><td>情報自体は公開情報だが転用には注意。2ドキュメント方針を適用。</td></tr>
+    <tr><td>購入コンテンツ・有料講座</td><td>使用権の確認を上村に要求。確認できない場合は保留。</td></tr>
+    <tr><td>社内資料・上村作成物</td><td>第三者ルール不要。自由に変換。</td></tr>
+    <tr><td>クライアントから受領した資料</td><td>機密情報の可能性大。上村に確認してから処理。</td></tr>
+  </table>
+</div>
+
+<!-- STEP 2 -->
+<div class="step-card" id="flow-s2">
+  <div class="step-title"><span class="step-num">2</span>コンサル価値の事前判断</div>
+
+  <p>処理の前に価値があるかどうかを判定し、ユーザーに簡潔に報告する。価値が低い場合はスキップを提案してよい。</p>
+
+  <div class="axis-grid" id="value-check">
+    <div class="axis-card">
+      <div class="axis-label">① 再現性</div>
+      <div class="axis-q">他のクライアントが同じ手順で実施できるか？</div>
+    </div>
+    <div class="axis-card">
+      <div class="axis-label">② 汎用性</div>
+      <div class="axis-q">業種・規模を問わず適用できるか？</div>
+    </div>
+    <div class="axis-card">
+      <div class="axis-label">③ 差別化</div>
+      <div class="axis-q">一般論ではなく具体性・実証性があるか？</div>
+    </div>
+    <div class="axis-card">
+      <div class="axis-label">④ 提案価値</div>
+      <div class="axis-q">ヒアリング・提案書・セミナーで使える場面があるか？</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>判定</th><th>条件</th><th>アクション</th></tr>
+    <tr><td><span class="badge badge-a">A 高価値</span></td><td>4軸すべて満たす</td><td>フルフロー実行（STEP 3〜6）</td></tr>
+    <tr><td><span class="badge badge-b">B 中価値</span></td><td>2〜3軸満たす</td><td>knowledge MD のみ（HTML マニュアルはスキップ）</td></tr>
+    <tr><td><span class="badge badge-c">C 低価値</span></td><td>1軸以下</td><td>スキップを提案。「役立つことがなければスルーしてよい」と言われた場合は即スキップ</td></tr>
+  </table>
+
+  <div class="tip">
+  <span class="label">判定レポートの書き方</span>
+  「再現性：高 / 汎用性：中 / 差別化：高 / 提案価値：高 → A判定。フルフロー実行します。」のように1行で報告する。
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step-card" id="flow-s3">
+  <div class="step-title"><span class="step-num">3</span>著作権セーフな概念抽出</div>
+
+  <p><code>rules/third-party-adaptation.md</code> の変換チェックリスト §3 を自動適用する。</p>
+
+  <h4>抽出する4軸</h4>
+  <table>
+    <tr><th>抽出軸</th><th>具体的に取り出すもの</th></tr>
+    <tr><td>① What（何を教えているか）</td><td>フレームワーク・ステップ・チェックリストの構造</td></tr>
+    <tr><td>② Why（なぜ重要か）</td><td>問題・障壁・課題の本質</td></tr>
+    <tr><td>③ How（どうやるか）</td><td>手順・判断基準・優先順位の考え方</td></tr>
+    <tr><td>④ 成果パターン</td><td>何が変わったか（数値は内部メモへ、外部版は一般化）</td></tr>
+  </table>
+
+  <h4 id="copyright">認識テスト（必須・外部公開版のみ）</h4>
+  <div class="warn">
+  <span class="label">認識テストの問い</span>
+  「原作者がこのファイルを見て、自分の作品の転用だと特定できる要素が残っているか？」<br><br>
+  特定できる要素が1つでもあれば変換不完全。以下をすべてチェックする。
+  <ul style="margin-top:10px;">
+    <li>固有の数値（特定組織の実績値）→ 削除または抽象化</li>
+    <li>特定業種・組織規模 → 「サービス業」等の上位概念に置換</li>
+    <li>著者固有の命名・エピソード → 一般原則として再記述</li>
+    <li>施策の組み合わせが特定できる構成 → 項目数・順序を変える</li>
+  </ul>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step-card" id="flow-s4">
+  <div class="step-title"><span class="step-num">4</span>knowledge MD 生成（外部公開版）</div>
+
+  <p><strong>保存先:</strong> <code>knowledge/指標/&lt;テーマ名&gt;.md</code></p>
+
+  <h4>必須の7セクション構成</h4>
+  <pre>## 1. このフレームワークの前提
+   適用フェーズ・推進主体・適用規模・期間目安
+
+## 2. [診断 / 原因分析]
+   問題の構造化・分類表（原因タイプ × 対処の方向性）
+
+## 3. [推進プロセス / ステップ]
+   フェーズ or ステップ構造（最大4フェーズ推奨）
+
+## 4. [介入パターン / 手法集]
+   具体的な施策・手順（パターン別に整理）
+
+## 5. [定着原則 / 成功条件]
+   本質的な原則リスト（3〜6原則）
+
+## 6. [抵抗パターンと対処法]
+   よくある障壁 × 深層の理由 × 対処アプローチ（表形式）
+
+## 7. コンサルティング提案への活用
+   ヒアリング診断項目 + 提案設計の要点</pre>
+
+  <div class="ok">
+  <span class="label">外部公開チェックリスト</span>
+  <ul class="check-list">
+    <li>固有の数値（特定組織の実績値）が入っていない</li>
+    <li>特定業種・組織規模が固定されていない</li>
+    <li>著者固有のエピソード・命名が残っていない</li>
+    <li>認識テスト通過済み</li>
+  </ul>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step-card" id="flow-s5">
+  <div class="step-title"><span class="step-num">5</span>HTML マニュアル生成（Kai評価・内部メモ付き）</div>
+
+  <p><strong>保存先:</strong> <code>07_マニュアル/&lt;テーマ名&gt;マニュアル.html</code></p>
+  <p>B判定（中価値）の場合はこのステップをスキップしてもよい。</p>
+
+  <h4>必須の9パート構成</h4>
+  <table>
+    <tr><th>PART</th><th>内容</th><th>備考</th></tr>
+    <tr><td>PART 1</td><td>フレームワーク概要</td><td>適用フェーズ・有効な組織特徴</td></tr>
+    <tr><td>PART 2</td><td>原因診断 / 適用判断</td><td>4タイプ分類表</td></tr>
+    <tr><td>PART 3〜6</td><td>推進プロセス・介入パターン・原則・抵抗対処</td><td>knowledge MD の内容を HTML 化</td></tr>
+    <tr><td>PART 7</td><td>コンサルティング提案への活用</td><td>ヒアリング項目・提案設計要点</td></tr>
+    <tr><td>PART 8</td><td><strong>Kai の評価・成功ポイント・改善提案</strong></td><td>必須。4軸スコア含む</td></tr>
+    <tr><td>PART 9</td><td><strong>内部メモ（参照事例の詳細）🔒</strong></td><td>必須。外部非公開</td></tr>
+  </table>
+</div>
+
+<!-- STEP 6 -->
+<div class="step-card" id="flow-s6">
+  <div class="step-title"><span class="step-num">6</span>総合マニュアル連携</div>
+
+  <p>2箇所を必ず編集する。</p>
+
+  <h4>編集箇所1: サイドバー（「📚 コンサル知識・事例」セクション）</h4>
+  <pre>&lt;div class="sb-section"&gt;
+  &lt;div class="sb-section-label"&gt;📚 コンサル知識・事例&lt;/div&gt;
+  &lt;a class="sb-link" href="<span style="color:#F6AD55">&lt;テーマ名&gt;</span>マニュアル.html" target="_blank"&gt;<span style="color:#F6AD55">[テーマ表示名]</span>↗&lt;/a&gt;
+&lt;/div&gt;</pre>
+  <p>セクション自体がない場合は新設する。</p>
+
+  <h4>編集箇所2: 変更履歴テーブル</h4>
+  <pre>&lt;tr&gt;
+  &lt;td&gt;v[N+1]&lt;/td&gt;
+  &lt;td&gt;[YYYY-MM-DD]&lt;/td&gt;
+  &lt;td&gt;[テーマ名]マニュアル新設（knowledge MD + HTML + 内部メモ）。&lt;/td&gt;
+&lt;/tr&gt;</pre>
+</div>
+
+<hr>
+
+<!-- Section 7 -->
+<h2 id="two-doc">Section 7 &nbsp;2ドキュメント方針とは</h2>
+
+<div class="lead">
+  事例資料を一般化しすぎると「根拠のないフレームワーク」になる。しかし具体情報をそのまま使うと著作権・識別可能性の問題が生じる。この矛盾を解決するのが2ドキュメント方針。
+</div>
+
+<table>
+  <tr><th>ドキュメント</th><th>内容</th><th>用途</th><th>外部公開</th></tr>
+  <tr>
+    <td><strong>外部公開版</strong><br>knowledge MD</td>
+    <td>認識テスト通過済み・一般化済み<br>固有数値・業種・エピソードなし</td>
+    <td>ブログ・提案書・セミナー資料</td>
+    <td>✅ OK</td>
+  </tr>
+  <tr>
+    <td><strong>内部参照版</strong><br>HTML マニュアル PART 9</td>
+    <td>元の数値・業種・エピソードを保持<br>Kai の利用判断基準を記載</td>
+    <td>Kai が提案設計・ヒアリング判断に参照</td>
+    <td>❌ 非公開</td>
+  </tr>
+</table>
+
+<div class="ok">
+<span class="label">なぜ内部メモが必要か</span>
+外部公開版で「AI活用率が向上した実績があります」と語れる。内部メモで「どの業種・規模・施策の組み合わせだったか」を Kai が把握して、類似クライアントへの提案を精度高く設計できる。事例の価値を捨てずに使い分ける。
+</div>
+
+<div class="tip">
+<span class="label">内部メモの自社実績への移行タイミング</span>
+当社クライアントで類似成果が出た時点で、内部メモの参照事例を自社実績に切り替える。その後は数値・事例名を外部公開版にも使えるようになる。
+</div>
+
+<hr>
+
+<!-- Section 8 -->
+<h2 id="internal-memo">Section 8 &nbsp;内部メモの設計</h2>
+
+<h3>必須の構成要素</h3>
+<table>
+  <tr><th>要素</th><th>記載内容</th></tr>
+  <tr><td>冒頭の取り扱い宣言</td><td>「このセクションは外部資料・提案書等には使用しない」を明示</td></tr>
+  <tr><td>組織属性</td><td>業種・法人規模・導入状況・推進体制</td></tr>
+  <tr><td>実施施策と結果</td><td>何をやって何が変わったか（具体的な数値含む）</td></tr>
+  <tr><td>記憶に残るエピソード</td><td>定着を加速したエピソード・予想外の出来事</td></tr>
+  <tr><td>Kai の利用判断基準</td><td>どう使っていいか / どう使ってはいけないか</td></tr>
+</table>
+
+<h3>HTML スタイル（必ず使う）</h3>
+<p>内部メモには専用の CSS クラスを使い、「🔒 内部参照用」バッジを必ず表示する。</p>
+
+<pre>&lt;!-- CSS定義（&lt;style&gt;内） --&gt;
+.internal {
+  background: #FFF8E1;
+  padding: 22px 28px;
+  border-radius: 8px;
+  margin: 22px 0;
+  border: 2px dashed #F6AD55;
+  position: relative;
+}
+.internal::before {
+  content: "🔒 内部参照用";
+  position: absolute;
+  top: -12px; left: 16px;
+  background: #F6AD55; color: white;
+  font-size: 11px; font-weight: bold;
+  padding: 2px 10px; border-radius: 10px;
+}
+.internal .label {
+  font-weight: bold; color: #975A16;
+  display: block; margin-bottom: 6px;
+  font-size: 14px; margin-top: 6px;
+}
+
+&lt;!-- 使用例 --&gt;
+&lt;div class="internal"&gt;
+  &lt;span class="label"&gt;参照事例：概要&lt;/span&gt;
+  &lt;p&gt;...&lt;/p&gt;
+&lt;/div&gt;</pre>
+
+<h3>表示プレビュー</h3>
+<div class="internal-preview">
+  <span class="label">参照事例：概要</span>
+  <p>このように表示される。黄色の破線ボーダーと「🔒 内部参照用」バッジが外部非公開であることを一目で示す。</p>
+</div>
+
+<hr>
+
+<!-- Section 9 -->
+<h2 id="html-spec">Section 9 &nbsp;HTML マニュアルの仕様</h2>
+
+<h3>デザイン仕様（既存マニュアルと統一）</h3>
+<table>
+  <tr><th>項目</th><th>値</th></tr>
+  <tr><td>サイドバー背景</td><td><code>#1A365D</code>（navy）</td></tr>
+  <tr><td>アクセント・見出し下線</td><td><code>#ED8936</code>（orange）</td></tr>
+  <tr><td>本文背景</td><td><code>#FAFBFC</code></td></tr>
+  <tr><td>内部メモ背景</td><td><code>#FFF8E1</code>（amber）/ <code>border: 2px dashed #F6AD55</code></td></tr>
+  <tr><td>サイドバー幅</td><td><code>220px</code>（固定）</td></tr>
+  <tr><td>コンテナ最大幅</td><td><code>920px</code></td></tr>
+  <tr><td>フォント</td><td><code>"Yu Gothic UI", "Hiragino Sans", "Meiryo"</code></td></tr>
+</table>
+
+<h3>PART 8（Kai 評価）の必須構成</h3>
+
+<table>
+  <tr><th>要素</th><th>形式</th></tr>
+  <tr><td>総合評価スコア</td><td>4軸カード（実践性・汎用性・スケーラビリティ・コンサル転用可能性）をグリッド表示</td></tr>
+  <tr><td>Kai 評価コメント</td><td><code>.kai</code> ボックス（紫：<code>#805AD5</code> 左ボーダー）</td></tr>
+  <tr><td>特に有効な成功ポイント</td><td>箇条書き（各ポイントに太字の見出し）</td></tr>
+  <tr><td>注意点・リスク</td><td><code>.warn</code> ボックスを複数</td></tr>
+  <tr><td>改善・追加提案</td><td>表形式（改善項目 × 具体的な提案）</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">Kai 評価ボックスの CSS</span>
+<code>.kai { background: #FAF5FF; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #805AD5; }</code>
+</div>
+
+<hr>
+
+<!-- Section 10 -->
+<h2 id="checklist">Section 10 &nbsp;品質チェックリスト</h2>
+
+<h3>著作権・識別可能性チェック</h3>
+<ul class="check-list">
+  <li>認識テスト通過（原作者が特定できない）</li>
+  <li>verbatim copy がない</li>
+  <li>固有数値（特定組織の実績値）が外部公開版に混入していない</li>
+  <li>著者固有の命名・用語が外部公開版に残っていない</li>
+  <li>施策の組み合わせが特定できる構成になっていない</li>
+</ul>
+
+<h3>knowledge MD チェック</h3>
+<ul class="check-list">
+  <li>7セクション構成が揃っているか</li>
+  <li>外部転用可能レベルで一般化されているか</li>
+  <li>コンサル提案への活用セクションがあるか</li>
+  <li>ファイルが <code>knowledge/指標/</code> に保存されているか</li>
+</ul>
+
+<h3>HTML マニュアルチェック（A判定のみ）</h3>
+<ul class="check-list">
+  <li>PART 8（Kai評価）が4軸スコア + Kaiコメント + 注意点 + 改善提案の構成になっているか</li>
+  <li>PART 9（内部メモ）が <code>🔒 内部参照用</code> スタイルで明示されているか</li>
+  <li>内部メモに「Kai の利用判断基準」が書かれているか</li>
+  <li>デザインが既存マニュアルと統一されているか（navy/<code>#1A365D</code>・orange/<code>#ED8936</code>）</li>
+  <li>総合マニュアルへの戻りリンクがサイドバーにあるか</li>
+</ul>
+
+<h3>連携チェック</h3>
+<ul class="check-list">
+  <li>総合マニュアルのサイドバー「📚 コンサル知識・事例」セクションに追加したか</li>
+  <li>変更履歴テーブルに記録したか</li>
+</ul>
+
+<hr>
+
+<!-- Section 11 -->
+<h2 id="failures">Section 11 &nbsp;よくある失敗と回避法</h2>
+
+<table>
+  <tr><th>失敗パターン</th><th>症状</th><th>回避法</th></tr>
+  <tr>
+    <td>抽象化しすぎ</td>
+    <td>「ある企業で成功しました」としか言えない。事例としての説得力がゼロ</td>
+    <td>内部メモに具体情報を必ず保存。外部版の一般化と並行して行う</td>
+  </tr>
+  <tr>
+    <td>具体情報が外部版に漏れる</td>
+    <td>固有数値・業種・エピソードが外部公開版に残る</td>
+    <td>認識テストを必ず実施。「原作者が見たら分かるか？」を問う</td>
+  </tr>
+  <tr>
+    <td>価値判定をスキップ</td>
+    <td>低価値素材に時間をかける。使わないファイルが蓄積する</td>
+    <td>STEP 2 の4軸判定を必ず先に行う。C 判定はスキップを提案</td>
+  </tr>
+  <tr>
+    <td>PART 8/9 を省略</td>
+    <td>Kai の評価・内部メモがない HTML マニュアルが生成される</td>
+    <td>PART 8・9 は必須。「マニュアルを作って」と言われたら両方含める</td>
+  </tr>
+  <tr>
+    <td>総合マニュアル連携忘れ</td>
+    <td>マニュアルが 07_マニュアル/ に孤立してどこからもリンクされない</td>
+    <td>STEP 6 はフローの最終ステップとして必ず実行する</td>
+  </tr>
+  <tr>
+    <td>出所未確認で処理開始</td>
+    <td>使用権のない素材を処理してしまう</td>
+    <td>STEP 1 で出所種別を確認・明示してから進む。不明なら上村に確認</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Section 12 -->
+<h2 id="related">Section 12 &nbsp;関連スキルとの連携マップ</h2>
+
+<table>
+  <tr><th>スキル</th><th>連携パターン</th></tr>
+  <tr>
+    <td><code>/skill-craft</code></td>
+    <td>knowledge-craft で蓄積した知識を「Kai のスキル」に昇華させる場合に後続で使う。knowledge → skill の変換ルート。</td>
+  </tr>
+  <tr>
+    <td><code>/research</code></td>
+    <td>素材が不足している場合の前段。WebSearch で情報を収集し、それを knowledge-craft に渡す。</td>
+  </tr>
+  <tr>
+    <td><code>/persona-review</code></td>
+    <td>完成した knowledge MD を「クライアント視点で伝わるか」検証する場合に後続で使う。</td>
+  </tr>
+  <tr>
+    <td><code>/seminar-slide</code></td>
+    <td>knowledge MD をセミナーコンテンツに展開する場合に後続で使う。知識 → スライドのルート。</td>
+  </tr>
+  <tr>
+    <td><code>/sme-ai-proposal</code></td>
+    <td>knowledge MD の内容を提案書の根拠として組み込む。コンサル提案への直接利用。</td>
+  </tr>
+  <tr>
+    <td><code>/profit-plan</code></td>
+    <td>knowledge 資産を有料コンテンツ・サービスとして設計する場合に使う。</td>
+  </tr>
+</table>
+
+<div class="flow-box"><span class="note">— 典型的な活用ルート —</span>
+
+<span class="note">① 事例収集 → knowledge化</span>
+<span class="node">/research</span> <span class="arrow">→</span> <span class="node">/knowledge-craft</span>
+
+<span class="note">② knowledge → スキル → セミナー</span>
+<span class="node">/knowledge-craft</span> <span class="arrow">→</span> <span class="node">/skill-craft</span> <span class="arrow">→</span> <span class="node">/seminar-slide</span>
+
+<span class="note">③ knowledge → 提案書</span>
+<span class="node">/knowledge-craft</span> <span class="arrow">→</span> <span class="node">/sme-ai-proposal</span>
+
+<span class="note">④ 品質検証</span>
+<span class="node">/knowledge-craft</span> <span class="arrow">→</span> <span class="node">/persona-review</span></div>
+
+<hr>
+
+<div class="ok">
+<span class="label">このガイドについて</span>
+作成：Kai / 2026-05-18 / v1.0<br>
+スキル定義ファイル: <code>rules/skills/knowledge-craft.md</code><br>
+更新が必要な場合は <code>07_マニュアル/knowledge-craft完全ガイド.html</code> を直接編集し、変更履歴テーブルを更新してください。
+</div>
+
+</div><!-- .container -->
+</div><!-- .main-content -->
+
+<script>
+(function(){
+  function addCopyBtn(el){
+    var btn=document.createElement('button');
+    btn.className='copy-btn'; btn.textContent='コピー';
+    el.appendChild(btn);
+    btn.addEventListener('click',function(){
+      var clone=el.cloneNode(true);
+      clone.querySelectorAll('.copy-btn').forEach(function(b){b.remove();});
+      var text=clone.innerText.trim();
+      var ok=function(){btn.textContent='コピー済み ✓';btn.classList.add('copied');setTimeout(function(){btn.textContent='コピー';btn.classList.remove('copied');},2000);};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(ok).catch(function(){fallback(text);ok();});}else{fallback(text);ok();}
+    });
+  }
+  function fallback(t){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}
+  document.querySelectorAll('pre').forEach(addCopyBtn);
+})();
+</script>
+</body>
+</html>
