@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-17T20:10:57",
+  "last_updated": "2026-05-17T20:11:34",
   "projects": [
     {
       "id": "sample-001",
@@ -9539,7 +9539,7 @@
       "goal": "ChatGPT自己分析履歴・書籍知識・対話履歴を統合して上村桂右の完全人物ガイドブックを作成する",
       "status": "active",
       "created_at": "2026-05-17T20:10:28",
-      "updated_at": "2026-05-17T20:10:57",
+      "updated_at": "2026-05-17T20:11:05",
       "memo": "2026-05-16〜17 08_アプリ開発/outputs/self-analysis/ に完成。人物分析HTML＋Markdown",
       "big_task": {
         "id": "173a637d",
@@ -9718,6 +9718,56 @@
               "detail": "「todo」→「done」"
             }
           ]
+        },
+        {
+          "id": "9a8d59e3",
+          "title": "Markdown版ガイドブック",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:10:59",
+          "updated_at": "2026-05-17T20:11:01",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:10:59",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:01",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "d63167a1",
+          "title": "よろず人物分析と連携",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:03",
+          "updated_at": "2026-05-17T20:11:05",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:03",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:05",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
         }
       ],
       "pivots": [],
@@ -9765,6 +9815,16 @@
           "timestamp": "2026-05-17T20:10:55",
           "action": "タスク追加",
           "detail": "人物分析HTML（インタラクティブ） を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:10:59",
+          "action": "タスク追加",
+          "detail": "Markdown版ガイドブック を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:03",
+          "action": "タスク追加",
+          "detail": "よろず人物分析と連携 を追加しました"
         }
       ]
     },
@@ -9774,7 +9834,7 @@
       "goal": "???AI?????????HTML???????????????????????",
       "status": "active",
       "created_at": "2026-05-17T20:10:43",
-      "updated_at": "2026-05-17T20:10:57",
+      "updated_at": "2026-05-17T20:11:18",
       "memo": "2026-05-17 ????????????06_???????/outputs/???AI????????/",
       "big_task": {
         "id": "2d4546b4",
@@ -9856,10 +9916,10 @@
           "id": "03018eb2",
           "title": "?????URL???manual.html??",
           "description": "",
-          "status": "todo",
+          "status": "done",
           "due_date": null,
           "created_at": "2026-05-17T20:10:57",
-          "updated_at": "2026-05-17T20:10:57",
+          "updated_at": "2026-05-17T20:10:59",
           "mindmap_mmd": "",
           "roadmap_mmd": "",
           "related_links": [],
@@ -9869,11 +9929,137 @@
               "timestamp": "2026-05-17T20:10:57",
               "action": "作成",
               "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:10:59",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
             }
           ]
         }
       ],
-      "small_tasks": [],
+      "small_tasks": [
+        {
+          "id": "6a6e6384",
+          "title": "???????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:01",
+          "updated_at": "2026-05-17T20:11:03",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:01",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:03",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "b4885f8a",
+          "title": "???AI?????????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:05",
+          "updated_at": "2026-05-17T20:11:08",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:05",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:08",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "dc2f177f",
+          "title": "CSS??????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:10",
+          "updated_at": "2026-05-17T20:11:12",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:10",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:12",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "7742f5da",
+          "title": "??????ch11??",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:14",
+          "updated_at": "2026-05-17T20:11:16",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:14",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:16",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "13b56518",
+          "title": "GitHub Pages????",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:18",
+          "updated_at": "2026-05-17T20:11:18",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:18",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
       "pivots": [],
       "linked_projects": [],
       "initial_mindmap_mmd": "",
@@ -9904,6 +10090,685 @@
           "timestamp": "2026-05-17T20:10:57",
           "action": "タスク追加",
           "detail": "?????URL???manual.html?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:01",
+          "action": "タスク追加",
+          "detail": "??????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:05",
+          "action": "タスク追加",
+          "detail": "???AI????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:10",
+          "action": "タスク追加",
+          "detail": "CSS?????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:14",
+          "action": "タスク追加",
+          "detail": "??????ch11?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:18",
+          "action": "タスク追加",
+          "detail": "GitHub Pages???? を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "c0baa351",
+      "name": "まる様 AI記録自動生成システム（GAS）",
+      "goal": "合同会社まる様の介護記録業務をGAS+ライモBizで自動化し職員の記録作業を大幅削減する",
+      "status": "active",
+      "created_at": "2026-05-17T20:10:58",
+      "updated_at": "2026-05-17T20:11:31",
+      "memo": "2026-05-08〜09 GAS Mode A MVP実装。提案書v8完成。ライモBiz×GASシステム設計分析済み",
+      "big_task": {
+        "id": "1315bb29",
+        "title": "まる様AIシステム納品・稼働開始",
+        "description": "",
+        "status": "in_progress",
+        "due_date": null,
+        "created_at": "2026-05-17T20:11:00",
+        "updated_at": "2026-05-17T20:11:02",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:11:00",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:11:02",
+            "action": "ステータス変更",
+            "detail": "「todo」→「in_progress」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "794649c7",
+          "title": "要件定義・システム設計（AI記録自動生成）",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:04",
+          "updated_at": "2026-05-17T20:11:06",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:04",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:06",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "c834f6b5",
+          "title": "GAS Mode A MVP実装（スプレッドシート＋サイドバー）",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:08",
+          "updated_at": "2026-05-17T20:11:10",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:08",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:10",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "40fb17a6",
+          "title": "提案書v8完成・クライアント確認",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:12",
+          "updated_at": "2026-05-17T20:11:14",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:12",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:14",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "44e85289",
+          "title": "ライモBizアプリ説明FAQナレッジ化",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:16",
+          "updated_at": "2026-05-17T20:11:18",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:16",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:18",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "0b0ea245",
+          "title": "doGet自動セットアップ＋URL表示モーダル",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:20",
+          "updated_at": "2026-05-17T20:11:23",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:20",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:23",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "3a0a0c3e",
+          "title": "Gemini APIサイドバーガイド実装",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:25",
+          "updated_at": "2026-05-17T20:11:27",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:25",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:27",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "fac2b42a",
+          "title": "Mode B（LINE連携）設計",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:29",
+          "updated_at": "2026-05-17T20:11:29",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:29",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        },
+        {
+          "id": "0d55e692",
+          "title": "現場テスト・フィードバック対応",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:31",
+          "updated_at": "2026-05-17T20:11:31",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:31",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:10:58",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:00",
+          "action": "タスク追加",
+          "detail": "まる様AIシステム納品・稼働開始 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:04",
+          "action": "タスク追加",
+          "detail": "要件定義・システム設計（AI記録自動生成） を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:08",
+          "action": "タスク追加",
+          "detail": "GAS Mode A MVP実装（スプレッドシート＋サイドバー） を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:12",
+          "action": "タスク追加",
+          "detail": "提案書v8完成・クライアント確認 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:16",
+          "action": "タスク追加",
+          "detail": "ライモBizアプリ説明FAQナレッジ化 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:20",
+          "action": "タスク追加",
+          "detail": "doGet自動セットアップ＋URL表示モーダル を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:25",
+          "action": "タスク追加",
+          "detail": "Gemini APIサイドバーガイド実装 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:29",
+          "action": "タスク追加",
+          "detail": "Mode B（LINE連携）設計 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:31",
+          "action": "タスク追加",
+          "detail": "現場テスト・フィードバック対応 を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "7bda6bca",
+      "name": "ビジネス文書スキル9本 + /contract-check",
+      "goal": "見積・請求・NDA・契約・WBS・日報・月報・比較など業務文書を自動生成する9スキルを実装しcontract-checkも追加する",
+      "status": "active",
+      "created_at": "2026-05-17T20:11:07",
+      "updated_at": "2026-05-17T20:11:34",
+      "memo": "2026-05-16 全10スキル完成。rules/skills/ 配下・ビジネス文書スキル完全ガイド.html作成",
+      "big_task": {
+        "id": "061c78c5",
+        "title": "ビジネス文書スキル10本リリース",
+        "description": "",
+        "status": "done",
+        "due_date": null,
+        "created_at": "2026-05-17T20:11:09",
+        "updated_at": "2026-05-17T20:11:12",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:11:09",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:11:12",
+            "action": "ステータス変更",
+            "detail": "「todo」→「done」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "cbc70957",
+          "title": "hearing-sheet/proposal-outline/billing-docs/nda実装",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:14",
+          "updated_at": "2026-05-17T20:11:16",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:14",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:16",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "e232b4e1",
+          "title": "biz-contract/wbs-gantt/daily-report/monthly-report/doc-compare実装",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:18",
+          "updated_at": "2026-05-17T20:11:20",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:18",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:20",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "eca958b5",
+          "title": "/contract-check追加・立場設定（甲有利/乙有利/公平）",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:22",
+          "updated_at": "2026-05-17T20:11:24",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:22",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:24",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [
+        {
+          "id": "e7730d45",
+          "title": "スキル定義SKILL.md 10本作成",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:26",
+          "updated_at": "2026-05-17T20:11:28",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:26",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:28",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "b1d0386e",
+          "title": "ビジネス文書スキル完全ガイド.html新設",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:30",
+          "updated_at": "2026-05-17T20:11:32",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:30",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:32",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "1a7283e8",
+          "title": "biz-contract 17条構成（個人情報・不可抗力追加）",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:34",
+          "updated_at": "2026-05-17T20:11:34",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:34",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:11:07",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:09",
+          "action": "タスク追加",
+          "detail": "ビジネス文書スキル10本リリース を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:14",
+          "action": "タスク追加",
+          "detail": "hearing-sheet/proposal-outline/billing-docs/nda実装 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:18",
+          "action": "タスク追加",
+          "detail": "biz-contract/wbs-gantt/daily-report/monthly-report/doc-compare実装 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:22",
+          "action": "タスク追加",
+          "detail": "/contract-check追加・立場設定（甲有利/乙有利/公平） を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:26",
+          "action": "タスク追加",
+          "detail": "スキル定義SKILL.md 10本作成 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:30",
+          "action": "タスク追加",
+          "detail": "ビジネス文書スキル完全ガイド.html新設 を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:34",
+          "action": "タスク追加",
+          "detail": "biz-contract 17条構成（個人情報・不可抗力追加） を追加しました"
+        }
+      ]
+    },
+    {
+      "id": "2ffdd342",
+      "name": "??????? + ???? ????",
+      "goal": "????????????????????????????????????????",
+      "status": "active",
+      "created_at": "2026-05-17T20:11:20",
+      "updated_at": "2026-05-17T20:11:34",
+      "memo": "2026-05-17 knowledge/????/ ???2??????????_????.html?????_????.html",
+      "big_task": {
+        "id": "6191d9f4",
+        "title": "???????????????",
+        "description": "",
+        "status": "done",
+        "due_date": null,
+        "created_at": "2026-05-17T20:11:22",
+        "updated_at": "2026-05-17T20:11:24",
+        "mindmap_mmd": "",
+        "roadmap_mmd": "",
+        "related_links": [],
+        "output_files": [],
+        "history": [
+          {
+            "timestamp": "2026-05-17T20:11:22",
+            "action": "作成",
+            "detail": "タスクを作成しました"
+          },
+          {
+            "timestamp": "2026-05-17T20:11:24",
+            "action": "ステータス変更",
+            "detail": "「todo」→「done」"
+          }
+        ]
+      },
+      "medium_tasks": [
+        {
+          "id": "c18f5fe7",
+          "title": "ChatGPT??????????????",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:26",
+          "updated_at": "2026-05-17T20:11:28",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:26",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:28",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "77cacd7f",
+          "title": "???????HTML??",
+          "description": "",
+          "status": "done",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:30",
+          "updated_at": "2026-05-17T20:11:32",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:30",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            },
+            {
+              "timestamp": "2026-05-17T20:11:32",
+              "action": "ステータス変更",
+              "detail": "「todo」→「done」"
+            }
+          ]
+        },
+        {
+          "id": "384d1f99",
+          "title": "????_????HTML??",
+          "description": "",
+          "status": "todo",
+          "due_date": null,
+          "created_at": "2026-05-17T20:11:34",
+          "updated_at": "2026-05-17T20:11:34",
+          "mindmap_mmd": "",
+          "roadmap_mmd": "",
+          "related_links": [],
+          "output_files": [],
+          "history": [
+            {
+              "timestamp": "2026-05-17T20:11:34",
+              "action": "作成",
+              "detail": "タスクを作成しました"
+            }
+          ]
+        }
+      ],
+      "small_tasks": [],
+      "pivots": [],
+      "linked_projects": [],
+      "initial_mindmap_mmd": "",
+      "tags": [],
+      "session_logs": [],
+      "history": [
+        {
+          "timestamp": "2026-05-17T20:11:20",
+          "action": "作成",
+          "detail": "プロジェクトを作成しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:22",
+          "action": "タスク追加",
+          "detail": "??????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:26",
+          "action": "タスク追加",
+          "detail": "ChatGPT?????????????? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:30",
+          "action": "タスク追加",
+          "detail": "???????HTML?? を追加しました"
+        },
+        {
+          "timestamp": "2026-05-17T20:11:34",
+          "action": "タスク追加",
+          "detail": "????_????HTML?? を追加しました"
         }
       ]
     }
