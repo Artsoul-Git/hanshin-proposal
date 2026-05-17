@@ -32,3 +32,9 @@ Knowledge/まる様、訪問、ヒアリング.txt
 
 # セミナースライドシステム — ローカル専用（初期パスワード・運用マニュアル）
 06_セミナー事業部/outputs/契約書AIチェックセミナー/07_HTML版_v2/manual.html
+
+# API keys / secrets
+.env
+*.env
+.env.local
+.env.*.local
