@@ -11,6 +11,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 import http.server
 import json
+import re
 import os
 import uuid
 import queue
@@ -87,6 +88,29 @@ def save_data(data):
 
 
 # ─── Groq API 呼び出し ────────────────────────────────────────
+def groq_text(messages, max_tokens=2000):
+    """Groq呼び出し（テキスト出力、JSONフォーマット強制なし）"""
+    if not GROQ_API_KEY:
+        raise ValueError("GROQ_API_KEY が .env に設定されていません")
+    payload = json.dumps({
+        "model": GROQ_MODEL,
+        "messages": messages,
+        "max_tokens": max_tokens,
+        "temperature": 0.3,
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        GROQ_API_URL, data=payload,
+        headers={
+            "Authorization": f"Bearer {GROQ_API_KEY}",
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0",
+        }
+    )
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        result = json.loads(resp.read().decode("utf-8"))
+    return result["choices"][0]["message"]["content"]
+
+
 def groq_chat(messages, max_tokens=1000):
     if not GROQ_API_KEY:
         raise ValueError("GROQ_API_KEY が .env に設定されていません")
@@ -386,6 +410,47 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             paths = body.get("paths", [])
             results = {p: os.path.exists(p) for p in paths}
             self.send_json(200, results)
+
+        elif path == "/api/ai/diagram":
+            instruction = body.get("instruction", "").strip()
+            current_code = body.get("current_code", "").strip()
+            diagram_type = body.get("diagram_type", "roadmap")
+            task_title   = body.get("task_title", "")
+            if not instruction:
+                return self.send_json(400, {"error": "instruction は必須です"})
+            if not GROQ_API_KEY:
+                return self.send_json(503, {"error": "GROQ_API_KEY が未設定です"})
+            type_guide = {
+                "roadmap": "graph TD（縦型フローチャート）。A([\"ラベル\"]) --> B[\"ラベル\"] 形式。",
+                "gantt":   "gantt記法。title, dateFormat YYYY-MM-DD, section, タスク名:id, 日付, 期間。",
+                "flow":    "stateDiagram-v2記法。状態と遷移を定義。[*]で開始/終了。",
+                "mindmap": "mindmap記法。root((タイトル))から階層的にノードを定義。",
+            }
+            sys_prompt = (
+                "あなたはMermaidダイアグラムの専門家です。"
+                "ユーザーの指示に従いMermaidコードを生成・改修してください。\n"
+                f"図の種類: {type_guide.get(diagram_type, diagram_type)}\n"
+                "【重要】コードのみを返してください。説明文・前置き・```mermaid囲みは不要です。"
+                "最初の行からMermaidコードを直接出力してください。"
+            )
+            messages = [
+                {"role": "system", "content": sys_prompt},
+                {"role": "user", "content": (
+                    f"タスク名：{task_title}\n"
+                    f"指示：{instruction}\n\n"
+                    f"現在のコード：\n{current_code}"
+                )}
+            ]
+            try:
+                raw = groq_text(messages, max_tokens=2000)
+                raw = raw.strip()
+                m = re.search(r"```(?:mermaid)?\s*\n?([\s\S]+?)```", raw)
+                code = m.group(1).strip() if m else raw
+                self.send_json(200, {"code": code})
+            except urllib.error.HTTPError as e:
+                self.send_json(502, {"error": f"Groq APIエラー: {e.code} {e.reason}"})
+            except Exception as e:
+                self.send_json(500, {"error": str(e)})
 
         elif path == "/api/ai/decompose":
             # タスクを具体的な実行ステップに分解する

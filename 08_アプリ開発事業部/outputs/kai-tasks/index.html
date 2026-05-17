@@ -1401,17 +1401,17 @@ function openDiagramModal(taskId, activeTab = 'roadmap') {
     </div>
     <div class="wide-body wide-body-3col" id="diagBody">
       <div class="ai-panel" id="diagAiPanel">
-        <div class="ai-panel-section">🤖 Kaiへ指示</div>
+        <div class="ai-panel-section">✨ AIに指示して生成</div>
         <textarea class="ai-textarea" id="aiInstruction"
-          placeholder="例：&#10;ステップを追加して&#10;期間を加えて"
-          onfocus="openAiFocus('aiInstruction','🤖 Kaiへの指示')"></textarea>
-        <button class="btn-ai" onclick="copyAiPrompt('diagEditor')">📋 プロンプトをコピー</button>
+          placeholder="例：&#10;フェーズを5段階にして&#10;各ステップに期間を追加して&#10;英語ラベルを日本語にして"
+          onfocus="openAiFocus('aiInstruction','✨ AIへの指示')"></textarea>
+        <button class="btn-ai btn-ai-apply" id="diagGroqBtn" onclick="diagGroqGenerate()">✨ 生成して適用</button>
         <div class="ai-sep"></div>
-        <div class="ai-panel-section">📥 Kaiの返答を貼り付け</div>
+        <div class="ai-panel-section">📥 コードを直接貼り付け</div>
         <textarea class="ai-textarea" id="aiResponse"
-          placeholder="Kaiの返答をそのまま貼り付けてください。コードブロックを自動で抽出します。"
-          onfocus="openAiFocus('aiResponse','📥 Kaiの返答を貼り付け')"></textarea>
-        <button class="btn-ai btn-ai-apply" onclick="applyAiCode('diagEditor','diagPreview')">✨ コードに適用</button>
+          placeholder="MermaidコードまたはClaudeの返答を貼り付け&#10;（```mermaid...```を自動抽出）"
+          onfocus="openAiFocus('aiResponse','📥 コードを貼り付け')"></textarea>
+        <button class="btn-ai" onclick="applyAiCode('diagEditor','diagPreview')">📥 コードに適用</button>
       </div>
       <div class="wide-editor">
         <div class="wide-editor-label">Mermaid コード</div>
@@ -1531,6 +1531,40 @@ function openA4Preview(previewId, title, autoPrint = false) {
 <div class="page-wrap"><div class="a4-page">${clone.outerHTML}</div></div></body></html>`);
   win.document.close();
   if (autoPrint) win.addEventListener('load', () => setTimeout(() => win.print(), 300));
+}
+
+async function diagGroqGenerate() {
+  const instruction = document.getElementById('aiInstruction')?.value?.trim();
+  if (!instruction) { toast('指示を入力してください', 'err'); return; }
+  const currentCode = document.getElementById('diagEditor')?.value?.trim() || '';
+  const task = findTask(_diagCtx.taskId);
+  const btn = document.getElementById('diagGroqBtn');
+  if (btn) { btn.textContent = '⏳ 生成中…'; btn.disabled = true; }
+  try {
+    const res = await fetch('/api/ai/diagram', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        instruction,
+        current_code: currentCode,
+        diagram_type: _diagCtx.tab,
+        task_title: task?.title || '',
+      }),
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+    const editor = document.getElementById('diagEditor');
+    if (editor && json.code) {
+      editor.value = json.code;
+      previewMmd('diagEditor', 'diagPreview');
+      document.getElementById('aiInstruction').value = '';
+      toast('✨ AIが生成しました。内容を確認して保存してください', 'ok');
+    }
+  } catch (e) {
+    toast(`生成エラー：${e.message}`, 'err');
+  } finally {
+    if (btn) { btn.textContent = '✨ 生成して適用'; btn.disabled = false; }
+  }
 }
 
 function copyAiPrompt(editorId) {
