@@ -137,7 +137,7 @@
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.4</span></div>
+  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.8</span></div>
 
   <div class="sb-section">
     <div class="sb-section-label">🤝 Kaiと協働する</div>
@@ -243,6 +243,7 @@
     <a class="sb-link" href="#ch19">Claude Code操作</a>
     <a class="sb-link" href="#ch20">提案書URL公開</a>
     <a class="sb-link" href="#ch21">自動完了指示</a>
+    <a class="sb-link" href="#ch27">🔑 Groq API 無料運用</a>
   </div>
 </nav>
 
@@ -254,7 +255,7 @@
 <div class="cover">
   <h1>有限会社アートソウル<br>総合マニュアル</h1>
   <div class="sub">Kaiとの協働 + 19エージェント + スキルコマンド + アプリ・ツール</div>
-  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.7</div>
+  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.8</div>
 </div>
 
 <!-- 変更履歴 -->
@@ -267,6 +268,8 @@
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
+<tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」を新設。登録・APIキー取得・安全な管理方法（.envファイル）・商用利用の注意点・Claude Codeでの適用手順を初心者向けに解説。</td></tr>
+<tr><td>v3.8</td><td>2026-05-17</td><td>第19章に「実行中の割り込み・指示のやり直し方」の解説と、早見表に「強制停止 (Ctrl+C)」を追加。</td></tr>
 <tr><td>v3.7</td><td>2026-05-17</td><td>/skill-craft スキル新設（素材→スキル→マニュアル→連携の一気通貫自動化）。skill-craft完全ガイド.html 追加。CLAUDE.md・サイドバー・目次・PART 1 リンク更新。</td></tr>
 <tr><td>v3.6</td><td>2026-05-17</td><td>スキル使い倒し完全ガイド（skill使い倒し完全ガイド.html）新設。全40スキル・7シナリオ別レシピ・連携マップ・失敗回避法を収録。サイドバー・目次・PART 1にリンク追加。/course-build スキル新設（カリキュラム設計）。</td></tr>
 <tr><td>v3.5</td><td>2026-05-16</td><td>ビジネス文書スキル9本追加（/hearing-sheet・/proposal-outline・/billing-docs・/nda・/biz-contract・/wbs-gantt・/daily-report・/monthly-report・/doc-compare）。完全ガイド連携。</td></tr>
@@ -350,6 +353,7 @@
     <li class="sub-item"><a href="#ch19">第19章　Claude Code 操作</a></li>
     <li class="sub-item"><a href="#ch20">第20章　提案書のURL公開（/publish-proposal）</a></li>
     <li class="sub-item"><a href="#ch21">第21章　自動完了指示の最短フォーマット</a></li>
+    <li class="sub-item"><a href="#ch27">第27章　Groq API 無料運用マニュアル</a></li>
     <li><strong>PART 5: Kai Tasks プロジェクト管理</strong></li>
     <li class="sub-item"><a href="#ch22">第22章　Kai Tasksアプリの使い方（ブラウザUI）</a></li>
     <li class="sub-item"><a href="#ch23">第23章　Kaiにテーマを渡してプロジェクトを自動生成する</a></li>
@@ -2421,11 +2425,41 @@ Claude を介さず直接コマンドが実行される。
 
 <hr>
 
+<h3>実行中の割り込み・指示のやり直し方</h3>
+<p>ターミナルで指示を出した後に「間違えた！」と気づき、一度動きを止めて指示をしなおしたい場合の対処法です。</p>
+
+<div class="step">
+  <h4>① 実行中の処理を強制停止する（基本）</h4>
+  <p>キーボードの <code>Ctrl + C</code> を押します。</p>
+  <ul>
+    <li>通常のターミナルコマンドや、Kaiの処理（回答の生成、ファイルの編集など）が即座に中断され、新しい指示を入力できるプロンプト（<code>&gt;</code>）に戻ります。</li>
+  </ul>
+</div>
+
+<div class="step">
+  <h4>② ツール自体を一度終了してやり直す</h4>
+  <p>キーボードの <code>Ctrl + C</code> を2回連続で押すか、<code>exit</code>（または <code>/exit</code>）と入力してエンターキーを押します。</p>
+  <ul>
+    <li>Claude CLI などのツール自体が終了し、通常のPowerShellに戻ります。セッションを完全にリセットしたい場合に有効です。</li>
+  </ul>
+</div>
+
+<div class="step">
+  <h4>③ チャットUI上で止めて指示を送り直す（ブラウザ/Antigravity）</h4>
+  <p>チャット画面の「停止 (Stop)」ボタンを押し、処理をキャンセルします。</p>
+  <ul>
+    <li>停止後、<strong>「先ほどの指示は間違いだったのでキャンセルしてください。代わりに以下をお願いします」</strong> と新しくメッセージを送れば、AIは前の指示を上書きして実行します。</li>
+  </ul>
+</div>
+
+<hr>
+
 <h3>コマンド早見表</h3>
 <table>
 <tr><th>やりたいこと</th><th>コマンド</th></tr>
 <tr><td>前回の続きから再開</td><td><code>claude --continue</code></td></tr>
 <tr><td>過去セッション一覧から再開</td><td><code>claude --resume</code></td></tr>
+<tr><td>実行中の処理を強制停止・割り込み</td><td><code>Ctrl + C</code></td></tr>
 <tr><td>現在の変更状況を確認</td><td><code>! git status</code></td></tr>
 <tr><td>変更の中身を確認</td><td><code>! git diff</code></td></tr>
 <tr><td>履歴を20件表示</td><td><code>! git log --oneline -20</code></td></tr>
@@ -2595,6 +2629,155 @@ kei_model のカラー（#6F911D, #FABE00, #333333）を再現。<br><br>
 <tr><td>既存ファイルを更新</td><td>「〇〇の△△を□□に変更して」と差分だけ書く</td></tr>
 <tr><td>スクリプト実行</td><td>「Pythonスクリプトで〇〇を生成して」＋必要な仕様</td></tr>
 </table>
+
+</div>
+</details>
+
+<!-- ===== 第27章 Groq API ===== -->
+<details id="ch27">
+<summary><span class="acc-num">27</span>Groq API 無料運用マニュアル — 登録・取得・安全管理・Claude Codeでの適用<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+Groq APIはアカウント登録だけで使えるAI推論API。クレジットカード不要・ゼロ円・1日14,400リクエストまで無料。Kai Tasks の「タスク分解」「推奨タスク提案」など、Kaiとの連携に使う外部AIエンジンとして採用。
+</div>
+
+<h3>1. Groq APIのスペックと無料枠</h3>
+
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><td>費用</td><td><strong>完全無料</strong>（クレジットカード登録不要）</td></tr>
+<tr><td>推奨モデル（高品質）</td><td><code>llama-3.3-70b-versatile</code>　1,000リクエスト/日</td></tr>
+<tr><td>推奨モデル（大容量）</td><td><code>llama-3.1-8b-instant</code>　14,400リクエスト/日・50万トークン/日</td></tr>
+<tr><td>JSON出力</td><td>対応（<code>"response_format": {"type": "json_object"}</code>）</td></tr>
+<tr><td>推論速度</td><td>300〜1,000トークン/秒（業界最速クラス）</td></tr>
+<tr><td>Kai Tasksでの想定使用量</td><td>1日20〜50回 → <strong>無料枠の余裕あり</strong></td></tr>
+</table>
+
+<div class="ok">
+<span class="label">Kai Tasks との相性</span>
+タスク分解・推奨タスク提案は1回あたり約500〜1,000トークン。1日100回使っても無料枠の10分の1。過剰になる心配は不要。
+</div>
+
+<h3>2. よくある疑問 — APIキーの取り扱い</h3>
+
+<h4>Q. 他のアプリで取得したキーを使い回してもいい？</h4>
+<div class="tip">
+<span class="label">A. 技術的には使えるが、アプリごとに別キーを作るのがベストプラクティス</span>
+1つのキーを複数アプリで使い回すと、もし1箇所でキーが漏れた場合に全アプリが影響を受ける。Kai Tasks専用に新しいキーを発行して、名前を「kai-tasks」などに設定しておくと管理が楽になる。発行数に制限はなく、削除・再発行もワンクリック。
+</div>
+
+<h4>Q. ターミナルに直接キーを書くのは問題ある？</h4>
+<div class="warn">
+<span class="label">A. 問題あり。絶対に避けること</span>
+ターミナルに入力したコマンドは「コマンド履歴」に残る（PowerShellなら <code>Get-History</code> で見える）。シェルスクリプトや設定ファイルにハードコードすると、Gitで誤って公開する危険もある。正しい方法は <strong>.envファイル</strong> に書いて管理する（後述）。
+</div>
+
+<h4>Q. 商用利用はできる？</h4>
+<div class="tip">
+<span class="label">A. 自社業務ツールとしての利用はOK。転売・再配布はNG</span>
+Groqの利用規約（Services Agreement）では「APIキーを第三者に販売・転売・配布すること」は禁止されている。しかしアートソウルが自社のために使うKai Tasksのような内製ツールは問題ない。クライアントにGroqのアクセスを「そのまま渡す」形はNG。自社が間に入って自分のアカウントで運用する形はOK。<br>
+<strong>無料プランは「テスト・プロトタイプ用」という位置付け</strong>で本番商用サービスには有料プランを推奨しているが、社内ツールとして継続利用することは禁止されていない。
+</div>
+
+<h3>3. Groq APIキーの取得手順</h3>
+
+<div class="step">
+<h3><span class="step-num">1</span>アカウント登録</h3>
+<p><strong>console.groq.com</strong> にアクセス → 「Sign Up」→ Googleアカウントでログイン（メール登録も可）。クレジットカード入力は不要。</p>
+</div>
+
+<div class="step">
+<h3><span class="step-num">2</span>APIキーを発行</h3>
+<p>左メニュー「API Keys」→「Create API Key」ボタンをクリック → 名前を入力（例：<strong>kai-tasks</strong>）→「Submit」。</p>
+<div class="warn">
+<span class="label">重要：キーが表示されるのは一度だけ</span>
+発行直後にだけ全文が表示される。必ずコピーして安全な場所に保存すること。画面を閉じたら再表示不可（その場合は削除して再発行）。
+</div>
+</div>
+
+<div class="step">
+<h3><span class="step-num">3</span>動作確認（任意）</h3>
+<p>Claude Codeのターミナルで以下を実行して疎通確認できる（キーは後述の.envに書いた後に使う）：</p>
+<pre><code><span class="comment"># PowerShellの場合</span>
+$env:GROQ_API_KEY = "gsk_xxxxxxxxxxxxxxxxxxxx"  <span class="comment"># ← 一時的にセット（確認後は消す）</span>
+echo $env:GROQ_API_KEY</code></pre>
+<p>※これはあくまで「疎通確認専用」。常時管理には次の .envファイルを使う。</p>
+</div>
+
+<h3>4. APIキーの安全な管理（.envファイル）</h3>
+
+<p>APIキーは <strong>.envファイル</strong> という隠しファイルに書いて管理するのが業界標準。コードの中に直接書かず、Gitにも追加しない。</p>
+
+<div class="step">
+<h3><span class="step-num">1</span>.envファイルを作成する</h3>
+<p>Kai Tasksのフォルダ（<code>08_アプリ開発事業部/outputs/kai-tasks/</code>）に <code>.env</code> という名前のファイルを作る。Claude Codeのターミナルから：</p>
+<pre><code><span class="comment"># Claude Codeのターミナルで（! を頭に付けて実行）</span>
+! echo GROQ_API_KEY=ここにキーを貼る > "08_アプリ開発事業部\outputs\kai-tasks\.env"</code></pre>
+<p>または直接 Claude Code に「<code>08_アプリ開発事業部/outputs/kai-tasks/</code> に .envファイルを作成して、GROQ_API_KEY=（キーを貼付）と書いて」と頼む。</p>
+<div class="ok">
+<span class="label">.envファイルの中身（例）</span>
+<pre><code>GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
+</div>
+</div>
+
+<div class="step">
+<h3><span class="step-num">2</span>.gitignoreに追加する（絶対に忘れないこと）</h3>
+<p><code>.env</code> はGitで管理してはいけない。プロジェクトルートの <code>.gitignore</code> に以下を追加：</p>
+<pre><code>.env
+*.env</code></pre>
+<p>これがないと <code>git commit</code> 時にキーがGitHub等に公開されてしまう。</p>
+</div>
+
+<div class="step">
+<h3><span class="step-num">3</span>server.pyから読み込む（Kaiが自動で設定）</h3>
+<p>server.py が .env を読み込むコードを追加すれば完了。Pythonのコードは以下の形：</p>
+<pre><code>import os
+
+<span class="comment"># .envファイルを読み込む（python-dotenvがある場合）</span>
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  <span class="comment"># dotenvなしでも環境変数から直接読める</span>
+
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")</code></pre>
+</div>
+
+<h3>5. Claude Code（Kai）での適用フロー</h3>
+
+<p>Kai Tasksへの組み込みは Kai に頼むだけで完結する。以下の指示をそのままコピーして使う：</p>
+
+<div class="prompt-box">
+<button class="copy-btn" onclick="navigator.clipboard.writeText(this.nextElementSibling.innerText);this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+<span>
+Kai Tasks（08_アプリ開発事業部/outputs/kai-tasks/）にGroq API連携を組み込んでください。<br><br>
+<span class="highlight">やること：</span><br>
+1. .envファイルを作成して GROQ_API_KEY を書き込む（キー：【ここにキーを貼る】）<br>
+2. .gitignoreに .env を追加する<br>
+3. server.pyに .env読み込みとGroq APIクライアントを実装する<br>
+4. タスク分解機能（POST /ai/decompose）と推奨タスク機能（POST /ai/recommend）のエンドポイントを追加する<br>
+5. index.htmlのタスクカードに「分解」ボタン、プロジェクトヘッダーに「推奨タスク」ボタンを追加する<br><br>
+スコープ：C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\ 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。
+</span>
+</div>
+
+<h3>6. キー管理の運用ルール（まとめ）</h3>
+
+<table>
+<tr><th>やること</th><th>やってはいけないこと</th></tr>
+<tr><td>.envファイルに書く</td><td>ターミナルに直接貼り付けて使い続ける</td></tr>
+<tr><td>.gitignore に .env を追加する</td><td>GitHubにpushされたファイルにキーを書く</td></tr>
+<tr><td>用途ごとにキーを分けて名前をつける</td><td>1つのキーを全アプリで使い回す</td></tr>
+<tr><td>漏れたと思ったら即削除・再発行する</td><td>「たぶん大丈夫」でそのまま使い続ける</td></tr>
+<tr><td>3〜6ヶ月ごとにローテーション（任意）</td><td>一度設定したら何年も放置する</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">キーが漏れたと思ったら</span>
+console.groq.com → API Keys → 該当キーの「Delete」→ 即座に新しいキーを発行する。Groqのキー削除・再発行はワンクリックで完了し、古いキーはその瞬間から無効になる。
+</div>
 
 </div>
 </details>
