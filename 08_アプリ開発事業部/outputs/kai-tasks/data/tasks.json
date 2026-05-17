@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-17T23:33:19",
+  "last_updated": "2026-05-18T00:55:27",
   "projects": [
     {
       "id": "sample-001",
@@ -1072,9 +1072,9 @@
       "id": "0a2c20c5",
       "name": "Kai Tasks Groq AI機能実装",
       "goal": "Groq無料APIでタスク分解・推奨タスク機能をKai Tasksに組み込みコスト0で実現する",
-      "status": "active",
+      "status": "archived",
       "created_at": "2026-05-17T20:03:53",
-      "updated_at": "2026-05-17T23:33:19",
+      "updated_at": "2026-05-18T00:55:27",
       "memo": "2026-05-17 実装完了。server.py Groq連携・index.html AI Modal・✂️分解ボタン・💡推奨タスクボタン追加済み",
       "big_task": {
         "id": "ffeece6b",
@@ -1402,6 +1402,11 @@
           "timestamp": "2026-05-17T22:02:10",
           "action": "ログ追加",
           "detail": "[output] タイムマシン・編集機能・自動記録ルール実装完了"
+        },
+        {
+          "timestamp": "2026-05-18T00:55:27",
+          "action": "更新",
+          "detail": "ステータスを「active」→「archived」に変更"
         }
       ],
       "snapshots": [

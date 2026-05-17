@@ -269,12 +269,8 @@ class TaskHandler(http.server.BaseHTTPRequestHandler):
             if task_type == "big":
                 project["big_task"] = task
             elif task_type == "medium":
-                if len(project["medium_tasks"]) >= 3:
-                    return self.send_json(400, {"error": "中タスクは最大3つです"})
                 project["medium_tasks"].append(task)
             elif task_type == "small":
-                if len(project["small_tasks"]) >= 5:
-                    return self.send_json(400, {"error": "小タスクは最大5つです"})
                 project["small_tasks"].append(task)
 
             project["updated_at"] = now_iso()

@@ -1443,9 +1443,9 @@ function openRoadmapModal(taskId) {
     <div class="wide-footer">
       <div class="wide-footer-left">
         <span class="tmpl-label">テンプレート：</span>
-        <button class="btn-tmpl" onclick="insertTemplate('roadmap-flow')">🔀 フロー</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-flow')">🌿 WBS分解</button>
         <button class="btn-tmpl" onclick="insertTemplate('roadmap-gantt')">📅 ガント</button>
-        <button class="btn-tmpl" onclick="insertTemplate('roadmap-status')">🔄 状態遷移</button>
+        <button class="btn-tmpl" onclick="insertTemplate('roadmap-status')">🔀 プロセスフロー</button>
       </div>
       <div class="wide-footer-right">
         <button class="btn btn-ghost btn-sm" onclick="closeWide()">✕ 閉じる</button>
@@ -1686,11 +1686,21 @@ function openNewProjectModal() {
     <div class="form-group"><label>ゴール（達成目標）</label><textarea id="f-goal" placeholder="例：2026年7月末までにAI活用率50%を達成する"></textarea></div>
     <div class="form-group"><label>メモ</label><textarea id="f-memo" placeholder="背景・補足など"></textarea></div>
     <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);border-radius:10px;margin-bottom:4px;">
-      <input type="checkbox" id="f-autogen" checked style="width:16px;height:16px;margin-top:1px;cursor:pointer;accent-color:var(--accent);">
+      <input type="checkbox" id="f-autogen" checked style="width:16px;height:16px;margin-top:1px;cursor:pointer;accent-color:var(--accent);" onchange="document.getElementById('task-count-opts').style.display=this.checked?'grid':'none'">
       <label for="f-autogen" style="font-size:13px;cursor:pointer;line-height:1.5;">
         <span style="font-weight:700;color:var(--accent);">✨ タスクを自動生成する</span><br>
-        <span style="font-size:11px;color:var(--text2);">大1・中3・小5タスク＋ロードマップ・マインドマップを自動生成します</span>
+        <span style="font-size:11px;color:var(--text2);">大タスク×1＋ロードマップ・マインドマップを自動生成します</span>
       </label>
+    </div>
+    <div id="task-count-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px;background:rgba(0,0,0,.2);border-radius:8px;margin-bottom:4px;">
+      <div class="form-group" style="margin:0">
+        <label style="font-size:11px;">中タスク数（0〜10）</label>
+        <input type="number" id="f-med-count" value="3" min="0" max="10" style="width:100%;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;">
+      </div>
+      <div class="form-group" style="margin:0">
+        <label style="font-size:11px;">小タスク数（0〜20）</label>
+        <input type="number" id="f-sm-count" value="5" min="0" max="20" style="width:100%;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:13px;">
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal()">キャンセル</button>
@@ -1702,36 +1712,48 @@ async function createProject() {
   const name = document.getElementById('f-name').value.trim();
   const goal = document.getElementById('f-goal').value.trim();
   const autoGen = document.getElementById('f-autogen').checked;
+  const medCount = parseInt(document.getElementById('f-med-count')?.value || '3', 10);
+  const smCount  = parseInt(document.getElementById('f-sm-count')?.value  || '5', 10);
   if (!name) { toast('プロジェクト名を入力してください', 'err'); return; }
   closeModal();
-  const r = await api('POST', '/projects', { name, goal, memo: document.getElementById('f-memo').value.trim() });
+  const r = await api('POST', '/projects', { name, goal, memo: document.getElementById('f-memo')?.value.trim() || '' });
   if (autoGen) {
     toast('タスクを自動生成中…', 'ok');
-    await autoGenerateTasks(r.id, name, goal);
+    await autoGenerateTasks(r.id, name, goal, medCount, smCount);
   }
   await loadData();
   selectProject(r.id);
   toast(autoGen ? '✨ プロジェクトとタスクを自動生成しました' : 'プロジェクトを作成しました', 'ok');
 }
 
-async function autoGenerateTasks(pid, name, goal) {
+async function autoGenerateTasks(pid, name, goal, medCount = 3, smCount = 5) {
   const label = goal || name;
   const short = label.length > 28 ? label.slice(0,28) + '…' : label;
   const bigTitle = goal ? `「${short}」を達成する` : `${short}を完了させる`;
   const bigR = await api('POST', `/projects/${pid}/tasks`, { type:'big', title:bigTitle, description:'このプロジェクト全体のゴール。ここを達成することがすべての判断基準になります。' });
   if (bigR.id) await api('PUT', `/tasks/${bigR.id}`, { roadmap_mmd: generateRoadmapCode(name, goal), mindmap_mmd: generateMindmapCode(bigTitle) });
-  for (const [title, description] of [
+
+  const medTemplates = [
     ['現状把握・要件整理','現在の状況を正確に把握し、達成に必要な要件を明確にする'],
     ['計画立案・実行','具体的なアクションプランを立て、確実に実行する'],
     ['検証・改善・定着化','結果を数値で確認し、改善サイクルを回して定着させる'],
-  ]) await api('POST', `/projects/${pid}/tasks`, { type:'medium', title, description });
-  for (const [title, description] of [
+  ];
+  for (let i = 0; i < medCount; i++) {
+    const [title, description] = medTemplates[i] || [`中タスク ${i+1}`, ''];
+    await api('POST', `/projects/${pid}/tasks`, { type:'medium', title, description });
+  }
+
+  const smTemplates = [
     ['キックオフ・関係者共有','プロジェクト開始を関係者に伝え、役割分担と協力体制を整える'],
     ['ツール・リソースの準備','作業に必要なツール・情報・人員・予算を事前に確保する'],
     ['進捗確認・中間レビュー','定期的に進捗を確認し、目標とのズレを早期に修正する'],
     ['課題の洗い出しと対処','リスクや障害を早期に発見し、影響が出る前に手を打つ'],
     ['最終確認・完了報告','成果物・達成度を確認し、引き継ぎ・報告を行って完了とする'],
-  ]) await api('POST', `/projects/${pid}/tasks`, { type:'small', title, description });
+  ];
+  for (let i = 0; i < smCount; i++) {
+    const [title, description] = smTemplates[i] || [`小タスク ${i+1}`, ''];
+    await api('POST', `/projects/${pid}/tasks`, { type:'small', title, description });
+  }
 }
 
 function generateRoadmapCode(name, goal) {
@@ -2922,7 +2944,7 @@ function closeAiModal() {
 async function openDecomposeModal(taskId) {
   const task = findTask(taskId);
   if (!task) return;
-  const proj = data.projects.find(p =>
+  const proj = (state.data?.projects || []).find(p =>
     (p.big_task?.id === taskId) ||
     (p.medium_tasks||[]).some(t => t.id === taskId) ||
     (p.small_tasks||[]).some(t => t.id === taskId)
@@ -2965,10 +2987,10 @@ async function openDecomposeModal(taskId) {
           ${s.estimated_minutes ? `<div class="ai-step-time">⏱ 約 ${s.estimated_minutes} 分</div>` : ''}
         </div>
       </div>`).join('');
-    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
   } catch (e) {
     body.innerHTML = `<p style="color:var(--red);">エラー：${esc(e.message)}</p>`;
-    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
   }
 }
 
@@ -3023,10 +3045,10 @@ async function openRecommendModal(projectId) {
         <button class="btn btn-primary" style="font-size:11px;padding:4px 10px;white-space:nowrap;"
           onclick="addRecommendedTask('${projectId}','${esc(r.title).replace(/'/g,"\\'")}','${r.type||'small'}','${esc(r.reason||'').replace(/'/g,"\\'")}')">＋追加</button>
       </div>`).join('');
-    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
   } catch (e) {
     body.innerHTML = `<p style="color:var(--red);">エラー：${esc(e.message)}</p>`;
-    foot.innerHTML = `<button class="btn btn-secondary" onclick="closeAiModal()">閉じる</button>`;
+    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
   }
 }
 
