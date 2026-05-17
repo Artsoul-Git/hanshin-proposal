@@ -708,6 +708,7 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
 let mmdSeq = 0;
 
 // ── MindMeister branch annotation — inject :::mmN before mermaid.render ──
+// NOTE: Mermaid mindmap does NOT support ::: on the root node → skip root
 function annotateMindmap(code) {
   if (!code || !code.trim().startsWith('mindmap')) return code;
   const lines = code.split('\n');
@@ -715,43 +716,50 @@ function annotateMindmap(code) {
   const stack = []; // {indent, branch}
   let branchCount = 0;
   let rootIndent = null;
-  let indentStep = null;
 
   for (const line of lines) {
     const trimmed = line.trimStart();
-    if (!trimmed || trimmed === 'mindmap') { out.push(line); continue; }
-    if (trimmed.includes(':::')) { out.push(line); continue; } // already annotated
-
+    // Pass through keyword / empty lines / already-annotated lines
+    if (!trimmed || trimmed === 'mindmap' || trimmed.includes(':::')) {
+      out.push(line);
+      continue;
+    }
     const indent = line.length - trimmed.length;
 
-    // First node is root
+    // Root: first indented node — do NOT annotate (Mermaid rejects ::: on root)
     if (rootIndent === null) {
       rootIndent = indent;
       stack.push({ indent, branch: -1 });
-      out.push(line + ':::mmroot');
+      out.push(line);
       continue;
     }
 
-    // Detect indent step from first child of root
-    if (indentStep === null && indent > rootIndent) indentStep = indent - rootIndent;
+    // Continuation lines (indent < rootIndent) = wrapped root label → pass through
+    if (indent < rootIndent) { out.push(line); continue; }
 
-    // Pop stack to find parent
+    // Pop stack until we find the parent
     while (stack.length > 0 && stack[stack.length - 1].indent >= indent) stack.pop();
     const parent = stack[stack.length - 1];
 
-    let branch;
-    if (!parent || parent.branch === -1) {
-      // Direct child of root = new branch
-      branch = branchCount % 8;
-      branchCount++;
-    } else {
-      branch = parent.branch;
-    }
+    // Direct child of root → new branch; deeper → inherit parent branch
+    const isDirectChildOfRoot = !parent || parent.branch === -1;
+    const branch = isDirectChildOfRoot ? (branchCount++ % 8) : parent.branch;
 
     stack.push({ indent, branch });
     out.push(line + `:::mm${branch}`);
   }
   return out.join('\n');
+}
+
+// Render mindmap with :::mmN colors, falling back to plain if annotation fails
+async function renderMindmapSvg(id, code) {
+  const annotated = annotateMindmap(code);
+  try {
+    return (await mermaid.render(id, annotated)).svg;
+  } catch(e) {
+    // :::className may not be supported in this build — fall back to plain
+    return (await mermaid.render(id + '_plain', code)).svg;
+  }
 }
 
 const API = 'http://localhost:3456/api';
@@ -1699,8 +1707,8 @@ function previewMmd(editorId, previewId) {
     if (!code || !container) return;
     try {
       const id = `mmd-${++mmdSeq}`;
-      const renderCode = code.trim().startsWith('mindmap') ? annotateMindmap(code) : code;
-      const { svg } = await mermaid.render(id, renderCode);
+      const isMindmap = code.trim().startsWith('mindmap');
+      const svg = isMindmap ? await renderMindmapSvg(id, code) : (await mermaid.render(id, code)).svg;
       container.innerHTML = svg + '<div class="mmd-preview-hint">クリックで拡大</div>';
       const svgEl = container.querySelector('svg');
       if (svgEl) {
@@ -2166,7 +2174,7 @@ async function renderPivotCompare(p) {
     if (!el) continue;
     try {
       const id = `pmc-${++mmdSeq}`;
-      const { svg } = await mermaid.render(id, annotateMindmap(code));
+      const svg = await renderMindmapSvg(id, code);
       el.innerHTML = svg;
       el.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
     } catch(e) {
@@ -2981,8 +2989,8 @@ function renderTaskDashboard(taskId) {
       if (!el) continue;
       try {
         const id = `td-${++mmdSeq}`;
-        const renderCode = code.trim().startsWith('mindmap') ? annotateMindmap(code) : code;
-        const { svg } = await mermaid.render(id, renderCode);
+        const isMindmap = code.trim().startsWith('mindmap');
+        const svg = isMindmap ? await renderMindmapSvg(id, code) : (await mermaid.render(id, code)).svg;
         el.innerHTML = svg + '<div class="mmd-preview-hint" style="position:absolute;bottom:6px;right:6px;">クリックで拡大</div>';
         const s = el.querySelector('svg');
         if (s) s.style.cssText = 'max-width:100%;height:auto;display:block;';
