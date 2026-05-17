@@ -137,7 +137,7 @@
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v3.8</span></div>
+  <div class="sb-logo">有限会社アートソウル<span>総合マニュアル v4.0</span></div>
 
   <div class="sb-section">
     <div class="sb-section-label">🤝 Kaiと協働する</div>
@@ -162,6 +162,7 @@
     <a class="sb-link" href="#sk-content-burst">/content-burst</a>
     <a class="sb-link" href="#sk-deck-sprint">/deck-sprint</a>
     <a class="sb-link" href="skill-craft完全ガイド.html" target="_blank">/skill-craft↗</a>
+    <a class="sb-link" href="seminar-dna完全ガイド.html" target="_blank">/seminar-dna↗</a>
     <a class="sb-link" href="skill使い倒し完全ガイド.html" target="_blank">スキル使い倒し完全ガイド↗</a>
   </div>
 
@@ -235,10 +236,12 @@
   </div>
 
   <div class="sb-section">
-    <div class="sb-section-label">🎤 セミナースライド</div>
+    <div class="sb-section-label">🎤 セミナーコンテンツ</div>
     <a class="sb-link" href="#ch24">/seminar-slide スキル</a>
     <a class="sb-link" href="#ch25">スライドビルダーツール</a>
     <a class="sb-link" href="#ch26">テンプレート管理</a>
+    <a class="sb-link" href="#ch28">/seminar-dna スキル</a>
+    <a class="sb-link" href="seminar-dna完全ガイド.html" target="_blank">seminar-dna 完全ガイド↗</a>
   </div>
 
   <div class="sb-section">
@@ -282,6 +285,7 @@
 <tr><td>v4.2</td><td>2026-05-17</td><td>Kai Tasks 完全マニュアル（Kai-Tasks完全マニュアル.html）新設。PART5を全面改訂（クイックスタート・CLI早見表・自動記録しくみ・タイムマシン・再開ボタン解説に更新）。サイドバー・目次にリンク追加。</td></tr>
 <tr><td>v4.1</td><td>2026-05-17</td><td>PART 5末尾に「.envファイル完全セットアップガイド」リンクカードを追加。目次・サイドバー（📊 プロジェクト管理）にも同ガイドへのリンクを追加。</td></tr>
 <tr><td>v4.0</td><td>2026-05-17</td><td>第27章のセクション4を簡略化し「.envファイル完全セットアップガイド（Groq-env完全ガイド.html）」を別ページとして新設。メモ帳・Kai・ターミナルの3方法を選択式で解説。用語集に .env・.gitignore・プロジェクトルート・環境変数・APIキー・エンコードを追加。</td></tr>
+<tr><td>v4.0</td><td>2026-05-18</td><td>/seminar-dna スキル新設（セミナーDNA抽出・型命名・パターンライブラリ・台本量産）。seminar-dna完全ガイド.html 追加。seminar-script-rules.md（台本構造ルール）新設。セミナースタイル3層体系（構成パターン×DNA型×デザインスタイル）を整備。CLAUDE.md・06_セミナー事業部 CLAUDE.md・サイドバー・目次・第28章を更新。</td></tr>
 <tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」を新設。登録・APIキー取得・安全な管理方法（.envファイル）・商用利用の注意点・Claude Codeでの適用手順を初心者向けに解説。</td></tr>
 <tr><td>v3.8</td><td>2026-05-17</td><td>第19章に「実行中の割り込み・指示のやり直し方」の解説と、早見表に「強制停止 (Ctrl+C)」を追加。</td></tr>
 <tr><td>v3.7</td><td>2026-05-17</td><td>/skill-craft スキル新設（素材→スキル→マニュアル→連携の一気通貫自動化）。skill-craft完全ガイド.html 追加。CLAUDE.md・サイドバー・目次・PART 1 リンク更新。</td></tr>
@@ -315,6 +319,7 @@
     <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
     <li class="sub-item"><a href="#sk-setup">/company-setup — AI組織ゼロベース設計</a></li>
     <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
+    <li class="sub-item"><a href="seminar-dna完全ガイド.html" target="_blank">↗ /seminar-dna — セミナーDNA抽出・型ライブラリ化・台本量産（完全ガイド）</a></li>
     <li class="sub-item"><a href="#sk-content-burst">/content-burst — テーマ→6チャネル発信物を並列生成</a></li>
     <li class="sub-item"><a href="#sk-deck-sprint">/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成</a></li>
     <li class="sub-item"><a href="skill-craft完全ガイド.html" target="_blank">↗ /skill-craft — 素材→スキル定義→HTMLマニュアル→総合マニュアル連携を一気通貫自動化</a></li>
@@ -378,6 +383,7 @@
     <li class="sub-item"><a href="#ch24">第24章　/seminar-slide スキル — 全自動でスライドを作る</a></li>
     <li class="sub-item"><a href="#ch25">第25章　スライドビルダーツールの使い方</a></li>
     <li class="sub-item"><a href="#ch26">第26章　テンプレート管理とブラッシュアップ</a></li>
+    <li class="sub-item"><a href="#ch28">第28章　/seminar-dna スキル — セミナーの型を抽出・命名・量産する</a></li>
   </ul>
 </div>
 
@@ -3125,6 +3131,49 @@ admin.html を開いてプレゼンターパスワードを設定する。初期
     <div class="file-desc">完全ガイド。システム概要・5種類のページの役割・当日操作・パスワードの仕組み・トラブルシューティング・slides.js 書き方リファレンス全網羅。</div>
   </div>
 </div>
+
+</div>
+</details>
+
+<!-- 第28章 -->
+<details id="ch28">
+<summary><span class="acc-num">28</span>/seminar-dna スキル — セミナーの型を抽出・命名・量産する<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+
+<div class="lead">
+参照セミナーの文字起こし・資料からセミナーの「型（DNA）」を7軸で抽出・命名・テンプレート化し、任意のテーマ・ゴール・ターゲットで同じスタイルのセミナーを量産できるパターンライブラリを構築するスキルです。
+</div>
+
+<h3>3つのモード</h3>
+<table>
+  <tr><th>モード</th><th>呼び出し方</th><th>用途</th></tr>
+  <tr><td><strong>browse</strong></td><td><code>/seminar-dna</code>（引数なし）または「スタイル一覧を見せて」</td><td>蓄積済みパターン一覧を表示し、テーマ・ゴール・ターゲットから推薦</td></tr>
+  <tr><td><strong>extract</strong></td><td>文字起こし・資料を渡す</td><td>DNAを抽出・命名してパターンライブラリに保存</td></tr>
+  <tr><td><strong>apply</strong></td><td><code>/seminar-dna apply &lt;パターン名&gt;</code></td><td>保存済みパターンを使って台本を生成</td></tr>
+</table>
+
+<h3>セミナースタイル体系（3層）</h3>
+<table>
+  <tr><th>層</th><th>内容</th></tr>
+  <tr><td>構成パターン（5種）</td><td>情報提供型・教育型・ストーリー型・製品紹介型・営業型</td></tr>
+  <tr><td>DNA型スタイル（蓄積型）</td><td>/seminar-dna で追加していくスタイル型</td></tr>
+  <tr><td>デザインスタイル（5種）</td><td>rough_chic_ink / dynamic_business_clean 等</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">情報保護ルール（必読）</span>
+登壇者名・セミナー名・固有フレーズは一切記録しない。「どう設計されているか（構造・比率・パターン）」のみを抽出する。情報元が見ても特定できないレベルまで抽象化するのが原則。
+</div>
+
+<div class="file-card">
+  <div class="file-icon">📗</div>
+  <div>
+    <span class="file-path">07_マニュアル/seminar-dna完全ガイド.html</span>
+    <div class="file-desc">完全ガイド。3モード詳解・DNA7軸分析・情報保護ルール・スタイル3層体系・命名ルール・パターンライブラリの育て方・よくある失敗・品質チェックリスト全収録。</div>
+  </div>
+</div>
+
+<a href="seminar-dna完全ガイド.html" target="_blank" style="display:inline-block;margin-top:10px;background:#1A365D;color:white;padding:8px 20px;border-radius:6px;text-decoration:none;font-weight:bold;">▶ 完全ガイドを開く</a>
 
 </div>
 </details>

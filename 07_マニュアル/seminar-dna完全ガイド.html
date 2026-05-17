@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/seminar-dna 完全ガイド — 有限会社アートソウル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+  /* ===== Sidebar ===== */
+  .sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+  .sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+  .sb-section { padding: 10px 14px 4px; }
+  .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+  .sb-link { display: block; padding: 5px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+  .sb-link:hover, .sb-link.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+  /* ===== Main ===== */
+  .main-content { margin-left: 230px; flex: 1; padding: 40px 20px; min-width: 0; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* ===== Cover ===== */
+  .cover { text-align: center; padding: 70px 40px 60px; border-bottom: 4px solid #1A365D; margin: -20px -20px 50px; background: linear-gradient(135deg, #EDF2F7 0%, #E2E8F0 100%); border-radius: 8px; }
+  .cover .skill-badge { display: inline-block; background: #ED8936; color: white; font-size: 13px; font-weight: bold; padding: 4px 16px; border-radius: 20px; margin-bottom: 18px; letter-spacing: 0.05em; }
+  .cover h1 { font-size: 36px; color: #1A365D; margin-bottom: 14px; line-height: 1.3; }
+  .cover .tagline { font-size: 17px; color: #4A5568; margin-bottom: 32px; }
+  .cover .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 540px; margin: 0 auto; }
+  .cover .meta-item { background: white; border-radius: 8px; padding: 14px 10px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+  .cover .meta-num { font-size: 26px; font-weight: bold; color: #ED8936; line-height: 1; }
+  .cover .meta-label { font-size: 11px; color: #718096; margin-top: 4px; }
+
+  /* ===== Typography ===== */
+  h2 { font-size: 24px; color: #1A365D; padding: 48px 0 14px; margin-top: 36px; border-bottom: 3px solid #ED8936; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 18px; color: #2D3748; margin: 28px 0 10px; padding-left: 14px; border-left: 5px solid #ED8936; line-height: 1.5; }
+  h4 { font-size: 15px; color: #1A365D; margin: 18px 0 6px; font-weight: bold; }
+  p { margin: 10px 0; }
+
+  /* ===== Components ===== */
+  .lead { font-size: 16px; color: #1A365D; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 5px; font-size: 13px; }
+  .warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 5px; font-size: 13px; }
+  .ok { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 5px; font-size: 13px; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 24px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; }
+  pre code { background: none; color: inherit; padding: 0; }
+  ul, ol { padding-left: 26px; margin: 10px 0; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 48px 0; }
+
+  /* ===== TOC ===== */
+  .toc { background: #F7FAFC; padding: 26px 32px; border-radius: 8px; margin: 26px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #ED8936; }
+  .toc .sub { padding-left: 20px; font-size: 13px; color: #4A5568; }
+
+  /* ===== Step card ===== */
+  .step-card { background: #EDF2F7; padding: 22px 26px; border-radius: 8px; margin: 20px 0; border-top: 4px solid #1A365D; }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; background: #ED8936; color: white; width: 32px; height: 32px; border-radius: 50%; font-weight: bold; font-size: 14px; margin-right: 10px; flex-shrink: 0; }
+  .step-title { font-size: 16px; font-weight: bold; color: #1A365D; display: flex; align-items: center; margin-bottom: 12px; }
+
+  /* ===== Prompt box ===== */
+  .prompt-box { background: #1A202C; color: #E2E8F0; padding: 38px 22px 20px; border-radius: 8px; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.8; position: relative; white-space: pre-wrap; }
+  .prompt-box .comment { color: #A0AEC0; }
+  .prompt-box .highlight { color: #F6AD55; }
+  .copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 10px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { background: rgba(255,255,255,0.22); color: #fff; }
+  .copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+
+  /* ===== Check list ===== */
+  .check-list { background: #F0FFF4; padding: 20px 26px; border-radius: 8px; margin: 20px 0; }
+  .check-list li { list-style: none; padding-left: 26px; position: relative; }
+  .check-list li::before { content: "□"; position: absolute; left: 0; color: #2F855A; font-size: 17px; line-height: 1.4; }
+
+  /* ===== Mode badge ===== */
+  .mode-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 2px 4px 2px 0; }
+  .mode-browse { background: #EBF8FF; color: #2B6CB0; }
+  .mode-extract { background: #FAF5FF; color: #553C9A; }
+  .mode-apply { background: #F0FFF4; color: #276749; }
+
+  /* ===== DNA card ===== */
+  .dna-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 18px 22px; margin: 12px 0; border-left: 6px solid #1A365D; }
+  .dna-card.orange { border-left-color: #ED8936; }
+  .dna-card.purple { border-left-color: #805AD5; }
+  .dna-card.green { border-left-color: #38A169; }
+  .dna-label { font-size: 12px; font-weight: bold; color: #718096; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .dna-title { font-size: 16px; font-weight: bold; color: #1A365D; margin-bottom: 8px; }
+
+  /* ===== Changelog ===== */
+  .changelog th { background: #2D3748; }
+
+  /* ===== Shield / guard ===== */
+  .guard-box { background: #FFF5F5; border: 2px solid #FC8181; border-radius: 10px; padding: 22px 26px; margin: 20px 0; }
+  .guard-box .guard-title { font-size: 15px; font-weight: bold; color: #C53030; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .guard-box ul { margin: 0; }
+  .guard-box li { color: #742A2A; }
+
+  /* ===== Layer diagram ===== */
+  .layer-diagram { display: flex; flex-direction: column; gap: 4px; margin: 20px 0; }
+  .layer { padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 16px; }
+  .layer-1 { background: #1A365D; color: white; }
+  .layer-2 { background: #2D4A7A; color: white; }
+  .layer-3 { background: #3A5FA0; color: white; }
+  .layer-num { background: #ED8936; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; flex-shrink: 0; }
+  .layer-name { font-size: 15px; font-weight: bold; flex: 1; }
+  .layer-sub { font-size: 12px; opacity: 0.8; }
+</style>
+</head>
+<body>
+
+<!-- ===== Sidebar ===== -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    有限会社アートソウル<br>
+    <span>/seminar-dna 完全ガイド</span>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">ナビゲーション</div>
+    <a class="sb-link" href="総合マニュアル.html" target="_blank">← 総合マニュアルへ</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">このガイド</div>
+    <a class="sb-link" href="#overview">概要・できること</a>
+    <a class="sb-link" href="#trigger">呼び出し方（3モード）</a>
+    <a class="sb-link" href="#guard">情報保護ルール</a>
+    <a class="sb-link" href="#style-system">スタイル体系（3層）</a>
+    <a class="sb-link" href="#browse">browseモード詳解</a>
+    <a class="sb-link" href="#extract">extractモード詳解</a>
+    <a class="sb-link" href="#dna-7axis">DNA 7軸分析</a>
+    <a class="sb-link" href="#naming">命名のルール</a>
+    <a class="sb-link" href="#apply">applyモード詳解</a>
+    <a class="sb-link" href="#library">パターンライブラリの育て方</a>
+    <a class="sb-link" href="#failures">よくある失敗</a>
+    <a class="sb-link" href="#related">関連スキルの連携マップ</a>
+    <a class="sb-link" href="#checklist">品質チェックリスト</a>
+    <a class="sb-link" href="#changelog">変更履歴</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">関連スキル</div>
+    <a class="sb-link" href="skill-craft完全ガイド.html" target="_blank">/skill-craft ↗</a>
+    <a class="sb-link" href="スライドビルダー完全ガイド.html" target="_blank">/seminar-slide ↗</a>
+  </div>
+</nav>
+
+<!-- ===== Main ===== -->
+<div class="main-content">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <div class="skill-badge">/seminar-dna</div>
+  <h1>セミナーDNA 完全ガイド</h1>
+  <p class="tagline">型を抽出し、命名し、量産する。<br>セミナーのスタイルをライブラリ化するメタスキル。</p>
+  <div class="meta-grid">
+    <div class="meta-item"><div class="meta-num">3</div><div class="meta-label">モード</div></div>
+    <div class="meta-item"><div class="meta-num">7</div><div class="meta-label">DNA分析軸</div></div>
+    <div class="meta-item"><div class="meta-num">∞</div><div class="meta-label">量産可能パターン</div></div>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>目次</h3>
+  <ul>
+    <li><a href="#overview">Section 1 — このスキルでできること</a></li>
+    <li><a href="#trigger">Section 2 — 呼び出し方（3モード）</a></li>
+    <li><a href="#guard">Section 3 — 情報保護ルール（最重要）</a></li>
+    <li><a href="#style-system">Section 4 — セミナースタイル体系（3層構造）</a></li>
+    <li><a href="#browse">Section 5 — browseモード：スタイルを選んで始める</a></li>
+    <li><a href="#extract">Section 6 — extractモード：DNAを抽出・命名・保存</a></li>
+    <li class="sub"><a href="#dna-7axis">　DNA 7軸分析フレーム</a></li>
+    <li class="sub"><a href="#naming">　命名のルール</a></li>
+    <li><a href="#apply">Section 7 — applyモード：パターンで台本を生成</a></li>
+    <li><a href="#library">Section 8 — パターンライブラリの育て方</a></li>
+    <li><a href="#failures">Section 9 — よくある失敗と回避法</a></li>
+    <li><a href="#related">Section 10 — 関連スキルとの連携マップ</a></li>
+    <li><a href="#checklist">Section 11 — 品質チェックリスト</a></li>
+    <li><a href="#changelog">変更履歴</a></li>
+  </ul>
+</div>
+
+<!-- Section 1 -->
+<h2 id="overview">Section 1 — このスキルでできること</h2>
+
+<div class="lead">
+  セミナーの「うまさ」は偶然ではなく<strong>型</strong>に宿る。その型を言語化すれば、テーマが変わっても同じ熱量・説得力・体験が再現できる。<br>
+  <code>/seminar-dna</code> はセミナーの構造・感情設計・話法パターンを<strong>7軸で分析</strong>し、命名してライブラリに蓄積する。以後は「テーマ・ゴール・ターゲット」を変えるだけで同じスタイルのセミナーを量産できる。
+</div>
+
+<h3>このスキルが解決する問題</h3>
+<table>
+  <tr><th>課題</th><th>解決策</th></tr>
+  <tr><td>「あのセミナー、なぜ刺さったのか分からない」</td><td>7軸DNA分析で構造を言語化して保存</td></tr>
+  <tr><td>テーマを変えるたびにゼロから設計している</td><td>命名済みパターンに変数を当てはめるだけ</td></tr>
+  <tr><td>「うまいセミナー」が属人的で再現できない</td><td>型をファイル化し誰でも（いつでも）呼び出せる</td></tr>
+  <tr><td>どのスタイルが自分の案件に合うか分からない</td><td>browseモードでテーマ・ゴール・ターゲットから推薦</td></tr>
+</table>
+
+<h3>このスキルが<em>しないこと</em></h3>
+<div class="warn">
+  <span class="label">対象外</span>
+  <ul>
+    <li>スライドの生成（→ <code>/seminar-slide</code> を使う）</li>
+    <li>トンマナ（文体・語調）の指定（→ 案件ごとに別途渡す）</li>
+    <li>情報元の具体的な内容・フレーズの保存（情報保護ルールにより禁止）</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- Section 2 -->
+<h2 id="trigger">Section 2 — 呼び出し方（3モード）</h2>
+
+<table>
+  <tr><th>モード</th><th>呼び出し方</th><th>用途</th></tr>
+  <tr>
+    <td><span class="mode-badge mode-browse">browse</span></td>
+    <td><code>/seminar-dna</code>（引数なし）<br>「スタイル一覧を見せて」<br>「どんなスタイルがある？」</td>
+    <td>蓄積済みパターンを一覧表示し、テーマ・ゴール・ターゲットから推薦</td>
+  </tr>
+  <tr>
+    <td><span class="mode-badge mode-extract">extract</span></td>
+    <td><code>/seminar-dna extract</code><br>または文字起こし・資料を渡したとき</td>
+    <td>参照素材からDNAを抽出・命名・パターンライブラリに保存</td>
+  </tr>
+  <tr>
+    <td><span class="mode-badge mode-apply">apply</span></td>
+    <td><code>/seminar-dna apply &lt;パターン名&gt;</code></td>
+    <td>保存済みパターンを使って新しいセミナー台本を生成</td>
+  </tr>
+</table>
+
+<div class="tip">
+  <span class="label">使い始め方のおすすめ</span>
+  まだパターンが0件の場合：参照したいセミナーの文字起こしを用意 → <code>/seminar-dna extract</code> で最初の型を作る。<br>
+  パターンが1件以上ある場合：<code>/seminar-dna</code>（引数なし）でスタイル一覧を見て選ぶ。
+</div>
+
+<hr>
+
+<!-- Section 3 -->
+<h2 id="guard">Section 3 — 情報保護ルール（最重要）</h2>
+
+<div class="guard-box">
+  <div class="guard-title">絶対に記録しないもの（全モード・全ステップに適用）</div>
+  <ul>
+    <li>登壇者名・主催者名・運営会社名</li>
+    <li>セミナー名・シリーズ名・コース名</li>
+    <li>開催日時・会場名</li>
+    <li>登壇者固有のフレーズ・口癖・言い回し</li>
+    <li>素材中に登場する固有事例・企業名・数値</li>
+    <li>参加者のコメント・反応（個人情報リスク）</li>
+  </ul>
+</div>
+
+<div class="ok">
+  <span class="label">記録してよいもの（構造・比率・設計パターンのみ）</span>
+  「どう設計されているか」は記録する。「何が言われていたか」は記録しない。<br>
+  例：「問いかけを8〜10分ごとに1回挿入する構造」→ OK。「〇〇さんの口癖"そうじゃないかと思うんですよ"」→ NG。
+</div>
+
+<h3>「情報元が見ても分からないか？」テスト</h3>
+<p>パターンファイルが完成したら、情報元の登壇者がそのファイルを読んだとして<strong>「これは自分のセミナーから取ったものだ」と気づくか</strong>をチェックする。気づかれるならNG。修正してから保存する。</p>
+
+<table>
+  <tr><th>判断基準</th><th>OK例</th><th>NG例</th></tr>
+  <tr><td>素材フィールド</td><td>「対面60分・中小企業向け」</td><td>「○○さんのAI活用セミナー2025年開催」</td></tr>
+  <tr><td>話法構造DNA</td><td>「8〜10分ごとに問いかけを1回挿入する」</td><td>「"そうじゃないかと思うんです"という問いかけを多用」</td></tr>
+  <tr><td>コツ・ツボ</td><td>「冒頭3分以内に挙手質問を入れる」</td><td>「○○さんのセミナーはAIの話から入る」</td></tr>
+  <tr><td>事例の記載</td><td>なし（変数プレースホルダーのみ）</td><td>「A社が○○で成功した話」</td></tr>
+</table>
+
+<hr>
+
+<!-- Section 4 -->
+<h2 id="style-system">Section 4 — セミナースタイル体系（3層構造）</h2>
+
+<p>このスキルが管理するのは「スタイル体系の中層」。3層を組み合わせてセミナーの完成形を作る。</p>
+
+<div class="layer-diagram">
+  <div class="layer layer-1">
+    <div class="layer-num">1</div>
+    <div>
+      <div class="layer-name">構成パターン（5種固定）</div>
+      <div class="layer-sub">情報提供型 / 教育型 / ストーリー型 / 製品紹介型 / 営業型 ─ ゴール×営業圧で選ぶ骨格</div>
+    </div>
+  </div>
+  <div class="layer layer-2">
+    <div class="layer-num">2</div>
+    <div>
+      <div class="layer-name">DNAスタイル型（/seminar-dna で蓄積）</div>
+      <div class="layer-sub">共感ファースト型 / 問題解体型 等 ─ 実セミナーから抽出した「どう伝えるか」の型</div>
+    </div>
+  </div>
+  <div class="layer layer-3">
+    <div class="layer-num">3</div>
+    <div>
+      <div class="layer-name">デザインスタイル（5種固定）</div>
+      <div class="layer-sub">dynamic_business_clean / luminous_dark_modern 等 ─ スライドのビジュアル設計</div>
+    </div>
+  </div>
+</div>
+
+<table>
+  <tr><th>層</th><th>決め方</th><th>参照先</th></tr>
+  <tr><td><strong>構成パターン</strong></td><td>ゴール（何を達成したいか）と営業圧で選ぶ</td><td><code>06_セミナー事業部/docs/構成パターン選定ガイド.md</code></td></tr>
+  <tr><td><strong>DNAスタイル型</strong></td><td><code>/seminar-dna</code>（browse）で推薦を受ける</td><td><code>rules/seminar-patterns/INDEX.md</code></td></tr>
+  <tr><td><strong>デザインスタイル</strong></td><td>業界×ターゲット層で選ぶ</td><td><code>06_セミナー事業部/docs/スタイル選定ガイド.md</code></td></tr>
+</table>
+
+<hr>
+
+<!-- Section 5 -->
+<h2 id="browse">Section 5 — browseモード：スタイルを選んで始める</h2>
+
+<h3>発動条件</h3>
+<ul>
+  <li><code>/seminar-dna</code>（引数なし）</li>
+  <li>「スタイル一覧を見せて」「どんなスタイルがある？」「スタイルを選びたい」</li>
+  <li><code>apply</code> したいがパターン名が不明な場合</li>
+</ul>
+
+<h3>Kaiの動き</h3>
+
+<div class="step-card">
+  <div class="step-title"><span class="step-num">1</span>パターンINDEXを読み込んで一覧表示</div>
+  <p>蓄積済みDNA型パターンと構成5パターンを並べて提示する。</p>
+  <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+<span class="highlight">[セミナースタイル一覧]</span>
+
+■ DNA型パターン（実際のセミナーから抽出した型）
+  No. | パターン名      | 得意なテーマ  | 得意なターゲット
+  ----|-----------------|--------------|------------------
+   1  | 共感ファースト型 | 業務改善系   | 現場担当者
+   2  | △△型           | ○○          | ○○
+  ※ まだ登録がない場合は「型がまだ登録されていません」と表示
+
+■ 構成パターン（ゴール×営業圧で選ぶ骨格）
+  1. 情報提供型   ── 理解と気づき / 営業圧ゼロ
+  2. 教育型       ── スキル習得 / 営業圧なし
+  3. ストーリー型 ── 感情共感・ブランド記憶 / 営業圧低
+  4. 製品紹介型   ── 認知・体験申込 / 営業圧中〜高
+  5. 営業型       ── リード獲得・受注 / 営業圧高
+
+どのスタイルで進めますか？または以下を教えてもらえれば最適を提案します。
+・テーマ / ・ゴール / ・ターゲット</div>
+</div>
+
+<div class="step-card">
+  <div class="step-title"><span class="step-num">2</span>テーマ・ゴール・ターゲットから推薦</div>
+  <p>3つの情報を受け取ったら、構成パターン × DNA型の最適な組み合わせを提案する。</p>
+  <div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+<span class="highlight">[スタイル推薦]</span>
+
+■ おすすめの組み合わせ
+  構成パターン : 情報提供型（理由: 営業圧不要・知識習得が目的）
+  DNA型スタイル: 共感ファースト型（理由: 現場担当者への共感訴求が最初のカギ）
+
+■ 代替案
+  A案: 教育型 × 証拠積み上げ型（より論理重視）
+  B案: ストーリー型 × 対話引き込み型（より感情訴求）
+
+この組み合わせで進めますか？</div>
+</div>
+
+<hr>
+
+<!-- Section 6 -->
+<h2 id="extract">Section 6 — extractモード：DNAを抽出・命名・保存</h2>
+
+<h3>対応素材</h3>
+<ul>
+  <li>セミナーの音声文字起こし（テキストファイル）</li>
+  <li>台本・レジュメ・スライド構成メモ</li>
+  <li>参加録・観察メモ</li>
+  <li>複数素材の組み合わせ</li>
+</ul>
+
+<div class="tip">
+  <span class="label">大きいファイルの読み込み</span>
+  文字起こしが大きい場合、Kaiは <code>offset</code> / <code>limit</code> を使って分割読み込みする。一度に全量を渡す必要はない。
+</div>
+
+<div class="warn">
+  <span class="label">渡す前の準備</span>
+  素材に登壇者名・セミナー名が含まれていても構わない。Kaiがそれらを記録しないようにルールが設定されている。ただし万一気になる場合は事前に匿名化してもよい。
+</div>
+
+<!-- DNA 7軸 -->
+<h2 id="dna-7axis">DNA 7軸分析フレーム</h2>
+
+<p>素材を読み込んだ後、Kaiは以下の7軸でセミナーの構造を分析する。</p>
+
+<div class="dna-card">
+  <div class="dna-label">軸 ①</div>
+  <div class="dna-title">オープニングDNA</div>
+  <ul>
+    <li>冒頭フックの種類（問いかけ型・共感型・数字型・物語型・宣言型）</li>
+    <li>信頼構築のプロセスと所要時間</li>
+    <li>場のほぐし方の設計パターン</li>
+  </ul>
+</div>
+
+<div class="dna-card orange">
+  <div class="dna-label">軸 ②</div>
+  <div class="dna-title">構造DNA</div>
+  <ul>
+    <li>セクション数と各セクションの役割</li>
+    <li>論理フロー（問題→解決型 / 感情→理性型 / 体験→一般化型 等）</li>
+    <li>転換点のタイミングと手法</li>
+  </ul>
+</div>
+
+<div class="dna-card">
+  <div class="dna-label">軸 ③</div>
+  <div class="dna-title">エンゲージメントDNA</div>
+  <ul>
+    <li>聴衆参加の仕掛けの種類（質問・挙手・ワーク・対話）</li>
+    <li>参加仕掛けの頻度と配置パターン</li>
+    <li>感情開放のタイミング設計</li>
+  </ul>
+</div>
+
+<div class="dna-card purple">
+  <div class="dna-label">軸 ④</div>
+  <div class="dna-title">感情カーブDNA</div>
+  <ul>
+    <li>感情の設計フロー（例: 共感→不安→希望→確信→行動）</li>
+    <li>テンション上下のリズムパターン</li>
+    <li>感情のピーク位置と回数</li>
+  </ul>
+</div>
+
+<div class="dna-card orange">
+  <div class="dna-label">軸 ⑤</div>
+  <div class="dna-title">コンテンツ比率DNA</div>
+  <ul>
+    <li>理論：体験談：問いかけ：具体事例 の配分（10段階比率）</li>
+    <li>事例の出し方のパターン（先出し・後出し・交互）</li>
+    <li>専門性の見せ方（データ重視 / 体験談重視 / 実演重視）</li>
+  </ul>
+</div>
+
+<div class="dna-card green">
+  <div class="dna-label">軸 ⑥</div>
+  <div class="dna-title">クロージングDNA</div>
+  <ul>
+    <li>CTAへの導き方（段階的 / 一発）</li>
+    <li>「今すぐ動く理由」の作り方のパターン</li>
+    <li>余韻・反芻の設計</li>
+  </ul>
+</div>
+
+<div class="dna-card">
+  <div class="dna-label">軸 ⑦</div>
+  <div class="dna-title">話法構造DNA</div>
+  <ul>
+    <li>口調・文体のパターン（断定型・問いかけ型・語りかけ型）</li>
+    <li>話法の構造（反復の使い方・問いかけの組み方・文末の変化パターン）</li>
+    <li>テンポ設計（ゆっくり説得型・テンポよく熱血型・対話型）</li>
+    <li>「間」の使い方のパターン</li>
+  </ul>
+  <div class="warn" style="margin-top:12px;">
+    <span class="label">重要</span>
+    具体的なフレーズ・口癖・言い回しは一切記録しない。「どんな構造で話しているか」のみを抽出する。
+  </div>
+</div>
+
+<!-- 命名 -->
+<h2 id="naming">命名のルール</h2>
+
+<p>7軸分析完了後、Kaiが命名候補を3つ提示してユーザーが選ぶ。</p>
+
+<h4>命名基準</h4>
+<ul>
+  <li>5〜15文字程度、「○○型」で終わる</li>
+  <li>「どう設計されているか」を体言止めで表す（テーマ・業種は含めない）</li>
+  <li>情報元が名前から特定されない</li>
+  <li>他のパターンと見分けがつく</li>
+</ul>
+
+<table>
+  <tr><th>パターン名例</th><th>特徴</th></tr>
+  <tr><td>共感ファースト型</td><td>課題共感から始めて解決策を積み上げる</td></tr>
+  <tr><td>問題解体型</td><td>複合課題を細分化して1つずつ潰す</td></tr>
+  <tr><td>ストーリー旅型</td><td>物語の起承転結に沿って体験させる</td></tr>
+  <tr><td>証拠積み上げ型</td><td>数字・事例・論理を重ねて確信に導く</td></tr>
+  <tr><td>対話引き込み型</td><td>問いかけで聴衆を思考させながら展開</td></tr>
+  <tr><td>熱血実演型</td><td>実演・体験ワーク中心、即使えるを体感させる</td></tr>
+</table>
+
+<h3>保存先ファイル構成</h3>
+<table>
+  <tr><th>ファイル</th><th>役割</th></tr>
+  <tr><td><code>rules/seminar-patterns/&lt;パターン名&gt;.md</code></td><td>DNA定義・コツ・落とし穴・適用実績</td></tr>
+  <tr><td><code>rules/seminar-patterns/&lt;パターン名&gt;_template.md</code></td><td>変数プレースホルダー入りの台本テンプレート</td></tr>
+  <tr><td><code>rules/seminar-patterns/INDEX.md</code></td><td>全パターンの目次（browseモードが参照）</td></tr>
+</table>
+
+<div class="tip">
+  <span class="label">テンプレートの固定パーツについて</span>
+  台本テンプレートの固定テキストはすべて<strong>完全新規作成</strong>で書く。素材から引用・派生させたテキストは一切含めない。「この型の設計原則を体現した新しい文章」として書くのがルール。
+</div>
+
+<hr>
+
+<!-- Section 7 -->
+<h2 id="apply">Section 7 — applyモード：パターンで台本を生成</h2>
+
+<div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+/seminar-dna apply 共感ファースト型</div>
+
+<h3>ヒアリング内容</h3>
+
+<div class="prompt-box"><button class="copy-btn" onclick="copyPrompt(this)">コピー</button>
+<span class="highlight">「共感ファースト型」スタイルでセミナーを設計します。以下を教えてください。</span>
+
+■ 必須情報
+1. テーマ: セミナーで扱う具体的なテーマ・業務領域
+2. ゴール: 参加者がセミナー後に達成してほしいこと（1文で）
+3. ターゲット: 誰に向けたセミナーか（職種・業種・知識レベル）
+
+■ 任意情報（なければ「おまかせ」でOK）
+4. 所要時間（デフォルト: 60分）
+5. 強調したい軸（DNA定義の中で特に強めたいポイント）
+6. 使える具体事例・数値
+7. CTA（最後に取ってほしいアクション）</div>
+
+<h3>生成される台本の構成</h3>
+<ul>
+  <li>セクション構成（全体アウトライン）</li>
+  <li>各セクションの台本（話し言葉）</li>
+  <li>エンゲージメント仕掛けの設計</li>
+  <li>CTA設計</li>
+</ul>
+
+<div class="ok">
+  <span class="label">次のステップへの接続</span>
+  台本完成後、Kaiが「スライド化しますか？（/seminar-slide に引き渡せます）」と確認する。そのまま流れてスライド生成まで一気通貫で進められる。
+</div>
+
+<hr>
+
+<!-- Section 8 -->
+<h2 id="library">Section 8 — パターンライブラリの育て方</h2>
+
+<p>パターンは<strong>蓄積するほど量産スピードが上がる</strong>。使い方のコツを整理する。</p>
+
+<h3>育て方の原則</h3>
+<ul>
+  <li><strong>1回のセミナー = 1つのDNA型</strong>が理想。似ているようで微妙に違う型も別々に保存してよい</li>
+  <li>apply後に「うまくいった・うまくいかなかった」をパターンの「落とし穴」セクションに追記する</li>
+  <li>「あのスタイルをまたやりたい」と思ったらパターン名を使えばすぐ再現できる</li>
+  <li>INDEXが5件以上になったら「最適テーマ」列を見直して分類を整理する</li>
+</ul>
+
+<h3>パターンの変数と固定の考え方</h3>
+<table>
+  <tr><th>固定（パターンの核）</th><th>変数（案件ごとに作る）</th></tr>
+  <tr><td>オープニングフックの種類</td><td>具体的な数値・事例</td></tr>
+  <tr><td>セクション数と役割</td><td>CTA（最後のアクション）</td></tr>
+  <tr><td>エンゲージメント仕掛けの頻度</td><td>共感ネタ・「あるある」</td></tr>
+  <tr><td>感情カーブの設計</td><td>ROI試算の数字</td></tr>
+  <tr><td>クロージングの構造</td><td>業種特有の用語・課題</td></tr>
+</table>
+
+<hr>
+
+<!-- Section 9 -->
+<h2 id="failures">Section 9 — よくある失敗と回避法</h2>
+
+<table class="fail-table">
+  <tr><th>失敗パターン</th><th>回避法</th></tr>
+  <tr>
+    <td>素材のフレーズがそのまま台本テンプレートに入っている</td>
+    <td>テンプレートの固定テキストは「完全新規作成」ルールを徹底。素材を読んだ後、テンプレートを書く前に一旦思考をリセットする</td>
+  </tr>
+  <tr>
+    <td>参照素材フィールドに登壇者名やセミナー名が入ってしまった</td>
+    <td>保存前に「情報元が見ても分からないか？」テストを必ず実施。セクション3の禁止項目と照合する</td>
+  </tr>
+  <tr>
+    <td>パターン名が似すぎて区別できない（「共感型」と「共感ファースト型」が混在）</td>
+    <td>命名時に既存パターン一覧と比較する。「最大の特徴1点」を名前に含め、他と被らないか確認する</td>
+  </tr>
+  <tr>
+    <td>applyで生成した台本に変数プレースホルダーが残っている</td>
+    <td>品質チェックリストの「変数がすべて埋まっているか」を生成後に必ず確認する</td>
+  </tr>
+  <tr>
+    <td>パターンが増えすぎて「どれを使えばいいか分からない」状態になる</td>
+    <td>browseモードで一覧を見てテーマ・ゴール・ターゲットを話せばKaiが推薦する。INDEXの「最適テーマ」列も参照する</td>
+  </tr>
+  <tr>
+    <td>台本がDNA定義と合っていない（スタイルがズレている）</td>
+    <td>apply後に7軸DNA定義と台本を1軸ずつ照合する。品質チェックの「7軸DNAが台本に反映されているか」を通す</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Section 10 -->
+<h2 id="related">Section 10 — 関連スキルとの連携マップ</h2>
+
+<table>
+  <tr><th>スキル</th><th>連携パターン</th></tr>
+  <tr><td><code>/seminar-slide</code></td><td>applyで台本生成後、そのままスライド化できる。最もよく使う連携</td></tr>
+  <tr><td><code>/talk-script</code></td><td>既存スライドがあり、DNA型スタイルで台本を整備したいとき</td></tr>
+  <tr><td><code>/skill-craft</code></td><td>参照素材から「スキル定義」を作りたいとき（DNA型ではなくスキルにしたい場合）</td></tr>
+  <tr><td><code>/persona-review</code></td><td>生成した台本をターゲットペルソナの視点で検証したいとき</td></tr>
+  <tr><td><code>/course-build</code></td><td>単発セミナーをカリキュラム・連続コースに展開するとき</td></tr>
+</table>
+
+<h3>推奨フロー（典型的な使い方）</h3>
+<pre>
+参照セミナーの文字起こしを用意
+      ↓
+/seminar-dna extract
+  → DNA 7軸分析 → 命名 → パターン保存
+      ↓
+/seminar-dna apply &lt;パターン名&gt;
+  → テーマ・ゴール・ターゲットを指定 → 台本生成
+      ↓
+/seminar-slide に引き渡し
+  → スライド生成 → GitHub Pages公開
+      ↓
+パターンの「適用実績」に記録 → ライブラリが育つ
+</pre>
+
+<hr>
+
+<!-- Section 11 -->
+<h2 id="checklist">Section 11 — 品質チェックリスト</h2>
+
+<h3>extractモード完了時（情報保護チェック）</h3>
+<ul class="check-list">
+  <li>登壇者名・セミナー名・主催者名がどのファイルにも含まれていないか</li>
+  <li>素材中の固有事例・数値・エピソードがパターン定義に含まれていないか</li>
+  <li>話法構造DNAに具体フレーズ・口癖が含まれていないか（構造のみか）</li>
+  <li>台本テンプレートの固定テキストが素材から派生していないか（完全新規か）</li>
+  <li>パターン名から情報元が特定できないか（「情報元が見ても分からないか？」テスト通過）</li>
+</ul>
+
+<h3>extractモード完了時（品質チェック）</h3>
+<ul class="check-list">
+  <li>7軸DNAがすべて記述されているか</li>
+  <li>テンプレートの変数プレースホルダーが正しく設定されているか</li>
+  <li>INDEX.mdが更新されているか</li>
+</ul>
+
+<h3>applyモード完了時</h3>
+<ul class="check-list">
+  <li>変数プレースホルダーがすべて埋まっているか（{{テーマ}}等が残っていないか）</li>
+  <li>7軸DNAがすべて台本に反映されているか</li>
+  <li><code>rules/seminar-script-rules.md</code> の品質ゲート（§9）を通過したか</li>
+  <li>CTAが最後の1つだけに絞られているか</li>
+  <li>パターンファイルの「適用実績」テーブルが更新されているか</li>
+</ul>
+
+<hr>
+
+<!-- Changelog -->
+<h2 id="changelog">変更履歴</h2>
+
+<table class="changelog">
+  <tr><th style="width:60px;">Ver.</th><th style="width:110px;">日付</th><th>内容</th></tr>
+  <tr><td>v1.0</td><td>2026-05-18</td><td>新規作成。3モード（browse / extract / apply）・DNA 7軸分析・情報保護ルール・スタイル3層体系・台本生成フロー・品質チェックリスト収録。seminar-script-rules.md・06_セミナー事業部と連携。</td></tr>
+</table>
+
+</div><!-- /container -->
+</div><!-- /main-content -->
+
+<script>
+function copyPrompt(btn) {
+  const box = btn.parentElement;
+  const text = box.innerText.replace('コピー', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ コピー済';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>
