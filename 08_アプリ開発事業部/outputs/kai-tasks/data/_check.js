@@ -3,6 +3,75 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
   mindmap: { padding: 16, curve: 'linear' } });
 let mmdSeq = 0;
 
+// ── MindMeister-style coloring for mindmap SVG ──
+const MM_PALETTE = [
+  '#3b82f6',  // blue
+  '#10b981',  // emerald
+  '#f97316',  // orange
+  '#8b5cf6',  // purple
+  '#ef4444',  // red
+  '#06b6d4',  // cyan
+  '#ec4899',  // pink
+  '#f59e0b',  // amber
+];
+
+function applyMindmapColors(svgEl) {
+  if (!svgEl || !svgEl.querySelector('.mindmap-node')) return;
+
+  // Inject override CSS into SVG
+  let styleEl = svgEl.querySelector('defs style') || svgEl.querySelector('style');
+  if (!styleEl) {
+    styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    svgEl.insertBefore(styleEl, svgEl.firstChild);
+  }
+
+  // Root node — dark navy
+  let css = `
+    .mindmap-node--root rect, .mindmap-node--root circle,
+    .mindmap-node--root ellipse, .mindmap-node--root polygon {
+      fill: #1e293b !important; stroke: #334155 !important; rx: 99;
+    }
+    .mindmap-node--root text, .mindmap-node--root tspan { fill: #f1f5f9 !important; font-weight: 700 !important; }
+    /* Edge lines to neutral subtle color */
+    .mindmap-node path { fill: none !important; }
+  `;
+
+  MM_PALETTE.forEach((col, i) => {
+    css += `
+      .section-${i} rect, .section-${i} circle,
+      .section-${i} ellipse, .section-${i} polygon {
+        fill: ${col} !important; stroke: ${col} !important; rx: 8;
+      }
+      .section-${i} text, .section-${i} tspan { fill: #ffffff !important; font-weight: 600 !important; }
+      .section-${i} line { stroke: ${col} !important; stroke-width: 2px !important; }
+    `;
+  });
+
+  styleEl.textContent += css;
+
+  // Directly color paths (edges) inside each section group
+  MM_PALETTE.forEach((col, i) => {
+    svgEl.querySelectorAll(`.section-${i}`).forEach(g => {
+      g.querySelectorAll('path').forEach(p => {
+        if (p.getAttribute('fill') !== 'none' && !p.getAttribute('fill')) return;
+        p.setAttribute('stroke', col);
+        p.setAttribute('stroke-width', '2.5');
+        p.setAttribute('fill', 'none');
+      });
+      g.querySelectorAll('line').forEach(l => { l.setAttribute('stroke', col); l.setAttribute('stroke-width', '2'); });
+    });
+  });
+
+  // Color standalone SVG-root paths (cross-section connector lines)
+  const allPaths = Array.from(svgEl.querySelectorAll('path, line'));
+  allPaths.forEach(p => {
+    if (!p.closest('.mindmap-node') && !p.getAttribute('stroke')) {
+      p.setAttribute('stroke', '#94a3b8');
+      p.setAttribute('stroke-width', '2');
+    }
+  });
+}
+
 const API = 'http://localhost:3456/api';
 let state = { data: null, projectId: null, tab: 'tasks', globalTab: 'dashboard', searchQuery: '', _draggingId: null };
 
@@ -959,6 +1028,7 @@ function previewMmd(editorId, previewId) {
           svgEl.setAttribute('viewBox', `0 0 ${parseFloat(w)} ${parseFloat(h)}`);
         }
         svgEl.setAttribute('style', 'max-width:100%;max-height:100%;width:auto;height:auto;display:block;');
+        if (code.trim().startsWith('mindmap')) applyMindmapColors(svgEl);
       }
     } catch(e) {
       container.innerHTML = `<div class="mmd-error">構文エラー:\n${e.message || e}</div>`;
@@ -1416,7 +1486,8 @@ async function renderPivotCompare(p) {
       const id = `pmc-${++mmdSeq}`;
       const { svg } = await mermaid.render(id, code);
       el.innerHTML = svg;
-      el.querySelector('svg')?.setAttribute('style', 'max-width:100%;height:auto;');
+      const s = el.querySelector('svg');
+      if (s) { s.setAttribute('style', 'max-width:100%;height:auto;'); applyMindmapColors(s); }
     } catch(e) {
       el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`;
     }
@@ -2232,7 +2303,10 @@ function renderTaskDashboard(taskId) {
         const { svg } = await mermaid.render(id, code);
         el.innerHTML = svg + '<div class="mmd-preview-hint" style="position:absolute;bottom:6px;right:6px;">クリックで拡大</div>';
         const s = el.querySelector('svg');
-        if (s) s.style.cssText = 'max-width:100%;height:auto;display:block;';
+        if (s) {
+          s.style.cssText = 'max-width:100%;height:auto;display:block;';
+          if (code.trim().startsWith('mindmap')) applyMindmapColors(s);
+        }
         el.style.position = 'relative';
       } catch(e) { el.innerHTML = `<div class="mmd-error" style="font-size:10px;">${e.message}</div>`; }
     }
