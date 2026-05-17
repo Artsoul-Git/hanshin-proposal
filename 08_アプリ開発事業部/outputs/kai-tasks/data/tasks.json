@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "last_updated": "2026-05-18T02:05:42",
+  "last_updated": "2026-05-18T03:31:16",
   "projects": [
     {
       "id": "sample-001",
@@ -8,7 +8,7 @@
       "goal": "タスク管理アプリを完成させて運用開始する",
       "status": "archived",
       "created_at": "2026-05-11T00:00:00",
-      "updated_at": "2026-05-18T02:05:42",
+      "updated_at": "2026-05-18T03:31:16",
       "memo": "これはサンプルです。使い方を確認したら削除してください。",
       "big_task": {
         "id": "t-big-001",
@@ -78,14 +78,15 @@
           "status": "todo",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-11T00:00:00",
+          "updated_at": "2026-05-18T03:30:41",
           "history": [
             {
               "timestamp": "2026-05-11T00:00:00",
               "action": "作成",
               "detail": "タスクを作成しました"
             }
-          ]
+          ],
+          "roadmap_mmd": "graph TD\n  A([\"🎯 Kaiとの連動ワークフローを確立する\"]) --> B[\"📋 計画フェーズ\"]\n  B --> C[\"⚙️ 実行フェーズ\"]\n  C --> E[\"🔄 分岐点\"]\n  E --> F[\"📈 成功パス\"]\n  E --> G[\"🚨 失敗パス\"]\n  F --> H[\"🎉 ゴールA\"]\n  G --> I[\"🏆 ゴールB\"]\n  H --> J([\"✅ 完了・定着\"])\n  I --> J\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style J fill:#43e97b,color:#000,stroke:#43e97b"
         }
       ],
       "small_tasks": [
@@ -151,11 +152,17 @@
           "id": "t-sm-005",
           "title": "CLAUDE.md にタスク管理アプリの場所を記載する",
           "description": "Kai が参照できるように場所と使い方を記録",
-          "status": "todo",
+          "status": "in_progress",
           "due_date": null,
           "created_at": "2026-05-11T00:00:00",
-          "updated_at": "2026-05-18T02:05:42",
-          "history": [],
+          "updated_at": "2026-05-18T03:31:01",
+          "history": [
+            {
+              "timestamp": "2026-05-18T03:31:01",
+              "action": "ステータス変更",
+              "detail": "「todo」→「in_progress」"
+            }
+          ],
           "mindmap_mmd": "mindmap\n  root((\"CLAUDE.md にタスク管理アプリの場所を記載す\"))\n    Step1: CLAUDE.md ファイルの作成\n      約5分\n    Step2: タスク管理アプリの場所を記載\n      約10分\n    Step3: 使い方の記載\n      約15分\n    Step4: 確認と保存\n      約5分",
           "roadmap_mmd": "graph TD\n  S0([\"🎯 CLAUDE.md にタスク管理アプリの場所\"])\n  S1[\"CLAUDE.md ファイルの作成 (5分)\"]\n  S2[\"タスク管理アプリの場所を記載 (10分)\"]\n  S3[\"使い方の記載 (15分)\"]\n  S4[\"確認と保存 (5分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
         }
@@ -200,6 +207,221 @@
           "type": "decision",
           "summary": "✂️ 「CLAUDE.md にタスク管理アプリの場所を記載する」を 4 ステップに分解",
           "detail": "Step1: CLAUDE.md ファイルの作成 (約5分)\nStep2: タスク管理アプリの場所を記載 (約10分)\nStep3: 使い方の記載 (約15分)\nStep4: 確認と保存 (約5分)"
+        }
+      ],
+      "snapshots": [
+        {
+          "id": "4e3601c1",
+          "timestamp": "2026-05-18T03:31:16",
+          "label": "スナップショット 2026/5/18 3:31:13",
+          "state": {
+            "id": "sample-001",
+            "name": "サンプルプロジェクト",
+            "goal": "タスク管理アプリを完成させて運用開始する",
+            "status": "archived",
+            "created_at": "2026-05-11T00:00:00",
+            "updated_at": "2026-05-18T03:31:01",
+            "memo": "これはサンプルです。使い方を確認したら削除してください。",
+            "big_task": {
+              "id": "t-big-001",
+              "title": "タスク管理アプリを本番運用開始する",
+              "description": "1-3-5ルールでプロジェクト管理を体系化する",
+              "status": "in_progress",
+              "due_date": "2026-05-15",
+              "created_at": "2026-05-11T00:00:00",
+              "updated_at": "2026-05-11T04:07:47",
+              "history": [
+                {
+                  "timestamp": "2026-05-11T00:00:00",
+                  "action": "作成",
+                  "detail": "タスクを作成しました"
+                }
+              ],
+              "mindmap_mmd": "",
+              "related_links": []
+            },
+            "medium_tasks": [
+              {
+                "id": "t-med-001",
+                "title": "サーバーの動作確認",
+                "description": "python server.py で起動して http://localhost:3456 にアクセス",
+                "status": "done",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-11T00:00:00",
+                "history": [
+                  {
+                    "timestamp": "2026-05-11T00:00:00",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ]
+              },
+              {
+                "id": "t-med-002",
+                "title": "実際のプロジェクトを登録する",
+                "description": "サンプルを参考に、実業務のプロジェクトを追加する",
+                "status": "done",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-11T03:48:19",
+                "history": [
+                  {
+                    "timestamp": "2026-05-11T00:00:00",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  },
+                  {
+                    "timestamp": "2026-05-11T03:48:18",
+                    "action": "ステータス変更",
+                    "detail": "「todo」→「in_progress」"
+                  },
+                  {
+                    "timestamp": "2026-05-11T03:48:19",
+                    "action": "ステータス変更",
+                    "detail": "「in_progress」→「done」"
+                  }
+                ]
+              },
+              {
+                "id": "t-med-003",
+                "title": "Kaiとの連動ワークフローを確立する",
+                "description": "「このプロジェクト整理して」→ Kai が JSON 更新 → リロードで反映",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-18T03:30:41",
+                "history": [
+                  {
+                    "timestamp": "2026-05-11T00:00:00",
+                    "action": "作成",
+                    "detail": "タスクを作成しました"
+                  }
+                ],
+                "roadmap_mmd": "graph TD\n  A([\"🎯 Kaiとの連動ワークフローを確立する\"]) --> B[\"📋 計画フェーズ\"]\n  B --> C[\"⚙️ 実行フェーズ\"]\n  C --> E[\"🔄 分岐点\"]\n  E --> F[\"📈 成功パス\"]\n  E --> G[\"🚨 失敗パス\"]\n  F --> H[\"🎉 ゴールA\"]\n  G --> I[\"🏆 ゴールB\"]\n  H --> J([\"✅ 完了・定着\"])\n  I --> J\n\n  style A fill:#6c63ff,color:#fff,stroke:#6c63ff\n  style J fill:#43e97b,color:#000,stroke:#43e97b"
+              }
+            ],
+            "small_tasks": [
+              {
+                "id": "t-sm-001",
+                "title": "ショートカットを作成する",
+                "description": "デスクトップに server.py のショートカットを置く",
+                "status": "in_progress",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-11T03:48:49",
+                "history": [
+                  {
+                    "timestamp": "2026-05-11T03:48:49",
+                    "action": "ステータス変更",
+                    "detail": "「todo」→「in_progress」"
+                  }
+                ]
+              },
+              {
+                "id": "t-sm-002",
+                "title": "サンプルプロジェクトを削除する",
+                "description": "使い方を理解したらサンプルを消す",
+                "status": "in_progress",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-18T01:44:16",
+                "history": [
+                  {
+                    "timestamp": "2026-05-11T03:50:26",
+                    "action": "ステータス変更",
+                    "detail": "「todo」→「in_progress」"
+                  }
+                ],
+                "mindmap_mmd": "mindmap\n  root((\"サンプルプロジェクトを削除する\"))\n    Step1: タスクの確認\n      約5分\n    Step2: サンプルプロジェクトの確認\n      約3分\n    Step3: サンプルプロジェクトの削除\n      約2分\n    Step4: 削除後の確認\n      約2分",
+                "roadmap_mmd": "graph LR\n  S0([\"🎯 サンプルプロジェクトを削除する\"])\n  S1[\"タスクの確認 (5分)\"]\n  S2[\"サンプルプロジェクトの確認 (3分)\"]\n  S3[\"サンプルプロジェクトの削除 (2分)\"]\n  S4[\"削除後の確認 (2分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
+              },
+              {
+                "id": "t-sm-003",
+                "title": "定期バックアップルールを決める",
+                "description": "tasks.json を週1でコピーするなど",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-18T01:28:13",
+                "history": [],
+                "mindmap_mmd": "mindmap\n  root((\"定期バックアップルールを決める\"))\n    Step1: バックアップルールの検討\n      約30分\n    Step2: バックアップ対象ファイルの特定\n      約15分\n    Step3: バックアップ方法の決定\n      約30分\n    Step4: バックアップスクリプトの作成\n      約60分\n    Step5: バックアップルールのテスト\n      約30分",
+                "roadmap_mmd": "graph LR\n  S0([\"🎯 定期バックアップルールを決める\"])\n  S1[\"バックアップルールの検討｜30分\"]\n  S2[\"バックアップ対象ファイルの特定｜15分\"]\n  S3[\"バックアップ方法の決定｜30分\"]\n  S4[\"バックアップスクリプトの作成｜60分\"]\n  S5[\"バックアップルールのテスト｜30分\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n  S5 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
+              },
+              {
+                "id": "t-sm-004",
+                "title": "完了プロジェクトのアーカイブ運用を決める",
+                "description": "archived ステータスに変更するだけでよいか検討",
+                "status": "todo",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-18T01:33:24",
+                "history": [],
+                "mindmap_mmd": "mindmap\n  root((\"完了プロジェクトのアーカイブ運用を決める\"))\n    Step1: プロジェクトのゴールとメモの確認\n      約10分\n    Step2: 現在のプロジェクトステータス確認\n      約5分\n    Step3: アーカイブ運用の条件検討\n      約15分\n    Step4: ステータス変更の検討\n      約10分\n    Step5: アーカイブ運用のルールの作成\n      約20分",
+                "roadmap_mmd": "graph LR\n  S0([\"🎯 完了プロジェクトのアーカイブ運用を決める\"])\n  S1[\"プロジェクトのゴールとメモの確認｜10分\"]\n  S2[\"現在のプロジェクトステータス確認｜5分\"]\n  S3[\"アーカイブ運用の条件検討｜15分\"]\n  S4[\"ステータス変更の検討｜10分\"]\n  S5[\"アーカイブ運用のルールの作成｜20分\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> S5\n  S5 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
+              },
+              {
+                "id": "t-sm-005",
+                "title": "CLAUDE.md にタスク管理アプリの場所を記載する",
+                "description": "Kai が参照できるように場所と使い方を記録",
+                "status": "in_progress",
+                "due_date": null,
+                "created_at": "2026-05-11T00:00:00",
+                "updated_at": "2026-05-18T03:31:01",
+                "history": [
+                  {
+                    "timestamp": "2026-05-18T03:31:01",
+                    "action": "ステータス変更",
+                    "detail": "「todo」→「in_progress」"
+                  }
+                ],
+                "mindmap_mmd": "mindmap\n  root((\"CLAUDE.md にタスク管理アプリの場所を記載す\"))\n    Step1: CLAUDE.md ファイルの作成\n      約5分\n    Step2: タスク管理アプリの場所を記載\n      約10分\n    Step3: 使い方の記載\n      約15分\n    Step4: 確認と保存\n      約5分",
+                "roadmap_mmd": "graph TD\n  S0([\"🎯 CLAUDE.md にタスク管理アプリの場所\"])\n  S1[\"CLAUDE.md ファイルの作成 (5分)\"]\n  S2[\"タスク管理アプリの場所を記載 (10分)\"]\n  S3[\"使い方の記載 (15分)\"]\n  S4[\"確認と保存 (5分)\"]\n  DONE([\"✅ 完了\"])\n  S0 --> S1\n  S1 --> S2\n  S2 --> S3\n  S3 --> S4\n  S4 --> DONE\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000"
+              }
+            ],
+            "history": [
+              {
+                "timestamp": "2026-05-11T00:00:00",
+                "action": "作成",
+                "detail": "プロジェクトを作成しました"
+              },
+              {
+                "timestamp": "2026-05-11T04:15:37",
+                "action": "更新",
+                "detail": "ステータスを「active」→「archived」に変更"
+              }
+            ],
+            "session_logs": [
+              {
+                "id": "mp9zohr2",
+                "timestamp": "2026-05-17T16:28:13.406Z",
+                "type": "decision",
+                "summary": "✂️ 「定期バックアップルールを決める」を 5 ステップに分解",
+                "detail": "Step1: バックアップルールの検討 (約30分)\nStep2: バックアップ対象ファイルの特定 (約15分)\nStep3: バックアップ方法の決定 (約30分)\nStep4: バックアップスクリプトの作成 (約60分)\nStep5: バックアップルールのテスト (約30分)"
+              },
+              {
+                "id": "mp9zv5tz",
+                "timestamp": "2026-05-17T16:33:24.551Z",
+                "type": "decision",
+                "summary": "✂️ 「完了プロジェクトのアーカイブ運用を決める」を 5 ステップに分解",
+                "detail": "Step1: プロジェクトのゴールとメモの確認 (約10分)\nStep2: 現在のプロジェクトステータス確認 (約5分)\nStep3: アーカイブ運用の条件検討 (約15分)\nStep4: ステータス変更の検討 (約10分)\nStep5: アーカイブ運用のルールの作成 (約20分)"
+              },
+              {
+                "id": "mpa0959b",
+                "timestamp": "2026-05-17T16:44:16.991Z",
+                "type": "decision",
+                "summary": "✂️ 「サンプルプロジェクトを削除する」を 4 ステップに分解",
+                "detail": "Step1: タスクの確認 (約5分)\nStep2: サンプルプロジェクトの確認 (約3分)\nStep3: サンプルプロジェクトの削除 (約2分)\nStep4: 削除後の確認 (約2分)"
+              },
+              {
+                "id": "mpa10ox6",
+                "timestamp": "2026-05-17T17:05:42.186Z",
+                "type": "decision",
+                "summary": "✂️ 「CLAUDE.md にタスク管理アプリの場所を記載する」を 4 ステップに分解",
+                "detail": "Step1: CLAUDE.md ファイルの作成 (約5分)\nStep2: タスク管理アプリの場所を記載 (約10分)\nStep3: 使い方の記載 (約15分)\nStep4: 確認と保存 (約5分)"
+              }
+            ]
+          }
         }
       ]
     },
