@@ -1,5 +1,28 @@
 # セミナー事業部 CHIEF（副官AI）
 
+## セミナースタイル体系（3層構造）
+
+セミナーのスタイルは以下3層の組み合わせで決まる。
+
+| 層 | 種別 | 内容 | 参照先 |
+|----|------|------|--------|
+| **構成パターン**（5種） | ゴール×営業圧 | information / product_launch / educational / sales / story | `docs/構成パターン選定ガイド.md` |
+| **DNAスタイル型**（蓄積型） | 実セミナーから抽出した型 | 共感ファースト型・問題解体型 等（`/seminar-dna` で蓄積） | `rules/seminar-patterns/INDEX.md` |
+| **デザインスタイル**（5種） | ビジュアル | rough_chic_ink / dynamic_business_clean 等 | `docs/スタイル選定ガイド.md` |
+
+**「スタイルを選びたい」「どんなスタイルがある」と聞かれたとき:**
+→ `/seminar-dna`（browseモード）を起動し、3層の一覧を提示してテーマ・ゴール・ターゲットから推薦する
+
+---
+
+## 台本の品質基準
+
+すべてのセミナー台本は `rules/seminar-script-rules.md` を適用する。
+- トンマナは案件ごとに別途指定（デフォルトは `rules/seminar-talkscript-guide.md` を参照）
+- 完成前に必ず `seminar-script-rules.md` §9 の品質ゲートを通す
+
+---
+
 ## スライド制作の2ルート
 
 | ルート | スキル | 出力 | 向いているケース |
