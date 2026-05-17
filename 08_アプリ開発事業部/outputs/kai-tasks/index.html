@@ -688,41 +688,43 @@ mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose
   mindmap: { padding: 16, curve: 'linear' } });
 let mmdSeq = 0;
 
-// ── MindMeister-style coloring via post-render DOM manipulation ──
-// (Mermaid mindmap :::className is NOT supported — treated as literal text)
+// ── MindMeister-style mindmap coloring ──
+// Strategy: append CSS *inside* the SVG's own <style> element, after Mermaid's rules.
+// Same stylesheet position → same specificity → LAST rule wins.
+// Using #svgId scoping to match Mermaid's own selector scope.
 const _MM_P = ['#3b82f6','#10b981','#f97316','#8b5cf6','#ef4444','#06b6d4','#ec4899','#f59e0b'];
 
 function applyMindmapColors(svgEl) {
   if (!svgEl || !svgEl.querySelector('.mindmap-node')) return;
+  const id = svgEl.id;
+  if (!id) return;
 
-  function paint(el, bg, txt) {
-    // Shapes: rect, circle, ellipse, polygon
-    el.querySelectorAll('rect, circle, ellipse, polygon').forEach(s => {
-      s.style.setProperty('fill', bg, 'important');
-      s.style.setProperty('stroke', bg, 'important');
-    });
-    // Paths: only those with an existing fill (node background paths, not edge-only paths)
-    el.querySelectorAll('path').forEach(p => {
-      const f = p.getAttribute('fill') || p.style.fill || '';
-      if (f && f !== 'none') p.style.setProperty('fill', bg, 'important');
-      p.style.setProperty('stroke', bg, 'important');
-    });
-    // Text
-    el.querySelectorAll('text, tspan').forEach(t => t.style.setProperty('fill', txt, 'important'));
+  // Find (or create) the SVG's internal <style> element
+  let styleEl = svgEl.querySelector('defs style') || svgEl.querySelector('style');
+  if (!styleEl) {
+    styleEl = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+    svgEl.insertBefore(styleEl, svgEl.firstChild);
   }
 
-  // Color each branch section (section-0 … section-7)
-  for (let i = 0; i < 8; i++) {
-    const els = svgEl.querySelectorAll(`.section-${i}`);
-    if (!els.length) break;
-    els.forEach(el => paint(el, _MM_P[i], '#fff'));
-  }
-
-  // Root node — paint last so it overrides any inherited section color
-  const allNodes = Array.from(svgEl.querySelectorAll('.mindmap-node'));
-  const rootEl = svgEl.querySelector('.mindmap-node--root')
-    || allNodes.find(n => n.querySelector('circle, ellipse'));
-  if (rootEl) paint(rootEl, '#1e293b', '#f8fafc');
+  let css = '';
+  _MM_P.forEach((col, i) => {
+    // Cover both SVG structures: .section-N.mindmap-node (same el) and .section-N > .mindmap-node
+    css += `
+      #${id} .section-${i} rect, #${id} .mindmap-node.section-${i} rect { fill: ${col} !important; stroke: ${col} !important; }
+      #${id} .section-${i} circle, #${id} .mindmap-node.section-${i} circle { fill: ${col} !important; stroke: ${col} !important; }
+      #${id} .section-${i} ellipse, #${id} .mindmap-node.section-${i} ellipse { fill: ${col} !important; stroke: ${col} !important; }
+      #${id} .section-${i} polygon, #${id} .mindmap-node.section-${i} polygon { fill: ${col} !important; stroke: ${col} !important; }
+      #${id} .section-${i} path { stroke: ${col} !important; stroke-width: 2px !important; }
+      #${id} .section-${i} text, #${id} .section-${i} tspan { fill: #ffffff !important; font-weight: 600 !important; }
+    `;
+  });
+  // Root node (last so it wins over any section color)
+  css += `
+    #${id} .mindmap-node--root circle, #${id} .mindmap-node--root ellipse { fill: #1e293b !important; stroke: #1e293b !important; }
+    #${id} .mindmap-node--root rect, #${id} .mindmap-node--root polygon { fill: #1e293b !important; stroke: #1e293b !important; }
+    #${id} .mindmap-node--root text, #${id} .mindmap-node--root tspan { fill: #f8fafc !important; font-weight: 700 !important; }
+  `;
+  styleEl.textContent += css;
 }
 
 const API = 'http://localhost:3456/api';
