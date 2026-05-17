@@ -268,6 +268,7 @@
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
+<tr><td>v4.0</td><td>2026-05-17</td><td>第27章のセクション4を簡略化し「.envファイル完全セットアップガイド（Groq-env完全ガイド.html）」を別ページとして新設。メモ帳・Kai・ターミナルの3方法を選択式で解説。用語集に .env・.gitignore・プロジェクトルート・環境変数・APIキー・エンコードを追加。</td></tr>
 <tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」を新設。登録・APIキー取得・安全な管理方法（.envファイル）・商用利用の注意点・Claude Codeでの適用手順を初心者向けに解説。</td></tr>
 <tr><td>v3.8</td><td>2026-05-17</td><td>第19章に「実行中の割り込み・指示のやり直し方」の解説と、早見表に「強制停止 (Ctrl+C)」を追加。</td></tr>
 <tr><td>v3.7</td><td>2026-05-17</td><td>/skill-craft スキル新設（素材→スキル→マニュアル→連携の一気通貫自動化）。skill-craft完全ガイド.html 追加。CLAUDE.md・サイドバー・目次・PART 1 リンク更新。</td></tr>
@@ -2331,6 +2332,24 @@ PIPELINEは以下を自動でチェックします：<br>
 
 <dt>スターターパック</dt>
 <dd>新規案件開始時にKaiに渡すテンプレート。基本情報・課題・ITリテラシー・予算・ゴール・上村の所感の6セクション。Knowledgeフォルダに保存して渡す。</dd>
+
+<dt>.envファイル（ドットイーエヌブイ）</dt>
+<dd>APIキーやパスワードなど「秘密の値」だけを書いておく専用の隠しファイル。ファイル名は必ず <code>.env</code>（ドットで始まる、拡張子なし）。コードの中に直接書く代わりにこのファイルを参照することで、万が一コードが外に漏れてもキーは守られる。エンコードはUTF-8（メモ帳で保存する場合は「UTF-8」を選択）。→ <a href="Groq-env完全ガイド.html" target="_blank">完全セットアップガイド</a></dd>
+
+<dt>.gitignore（ドットギットイグノア）</dt>
+<dd>Gitに「このファイルは管理しないで」と伝えるリスト。プロジェクトルートに置く <code>.gitignore</code> というテキストファイルに除外したいファイル名を1行ずつ書く。<code>.env</code> をここに書いておかないと、APIキーがGitHub等に誤って公開されてしまう。→ <a href="Groq-env完全ガイド.html#step2" target="_blank">設定方法</a></dd>
+
+<dt>プロジェクトルート</dt>
+<dd>プロジェクトの「一番上のフォルダ」のこと。Kai Tasksの場合は <code>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\</code> がプロジェクトルート。ここに <code>.gitignore</code> や <code>CLAUDE.md</code> などの設定ファイルが置かれている。</dd>
+
+<dt>環境変数（かんきょうへんすう）</dt>
+<dd>OSやアプリが「どこからでも読める変数」として保持する設定値のこと。APIキーを <code>.env</code> に書いて読み込むと、プログラムからは <code>os.environ.get("GROQ_API_KEY")</code> という形でどこからでも取り出せる。「環境に紐づいた変数」なのでコードを変えずに値だけ切り替えられる。</dd>
+
+<dt>APIキー</dt>
+<dd>「誰がAPIを呼び出しているか」を証明するパスワードのようなもの。<code>gsk_</code> から始まる長い文字列（Groqの場合）。発行したサービスごとに一意で、漏れると他人が自分のアカウントで利用できてしまう。使い終わったら削除し、用途ごとに別キーを発行するのがベストプラクティス。</dd>
+
+<dt>エンコード（文字コード）</dt>
+<dd>文字をコンピューターが扱えるデータに変換する方式。日本語が含まれるファイルは UTF-8 で統一するのがトラブル防止の基本。メモ帳で保存する際は「名前を付けて保存」→ 文字コード欄で「UTF-8」を選択する（「ANSI」や「UTF-16」にすると文字化けの原因になる）。</dd>
 </dl>
 
 </div>
@@ -2707,41 +2726,45 @@ echo $env:GROQ_API_KEY</code></pre>
 
 <h3>4. APIキーの安全な管理（.envファイル）</h3>
 
-<p>APIキーは <strong>.envファイル</strong> という隠しファイルに書いて管理するのが業界標準。コードの中に直接書かず、Gitにも追加しない。</p>
+<div class="lead">
+APIキーは <strong>.envファイル</strong> という専用ファイルに書いて管理する。コードの中に直接書かない、Gitにも上げない——この2点が最重要ルール。<br>
+詳しい手順（ファイルの作り方・エンコード・.gitignoreの意味まで）は完全ガイドを参照。
+</div>
+
+<div style="text-align:center;margin:20px 0;">
+  <a href="Groq-env完全ガイド.html" target="_blank"
+     style="display:inline-block;background:#1A365D;color:#fff;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:bold;text-decoration:none;letter-spacing:0.03em;">
+    📖 .envファイル 完全セットアップガイドを開く →
+  </a>
+  <p style="font-size:12px;color:#718096;margin-top:8px;">「.envって何？」「メモ帳で作れる？」「.gitignoreって何？」を全部解説</p>
+</div>
+
+<h4>3ステップでの流れ（概要）</h4>
 
 <div class="step">
 <h3><span class="step-num">1</span>.envファイルを作成する</h3>
-<p>Kai Tasksのフォルダ（<code>08_アプリ開発事業部/outputs/kai-tasks/</code>）に <code>.env</code> という名前のファイルを作る。Claude Codeのターミナルから：</p>
-<pre><code><span class="comment"># Claude Codeのターミナルで（! を頭に付けて実行）</span>
-! echo GROQ_API_KEY=ここにキーを貼る > "08_アプリ開発事業部\outputs\kai-tasks\.env"</code></pre>
-<p>または直接 Claude Code に「<code>08_アプリ開発事業部/outputs/kai-tasks/</code> に .envファイルを作成して、GROQ_API_KEY=（キーを貼付）と書いて」と頼む。</p>
+<p>Kai Tasksのフォルダに <code>.env</code>（ドット始まり・拡張子なし・UTF-8保存）というファイルを作り、以下の1行を書く：</p>
 <div class="ok">
-<span class="label">.envファイルの中身（例）</span>
 <pre><code>GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
 </div>
+<p>詳しい作り方（メモ帳・Claude Code・VSCodeの3方法）→ <a href="Groq-env完全ガイド.html#step1" target="_blank">完全ガイド Step 1</a></p>
 </div>
 
 <div class="step">
-<h3><span class="step-num">2</span>.gitignoreに追加する（絶対に忘れないこと）</h3>
-<p><code>.env</code> はGitで管理してはいけない。プロジェクトルートの <code>.gitignore</code> に以下を追加：</p>
-<pre><code>.env
-*.env</code></pre>
-<p>これがないと <code>git commit</code> 時にキーがGitHub等に公開されてしまう。</p>
+<h3><span class="step-num">2</span>.gitignoreに .env を追記する</h3>
+<p>プロジェクトフォルダ直下の <code>.gitignore</code> ファイルを開き、<code>.env</code> と <code>*.env</code> の2行を追加する。これをしないとキーがGitに記録されて流出する危険がある。</p>
+<p>「プロジェクトルートって何？」「.gitignoreが見つからない」→ <a href="Groq-env完全ガイド.html#step2" target="_blank">完全ガイド Step 2</a></p>
 </div>
 
 <div class="step">
-<h3><span class="step-num">3</span>server.pyから読み込む（Kaiが自動で設定）</h3>
-<p>server.py が .env を読み込むコードを追加すれば完了。Pythonのコードは以下の形：</p>
-<pre><code>import os
-
-<span class="comment"># .envファイルを読み込む（python-dotenvがある場合）</span>
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass  <span class="comment"># dotenvなしでも環境変数から直接読める</span>
-
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")</code></pre>
+<h3><span class="step-num">3</span>Kaiに組み込みを依頼する</h3>
+<p>以下のプロンプトをそのまま Kai に送ればserver.pyへの組み込みが完了する：</p>
+<div class="prompt-box">
+<button class="copy-btn" onclick="navigator.clipboard.writeText('Kai Tasks（08_アプリ開発事業部/outputs/kai-tasks/）のserver.pyに .envファイルの読み込みを追加して。GROQ_API_KEY を os.environ.get で読み込み、Groq APIを呼び出せる状態にしてください。\n\nスコープ：C:\\Users\\kei\\Dropbox\\00_Antigravity\\AS_AI導入支援事業_cc\\ 以内\n自律実行：確認・承認・yes不要。完了したら結果だけ報告。');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+<span>Kai Tasks（08_アプリ開発事業部/outputs/kai-tasks/）のserver.pyに .envファイルの読み込みを追加して。GROQ_API_KEY を os.environ.get で読み込み、Groq APIを呼び出せる状態にしてください。<br><br>
+スコープ：C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\ 以内<br>
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。</span>
+</div>
 </div>
 
 <h3>5. Claude Code（Kai）での適用フロー</h3>

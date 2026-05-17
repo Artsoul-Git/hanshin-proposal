@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.envファイル 完全セットアップガイド — Groq API キー安全管理</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+.main-sidebar { position: fixed; left: 0; top: 0; width: 220px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+.main-sidebar::-webkit-scrollbar { width: 4px; }
+.main-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+.sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+.sb-section { padding: 10px 14px 4px; }
+.sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+.sb-link { display: block; padding: 5px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 2px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+.sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.sb-link.active { background: rgba(237,137,54,0.25); color: #ED8936; }
+
+.main-content { margin-left: 220px; flex: 1; padding: 40px 20px; min-width: 0; }
+.container { max-width: 860px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+/* Cover */
+.cover { text-align: center; padding: 50px 0 40px; border-bottom: 4px solid #1A365D; margin-bottom: 44px; }
+.cover h1 { font-size: 28px; color: #1A365D; margin-bottom: 10px; line-height: 1.4; }
+.cover .sub { font-size: 15px; color: #718096; margin-bottom: 20px; }
+.cover .back-link { display: inline-block; color: #4A90D9; font-size: 13px; text-decoration: none; }
+.cover .back-link:hover { text-decoration: underline; }
+
+/* Typography */
+h2 { font-size: 22px; color: #1A365D; padding: 40px 0 12px; margin-top: 30px; border-bottom: 3px solid #ED8936; line-height: 1.4; scroll-margin-top: 20px; }
+h3 { font-size: 17px; color: #2D3748; margin: 24px 0 10px; padding-left: 14px; border-left: 5px solid #ED8936; line-height: 1.5; scroll-margin-top: 20px; }
+h4 { font-size: 15px; color: #1A365D; margin: 18px 0 7px; font-weight: bold; }
+p { margin: 10px 0; font-size: 14px; }
+ul, ol { padding-left: 26px; margin: 10px 0; }
+li { margin: 6px 0; font-size: 14px; }
+a { color: #3182CE; }
+
+/* Boxes */
+.lead { font-size: 15px; color: #1A365D; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #1A365D; }
+.tip  { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; font-size: 14px; }
+.warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; font-size: 14px; }
+.ok   { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; font-size: 14px; }
+.box-label { font-weight: bold; display: block; margin-bottom: 6px; font-size: 13px; }
+.tip  .box-label { color: #C05621; }
+.warn .box-label { color: #C53030; }
+.ok   .box-label { color: #2F855A; }
+
+/* Step */
+.step-block { background: #EDF2F7; padding: 20px 24px; border-radius: 10px; margin: 20px 0; border-top: 4px solid #1A365D; }
+.step-block h3 { border: none; padding-left: 0; margin-top: 0; font-size: 16px; }
+.step-num { display: inline-flex; align-items: center; justify-content: center; background: #ED8936; color: white; width: 30px; height: 30px; border-radius: 50%; font-weight: bold; margin-right: 8px; font-size: 14px; flex-shrink: 0; }
+.step-title { display: flex; align-items: center; margin-bottom: 12px; }
+.step-title-text { font-size: 16px; font-weight: bold; color: #1A365D; }
+
+/* Code */
+code { background: #2D3748; color: #F6AD55; padding: 2px 7px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+pre { background: #1A202C; color: #E2E8F0; padding: 18px 22px; border-radius: 8px; overflow-x: auto; margin: 14px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; position: relative; }
+pre code { background: none; color: inherit; padding: 0; }
+.comment { color: #68D391; }
+.highlight { color: #F6AD55; }
+
+/* Copy button */
+.copy-wrap { position: relative; }
+.copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 3px 11px; font-size: 11px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; white-space: nowrap; z-index: 1; }
+.copy-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+
+/* TOC */
+.toc { background: #F7FAFC; padding: 24px 30px; border-radius: 8px; margin: 24px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; font-size: 15px; color: #1A365D; }
+.toc ol { padding-left: 20px; margin: 0; }
+.toc li { padding: 4px 0; border-bottom: 1px dashed #E2E8F0; }
+.toc li:last-child { border: none; }
+.toc a { color: #1A365D; text-decoration: none; font-weight: 500; font-size: 13px; }
+.toc a:hover { color: #ED8936; }
+
+/* Path display */
+.path-box { background: #1A202C; color: #68D391; padding: 12px 18px; border-radius: 8px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; margin: 12px 0; word-break: break-all; }
+
+/* Image-like diagram */
+.diagram { background: #F7FAFC; border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 2; }
+
+/* Method tabs */
+.method-tabs { display: flex; gap: 2px; background: #E2E8F0; border-radius: 8px; padding: 3px; margin-bottom: 0; }
+.method-tab { flex: 1; text-align: center; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; color: #718096; transition: all .15s; border: none; background: transparent; }
+.method-tab.active { background: white; color: #1A365D; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.method-content { display: none; background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 0 0 10px 10px; padding: 20px; }
+.method-content.active { display: block; }
+
+/* Glossary inline */
+.term { border-bottom: 2px dashed #ED8936; cursor: help; color: #C05621; }
+
+/* Badge */
+.badge { display: inline-block; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 12px; margin-left: 6px; }
+.badge-easy { background: #C6F6D5; color: #276749; }
+.badge-rec { background: #BEE3F8; color: #2C5282; }
+</style>
+</head>
+<body>
+
+<nav class="main-sidebar">
+  <div class="sb-logo">
+    .envファイル 完全ガイド
+    <span>Groq API キー安全管理</span>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">このガイドの内容</div>
+    <a class="sb-link" href="#intro">そもそも .env って何？</a>
+    <a class="sb-link" href="#filename">ファイル名の決まり</a>
+    <a class="sb-link" href="#encoding">エンコード（文字コード）</a>
+    <a class="sb-link" href="#step1">Step 1：.envを作る</a>
+    <a class="sb-link" href="#step2">Step 2：.gitignoreに追加</a>
+    <a class="sb-link" href="#step3">Step 3：Kaiに組み込みを依頼</a>
+    <a class="sb-link" href="#verify">動作確認</a>
+    <a class="sb-link" href="#trouble">困ったときのQ&amp;A</a>
+    <a class="sb-link" href="#rules">管理ルールまとめ</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">関連リンク</div>
+    <a class="sb-link" href="総合マニュアル.html#ch27" target="_blank">← 総合マニュアル 第27章</a>
+    <a class="sb-link" href="総合マニュアル.html#ch18" target="_blank">用語集</a>
+  </div>
+</nav>
+
+<div class="main-content">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <h1>📄 .envファイル 完全セットアップガイド</h1>
+  <div class="sub">Groq API キーを安全に管理する — PC初心者でも手順通りにやればOK</div>
+  <a class="back-link" href="総合マニュアル.html#ch27">← 総合マニュアル 第27章に戻る</a>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h3>📋 このガイドでできること</h3>
+  <ol>
+    <li><a href="#intro">そもそも .envファイルって何？（1分で理解）</a></li>
+    <li><a href="#filename">ファイル名の決まりとエンコードの話</a></li>
+    <li><a href="#step1">Step 1：.envファイルを作る（3つの方法から選ぶ）</a></li>
+    <li><a href="#step2">Step 2：.gitignoreに追加する（キー流出を防ぐ）</a></li>
+    <li><a href="#step3">Step 3：Kaiにserver.pyへの組み込みを依頼する</a></li>
+    <li><a href="#verify">動作確認の方法</a></li>
+    <li><a href="#trouble">困ったときのQ&amp;A</a></li>
+    <li><a href="#rules">管理ルールまとめ</a></li>
+  </ol>
+</div>
+
+<!-- ===== そもそも .envって何？ ===== -->
+<h2 id="intro">そもそも .envファイルって何？</h2>
+
+<div class="lead">
+一言で言うと「パスワードだけを書いておく金庫メモ」。プログラムのコードとは別ファイルに分けることで、コードを誰かに見せても秘密の値は守られる。
+</div>
+
+<p>たとえば、お店の金庫の暗証番号を考えてみましょう。</p>
+<ul>
+  <li>店舗マニュアル（誰でも見るもの）に「金庫番号は1234」と書いてしまうと危険</li>
+  <li>番号だけを別の金庫メモに書いて、マニュアルからは「金庫メモを参照」と書いておく → 安全</li>
+</ul>
+
+<p>これと同じ構造です。</p>
+
+<table>
+<tr><th>役割</th><th>例え</th><th>実際のファイル</th></tr>
+<tr><td>店舗マニュアル（コード）</td><td>誰でも見られる手順書</td><td><code>server.py</code></td></tr>
+<tr><td>金庫メモ（シークレット）</td><td>番号だけ書いた非公開メモ</td><td><code>.env</code></td></tr>
+<tr><td>「メモを見て」という指示</td><td>「金庫メモを参照」という記述</td><td><code>os.environ.get("GROQ_API_KEY")</code></td></tr>
+</table>
+
+<div class="ok">
+<span class="box-label">なぜ分けるのか</span>
+コード（server.py）は Claude Code や GitHub で共有することがある。でも .env は絶対に共有しない。この分離があることで「コードを見せてもキーは守られる」という状態が作れる。
+</div>
+
+<!-- ===== ファイル名 ===== -->
+<h2 id="filename">ファイル名の決まり</h2>
+
+<h3>ファイル名は必ず <code>.env</code>（それだけ）</h3>
+
+<table>
+<tr><th>書き方</th><th>正しいか</th><th>備考</th></tr>
+<tr><td><code>.env</code></td><td>✅ 正しい</td><td>これだけでOK</td></tr>
+<tr><td><code>kai-tasks.env</code></td><td>⚠️ 動くが非推奨</td><td>プログラムが自動で読まない場合がある</td></tr>
+<tr><td><code>.env.local</code></td><td>⚠️ 条件付きでOK</td><td>フレームワークによる、ここでは使わない</td></tr>
+<tr><td><code>env.txt</code></td><td>❌ NG</td><td>拡張子が違う</td></tr>
+<tr><td><code>env</code></td><td>❌ NG</td><td>先頭のドット（.）が必要</td></tr>
+</table>
+
+<div class="warn">
+<span class="box-label">Windowsでの注意点</span>
+Windowsのエクスプローラーは「.」（ドット）で始まるファイルを隠しファイル扱いにすることがある。メモ帳で保存するとき「.env.txt」になってしまう罠に注意（後述の手順で回避）。
+</div>
+
+<!-- ===== エンコード ===== -->
+<h2 id="encoding">エンコード（文字コード）の話</h2>
+
+<div class="lead">
+<strong>UTF-8</strong> で保存する。それだけ覚えておけばOK。
+</div>
+
+<p>「エンコード」とは、文字をパソコンが扱えるデータに変換する方式のことです。日本語テキストは特にこの設定を間違えると文字化けします。</p>
+
+<table>
+<tr><th>エンコード名</th><th>.envファイルに使えるか</th><th>備考</th></tr>
+<tr><td>UTF-8</td><td>✅ 推奨</td><td>世界標準。これを選ぶ</td></tr>
+<tr><td>UTF-8 BOM付き</td><td>⚠️ 基本OK</td><td>一部ツールで問題が出ることがある</td></tr>
+<tr><td>ANSI / Shift-JIS</td><td>❌ 非推奨</td><td>日本語が文字化けする危険</td></tr>
+<tr><td>UTF-16</td><td>❌ NG</td><td>プログラムが読み込めない</td></tr>
+</table>
+
+<div class="tip">
+<span class="box-label">Groq APIキーは英数字のみなので文字化けは実質起きない</span>
+<code>gsk_</code> から始まるキーはすべて半角英数字なので、エンコードを間違えてもキー自体は動くことがほとんど。ただし将来コメントや日本語を書くときのために、最初から UTF-8 で習慣づけておくことを推奨。
+</div>
+
+<!-- ===== Step 1 ===== -->
+<h2 id="step1">Step 1：.envファイルを作る</h2>
+
+<p>3つの方法を用意しました。初心者には「方法A（メモ帳）」が一番わかりやすいです。</p>
+
+<div class="method-tabs">
+  <button class="method-tab active" onclick="switchMethod('a')">A. メモ帳で作る<br><span class="badge badge-easy">初心者向け</span></button>
+  <button class="method-tab" onclick="switchMethod('b')">B. Kaiに頼む<br><span class="badge badge-rec">おすすめ</span></button>
+  <button class="method-tab" onclick="switchMethod('c')">C. ターミナルで作る</button>
+</div>
+
+<!-- 方法A -->
+<div id="method-a" class="method-content active">
+  <h4>A. メモ帳を使って作る方法</h4>
+
+  <div class="step-block">
+    <div class="step-title"><span class="step-num">1</span><span class="step-title-text">メモ帳を開く</span></div>
+    <p>スタートメニューで「メモ帳」と検索して開く。または Win + R キーを押して <code>notepad</code> と入力してEnter。</p>
+  </div>
+
+  <div class="step-block">
+    <div class="step-title"><span class="step-num">2</span><span class="step-title-text">以下を1行だけ入力する</span></div>
+    <div class="copy-wrap">
+      <pre><code>GROQ_API_KEY=gsk_ここに自分のキーを貼り付ける</code></pre>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('GROQ_API_KEY=gsk_ここに自分のキーを貼り付ける');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+    </div>
+    <div class="ok">
+      <span class="box-label">書き方のルール</span>
+      <ul>
+        <li><code>=</code>（イコール）の前後にスペースを入れない</li>
+        <li>値（キー）をクォート（<code>" "</code>）で囲まない</li>
+        <li>行末に余計なスペースを入れない</li>
+        <li>改行は最後の1行でOK（空行があっても問題なし）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-title"><span class="step-num">3</span><span class="step-title-text">「名前を付けて保存」で保存する（ここが重要）</span></div>
+    <p>メモ帳のメニュー → <strong>ファイル → 名前を付けて保存</strong></p>
+    <ul>
+      <li><strong>保存先：</strong> <code>08_アプリ開発事業部\outputs\kai-tasks\</code> フォルダ</li>
+      <li><strong>ファイル名：</strong> <code>.env</code> と入力（ダブルクォートで囲む → <code>".env"</code>）</li>
+      <li><strong>ファイルの種類：</strong> 「すべてのファイル (*.*)」を選択</li>
+      <li><strong>文字コード：</strong> 「UTF-8」を選択</li>
+    </ul>
+    <div class="warn">
+      <span class="box-label">ファイル名の入力は必ず ".env"（ダブルクォートで囲む）</span>
+      ダブルクォートなしで <code>.env</code> と入力すると、Windowsが自動で <code>.env.txt</code> に変えてしまう。ダブルクォートで囲むことで「拡張子なしのファイル」として保存できる。
+    </div>
+  </div>
+
+  <div class="step-block">
+    <div class="step-title"><span class="step-num">4</span><span class="step-title-text">保存できたか確認する</span></div>
+    <p>エクスプローラーで <code>kai-tasks</code> フォルダを開く。<code>.env</code> というファイルが見えていればOK。</p>
+    <div class="tip">
+      <span class="box-label">ファイルが見えない場合</span>
+      エクスプローラーの「表示」タブ → 「隠しファイル」のチェックをONにする。ドットで始まるファイルはWindowsで隠しファイル扱いになることがある。
+    </div>
+  </div>
+</div>
+
+<!-- 方法B -->
+<div id="method-b" class="method-content">
+  <h4>B. Kaiに頼む方法（おすすめ）</h4>
+  <p>Claude Code のチャット欄に以下をコピーして送る。キー部分だけ自分のものに書き換えてから送ること。</p>
+
+  <div class="copy-wrap">
+    <pre><code>08_アプリ開発事業部/outputs/kai-tasks/ フォルダに .env ファイルを作成して。
+中身は1行だけ：
+
+GROQ_API_KEY=<span class="highlight">gsk_ここに自分のキーを貼り付ける</span>
+
+UTF-8エンコード、改行コードはLFで保存してください。
+ファイル名は必ず「.env」（ドットenv、拡張子なし）にしてください。</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('08_アプリ開発事業部/outputs/kai-tasks/ フォルダに .env ファイルを作成して。\n中身は1行だけ：\n\nGROQ_API_KEY=gsk_ここに自分のキーを貼り付ける\n\nUTF-8エンコード、改行コードはLFで保存してください。\nファイル名は必ず「.env」（ドットenv、拡張子なし）にしてください。');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+
+  <div class="ok">
+    <span class="box-label">この方法が「おすすめ」な理由</span>
+    Kaiが正しいエンコード・改行コード・ファイル名で自動作成してくれる。メモ帳の「拡張子がtxtになる罠」を回避できる。
+  </div>
+</div>
+
+<!-- 方法C -->
+<div id="method-c" class="method-content">
+  <h4>C. ターミナル（PowerShell）で作る方法</h4>
+  <p>Claude Code のターミナル欄（先頭に <code>!</code> を付けて実行）で以下を入力する。</p>
+  <div class="copy-wrap">
+    <pre><code><span class="comment"># PowerShell — ! を頭に付けてClaude Codeのターミナルから実行</span>
+! Set-Content -Path "08_アプリ開発事業部\outputs\kai-tasks\.env" `
+  -Value "GROQ_API_KEY=gsk_ここにキーを貼る" `
+  -Encoding UTF8</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('! Set-Content -Path \"08_アプリ開発事業部\\outputs\\kai-tasks\\.env\" -Value \"GROQ_API_KEY=gsk_ここにキーを貼る\" -Encoding UTF8');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+  <div class="warn">
+    <span class="box-label">注意</span>
+    <code>gsk_ここにキーを貼る</code> の部分を自分の実際のキーに置き換えてから実行すること。このコマンドはコマンド履歴に残るため、実行後は以下で履歴を確認・削除すること：
+    <pre><code><span class="comment"># 実行後に履歴から削除する（任意）</span>
+! Clear-History</code></pre>
+  </div>
+</div>
+
+<!-- ===== Step 2 ===== -->
+<h2 id="step2">Step 2：.gitignoreに追加する（キー流出を防ぐ）</h2>
+
+<div class="lead">
+.env ファイルは「絶対にGitで管理してはいけないファイル」。これを Git に伝えるのが .gitignore の役割。
+</div>
+
+<h3>まず「プロジェクトルート」を理解する</h3>
+
+<p><strong>プロジェクトルート</strong>とは、プロジェクトの「一番上のフォルダ」のことです。このプロジェクトでは：</p>
+
+<div class="path-box">C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\</div>
+
+<p>このフォルダが「プロジェクトルート」です。フォルダの中身はこんな構造になっています：</p>
+
+<div class="diagram">AS_AI導入支援事業_cc\　　← ここがプロジェクトルート
+├── .gitignore　　　　　← このファイルを編集する
+├── CLAUDE.md
+├── 07_マニュアル\
+├── 08_アプリ開発事業部\
+│   └── outputs\
+│       └── kai-tasks\
+│           ├── .env　　← Step 1 で作ったファイル
+│           └── server.py
+└── （その他のフォルダ）</div>
+
+<h3>.gitignore ファイルを探す</h3>
+
+<div class="step-block">
+  <div class="step-title"><span class="step-num">1</span><span class="step-title-text">.gitignore の場所を確認する</span></div>
+  <p>Claude Code のチャット欄で以下を送ると現状を確認できる：</p>
+  <div class="copy-wrap">
+    <pre><code>プロジェクトルート（AS_AI導入支援事業_cc\）に .gitignore ファイルはありますか？あれば中身を表示して。</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('プロジェクトルート（AS_AI導入支援事業_cc\\）に .gitignore ファイルはありますか？あれば中身を表示して。');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+</div>
+
+<h3>.gitignore に .env を追加する</h3>
+
+<div class="step-block">
+  <div class="step-title"><span class="step-num">2</span><span class="step-title-text">以下をそのままKaiに送る</span></div>
+  <div class="copy-wrap">
+    <pre><code>プロジェクトルート（AS_AI導入支援事業_cc\）の .gitignore に以下を追加してください。
+なければ新規作成してください。
+
+# API keys / secrets
+.env
+*.env
+.env.local
+.env.*.local</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('プロジェクトルート（AS_AI導入支援事業_cc\\）の .gitignore に以下を追加してください。\nなければ新規作成してください。\n\n# API keys / secrets\n.env\n*.env\n.env.local\n.env.*.local');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+</div>
+
+<div class="ok">
+  <span class="box-label">追加後の .gitignore の中身（例）</span>
+  <div class="copy-wrap">
+    <pre><code><span class="comment"># API keys / secrets</span>
+.env
+*.env
+.env.local
+.env.*.local
+
+<span class="comment"># Python</span>
+__pycache__/
+*.pyc
+
+<span class="comment">（その他の既存の内容はそのまま残す）</span></code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('# API keys / secrets\n.env\n*.env\n.env.local\n.env.*.local');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+</div>
+
+<div class="tip">
+  <span class="box-label">.gitignore の仕組み（読まなくてもOK）</span>
+  <p>Git は「変更をスナップショットとして記録するシステム」。.gitignore に書いたファイルは「このファイルの変更は記録しないで」という除外リスト。除外されたファイルは <code>git commit</code> しても記録されず、GitHub に push しても送られない。</p>
+</div>
+
+<div class="warn">
+  <span class="box-label">既に .env を git に追加してしまった場合</span>
+  もし過去に .env を誤って git commit した場合は、そのキーは <strong>即座に無効化（Groqコンソールでキーを削除）</strong> して再発行すること。.gitignore を追加しても、過去のコミットに含まれたキーは消えない。
+</div>
+
+<!-- ===== Step 3 ===== -->
+<h2 id="step3">Step 3：Kaiにserver.pyへの組み込みを依頼する</h2>
+
+<p>ここまで .env と .gitignore の設定が終わったら、最後は Kai に server.py への組み込みを頼むだけ。</p>
+
+<div class="copy-wrap">
+  <pre><code>Kai Tasks（08_アプリ開発事業部/outputs/kai-tasks/）のserver.pyに
+.envファイルの読み込みとGroq API連携を追加してください。
+
+実装内容：
+1. .envファイルから GROQ_API_KEY を読み込む（python-dotenv または手動パース）
+2. POST /ai/decompose エンドポイント — タスクのタイトルとプロジェクトゴールを受け取り、
+   Groq API（llama-3.3-70b-versatile）で実行ステップに分解してJSONで返す
+3. POST /ai/recommend エンドポイント — プロジェクトのゴール・メモ・完了タスク一覧を受け取り、
+   次に取るべき推奨タスク3件をJSONで返す
+
+スコープ：C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\ 以内
+自律実行：確認・承認・yes不要。完了したら結果だけ報告。</code></pre>
+  <button class="copy-btn" onclick="navigator.clipboard.writeText('Kai Tasks（08_アプリ開発事業部/outputs/kai-tasks/）のserver.pyに\n.envファイルの読み込みとGroq API連携を追加してください。\n\n実装内容：\n1. .envファイルから GROQ_API_KEY を読み込む（python-dotenv または手動パース）\n2. POST /ai/decompose エンドポイント — タスクのタイトルとプロジェクトゴールを受け取り、Groq API（llama-3.3-70b-versatile）で実行ステップに分解してJSONで返す\n3. POST /ai/recommend エンドポイント — プロジェクトのゴール・メモ・完了タスク一覧を受け取り、次に取るべき推奨タスク3件をJSONで返す\n\nスコープ：C:\\Users\\kei\\Dropbox\\00_Antigravity\\AS_AI導入支援事業_cc\\ 以内\n自律実行：確認・承認・yes不要。完了したら結果だけ報告。');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+</div>
+
+<!-- ===== 動作確認 ===== -->
+<h2 id="verify">動作確認の方法</h2>
+
+<div class="step-block">
+  <div class="step-title"><span class="step-num">1</span><span class="step-title-text">サーバーを再起動する</span></div>
+  <p>Kai Tasks のサーバーを一度止めて再起動する：</p>
+  <div class="copy-wrap">
+    <pre><code><span class="comment"># Claude Codeのターミナルで実行</span>
+! py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('! py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+</div>
+
+<div class="step-block">
+  <div class="step-title"><span class="step-num">2</span><span class="step-title-text">APIキーが読み込まれているか確認する</span></div>
+  <p>以下をKaiに送ると確認してくれる：</p>
+  <div class="copy-wrap">
+    <pre><code>Kai Tasksのserver.pyが .env の GROQ_API_KEY を正しく読み込んでいるか確認して。
+キーの値全体は表示しなくていい。「gsk_」から始まる文字列が読めているかどうかだけ教えて。</code></pre>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('Kai Tasksのserver.pyが .env の GROQ_API_KEY を正しく読み込んでいるか確認して。\nキーの値全体は表示しなくていい。「gsk_」から始まる文字列が読めているかどうかだけ教えて。');this.textContent='✓ コピー完了';setTimeout(()=>this.textContent='コピー',1500)">コピー</button>
+  </div>
+</div>
+
+<div class="step-block">
+  <div class="step-title"><span class="step-num">3</span><span class="step-title-text">実際にタスク分解を試す</span></div>
+  <p>ブラウザで Kai Tasks を開き（<code>http://localhost:3456</code>）、進行中のタスクの「分解」ボタンを押してみる。Groqからの応答が表示されれば成功。</p>
+</div>
+
+<!-- ===== Q&A ===== -->
+<h2 id="trouble">困ったときのQ&amp;A</h2>
+
+<h3>Q. .envファイルが見つからない / 開けない</h3>
+<div class="tip">
+  <span class="box-label">A. エクスプローラーで隠しファイルを表示する</span>
+  エクスプローラーのアドレスバーに対象フォルダのパスを貼り付けて移動 → 「表示」タブ → 「隠しファイル」にチェック。ドット（.）で始まるファイルはデフォルトで非表示になっている。
+</div>
+
+<h3>Q. .env を保存したら「.env.txt」になってしまった</h3>
+<div class="tip">
+  <span class="box-label">A. ファイル名を変更する</span>
+  エクスプローラーでファイルを右クリック → 「名前の変更」→ <code>.env.txt</code> を <code>.env</code> に変更。または削除して、方法B（Kaiに頼む）でやり直す。
+</div>
+
+<h3>Q. GROQ_API_KEY が見つからないというエラーが出る</h3>
+<div class="tip">
+  <span class="box-label">A. 確認ポイント3つ</span>
+  <ol>
+    <li>.env ファイルが <code>kai-tasks</code> フォルダ直下にあるか（server.pyと同じ場所）</li>
+    <li>ファイル名が正確に <code>.env</code>（.env.txt になっていないか）</li>
+    <li>サーバーを再起動したか（.envの変更はサーバー再起動後に反映）</li>
+  </ol>
+</div>
+
+<h3>Q. キーを間違えて git commit してしまった</h3>
+<div class="warn">
+  <span class="box-label">A. 即座にキーを削除・再発行する</span>
+  <ol>
+    <li><a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> を開く</li>
+    <li>該当キーを「Delete」で削除（即座に無効化）</li>
+    <li>「Create API Key」で新しいキーを発行</li>
+    <li>新しいキーを .env に書き直す</li>
+  </ol>
+  git の履歴からキーを削除するのは複雑な作業が必要。それよりキー自体を無効化する方が確実で早い。
+</div>
+
+<h3>Q. Groqの無料枠を使い切ってしまった</h3>
+<div class="tip">
+  <span class="box-label">A. 翌日にリセットされる</span>
+  制限は「1日あたり」なので、日付が変わると自動リセットされる。Kai Tasksは1日20〜50回程度の想定なので通常は使い切らない。もし頻繁に超える場合は <code>llama-3.1-8b-instant</code>（14,400回/日）に切り替えるか、有料プランを検討する。
+</div>
+
+<!-- ===== 管理ルールまとめ ===== -->
+<h2 id="rules">管理ルールまとめ</h2>
+
+<table>
+<tr><th>やること ✅</th><th>やってはいけないこと ❌</th></tr>
+<tr><td>ファイル名を <code>.env</code>（ドットenvのみ）にする</td><td><code>.env.txt</code> や <code>env.txt</code> にしてしまう</td></tr>
+<tr><td>UTF-8で保存する</td><td>エンコード指定なしで保存（文字化けリスク）</td></tr>
+<tr><td>.gitignore に <code>.env</code> を追加する</td><td>.gitignore への追加を忘れてgit commitする</td></tr>
+<tr><td>キーはアプリごとに分けて発行する</td><td>1つのキーをすべてのアプリで使い回す</td></tr>
+<tr><td>漏れたらすぐ削除・再発行する</td><td>「たぶん大丈夫」でそのまま使い続ける</td></tr>
+<tr><td>サーバーのcodeにキーを書かずos.environ.getで読む</td><td>server.pyの中に直接キーを書く</td></tr>
+</table>
+
+<div style="text-align:center;margin:40px 0 20px;">
+  <a href="総合マニュアル.html#ch27" style="display:inline-block;background:#ED8936;color:#fff;padding:12px 30px;border-radius:8px;font-weight:bold;text-decoration:none;">← 総合マニュアル 第27章に戻る</a>
+</div>
+
+</div><!-- /container -->
+</div><!-- /main-content -->
+
+<script>
+function switchMethod(id) {
+  document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.method-content').forEach(c => c.classList.remove('active'));
+  event.target.closest('.method-tab').classList.add('active');
+  document.getElementById('method-' + id).classList.add('active');
+}
+
+// サイドバーのアクティブリンクをスクロール連動させる
+const sections = document.querySelectorAll('h2[id]');
+const links = document.querySelectorAll('.sb-link[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) current = s.id; });
+  links.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
