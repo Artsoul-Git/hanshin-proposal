@@ -429,6 +429,13 @@ kbd { background: var(--border); border-radius: 3px; padding: 1px 5px; font-size
 .btn-ai:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
 .btn-recommend { background: rgba(249,202,36,.12); color: var(--yellow); border: 1px solid rgba(249,202,36,.4); }
 .btn-recommend:hover { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.ai-step-editable { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; transition: border-color .15s; }
+.ai-step-editable:hover { border-color: var(--accent); }
+.ai-step-inputs { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.step-input { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 5px 8px; font-size: 12px; font-family: inherit; width: 100%; outline: none; transition: border-color .15s; }
+.step-input:focus { border-color: var(--accent); }
+.step-del { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 18px; padding: 0 3px; line-height: 1; flex-shrink: 0; margin-top: 1px; }
+.step-del:hover { color: var(--red); }
 
 /* ── AI Input Focus Overlay ── */
 #aiFocusOverlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 6000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
@@ -2950,11 +2957,11 @@ async function openDecomposeModal(taskId) {
   );
 
   const overlay = document.getElementById('aiModalOverlay');
-  const title   = document.getElementById('aiModalTitle');
+  const titleEl = document.getElementById('aiModalTitle');
   const body    = document.getElementById('aiModalBody');
   const foot    = document.getElementById('aiModalFoot');
 
-  title.textContent = `✂️ タスク分解：${task.title}`;
+  titleEl.textContent = `✂️ タスク分解：${task.title}`;
   body.innerHTML = `<div class="ai-loading"><div class="ai-spin"></div>分解中…</div>`;
   foot.innerHTML = '';
   overlay.style.display = 'flex';
@@ -2977,24 +2984,125 @@ async function openDecomposeModal(taskId) {
     const json = await res.json();
     const steps = json.steps || [];
     if (!steps.length) { body.innerHTML = '<p>ステップを生成できませんでした。</p>'; return; }
-    body.innerHTML = steps.map((s, i) => `
-      <div class="ai-step-card">
-        <div class="ai-step-num">Step ${i + 1}</div>
-        <div>
-          <div class="ai-step-title">${esc(s.title)}</div>
-          ${s.description ? `<div class="ai-step-desc">${esc(s.description)}</div>` : ''}
-          ${s.estimated_minutes ? `<div class="ai-step-time">⏱ 約 ${s.estimated_minutes} 分</div>` : ''}
-        </div>
-      </div>`).join('');
-    foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
+
+    body.innerHTML = steps.map((s, i) => renderDecomposeStepHtml(s, i)).join('')
+      + `<div class="decompose-add-hint"></div>`;
+    foot.innerHTML = `
+      <button class="btn btn-ghost btn-sm" onclick="addDecomposeStep()" style="margin-right:auto;">＋ ステップ追加</button>
+      <button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>
+      <button class="btn btn-primary" onclick="confirmDecompose('${taskId}')">✅ 決定・マップへ反映</button>`;
   } catch (e) {
     body.innerHTML = `<p style="color:var(--red);">エラー：${esc(e.message)}</p>`;
     foot.innerHTML = `<button class="btn btn-ghost" onclick="closeAiModal()">閉じる</button>`;
   }
 }
 
+function renderDecomposeStepHtml(s, i) {
+  return `
+    <div class="ai-step-editable">
+      <div class="ai-step-num">${i + 1}</div>
+      <div class="ai-step-inputs">
+        <input class="step-input step-title" placeholder="ステップのタイトル" value="${esc(s.title || '')}">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:11px;color:var(--text2);">⏱</span>
+          <input class="step-input step-time" type="number" min="1" placeholder="—" value="${s.estimated_minutes || ''}" style="width:64px;text-align:right;">
+          <span style="font-size:11px;color:var(--text2);">分</span>
+        </div>
+      </div>
+      <button class="step-del" onclick="removeDecomposeStep(this)" title="削除">×</button>
+    </div>`;
+}
+
+function removeDecomposeStep(btn) {
+  btn.closest('.ai-step-editable').remove();
+  renumberDecomposeSteps();
+}
+
+function addDecomposeStep() {
+  const body = document.getElementById('aiModalBody');
+  const hint = body.querySelector('.decompose-add-hint');
+  const i = body.querySelectorAll('.ai-step-editable').length;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderDecomposeStepHtml({ title: '', estimated_minutes: null }, i);
+  body.insertBefore(tmp.firstElementChild, hint || null);
+}
+
+function renumberDecomposeSteps() {
+  document.querySelectorAll('.ai-step-editable .ai-step-num').forEach((el, i) => {
+    el.textContent = i + 1;
+  });
+}
+
+function collectDecomposeSteps() {
+  return Array.from(document.querySelectorAll('.ai-step-editable')).map(card => ({
+    title: card.querySelector('.step-title')?.value?.trim() || '',
+    estimated_minutes: parseInt(card.querySelector('.step-time')?.value || '0', 10) || null,
+  })).filter(s => s.title);
+}
+
+async function confirmDecompose(taskId) {
+  const steps = collectDecomposeSteps();
+  if (!steps.length) { toast('ステップが1つもありません', 'err'); return; }
+
+  const task = findTask(taskId);
+  const proj = (state.data?.projects || []).find(p =>
+    p.big_task?.id === taskId ||
+    (p.medium_tasks||[]).some(t => t.id === taskId) ||
+    (p.small_tasks||[]).some(t => t.id === taskId)
+  );
+
+  closeAiModal();
+  toast('マップに反映中…', 'ok');
+
+  await api('PUT', `/tasks/${taskId}`, {
+    roadmap_mmd: stepsToRoadmapMmd(task.title, steps),
+    mindmap_mmd: stepsToMindmapMmd(task.title, steps),
+  });
+
+  if (proj) {
+    const logEntry = {
+      id: Date.now().toString(36),
+      timestamp: new Date().toISOString(),
+      type: 'decision',
+      summary: `✂️ 「${task.title}」を ${steps.length} ステップに分解`,
+      detail: steps.map((s, i) => `Step${i+1}: ${s.title}${s.estimated_minutes ? ` (約${s.estimated_minutes}分)` : ''}`).join('\n'),
+    };
+    await api('PUT', `/projects/${proj.id}`, { session_logs: [...(proj.session_logs || []), logEntry] });
+  }
+
+  await loadData(true);
+  const p = state.data?.projects.find(x => x.id === state.projectId);
+  if (p) renderProject(p);
+  toast(`✅ ${steps.length}ステップをロードマップ・マインドマップに反映しました`, 'ok');
+}
+
+function stepsToRoadmapMmd(title, steps) {
+  const t = title.length > 22 ? title.slice(0, 22) + '…' : title;
+  const nodes = [`  S0(["🎯 ${t}"])`];
+  steps.forEach((s, i) => {
+    const lbl = s.title.length > 22 ? s.title.slice(0, 22) + '…' : s.title;
+    const time = s.estimated_minutes ? `｜${s.estimated_minutes}分` : '';
+    nodes.push(`  S${i+1}["${lbl}${time}"]`);
+  });
+  nodes.push(`  DONE(["✅ 完了"])`);
+  const conns = [`  S0 --> S1`];
+  steps.forEach((_, i) => conns.push(i < steps.length - 1 ? `  S${i+1} --> S${i+2}` : `  S${i+1} --> DONE`));
+  return `graph LR\n${nodes.join('\n')}\n${conns.join('\n')}\n\n  style S0 fill:#6c63ff,color:#fff\n  style DONE fill:#43e97b,color:#000`;
+}
+
+function stepsToMindmapMmd(title, steps) {
+  const t = title.length > 26 ? title.slice(0, 26) + '…' : title;
+  const lines = steps.map((s, i) => {
+    const lbl = s.title.length > 24 ? s.title.slice(0, 24) + '…' : s.title;
+    return s.estimated_minutes
+      ? `    Step${i+1}: ${lbl}\n      約${s.estimated_minutes}分`
+      : `    Step${i+1}: ${lbl}`;
+  });
+  return `mindmap\n  root(("${t}"))\n${lines.join('\n')}`;
+}
+
 async function openRecommendModal(projectId) {
-  const proj = data.projects.find(p => p.id === projectId);
+  const proj = (state.data?.projects || []).find(p => p.id === projectId);
   if (!proj) return;
 
   const all = [];
