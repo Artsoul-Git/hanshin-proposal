@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI定着支援 現場推進マニュアル｜有限会社アートソウル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .main-sidebar { position: fixed; left: 0; top: 0; width: 220px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+  .main-sidebar::-webkit-scrollbar { width: 4px; }
+  .main-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+  .sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+  .sb-section { padding: 10px 14px 4px; }
+  .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+  .sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+  .sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .sb-link.active { background: rgba(237,137,54,0.25); color: #ED8936; }
+
+  /* Main */
+  .main-content { margin-left: 220px; flex: 1; padding: 40px 20px; min-width: 0; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* Cover */
+  .cover { text-align: center; padding: 80px 0 60px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; }
+  .cover h1 { font-size: 32px; color: #1A365D; margin-bottom: 12px; line-height: 1.4; }
+  .cover .sub { font-size: 18px; color: #ED8936; font-weight: bold; margin-bottom: 36px; }
+  .cover .meta { color: #718096; font-size: 14px; line-height: 2; }
+
+  /* Typography */
+  h2 { font-size: 26px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #ED8936; line-height: 1.4; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 20px; color: #2D3748; margin: 30px 0 12px; padding-left: 16px; border-left: 6px solid #ED8936; line-height: 1.5; }
+  h4 { font-size: 16px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+  p { margin: 12px 0; }
+
+  /* Components */
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .ok { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+  .kai { background: #FAF5FF; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #805AD5; }
+  .kai .label { font-weight: bold; color: #553C9A; display: block; margin-bottom: 6px; font-size: 14px; }
+  .internal { background: #FFF8E1; padding: 22px 28px; border-radius: 8px; margin: 22px 0; border: 2px dashed #F6AD55; position: relative; }
+  .internal::before { content: "🔒 内部参照用"; position: absolute; top: -12px; left: 16px; background: #F6AD55; color: white; font-size: 11px; font-weight: bold; padding: 2px 10px; border-radius: 10px; }
+  .internal .label { font-weight: bold; color: #975A16; display: block; margin-bottom: 8px; font-size: 14px; margin-top: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+
+  .step { background: #EDF2F7; padding: 22px 28px; border-radius: 8px; margin: 22px 0; border-top: 4px solid #1A365D; }
+  .step-num { display: inline-block; background: #ED8936; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: bold; margin-right: 10px; font-size: 15px; }
+
+  .toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; color: #1A365D; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 5px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #ED8936; }
+  .toc .sub-item { padding-left: 20px; font-size: 14px; color: #4A5568; }
+
+  .part-header { background: #1A365D; color: white; padding: 16px 24px; border-radius: 10px; margin: 40px 0 16px; font-size: 20px; font-weight: bold; letter-spacing: 0.05em; }
+  .part-header span { color: #ED8936; }
+
+  .score-row { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
+  .score-card { flex: 1; min-width: 140px; border: 2px solid #E2E8F0; border-radius: 10px; padding: 16px; text-align: center; }
+  .score-card .score { font-size: 32px; font-weight: bold; color: #1A365D; }
+  .score-card .score-label { font-size: 12px; color: #718096; margin-top: 4px; }
+
+  ul, ol { padding-left: 28px; margin: 12px 0; }
+  li { margin: 7px 0; }
+  code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 50px 0; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .badge-blue { background: #EBF8FF; color: #2B6CB0; }
+  .badge-green { background: #F0FFF4; color: #276749; }
+  .badge-orange { background: #FFFAF0; color: #C05621; }
+  .badge-red { background: #FFF5F5; color: #C53030; }
+  .badge-purple { background: #FAF5FF; color: #553C9A; }
+</style>
+</head>
+<body>
+
+<nav class="main-sidebar">
+  <div class="sb-logo">有限会社アートソウル<span>AI定着支援マニュアル v1.0</span></div>
+  <div class="sb-section">
+    <div class="sb-section-label">概要</div>
+    <a class="sb-link" href="#overview">フレームワーク概要</a>
+    <a class="sb-link" href="#diagnosis">原因診断</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">推進プロセス</div>
+    <a class="sb-link" href="#phase1">フェーズ1 土台作り</a>
+    <a class="sb-link" href="#phase2">フェーズ2 職種別介入</a>
+    <a class="sb-link" href="#phase3">フェーズ3 横展開</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">介入パターン</div>
+    <a class="sb-link" href="#ptn-a">A: デモ勉強会</a>
+    <a class="sb-link" href="#ptn-b">B: フロー埋め込み</a>
+    <a class="sb-link" href="#ptn-c">C: 情報収集AI</a>
+    <a class="sb-link" href="#ptn-d">D: 見える化・展開</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">実践知</div>
+    <a class="sb-link" href="#principles">定着の5原則</a>
+    <a class="sb-link" href="#resistance">抵抗パターン対処</a>
+    <a class="sb-link" href="#consulting">コンサル活用法</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">Kaiの評価</div>
+    <a class="sb-link" href="#kai-eval">評価・改善提案</a>
+    <a class="sb-link" href="#internal-memo">内部メモ（事例詳細）</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-section-label">ナビゲーション</div>
+    <a class="sb-link" href="総合マニュアル.html">← 総合マニュアルへ</a>
+  </div>
+</nav>
+
+<div class="main-content">
+<div class="container">
+
+<div class="cover">
+  <h1>AI定着支援<br>現場推進マニュアル</h1>
+  <div class="sub">「入れたのに使われない」を解決する実践フレームワーク</div>
+  <div class="meta">
+    作成：Kai（2026-05-18） / バージョン：v1.0<br>
+    用途：コンサルティング支援・提案設計・ヒアリング設計<br>
+    <span style="color:#E53E3E;font-weight:bold;">内部メモセクションは外部非公開</span>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>もくじ</h3>
+  <ul>
+    <li><a href="#overview">PART 1：フレームワーク概要</a></li>
+    <li><a href="#diagnosis">PART 2：活用率が上がらない原因診断</a></li>
+    <li><a href="#process">PART 3：現場推進の3フェーズ</a></li>
+    <li class="sub-item"><a href="#phase1">フェーズ1 土台作り</a></li>
+    <li class="sub-item"><a href="#phase2">フェーズ2 職種別介入</a></li>
+    <li class="sub-item"><a href="#phase3">フェーズ3 成功事例の横展開</a></li>
+    <li><a href="#patterns">PART 4：介入パターン集（A〜D）</a></li>
+    <li><a href="#principles">PART 5：定着の5原則</a></li>
+    <li><a href="#resistance">PART 6：抵抗パターンと対処法</a></li>
+    <li><a href="#consulting">PART 7：コンサルティング提案への活用</a></li>
+    <li><a href="#kai-eval">PART 8：Kaiの評価・成功ポイント・改善提案</a></li>
+    <li><a href="#internal-memo">PART 9：内部メモ（参照事例の詳細）🔒</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- PART 1 -->
+<div class="part-header" id="overview"><span>PART 1</span>　フレームワーク概要</div>
+
+<p class="lead">「AIツールを入れた。でも使われない」— この状態はツール問題ではなく<strong>届け方問題</strong>。このフレームワークはその構造を解決する。</p>
+
+<h3>適用フェーズ</h3>
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>対象フェーズ</td><td>AIツール導入済みだが活用が定着していない組織</td></tr>
+  <tr><td>推進主体</td><td>現場の担当者1名（DX部門・専任チーム不要）</td></tr>
+  <tr><td>適用規模</td><td>部署・チームレベル（数十人〜百人強の現場単位）</td></tr>
+  <tr><td>期間目安</td><td>3〜4か月で初期成果（活用率向上・定着確認）</td></tr>
+</table>
+
+<div class="ok">
+<span class="label">このフレームワークが有効な組織の特徴</span>
+<ul>
+  <li>AIツールは既に導入されている（ChatGPT・Microsoft Copilot等）</li>
+  <li>推進担当のリソースが限られている（専任チームが組めない）</li>
+  <li>現場が多忙で「新しいことを学ぶ余裕がない」という声がある</li>
+  <li>経営層はAIに前向きだが、現場との温度差がある</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- PART 2 -->
+<div class="part-header" id="diagnosis"><span>PART 2</span>　活用率が上がらない原因診断</div>
+
+<h3>4つの原因タイプ</h3>
+<table>
+  <tr><th>原因タイプ</th><th>現場での代表的な声</th><th>対処の方向性</th></tr>
+  <tr><td><span class="badge badge-red">時間・余裕なし</span></td><td>「試す暇があるなら業務をやる」</td><td>既存業務フローに埋め込む（新行動を増やさない）</td></tr>
+  <tr><td><span class="badge badge-orange">応用イメージなし</span></td><td>「使い方は習ったが、自分の業務への当てはめが分からない」</td><td>本人の業務に合わせたライブデモを見せる</td></tr>
+  <tr><td><span class="badge badge-purple">心理的不安</span></td><td>「個人情報が漏れないか不安」「AIに触るのが怖い」</td><td>IT部門のお墨付き＋プライバシー設定の説明</td></tr>
+  <tr><td><span class="badge badge-blue">必要性を感じない</span></td><td>「今のやり方で困っていない」</td><td>業務時間の記録→Before/After数値で問題を可視化</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">診断のポイント</span>
+活用率が低迷しているとき、多くの組織が「ツールを変える」「研修を増やす」という方向に走る。しかし実際は<strong>どの原因タイプが主因か</strong>を特定してから対処しないと効果が出ない。まずヒアリングで原因タイプを絞り込む。
+</div>
+
+<h3>ヒアリングで確認する診断項目</h3>
+<ul>
+  <li>AI活用率の現在値（測定方法も確認：アンケート / 感覚値 / ログデータ）</li>
+  <li>導入からの経過期間</li>
+  <li>使っている人と使っていない人の職種・業務の違い</li>
+  <li>上長・経営層のAIへのスタンス</li>
+  <li>組織の繁忙期・業務サイクル（施策タイミング設計のため）</li>
+</ul>
+
+<hr>
+
+<!-- PART 3 -->
+<div class="part-header" id="process"><span>PART 3</span>　現場推進の3フェーズ</div>
+
+<div class="step" id="phase1">
+<span class="step-num">1</span> <strong>フェーズ1：土台作り</strong>
+</div>
+
+<h4>上長への事前承認取得（推奨）</h4>
+<p>「AI活用の推進担当をやらせてください」という短い依頼をするだけでよい。5分の会話で足りる。</p>
+
+<table>
+  <tr><th>承認を取る理由</th><th>効果</th></tr>
+  <tr><td>担当者の心理的安全</td><td>罪悪感なく動ける・業務として割り切れる</td></tr>
+  <tr><td>他メンバーへの巻き込み</td><td>「業務上の活動」として声かけできる</td></tr>
+  <tr><td>施策の後押し</td><td>横展開フェーズで詰まったときに上長が動いてくれる</td></tr>
+</table>
+
+<div class="warn">
+<span class="label">承認なしで進める場合のリスク</span>
+始めることは可能だが、横展開フェーズ（他チームへの拡大）で「勝手にやっていた」という壁にぶつかりやすい。初回案件では承認取得を強く推奨。
+</div>
+
+<h4>初期値の測定（この段階で必ず実施）</h4>
+<ul>
+  <li>アンケートを設計・実施しておく — 後で効果を語れなくなる</li>
+  <li>質問は3問以内・選択式のみ（記述式は後回し）</li>
+  <li>繁忙期を避けてタイミングを設定する</li>
+</ul>
+
+<div class="step" id="phase2">
+<span class="step-num">2</span> <strong>フェーズ2：職種・チーム別に介入する</strong>
+</div>
+
+<p>全員に一律展開しない。自分が業務を最もよく理解しているチームから着手し、成功事例を作ってから横展開する。</p>
+
+<h4>業務選定の判断軸</h4>
+<table>
+  <tr><th>優先度</th><th>条件</th></tr>
+  <tr><td><span class="badge badge-green">高</span></td><td>多くのメンバーが日常的に行う繰り返し業務</td></tr>
+  <tr><td><span class="badge badge-green">高</span></td><td>既存AIツールでそのまま試せる（個人情報不使用）</td></tr>
+  <tr><td><span class="badge badge-orange">中</span></td><td>時間がかかっていると感じている業務（体感ベースで可）</td></tr>
+  <tr><td><span class="badge badge-red">低（後回し）</span></td><td>個人情報・機密情報を扱う業務（環境整備が先）</td></tr>
+</table>
+
+<div class="step" id="phase3">
+<span class="step-num">3</span> <strong>フェーズ3：成功事例を作って横展開する</strong>
+</div>
+
+<ul>
+  <li>1チームでの定着を確認したらアンケートで数値化する</li>
+  <li>同職種・同チームの別メンバーへ「仲間の声」として紹介する</li>
+  <li>外部専門家より同僚の一言の方が行動変容を起こしやすい</li>
+</ul>
+
+<div class="tip">
+<span class="label">横展開のコツ</span>
+「この部署で効果がありました」という<strong>数字と人の顔が見えるストーリー</strong>で伝える。「AI活用が重要です」という抽象的な話より、「同じ職種のAさんがこれで業務時間が週○時間減りました」の方が動く。
+</div>
+
+<hr>
+
+<!-- PART 4 -->
+<div class="part-header" id="patterns"><span>PART 4</span>　介入パターン集（A〜D）</div>
+
+<h3 id="ptn-a">パターンA：業務別デモ勉強会</h3>
+
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>形式</td><td>少人数（5〜10名）・30〜45分・昼休み活用</td></tr>
+  <tr><td>場所</td><td>社内会議室 or オンライン（心理的ハードルが下がる）</td></tr>
+  <tr><td>コンテンツ</td><td>抽象的な説明より「今日の業務でこう使った」の実演</td></tr>
+</table>
+
+<div class="ok">
+<span class="label">最も盛り上がる演出</span>
+音声入力で実際に話しかけ、その場で要約させるライブデモ。「自分の業務に使えるイメージ」が見えた瞬間に反応が大きく変わる。スマートフォンを取り出して行うと参加者が「自分もできそう」と感じやすい。
+</div>
+
+<div class="warn">
+<span class="label">注意点</span>
+勉強会の参加者はAIに関心がある層に偏る。無関心層・多忙層には別のアプローチ（パターンB）が必要。勉強会だけで全員に届けようとするのは誤り。
+</div>
+
+<h3 id="ptn-b">パターンB：既存業務フローへのAI埋め込み</h3>
+
+<p class="lead">発想の転換：「新しいツールを覚えてもらう」ではなく「今やっている作業の中にAIを忍ばせる」</p>
+
+<h4>設計のポイント</h4>
+<ul>
+  <li>操作ステップを1〜2アクションに絞る（URLを貼るだけ・ボタンを押すだけ）</li>
+  <li>出力が「いつも自分が作っているものと近い形式」になるよう事前設定</li>
+  <li>操作マニュアルが不要なほどシンプルにする</li>
+</ul>
+
+<div class="ok">
+<span class="label">このパターンの特徴的な効果</span>
+最も活用率が低かったメンバーがヘビーユーザーになりやすい。「難しそう」「覚えられない」という心理的ハードルが操作の簡単さで消えるため、逆転現象が起きる。
+</div>
+
+<h4>具体例（業種・業務別）</h4>
+<table>
+  <tr><th>業務タイプ</th><th>埋め込み方</th></tr>
+  <tr><td>案内文・お知らせ文の作成</td><td>URLや情報を貼るだけで定型文が出てくるカスタムGPT</td></tr>
+  <tr><td>議事録・報告書作成</td><td>音声入力→そのまま議事録フォーマットに変換</td></tr>
+  <tr><td>メール文作成</td><td>箇条書き入力→フォーマルな文体に変換</td></tr>
+  <tr><td>クレーム対応文</td><td>状況入力→謝罪文テンプレートに変換</td></tr>
+</table>
+
+<h3 id="ptn-c">パターンC：情報収集AIの導入</h3>
+
+<p>相手に情報を素早く返す必要がある業務（窓口対応・カスタマーサポート・営業等）に特に有効。</p>
+
+<h4>ツール選定の3基準</h4>
+<table>
+  <tr><th>基準</th><th>なぜ重要か</th></tr>
+  <tr><td>速度</td><td>即答が必要な現場では5分待てない</td></tr>
+  <tr><td>操作シンプルさ</td><td>使い慣れた検索に近いUIが習得ハードルを下げる</td></tr>
+  <tr><td>信頼性確認のしやすさ</td><td>出典リンクがないと「本当か分からない」で使われなくなる</td></tr>
+</table>
+
+<h4>定着率を上げる実践的な工夫</h4>
+<ul>
+  <li><strong>愛称をつける：</strong>長い英語名より短い呼びやすい名前にすると会話に自然に出てくるようになる</li>
+  <li><strong>IT部門のお墨付き：</strong>「安全性は確認済み」という一言が不安層の心理障壁を下げる</li>
+  <li><strong>運用ルールは最大2〜3個：</strong>多すぎると「覚えられない→使わない」のループに入る</li>
+</ul>
+
+<div class="tip">
+<span class="label">運用ルールの推奨例</span>
+① 個人情報・機密情報は入力しない　② 出てきた情報は必ず確認する<br>
+この2つだけで大半のリスクがカバーできる。ルールを増やすほど現場の定着が遅れる。
+</div>
+
+<h3 id="ptn-d">パターンD：成果の見える化と再展開</h3>
+
+<ul>
+  <li>アンケートで「役に立ったか」「業務時間の変化」を選択式で数値取得</li>
+  <li>成功事例をチームミーティングや社内メールで共有</li>
+  <li>ポジティブな事例を発信し続けることで「使って当たり前」の空気を作る</li>
+</ul>
+
+<div class="tip">
+<span class="label">数値がない場合の代替策</span>
+「どの部署でどんな効果があったか」のストーリーをメール配信する。数字がなくてもエピソードはモチベーションに効く。ただし経営層への報告には数字が必要なため、次回以降は必ず測定設計を組み込む。
+</div>
+
+<hr>
+
+<!-- PART 5 -->
+<div class="part-header" id="principles"><span>PART 5</span>　定着の5原則</div>
+
+<table>
+  <tr><th>#</th><th>原則</th><th>実践のポイント</th></tr>
+  <tr>
+    <td>1</td>
+    <td><strong>当事者感が定着を決める</strong></td>
+    <td>「外から導入されたツール」ではなく「自分たちが選んだもの」という認識を作る。現場への事前説明・意見収集・改善フィードバックループを意図的に設計する。</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>測定は開始と同時に仕込む</strong></td>
+    <td>初期値を取らないと後から効果を証明できない。開始前の測定設計を支援メニューに含める。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>同職種の声が最強の伝播ルート</strong></td>
+    <td>外部専門家・管理職の推奨より「同じ立場の人がよかったと言っている」情報の方が行動変容に直結する。初期成功者をインフルエンサーとして活用する。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>ルールの複雑さが普及の壁になる</strong></td>
+    <td>最初の運用ルールは最低限の安全確保のみに絞る。慣れてから段階的に追加する。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>数字がなければ組織の支持は維持できない</strong></td>
+    <td>活用が進んでも「効果が見えない」と言われ始めたら数字で答えるしかない。効果測定設計はコンサルメニューの必須項目。</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- PART 6 -->
+<div class="part-header" id="resistance"><span>PART 6</span>　抵抗パターンと対処法</div>
+
+<table>
+  <tr><th>抵抗パターン</th><th>深層にある理由</th><th>有効なアプローチ</th></tr>
+  <tr>
+    <td>「忙しくて試す時間がない」</td>
+    <td>新しい行動を追加することへの拒否感</td>
+    <td>既存業務フローに埋め込む（パターンB）。「新しく覚えること」をゼロにする。</td>
+  </tr>
+  <tr>
+    <td>「自分の業務に使えるか分からない」</td>
+    <td>抽象的な説明しか受けていない</td>
+    <td>その人の実際の業務で動かすライブデモを見せる。</td>
+  </tr>
+  <tr>
+    <td>「個人情報が不安」</td>
+    <td>リスクの過大評価（正確な情報不足）</td>
+    <td>IT部門確認・プライバシー設定説明・ルール2つに絞る。</td>
+  </tr>
+  <tr>
+    <td>「効果が実感できない」</td>
+    <td>使い方が浅い・比較基準がない</td>
+    <td>業務時間の記録→Before/After数値化→アンケート結果提示。</td>
+  </tr>
+  <tr>
+    <td>「一部の人しか使っていない」</td>
+    <td>関心層だけにリーチしている</td>
+    <td>成功者のストーリーを横展開・愛称付与・参加しやすい仕組みの設計。</td>
+  </tr>
+  <tr>
+    <td>「アンケートに答えるのが面倒」</td>
+    <td>設問が長い・タイミングが悪い</td>
+    <td>3問・選択式のみ・繁忙期を避ける・手上げ方式でも可。</td>
+  </tr>
+  <tr>
+    <td>「役員・上司からAI疲れと言われた」</td>
+    <td>効果測定ができていない</td>
+    <td>これまでの実績を数値化。なければ成功事例ストーリーを配信→次回から測定を組み込む。</td>
+  </tr>
+</table>
+
+<div class="tip">
+<span class="label">抵抗への最強の切り返し</span>
+最初から「AI活用しましょう」ではなく「<strong>次の繁忙期に向けて、業務効率化を一緒に考えませんか</strong>」という切り口で入る。AIは手段として後から出す。業務課題の解決という共通ゴールから始めると抵抗が格段に下がる。
+</div>
+
+<hr>
+
+<!-- PART 7 -->
+<div class="part-header" id="consulting"><span>PART 7</span>　コンサルティング提案への活用</div>
+
+<h3>初回ヒアリング時のチェックリスト</h3>
+
+<ul>
+  <li>AI活用率の現在値（測定方法も確認：アンケート / 感覚値 / ツールログ）</li>
+  <li>導入からの経過期間</li>
+  <li>使っている人・使っていない人の職種と業務の違い</li>
+  <li>上長・経営層のAIへのスタンス（積極的 / 様子見 / 懐疑的）</li>
+  <li>推進を担える人材が社内にいるか（内部チャンピオンの有無）</li>
+  <li>繁忙期・業務サイクル（施策タイミング設計のため）</li>
+</ul>
+
+<h3>提案設計の要点</h3>
+
+<table>
+  <tr><th>設計ポイント</th><th>詳細</th></tr>
+  <tr>
+    <td>「全社展開」より「1チーム成功事例」から始める</td>
+    <td>受注しやすく成果も出やすい。3か月で数値を出してから次フェーズへ。</td>
+  </tr>
+  <tr>
+    <td>効果測定設計をメニューに含める</td>
+    <td>数字がないと継続契約につながらない。初期値取得から設計する。</td>
+  </tr>
+  <tr>
+    <td>3か月1サイクルを提案の基本単位にする</td>
+    <td>短期成果を出せる範囲・次フェーズへの移行提案がしやすい。</td>
+  </tr>
+  <tr>
+    <td>内部チャンピオンの育成をセットにする</td>
+    <td>コンサル撤退後に自走できる体制を作る。LTV向上にもつながる。</td>
+  </tr>
+</table>
+
+<div class="ok">
+<span class="label">提案書（/sme-ai-proposal）との連携</span>
+このフレームワークをベースに、ヒアリングで特定した原因タイプと対応パターンを提案書の「課題と解決策」セクションに落とし込む。数値目標（活用率○○%達成など）を設定すると説得力が増す。
+</div>
+
+<hr>
+
+<!-- PART 8 -->
+<div class="part-header" id="kai-eval"><span>PART 8</span>　Kaiの評価・成功ポイント・改善提案</div>
+
+<h3>総合評価</h3>
+
+<div class="score-row">
+  <div class="score-card">
+    <div class="score">A</div>
+    <div class="score-label">実践性</div>
+  </div>
+  <div class="score-card">
+    <div class="score">B+</div>
+    <div class="score-label">汎用性</div>
+  </div>
+  <div class="score-card">
+    <div class="score">B</div>
+    <div class="score-label">スケーラビリティ</div>
+  </div>
+  <div class="score-card">
+    <div class="score">A-</div>
+    <div class="score-label">コンサル転用可能性</div>
+  </div>
+</div>
+
+<div class="kai">
+<span class="label">Kai評価コメント</span>
+このフレームワークが特に優れているのは「現場1人が動ける」という設計思想。DX部門や専任チームに頼らず、普通のメンバーが実行できる粒度に落とし込まれている。中小企業向けコンサルティングとの相性は抜群で、「専任チームがいない」「予算が限られている」という中小企業の現実にそのまま刺さる。ただし、規模拡大（200人超）や製造業・医療など業務特性が異なる業種への適用は要カスタマイズ。
+</div>
+
+<h3>特に有効な成功ポイント</h3>
+
+<ul>
+  <li><strong>「業務フロー埋め込み」の発想：</strong>新しい行動を増やさないという設計は習慣化の最難関をクリアする。行動変容理論的にも正しい。</li>
+  <li><strong>愛称付与による心理的距離の縮め方：</strong>ツールを「仲間」として扱う工夫は、特に人と関わる職種（対人サービス・福祉・教育）で有効。</li>
+  <li><strong>同職種からの伝播設計：</strong>インフルエンサー活用を意図的に設計している点がユニーク。自然発生を待つのではなく仕掛ける。</li>
+  <li><strong>上長承認の5分ルール：</strong>「大事な会議を設定しなくていい」という低コストさが実行率を上げる。</li>
+</ul>
+
+<h3>注意点・リスク</h3>
+
+<div class="warn">
+<span class="label">内部チャンピオンへの依存リスク</span>
+このフレームワークは推進担当者の熱量と業務理解に強く依存する。担当者が異動・退職した場合、定着が逆戻りするリスクがある。コンサル提案時は「属人化しない仕組み化」を同時に組み込む必要がある。
+</div>
+
+<div class="warn">
+<span class="label">測定の主観性問題</span>
+「AI活用を実感していますか？」という主観アンケートは操作されやすく、管理職への報告時に「それは感覚値ですよね？」と突かれる。可能であれば<strong>ツールのログデータ（利用回数・時間）</strong>と組み合わせることを推奨する。
+</div>
+
+<div class="warn">
+<span class="label">70%の壁</span>
+参照事例では活用率が約70%で止まっている。後半30%（無関心層・抵抗層）は異なるアプローチが必要で、本フレームワークだけでは突破できない可能性がある。80%以上を目指す場合は別の介入設計が必要。
+</div>
+
+<h3>改善・追加提案（Kai独自の補足）</h3>
+
+<table>
+  <tr><th>改善項目</th><th>具体的な提案</th></tr>
+  <tr>
+    <td>測定の客観化</td>
+    <td>主観アンケートに加えてツールのログデータ（Microsoft 365 Copilot利用回数など）を組み合わせる。数値の信頼性が上がり役員説得に使える。</td>
+  </tr>
+  <tr>
+    <td>70%超への施策</td>
+    <td>後半の無関心層には「使わないことのリスク」を見える化する（競合他社の活用事例・業界標準の変化）。「できない」ではなく「使わなかった場合の機会損失」で動く層がいる。</td>
+  </tr>
+  <tr>
+    <td>内部チャンピオンの複数化</td>
+    <td>推進担当1人に頼らず、各チームに1名ずつ「AIリーダー」を育成する設計を第2フェーズに組み込む。</td>
+  </tr>
+  <tr>
+    <td>コスト・時間の明示</td>
+    <td>「何時間かかるのか」が見えないと上長が承認しにくい。各介入パターンの工数目安を事前に示す。</td>
+  </tr>
+  <tr>
+    <td>業種別カスタマイズガイド</td>
+    <td>製造業（ライン作業中心）・医療（個人情報制約大）・小売（繁忙期明確）は本フレームワークのカスタマイズが必要。業種別パターンの整備が今後の課題。</td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- PART 9 内部メモ -->
+<div class="part-header" id="internal-memo"><span>PART 9</span>　内部メモ（参照事例の詳細）🔒</div>
+
+<div class="internal">
+<span class="label">このセクションの取り扱い</span>
+<p>以下の情報は外部資料・提案書・ブログ等には使用しない。Kaiが提案設計・ヒアリング判断をする際の参照用のみ。</p>
+<p>元の発表者は公開セミナーで体験談として発表しているため情報自体は公開情報だが、当社が自社コンテンツとして二次利用するには事前許諾が必要。</p>
+</div>
+
+<div class="internal">
+<span class="label">参照事例：概要</span>
+
+<h4>組織属性</h4>
+<table>
+  <tr><th>項目</th><th>内容</th></tr>
+  <tr><td>業種</td><td>福祉系法人（就労支援・生活支援等の相談援助事業を含む）</td></tr>
+  <tr><td>法人規模</td><td>約1,000名</td></tr>
+  <tr><td>推進対象部署</td><td>50〜60名（運営スタッフ＋相談員の混合構成）</td></tr>
+  <tr><td>AI導入状況</td><td>ChatGPT等を導入済み（導入から約1.5年）</td></tr>
+  <tr><td>推進前の状態</td><td>AI活用率35%で約半年間停滞</td></tr>
+  <tr><td>経営層スタンス</td><td>AI活用に積極的。目標「80%」を設定していたが達成できていなかった</td></tr>
+</table>
+
+<h4>実施した3施策と結果</h4>
+<table>
+  <tr><th>施策</th><th>内容</th></tr>
+  <tr><td>①ランチタイムAIシェア会</td><td>昼休みに運営メンバー5名で開催。音声入力→要約のライブデモが最も盛り上がった。参加者が他の参加者を呼ぶ連鎖が自然発生。</td></tr>
+  <tr><td>②カスタムGPT作成</td><td>Webページ案内文の作成業務用。URLを貼るだけで文案が出る設計。最も活用率が低かったスタッフが半年後も愛用中。</td></tr>
+  <tr><td>③Perplexity（パープ君）導入</td><td>相談員の情報収集業務向け。「パープ君」という愛称で定着。20代〜60代まで使用。ルールは「個人情報を入れない」「出典を確認する」の2つのみ。</td></tr>
+</table>
+
+<h4>数値結果</h4>
+<table>
+  <tr><th>指標</th><th>値</th></tr>
+  <tr><td>推進前の活用率</td><td>35%</td></tr>
+  <tr><td>推進後の活用率</td><td>69%</td></tr>
+  <tr><td>期間</td><td>約3か月</td></tr>
+  <tr><td>測定方法</td><td>主観アンケート（「AI活用を実感していますか？」の選択式）</td></tr>
+</table>
+</div>
+
+<div class="internal">
+<span class="label">活用の際のKaiの判断基準</span>
+<ul>
+  <li>「3か月で2倍」「35%→69%」という数字を口頭や提案資料で使う場合は上村に確認する</li>
+  <li>「ある企業での実績」として数字を引用したい場合、発表者・法人名を出さない形でも出典許諾を取ることを推奨</li>
+  <li>「同様の事例がある」という文脈での言及はOK（数字を出さない形）</li>
+  <li>当社自身のクライアント支援で同様の成果が出た際は、それを独自の実績として使う</li>
+</ul>
+</div>
+
+<hr>
+
+<div class="ok">
+<span class="label">このマニュアルについて</span>
+作成：Kai / 2026-05-18 / v1.0<br>
+更新が必要な場合は <code>07_マニュアル\AI定着支援_現場推進マニュアル.html</code> を編集してください。<br>
+PART 9（内部メモ）は外部共有・印刷時に削除または非表示にすること。
+</div>
+
+</div><!-- .container -->
+</div><!-- .main-content -->
+
+</body>
+</html>
