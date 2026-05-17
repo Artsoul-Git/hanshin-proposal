@@ -223,8 +223,9 @@
 
   <div class="sb-section">
     <div class="sb-section-label">📊 プロジェクト管理</div>
-    <a class="sb-link" href="#ch22">Kai Tasks UI</a>
-    <a class="sb-link" href="#ch23">プロジェクト自動生成</a>
+    <a class="sb-link" href="Kai-Tasks完全マニュアル.html" target="_blank">⚡ Kai Tasks 完全マニュアル↗</a>
+    <a class="sb-link" href="#ch22">クイックスタート</a>
+    <a class="sb-link" href="#ch23">CLI・自動記録</a>
     <a class="sb-link" href="Groq-env完全ガイド.html" target="_blank">🔑 .env完全セットアップ↗</a>
   </div>
 
@@ -269,6 +270,7 @@
 <tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
 <tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
 <tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
+<tr><td>v4.2</td><td>2026-05-17</td><td>Kai Tasks 完全マニュアル（Kai-Tasks完全マニュアル.html）新設。PART5を全面改訂（クイックスタート・CLI早見表・自動記録しくみ・タイムマシン・再開ボタン解説に更新）。サイドバー・目次にリンク追加。</td></tr>
 <tr><td>v4.1</td><td>2026-05-17</td><td>PART 5末尾に「.envファイル完全セットアップガイド」リンクカードを追加。目次・サイドバー（📊 プロジェクト管理）にも同ガイドへのリンクを追加。</td></tr>
 <tr><td>v4.0</td><td>2026-05-17</td><td>第27章のセクション4を簡略化し「.envファイル完全セットアップガイド（Groq-env完全ガイド.html）」を別ページとして新設。メモ帳・Kai・ターミナルの3方法を選択式で解説。用語集に .env・.gitignore・プロジェクトルート・環境変数・APIキー・エンコードを追加。</td></tr>
 <tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」を新設。登録・APIキー取得・安全な管理方法（.envファイル）・商用利用の注意点・Claude Codeでの適用手順を初心者向けに解説。</td></tr>
@@ -358,8 +360,9 @@
     <li class="sub-item"><a href="#ch21">第21章　自動完了指示の最短フォーマット</a></li>
     <li class="sub-item"><a href="#ch27">第27章　Groq API 無料運用マニュアル</a></li>
     <li><strong>PART 5: Kai Tasks プロジェクト管理</strong></li>
-    <li class="sub-item"><a href="#ch22">第22章　Kai Tasksアプリの使い方（ブラウザUI）</a></li>
-    <li class="sub-item"><a href="#ch23">第23章　Kaiにテーマを渡してプロジェクトを自動生成する</a></li>
+    <li class="sub-item"><a href="Kai-Tasks完全マニュアル.html" target="_blank">↗ Kai Tasks 完全マニュアル（独立ページ）</a></li>
+    <li class="sub-item"><a href="#ch22">第22章　Kai Tasks クイックスタート（起動・基本操作）</a></li>
+    <li class="sub-item"><a href="#ch23">第23章　基本CLIコマンドと自動記録のしくみ</a></li>
     <li class="sub-item"><a href="Groq-env完全ガイド.html" target="_blank">↗ .envファイル完全セットアップガイド（Groq APIキーの安全な管理）</a></li>
     <li><strong>PART 6: セミナースライドビルダー</strong></li>
     <li class="sub-item"><a href="#ch24">第24章　/seminar-slide スキル — 全自動でスライドを作る</a></li>
@@ -2813,82 +2816,69 @@ console.groq.com → API Keys → 該当キーの「Delete」→ 即座に新し
 <!-- ===== PART 5: Kai Tasks ===== -->
 <div class="part-header">PART <span>5</span>　Kai Tasks プロジェクト管理</div>
 
+<!-- 完全マニュアルリンクカード -->
+<div style="background:linear-gradient(135deg,#1A365D 0%,#2B6CB0 100%);border-radius:12px;padding:22px 26px;margin:0 0 24px;display:flex;gap:18px;align-items:center;">
+  <div style="font-size:36px;flex-shrink:0;">⚡</div>
+  <div style="flex:1;">
+    <div style="font-size:16px;font-weight:bold;color:#fff;margin-bottom:6px;">
+      <a href="Kai-Tasks完全マニュアル.html" target="_blank" style="color:#FBD38D;text-decoration:none;">Kai Tasks 完全マニュアル ↗</a>
+    </div>
+    <div style="font-size:13px;color:#BEE3F8;line-height:1.7;">
+      概念・操作・自動記録・タイムマシン・再開ボタン・使い倒し方・トラブル対応まで一冊にまとめた独立マニュアルです。<br>
+      数か月後に見返しても迷わないよう設計されています。
+    </div>
+  </div>
+</div>
+
 <!-- 第22章 -->
 <details id="ch22">
-<summary><span class="acc-num">22</span>Kai Tasksアプリの使い方（ブラウザUI）<span class="acc-arrow">▼</span></summary>
+<summary><span class="acc-num">22</span>Kai Tasks クイックスタート（起動・基本操作）<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
 
 <div class="lead">
-Kai Tasksは、上村とKaiが共有するプロジェクト管理アプリです。1-3-5ルール（大タスク×1・中タスク×3・小タスク×5）でプロジェクトを構造化し、ロードマップをmermaidで可視化します。
+Kai Tasksは、上村とKaiが<strong>共有するプロジェクト管理システム</strong>です。「普通に仕事をしているだけで記録が積み上がる」を設計思想とし、タスク管理・活動ログ・思考遷移・タイムマシンが一体になっています。
 </div>
 
 <h3>起動方法</h3>
 
 <div class="step">
-<span class="step-num">1</span> <strong>VBSファイルをダブルクリック</strong><br>
-<span class="file-path">08_アプリ開発事業部\outputs\kai-tasks\起動してブラウザを開く.vbs</span> をダブルクリック<br>
-ウィンドウなしでサーバーが起動し、2秒後にブラウザが自動で開きます。
+<span class="step-num">1</span> <strong>VBSファイルをダブルクリック（推奨）</strong><br>
+<span class="file-path">08_アプリ開発事業部\outputs\kai-tasks\起動してブラウザを開く.vbs</span><br>
+バックグラウンドでサーバーが起動し、2秒後にブラウザが自動で開きます（黒いウィンドウは出ません）。
 </div>
 
 <div class="step">
-<span class="step-num">2</span> <strong>ブラウザで確認</strong><br>
-<code>http://localhost:3456</code> でKai Tasksが表示されればOK
+<span class="step-num">2</span> <strong>確認</strong><br>
+<code>http://localhost:3456</code> でKai Tasksが表示されればOK。PCを再起動したら再度VBSをダブルクリック。
 </div>
 
-<div class="tip">
-<span class="label">サーバーについて</span>
-VBSランチャーはサーバーをバックグラウンドで起動します（黒いウィンドウは出ません）。PCを再起動したら再度VBSをダブルクリックしてください。
-</div>
-
-<h3>画面構成</h3>
+<h3>画面の全タブ</h3>
 
 <table>
-<tr><th>エリア</th><th>内容</th></tr>
-<tr><td>左サイドバー</td><td>プロジェクト一覧。クリックで切り替え。</td></tr>
-<tr><td>メイン上部</td><td>プロジェクト名・目標・進捗バー・ロードマップ</td></tr>
-<tr><td>カンバン</td><td>タスクを「未着手 / 進行中 / 完了」で管理。ドラッグ&ドロップで移動可</td></tr>
-<tr><td>右下アンドゥバー</td><td>直前の操作を最大3回まで取り消し（Ctrl+Zも可）</td></tr>
+<tr><th>タブ</th><th>内容</th></tr>
+<tr><td>タスク</td><td>1-3-5ルールのタスク一覧。AI分解ボタン（✂️）付き</td></tr>
+<tr><td>カンバン</td><td>未着手 / 進行中 / 完了 のドラッグ&ドロップボード</td></tr>
+<tr><td>🔄 思考遷移</td><td>方針転換・技術選定変更などをKaiが自動記録。後から編集可</td></tr>
+<tr><td>📋 活動ログ</td><td>指示・決定・成果物をKaiが自動記録。後から編集可</td></tr>
+<tr><td>履歴</td><td>全変更の自動ログ</td></tr>
+<tr><td>メモ</td><td>自由記述メモ</td></tr>
+<tr><td>⏰ タイムマシン</td><td>スナップショットの保存・復元（新機能）</td></tr>
 </table>
 
-<h3>1-3-5ルール（タスク構造）</h3>
-
-<div class="flow-diagram">
-<svg viewBox="0 0 620 100" width="100%" style="max-width:620px">
-  <defs>
-    <marker id="arr2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0,0 9,3 0,6" fill="#ED8936"/>
-    </marker>
-  </defs>
-  <rect x="10" y="30" width="120" height="40" fill="#1A365D" rx="8"/>
-  <text x="70" y="55" fill="white" text-anchor="middle" font-size="13" font-weight="bold">大タスク ×1</text>
-  <line x1="130" y1="50" x2="155" y2="50" stroke="#ED8936" stroke-width="2" marker-end="url(#arr2)"/>
-  <rect x="155" y="20" width="130" height="60" fill="#EDF2F7" rx="8" stroke="#1A365D" stroke-width="1.5"/>
-  <text x="220" y="42" fill="#1A365D" text-anchor="middle" font-size="12" font-weight="bold">中タスク ×3</text>
-  <text x="220" y="60" fill="#718096" text-anchor="middle" font-size="11">フェーズ・工程単位</text>
-  <line x1="285" y1="50" x2="310" y2="50" stroke="#ED8936" stroke-width="2" marker-end="url(#arr2)"/>
-  <rect x="310" y="20" width="140" height="60" fill="#FFFAF0" rx="8" stroke="#ED8936" stroke-width="1.5"/>
-  <text x="380" y="42" fill="#C05621" text-anchor="middle" font-size="12" font-weight="bold">小タスク ×5</text>
-  <text x="380" y="60" fill="#718096" text-anchor="middle" font-size="11">具体的なアクション</text>
-  <line x1="450" y1="50" x2="475" y2="50" stroke="#38A169" stroke-width="2" marker-end="url(#arr2)"/>
-  <rect x="475" y="30" width="130" height="40" fill="#F0FFF4" rx="8" stroke="#38A169" stroke-width="1.5"/>
-  <text x="540" y="48" fill="#276749" text-anchor="middle" font-size="12" font-weight="bold">ロードマップ自動生成</text>
-</svg>
-</div>
-
-<h3>主な操作</h3>
+<h3>プロジェクトヘッダーのボタン</h3>
 
 <table>
-<tr><th>操作</th><th>方法</th></tr>
-<tr><td>プロジェクト作成</td><td>左サイドバー「＋ 新規プロジェクト」ボタン</td></tr>
-<tr><td>タスクのステータス変更</td><td>カンバンのタスクカードをドラッグ&ドロップ、またはステータスボタンをクリック</td></tr>
-<tr><td>タスク編集</td><td>タスクカードをクリック → タイトル・説明・期日を編集</td></tr>
-<tr><td>操作を取り消す</td><td>画面右下のアンドゥバー、またはCtrl+Z</td></tr>
-<tr><td>プロジェクト完了</td><td>左サイドバーのプロジェクト名横「完了」ボタン</td></tr>
+<tr><th>ボタン</th><th>機能</th></tr>
+<tr><td>▶ 再開</td><td>ターミナルコマンドとKaiへのコンテキストを自動生成（新機能）</td></tr>
+<tr><td>💡 推奨タスク</td><td>Groq AIが次にすべきタスクを提案</td></tr>
+<tr><td>✏️ 編集</td><td>プロジェクト名・目標を編集</td></tr>
+<tr><td>✅ 完了</td><td>プロジェクトを完了状態に変更</td></tr>
+<tr><td>📁 アーカイブ</td><td>一覧から非表示（データは保持）</td></tr>
 </table>
 
 <div class="tip">
-<span class="label">Kaiとの連動</span>
-KaiはCLI（<code>kai-tasks-cli.py</code>）経由でプロジェクトとタスクを自動生成・更新します。ブラウザUIとリアルタイムで同期しているので、Kaiが作業中でも手元のブラウザで進捗を確認できます。
+<span class="label">リアルタイム同期</span>
+KaiがCLIからデータを更新すると、ブラウザが自動更新されます（手動リロード不要）。Kaiが作業中でもリアルタイムで進捗確認が可能です。
 </div>
 
 </div>
@@ -2896,91 +2886,69 @@ KaiはCLI（<code>kai-tasks-cli.py</code>）経由でプロジェクトとタス
 
 <!-- 第23章 -->
 <details id="ch23">
-<summary><span class="acc-num">23</span>Kaiにテーマを渡してプロジェクトを自動生成する<span class="acc-arrow">▼</span></summary>
+<summary><span class="acc-num">23</span>Kai Tasks 基本CLIコマンドと自動記録のしくみ<span class="acc-arrow">▼</span></summary>
 <div class="acc-content">
 
 <div class="lead">
-Kaiにテーマ・目的を伝えると、Kai Tasksにプロジェクト・タスク・ロードマップを自動生成してから作業を開始します。「何を作るか」だけ話しかければOKです。
+Kaiが自律的にCLIコマンドを実行してKai Tasksを更新します。上村は何も操作しなくても、仕事をしているだけで記録が蓄積されます。ここでは代表的なコマンドと自動記録の仕組みを説明します。
 </div>
 
-<h3>基本の話しかけ方（3パターン）</h3>
+<h3>よく使うCLIコマンド（上村が直接使う場合）</h3>
 
-<h4>パターン①　テーマだけ投げる（最短）</h4>
-<div class="prompt-box">
-〇〇のセミナースライドを作りたい
-</div>
-<p>Kaiが目的・対象・ゴールを補完してブリーフィングを提示します。確認後にプロジェクトとタスクを自動生成します。</p>
+<pre style="font-size:12px;"><span style="color:#A0AEC0;"># プロジェクトルートで実行</span>
+cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc"
 
-<h4>パターン②　スキルコマンドを指定する</h4>
-<div class="prompt-box">
-/seminar-slide テーマ：契約書AIチェック、対象：中小企業の経営者
-</div>
-<p>スキルが直接起動し、ヒアリング→タスク生成→スライド制作まで一気通貫で動きます。</p>
+<span style="color:#A0AEC0;"># サーバー起動確認</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server
 
-<h4>パターン③　目標まで明示する（精度最高）</h4>
-<div class="prompt-box">
-〇〇社向けのAI導入提案書を作りたい。
-目標：5月末に提出。対象：製造業20名規模。訴求ポイントは在庫管理の自動化。
-</div>
-<p>情報が揃っているのでKaiがブリーフィングを省略して即タスク生成→作業開始します。</p>
+<span style="color:#A0AEC0;"># 今日のフォーカス確認（進行中 + 期限切れタスク）</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py today
 
-<h3>Kaiが自動でやること（確認不要）</h3>
+<span style="color:#A0AEC0;"># プロジェクト一覧（IDを調べる）</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py list
+
+<span style="color:#A0AEC0;"># 全プロジェクト進捗確認</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py status
+
+<span style="color:#A0AEC0;"># スナップショット作成（タイムマシン用）</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py snapshot PROJECT_ID --label "ラベル"</pre>
+
+<h3>Kaiの自動記録トリガー</h3>
 
 <div class="ok">
-<span class="label">自動実行される一連の流れ</span>
-<ol>
-  <li>Kai Tasksサーバーを確認（起動していなければ起動）</li>
-  <li>プロジェクトを新規作成（名前・目標を設定）</li>
-  <li>大タスク×1・中タスク×3・小タスク×5 を1-3-5ルールで自動生成</li>
-  <li>mermaidロードマップを自動生成してプロジェクトに紐付け</li>
-  <li>作業開始（最初のタスクを「進行中」に更新）</li>
-</ol>
+<span class="label">上村が何も言わなくてもKaiが自動実行すること</span>
+<table>
+<tr><th>Kaiの行動</th><th>自動で記録されること</th></tr>
+<tr><td>新しい作業が始まったとき</td><td>プロジェクトを自動作成（1-3-5タスク + ロードマップ付き）</td></tr>
+<tr><td>指示・依頼を受けたとき</td><td>活動ログに「📝 指示」として記録</td></tr>
+<tr><td>ファイル・成果物を作成したとき</td><td>活動ログに「📦 成果物」として記録</td></tr>
+<tr><td>技術・方針・スコープが変わったとき</td><td>思考遷移（ピボット）を自動記録</td></tr>
+<tr><td>作業の一区切り後</td><td>セッション終了ログ + スナップショットを作成</td></tr>
+</table>
 </div>
 
-<h3>作業中の進捗確認</h3>
+<h3>タイムマシン（スナップショット）について</h3>
 
-<p>Kai Tasksのブラウザ（<code>http://localhost:3456</code>）を開いておくと、Kaiが作業を進めるたびにリアルタイムで進捗が更新されます。</p>
+<p>「⏰ タイムマシン」タブでプロジェクトの過去状態を保存・復元できます。</p>
+<ul>
+  <li>最大10件保存（11件目で最も古いものが自動削除）</li>
+  <li>Kaiが作業完了時に自動作成 + 上村が手動で作成も可能</li>
+  <li>スナップショットのタイトルは後から✏️ボタンで編集可能</li>
+  <li>「⏪ ここに戻る」で任意の時点の状態に復元（復元前にスナップショット推奨）</li>
+</ul>
+
+<h3>▶ 再開ボタン（セッション再開を最短に）</h3>
+
+<p>数日ぶりにプロジェクトを再開するとき、プロジェクトヘッダーの「▶ 再開」をクリックすると：</p>
+<ol>
+  <li>ターミナルに貼るコマンドブロック（状態確認CLI）を生成</li>
+  <li>Kaiへの最初のメッセージとして貼り付けるコンテキスト文を生成</li>
+</ol>
+<p>生成された文をKaiへの最初のメッセージとして貼り付けると、説明ゼロで即作業再開できます。</p>
 
 <div class="tip">
-<span class="label">サーバーが起動していない場合</span>
-Kaiが作業を始めようとしたとき、サーバーが止まっていると「サーバーを起動してください」と案内します。<br>
-<span class="file-path">起動してブラウザを開く.vbs</span> をダブルクリックしてから再度話しかけてください。
-</div>
-
-<h3>途中でプロジェクトを確認・修正する</h3>
-
-<table>
-<tr><th>やりたいこと</th><th>Kaiへの指示</th></tr>
-<tr><td>今のタスク状況を見たい</td><td>「Kai Tasksの進捗を見せて」</td></tr>
-<tr><td>タスクのタイトルを変えたい</td><td>「〇〇というタスクのタイトルを△△に変えて」</td></tr>
-<tr><td>タスクを追加したい</td><td>「□□というタスクを追加して」</td></tr>
-<tr><td>ロードマップを更新したい</td><td>「ロードマップのフェーズ3を納品準備に変更して」</td></tr>
-<tr><td>プロジェクトを完了にしたい</td><td>「〇〇プロジェクトを完了にして」</td></tr>
-</table>
-
-<h3>使用例：セミナースライド案件</h3>
-
-<div class="step">
-<span class="step-num">1</span> <strong>上村の発言</strong><br>
-「契約書AIチェックのセミナースライドを作りたい。対象は中小企業の法務担当者。」
-</div>
-
-<div class="step">
-<span class="step-num">2</span> <strong>Kaiが自動実行</strong><br>
-Kai Tasksにプロジェクト「契約書AIチェックセミナー」を作成<br>
-→ 大タスク「セミナースライド完成」<br>
-→ 中タスク「構成設計 / スライド制作 / 公開設定」<br>
-→ 小タスク×5「ペルソナ整理・目次作成・各スライド執筆・デザイン調整・GitHub Pages公開」
-</div>
-
-<div class="step">
-<span class="step-num">3</span> <strong>作業開始</strong><br>
-Kaiが「構成設計」タスクを進行中にして、ヒアリング→スライド制作を開始
-</div>
-
-<div class="warn">
-<span class="label">注意</span>
-プロジェクト開始時に「Kai Tasksは使わなくていい」と明示すれば、タスク生成をスキップして作業のみ行います。逆に、会話の途中で「やっぱりタスク管理して」と依頼することも可能です。
+<span class="label">完全リファレンスは別マニュアルへ</span>
+CLIの全コマンド・各タブの詳細・使い倒し方・トラブル対応は <a href="Kai-Tasks完全マニュアル.html" target="_blank" style="color:#1A365D;font-weight:bold;">Kai Tasks 完全マニュアル ↗</a> を参照してください。
 </div>
 
 </div>

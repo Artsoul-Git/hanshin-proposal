@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kai Tasks 完全マニュアル</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; display: flex; min-height: 100vh; }
+
+.main-sidebar { position: fixed; left: 0; top: 0; width: 230px; height: 100vh; overflow-y: auto; background: #1A365D; z-index: 100; padding-bottom: 40px; }
+.main-sidebar::-webkit-scrollbar { width: 4px; }
+.main-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+.sb-logo { padding: 18px 16px; background: #0F2340; font-size: 13px; font-weight: bold; color: #E2E8F0; border-bottom: 1px solid rgba(255,255,255,0.1); line-height: 1.5; }
+.sb-logo span { color: #ED8936; display: block; font-size: 11px; margin-top: 2px; }
+.sb-section { padding: 10px 14px 4px; }
+.sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
+.sb-link { display: block; padding: 5px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
+.sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.sb-link.indent { padding-left: 18px; font-size: 11px; color: #A0AEC0; }
+.sb-back { display: block; padding: 8px 14px; font-size: 11px; color: #A0AEC0; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 6px; }
+.sb-back:hover { color: #fff; }
+
+.main-content { margin-left: 230px; flex: 1; padding: 40px 20px; min-width: 0; }
+.container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+.cover { text-align: center; padding: 70px 0 50px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; }
+.cover h1 { font-size: 34px; color: #1A365D; margin-bottom: 12px; line-height: 1.4; }
+.cover .sub { font-size: 18px; color: #ED8936; font-weight: bold; margin-bottom: 30px; }
+.cover .meta { color: #718096; font-size: 13px; line-height: 2.2; }
+.cover-badge { display: inline-block; background: #1A365D; color: white; padding: 4px 14px; border-radius: 20px; font-size: 12px; margin: 4px; }
+
+h2 { font-size: 24px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #ED8936; line-height: 1.4; }
+h2:first-of-type { margin-top: 0; }
+h3 { font-size: 18px; color: #2D3748; margin: 28px 0 12px; padding-left: 14px; border-left: 6px solid #ED8936; line-height: 1.5; }
+h4 { font-size: 15px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+p { margin: 12px 0; font-size: 14px; }
+
+.lead { font-size: 15px; color: #1A365D; background: #EDF2F7; padding: 18px 22px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; line-height: 1.9; }
+.tip { background: #FFFAF0; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #ED8936; font-size: 14px; }
+.tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 5px; font-size: 13px; }
+.warn { background: #FFF5F5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #E53E3E; font-size: 14px; }
+.warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 5px; font-size: 13px; }
+.ok { background: #F0FFF4; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #38A169; font-size: 14px; }
+.ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 5px; font-size: 13px; }
+.info { background: #EBF4FF; padding: 16px 20px; border-radius: 8px; margin: 16px 0; border-left: 5px solid #3182CE; font-size: 14px; }
+.info .label { font-weight: bold; color: #2B6CB0; display: block; margin-bottom: 5px; font-size: 13px; }
+
+code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 12px; }
+pre { background: #1A202C; color: #E2E8F0; padding: 18px 22px; border-radius: 8px; overflow-x: auto; margin: 16px 0; font-family: "Consolas","SF Mono",monospace; font-size: 12px; line-height: 1.8; position: relative; }
+pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+.cm { color: #A0AEC0; }
+.hl { color: #F6AD55; }
+.gr { color: #68D391; }
+
+ul, ol { padding-left: 26px; margin: 12px 0; font-size: 14px; }
+li { margin: 6px 0; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+tr:nth-child(even) { background: #F7FAFC; }
+
+.step { background: #EDF2F7; padding: 18px 24px; border-radius: 8px; margin: 18px 0; border-top: 4px solid #1A365D; font-size: 14px; }
+.step-num { display: inline-block; background: #ED8936; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: bold; margin-right: 8px; font-size: 14px; }
+
+.toc { background: #F7FAFC; padding: 24px 32px; border-radius: 8px; margin: 24px 0; }
+.toc h3 { border: none; padding-left: 0; margin-top: 0; font-size: 16px; }
+.toc ul { list-style: none; padding-left: 0; }
+.toc > ul > li { padding: 6px 0; border-bottom: 1px dashed #E2E8F0; font-weight: 600; font-size: 14px; }
+.toc > ul > li:last-child { border: none; }
+.toc a { color: #1A365D; text-decoration: none; }
+.toc a:hover { color: #ED8936; }
+.toc .sub { padding-left: 20px; font-size: 13px; font-weight: normal; color: #4A5568; }
+.toc .sub li { padding: 3px 0; border: none; }
+
+.part-header { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #718096; padding: 40px 0 8px; border-top: 2px solid #E2E8F0; margin-top: 50px; }
+.part-header:first-of-type { margin-top: 0; border-top: none; }
+
+.file-path { font-family: "Consolas","SF Mono",monospace; font-size: 12px; color: #4A5568; background: #EDF2F7; padding: 2px 8px; border-radius: 4px; }
+
+.cmd-table td:first-child { font-family: "Consolas","SF Mono",monospace; color: #ED8936; font-size: 12px; white-space: nowrap; background: #1A202C; }
+.cmd-table td:first-child code { background: none; color: #68D391; padding: 0; }
+
+.badge { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: 11px; font-weight: bold; }
+.badge-new { background: #FEF3C7; color: #92400E; }
+.badge-auto { background: #D1FAE5; color: #065F46; }
+.badge-manual { background: #DBEAFE; color: #1E40AF; }
+
+.ui-box { border: 2px solid #E2E8F0; border-radius: 10px; padding: 18px 22px; margin: 16px 0; }
+.ui-box-title { font-size: 13px; font-weight: bold; color: #1A365D; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #E2E8F0; }
+
+.flow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 16px 0; }
+.flow-item { background: #EDF2F7; border: 1px solid #CBD5E0; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; color: #1A365D; }
+.flow-arrow { color: #ED8936; font-size: 18px; font-weight: bold; }
+.flow-item.auto { background: #F0FFF4; border-color: #38A169; color: #276749; }
+.flow-item.kai { background: #EBF4FF; border-color: #3182CE; color: #1A365D; }
+
+.qa { border: 1px solid #E2E8F0; border-radius: 8px; margin: 14px 0; overflow: hidden; }
+.qa-q { background: #EDF2F7; padding: 12px 16px; font-weight: bold; font-size: 14px; color: #1A365D; }
+.qa-a { padding: 12px 16px; font-size: 14px; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- サイドバー -->
+<nav class="main-sidebar">
+  <a class="sb-back" href="総合マニュアル.html">← 総合マニュアルに戻る</a>
+  <div class="sb-logo">Kai Tasks<span>完全マニュアル v1.0</span></div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">はじめに</div>
+    <a class="sb-link" href="#overview">概要と存在意義</a>
+    <a class="sb-link" href="#concept">タスク構想の正しさ</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">セットアップ</div>
+    <a class="sb-link" href="#structure">システム構成</a>
+    <a class="sb-link" href="#startup">起動方法</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">ブラウザUI</div>
+    <a class="sb-link" href="#ui-overview">画面構成</a>
+    <a class="sb-link indent" href="#ui-dashboard">📊 ダッシュボード</a>
+    <a class="sb-link indent" href="#ui-tasks">タスクタブ</a>
+    <a class="sb-link indent" href="#ui-kanban">カンバンタブ</a>
+    <a class="sb-link indent" href="#ui-pivots">🔄 思考遷移タブ</a>
+    <a class="sb-link indent" href="#ui-logs">📋 活動ログタブ</a>
+    <a class="sb-link indent" href="#ui-timemachine">⏰ タイムマシン</a>
+    <a class="sb-link indent" href="#ui-resume">▶ 再開ボタン</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">CLIリファレンス</div>
+    <a class="sb-link" href="#cli-basic">基本コマンド</a>
+    <a class="sb-link" href="#cli-log">ログ・ピボット</a>
+    <a class="sb-link" href="#cli-session">session-end / snapshot</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">自動連動</div>
+    <a class="sb-link" href="#auto-record">自動記録の仕組み</a>
+    <a class="sb-link" href="#auto-trigger">記録のトリガー一覧</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">活用法</div>
+    <a class="sb-link" href="#timemachine-howto">タイムマシン活用</a>
+    <a class="sb-link" href="#resume-howto">再開ボタン活用</a>
+    <a class="sb-link" href="#ops-advice">運用アドバイス</a>
+    <a class="sb-link" href="#power-use">使い倒し方</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">トラブル対応</div>
+    <a class="sb-link" href="#faq">よくある疑問</a>
+    <a class="sb-link" href="#trouble">トラブルシューティング</a>
+  </div>
+</nav>
+
+<!-- メインコンテンツ -->
+<div class="main-content">
+<div class="container">
+
+<!-- カバー -->
+<div class="cover">
+  <h1>⚡ Kai Tasks<br>完全マニュアル</h1>
+  <div class="sub">上村桂右 × Kai の共有プロジェクト管理システム</div>
+  <div class="meta">
+    <span class="cover-badge">v1.0</span>
+    <span class="cover-badge">2026-05-17</span>
+    <span class="cover-badge">localhost:3456</span><br><br>
+    このマニュアルは「Kai Tasksを数か月ぶりに開いても迷わない」を目標に作成しました。<br>
+    概念・操作・自動化・使い倒し方・不安点の解消まで一冊に収めています。
+  </div>
+</div>
+
+<!-- 目次 -->
+<div class="toc">
+  <h3>📋 目次</h3>
+  <ul>
+    <li><a href="#overview">PART 1: Kai Tasksとは何か</a>
+      <ul class="sub">
+        <li><a href="#overview">概要と存在意義</a></li>
+        <li><a href="#concept">「タスク＋履歴」構想の正しさ</a></li>
+      </ul>
+    </li>
+    <li><a href="#structure">PART 2: システム構成と起動方法</a>
+      <ul class="sub">
+        <li><a href="#structure">ファイル構成・ポート・データ</a></li>
+        <li><a href="#startup">起動方法（VBS / CLI）</a></li>
+      </ul>
+    </li>
+    <li><a href="#ui-overview">PART 3: ブラウザUI完全ガイド</a>
+      <ul class="sub">
+        <li><a href="#ui-overview">画面構成の全体像</a></li>
+        <li><a href="#ui-dashboard">ダッシュボード</a></li>
+        <li><a href="#ui-tasks">タスク・カンバンタブ</a></li>
+        <li><a href="#ui-pivots">思考遷移タブ</a></li>
+        <li><a href="#ui-logs">活動ログタブ</a></li>
+        <li><a href="#ui-timemachine">⏰ タイムマシン（新機能）</a></li>
+        <li><a href="#ui-resume">▶ 再開ボタン（新機能）</a></li>
+      </ul>
+    </li>
+    <li><a href="#cli-basic">PART 4: CLIコマンド完全リファレンス</a></li>
+    <li><a href="#auto-record">PART 5: Kaiとの自動連動</a>
+      <ul class="sub">
+        <li><a href="#auto-record">自動記録の仕組み</a></li>
+        <li><a href="#auto-trigger">記録トリガー一覧</a></li>
+      </ul>
+    </li>
+    <li><a href="#timemachine-howto">PART 6: タイムマシン活用法</a></li>
+    <li><a href="#ops-advice">PART 7: 運用アドバイス</a></li>
+    <li><a href="#power-use">PART 8: 使い倒し方</a></li>
+    <li><a href="#faq">PART 9: よくある疑問とトラブル対応</a></li>
+  </ul>
+</div>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 1 — はじめに</div>
+
+<h2 id="overview">Kai Tasksとは何か</h2>
+
+<div class="lead">
+Kai Tasksは、上村桂右とKai（Claude Code）が<strong>共有するプロジェクト管理システム</strong>です。<br>
+「普通に仕事をしているだけで、記録が積み上がる」を設計思想としています。
+</div>
+
+<h3>3つの核心機能</h3>
+
+<table>
+<tr><th>機能</th><th>何ができるか</th><th>誰がやるか</th></tr>
+<tr><td>📁 プロジェクト管理</td><td>1-3-5ルールでタスクを構造化・進捗を可視化</td><td>Kai（自動）+ 上村（手動）</td></tr>
+<tr><td>📋 活動ログ・思考遷移</td><td>指示・決定・成果物・方針転換を時系列で記録</td><td>Kai（自動記録）</td></tr>
+<tr><td>⏰ タイムマシン</td><td>過去の状態スナップショットを保存・復元</td><td>Kai（自動）+ 上村（手動）</td></tr>
+</table>
+
+<h3>なぜ必要か</h3>
+
+<p>複数のプロジェクトを同時進行していると「どこまで進んだか」「なぜこの方向にしたか」が分からなくなります。KaiとKai Tasksは会話をまたいで記憶を持てないため、<strong>この場所さえ見れば状況と思考を振り返れる</strong>仕組みが必要でした。</p>
+
+<div class="ok">
+<span class="label">解決する3つの問題</span>
+<ul>
+<li><strong>分断：</strong>先週どこまで進めたか分からない → 活動ログ・スナップショットで復元</li>
+<li><strong>混乱：</strong>なぜこのアプローチにしたか忘れる → 思考遷移（ピボット）で記録</li>
+<li><strong>スタート遅延：</strong>新しいセッションのたびに状況説明が必要 → ▶再開ボタンで即コンテキスト生成</li>
+</ul>
+</div>
+
+<h2 id="concept">「タスク＋履歴」構想の正しさ</h2>
+
+<p>「タスク実行 → 完了・途中を自動記録 → 手動で先の予定も登録できる」というこのシステムの設計思想について。</p>
+
+<div class="info">
+<span class="label">結論：この構想は変ではなく、むしろ本質を突いている</span>
+<ul>
+<li><strong>「履歴管理だけ」</strong>にすると「何をいつしたか」はわかるが「これから何をするか」「どこまで進んだか」が見えない</li>
+<li><strong>「タスク管理だけ」</strong>にすると「やること」はわかるが「なぜこうなったか」の脈絡が失われる</li>
+<li><strong>現在の構想（タスク＋履歴＋ログ＋ピボット）</strong>は両方をカバーしており、実用性が高い</li>
+</ul>
+課題は「構想が変」ではなく「自動化の摩擦」でした。Kaiの自動記録ルール（CLAUDE.md）が機能すれば、このシステムが最も価値を発揮します。
+</div>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 2 — システム構成と起動方法</div>
+
+<h2 id="structure">システム構成</h2>
+
+<h3>ファイル構成</h3>
+
+<pre>08_アプリ開発事業部/outputs/kai-tasks/
+<span class="hl">├── kai-tasks-cli.py</span>     <span class="cm">← KaiがCLIから使うメインツール（Bashツール経由で実行）</span>
+<span class="hl">├── server.py</span>            <span class="cm">← REST APIサーバー（ポート3456）</span>
+<span class="hl">├── index.html</span>           <span class="cm">← ブラウザUI（リアルタイム同期）</span>
+├── 起動してブラウザを開く.vbs  <span class="cm">← 上村さんがダブルクリックで起動するランチャー</span>
+└── data/
+    └── <span class="gr">tasks.json</span>       <span class="cm">← 全データ。CLIとブラウザ両方が読み書き</span></pre>
+
+<h3>データの流れ</h3>
+
+<div class="flow">
+  <div class="flow-item kai">Kai（Claude Code）</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">kai-tasks-cli.py</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">server.py<br><small>:3456</small></div>
+  <div class="flow-arrow">↔</div>
+  <div class="flow-item auto">tasks.json</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">index.html<br><small>（ブラウザ）</small></div>
+</div>
+
+<table>
+<tr><th>コンポーネント</th><th>役割</th><th>備考</th></tr>
+<tr><td>kai-tasks-cli.py</td><td>KaiがAPIを叩くためのCLIラッパー</td><td>Pythonで書かれたコマンドラインツール</td></tr>
+<tr><td>server.py</td><td>REST APIサーバー</td><td>ポート3456。起動中は常駐する</td></tr>
+<tr><td>index.html</td><td>ブラウザUI</td><td>SSE（リアルタイム同期）対応</td></tr>
+<tr><td>tasks.json</td><td>唯一のデータストア</td><td>手動編集も可能だが基本はAPI経由で操作</td></tr>
+</table>
+
+<div class="warn">
+<span class="label">tasks.jsonのバックアップについて</span>
+tasks.jsonが壊れると全データを失います。重要な作業前にはタイムマシンでスナップショットを作成するか、ファイルをDropboxが自動バックアップする仕組みを活用してください（Dropbox配下に保存されているため、バージョン履歴は自動保存されています）。
+</div>
+
+<h2 id="startup">起動方法</h2>
+
+<h3>方法①：VBSランチャー（上村さん推奨）</h3>
+
+<div class="step">
+<span class="step-num">1</span> <strong>ダブルクリック</strong><br>
+<span class="file-path">08_アプリ開発事業部\outputs\kai-tasks\起動してブラウザを開く.vbs</span><br>
+サーバーがバックグラウンドで起動し、2秒後にブラウザが自動で開きます。
+</div>
+
+<div class="step">
+<span class="step-num">2</span> <strong>確認</strong><br>
+ブラウザで <code>http://localhost:3456</code> が開けばOKです。
+</div>
+
+<div class="tip">
+<span class="label">PCを再起動したら</span>
+サーバーは常駐していないため、PCを再起動するたびにVBSをダブルクリックしてください。
+</div>
+
+<h3>方法②：CLIから起動（Kai / ターミナル）</h3>
+
+<pre>cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc"
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server</pre>
+
+<p>すでに起動中なら「サーバー稼働中」と表示されます。起動していなければ自動起動します。</p>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 3 — ブラウザUI完全ガイド</div>
+
+<h2 id="ui-overview">画面構成の全体像</h2>
+
+<table>
+<tr><th>エリア</th><th>内容</th></tr>
+<tr><td>左サイドバー（上段）</td><td>グローバルナビ（ダッシュボード / グラフビュー / プロジェクト一覧）</td></tr>
+<tr><td>左サイドバー（中段）</td><td>プロジェクト一覧。クリックで切り替え。進捗バー付き</td></tr>
+<tr><td>左サイドバー（下段）</td><td>＋ 新規プロジェクト追加ボタン</td></tr>
+<tr><td>メインヘッダー</td><td>プロジェクト名・ゴール・進捗バー・ロードマッププレビュー</td></tr>
+<tr><td>アクションボタン群</td><td>▶再開 / 💡推奨タスク / ✏️編集 / ✅完了 / 📁アーカイブ / 🗑削除</td></tr>
+<tr><td>タブエリア</td><td>タスク / カンバン / 🔄思考遷移 / 📋活動ログ / 履歴 / メモ / ⏰タイムマシン</td></tr>
+<tr><td>右下アンドゥバー</td><td>直前の操作を最大3回まで取り消し（Ctrl+Zも可）</td></tr>
+</table>
+
+<div class="info">
+<span class="label">リアルタイム同期について</span>
+KaiがCLIからデータを更新すると、ブラウザを手動リロードしなくてもSSE（Server-Sent Events）で自動的に画面が更新されます。Kaiが作業中でもリアルタイムで進捗確認が可能です。
+</div>
+
+<h2 id="ui-dashboard">📊 ダッシュボード</h2>
+
+<p>グローバルナビの「📊 ダッシュボード」をクリックすると全プロジェクトを俯瞰できます。</p>
+
+<table>
+<tr><th>カード</th><th>内容</th></tr>
+<tr><td>プロジェクトサマリー</td><td>全/進行中/完了/アーカイブの件数</td></tr>
+<tr><td>進行中プロジェクト一覧</td><td>最終更新日時順。進捗バー付き</td></tr>
+<tr><td>最近の活動</td><td>全プロジェクトの変更履歴（最新8件）</td></tr>
+<tr><td>思考転換パターン分析</td><td>ピボットの種類（方針/技術/スコープ/概念）の内訳グラフ</td></tr>
+</table>
+
+<h2 id="ui-tasks">タスクタブ・カンバンタブ</h2>
+
+<h3>1-3-5ルール（タスク構造）</h3>
+
+<table>
+<tr><th>種類</th><th>数</th><th>役割</th></tr>
+<tr><td>★ 大タスク（Must do）</td><td>×1</td><td>プロジェクト全体のゴール。すべての判断基準</td></tr>
+<tr><td>◆ 中タスク（Should do）</td><td>×3</td><td>フェーズ・工程単位の大きな区切り</td></tr>
+<tr><td>◇ 小タスク（Could do）</td><td>×5</td><td>具体的なアクションステップ</td></tr>
+</table>
+
+<h3>タスクカードの操作</h3>
+
+<table>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>タスク詳細を開く</td><td>タスクカードをクリック（タスクダッシュボードが開く）</td></tr>
+<tr><td>ステータス変更</td><td>カードの「▶進行中」「✅完了」ボタン、またはカンバンでドラッグ</td></tr>
+<tr><td>タスクを分解（AI）</td><td>カードの「✂️」ボタン → Groq AIが実行ステップを提案</td></tr>
+<tr><td>推奨タスク（AI）</td><td>ヘッダーの「💡推奨タスク」ボタン → プロジェクト全体の次のアクションを提案</td></tr>
+</table>
+
+<h3>タスクダッシュボード（タスクカードをクリックすると開く）</h3>
+
+<table>
+<tr><th>タブ</th><th>内容</th></tr>
+<tr><td>マインドマップ</td><td>タスクに紐付いたmermaidマインドマップ（CLIから設定）</td></tr>
+<tr><td>ロードマップ</td><td>mermaidフロー図でタスクの進め方を可視化</td></tr>
+<tr><td>フロー</td><td>同上（拡張用）</td></tr>
+<tr><td>ガント</td><td>ガントチャート（mermaidコード設定後に表示）</td></tr>
+<tr><td>状態遷移</td><td>状態遷移図</td></tr>
+<tr><td>成果物ファイル</td><td>タスクに紐付いたファイルパス一覧</td></tr>
+</table>
+
+<h2 id="ui-pivots">🔄 思考遷移タブ</h2>
+
+<div class="lead">
+方針転換・技術選定の変更・スコープ変更・概念の切り替えを時系列で記録します。<br>
+「なぜこのアプローチにしたのか」を数か月後でも振り返れる<strong>意思決定ログ</strong>です。
+</div>
+
+<h3>ピボットの種類</h3>
+
+<table>
+<tr><th>種類</th><th>典型的な例</th></tr>
+<tr><td>方針転換（strategic）</td><td>「月額モデル → スポット型に変更」</td></tr>
+<tr><td>技術転換（technical）</td><td>「OpenAI API → Groq無料APIに切り替え」</td></tr>
+<tr><td>スコープ変更（scope）</td><td>「全機能実装 → MVP（最小構成）に縮小」</td></tr>
+<tr><td>概念転換（conceptual）</td><td>「ツール開発 → プロセス改善に考え直し」</td></tr>
+</table>
+
+<h3>操作</h3>
+
+<table>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>新規追加</td><td>「＋ 思考転換を記録」ボタン</td></tr>
+<tr><td>編集</td><td>各カードの「✏️」ボタン <span class="badge badge-new">NEW</span></td></tr>
+<tr><td>削除</td><td>各カードの「🗑」ボタン</td></tr>
+<tr><td>思考遷移図</td><td>タブ内で自動生成（mermaidフロー図）</td></tr>
+<tr><td>マインドマップ比較</td><td>初期と現在のマインドマップを並べて比較（変化の可視化）</td></tr>
+</table>
+
+<div class="tip">
+<span class="label">Kaiが自動記録するケース</span>
+KaiがCLAUDE.mdのルールに従い、方針転換・技術選定変更・スコープ変更が発生したタイミングで自動的にピボットを記録します。上村が追記・修正できるよう「✏️」ボタンで編集も可能です。
+</div>
+
+<h2 id="ui-logs">📋 活動ログタブ</h2>
+
+<div class="lead">
+上村の指示・Kaiの判断・作成した成果物・メモを時系列で記録します。<br>
+セッション（会話）をまたいだ<strong>作業の軌跡</strong>がここに蓄積されます。
+</div>
+
+<h3>ログの種類</h3>
+
+<table>
+<tr><th>アイコン</th><th>種類</th><th>いつ記録されるか</th></tr>
+<tr><td>📝</td><td>指示（instruction）</td><td>上村から明確な指示・依頼を受けたとき</td></tr>
+<tr><td>✅</td><td>決定（decision）</td><td>Kaiが設計・技術・方針の判断をしたとき</td></tr>
+<tr><td>📦</td><td>成果物（output）</td><td>ファイル・ドキュメントを作成・完成させたとき</td></tr>
+<tr><td>💬</td><td>メモ（note）</td><td>その他の記録・コンテキスト情報</td></tr>
+</table>
+
+<h3>操作</h3>
+
+<table>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>手動追加</td><td>「＋ ログを追加」ボタン</td></tr>
+<tr><td>編集</td><td>各ログの「✏️」ボタン <span class="badge badge-new">NEW</span></td></tr>
+<tr><td>削除</td><td>各ログの「✕」ボタン</td></tr>
+</table>
+
+<div class="ok">
+<span class="label">CLIからの自動記録（Kaiの義務）</span>
+Kaiは作業の節目ごとに自動的に <code>log-action</code> コマンドを実行してログを記録します。ブラウザを開いていなくても、次に開いたときに活動の全記録が表示されます。
+</div>
+
+<h2 id="ui-timemachine">⏰ タイムマシンタブ <span class="badge badge-new">NEW</span></h2>
+
+<div class="lead">
+プロジェクトの状態を「スナップショット」として永続保存し、過去の任意の時点に復元できる機能です。<br>
+アプリ開発中の「実装前の状態に戻したい」「検討段階の分岐点を保存したい」という場面に特に有効です。
+</div>
+
+<h3>スナップショットとは</h3>
+
+<p>その時点のプロジェクト全体（タスク・活動ログ・ピボット・ロードマップ）の完全なコピーを保存したものです。最大10件保存され、11件目を作成すると最も古いものが自動的に削除されます。</p>
+
+<h3>スナップショットが作られるタイミング</h3>
+
+<table>
+<tr><th>タイミング</th><th>誰が</th></tr>
+<tr><td>Kaiがセッション終了時に <code>session-end --snapshot</code> を実行したとき</td><td><span class="badge badge-auto">Kai 自動</span></td></tr>
+<tr><td>重要なマイルストーン（機能完成・方針確定など）の後</td><td><span class="badge badge-auto">Kai 自動</span></td></tr>
+<tr><td>「📸 スナップショットを作成」ボタンをクリックしたとき</td><td><span class="badge badge-manual">上村 手動</span></td></tr>
+<tr><td>CLIで <code>snapshot PROJECT_ID --label "ラベル"</code> を実行したとき</td><td><span class="badge badge-manual">手動 / Kai</span></td></tr>
+</table>
+
+<h3>操作</h3>
+
+<table>
+<tr><th>操作</th><th>方法</th></tr>
+<tr><td>スナップショット作成</td><td>「📸 スナップショットを作成」ボタン → ラベルを入力</td></tr>
+<tr><td>ラベルを後から編集</td><td>スナップショット横の「✏️」ボタン <span class="badge badge-new">NEW</span></td></tr>
+<tr><td>過去の状態に戻す</td><td>「⏪ ここに戻る」ボタン → 確認ダイアログ → 復元</td></tr>
+</table>
+
+<div class="warn">
+<span class="label">「ここに戻る」を実行する前に</span>
+復元するとタスク・ログ・ピボットなど現在の状態が上書きされます。<strong>必ず先に現在の状態のスナップショットを作成してから復元</strong>してください。スナップショット自体（履歴リスト）は保持されます。
+</div>
+
+<h2 id="ui-resume">▶ 再開ボタン <span class="badge badge-new">NEW</span></h2>
+
+<div class="lead">
+プロジェクトヘッダーの「▶ 再開」ボタンをクリックすると、そのプロジェクトを再開するために必要な情報を自動生成します。<br>
+数日・数週間ぶりに作業を再開する際の「どこから始めればいいか」問題を解消します。
+</div>
+
+<h3>生成される情報</h3>
+
+<div class="ui-box">
+  <div class="ui-box-title">① ターミナルコマンド（現在の状態確認）</div>
+  <pre><span class="cm"># プロジェクトの状態をターミナルで確認するコマンド</span>
+cd "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc"
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py ensure-server
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py show <span class="hl">PROJECT_ID</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py log-action <span class="hl">PROJECT_ID</span> --type note --summary "セッション再開"</pre>
+</div>
+
+<div class="ui-box">
+  <div class="ui-box-title">② Kaiへの再開コンテキスト（新しい会話に貼り付け）</div>
+  <pre><span class="hl">## プロジェクト再開: ○○プロジェクト</span>
+<span class="gr">**ゴール:**</span> プロジェクトの達成目標
+<span class="gr">**ステータス:**</span> active
+<span class="gr">**進行中・次のタスク:**</span>
+  - [進行中] 現状把握・要件整理
+  - [未着手] 計画立案・実行
+<span class="gr">**前回の活動:**</span> [output] ○○を実装完了
+<span class="gr">**最新の思考転換:**</span> 旧方針 → 新方針
+<span class="gr">**プロジェクトID:**</span> xxxxxxxx</pre>
+</div>
+
+<div class="tip">
+<span class="label">使い方</span>
+① の「📋 コピー」でターミナルに貼って状態確認 → ② の「📋 コピー」でKaiへの最初のメッセージとして貼り付けると、Kaiが即座に文脈を把握して作業を再開できます。
+</div>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 4 — CLIコマンド完全リファレンス</div>
+
+<h2 id="cli-basic">CLIの実行方法</h2>
+
+<pre><span class="cm"># プロジェクトルートから実行（cd は不要）</span>
+<span class="cm"># ※ AS_AI導入支援事業_cc ディレクトリで実行する</span>
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py <span class="hl">&lt;コマンド&gt;</span> [オプション]
+
+<span class="cm"># ショートカット（CLI変数として使うと便利）</span>
+<span class="hl">KAI</span>=08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py</pre>
+
+<h3>サーバー管理</h3>
+
+<table class="cmd-table">
+<tr><th>コマンド</th><th>説明</th></tr>
+<tr><td><code>ensure-server</code></td><td>サーバーが起動していなければ起動する。すべての操作の前提</td></tr>
+<tr><td><code>open</code></td><td>ブラウザで <code>http://localhost:3456</code> を開く</td></tr>
+<tr><td><code>status</code></td><td>全プロジェクトの進捗をターミナルに表示</td></tr>
+<tr><td><code>today</code></td><td>進行中タスクと期限切れタスクを表示（今日のフォーカス）</td></tr>
+</table>
+
+<h2>プロジェクト操作</h2>
+
+<table class="cmd-table">
+<tr><th>コマンド</th><th>説明</th></tr>
+<tr><td><code>create --name "名前" --goal "ゴール"</code></td><td>プロジェクト作成 + 1-3-5タスク自動生成 + ロードマップ生成</td></tr>
+<tr><td><code>create-bare --name "名前"</code></td><td>プロジェクトのみ作成（タスクなし）</td></tr>
+<tr><td><code>list</code></td><td>プロジェクト一覧（ID付き）</td></tr>
+<tr><td><code>find "キーワード"</code></td><td>プロジェクト名で検索してIDを返す</td></tr>
+<tr><td><code>show PROJECT_ID</code></td><td>プロジェクトの詳細・タスク一覧を表示</td></tr>
+<tr><td><code>project-done PROJECT_ID</code></td><td>プロジェクトを完了に変更</td></tr>
+<tr><td><code>project-archive PROJECT_ID</code></td><td>プロジェクトをアーカイブ</td></tr>
+</table>
+
+<h2>タスク操作</h2>
+
+<table class="cmd-table">
+<tr><th>コマンド</th><th>説明</th></tr>
+<tr><td><code>add-task PID --type big|medium|small --title "タイトル"</code></td><td>既存プロジェクトにタスクを追加</td></tr>
+<tr><td><code>start-task TASK_ID</code></td><td>タスクを「進行中」に変更</td></tr>
+<tr><td><code>done-task TASK_ID</code></td><td>タスクを「完了」に変更</td></tr>
+<tr><td><code>update-task TASK_ID --title "新タイトル" --desc "説明"</code></td><td>タスクの任意フィールドを更新</td></tr>
+<tr><td><code>set-roadmap TASK_ID --code "graph LR\n  A--&gt;B"</code></td><td>タスクにmermaidロードマップを設定</td></tr>
+<tr><td><code>set-mindmap TASK_ID --code "mindmap\n  root..."</code></td><td>タスクにmermaidマインドマップを設定</td></tr>
+</table>
+
+<h2 id="cli-log">ログ・ピボット記録</h2>
+
+<table class="cmd-table">
+<tr><th>コマンド</th><th>説明</th></tr>
+<tr><td><code>log-action PID --type 種別 --summary "要点" --detail "詳細"</code></td><td>活動ログを記録。typeは <code>instruction|decision|output|note</code></td></tr>
+<tr><td><code>pivot PID --type 種別 --from "元方針" --to "新方針" --reason "理由" --impact 影響度</code></td><td>思考転換（ピボット）を記録</td></tr>
+<tr><td><code>log --limit 20</code></td><td>全プロジェクトの変更履歴（最新N件）を表示</td></tr>
+</table>
+
+<pre><span class="cm"># 活動ログの例</span>
+py KAI log-action abc12345 \
+  --type output \
+  --summary "Groq API連携実装完了" \
+  --detail "08_アプリ開発事業部/outputs/kai-tasks/server.py"
+
+<span class="cm"># ピボットの例</span>
+py KAI pivot abc12345 \
+  --type technical \
+  --from "OpenAI API（有料）" \
+  --to "Groq API（無料）" \
+  --reason "コスト削減のため" \
+  --impact high</pre>
+
+<h2 id="cli-session">session-end / snapshot <span class="badge badge-new">NEW</span></h2>
+
+<table class="cmd-table">
+<tr><th>コマンド</th><th>説明</th></tr>
+<tr><td><code>session-end PID --summary "概要" --detail "詳細" --snapshot</code></td><td>セッション終了ログを記録。<code>--snapshot</code> でスナップショットも同時作成</td></tr>
+<tr><td><code>snapshot PID --label "ラベル"</code></td><td>現在の状態を永続スナップショットとして保存</td></tr>
+</table>
+
+<pre><span class="cm"># 作業が一区切りついたときに実行（Kaiが自動実行）</span>
+py KAI session-end abc12345 \
+  --summary "タイムマシン機能・編集機能・自動記録ルール実装完了" \
+  --detail "server.py + kai-tasks-cli.py + index.html + CLAUDE.md を更新" \
+  --snapshot
+
+<span class="cm"># 重要な分岐点の前に手動でスナップショット</span>
+py KAI snapshot abc12345 --label "DB設計変更前"</pre>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 5 — Kaiとの自動連動</div>
+
+<h2 id="auto-record">自動記録の仕組み</h2>
+
+<div class="lead">
+CLAUDE.md（プロジェクトルールファイル）に「いつ・何を記録するか」を定義しています。<br>
+Kaiはセッション開始時にこのファイルを読み込み、ルールに従って自律的に記録します。<br>
+<strong>上村は何も操作しなくても記録が蓄積されます。</strong>
+</div>
+
+<h3>仕組みの全体像</h3>
+
+<div class="flow">
+  <div class="flow-item">上村が話しかける</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item kai">Kaiが作業</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item auto">自動的にCLIを実行</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item auto">tasks.jsonに記録</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item">ブラウザで確認</div>
+</div>
+
+<h2 id="auto-trigger">記録トリガー一覧</h2>
+
+<table>
+<tr><th>Kaiの行動</th><th>自動実行されるコマンド</th></tr>
+<tr><td>明確な目標を持つ作業が始まったとき</td><td><code>ensure-server</code> → <code>create</code>（プロジェクト自動作成）</td></tr>
+<tr><td>上村から明確な指示・依頼を受けたとき</td><td><code>log-action --type instruction</code></td></tr>
+<tr><td>設計・技術・方針の判断をしたとき</td><td><code>log-action --type decision</code></td></tr>
+<tr><td>ファイル・成果物を作成したとき</td><td><code>log-action --type output</code></td></tr>
+<tr><td>タスクに着手したとき</td><td><code>start-task</code></td></tr>
+<tr><td>タスクが完了したとき</td><td><code>done-task</code></td></tr>
+<tr><td>技術選定・方針・スコープが変わったとき</td><td><code>pivot</code></td></tr>
+<tr><td>まとまった作業が一区切りついたとき</td><td><code>session-end --snapshot</code></td></tr>
+</table>
+
+<div class="tip">
+<span class="label">完全自動化できない1つのケース</span>
+会話がいきなり終わった場合（ブラウザを閉じるなど）は <code>session-end</code> が呼ばれません。これはClaude Codeのアーキテクチャ上の制限です。この場合でも、定期的なスナップショットで状態の復元は可能です。
+</div>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 6 — タイムマシン活用法</div>
+
+<h2 id="timemachine-howto">タイムマシンの実践的な使い方</h2>
+
+<h3>スナップショットを取るべき場面</h3>
+
+<table>
+<tr><th>場面</th><th>理由</th></tr>
+<tr><td>大きな機能実装を始める前</td><td>実装が失敗したときに元に戻せる</td></tr>
+<tr><td>設計方針が確定したとき</td><td>「確定前の検討状態」と「確定後」を両方残せる</td></tr>
+<tr><td>クライアントへの提案前</td><td>提案後の変更との比較に使える</td></tr>
+<tr><td>長い作業セッションの終わり</td><td>Kaiが自動実行（<code>session-end --snapshot</code>）</td></tr>
+<tr><td>スコープが大きく変わるとき</td><td>変更前の計画を保全</td></tr>
+</table>
+
+<h3>スナップショットの命名規則（推奨）</h3>
+
+<pre><span class="cm"># 「何の前/後か」が分かる名前にする</span>
+"Groq API連携実装前"
+"v1.0リリース完了"
+"スコープ縮小決定後"
+"クライアントへの提案前"
+"2026-05-17 タイムマシン機能実装完了"</pre>
+
+<h3>復元の手順</h3>
+
+<div class="step">
+<span class="step-num">1</span> <strong>現在の状態をスナップショット</strong><br>
+「⏰ タイムマシン」タブ → 「📸 スナップショットを作成」 → ラベル「復元前の現在の状態」
+</div>
+
+<div class="step">
+<span class="step-num">2</span> <strong>戻りたいスナップショットを選択</strong><br>
+一覧から「⏪ ここに戻る」ボタンをクリック
+</div>
+
+<div class="step">
+<span class="step-num">3</span> <strong>確認ダイアログで承認</strong><br>
+「○○ の状態に戻しますか？」 → OK
+</div>
+
+<div class="ok">
+<span class="label">スナップショット履歴は保持される</span>
+復元してもスナップショットの一覧（履歴リスト）は消えません。また復元後に再度スナップショットを作って比較することも可能です。
+</div>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 7 — 運用アドバイス</div>
+
+<h2 id="ops-advice">プロジェクトの粒度の決め方</h2>
+
+<table>
+<tr><th>これはプロジェクトにする</th><th>これはタスクにする</th></tr>
+<tr><td>クライアント案件（提案書・セミナーなど）</td><td>提案書の修正・微調整</td></tr>
+<tr><td>内製アプリ・ツール開発</td><td>既存アプリへの機能追加（小規模）</td></tr>
+<tr><td>新しいスキル・マニュアルの作成</td><td>既存マニュアルの更新</td></tr>
+<tr><td>1週間以上かかる作業</td><td>1日で終わる単発タスク</td></tr>
+</table>
+
+<h3>活動ログの効果的な使い方</h3>
+
+<ul>
+<li><strong>日報の代わりに使う：</strong> Kaiとの仕事が終わったら「今日の成果」が活動ログに自動的に蓄積されています</li>
+<li><strong>/eval-daily と組み合わせる：</strong> <code>/eval-daily</code> スキルが活動ログを参照して日次評価を生成します</li>
+<li><strong>Brain記事の素材として：</strong> 活動ログに記録された「決定・判断の経緯」はそのまま事例として使えます</li>
+</ul>
+
+<h3>思考遷移を記録する価値</h3>
+
+<div class="info">
+<span class="label">3〜6ヶ月後の自分へのメモ</span>
+「なぜあのとき○○を選んだのか」は意外と早く忘れます。思考遷移タブを「意思決定の理由書」として使うことで、後から見返したときに「あーそういう事情があったのか」とすぐ理解できます。Kaiが自動記録するので特別な作業は不要です。
+</div>
+
+<h3>プロジェクトのライフサイクル</h3>
+
+<div class="flow">
+  <div class="flow-item">作成（active）</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item auto">進行中</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item" style="background:#F0FFF4;border-color:#38A169;color:#276749">完了（completed）</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-item" style="background:#F7FAFC;color:#718096;border-color:#CBD5E0">アーカイブ</div>
+</div>
+
+<ul>
+<li><strong>完了：</strong>成果物が揃い、クライアントや自分で「これで終わり」と確認できたとき</li>
+<li><strong>アーカイブ：</strong>完了済みで一覧から非表示にしたいとき（データは保持される）</li>
+<li>長期停滞しているプロジェクトは「▶ 再開ボタン」でコンテキストを確認してから再開判断</li>
+</ul>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 8 — 使い倒し方</div>
+
+<h2 id="power-use">上級活用テクニック</h2>
+
+<h3>① 毎朝「今日のフォーカス」確認でスタートする</h3>
+
+<pre>py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py today</pre>
+
+<p>進行中タスクと期限切れタスクがターミナルに表示されます。1日の優先順位が即座に明確になります。</p>
+
+<h3>② 週次・月次評価と組み合わせる</h3>
+
+<p>Kai Tasksのデータは <code>/eval-weekly</code> <code>/eval-monthly</code> スキルと連動しています。「今週何が進んだか・止まっているか」「ロードマップとの整合性は取れているか」を自動分析できます。</p>
+
+<div class="ok">
+<span class="label">評価スキルとの連動フロー</span>
+<ol>
+<li>Kaiが活動ログ・タスク進捗をKai Tasksに蓄積（自動）</li>
+<li><code>/eval-weekly</code> を実行 → 活動ログとgit履歴からロードマップ整合スコアを自動計算</li>
+<li>Stop候補（やめるべき作業）とScale候補（拡大すべき作業）を提示</li>
+<li>翌週のタスク候補を自動生成 → Kai Tasksに追加</li>
+</ol>
+</div>
+
+<h3>③ ▶再開ボタンで「文脈ゼロ」問題を解決する</h3>
+
+<p>数日ぶりにプロジェクトを再開するとき、「どこまでやったか」を思い出すのに時間がかかります。▶再開ボタンで生成したコンテキストをKaiへの最初のメッセージとして貼り付けると、説明なしで即作業開始できます。</p>
+
+<pre><span class="cm"># 新しいKaiセッションの最初のメッセージとして貼り付ける</span>
+<span class="hl">## プロジェクト再開: Kai Tasks Groq AI機能実装</span>
+<span class="gr">**ゴール:**</span> AIアシスト機能を無料Groq APIで実装する
+<span class="gr">**進行中タスク:**</span> [進行中] 検証・改善・定着化
+<span class="gr">**前回の活動:**</span> [output] server.py にGroq API連携実装完了
+<span class="gr">**プロジェクトID:**</span> 0a2c20c5
+
+このプロジェクトを上記の状態から再開してください。</pre>
+
+<h3>④ タイムマシンをアプリ開発の「セーブポイント」として使う</h3>
+
+<p>ゲームのセーブポイントのように、実装の分岐点ごとにスナップショットを作成します。</p>
+
+<table>
+<tr><th>実装フェーズ</th><th>スナップショットのタイミング</th></tr>
+<tr><td>設計完了</td><td>「実装前 — 設計確定」</td></tr>
+<tr><td>機能A完成</td><td>「機能A完了 — 機能B実装前」</td></tr>
+<tr><td>テスト前</td><td>「リリース前 — QA前」</td></tr>
+<tr><td>リリース後</td><td>「v1.0リリース完了」</td></tr>
+</table>
+
+<h3>⑤ グラフビューで複数プロジェクトの関係を把握する</h3>
+
+<p>グローバルナビの「🔗 グラフビュー」を使うと、プロジェクト間のリンク関係を視覚的に確認できます。CLIの <code>link</code> コマンドでプロジェクト間を関連付けることができます。</p>
+
+<pre><span class="cm"># プロジェクト間をリンクする</span>
+py KAI link PROJECT_ID_A PROJECT_ID_B</pre>
+
+<h3>⑥ 活動ログをBrain記事・事例報告の素材にする</h3>
+
+<p>「なぜこのアプローチを選んだか」「どんな問題が発生してどう解決したか」が活動ログと思考遷移に記録されています。Brain記事や事例報告を書くとき、このデータをKaiに渡すことで「実体験ベース」の信頼性の高いコンテンツが作れます。</p>
+
+<!-- ================================================================ -->
+<div class="part-header">PART 9 — よくある疑問とトラブル対応</div>
+
+<h2 id="faq">よくある疑問</h2>
+
+<div class="qa">
+  <div class="qa-q">Q. サーバーを止めたらデータは消えますか？</div>
+  <div class="qa-a">消えません。すべてのデータは <span class="file-path">data/tasks.json</span> に永続保存されています。サーバーを再起動しても前回のデータが復元されます。</div>
+</div>
+
+<div class="qa">
+  <div class="qa-q">Q. Kaiが記録するはずなのに活動ログが空のままです。</div>
+  <div class="qa-a">セッションをまたいで作業した場合、前のセッションのログが既に記録されている可能性があります。また、Kaiがまだ自動記録のルールを適用していないセッション（ルール設定前の古い会話）では記録されていません。新しいセッションから自動記録が機能し始めます。記録されていない場合は「それ記録した？」とKaiに確認してください。</div>
+</div>
+
+<div class="qa">
+  <div class="qa-q">Q. スナップショットが自動で消えました。</div>
+  <div class="qa-a">スナップショットは最大10件まで保存されます。11件目を作成すると最も古いものが自動的に削除されます。重要なスナップショットには分かりやすいラベルを付けて、タイムマシン画面で確認するようにしてください。</div>
+</div>
+
+<div class="qa">
+  <div class="qa-q">Q. 「ここに戻る」で復元したらどこまで戻りますか？</div>
+  <div class="qa-a">そのスナップショットが作成された時点のプロジェクト全体の状態（タスク・活動ログ・ピボット・ロードマップ・マインドマップ）に戻ります。スナップショット一覧自体は変わりません。復元前に必ず現在の状態をスナップショットしてください。</div>
+</div>
+
+<div class="qa">
+  <div class="qa-q">Q. タスクが1-3-5（大1中3小5）より多くなってもいいですか？</div>
+  <div class="qa-a">はい、上限はありません。1-3-5は「自動生成時のデフォルト構造」です。プロジェクトの実態に合わせて増減してください。ブラウザUIの「＋ タスクを追加」ボタンか、CLIの <code>add-task</code> コマンドで追加できます。</div>
+</div>
+
+<div class="qa">
+  <div class="qa-q">Q. AIの✂️分解ボタンや💡推奨タスクを使うには何が必要ですか？</div>
+  <div class="qa-a">Groq APIキーが必要です。プロジェクトルートの <code>.env</code> ファイルに <code>GROQ_API_KEY=gsk_...</code> を設定してください。設定方法は <a href="Groq-env完全ガイド.html">Groq-env完全ガイド</a> を参照してください。キーが未設定の場合はボタンをクリックしてもエラーが返ります。</div>
+</div>
+
+<h2 id="trouble">トラブルシューティング</h2>
+
+<h3>サーバーが起動しない</h3>
+
+<div class="step">
+<span class="step-num">1</span> <strong>Pythonが入っているか確認</strong><br>
+<code>py --version</code> をターミナルで実行。エラーが出る場合はMicrosoft StoreからPythonをインストール。
+</div>
+
+<div class="step">
+<span class="step-num">2</span> <strong>ポートが使われていないか確認</strong><br>
+<code>netstat -ano | findstr :3456</code> で何かが使用中なら、そのプロセスを停止するか別のポートを使う。
+</div>
+
+<div class="step">
+<span class="step-num">3</span> <strong>server.pyを直接実行して確認</strong><br>
+<code>py 08_アプリ開発事業部/outputs/kai-tasks/server.py</code> を実行してエラーメッセージを確認。
+</div>
+
+<h3>ブラウザUI が表示されない / 白い画面になる</h3>
+
+<ul>
+<li>サーバーが起動しているか <code>ensure-server</code> で確認</li>
+<li>ブラウザのキャッシュをクリア（Ctrl+Shift+R）</li>
+<li><code>http://localhost:3456</code> に直接アクセスしてみる</li>
+</ul>
+
+<h3>「Kaiが記録したはずなのに反映されていない」</h3>
+
+<ul>
+<li>ブラウザをリロードする（SSEで自動更新されるが、念のため）</li>
+<li>CLIで <code>show PROJECT_ID</code> を実行してdata/tasks.jsonへの書き込みを確認</li>
+<li>サーバーが停止している場合はCLIコマンドが失敗するが、エラーが表示されるはず</li>
+</ul>
+
+<h3>tasks.jsonが壊れた場合</h3>
+
+<div class="warn">
+<span class="label">最終手段</span>
+Dropboxのバージョン履歴から過去のtasks.jsonを復元できます（Dropboxは通常30日分の履歴を保持）。Dropbox Web → ファイル選択 → バージョン履歴 から任意の日時に戻せます。
+</div>
+
+<hr style="margin: 50px 0; border: none; border-top: 2px solid #E2E8F0;">
+
+<div style="text-align:center; color: #718096; font-size: 13px; padding: 20px 0;">
+  <strong>Kai Tasks 完全マニュアル v1.0</strong><br>
+  作成：Kai（上村桂右のビジネスパートナーAI）<br>
+  最終更新：2026-05-17<br><br>
+  <a href="総合マニュアル.html" style="color:#1A365D;font-weight:bold;">← 総合マニュアルに戻る</a>
+</div>
+
+</div>
+</div>
+</body>
+</html>
