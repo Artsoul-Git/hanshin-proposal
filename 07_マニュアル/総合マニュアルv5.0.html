@@ -18,6 +18,12 @@
   .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
   .sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
   .sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  /* Accordion */
+  .sb-section-label { cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .sb-section-label::after { content: '▶'; font-size: 8px; opacity: 0.5; flex-shrink: 0; transition: transform 0.2s; }
+  .sb-section.is-open .sb-section-label::after { transform: rotate(90deg); opacity: 0.8; }
+  .sb-links { display: none; }
+  .sb-section.is-open .sb-links { display: block; }
 
   /* ===== Main Content ===== */
   .main-content { margin-left: 220px; flex: 1; padding: 40px 20px; min-width: 0; }
@@ -162,7 +168,7 @@
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo"><a href="#top" style="color:inherit;text-decoration:none;">有限会社アートソウル</a><span>総合マニュアル v5.0</span></div>
+  <div class="sb-logo"><a href="総合マニュアルv5.0.html" style="color:inherit;text-decoration:none;">有限会社アートソウル</a><span>総合マニュアル v5.0</span></div>
 
   <div class="sb-section">
     <div class="sb-section-label">🏠 よくある作業</div>
@@ -3323,6 +3329,28 @@ window.addEventListener('scroll', function(){
   }
   function fallback(text) { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
   document.querySelectorAll('.prompt-box').forEach(addCopyBtn);
+})();
+</script>
+
+<script>
+(function(){
+  /* ---- Sidebar accordion ---- */
+  document.querySelectorAll('.sb-section').forEach(function(section){
+    var label = section.querySelector('.sb-section-label');
+    var links = Array.from(section.querySelectorAll('.sb-link'));
+    if (!label || !links.length) return;
+    var wrapper = document.createElement('div');
+    wrapper.className = 'sb-links';
+    links.forEach(function(link){ wrapper.appendChild(link); });
+    section.appendChild(wrapper);
+    var name = label.textContent.trim();
+    if (name.indexOf('よくある作業') >= 0 || name.indexOf('運用・管理') >= 0) {
+      section.classList.add('is-open');
+    }
+    label.addEventListener('click', function(){ section.classList.toggle('is-open'); });
+  });
+  /* ---- Same-tab navigation (remove target="_blank" from sidebar) ---- */
+  document.querySelectorAll('.main-sidebar a').forEach(function(a){ a.removeAttribute('target'); });
 })();
 </script>
 </body>

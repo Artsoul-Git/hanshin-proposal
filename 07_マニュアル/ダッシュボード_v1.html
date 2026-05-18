@@ -175,7 +175,7 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
 <!-- ===== HEADER ===== -->
 <header class="dh">
   <div class="dh-brand">
-    <span class="dh-logo">有限会社アートソウル</span>
+    <a class="dh-logo" href="総合マニュアルv5.0.html" style="text-decoration:none;color:inherit;">有限会社アートソウル</a>
     <span class="dh-kai">Kai ダッシュボード</span>
     <span class="dh-ver">v1.0 draft</span>
   </div>
@@ -184,8 +184,8 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
     <div id="suggest-panel"></div>
   </div>
   <div class="dh-links">
-    <a href="総合マニュアルv5.0.html" target="_blank">総合マニュアル v5↗</a>
-    <a href="AI活用ガイド.html" target="_blank">活用ガイド↗</a>
+    <a href="総合マニュアルv5.0.html">総合マニュアル v5</a>
+    <a href="AI活用ガイド.html">活用ガイド</a>
   </div>
 </header>
 <div class="philosophy">
@@ -567,6 +567,108 @@ const SUGGEST_RULES = [
 ];
 
 // =====================================================
+// KEYWORD MAP（自然言語→スキルID マッピング）
+// =====================================================
+const KEYWORD_MAP = {
+  // 受付・困ったとき
+  '相談':['project-intake'],'困った':['project-intake'],'迷う':['project-intake'],
+  'わからない':['project-intake'],'どこから':['project-intake'],'受付':['project-intake'],
+  '何から':['project-intake'],'始め方':['project-intake'],'入口':['project-intake'],
+  // 提案書・営業
+  '提案書':['sme-ai-proposal','proposal-outline'],'提案':['sme-ai-proposal','proposal-outline'],
+  '営業':['sme-ai-proposal','proposal-outline'],'受注':['sme-ai-proposal'],
+  'クライアント':['sme-ai-proposal','hearing-sheet'],'顧客':['sme-ai-proposal'],
+  '公開':['publish-proposal'],'パスワード付き':['publish-proposal'],
+  'github':['publish-proposal'],'url発行':['publish-proposal'],
+  'ヒアリング':['hearing-sheet'],'ヒアリングシート':['hearing-sheet'],
+  '骨子':['proposal-outline'],'アウトライン':['proposal-outline'],
+  // コンテンツ・記事
+  '記事':['write-brain-article','content-burst'],'ブログ':['write-brain-article','content-burst'],
+  'brain':['write-brain-article'],'有料記事':['write-brain-article'],
+  '発信':['content-burst','marketing'],'sns':['content-burst','marketing'],
+  'x投稿':['content-burst','text-refine'],'メルマガ':['content-burst'],
+  'youtube':['content-burst'],'台本':['talk-script','content-burst'],
+  '量産':['content-burst','seminar-dna'],'一気に':['content-burst','deck-sprint'],
+  '初心者':['beginner-guide'],'入門':['beginner-guide'],'ガイドブック':['beginner-guide'],
+  'ニュース':['ai-news-digest'],'ダイジェスト':['ai-news-digest'],'ai情報':['ai-news-digest'],
+  // セミナー・研修
+  'セミナー':['seminar-slide','seminar-dna','course-build'],
+  'スライド':['seminar-slide','deck-sprint'],'pptx':['seminar-slide'],
+  'パターン':['seminar-dna'],'型':['seminar-dna'],'スタイル':['seminar-dna'],
+  'トークスクリプト':['talk-script'],'話し方':['talk-script'],'スクリプト':['talk-script'],
+  '研修':['course-build','hr-transform'],'カリキュラム':['course-build'],
+  '講座':['course-build'],'教育':['course-build','hr-transform'],
+  // 知識・資料
+  '知識':['knowledge-craft','skill-craft'],'資料':['knowledge-craft'],
+  '取り込む':['knowledge-craft'],'インポート':['knowledge-craft','skill-craft'],
+  'knowledge':['knowledge-craft'],'蓄積':['knowledge-craft'],
+  'スキル定義':['skill-craft'],'マニュアル作成':['skill-craft'],'素材':['skill-craft'],
+  // 経営・戦略
+  '組織':['company-setup','hr-transform'],'立上げ':['company-setup'],
+  '戦略':['stakeholder','issue-tree','research'],'方針':['rashinban'],
+  '市場調査':['research'],'競合':['research'],'リサーチ':['research'],
+  '調査':['research'],'業界':['research'],'トレンド':['research'],
+  '問題':['issue-tree'],'課題':['issue-tree','project-intake'],
+  'ロジック':['issue-tree'],'ツリー':['issue-tree'],
+  'ステークホルダー':['stakeholder'],'根回し':['stakeholder'],'説得':['stakeholder'],
+  '収益':['profit-plan','finance'],'利益':['finance','profit-plan'],
+  '財務':['finance'],'損益':['finance'],'損益分岐':['finance'],
+  '資金':['finance'],'dcf':['finance'],'シミュレーション':['finance'],
+  '売上':['finance','profit-plan'],'価格':['finance','marketing'],
+  '目標':['rashinban','visualize','kpi-design'],'ゴール':['rashinban','kpi-design'],
+  'kgi':['kpi-design'],'kpi':['kpi-design','eval-weekly'],'okr':['kpi-design'],
+  'ダッシュボード設計':['kpi-design'],'指標':['kpi-design'],
+  'ロードマップ':['rashinban','visualize'],'マンダラ':['rashinban'],'羅針盤':['rashinban'],
+  'マトリクス':['visualize'],'可視化':['visualize','rashinban'],'図':['visualize'],
+  '人材':['hr-transform','company-setup'],'変革':['hr-transform'],
+  'ai導入':['company-setup','hr-transform'],'デジタル化':['company-setup'],
+  // 書類・文書
+  '契約書':['biz-contract','nda','contract-check'],'契約':['biz-contract','nda'],
+  'nda':['nda'],'機密':['nda'],'秘密保持':['nda'],
+  '委託':['biz-contract'],'業務委託':['biz-contract'],
+  'レビュー':['contract-check','fact-check'],'チェック':['contract-check','fact-check'],
+  'リスク':['contract-check','fact-check','stakeholder'],
+  '見積':['billing-docs'],'請求書':['billing-docs'],'インボイス':['billing-docs'],
+  '帳票':['billing-docs'],'請求':['billing-docs'],
+  'wbs':['wbs-gantt'],'ガントチャート':['wbs-gantt'],'スケジュール':['wbs-gantt'],
+  '工程表':['wbs-gantt'],'進捗管理':['wbs-gantt'],
+  '日報':['daily-report'],'作業記録':['daily-report'],
+  '月次':['monthly-report'],'月報':['monthly-report'],'報告書':['monthly-report','daily-report'],
+  '文書比較':['doc-compare'],'新旧':['doc-compare'],'差分':['doc-compare'],
+  // M&A
+  'm&a':['ma'],'買収':['ma'],'事業譲渡':['ma'],'pmi':['ma'],
+  '企業価値':['ma'],'dd':['ma'],
+  // 評価・品質
+  '評価':['eval-daily','eval-weekly','eval-monthly'],
+  '振り返り':['eval-weekly','eval-monthly'],'週次':['eval-weekly'],
+  'ファクトチェック':['fact-check'],'検証':['fact-check','persona-review'],
+  'ペルソナ':['persona-review','marketing'],'ターゲット':['persona-review','marketing'],
+  // マーケティング
+  '集客':['marketing'],'lp':['marketing'],'コピー':['marketing','text-refine'],
+  'マーケ':['marketing'],'drm':['marketing'],'usp':['marketing'],
+  'キャッチコピー':['marketing'],'セールス':['marketing'],
+  // テキスト整形
+  '文字起こし':['text-refine'],'音声':['text-refine','talk-script'],
+  '校正':['text-refine'],'リライト':['text-refine'],'整文':['text-refine'],
+  'メール':['text-refine'],'文章':['text-refine'],
+  // その他
+  '計画':['profit-plan','wbs-gantt','rashinban'],
+  '自動化':['company-setup','content-burst','deck-sprint'],
+  '効率化':['content-burst','deck-sprint','hearing-sheet'],
+  'まとめ':['knowledge-craft','deck-sprint'],'整理':['knowledge-craft','issue-tree'],
+};
+
+function matchSkill(s, words) {
+  if (!words.length) return true;
+  const corpus = [s.cmd, s.title, s.desc, ...s.tags].join(' ').toLowerCase();
+  return words.some(function(w) {
+    if (corpus.includes(w)) return true;
+    const ids = KEYWORD_MAP[w] || [];
+    return ids.includes(s.id);
+  });
+}
+
+// =====================================================
 // DETAIL LINK HELPERS
 // =====================================================
 const MANUAL_ANCHORS = {
@@ -581,7 +683,7 @@ const MANUAL_ANCHORS = {
 function getDetailLink(s){
   if(s.link) return s.link;
   const a = MANUAL_ANCHORS[s.id];
-  return '総合マニュアル.html' + (a ? '#'+a : '');
+  return '総合マニュアルv5.0.html' + (a ? '#'+a : '');
 }
 
 const TYPE_INFO = {
@@ -643,7 +745,7 @@ function makeCard(s){
   const outTags = s.output.map(t=>`<span class="sk-tag out">${t}</span>`).join('');
   const detailLink = getDetailLink(s);
   const linkLabel = s.link ? '詳細ガイド↗' : 'マニュアルで詳細↗';
-  const linkHtml = `<a class="sk-link" href="${detailLink}" target="_blank">${linkLabel}</a>`;
+  const linkHtml = `<a class="sk-link" href="${detailLink}">${linkLabel}</a>`;
   const ti = TYPE_INFO[s.id] || {badge:'🔧 スキル',cls:'tb-skill'};
   return `<div class="sk-card" data-cat="${s.cat}" data-id="${s.id}">
     <div class="sk-head">
@@ -680,7 +782,8 @@ function renderSkills(cat, query){
   const q = (query||'').toLowerCase();
   let filtered = SKILLS.filter(s => {
     const catOk = cat==='all' || s.cat===cat;
-    const qOk = !q || [s.cmd,s.title,s.desc,...s.tags].join(' ').toLowerCase().includes(q);
+    const words = q ? q.split(/\s+/).filter(Boolean) : [];
+    const qOk = matchSkill(s, words);
     return catOk && qOk;
   });
 
@@ -729,9 +832,11 @@ function renderAssets(type){
 function suggest(q){
   if(!q || q.length < 2){ return []; }
   const lq = q.toLowerCase();
+  const words = lq.split(/\s+/).filter(Boolean);
   let results = [];
+  // SUGGEST_RULES（意図ベース）
   SUGGEST_RULES.forEach(r=>{
-    if(r.kw.some(k=>lq.includes(k))){
+    if(r.kw.some(k=>words.some(w=>w.includes(k)||k.includes(w)))){
       r.skills.forEach(sid=>{
         const sk = SKILLS.find(s=>s.id===sid);
         if(sk && !results.find(r2=>r2.id===sk.id)){
@@ -740,11 +845,21 @@ function suggest(q){
       });
     }
   });
-  // Also fuzzy match skill names/tags
+  // KEYWORD_MAP（詳細キーワード）
+  words.forEach(w=>{
+    const ids = KEYWORD_MAP[w] || [];
+    ids.forEach(sid=>{
+      const sk = SKILLS.find(s=>s.id===sid);
+      if(sk && !results.find(r2=>r2.id===sk.id)){
+        results.push({...sk, reason:'「'+w+'」に関連するスキルです'});
+      }
+    });
+  });
+  // Fuzzy match（コーパス照合）
   SKILLS.forEach(s=>{
     if(!results.find(r=>r.id===s.id)){
-      const match = [s.cmd,s.title,...s.tags].some(t=>t.toLowerCase().includes(lq));
-      if(match) results.push(s);
+      const corpus = [s.cmd,s.title,...s.tags].join(' ').toLowerCase();
+      if(words.some(w=>corpus.includes(w))) results.push(s);
     }
   });
   return results.slice(0,5);
@@ -757,7 +872,7 @@ function updateSuggestPanel(q){
   if(!items.length){ panel.classList.remove('open'); return; }
   panel.innerHTML = items.map(s=>{
     const link = getDetailLink(s);
-    return `<a class="sp-item" href="${link}" target="_blank">
+    return `<a class="sp-item" href="${link}">
       <span>${s.icon}</span>
       <span class="sp-cmd">${s.cmd}</span>
       <span class="sp-reason">${s.reason||s.title}</span>
@@ -775,7 +890,7 @@ function updateRecommendBox(q){
   if(!items.length){ box.classList.remove('visible'); return; }
   cards.innerHTML = items.map(s=>{
     const link = getDetailLink(s);
-    return `<a class="rec-card" href="${link}" target="_blank" style="text-decoration:none;">
+    return `<a class="rec-card" href="${link}" style="text-decoration:none;">
       <div class="rc-cmd">${s.icon} ${s.cmd}</div>
       <div class="rc-reason">${s.reason||s.title}</div>
     </a>`;
@@ -786,7 +901,7 @@ function updateRecommendBox(q){
 function selectSkill(id){
   document.getElementById('suggest-panel').classList.remove('open');
   const sk = SKILLS.find(s=>s.id===id);
-  if(sk){ window.open(getDetailLink(sk),'_blank'); return; }
+  if(sk){ window.location.href = getDetailLink(sk); return; }
   const card = document.querySelector(`[data-id="${id}"]`);
   if(card){
     card.scrollIntoView({behavior:'smooth',block:'center'});
