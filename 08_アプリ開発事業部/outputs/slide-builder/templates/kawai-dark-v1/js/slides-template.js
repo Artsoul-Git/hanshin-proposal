@@ -5,6 +5,10 @@
   }
 
   /* ===================== SLIDES ===================== */
+
+  /* プロジェクト識別子 — localStorage の名前空間として使用 */
+  window.SLIDE_SLUG = 'SLUG_PLACEHOLDER'; /* new-seminar.py が自動置換 */
+
   /*
    * スライドタイプ一覧:
    *

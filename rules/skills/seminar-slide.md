@@ -89,7 +89,7 @@ CTA           : 〇〇
 
 1. **ファイル全体を IIFE（即時実行関数）で包む**
    ```javascript
-   (function () { ... window.SLIDES = [slide01, slide02, ...]; })();
+   (function () { ... window.slideFactories = [slide01, slide02, ...]; })();
    ```
 
 2. **H() ヘルパーは冒頭で定義**
@@ -99,14 +99,22 @@ CTA           : 〇〇
    }
    ```
 
-3. **各スライドは `slideNN()` 関数（ゼロ埋め2桁）**
+3. **`window.SLIDE_SLUG` をスライド関数群の直前に定義**（localStorage のキー衝突を防ぐ必須設定）
+   ```javascript
+   /* ===================== SLIDES ===================== */
+   window.SLIDE_SLUG = 'your-slug-here';
+   ```
+   - スラッグは GitHub リポジトリ名と同一にする
+   - `app.js` / `presenter.js` はこの値を参照してキーを名前空間化する
 
-4. **各スライドに必須の data 属性**
+4. **各スライドは `slideNN()` 関数（ゼロ埋め2桁）**
+
+5. **各スライドに必須の data 属性**
    - `data-section`: セクションID（サイドバーのグループ化）
    - `data-title`: スライドタイトル（サイドバー表示）
    - `data-notes`: トークスクリプト（プレゼンター画面）
 
-5. **スライドタイプの使い分け**（`template-spec.md` 参照）
+6. **スライドタイプの使い分け**（`template-spec.md` 参照）
    - 表紙: `slide-cover`
    - 核心メッセージ: `slide-impact`
    - セクション扉: `slide-section`
@@ -114,13 +122,13 @@ CTA           : 〇〇
    - 格言・名言: `slide-quote`
    - 通常: `H()` + `.slide-content`
 
-6. **コンテンツコンポーネントの使い方**（`template-spec.md` 参照）
+7. **コンテンツコンポーネントの使い方**（`template-spec.md` 参照）
    - 箇条書き: `.s-list` + `.s-list-callout` / `.s-list-arrow`
    - 手順: `.s-steps` + `.s-step-row`
    - リスク表: `.s-risk-list` + `.s-risk-badge high/medium/low`
    - 比較: `.s-compare` + `.s-compare-col positive/neutral/negative`
 
-7. **時間表記は含めない**
+8. **時間表記は含めない**
    - 「（20分）」「60分」などの所要時間は本文・タイトルに入れない
 
 ---
@@ -309,7 +317,8 @@ CTA         : 〇〇
 - [ ] 全スライドに `data-section`, `data-title`, `data-notes` が設定されている
 - [ ] `data-notes` 内の `'` が `&#39;` にエスケープされている
 - [ ] IIFE で包まれている
-- [ ] `window.SLIDES = [...]` が最後に定義されている
+- [ ] `window.SLIDE_SLUG = 'slug';` がスライド関数群の直前に定義されている
+- [ ] `window.slideFactories = [...]` がIIFE末尾に定義されている
 - [ ] 時間表記（60分・20分など）が本文に含まれていない
 - [ ] スライド数が依頼に近い枚数になっている
 

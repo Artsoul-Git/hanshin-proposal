@@ -54,7 +54,7 @@ def validate_slug(slug: str) -> bool:
     return bool(re.match(r'^[a-z0-9][a-z0-9\-]*[a-z0-9]$', slug))
 
 
-def generate_image_slides_js(title: str, image_names: list) -> str:
+def generate_image_slides_js(title: str, image_names: list, slug: str = 'default') -> str:
     lines = ["(function () {\n"]
     funcs = []
     for i, name in enumerate(image_names, 1):
@@ -68,6 +68,7 @@ def generate_image_slides_js(title: str, image_names: list) -> str:
         lines.append(f"    '</section>';")
         lines.append(f"  }}\n")
 
+    lines.append(f"  window.SLIDE_SLUG = '{slug}';\n")
     lines.append(f"  window.slideFactories = [{', '.join(funcs)}];\n")
     lines.append("})();\n")
     return "\n".join(lines)
@@ -143,7 +144,7 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None,
         for f in img_files:
             shutil.copy2(f, img_out / f.name)
         slides_js.write_text(
-            generate_image_slides_js(title, [f.name for f in img_files]),
+            generate_image_slides_js(title, [f.name for f in img_files], slug),
             encoding="utf-8"
         )
         print(f"[IMG] {len(img_files)} 枚の画像を img/ にコピーし、slides.js を生成しました。")
@@ -160,6 +161,8 @@ def create_seminar(slug: str, title: str, template: str, images_dir: str = None,
   /* テンプレート: {template}                           */
   /* タイトル: {title}                                  */
   /* TODO: 以下にスライド関数を追加してください          */
+
+  window.SLIDE_SLUG = '{slug}';
 
   function slide01() {{
     return '<section class="slide slide-cover" data-section="cover" data-title="{title}" data-notes="">' +
