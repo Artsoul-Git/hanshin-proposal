@@ -23,6 +23,7 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
 .sp-item{padding:10px 16px;cursor:pointer;border-bottom:1px solid #F0F2F5;display:flex;align-items:flex-start;gap:10px;}
 .sp-item:hover{background:#F7FAFC;}
 .sp-item:last-child{border:none;}
+.sp-item{text-decoration:none;color:inherit;}
 .sp-cmd{font-weight:bold;color:#1A365D;font-size:13px;white-space:nowrap;}
 .sp-reason{font-size:12px;color:#718096;flex:1;}
 .sp-badge{font-size:10px;background:#EDF2F7;color:#4A5568;padding:2px 7px;border-radius:10px;white-space:nowrap;}
@@ -110,6 +111,24 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
 .sk-status.active{background:#F0FFF4;color:#276749;}
 .sk-status.dev{background:#FFFBEB;color:#975A16;}
 
+/* ===== TYPE BADGE ===== */
+.type-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0;}
+.tb-skill{background:#EBF8FF;color:#2B6CB0;}
+.tb-multi{background:#FAF5FF;color:#6B46C1;}
+.tb-app{background:#FFFBEB;color:#975A16;}
+.tb-infra{background:#F0F2F5;color:#4A5568;}
+
+/* ===== COMBO BAR ===== */
+.combo-bar{background:#F0FFF4;border:1px solid #9AE6B4;border-radius:10px;padding:12px 16px;margin-bottom:14px;}
+.combo-title{font-size:12px;font-weight:700;color:#276749;margin-bottom:8px;}
+.combo-flows{display:flex;flex-wrap:wrap;gap:8px;}
+.combo-flow{display:flex;align-items:center;flex-wrap:wrap;gap:5px;background:#fff;border-radius:7px;padding:7px 12px;border:1px solid #C6F6D5;font-size:12px;}
+.cf-cmd{font-weight:700;color:#1A365D;}
+.cf-sep{color:#718096;font-size:10px;}
+.cf-arr{color:#38A169;font-weight:bold;}
+.cf-to{font-weight:700;color:#276749;}
+.cf-desc{font-size:11px;color:#718096;width:100%;margin-top:2px;}
+
 /* ===== REGISTRY ===== */
 .registry-section{background:#fff;border-radius:12px;padding:24px;margin-top:8px;}
 .registry-section h2{font-size:22px;color:#1A365D;margin-bottom:6px;border-bottom:3px solid #ED8936;padding-bottom:10px;}
@@ -172,6 +191,7 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
 <div class="philosophy">
   <strong>設計思想：</strong>「目的 → ツール → 成果物 → 次の活用」のサイクルで資産を管理する。
   アプリ開発会社的には <em>Internal Developer Portal（Backstage/Storybook型）</em> — すべての資産にメタデータをつけ、目的から発見できる状態にする。
+  ／ <strong>3層設計：</strong><em>ダッシュボード（発見・検索）→ スキル別完全ガイド（使い方詳細）→ 総合マニュアル（全体リファレンス）</em>が補完し合う。カード内リンクはすべて詳細ページへ接続済み。
 </div>
 
 <!-- ===== TABS ===== -->
@@ -218,7 +238,7 @@ body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D
 
   <!-- Skills Section -->
   <div id="skills-section">
-    <div id="grid" class="skill-grid"></div>
+    <div id="grid"></div>
   </div>
 
   <!-- Asset Registry -->
@@ -547,6 +567,71 @@ const SUGGEST_RULES = [
 ];
 
 // =====================================================
+// DETAIL LINK HELPERS
+// =====================================================
+const MANUAL_ANCHORS = {
+  'project-intake':'sk-intake','sme-ai-proposal':'sk-proposal','publish-proposal':'sk-publish',
+  'write-brain-article':'sk-brain','beginner-guide':'sk-beginner','ai-news-digest':'sk-news',
+  'company-setup':'sk-setup','seminar-slide':'sk-seminar','content-burst':'sk-content-burst',
+  'deck-sprint':'sk-deck-sprint','hearing-sheet':'sk-hearing-sheet','proposal-outline':'sk-proposal-outline',
+  'billing-docs':'sk-billing-docs','nda':'sk-nda','biz-contract':'sk-biz-contract',
+  'contract-check':'sk-contract-check','wbs-gantt':'sk-wbs-gantt','daily-report':'sk-daily-report',
+  'monthly-report':'sk-monthly-report','doc-compare':'sk-doc-compare',
+};
+function getDetailLink(s){
+  if(s.link) return s.link;
+  const a = MANUAL_ANCHORS[s.id];
+  return '総合マニュアル.html' + (a ? '#'+a : '');
+}
+
+const TYPE_INFO = {
+  'content-burst':{badge:'🤖 マルチAI',cls:'tb-multi'},
+  'deck-sprint':{badge:'🤖 マルチAI',cls:'tb-multi'},
+  'kai-tasks':{badge:'📱 アプリ',cls:'tb-app'},
+  'kai-visualize':{badge:'📱 アプリ',cls:'tb-app'},
+  'slide-builder':{badge:'📱 アプリ',cls:'tb-app'},
+  'rashinban-app':{badge:'📱 アプリ',cls:'tb-app'},
+  'claude-code':{badge:'💻 基盤',cls:'tb-infra'},
+};
+
+const COMBOS = {
+  import:{title:'💡 組み合わせ活用例',flows:[
+    {from:['/knowledge-craft','/seminar-dna'],to:'/skill-craft',desc:'セミナー受講後フロー：型抽出＋知識化 → スキル定義化の3ステップ'},
+    {from:['/knowledge-craft'],to:'/sme-ai-proposal',desc:'外部知識をKnowledgeに変換 → 提案書の根拠として活用'},
+  ]},
+  content:{title:'💡 コンテンツ量産の黄金コンボ',flows:[
+    {from:['/research'],to:'/content-burst',desc:'まず調査 → 6チャネル同時発信'},
+    {from:['/seminar-slide'],to:'/talk-script',desc:'スライド生成 → トークスクリプト自動作成'},
+    {from:['/text-refine'],to:'/write-brain-article',desc:'音声→整文 → Brain記事化'},
+  ]},
+  proposal:{title:'💡 受注への黄金フロー',flows:[
+    {from:['/hearing-sheet'],to:'/sme-ai-proposal →',desc:'ヒアリング → 提案書作成 → /publish-proposal でGitHub Pages公開'},
+    {from:['/research','/stakeholder'],to:'/sme-ai-proposal',desc:'市場調査＋ステークホルダー分析 → 説得力ある提案書'},
+  ]},
+  research:{title:'💡 調査・分析の深掘りフロー',flows:[
+    {from:['/research'],to:'/issue-tree + /stakeholder',desc:'調査 → 問題構造化 → ステークホルダー攻略シナリオ'},
+    {from:['/rashinban'],to:'/profit-plan',desc:'目標を羅針盤で整理 → 収益プラン設計'},
+  ]},
+  finance:{title:'💡 財務設計の連携フロー',flows:[
+    {from:['/finance'],to:'/kpi-design',desc:'損益シミュレーション → KPI体系設計'},
+    {from:['/profit-plan','/finance'],to:'/sme-ai-proposal',desc:'収益計画＋財務数値を提案書に組み込む'},
+  ]},
+  org:{title:'💡 組織設計の連携フロー',flows:[
+    {from:['/company-setup'],to:'/hr-transform → /course-build',desc:'AI組織設計 → 人材変革計画 → 研修カリキュラム'},
+    {from:['/hr-transform'],to:'/kpi-design',desc:'人材変革計画 → 成果計測KPI設計'},
+  ]},
+  docs:{title:'💡 業務文書の一気通貫フロー',flows:[
+    {from:['/hearing-sheet'],to:'/proposal-outline → /billing-docs',desc:'ヒアリング → 提案骨子 → 見積書まで一気通貫'},
+    {from:['/nda','/biz-contract'],to:'/contract-check',desc:'契約書作成 → 受領後レビューもKai対応'},
+    {from:['/daily-report'],to:'/monthly-report',desc:'日報蓄積 → 月次レポート自動生成'},
+  ]},
+  quality:{title:'💡 品質チェックのセット運用',flows:[
+    {from:['/fact-check','/persona-review'],to:'（提出前セット実行）',desc:'成果物提出前は必ずこの2つをセットで実行する'},
+    {from:['/eval-daily → /eval-weekly'],to:'/eval-monthly',desc:'日次→週次→月次の3段階評価サイクル'},
+  ]},
+};
+
+// =====================================================
 // RENDER FUNCTIONS
 // =====================================================
 function catColor(cat){
@@ -556,25 +641,39 @@ function catColor(cat){
 function makeCard(s){
   const inTags = s.input.map(t=>`<span class="sk-tag in">${t}</span>`).join('');
   const outTags = s.output.map(t=>`<span class="sk-tag out">${t}</span>`).join('');
-  const linkHtml = s.link ? `<a class="sk-link" href="${s.link}" target="_blank">詳細ガイド↗</a>` : '';
+  const detailLink = getDetailLink(s);
+  const linkLabel = s.link ? '詳細ガイド↗' : 'マニュアルで詳細↗';
+  const linkHtml = `<a class="sk-link" href="${detailLink}" target="_blank">${linkLabel}</a>`;
+  const ti = TYPE_INFO[s.id] || {badge:'🔧 スキル',cls:'tb-skill'};
   return `<div class="sk-card" data-cat="${s.cat}" data-id="${s.id}">
     <div class="sk-head">
       <div class="sk-icon">${s.icon}</div>
-      <div>
+      <div style="flex:1;min-width:0;">
         <div class="sk-cmd">${s.cmd}</div>
         <div class="sk-title">${s.title}</div>
       </div>
+      <span class="type-badge ${ti.cls}">${ti.badge}</span>
     </div>
     <div class="sk-desc">${s.desc}</div>
     <div class="sk-io">
-      <div class="sk-io-group"><div class="sk-io-label">Input</div><div class="sk-tags">${inTags}</div></div>
-      <div class="sk-io-group"><div class="sk-io-label">Output</div><div class="sk-tags">${outTags}</div></div>
+      <div class="sk-io-group"><div class="sk-io-label">INPUT</div><div class="sk-tags">${inTags}</div></div>
+      <div class="sk-io-group"><div class="sk-io-label">OUTPUT</div><div class="sk-tags">${outTags}</div></div>
     </div>
     <div class="sk-footer">
       ${linkHtml}
       <span class="sk-status ${s.status==='active'?'active':'dev'}">${s.status==='active'?'✅ 運用中':'🔧 開発中'}</span>
     </div>
   </div>`;
+}
+
+function renderComboBar(cat, q){
+  if(cat==='all' || q || !COMBOS[cat]) return '';
+  const cb = COMBOS[cat];
+  const flows = cb.flows.map(f=>{
+    const fromH = f.from.map(c=>`<span class="cf-cmd">${c}</span>`).join('<span class="cf-sep"> + </span>');
+    return `<div class="combo-flow">${fromH}<span class="cf-arr">→</span><span class="cf-to">${f.to}</span><span class="cf-desc">${f.desc}</span></div>`;
+  }).join('');
+  return `<div class="combo-bar"><div class="combo-title">${cb.title}</div><div class="combo-flows">${flows}</div></div>`;
 }
 
 function renderSkills(cat, query){
@@ -585,7 +684,7 @@ function renderSkills(cat, query){
     return catOk && qOk;
   });
 
-  // Group by category when showing all
+  const comboHtml = renderComboBar(cat, q);
   let html = '';
   if(cat==='all' && !q){
     Object.keys(CAT_META).forEach(c=>{
@@ -602,11 +701,12 @@ function renderSkills(cat, query){
         <div class="skill-grid">${inCat.map(makeCard).join('')}</div>
       </div>`;
     });
+  } else if(!filtered.length){
+    html = `<div class="no-result"><div class="nr-icon">🔍</div>該当するスキルが見つかりませんでした</div>`;
   } else {
     html = `<div class="skill-grid">${filtered.map(makeCard).join('')}</div>`;
-    if(!filtered.length) html = `<div class="no-result"><div class="nr-icon">🔍</div>該当するスキルが見つかりませんでした</div>`;
   }
-  document.getElementById('grid').innerHTML = html;
+  document.getElementById('grid').innerHTML = comboHtml + html;
 }
 
 function renderAssets(type){
@@ -655,12 +755,15 @@ function updateSuggestPanel(q){
   if(!q || q.length<2){ panel.classList.remove('open'); return; }
   const items = suggest(q);
   if(!items.length){ panel.classList.remove('open'); return; }
-  panel.innerHTML = items.map(s=>`<div class="sp-item" onclick="selectSkill('${s.id}')">
-    <span>${s.icon}</span>
-    <span class="sp-cmd">${s.cmd}</span>
-    <span class="sp-reason">${s.reason||s.title}</span>
-    <span class="sp-badge">${CAT_META[s.cat]?.name||s.cat}</span>
-  </div>`).join('');
+  panel.innerHTML = items.map(s=>{
+    const link = getDetailLink(s);
+    return `<a class="sp-item" href="${link}" target="_blank">
+      <span>${s.icon}</span>
+      <span class="sp-cmd">${s.cmd}</span>
+      <span class="sp-reason">${s.reason||s.title}</span>
+      <span class="sp-badge">${CAT_META[s.cat]?.name||s.cat}</span>
+    </a>`;
+  }).join('');
   panel.classList.add('open');
 }
 
@@ -670,16 +773,20 @@ function updateRecommendBox(q){
   if(!q || q.length<2){ box.classList.remove('visible'); return; }
   const items = suggest(q).slice(0,3);
   if(!items.length){ box.classList.remove('visible'); return; }
-  cards.innerHTML = items.map(s=>`<div class="rec-card" onclick="selectSkill('${s.id}')">
-    <div class="rc-cmd">${s.icon} ${s.cmd}</div>
-    <div class="rc-reason">${s.reason||s.title}</div>
-  </div>`).join('');
+  cards.innerHTML = items.map(s=>{
+    const link = getDetailLink(s);
+    return `<a class="rec-card" href="${link}" target="_blank" style="text-decoration:none;">
+      <div class="rc-cmd">${s.icon} ${s.cmd}</div>
+      <div class="rc-reason">${s.reason||s.title}</div>
+    </a>`;
+  }).join('');
   box.classList.add('visible');
 }
 
 function selectSkill(id){
   document.getElementById('suggest-panel').classList.remove('open');
-  // Scroll to card
+  const sk = SKILLS.find(s=>s.id===id);
+  if(sk){ window.open(getDetailLink(sk),'_blank'); return; }
   const card = document.querySelector(`[data-id="${id}"]`);
   if(card){
     card.scrollIntoView({behavior:'smooth',block:'center'});
