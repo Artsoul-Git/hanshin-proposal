@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI エージェント活用ガイド | 有限会社アートソウル</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI","Hiragino Sans","Meiryo",sans-serif; line-height:1.8; color:#2D3748; background:#FAFBFC; display:flex; min-height:100vh; }
+
+  /* Sidebar */
+  .main-sidebar { position:fixed; left:0; top:0; width:220px; height:100vh; overflow-y:auto; background:#1A365D; z-index:100; padding-bottom:40px; }
+  .main-sidebar::-webkit-scrollbar { width:4px; }
+  .main-sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:2px; }
+  .sb-logo { padding:18px 16px; background:#0F2340; font-size:13px; font-weight:bold; color:#E2E8F0; border-bottom:1px solid rgba(255,255,255,0.1); line-height:1.5; }
+  .sb-logo a { color:inherit; text-decoration:none; }
+  .sb-logo span { color:#ED8936; display:block; font-size:11px; margin-top:2px; }
+  .sb-section { padding:10px 14px 4px; }
+  .sb-section-label { font-size:10px; font-weight:bold; color:#A0AEC0; letter-spacing:0.08em; text-transform:uppercase; padding:0 0 5px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:4px; }
+  .sb-link { display:block; padding:4px 8px; font-size:12px; color:#CBD5E0; text-decoration:none; border-radius:4px; margin:1px 0; line-height:1.4; transition:background 0.15s,color 0.15s; }
+  .sb-link:hover { background:rgba(255,255,255,0.1); color:#fff; }
+
+  /* Main */
+  .main-content { margin-left:220px; flex:1; padding:40px 20px; min-width:0; }
+  .container { max-width:920px; margin:0 auto; background:white; padding:60px 70px; box-shadow:0 2px 30px rgba(0,0,0,0.08); border-radius:12px; }
+
+  /* Cover */
+  .cover { text-align:center; padding:80px 0 60px; border-bottom:4px solid #1A365D; margin-bottom:50px; }
+  .cover h1 { font-size:34px; color:#1A365D; margin-bottom:16px; line-height:1.4; }
+  .cover .sub { font-size:20px; color:#ED8936; font-weight:bold; margin-bottom:40px; }
+  .cover .meta { color:#718096; font-size:14px; line-height:2; }
+
+  /* Headings */
+  h2 { font-size:26px; color:#1A365D; padding:50px 0 15px; margin-top:40px; border-bottom:3px solid #ED8936; line-height:1.4; }
+  h2:first-of-type { margin-top:0; }
+  h3 { font-size:20px; color:#2D3748; margin:30px 0 12px; padding-left:16px; border-left:6px solid #ED8936; line-height:1.5; }
+  h4 { font-size:16px; color:#1A365D; margin:20px 0 8px; font-weight:bold; }
+  p { margin:12px 0; }
+
+  /* Blocks */
+  .lead { font-size:17px; color:#1A365D; background:#EDF2F7; padding:20px 25px; border-radius:8px; margin:20px 0; border-left:5px solid #1A365D; }
+  .tip { background:#FFFAF0; padding:18px 22px; border-radius:8px; margin:18px 0; border-left:5px solid #ED8936; }
+  .tip .label { font-weight:bold; color:#C05621; display:block; margin-bottom:6px; font-size:14px; }
+  .ok { background:#F0FFF4; padding:18px 22px; border-radius:8px; margin:18px 0; border-left:5px solid #38A169; }
+  .ok .label { font-weight:bold; color:#2F855A; display:block; margin-bottom:6px; font-size:14px; }
+  .warn { background:#FFF5F5; padding:18px 22px; border-radius:8px; margin:18px 0; border-left:5px solid #E53E3E; }
+  .warn .label { font-weight:bold; color:#C53030; display:block; margin-bottom:6px; font-size:14px; }
+  code { background:#2D3748; color:#F6AD55; padding:2px 8px; border-radius:4px; font-family:"Consolas","SF Mono",monospace; font-size:13px; }
+  pre { background:#1A202C; color:#E2E8F0; padding:20px 25px; border-radius:8px; overflow-x:auto; margin:18px 0; font-family:"Consolas","SF Mono",monospace; font-size:13px; line-height:1.7; }
+  pre code { background:none; color:inherit; padding:0; }
+  ul,ol { padding-left:28px; margin:12px 0; }
+  li { margin:7px 0; }
+  table { width:100%; border-collapse:collapse; margin:18px 0; font-size:14px; }
+  th { background:#1A365D; color:white; padding:10px 12px; text-align:left; }
+  td { padding:10px 12px; border-bottom:1px solid #E2E8F0; vertical-align:top; }
+  tr:nth-child(even) { background:#F7FAFC; }
+  hr { border:none; border-top:2px dashed #E2E8F0; margin:50px 0; }
+  .step { background:#EDF2F7; padding:22px 28px; border-radius:8px; margin:22px 0; border-top:4px solid #1A365D; }
+  .step-num { display:inline-block; background:#ED8936; color:white; width:32px; height:32px; border-radius:50%; text-align:center; line-height:32px; font-weight:bold; margin-right:10px; font-size:15px; }
+  .toc { background:#F7FAFC; padding:28px 36px; border-radius:8px; margin:28px 0; }
+  .toc h3 { border:none; padding-left:0; margin-top:0; }
+  .toc ul { list-style:none; padding-left:0; }
+  .toc li { padding:5px 0; border-bottom:1px dashed #E2E8F0; }
+  .toc li:last-child { border:none; }
+  .toc a { color:#1A365D; text-decoration:none; font-weight:500; }
+  .toc a:hover { color:#ED8936; }
+  .toc .sub-item { padding-left:20px; font-size:14px; color:#4A5568; }
+
+  /* Skill accordion */
+  details { border:2px solid #E2E8F0; border-radius:10px; margin:10px 0; overflow:hidden; }
+  details > summary { background:#EDF2F7; padding:14px 20px; cursor:pointer; font-size:15px; font-weight:bold; color:#1A365D; list-style:none; display:flex; align-items:center; gap:12px; user-select:none; }
+  details > summary::-webkit-details-marker { display:none; }
+  details > summary .arrow { margin-left:auto; color:#ED8936; font-size:16px; }
+  details[open] > summary { background:#1A365D; color:white; }
+  details[open] > summary .arrow { color:#ED8936; }
+  .acc-content { padding:20px 24px; }
+  .skill-meta { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0 16px; }
+  .skill-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:bold; }
+  .badge-blue { background:#EBF8FF; color:#2B6CB0; }
+  .badge-green { background:#F0FFF4; color:#276749; }
+  .badge-orange { background:#FFFAF0; color:#C05621; }
+  .badge-purple { background:#FAF5FF; color:#553C9A; }
+  .cat-label { background:#1A365D; color:white; padding:8px 16px; border-radius:6px; margin:30px 0 10px; font-size:14px; font-weight:bold; }
+
+  /* Zone table */
+  .zone-green td:first-child { background:#F0FFF4; border-left:4px solid #38A169; }
+  .zone-red td:first-child { background:#FFF5F5; border-left:4px solid #E53E3E; }
+  .zone-yellow td:first-child { background:#FFFFF0; border-left:4px solid #D69E2E; }
+
+  /* Flow */
+  .flow-step { display:flex; align-items:flex-start; gap:16px; margin:18px 0; }
+  .flow-num { background:#ED8936; color:white; min-width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:15px; }
+  .flow-content { flex:1; }
+  .flow-title { font-weight:bold; color:#1A365D; font-size:15px; margin-bottom:4px; }
+  .flow-detail { font-size:14px; color:#4A5568; }
+
+  /* Tips */
+  .tip-num { background:#1A365D; color:white; width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; font-weight:bold; margin-right:8px; }
+
+  /* Changelog */
+  .changelog-scroll { max-height:320px; overflow-y:auto; border:1px solid #E2E8F0; border-radius:8px; }
+  .changelog-scroll table { margin:0; }
+  .changelog th { background:#2D3748; }
+
+  /* Page Top Button */
+  #page-top-btn { position:fixed; bottom:24px; right:24px; background:#1A365D; color:white; border:none; border-radius:50%; width:48px; height:48px; font-size:20px; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.3); z-index:999; line-height:1; }
+  #page-top-btn:hover { background:#ED8936; }
+</style>
+</head>
+<body id="top">
+
+<!-- Sidebar -->
+<nav class="main-sidebar">
+  <div class="sb-logo"><a href="#top">有限会社アートソウル</a><span>AI活用ガイド v2.6</span></div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">📋 もくじ</div>
+    <a class="sb-link" href="#sec1">1. システム全体マップ</a>
+    <a class="sb-link" href="#sec2">2. ファイルゾーン早見表</a>
+    <a class="sb-link" href="#sec3">3. スキル一覧</a>
+    <a class="sb-link" href="#sec4">4. AIが読む仕組み</a>
+    <a class="sb-link" href="#sec5">5. 案件の進め方</a>
+    <a class="sb-link" href="#sec6">6. 使い倒しポイント10選</a>
+    <a class="sb-link" href="#sec7">7. 更新ルール</a>
+    <a class="sb-link" href="#sec8">8. 変更履歴</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🎯 スキルカテゴリ</div>
+    <a class="sb-link" href="#cat-reception">受付・ルーティング</a>
+    <a class="sb-link" href="#cat-proposal">提案書・営業支援</a>
+    <a class="sb-link" href="#cat-content">コンテンツ作成</a>
+    <a class="sb-link" href="#cat-seminar">セミナー・研修</a>
+    <a class="sb-link" href="#cat-strategy">経営分析・戦略</a>
+    <a class="sb-link" href="#cat-docs">書類・帳票生成</a>
+    <a class="sb-link" href="#cat-eval">評価・振り返り</a>
+    <a class="sb-link" href="#cat-system">システム・品質</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🔗 関連ページ</div>
+    <a class="sb-link" href="総合マニュアルv5.0.html" target="_blank">総合マニュアル v5.0↗</a>
+    <a class="sb-link" href="ダッシュボード_v1.html" target="_blank">スキルダッシュボード↗</a>
+    <a class="sb-link" href="Kai-Tasks完全マニュアル.html" target="_blank">Kai Tasks マニュアル↗</a>
+    <a class="sb-link" href="skill使い倒し完全ガイド.html" target="_blank">スキル使い倒し完全ガイド↗</a>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <h1>有限会社アートソウル<br>AI エージェント活用ガイド</h1>
+  <div class="sub">これさえ見れば全体像がわかる — 全スキル一覧・ファイルゾーン・案件標準フロー</div>
+  <div class="meta">作成：上村桂右　最終更新：2026-05-18<br>バージョン：v2.6</div>
+</div>
+
+<div class="toc">
+  <h3>もくじ</h3>
+  <ul>
+    <li><a href="#sec1">1. システム全体マップ</a></li>
+    <li><a href="#sec2">2. ファイルゾーン早見表（触っていい場所・触らない場所）</a></li>
+    <li><a href="#sec3">3. スキル一覧（/コマンド）</a>
+      <ul style="margin-top:4px;">
+        <li class="sub-item"><a href="#cat-reception">受付・ルーティング</a></li>
+        <li class="sub-item"><a href="#cat-proposal">提案書・営業支援</a></li>
+        <li class="sub-item"><a href="#cat-content">コンテンツ作成</a></li>
+        <li class="sub-item"><a href="#cat-seminar">セミナー・研修</a></li>
+        <li class="sub-item"><a href="#cat-strategy">経営分析・戦略</a></li>
+        <li class="sub-item"><a href="#cat-docs">書類・帳票生成</a></li>
+        <li class="sub-item"><a href="#cat-eval">評価・振り返り</a></li>
+        <li class="sub-item"><a href="#cat-system">システム・品質</a></li>
+      </ul>
+    </li>
+    <li><a href="#sec4">4. AIが自動で読む仕組み</a></li>
+    <li><a href="#sec5">5. クライアント案件の進め方（標準フロー）</a></li>
+    <li><a href="#sec6">6. 使い倒しポイント10選</a></li>
+    <li><a href="#sec7">7. このガイドの更新ルール</a></li>
+    <li><a href="#sec8">8. 変更履歴</a></li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ===== Section 1 ===== -->
+<h2 id="sec1">1. システム全体マップ</h2>
+<p class="lead">プロジェクトフォルダの全体構造。「どこに何を置くか」の基本ルールを確認する時に使う。</p>
+
+<pre>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\
+│
+├── 📄 CLAUDE.md                    ← AIが起動時に必ず読む設定ファイル
+├── 📄 00_AIエージェント活用ガイド.md   ← 全体像のリファレンス（このHTML版）
+│
+├── 📁 01_経営管理/                  ← 自社経営記録（戦略・Kaiブリーフィング）
+│   ├── 構造改革ロードマップ_2026.md
+│   └── Kaiブリーフィング記録/
+│
+├── 📁 rules/                        ← AIの行動原則・詳細ルール
+│   ├── CONSTITUTION.md              ← 憲法（判断基準・品質ゲート）
+│   ├── brain-article-rules.md
+│   └── skills/                      ← 各スキルの詳細定義MD
+│
+├── 📁 skill/                        ← スキル定義パッケージ（AIの専門能力）
+│   ├── project-intake/
+│   ├── sme-ai-proposal/
+│   └── ...
+│
+├── 📁 05_クライアント案件/
+│   ├── 20260326_合同会社まる/
+│   │   ├── Knowledge/               ← ✅ 実データ（ヒアリング記録・書類）
+│   │   ├── 要件定義.md
+│   │   └── AI導入支援_*_v{n}.html  ← 提案書（バージョン管理）
+│   └── 20260504_株式会社コーデ就労支援/
+│
+├── 📁 06_セミナー事業部/
+│   └── outputs/curriculum/         ← /course-build の出力先
+│
+├── 📁 07_マニュアル/                ← AIが生成した完成ドキュメント（HTML）
+│   ├── 総合マニュアルv5.0.html      ← 全体リファレンス
+│   ├── ダッシュボード_v1.html       ← スキル検索ダッシュボード
+│   └── AI活用ガイド.html            ← このファイル
+│
+└── 📁 08_アプリ開発事業部/
+    └── outputs/kai-tasks/           ← Kai Tasks（プロジェクト管理ツール）</pre>
+
+<hr>
+
+<!-- ===== Section 2 ===== -->
+<h2 id="sec2">2. ファイルゾーン早見表</h2>
+<p class="lead">触っていい場所と触らない場所。迷ったらここを確認。</p>
+
+<h3>🟢 人間が追加・編集する場所</h3>
+<table>
+<tr><th>場所</th><th>何を置くか</th><th>タイミング</th></tr>
+<tr class="zone-green"><td><code>05_クライアント案件/{案件}/Knowledge/</code></td><td>ヒアリング音声の文字起こし・提出書類・フロー図・実際に使っている帳票</td><td>訪問・ヒアリング後すぐ</td></tr>
+<tr class="zone-green"><td><code>05_クライアント案件/{案件}/要件定義.md</code></td><td>プロジェクトの方針変更・新たな制約・修正要望</td><td>「要件定義に追加して」と依頼するだけでAIが更新</td></tr>
+<tr class="zone-green"><td><code>CLAUDE.md</code></td><td>スキル追加・削除のみ</td><td>スキル追加時にAIが提案→確認後に反映</td></tr>
+<tr class="zone-green"><td><code>rules/CONSTITUTION.md</code></td><td>判断基準・品質ゲートの改訂</td><td>運用ルールが変わった時。版番号を上げる</td></tr>
+</table>
+
+<h3>🔴 人間は触らない（AIが管理する）</h3>
+<table>
+<tr><th>場所</th><th>内容</th><th>理由</th></tr>
+<tr class="zone-red"><td><code>.claude/memory/*.md</code></td><td>AIの自動記憶（会社情報・案件設計哲学・フィードバック）</td><td>AIが自動で書き込み・更新。手動で変えると不整合が起きる</td></tr>
+<tr class="zone-red"><td><code>.claude/memory/MEMORY.md</code></td><td>メモリのインデックス</td><td>同上</td></tr>
+<tr class="zone-red"><td><code>07_マニュアル/</code> 内のHTML</td><td>AIが生成した完成済みドキュメント</td><td>編集が必要な時はAIに「修正して」と依頼</td></tr>
+</table>
+
+<h3>🟡 AIが出力する場所（確認・承認は人間）</h3>
+<table>
+<tr><th>場所</th><th>内容</th><th>確認ポイント</th></tr>
+<tr class="zone-yellow"><td><code>05_クライアント案件/{案件}/AI導入支援_*_v{n}.html</code></td><td>提案書HTML（バージョン管理）</td><td>旧版は消さない。内容確認後にGitHub Pagesへ公開</td></tr>
+</table>
+
+<hr>
+
+<!-- ===== Section 3 ===== -->
+<h2 id="sec3">3. スキル一覧（/コマンド）</h2>
+<p class="lead"><code>/スキル名</code> と入力するだけで起動する。スキルは「AIの専門能力パッケージ」。迷ったら <code>/project-intake</code> から始める。</p>
+
+<div class="tip"><span class="label">💡 詳細な使い方・スキル連携レシピ</span>
+<a href="skill使い倒し完全ガイド.html" target="_blank">→ スキル使い倒し完全ガイド（シナリオ別レシピ・連携マップ・失敗パターン）</a></div>
+
+<!-- カテゴリ：受付 -->
+<div class="cat-label" id="cat-reception">💬 受付・ルーティング</div>
+
+<details>
+<summary><code>/project-intake</code> — 受付・ルーティング（迷ったらここから）<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta">
+  <span class="skill-badge badge-blue">🎯 受付</span>
+  <span class="skill-badge badge-green">自動ルーティング</span>
+</div>
+<p><strong>何をするか：</strong> 自然言語の依頼を受け取り、必要な情報を整理して適切なスキルにルーティングする。「どのコマンドを使うか」を意識しなくても、ここに話しかければOK。</p>
+<pre>起動例：
+  「新しい案件が来たんだけど」
+  「〇〇したいんだけどどうすればいい？」</pre>
+</div>
+</details>
+
+<!-- カテゴリ：提案書 -->
+<div class="cat-label" id="cat-proposal">📊 提案書・営業支援</div>
+
+<details>
+<summary><code>/sme-ai-proposal</code> — 中小企業AI導入支援 提案書生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Knowledge必須</span></div>
+<p><strong>何をするか：</strong> クライアントのヒアリング記録・書類・課題メモを読み込み、提案書HTML（10セクション構成）を生成する。</p>
+<pre>起動例：
+  /sme-ai-proposal
+  /sme-ai-proposal 合同会社まる 障害福祉</pre>
+<p><strong>準備：</strong> <code>Knowledge/</code> にヒアリング記録・書類を入れてから依頼</p>
+<p><strong>出力：</strong> <code>AI導入支援_完全提案パッケージ_{クライアント名}_v{n}.html</code></p>
+<p><strong>対応業種：</strong> 障害福祉 / クリニック・サロン / 製造・建設 / 士業・コンサル</p>
+</div>
+</details>
+
+<details>
+<summary><code>/publish-proposal</code> — HTML提案書をパスワード保護付きで公開<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">GitHub Pages</span></div>
+<p><strong>何をするか：</strong> 提案書HTMLにパスワードゲートを追加し、GitHub Pages経由で公開。クライアントへ即日URLを送付できる状態にする。</p>
+<pre>起動例：
+  /publish-proposal
+  「GitHub Pagesを更新して」</pre>
+<p><strong>出力：</strong> GitHub Pages URL（例：<code>https://artsoul-git.github.io/maru-proposal-2026/</code>）</p>
+</div>
+</details>
+
+<details>
+<summary><code>/hearing-sheet</code> — 業種×部門別ヒアリングシート生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Excel出力</span></div>
+<p><strong>何をするか：</strong> 業種（12種）×部門（4種）に合わせたヒアリングシートをExcelで動的生成。文字起こしからの自動記入にも対応。</p>
+<pre>起動例：
+  /hearing-sheet
+  「明日〇〇業の経営者にヒアリングする。シートを作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/proposal-outline</code> — ヒアリング結果から提案骨子生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Word出力</span></div>
+<p><strong>何をするか：</strong> ヒアリング結果（Excel/文字起こし/メモ）から提案骨子（1〜2ページWord）を自動生成。<code>/sme-ai-proposal</code> の前工程として使う。</p>
+<pre>起動例：
+  /proposal-outline
+  「さっきのヒアリングメモから提案骨子を作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/stakeholder</code> — ステークホルダー分析・攻略シナリオ設計<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 分析スキル</span></div>
+<p><strong>何をするか：</strong> 影響力×関心度マトリクスで利害関係者を整理し、提案を通すための攻略シナリオを設計する。</p>
+<pre>起動例：
+  /stakeholder
+  「この案件の意思決定者を整理して」「提案を通すための根回しシナリオを作って」</pre>
+</div>
+</details>
+
+<!-- カテゴリ：コンテンツ -->
+<div class="cat-label" id="cat-content">✍️ コンテンツ作成</div>
+
+<details>
+<summary><code>/write-brain-article</code> — Brain記事（有料コンテンツ）執筆<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 参考記事のスタイルを分析し、note等のプラットフォーム向け有料コンテンツを執筆する。</p>
+<pre>起動例：
+  /write-brain-article</pre>
+<p><strong>準備：</strong> <code>YYYYMMDD_&lt;テーマ&gt;/参考記事/</code> に参考記事ファイルを置いてから依頼</p>
+</div>
+</details>
+
+<details>
+<summary><code>/content-burst</code> — テーマ1つから6種コンテンツ並列生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 マルチAI</span><span class="skill-badge badge-green">並列生成</span></div>
+<p><strong>何をするか：</strong> テーマ1つからリサーチレポート・ブログ・X投稿・YouTube台本・メルマガ・ビジュアルマップを並列生成。Kai Tasks連動・セッションログ自動記録。</p>
+<pre>起動例：
+  /content-burst ChatGPTで議事録を5分で作る方法</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/text-refine</code> — 音声整文・文章校正・リライト・メール・X投稿<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">自動判定</span></div>
+<p><strong>何をするか：</strong> テキストの種別・指示語を自動判定し、音声整文・メール・X投稿・校正の4モードで処理する。</p>
+<pre>起動例：
+  /text-refine
+  「これ整えて！」＋テキスト
+  「フィラー取ってメールにして」＋音声テキスト
+  「これXにして」＋テキスト</pre>
+<table>
+<tr><th>モード</th><th>発動キーワード</th></tr>
+<tr><td>🎙 音声整文</td><td>「フィラー取って」「整文して」「句読点」</td></tr>
+<tr><td>✉️ メール</td><td>「メール」「返信」「件名」</td></tr>
+<tr><td>🐦 X投稿</td><td>「X」「ツイート」「SNS投稿」</td></tr>
+<tr><td>📝 校正・リライト</td><td>「校正」「リライト」「整えて」</td></tr>
+</table>
+</div>
+</details>
+
+<details>
+<summary><code>/ai-news-digest</code> — AIニュースダイジェスト生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> AIに関する最新ニュースを収集・整理してダイジェスト形式で出力する。</p>
+<pre>起動例：
+  /ai-news-digest</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/beginner-guide</code> — 初心者向けHTMLガイドブック作成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> PC操作・IT知識ゼロの完全初心者でも読めるHTML形式のガイドブックを生成する。フロー図・ASCII画面・カラーボックス付き。</p>
+<pre>起動例：
+  /beginner-guide
+  「〇〇の初心者向けマニュアルを作って」</pre>
+</div>
+</details>
+
+<!-- カテゴリ：セミナー -->
+<div class="cat-label" id="cat-seminar">🎤 セミナー・研修</div>
+
+<details>
+<summary><code>/seminar-slide</code> — セミナースライド一気通貫生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">GitHub Pages公開</span></div>
+<p><strong>何をするか：</strong> テーマを投げるだけでヒアリング→スライド生成（slides.js形式）→GitHub Pages公開まで一気通貫で仕上げる。</p>
+<pre>起動例：
+  /seminar-slide
+  「〇〇テーマでセミナースライドを作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/seminar-dna</code> — セミナーの「型」を抽出・命名・ライブラリ化<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 マルチAI</span><span class="skill-badge badge-green">ライブラリ蓄積</span></div>
+<p><strong>何をするか：</strong> セミナーの文字起こし・参照資料から「型」を抽出・命名・テンプレート化。<code>apply &lt;パターン名&gt;</code> で任意テーマで量産する。</p>
+<pre>起動例：
+  /seminar-dna
+  /seminar-dna apply エミ式AI定着メソッド</pre>
+<p><a href="seminar-dna完全ガイド.html" target="_blank">→ seminar-dna完全ガイドを見る↗</a></p>
+</div>
+</details>
+
+<details>
+<summary><code>/course-build</code> — カリキュラム設計書生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> テーマ・対象者・ゴールをヒアリングし、受講者診断→3軸マイルストーン→レクチャー設計書まで一気通貫で出力する。<code>/seminar-slide</code> の前工程として使うと品質が上がる。</p>
+<pre>起動例：
+  /course-build
+  「AI活用研修のカリキュラムを設計して」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/talk-script</code> — スライドからトークスクリプト生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 既存スライド（PDF等）を分析し、登壇者向けのプレゼントークスクリプトを生成する。</p>
+<pre>起動例：
+  /talk-script
+  「このスライドのトーク台本を作って」＋PDFまたはスライド内容</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/deck-sprint</code> — 資料3点セットを5分で高速生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">高速</span></div>
+<p><strong>何をするか：</strong> テーマ1つからレポート＋HTMLスライド＋アジェンダを5分で生成。<code>/seminar-slide</code> より軽量・高速。社内報告・MTG資料に使う。</p>
+<pre>起動例：
+  /deck-sprint DXロードマップ設計</pre>
+</div>
+</details>
+
+<!-- カテゴリ：戦略 -->
+<div class="cat-label" id="cat-strategy">📈 経営分析・戦略</div>
+
+<details>
+<summary><code>/marketing</code> — DRMマーケティング戦略・LP設計・壁打ち<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-purple">神崎潤ペルソナ</span></div>
+<p><strong>何をするか：</strong> 「神崎潤」ペルソナで対話型マーケティング相談。LP・セールスファネル・コピーライティング・USP・オファー設計を支援する。</p>
+<pre>起動例：
+  /marketing
+  「マーケティングの相談したい」「LP見直したい」「USP整理して」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/research</code> — 市場・競合実調査レポート生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">WebSearch</span></div>
+<p><strong>何をするか：</strong> WebSearchで業界・競合・市場規模を実調査し、エビデント付きレポートを生成する。<code>/marketing</code>・<code>/profit-plan</code>・<code>/sme-ai-proposal</code> のインプットとして使う。</p>
+<pre>起動例：
+  /research
+  「〇〇業界の市場調査をして」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/finance</code> — 財務モデリング・損益シミュレーション<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 数字に裏付けられた意思決定を支援。6モードで対応する。</p>
+<pre>起動例：
+  /finance
+  「3シナリオで損益シミュレーションして」「DCFで企業価値を出して」</pre>
+<table>
+<tr><th>モード</th><th>内容</th></tr>
+<tr><td>P&Lシミュレーション</td><td>3シナリオ×3年の損益計画</td></tr>
+<tr><td>DCF企業価値算定</td><td>キャッシュフロー割引・感応度分析</td></tr>
+<tr><td>損益分岐点分析</td><td>安全余裕率・固定費構造</td></tr>
+<tr><td>価格戦略設計</td><td>コスト積み上げ・競合比較</td></tr>
+<tr><td>月次CF計画</td><td>月次キャッシュフロー計画</td></tr>
+<tr><td>リスク定量化</td><td>確率×影響のリスクマトリクス</td></tr>
+</table>
+</div>
+</details>
+
+<details>
+<summary><code>/issue-tree</code> — ロジックツリー・イシューツリー分析<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> ロジックツリー（Why/How/What）とイシューツリーの2フレームワークで問題を構造化する。すべての戦略・提案・計画の「問いの設定」に使う前処理スキル。</p>
+<pre>起動例：
+  /issue-tree
+  「この問題を分解して」「なぜ売上が上がらないか」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/kpi-design</code> — KPI・OKR体系設計とダッシュボード構築<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> KGI→CSF→KPI→KDIの階層で「測れる戦略」に変換する。OKR設計・ダッシュボード設計・レビューサイクルまで一気通貫。</p>
+<pre>起動例：
+  /kpi-design
+  「KPIを設計したい」「OKRを導入したい」「AI導入の効果をどう測るか定義したい」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/profit-plan</code> — 収益計画（EPDCARサイクル）設計<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-purple">上村オリジナル</span></div>
+<p><strong>何をするか：</strong> 上村オリジナルフレームワーク（EPDCARサイクル＋EOODARモデル）で短中長期収益計画を5ステージで構築する。</p>
+<pre>起動例：
+  /profit-plan
+  「この事業の儲けのプランを作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/visualize</code> — 図解可視化・ドリルダウン深掘り<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">HTML出力</span></div>
+<p><strong>何をするか：</strong> テーマ・目標を4種類の図（4象限・マンダラ・フロー・ガント）でHTMLとして生成する。</p>
+<pre>起動例：
+  /visualize 4象限 [テーマ]
+  /visualize マンダラ [テーマ]
+  /visualize 深掘り [テーマ]   ← 段階的深掘り</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/rashinban</code> — 目標→マンダラ→ロードマップ HTML一発生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 マルチAI</span><span class="skill-badge badge-green">インタラクティブHTML</span></div>
+<p><strong>何をするか：</strong> 目標・課題をヒアリング（5問）→Kai全体分析→マンダラ64項目→マトリクス8枚→フロー図→ガントを1ファイルのインタラクティブHTMLで生成。<code>/visualize 羅針盤</code> の省略形。</p>
+<pre>起動例：
+  /rashinban
+  /rashinban 売上2倍</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/hr-transform</code> — AI導入の人材マネジメント・変革推進<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> AI導入・業務改革における人材マネジメントを5フェーズで設計する。ツールより先に「人の設計」をする。</p>
+<pre>起動例：
+  /hr-transform
+  「AI導入を現場に浸透させたい」「現場が使ってくれない」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/ma</code> — M&A企業価値評価・デューデリジェンス支援<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">スモールM&A専門</span></div>
+<p><strong>何をするか：</strong> 取引規模5,000万円程度までのスモールM&A案件を支援する。企業価値評価・DDチェックリスト・PMI・LOI骨子まで。</p>
+<pre>起動例：
+  /ma
+  「会社を買いたい・売りたい」「この会社の価値をいくらで見るか」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/company-setup</code> — AI組織設計・業務プロセス構築<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 業種・業態を問わず、AI導入を前提とした組織構造・役割定義・業務プロセスをゼロから設計する。</p>
+<pre>起動例：
+  /company-setup
+  「AI前提の組織を設計したい」「業務フローを再設計して」</pre>
+</div>
+</details>
+
+<!-- カテゴリ：書類 -->
+<div class="cat-label" id="cat-docs">📄 書類・帳票生成</div>
+
+<details>
+<summary><code>/billing-docs</code> — 見積書・請求書 Excel自動生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Excel出力</span></div>
+<p><strong>何をするか：</strong> 見積書・請求書をExcelで自動生成。消費税10%自動計算・インボイス番号自動採番。月額顧問型・時間単価型・プロジェクト型に対応。</p>
+<pre>起動例：
+  /billing-docs
+  「〇〇社への見積書を作って。月額顧問50万円。」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/nda</code> — NDA（機密保持契約書）Word自動生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Word出力</span></div>
+<p><strong>何をするか：</strong> 機密保持契約書（NDA）をWord形式で自動生成。損害賠償上限変動型・秘密保持3年・11条構成。生成AI利用条項含む。</p>
+<pre>起動例：
+  /nda
+  「〇〇社とのNDAを作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/biz-contract</code> — 業務委託契約書 Word自動生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Word出力</span></div>
+<p><strong>何をするか：</strong> コンサル・AI支援向け業務委託契約書をWord形式で自動生成。甲有利/乙有利/公平の立場設定に対応。</p>
+<pre>起動例：
+  /biz-contract
+  「〇〇社との業務委託契約書を作って。乙有利で。」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/contract-check</code> — 受領契約書の立場別レビュー<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Excel+Word出力</span></div>
+<p><strong>何をするか：</strong> 受領した契約書を指定の立場（甲有利/乙有利/公平）でレビュー。リスク条項をExcel比較表とWordレポートで出力する。</p>
+<pre>起動例：
+  /contract-check
+  「この契約書を乙有利でレビューして」＋契約書ファイル</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/doc-compare</code> — 2文書の差分を新旧対比表で出力<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Word出力</span></div>
+<p><strong>何をするか：</strong> 2つのWord/PDFを比較し、変更箇所を色分けした新旧対比表をWord形式で生成する。</p>
+<pre>起動例：
+  /doc-compare
+  「この2つの契約書の差分を出して」＋旧版・新版ファイル</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/wbs-gantt</code> — WBS・ガントチャート Excel自動生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Excel出力</span></div>
+<p><strong>何をするか：</strong> WBS・ガントチャートをExcelで自動生成。日付変更でバーが自動伸縮・ステータスで色が自動変化する動的関数版。予備工程5〜15%設定。</p>
+<pre>起動例：
+  /wbs-gantt
+  「AI導入プロジェクトのWBSとガントを作って」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/daily-report</code> — 音声・自然文で日報 Excel化<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Excel出力</span></div>
+<p><strong>何をするか：</strong> 音声・自然文で話した業務内容を6列Excel日報（工数列含む）に自動変換。<code>/monthly-report</code> のデータ源として蓄積する。</p>
+<pre>起動例：
+  /daily-report
+  「今日やったこと：〇〇の提案書を修正した。まる様と電話。2時間。」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/monthly-report</code> — 日報データから月次レポート Word自動生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-orange">Word出力</span></div>
+<p><strong>何をするか：</strong> 日報データからA4縦2ページの月次活動レポートをWord形式で自動生成。円グラフ付き。</p>
+<pre>起動例：
+  /monthly-report
+  「今月の月次レポートを作って。クライアント名は〇〇。」</pre>
+</div>
+</details>
+
+<!-- カテゴリ：評価 -->
+<div class="cat-label" id="cat-eval">📊 評価・振り返り</div>
+
+<details>
+<summary><code>/eval-daily</code> — 日次作業評価（自動・コスト0）<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-green">コスト0</span></div>
+<p><strong>何をするか：</strong> 今日の作業をgit履歴・セッションログ・Kai Tasksから自動収集してロードマップ5本柱との整合スコアを算出しJSONに保存。夕方の習慣にする。</p>
+<pre>起動例：
+  /eval-daily</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/eval-weekly</code> — 週次 Stop/Scale評価＋翌週タスク生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 週次ゴール整合評価。Stop候補（理由・メリット・続ける場合アドバイス）とScale候補（具体アドバイス3点）を提示。翌週タスク自動作成候補を出力する。</p>
+<pre>起動例：
+  /eval-weekly</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/eval-monthly</code> — 月次総括＋ロードマップ見直し提案<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> 月次総括。柱別進捗・繰り返しStop候補・翌月重点テーマ・ロードマップ見直し提案を生成。終わったら<code>/rashinban</code>で翌月ロードマップを更新する。</p>
+<pre>起動例：
+  /eval-monthly</pre>
+</div>
+</details>
+
+<!-- カテゴリ：システム -->
+<div class="cat-label" id="cat-system">⚙️ システム・品質</div>
+
+<details>
+<summary><code>/persona-review</code> — ターゲットペルソナ視点での品質検証<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span></div>
+<p><strong>何をするか：</strong> ターゲットペルソナの視点で「本当に伝わるか？」を検証し、改善点を提案するペルソナ品質部として機能する。</p>
+<pre>起動例：
+  /persona-review
+  「このLPをペルソナ視点でレビューして」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/fact-check</code> — ファクト・エビデンス・法的リスク独立検証<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-blue">🔧 スキル</span><span class="skill-badge badge-purple">法務部</span></div>
+<p><strong>何をするか：</strong> 成果物（提案書・記事・マニュアル）に対し、法務部として独立した視点でファクト確認・法的リスク洗い出しを行う。</p>
+<pre>起動例：
+  /fact-check
+  「この提案書のファクトを確認して」「法的リスクをチェックして」</pre>
+</div>
+</details>
+
+<details>
+<summary><code>/skill-craft</code> — 素材→スキル定義→HTMLマニュアル→総合マニュアル連携を一気通貫自動化<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 マルチAI</span><span class="skill-badge badge-green">一気通貫</span></div>
+<p><strong>何をするか：</strong> 文字起こし・書籍・素材を受け取り、著作権セーフな概念抽出→スキル定義生成→HTMLマニュアル作成→総合マニュアル連携まで自動実行する。</p>
+<pre>起動例：
+  /skill-craft</pre>
+<p><a href="skill-craft完全ガイド.html" target="_blank">→ skill-craft完全ガイドを見る↗</a></p>
+</div>
+</details>
+
+<details>
+<summary><code>/knowledge-craft</code> — 外部資料から知識資産を生成<span class="arrow">▼</span></summary>
+<div class="acc-content">
+<div class="skill-meta"><span class="skill-badge badge-purple">🤖 マルチAI</span><span class="skill-badge badge-green">2ドキュメント生成</span></div>
+<p><strong>何をするか：</strong> 外部資料・体験談・セミナー素材から著作権セーフな知識資産（外部公開版MD＋Kai評価・内部メモ付きHTML）を一気通貫で生成・総合マニュアル連携する。</p>
+<pre>起動例：
+  /knowledge-craft</pre>
+<p><a href="knowledge-craft完全ガイド.html" target="_blank">→ knowledge-craft完全ガイドを見る↗</a></p>
+</div>
+</details>
+
+<hr>
+
+<!-- ===== Section 4 ===== -->
+<h2 id="sec4">4. AIが自動で読む仕組み</h2>
+
+<h3>CLAUDE.md（起動時の設定ファイル）</h3>
+<div class="step">
+<p><strong>役割：</strong> Claude Codeが会話を始める前に必ず読む「プロジェクト基本ルール書」</p>
+<p><strong>場所：</strong> <code>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\CLAUDE.md</code></p>
+<p><strong>更新タイミング：</strong> 新しいスキルを追加した時、全案件共通ルールが変わった時</p>
+</div>
+
+<h3>memory/（AIの自動記憶）</h3>
+<div class="step">
+<p><strong>役割：</strong> 会話をまたいで記憶すべき情報をAIが自動で保存・参照する仕組み</p>
+<p><strong>場所：</strong> <code>C:\Users\kei\.claude\projects\...\memory\</code></p>
+<p><strong>使い方：</strong> 「◯◯を覚えておいて」と言うだけ。AIが自動でファイルを作成・更新する。</p>
+</div>
+
+<table>
+<tr><th>ファイル</th><th>内容</th></tr>
+<tr><td><code>user_company_info.md</code></td><td>有限会社アートソウルの正式情報（社名・担当者・口座・インボイス番号・ロゴパス）</td></tr>
+<tr><td><code>project_maru_data_policy.md</code></td><td>まる様案件のデータ使用ルール（KnowledgeのみをRealデータとして使用）</td></tr>
+</table>
+
+<div class="warn"><span class="label">⚠ 注意</span><code>memory/</code> フォルダを直接編集すると不整合が起きる可能性がある。変更したい場合は「◯◯の記憶を更新して」とAIに依頼する。</div>
+
+<hr>
+
+<!-- ===== Section 5 ===== -->
+<h2 id="sec5">5. クライアント案件の進め方（標準フロー）</h2>
+<p class="lead">新規案件の最初から提案書URL送付まで6ステップで完結する。</p>
+
+<div class="flow-step">
+  <div class="flow-num">1</div>
+  <div class="flow-content">
+    <div class="flow-title">案件フォルダ作成</div>
+    <div class="flow-detail">AIに「新しい案件フォルダを作って」と依頼するか、<code>05_クライアント案件/</code> の下に <code>YYYYMMDD_{会社名}/</code> を手動作成</div>
+  </div>
+</div>
+
+<div class="flow-step">
+  <div class="flow-num">2</div>
+  <div class="flow-content">
+    <div class="flow-title">実データをKnowledgeに入れる（人間の作業）</div>
+    <div class="flow-detail">ヒアリング音声の文字起こし（.txt/.md）・訪問記録・実際に使っている書類PDF・現状フロー図（写真でもOK）</div>
+  </div>
+</div>
+
+<div class="flow-step">
+  <div class="flow-num">3</div>
+  <div class="flow-content">
+    <div class="flow-title">要件定義の初版を作成</div>
+    <div class="flow-detail">「KnowledgeのX・Yを読んで要件定義を作って」と依頼。AIが <code>要件定義.md</code> を自動生成する。</div>
+  </div>
+</div>
+
+<div class="flow-step">
+  <div class="flow-num">4</div>
+  <div class="flow-content">
+    <div class="flow-title">提案書を生成</div>
+    <div class="flow-detail">「/sme-ai-proposal で提案書を作って」と依頼。AIがKnowledge + 要件定義を参照してHTML生成する。</div>
+  </div>
+</div>
+
+<div class="flow-step">
+  <div class="flow-num">5</div>
+  <div class="flow-content">
+    <div class="flow-title">確認・修正</div>
+    <div class="flow-detail">「この部分を修正して。要件定義にも反映して」。バージョン管理は自動（v1→v2→v3）。旧版は残る。</div>
+  </div>
+</div>
+
+<div class="flow-step">
+  <div class="flow-num">6</div>
+  <div class="flow-content">
+    <div class="flow-title">GitHub Pagesで公開（/publish-proposal）</div>
+    <div class="flow-detail">「GitHub Pagesを更新して」と依頼するだけ。パスワード保護付きURLを自動発行する。現在の公開URL：<code>https://artsoul-git.github.io/maru-proposal-2026/</code></div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===== Section 6 ===== -->
+<h2 id="sec6">6. 使い倒しポイント10選</h2>
+
+<div class="step">
+<p><span class="tip-num">①</span><strong>Knowledgeに入れてから頼む</strong><br>
+ヒアリング後すぐ文字起こしをKnowledgeに入れる。「ヒアリング内容を反映して」だけで提案書の中身が現場の実態に即したものになる。架空数値・推測が入らない。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">②</span><strong>「要件定義に追加して」が最強コマンド</strong><br>
+何か方針が変わったり、新しい情報が入った時に「これを要件定義に追加して」と言うだけ。要件定義.mdがプロジェクトの「生きた設計書」になり、次回以降もAIが参照し続ける。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">③</span><strong>バージョン管理は自動</strong><br>
+提案書を修正するたびにv1→v2→v3と自動でバージョンが上がり、旧版は消えない。「v2に戻して」も可能。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">④</span><strong>GitHub Pagesで即URL送付</strong><br>
+「GitHub Pagesを更新して」だけでクライアントにURLを送れる状態になる。その日中にURLで提案内容を見せられる。Gitの知識は不要。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑤</span><strong>「覚えておいて」で次回以降も文脈が続く</strong><br>
+重要な情報や決定事項は「これを覚えておいて」と言うだけでmemory/に自動保存される。次のセッションでも忘れない。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑥</span><strong>ファイルパスをそのまま渡せる</strong><br>
+ターミナルや画面から <code>&amp; 'D:\パス\ファイル名.txt'</code> の形でファイルを渡すと、AIがそのファイルを読んで作業してくれる。複数ファイルを一度に渡すことも可能。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑦</span><strong>「◯◯についての部分だけ修正して。他は変えないで」</strong><br>
+大きなHTMLファイルでも特定のセクションだけを指定して修正できる。無駄な変更が入らない。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑧</span><strong>! コマンドでその場でターミナル実行</strong><br>
+<code>! git status</code> のように <code>!</code> を前置するとターミナルコマンドをチャット内で実行できる。「このエラーどう直す？」がスムーズになる。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑨</span><strong>「このメモを元に整理して」で文章整形</strong><br>
+思考途中の箇条書きメモや会議の走り書きを貼り付けて「整理して要件定義に追加して」と言うだけ。まる様の「案件整理メモ_まる.txt」がこの使い方の実例。</p>
+</div>
+
+<div class="step">
+<p><span class="tip-num">⑩</span><strong>既存スキルの業種パターンに「追加して」</strong><br>
+<code>/sme-ai-proposal</code> の業種パターンは増やせる。「このクライアントの業種パターンをスキルに追加して」と言えば次回から同業種への提案品質が自動で上がる。</p>
+</div>
+
+<hr>
+
+<!-- ===== Section 7 ===== -->
+<h2 id="sec7">7. このガイドの更新ルール</h2>
+
+<h3>更新すべきタイミング</h3>
+<ul>
+  <li>新しいスキルを追加した時 → 「3. スキル一覧」に追加</li>
+  <li>CLAUDE.mdを変更した時 → 「4. AIが自動で読む仕組み」を更新</li>
+  <li>案件フォルダ構成が変わった時 → 「1. システム全体マップ」を更新</li>
+  <li>新しいクライアントプロジェクトが始まった時 → 「1. システム全体マップ」に案件フォルダを追加</li>
+  <li>使い方のコツを発見した時 → 「6. 使い倒しポイント」に追加</li>
+</ul>
+
+<h3>更新の指示方法</h3>
+<pre>「AIエージェント活用ガイドを更新して。[変更内容]」</pre>
+<p>AIが <code>00_AIエージェント活用ガイド.md</code> を直接編集する。承認したらgitにコミットする。</p>
+
+<div class="ok"><span class="label">✅ このガイドを更新した後に必ずやること</span>
+<ol>
+  <li>変更内容を「8. 変更履歴」に追記する</li>
+  <li>git commit する（AIが自動でやる）</li>
+</ol>
+</div>
+
+<hr>
+
+<!-- ===== Section 8 ===== -->
+<h2 id="sec8">8. 変更履歴</h2>
+<p>直近5件を表示。全履歴は下のボックスをスクロールして確認。</p>
+
+<div class="changelog-scroll">
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>2.6</td><td>2026-05-18</td><td>「自律実行フレームワーク CC完全ガイド」新設。12の自律キャパシティ、並列実行、A2Aチェック、5大報告フォーマットの解説書を追加。総合マニュアルにリンク連携。</td></tr>
+<tr><td>2.5</td><td>2026-05-18</td><td>「プロンプト拡張・デュアル定着解説書」新設。高度なAI拡張指示文の用語解説と「エミ式AI定着メソッド（能動・受動デュアルアプローチ）」の現場ノウハウを解説。</td></tr>
+<tr><td>2.4</td><td>2026-05-17</td><td>/course-build スキル追加。seminar-talkscript-guide.mdに主張＋4要素構造を注入。スキル使い倒し完全マニュアル新設。総合マニュアルに未掲載だった16スキルの詳細説明を追記。</td></tr>
+<tr><td>2.3</td><td>2026-05-14</td><td>/visualize を全面刷新。4象限マトリクス・マンダラチャートにフロー図・ガントチャートを追加。ドリルダウンモード追加。</td></tr>
+<tr><td>2.2</td><td>2026-05-14</td><td>/kpi-design・/hr-transform・/ma スキル追加。/issue-tree をロジックツリー（Why/How/What Tree）対応に拡張。</td></tr>
+<tr><td>2.1</td><td>2026-05-14</td><td>/issue-tree・/stakeholder スキル追加。案件ナレッジ蓄積ルール新設。</td></tr>
+<tr><td>2.0</td><td>2026-05-14</td><td>/finance スキル追加。P&Lシミュレーション・DCF・損益分岐点・価格戦略・CF計画・リスク定量化を実装。</td></tr>
+<tr><td>1.9</td><td>2026-05-14</td><td>/research スキル追加。WebSearchで市場規模・トレンド・競合分析を実調査。</td></tr>
+<tr><td>1.8</td><td>2026-05-14</td><td>/profit-plan スキル追加。EPDCARサイクル＋EOODARモデルで収益計画を5ステージで構築。</td></tr>
+<tr><td>1.7</td><td>2026-05-14</td><td>/visualize スキル追加。4象限マトリクス・マンダラチャートの分析＋draw.io XML生成。</td></tr>
+<tr><td>1.6</td><td>2026-05-14</td><td>/talk-script スキル追加。既存スライドPDFからトークスクリプトを生成。</td></tr>
+<tr><td>1.5</td><td>2026-05-14</td><td>/marketing スキル追加。DRM戦略壁打ち・LP設計・コピーライティング・USP開発に対応。</td></tr>
+<tr><td>1.4</td><td>2026-05-13</td><td>/text-refine スキル追加。音声整文・メール作成・X投稿・文章校正を1コマンドで自動ルーティング。</td></tr>
+<tr><td>1.3</td><td>2026-05-09</td><td>経営管理フォルダ新設。01_経営管理/・Kaiブリーフィング記録・構造改革ロードマップ追加。Kai 90%/上村10%モデルへの構造改革設計。</td></tr>
+<tr><td>1.2</td><td>2026-05-09</td><td>組織再設計。rules/CONSTITUTION.md（憲法）・brain-article-rules.md 新設。/project-intake 受付スキル追加。</td></tr>
+<tr><td>1.1</td><td>2026-05-09</td><td>/publish-proposal スキル追加。まる様提案書のパスワード保護付きGitHub Pages公開手順をスキル化。</td></tr>
+<tr><td>1.0</td><td>2026-05-07</td><td>初版作成。スキル3本・ファイルゾーン・使い倒しポイント10選・標準フロー。</td></tr>
+</table>
+</div>
+
+</div><!-- .container -->
+</div><!-- .main-content -->
+
+<!-- Page Top Button -->
+<button id="page-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ページトップへ">↑</button>
+
+<script>
+window.addEventListener('scroll', function(){
+  var btn = document.getElementById('page-top-btn');
+  btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
+</script>
+
+</body>
+</html>
