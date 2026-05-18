@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kai ダッシュボード — アートソウル</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Yu Gothic UI","Meiryo",sans-serif;background:#F0F2F5;color:#2D3748;min-height:100vh;}
+
+/* ===== HEADER ===== */
+.dh{position:sticky;top:0;z-index:200;background:#1A365D;padding:10px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 12px rgba(0,0,0,0.25);}
+.dh-brand{white-space:nowrap;}
+.dh-logo{font-size:12px;color:#A0AEC0;}
+.dh-kai{display:block;font-size:16px;font-weight:bold;color:#fff;line-height:1.2;}
+.dh-ver{font-size:10px;color:#ED8936;background:rgba(237,137,54,0.15);padding:1px 7px;border-radius:10px;display:inline-block;}
+.dh-search{flex:1;position:relative;}
+.dh-search input{width:100%;padding:9px 16px;border-radius:8px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-size:14px;outline:none;transition:border-color 0.2s;}
+.dh-search input::placeholder{color:#A0AEC0;}
+.dh-search input:focus{border-color:#ED8936;background:rgba(255,255,255,0.15);}
+#suggest-panel{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.15);z-index:300;max-height:320px;overflow-y:auto;display:none;}
+#suggest-panel.open{display:block;}
+.sp-item{padding:10px 16px;cursor:pointer;border-bottom:1px solid #F0F2F5;display:flex;align-items:flex-start;gap:10px;}
+.sp-item:hover{background:#F7FAFC;}
+.sp-item:last-child{border:none;}
+.sp-cmd{font-weight:bold;color:#1A365D;font-size:13px;white-space:nowrap;}
+.sp-reason{font-size:12px;color:#718096;flex:1;}
+.sp-badge{font-size:10px;background:#EDF2F7;color:#4A5568;padding:2px 7px;border-radius:10px;white-space:nowrap;}
+.dh-links{display:flex;gap:10px;white-space:nowrap;}
+.dh-links a{font-size:12px;color:#CBD5E0;text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);transition:all 0.15s;}
+.dh-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
+
+/* ===== PHILOSOPHY ===== */
+.philosophy{background:#1A365D;border-top:1px solid rgba(255,255,255,0.1);padding:8px 24px;font-size:12px;color:#A0AEC0;}
+.philosophy strong{color:#ED8936;}
+.philosophy em{color:#CBD5E0;}
+
+/* ===== CATEGORY TABS ===== */
+.cat-bar{background:#fff;padding:0 16px;display:flex;gap:4px;overflow-x:auto;border-bottom:2px solid #E2E8F0;position:sticky;top:60px;z-index:100;box-shadow:0 2px 4px rgba(0,0,0,0.05);}
+.cat-bar::-webkit-scrollbar{height:3px;}
+.cat-bar::-webkit-scrollbar-thumb{background:#E2E8F0;}
+.ct{flex-shrink:0;padding:10px 14px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:#718096;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.15s;white-space:nowrap;}
+.ct:hover{color:#1A365D;}
+.ct.active{color:#1A365D;border-bottom-color:#ED8936;}
+
+/* ===== MAIN ===== */
+.main-wrap{max-width:1400px;margin:0 auto;padding:20px 16px;}
+
+/* ===== AI RECOMMEND ===== */
+.rec-box{background:linear-gradient(135deg,#FFFAF0 0%,#FFF5E6 100%);border:2px solid #ED8936;border-radius:12px;padding:16px 20px;margin-bottom:20px;display:none;}
+.rec-box.visible{display:block;}
+.rec-title{font-size:13px;font-weight:bold;color:#C05621;margin-bottom:10px;}
+.rec-cards{display:flex;gap:10px;flex-wrap:wrap;}
+.rec-card{background:#fff;border-radius:8px;padding:10px 14px;flex:1;min-width:200px;border-left:4px solid #ED8936;cursor:pointer;transition:box-shadow 0.15s;}
+.rec-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.1);}
+.rc-cmd{font-weight:bold;color:#1A365D;font-size:14px;}
+.rc-reason{font-size:12px;color:#718096;margin-top:3px;}
+
+/* ===== IMPORT FLOW ===== */
+.import-flow{background:linear-gradient(135deg,#EDF2F7 0%,#E6EEFF 100%);border-radius:12px;padding:16px 20px;margin-bottom:20px;border:1px solid #CBD5E0;}
+.if-title{font-size:13px;font-weight:bold;color:#2D3748;margin-bottom:12px;}
+.if-diagram{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.if-node{background:#fff;border-radius:8px;padding:10px 14px;font-size:13px;font-weight:600;color:#1A365D;border:2px solid #CBD5E0;text-align:center;line-height:1.4;}
+.if-node small{display:block;font-size:11px;color:#718096;font-weight:normal;}
+.if-node.input{border-color:#3182CE;}
+.if-node.output{border-color:#38A169;}
+.if-node.use{border-color:#805AD5;}
+.if-tools{display:flex;flex-direction:column;gap:6px;}
+.if-tool{background:#fff;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;color:#1A365D;border:2px solid #ED8936;text-align:center;line-height:1.4;}
+.if-tool small{display:block;font-size:11px;color:#718096;font-weight:normal;}
+.if-arrow{font-size:20px;color:#718096;flex-shrink:0;}
+
+/* ===== CATEGORY SECTION ===== */
+.cat-section{margin-bottom:24px;}
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.cat-icon{font-size:20px;}
+.cat-name{font-size:18px;font-weight:bold;color:#1A365D;}
+.cat-desc{font-size:12px;color:#718096;margin-left:auto;}
+.cat-count{font-size:12px;background:#EDF2F7;color:#4A5568;padding:2px 8px;border-radius:10px;}
+
+/* ===== SKILL CARDS ===== */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.sk-card{background:#fff;border-radius:10px;padding:16px 18px;border:1px solid #E2E8F0;border-left:5px solid #CBD5E0;transition:box-shadow 0.15s,transform 0.1s;cursor:default;position:relative;}
+.sk-card:hover{box-shadow:0 6px 20px rgba(0,0,0,0.1);transform:translateY(-1px);}
+.sk-card[data-cat="import"]{border-left-color:#3182CE;}
+.sk-card[data-cat="content"]{border-left-color:#805AD5;}
+.sk-card[data-cat="proposal"]{border-left-color:#ED8936;}
+.sk-card[data-cat="research"]{border-left-color:#2B6CB0;}
+.sk-card[data-cat="finance"]{border-left-color:#276749;}
+.sk-card[data-cat="org"]{border-left-color:#6B46C1;}
+.sk-card[data-cat="docs"]{border-left-color:#2C7A7B;}
+.sk-card[data-cat="quality"]{border-left-color:#C53030;}
+.sk-card[data-cat="system"]{border-left-color:#744210;}
+.sk-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.sk-icon{font-size:22px;flex-shrink:0;line-height:1;}
+.sk-cmd{font-size:15px;font-weight:bold;color:#1A365D;line-height:1.3;}
+.sk-title{font-size:12px;color:#718096;}
+.sk-desc{font-size:13px;color:#4A5568;line-height:1.6;margin-bottom:10px;}
+.sk-io{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.sk-io-group{flex:1;min-width:120px;}
+.sk-io-label{font-size:10px;font-weight:bold;color:#718096;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;}
+.sk-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.sk-tag{font-size:11px;padding:2px 7px;border-radius:10px;background:#EDF2F7;color:#4A5568;}
+.sk-tag.in{background:#EBF8FF;color:#2B6CB0;}
+.sk-tag.out{background:#F0FFF4;color:#276749;}
+.sk-footer{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid #F0F2F5;}
+.sk-link{font-size:12px;color:#3182CE;text-decoration:none;font-weight:600;}
+.sk-link:hover{text-decoration:underline;}
+.sk-status{font-size:10px;padding:2px 8px;border-radius:10px;margin-left:auto;}
+.sk-status.active{background:#F0FFF4;color:#276749;}
+.sk-status.dev{background:#FFFBEB;color:#975A16;}
+
+/* ===== REGISTRY ===== */
+.registry-section{background:#fff;border-radius:12px;padding:24px;margin-top:8px;}
+.registry-section h2{font-size:22px;color:#1A365D;margin-bottom:6px;border-bottom:3px solid #ED8936;padding-bottom:10px;}
+.reg-lead{font-size:13px;color:#718096;margin-bottom:16px;}
+.reg-meta{font-size:12px;color:#A0AEC0;margin-bottom:16px;background:#F7FAFC;padding:10px 14px;border-radius:8px;line-height:1.8;}
+.reg-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.rf{padding:5px 12px;font-size:12px;font-weight:600;border:1px solid #E2E8F0;border-radius:6px;background:#fff;cursor:pointer;color:#718096;transition:all 0.15s;}
+.rf.active{background:#1A365D;color:#fff;border-color:#1A365D;}
+.reg-table{width:100%;border-collapse:collapse;font-size:13px;}
+.reg-table th{background:#1A365D;color:#fff;padding:10px 12px;text-align:left;font-size:12px;font-weight:600;}
+.reg-table td{padding:10px 12px;border-bottom:1px solid #E2E8F0;vertical-align:top;}
+.reg-table tr:hover td{background:#F7FAFC;}
+.rt-name{font-weight:bold;color:#1A365D;}
+.rt-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;}
+.rt-agent{background:#EBF8FF;color:#2B6CB0;}
+.rt-app{background:#FFFAF0;color:#C05621;}
+.rt-knowledge{background:#F0FFF4;color:#276749;}
+.rt-skill{background:#FAF5FF;color:#553C9A;}
+.rt-style{background:#FFF5F5;color:#C53030;}
+.rt-output{background:#F0F2F5;color:#4A5568;}
+.rt-path{font-size:11px;color:#718096;font-family:monospace;background:#F0F2F5;padding:2px 6px;border-radius:4px;}
+.rt-created{font-size:11px;color:#718096;}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
+.sd-active{background:#38A169;}
+.sd-dev{background:#ED8936;}
+.rt-how{font-size:12px;color:#4A5568;}
+
+/* ===== NO RESULT ===== */
+.no-result{text-align:center;padding:60px 20px;color:#A0AEC0;font-size:15px;}
+.no-result .nr-icon{font-size:48px;margin-bottom:10px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:640px){
+  .dh{flex-wrap:wrap;gap:8px;}
+  .dh-links{display:none;}
+  .skill-grid{grid-template-columns:1fr;}
+  .if-diagram{flex-direction:column;}
+  .if-arrow{transform:rotate(90deg);}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="dh">
+  <div class="dh-brand">
+    <span class="dh-logo">有限会社アートソウル</span>
+    <span class="dh-kai">Kai ダッシュボード</span>
+    <span class="dh-ver">v1.0 draft</span>
+  </div>
+  <div class="dh-search">
+    <input id="q" type="text" placeholder="🔍 やりたいことを入力...（例：セミナーの知識を整理したい、提案書を作りたい）" autocomplete="off">
+    <div id="suggest-panel"></div>
+  </div>
+  <div class="dh-links">
+    <a href="総合マニュアル.html" target="_blank">旧マニュアル↗</a>
+    <a href="../00_AIエージェント活用ガイド.md" target="_blank">活用ガイド↗</a>
+  </div>
+</header>
+<div class="philosophy">
+  <strong>設計思想：</strong>「目的 → ツール → 成果物 → 次の活用」のサイクルで資産を管理する。
+  アプリ開発会社的には <em>Internal Developer Portal（Backstage/Storybook型）</em> — すべての資産にメタデータをつけ、目的から発見できる状態にする。
+</div>
+
+<!-- ===== TABS ===== -->
+<div class="cat-bar">
+  <button class="ct active" data-cat="all">🔍 全て</button>
+  <button class="ct" data-cat="import">🔄 インポート系</button>
+  <button class="ct" data-cat="content">📢 コンテンツ</button>
+  <button class="ct" data-cat="proposal">🎯 提案・営業</button>
+  <button class="ct" data-cat="research">🔬 調査・分析</button>
+  <button class="ct" data-cat="finance">💰 財務・事業</button>
+  <button class="ct" data-cat="org">🏗 組織・人材</button>
+  <button class="ct" data-cat="docs">📄 ビジネス文書</button>
+  <button class="ct" data-cat="quality">✅ 品質・評価</button>
+  <button class="ct" data-cat="system">⚙️ システム基盤</button>
+  <button class="ct" data-cat="registry">📦 アセット台帳</button>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div class="main-wrap">
+
+  <!-- AI Recommend Box -->
+  <div class="rec-box" id="rec-box">
+    <div class="rec-title">💡 Kaiの提案 — 入力に合わせたスキルを選びました</div>
+    <div class="rec-cards" id="rec-cards"></div>
+  </div>
+
+  <!-- Import Flow (shown when cat=import or all) -->
+  <div class="import-flow" id="import-flow">
+    <div class="if-title">🔄 インポート系 — 外部素材を自社資産に変換するフロー（/knowledge-craft・/seminar-dna・/skill-craft はここに集約）</div>
+    <div class="if-diagram">
+      <div class="if-node input">外部素材<br><small>資料・書籍・セミナー・音声</small></div>
+      <div class="if-arrow">▶</div>
+      <div class="if-tools">
+        <div class="if-tool">/knowledge-craft<br><small>→ Knowledge MD（外部公開版）+ HTMLマニュアル（内部メモ付き）</small></div>
+        <div class="if-tool">/seminar-dna<br><small>→ セミナースタイル型 + パターンライブラリ</small></div>
+        <div class="if-tool">/skill-craft<br><small>→ スキル定義 + HTMLマニュアル → エージェント化候補</small></div>
+      </div>
+      <div class="if-arrow">▶</div>
+      <div class="if-node output">自社資産ライブラリ<br><small>Knowledge / Style型 / Skill / Agent</small></div>
+      <div class="if-arrow">▶</div>
+      <div class="if-node use">活用<br><small>提案・コンテンツ・Kai再学習</small></div>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div id="skills-section">
+    <div id="grid" class="skill-grid"></div>
+  </div>
+
+  <!-- Asset Registry -->
+  <section id="registry" class="registry-section" style="display:none;">
+    <h2>📦 アセット台帳</h2>
+    <p class="reg-lead">Kaiが作成・管理している全資産の台帳。種別・作成方法・保管場所・状態を一元管理する。<br>
+    <strong>新しいアセットができたら即登録</strong>（作成に使ったスキル・指示文のポイントも記録する）。</p>
+    <div class="reg-meta">
+      💡 <strong>ソフトウェア会社はどうやってるか：</strong>
+      Spotify Backstageは各サービスに <code>catalog-info.yaml</code> を置き「オーナー・種別・依存関係」を記録。
+      Storybookはコンポーネントをカテゴリ別にカタログ化し実例付きで閲覧可。
+      私たちのアセット台帳はその考え方を適用 — スキル・エージェント・アプリすべてに「何が・誰が・どうやって・なぜ」を記録する。
+    </div>
+    <div class="reg-filters">
+      <button class="rf active" data-rtype="all">全て</button>
+      <button class="rf" data-rtype="agent">🤖 エージェント</button>
+      <button class="rf" data-rtype="app">📱 アプリ</button>
+      <button class="rf" data-rtype="knowledge">📚 Knowledge</button>
+      <button class="rf" data-rtype="skill">⚗️ スキル定義</button>
+      <button class="rf" data-rtype="style">🧬 スタイル型</button>
+      <button class="rf" data-rtype="output">📄 成果物サンプル</button>
+    </div>
+    <table class="reg-table">
+      <thead>
+        <tr>
+          <th>アセット名</th>
+          <th>種別</th>
+          <th>作成方法・使ったスキル</th>
+          <th>目的・用途</th>
+          <th>保管場所</th>
+          <th>状態</th>
+        </tr>
+      </thead>
+      <tbody id="reg-body"></tbody>
+    </table>
+  </section>
+</div>
+
+<script>
+// =====================================================
+// SKILLS DATA
+// =====================================================
+const CAT_META = {
+  import:   { icon:'🔄', name:'インポート系',    desc:'外から取り込む — 他者の知識・スタイル・素材を自社資産に変換する' },
+  content:  { icon:'📢', name:'コンテンツ発信',  desc:'外に出す — 記事・スライド・ガイドなどのコンテンツを作る' },
+  proposal: { icon:'🎯', name:'提案・営業',       desc:'仕事を取る — 提案書作成から受注・公開まで' },
+  research: { icon:'🔬', name:'調査・分析',       desc:'知る・考える — 調査から戦略立案まで' },
+  finance:  { icon:'💰', name:'財務・事業設計',   desc:'お金を設計する — 事業モデル・財務シミュレーション' },
+  org:      { icon:'🏗', name:'組織・人材',       desc:'人と組織を整える — 組織設計・研修・AI導入推進' },
+  docs:     { icon:'📄', name:'ビジネス文書',     desc:'書類を作る — ヒアリングから契約・報告まで' },
+  quality:  { icon:'✅', name:'品質・評価',       desc:'確かめる・振り返る — ファクトチェック・定期評価' },
+  system:   { icon:'⚙️', name:'システム基盤',    desc:'動かす環境 — アプリ・ツール・Claude Code基盤' },
+};
+
+const SKILLS = [
+  // ===== IMPORT =====
+  { id:'knowledge-craft', cat:'import', icon:'📚', cmd:'/knowledge-craft', title:'外部資料→知識資産化',
+    desc:'外部資料・体験談・セミナー素材からコンサル知識MD（外部公開版）+ HTMLマニュアル（Kai評価・内部メモ付き）を一気通貫生成。第三者著作権セーフ変換チェックリスト自動適用。',
+    input:['外部資料','体験談','セミナー素材'], output:['Knowledge MD（公開版）','HTMLマニュアル（内部メモ付き）'],
+    link:'knowledge-craft完全ガイド.html', tags:['知識化','インポート','外部資料','knowledge'], status:'active' },
+  { id:'seminar-dna', cat:'import', icon:'🧬', cmd:'/seminar-dna', title:'セミナー→スタイル型抽出',
+    desc:'文字起こし・参照資料からセミナーの「型」を抽出・命名・テンプレート化。パターンライブラリに蓄積し、apply <パターン名> で任意テーマ・ターゲットに台本量産。',
+    input:['セミナー文字起こし','参照資料'], output:['スタイル型定義MD','パターンライブラリ','台本テンプレート'],
+    link:'seminar-dna完全ガイド.html', tags:['スタイル抽出','セミナー','DNA','パターン','量産'], status:'active' },
+  { id:'skill-craft', cat:'import', icon:'⚗️', cmd:'/skill-craft', title:'素材→スキル・エージェント定義',
+    desc:'文字起こし・書籍・素材を受け取り、著作権セーフな概念抽出→スキル定義生成→HTMLマニュアル作成→総合マニュアル連携を一気通貫自動化。',
+    input:['文字起こし','書籍','音声素材'], output:['スキル定義MD','HTMLマニュアル','エージェント定義候補'],
+    link:'skill-craft完全ガイド.html', tags:['スキル化','素材変換','エージェント','craft'], status:'active' },
+
+  // ===== CONTENT =====
+  { id:'write-brain-article', cat:'content', icon:'✍️', cmd:'/write-brain-article', title:'Brain有料記事執筆',
+    desc:'参考記事のスタイルを分析して新しいBrain記事を執筆。ユニコスタイル（冒頭フック・実績・CTA）準拠。',
+    input:['テーマ','参考記事（任意）'], output:['Brain記事MD'],
+    link:null, tags:['記事','Brain','コンテンツ','有料記事'], status:'active' },
+  { id:'seminar-slide', cat:'content', icon:'🎬', cmd:'/seminar-slide', title:'セミナースライド全自動作成',
+    desc:'テーマを投げるとヒアリング→slides.js生成→GitHub Pages公開まで一気通貫。スライドビルダーツールと連携。',
+    input:['セミナーテーマ','対象者'], output:['slides.js HTML','GitHub Pages URL'],
+    link:'スライドビルダー完全ガイド.html', tags:['スライド','セミナー','GitHub Pages','公開'], status:'active' },
+  { id:'content-burst', cat:'content', icon:'💥', cmd:'/content-burst', title:'6チャネル同時発信',
+    desc:'テーマ1つからリサーチレポート/ブログ/X投稿/YouTube台本/メルマガ/ビジュアルマップを並列生成。cb-*エージェント連動・Kai Tasks自動記録。',
+    input:['テーマ'], output:['リサーチレポート','ブログ','X投稿','YouTube台本','メルマガ','ビジュアルマップ'],
+    link:null, tags:['並列','6チャネル','コンテンツ量産','SNS'], status:'active' },
+  { id:'deck-sprint', cat:'content', icon:'⚡', cmd:'/deck-sprint', title:'スライド+レポート高速生成',
+    desc:'テーマ1つからレポート+HTMLスライド+アジェンダを5分で高速生成。ds-*エージェント連動・テンプレート差し替え方式でトークン効率最大化。',
+    input:['テーマ'], output:['HTMLスライド','レポートMD','アジェンダ'],
+    link:null, tags:['スライド','高速','5分','レポート'], status:'active' },
+  { id:'beginner-guide', cat:'content', icon:'📘', cmd:'/beginner-guide', title:'初心者向けガイドブック',
+    desc:'初心者向けHTMLガイドブック作成。やさしい説明・ビジュアル重視。',
+    input:['テーマ','対象読者'], output:['HTMLガイドブック'],
+    link:null, tags:['初心者','ガイド','教育','HTML'], status:'active' },
+  { id:'ai-news-digest', cat:'content', icon:'📰', cmd:'/ai-news-digest', title:'AIニュースダイジェスト',
+    desc:'AIニュースダイジェスト生成。最新動向をまとめて発信。',
+    input:['期間','分野（任意）'], output:['ニュースダイジェストMD/HTML'],
+    link:null, tags:['ニュース','AI','ダイジェスト'], status:'active' },
+  { id:'talk-script', cat:'content', icon:'🎤', cmd:'/talk-script', title:'トークスクリプト生成',
+    desc:'既存スライド（PDF等）を読み込み、プレゼン用トークスクリプトを生成する。',
+    input:['スライドPDF/HTML'], output:['トークスクリプトMD'],
+    link:null, tags:['スクリプト','プレゼン','トーク'], status:'active' },
+  { id:'text-refine', cat:'content', icon:'✏️', cmd:'/text-refine', title:'文章整文・校正・リライト',
+    desc:'音声整文・文章校正・リライト・メール作成・X投稿文生成を自動ルーティング。',
+    input:['音声/テキスト'], output:['整文済みテキスト','メール文','X投稿文'],
+    link:null, tags:['整文','校正','メール','SNS','X'], status:'active' },
+
+  // ===== PROPOSAL =====
+  { id:'project-intake', cat:'proposal', icon:'📋', cmd:'/project-intake', title:'受付・スキルルーティング',
+    desc:'自然言語の依頼を受け取り、適切なスキルにルーティングする受付。ブリーフィング自動生成。迷ったらまずここ。',
+    input:['自然言語の依頼'], output:['ブリーフィング','最適スキル提案'],
+    link:null, tags:['受付','ルーティング','ブリーフィング','入口'], status:'active' },
+  { id:'sme-ai-proposal', cat:'proposal', icon:'📊', cmd:'/sme-ai-proposal', title:'AI導入提案書（中小企業向け）',
+    desc:'中小企業向けAI導入支援提案書（HTML）生成。ヒアリング→ROI試算→6ヶ月計画まで。',
+    input:['ヒアリング結果','業種・規模'], output:['提案書HTML'],
+    link:null, tags:['提案書','中小企業','AI導入','ROI','HTML'], status:'active' },
+  { id:'publish-proposal', cat:'proposal', icon:'🌐', cmd:'/publish-proposal', title:'提案書をGitHub Pages公開',
+    desc:'提案書をパスワード保護付きGitHub Pagesで公開。URL+パスワードをクライアントに共有。',
+    input:['提案書HTML'], output:['GitHub Pages URL','パスワード保護URL'],
+    link:null, tags:['公開','GitHub Pages','パスワード','URL'], status:'active' },
+  { id:'marketing', cat:'proposal', icon:'📣', cmd:'/marketing', title:'DRM戦略・LP・コピーライティング',
+    desc:'DRM戦略の壁打ち・LP設計・コピーライティング・USP開発・ファネル設計（神崎潤ペルソナ）。',
+    input:['商品・サービス情報','ターゲット'], output:['DRM戦略','LP設計書','コピー文'],
+    link:null, tags:['マーケティング','LP','コピー','DRM','USP','ファネル'], status:'active' },
+
+  // ===== RESEARCH =====
+  { id:'research', cat:'research', icon:'🔍', cmd:'/research', title:'市場調査・競合分析',
+    desc:'業種・テーマ・競合をWebSearchで実調査し、市場規模・トレンド・競合分析レポートを生成。他スキルのインプットとして使う。',
+    input:['調査テーマ','業種・競合'], output:['調査レポートMD/HTML'],
+    link:null, tags:['調査','市場','競合','WebSearch'], status:'active' },
+  { id:'issue-tree', cat:'research', icon:'🌳', cmd:'/issue-tree', title:'問題構造化（ロジックツリー）',
+    desc:'ロジックツリー（Why/How/What）とイシューツリーの2フレームワークで問題を構造化。クリティカルイシュー特定・So What?連鎖・アクション優先度付け。',
+    input:['課題・問題'], output:['ロジックツリー','イシューツリー','アクション優先度表'],
+    link:null, tags:['ロジック','イシュー','構造化','問題解決'], status:'active' },
+  { id:'visualize', cat:'research', icon:'🗺️', cmd:'/visualize', title:'思考可視化（マトリクス・フロー）',
+    desc:'4象限マトリクス・マンダラチャート・フロー図・ガントチャートをブラウザ表示HTMLで生成。ドリルダウンモードで段階的深掘りが可能。',
+    input:['テーマ・項目データ'], output:['インタラクティブHTML（各図）'],
+    link:null, tags:['可視化','マトリクス','マンダラ','フロー','ガント'], status:'active' },
+  { id:'rashinban', cat:'research', icon:'🧭', cmd:'/rashinban', title:'羅針盤（目標→全自動可視化）',
+    desc:'目標・課題をヒアリング（5問）→Kai全体分析→マンダラ64項目→マトリクス8枚→フロー図→ガントを1ファイルのインタラクティブHTMLで生成。/visualize 羅針盤の省略形。',
+    input:['目標・課題（5問回答）'], output:['羅針盤HTML（マンダラ+マトリクス+フロー+ガント）'],
+    link:null, tags:['羅針盤','目標設定','全自動','インタラクティブ','マンダラ'], status:'active' },
+  { id:'stakeholder', cat:'research', icon:'👥', cmd:'/stakeholder', title:'ステークホルダー分析',
+    desc:'意思決定者・抵抗勢力・支持者を影響力×関心度マトリクスで整理し、提案を通すための攻略シナリオを設計する。',
+    input:['関係者リスト','状況'], output:['ステークホルダーマトリクス','攻略シナリオ'],
+    link:null, tags:['ステークホルダー','関係者','影響力','攻略'], status:'active' },
+
+  // ===== FINANCE =====
+  { id:'finance', cat:'finance', icon:'💹', cmd:'/finance', title:'財務シミュレーション・DCF',
+    desc:'損益シミュレーション（3シナリオ）・DCF・損益分岐点・価格戦略・CF計画・リスク定量化。数字に裏付けられた意思決定を支援する。',
+    input:['売上・コスト情報','事業計画'], output:['財務シミュレーション表','DCF計算','損益分岐点分析'],
+    link:null, tags:['財務','DCF','損益','シミュレーション','CF'], status:'active' },
+  { id:'profit-plan', cat:'finance', icon:'💡', cmd:'/profit-plan', title:'儲けのプラン設計',
+    desc:'EPDCARサイクル＋EOODARモデル（上村オリジナルフレームワーク）で短中長期の収益計画を構築する。',
+    input:['テーマ・事業情報'], output:['収益計画書','フェーズロードマップ'],
+    link:null, tags:['収益','プラン','EPDCAR','EOODAR','ロードマップ'], status:'active' },
+  { id:'kpi-design', cat:'finance', icon:'📈', cmd:'/kpi-design', title:'KGI→KPI体系設計',
+    desc:'KGI→CSF→KPI→KDI体系とOKR設計・ダッシュボード構築・レビューサイクル設計まで。AI導入効果の計測にも対応。',
+    input:['経営目標','事業KGI'], output:['KPI体系表','OKR設計','ダッシュボード設計'],
+    link:null, tags:['KPI','KGI','OKR','目標管理','ダッシュボード'], status:'active' },
+  { id:'ma', cat:'finance', icon:'🤝', cmd:'/ma', title:'スモールM&A支援',
+    desc:'取引額5,000万円以下のスモールM&Aを支援。企業価値評価（3手法）・DDチェックリスト・ストラクチャー比較・PMI・価格交渉・LOI骨子。',
+    input:['対象企業情報','買収目的'], output:['企業価値評価','DDチェックリスト','LOI骨子'],
+    link:null, tags:['M&A','企業価値','デューデリジェンス','PMI','LOI'], status:'active' },
+
+  // ===== ORG =====
+  { id:'company-setup', cat:'org', icon:'🏢', cmd:'/company-setup', title:'AI組織ゼロベース設計',
+    desc:'AI組織をゼロベース設計・構築（業種・業態問わず対応）。エージェント設計から運用体制まで。',
+    input:['業種・規模','現状の組織'], output:['AI組織設計書','エージェント構成案'],
+    link:null, tags:['組織設計','AI導入','エージェント設計','ゼロベース'], status:'active' },
+  { id:'hr-transform', cat:'org', icon:'👨‍💼', cmd:'/hr-transform', title:'AI導入×人材マネジメント',
+    desc:'AI導入・業務改革の人材マネジメントを5フェーズで設計。変革準備診断・AIマネージャー育成・役割再設計・研修・定着管理。',
+    input:['組織情報','変革目標'], output:['5フェーズ人材変革計画','研修設計'],
+    link:null, tags:['HR','人材','変革管理','研修','AI定着'], status:'active' },
+  { id:'course-build', cat:'org', icon:'🎓', cmd:'/course-build', title:'カリキュラム設計',
+    desc:'テーマと対象者からカリキュラムを設計。受講者診断（現状・障壁・理想）→マイルストーン3軸→アウトライン→レクチャー設計書まで一気通貫。',
+    input:['テーマ','対象受講者'], output:['カリキュラム設計書','レクチャー設計書'],
+    link:null, tags:['カリキュラム','研修','コース','学習設計'], status:'active' },
+
+  // ===== DOCS =====
+  { id:'hearing-sheet', cat:'docs', icon:'📝', cmd:'/hearing-sheet', title:'ヒアリングシート生成',
+    desc:'業種（12種）×部門（4種）に合わせたヒアリングシートをExcelで動的生成。文字起こしからの自動記入にも対応。',
+    input:['業種・部門'], output:['Excel ヒアリングシート'],
+    link:null, tags:['ヒアリング','Excel','シート'], status:'active' },
+  { id:'proposal-outline', cat:'docs', icon:'📄', cmd:'/proposal-outline', title:'提案骨子生成',
+    desc:'ヒアリング結果（Excel/文字起こし/メモ）から提案骨子（1〜2ページWord）を自動生成。AI/DX型・ITツール型・マーケ型・複合型の4タイプ対応。',
+    input:['ヒアリング結果','Excel/文字起こし'], output:['Word 提案骨子（1〜2p）'],
+    link:null, tags:['提案','骨子','Word'], status:'active' },
+  { id:'billing-docs', cat:'docs', icon:'🧾', cmd:'/billing-docs', title:'見積書・請求書生成',
+    desc:'見積書・請求書をExcelで自動生成。消費税10%自動計算・インボイス番号採番（EST-/AR-）。月額顧問型・時間単価型・プロジェクト型対応。',
+    input:['取引内容・金額'], output:['Excel 見積書','Excel 請求書'],
+    link:null, tags:['見積','請求書','インボイス','Excel'], status:'active' },
+  { id:'nda', cat:'docs', icon:'🔒', cmd:'/nda', title:'NDA（秘密保持契約書）生成',
+    desc:'機密保持契約書（NDA）をWord形式で自動生成。損害賠償上限変動型・秘密保持3年・11条構成。生成AI利用条項含む。',
+    input:['当事者情報','取引内容'], output:['Word NDA（11条）'],
+    link:null, tags:['NDA','契約書','秘密保持','Word'], status:'active' },
+  { id:'biz-contract', cat:'docs', icon:'📃', cmd:'/biz-contract', title:'業務委託契約書生成',
+    desc:'コンサル・AI支援向け業務委託契約書をWord形式で自動生成。受託者帰属+包括ライセンス型・甲有利/乙有利/公平の立場設定対応。',
+    input:['当事者情報','委託内容','立場設定'], output:['Word 業務委託契約書（17条）'],
+    link:null, tags:['業務委託','契約書','Word','立場設定'], status:'active' },
+  { id:'contract-check', cat:'docs', icon:'🔎', cmd:'/contract-check', title:'受領契約書レビュー',
+    desc:'受領した契約書・覚書を指定立場でレビュー。リスク条項・曖昧条項・欠落条項をExcel比較表+Wordレポートで出力。',
+    input:['契約書','立場（甲/乙/公平）'], output:['Excel 条文比較表','Word レビューレポート'],
+    link:null, tags:['契約','レビュー','リスク','Excel'], status:'active' },
+  { id:'wbs-gantt', cat:'docs', icon:'📅', cmd:'/wbs-gantt', title:'WBS・ガントチャート生成',
+    desc:'WBS・ガントチャートをExcelで自動生成。日付変更でバー自動伸縮・ステータスで色変化の動的関数版。予備工程5〜15%設定。',
+    input:['プロジェクト情報','タスク一覧'], output:['Excel WBS・ガントチャート'],
+    link:null, tags:['WBS','ガント','Excel','プロジェクト管理'], status:'active' },
+  { id:'daily-report', cat:'docs', icon:'📒', cmd:'/daily-report', title:'音声入力→日報自動変換',
+    desc:'音声・自然文で話した業務内容を6列Excel日報（工数列含む）に自動変換。月次レポートのデータ源として蓄積。',
+    input:['音声/テキスト（業務内容）'], output:['Excel 日報（6列）'],
+    link:null, tags:['日報','音声入力','工数','Excel'], status:'active' },
+  { id:'monthly-report', cat:'docs', icon:'📊', cmd:'/monthly-report', title:'月次活動レポート生成',
+    desc:'日報データからA4縦2ページの月次活動レポートをWord形式で自動生成。円グラフ付き。ファイル名にクライアント名を含む。',
+    input:['日報データ/Excel'], output:['Word 月次レポート（A4×2p）'],
+    link:null, tags:['月次','レポート','Word','円グラフ'], status:'active' },
+  { id:'doc-compare', cat:'docs', icon:'🔀', cmd:'/doc-compare', title:'新旧対比表（文書比較）',
+    desc:'2つのWord/PDFを比較し、変更箇所を色分けした新旧対比表をWord形式で生成。13種の見出しパターン自動対応。',
+    input:['旧文書','新文書'], output:['Word 新旧対比表'],
+    link:null, tags:['比較','対比表','Word','差分'], status:'active' },
+
+  // ===== QUALITY =====
+  { id:'fact-check', cat:'quality', icon:'⚖️', cmd:'/fact-check', title:'ファクト・法的リスク検証',
+    desc:'成果物のファクト・エビデンス・法的リスクを独立検証（法務部）。提示前に必ず実行。自己検証で発見した問題はその場で修正。',
+    input:['成果物（提案書・記事等）'], output:['検証レポート','リスク指摘リスト'],
+    link:null, tags:['ファクトチェック','法的リスク','検証','品質'], status:'active' },
+  { id:'persona-review', cat:'quality', icon:'👤', cmd:'/persona-review', title:'ペルソナ視点で検証',
+    desc:'ターゲットペルソナ視点で「伝わるか」を検証・改善（ペルソナ品質部）。',
+    input:['成果物','ターゲットペルソナ'], output:['ペルソナ評価レポート','改善提案'],
+    link:null, tags:['ペルソナ','伝わる','検証','改善'], status:'active' },
+  { id:'eval-daily', cat:'quality', icon:'📆', cmd:'/eval-daily', title:'日次評価・ロードマップ整合',
+    desc:'今日の作業をgit履歴・セッションログ・kai-tasksから自動評価。ロードマップ5本柱との整合スコアを算出しJSONに保存。追加コスト0。',
+    input:['（自動取得）git/セッションログ'], output:['評価JSON','整合スコア'],
+    link:null, tags:['評価','日次','ロードマップ','KPI'], status:'active' },
+  { id:'eval-weekly', cat:'quality', icon:'📅', cmd:'/eval-weekly', title:'週次評価・Stop/Scale分析',
+    desc:'週次ゴール整合評価。Stop候補（理由・メリット・続ける場合アドバイス）とScale候補（具体アドバイス3点）を提示。翌週タスク自動作成候補を出力。',
+    input:['（自動取得）週間ログ'], output:['週次評価レポート','Stop/Scale候補リスト'],
+    link:null, tags:['評価','週次','Stop','Scale'], status:'active' },
+  { id:'eval-monthly', cat:'quality', icon:'📆', cmd:'/eval-monthly', title:'月次総括・ロードマップ見直し',
+    desc:'月次総括。柱別進捗・繰り返しStop候補・翌月重点テーマ・ロードマップ見直し提案を生成。ゴール再設定の場として使う。',
+    input:['（自動取得）月次ログ'], output:['月次総括レポート','翌月テーマ','ロードマップ改訂案'],
+    link:null, tags:['評価','月次','総括','ロードマップ'], status:'active' },
+
+  // ===== SYSTEM =====
+  { id:'kai-tasks', cat:'system', icon:'📋', cmd:'Kai Tasks', title:'プロジェクト管理・セッションログ',
+    desc:'ブラウザUI+CLIでプロジェクト・タスク・セッションログを管理。Kai全スキルが自動ログ記録。タイムマシン機能（スナップショット）付き。',
+    input:['（自動連動）'], output:['projects.json','スナップショット','セッション要約'],
+    link:'Kai-Tasks完全マニュアル.html', tags:['タスク管理','ログ','プロジェクト','スナップショット'], status:'active' },
+  { id:'kai-visualize', cat:'system', icon:'🗺️', cmd:'Kai Visualize', title:'可視化アウトプット管理ツール',
+    desc:'マンダラ・4象限・フロー・ガントを生成・管理するローカルツール。VBSダブルクリックで起動。',
+    input:['（/visualize・/rashinban 連動）'], output:['HTML可視化ファイル'],
+    link:null, tags:['可視化','ローカル','管理'], status:'active' },
+  { id:'slide-builder', cat:'system', icon:'🎬', cmd:'Slide Builder', title:'セミナースライド管理ツール',
+    desc:'slides.js テンプレート差し替え方式のスライド管理ツール。/seminar-slide・/deck-sprint と連動。',
+    input:['（/seminar-slide 連動）'], output:['スライドHTML','テンプレート'],
+    link:'スライドビルダー完全ガイド.html', tags:['スライド','テンプレート','管理'], status:'active' },
+  { id:'rashinban-app', cat:'system', icon:'🧭', cmd:'Rashinban App', title:'羅針盤生成アプリ',
+    desc:'ヒアリング→マンダラ→マトリクス→フロー→ガントを一括生成するローカルアプリ。VBSで起動。',
+    input:['（/rashinban 連動）'], output:['羅針盤HTML'],
+    link:null, tags:['羅針盤','マンダラ','ローカル'], status:'active' },
+  { id:'claude-code', cat:'system', icon:'💻', cmd:'Claude Code (CC)', title:'CC実行環境・フレームワーク',
+    desc:'全スキル・エージェントを動かすCC実行基盤。Goal/Batch/Hooks/Rules/DCI/fork/allow/Mem/sec/tasks/Teams/Ultra から最適選択して並列爆速実行。',
+    input:['（すべてのスキル・エージェント）'], output:['（あらゆる成果物）'],
+    link:'ClaudeCode_自律実行フレームワーク_CC完全ガイド.html', tags:['CC','基盤','並列','自律実行'], status:'active' },
+];
+
+// =====================================================
+// ASSET REGISTRY DATA
+// =====================================================
+const ASSETS = [
+  // ===== エージェント（content-burst系） =====
+  { name:'cb-scout', type:'agent', how:'/content-burst スキル設計 → cb-scout.md 生成', purpose:'コンテンツ調査・リサーチ（content-burst 専用）', path:'.claude/agents/cb-scout.md', status:'active', created:'2026-05' },
+  { name:'cb-ink', type:'agent', how:'/content-burst スキル設計', purpose:'ブログ・メルマガ記事執筆（content-burst 専用）', path:'.claude/agents/cb-ink.md', status:'active', created:'2026-05' },
+  { name:'cb-pen', type:'agent', how:'/content-burst スキル設計', purpose:'X投稿文作成（content-burst 専用）', path:'.claude/agents/cb-pen.md', status:'active', created:'2026-05' },
+  { name:'cb-spark', type:'agent', how:'/content-burst スキル設計', purpose:'YouTube台本生成（content-burst 専用）', path:'.claude/agents/cb-spark.md', status:'active', created:'2026-05' },
+  { name:'cb-lens', type:'agent', how:'/content-burst スキル設計', purpose:'ビジュアルマップ生成（content-burst 専用）', path:'.claude/agents/cb-lens.md', status:'active', created:'2026-05' },
+  { name:'cb-post', type:'agent', how:'/content-burst スキル設計', purpose:'SNS投稿・発信（content-burst 専用）', path:'.claude/agents/cb-post.md', status:'active', created:'2026-05' },
+  { name:'cb-canvas', type:'agent', how:'/content-burst スキル設計', purpose:'ビジュアル素材生成（content-burst 専用）', path:'.claude/agents/cb-canvas.md', status:'active', created:'2026-05' },
+  // ===== エージェント（deck-sprint系） =====
+  { name:'ds-scout', type:'agent', how:'/deck-sprint スキル設計', purpose:'リサーチ（deck-sprint 専用）', path:'.claude/agents/ds-scout.md', status:'active', created:'2026-05' },
+  { name:'ds-analyst', type:'agent', how:'/deck-sprint スキル設計', purpose:'分析・構造化（deck-sprint 専用）', path:'.claude/agents/ds-analyst.md', status:'active', created:'2026-05' },
+  { name:'ds-deck', type:'agent', how:'/deck-sprint スキル設計', purpose:'スライド生成（deck-sprint 専用）', path:'.claude/agents/ds-deck.md', status:'active', created:'2026-05' },
+  { name:'ds-chair', type:'agent', how:'/deck-sprint スキル設計', purpose:'全体統括・品質チェック（deck-sprint 専用）', path:'.claude/agents/ds-chair.md', status:'active', created:'2026-05' },
+  // ===== エージェント（クライアント案件系） =====
+  { name:'DEAL', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'営業フェーズ管理', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'MAPPER', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'ロードマップ策定', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'INTAKE', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'事前アンケート・ヒアリング準備', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'ANALYST', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'現状分析・ROI概算', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'PLANNER', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'提案書・6ヶ月計画', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'BLUEPRINT', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'スペシャル資料生成', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'TRAINER', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'研修実施', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'COACH', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'手順書作成・実装コーチング', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'TRACKER', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'KPI追跡・成果可視化', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'GROWER', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'自走化支援・Phase 3移行', path:'（内部設定）', status:'active', created:'2026-05' },
+  { name:'PIPELINE', type:'agent', how:'/company-setup → クライアント案件エージェント設計', purpose:'案件管理・週次ダッシュボード', path:'（内部設定）', status:'active', created:'2026-05' },
+  // ===== アプリ =====
+  { name:'Kai Tasks', type:'app', how:'Kai 直接開発（Python + REST API + JS UI）', purpose:'全プロジェクト・タスク・セッションログ管理', path:'08_アプリ開発事業部/outputs/kai-tasks/', status:'active', created:'2026-05' },
+  { name:'Kai Visualize', type:'app', how:'Kai 直接開発（Python + JS）', purpose:'可視化HTML（マンダラ・4象限・フロー・ガント）の生成・管理', path:'08_アプリ開発事業部/outputs/kai-visualize/', status:'active', created:'2026-05' },
+  { name:'Slide Builder', type:'app', how:'Kai 直接開発 → /seminar-slide 連動化', purpose:'slides.js テンプレート管理・スライド生成', path:'08_アプリ開発事業部/outputs/slide-builder/', status:'active', created:'2026-05' },
+  { name:'Rashinban App', type:'app', how:'Kai 直接開発（/rashinban スキル用アプリ化）', purpose:'ヒアリング→羅針盤HTML一括生成', path:'08_アプリ開発事業部/outputs/rashinban/', status:'active', created:'2026-05' },
+  { name:'Kai Review', type:'app', how:'Kai 直接開発（/eval-daily 用バックエンド）', purpose:'日次評価JSON管理', path:'08_アプリ開発事業部/outputs/kai-review/', status:'active', created:'2026-05' },
+  { name:'maru-ai-kiroku', type:'app', how:'Kai 直接開発（GAS + Google Sheet）', purpose:'まる様案件向けAI記録システム', path:'08_アプリ開発事業部/outputs/maru-ai-kiroku/', status:'active', created:'2026-05' },
+  { name:'supplement_app', type:'app', how:'Kai 直接開発（GAS + Google Sheet）', purpose:'サプリメント関連アプリ', path:'08_アプリ開発事業部/outputs/supplement_app/', status:'active', created:'2026-05' },
+  { name:'音源トリミング', type:'app', how:'Kai 直接開発（JS/ブラウザ）', purpose:'音源の切り出し・トリミング', path:'08_アプリ開発事業部/outputs/音源トリミング/', status:'active', created:'2026-05' },
+  // ===== スタイル型（seminar-dna で抽出済みのもの） =====
+  { name:'エミ式AI定着メソッド', type:'style', how:'/seminar-dna + /knowledge-craft で抽出・体系化', purpose:'AI定着支援セミナーのベーススタイル型', path:'07_マニュアル/AI定着支援_現場推進マニュアル.html', status:'active', created:'2026-05' },
+  { name:'（seminar-dna 抽出型 — 随時追加）', type:'style', how:'/seminar-dna apply <パターン名>', purpose:'各種セミナーから抽出したスタイルパターン', path:'06_セミナー事業部/', status:'dev', created:'—' },
+  // ===== Knowledge =====
+  { name:'（knowledge-craft 生成 — 随時追加）', type:'knowledge', how:'/knowledge-craft → Knowledge MD 生成', purpose:'外部資料から抽出した自社コンサル知識資産', path:'Knowledge/', status:'dev', created:'—' },
+  // ===== スキル定義 =====
+  { name:'（skill-craft 生成 — 随時追加）', type:'skill', how:'/skill-craft → スキル定義MD + HTMLマニュアル生成', purpose:'外部素材から抽出した再利用可能なスキル定義', path:'rules/skills/', status:'dev', created:'—' },
+];
+
+// =====================================================
+// AI SUGGESTION RULES
+// =====================================================
+const SUGGEST_RULES = [
+  { kw:['セミナー','スタイル','型','抽出','パターン'], skills:['seminar-dna','skill-craft'], reason:'セミナーのスタイルを抽出・自社資産化できます' },
+  { kw:['知識','資料','取り込む','インポート','まとめ','読んだ','参考'], skills:['knowledge-craft','skill-craft'], reason:'外部資料を Knowledge MD に変換・蓄積できます' },
+  { kw:['提案書','クライアント','営業','受注'], skills:['sme-ai-proposal','proposal-outline','project-intake'], reason:'提案書作成から公開まで一気通貫で対応できます' },
+  { kw:['記事','ブログ','コンテンツ','発信','Brain'], skills:['write-brain-article','content-burst','text-refine'], reason:'記事・コンテンツ制作を高速化できます' },
+  { kw:['スライド','プレゼン','セミナー資料'], skills:['seminar-slide','deck-sprint','talk-script'], reason:'スライド作成から公開まで自動化できます' },
+  { kw:['財務','損益','売上','資金','DCF','シミュレーション'], skills:['finance','profit-plan','kpi-design'], reason:'財務設計・収益計画を数値化できます' },
+  { kw:['組織','人材','研修','AI導入'], skills:['company-setup','hr-transform','course-build'], reason:'AI組織設計・人材変革を体系的に進められます' },
+  { kw:['契約','NDA','委託','書類','文書'], skills:['nda','biz-contract','contract-check'], reason:'契約書・文書を自動生成・レビューできます' },
+  { kw:['調査','市場','競合','リサーチ'], skills:['research','issue-tree','stakeholder'], reason:'市場調査から戦略立案まで体系化できます' },
+  { kw:['目標','可視化','マンダラ','ロードマップ','計画'], skills:['rashinban','visualize','profit-plan'], reason:'目標・戦略を視覚的に整理・共有できます' },
+  { kw:['評価','振り返り','KPI','チェック'], skills:['eval-daily','eval-weekly','fact-check'], reason:'成果・品質を定量的に評価・改善できます' },
+  { kw:['どこから','迷う','わからない','始め'], skills:['project-intake'], reason:'まず /project-intake で受付します。何でも話しかけてください。' },
+];
+
+// =====================================================
+// RENDER FUNCTIONS
+// =====================================================
+function catColor(cat){
+  return {import:'#3182CE',content:'#805AD5',proposal:'#ED8936',research:'#2B6CB0',finance:'#276749',org:'#6B46C1',docs:'#2C7A7B',quality:'#C53030',system:'#744210'}[cat]||'#CBD5E0';
+}
+
+function makeCard(s){
+  const inTags = s.input.map(t=>`<span class="sk-tag in">${t}</span>`).join('');
+  const outTags = s.output.map(t=>`<span class="sk-tag out">${t}</span>`).join('');
+  const linkHtml = s.link ? `<a class="sk-link" href="${s.link}" target="_blank">詳細ガイド↗</a>` : '';
+  return `<div class="sk-card" data-cat="${s.cat}" data-id="${s.id}">
+    <div class="sk-head">
+      <div class="sk-icon">${s.icon}</div>
+      <div>
+        <div class="sk-cmd">${s.cmd}</div>
+        <div class="sk-title">${s.title}</div>
+      </div>
+    </div>
+    <div class="sk-desc">${s.desc}</div>
+    <div class="sk-io">
+      <div class="sk-io-group"><div class="sk-io-label">Input</div><div class="sk-tags">${inTags}</div></div>
+      <div class="sk-io-group"><div class="sk-io-label">Output</div><div class="sk-tags">${outTags}</div></div>
+    </div>
+    <div class="sk-footer">
+      ${linkHtml}
+      <span class="sk-status ${s.status==='active'?'active':'dev'}">${s.status==='active'?'✅ 運用中':'🔧 開発中'}</span>
+    </div>
+  </div>`;
+}
+
+function renderSkills(cat, query){
+  const q = (query||'').toLowerCase();
+  let filtered = SKILLS.filter(s => {
+    const catOk = cat==='all' || s.cat===cat;
+    const qOk = !q || [s.cmd,s.title,s.desc,...s.tags].join(' ').toLowerCase().includes(q);
+    return catOk && qOk;
+  });
+
+  // Group by category when showing all
+  let html = '';
+  if(cat==='all' && !q){
+    Object.keys(CAT_META).forEach(c=>{
+      const inCat = filtered.filter(s=>s.cat===c);
+      if(!inCat.length) return;
+      const m = CAT_META[c];
+      html += `<div class="cat-section">
+        <div class="cat-header" style="border-bottom:2px solid ${catColor(c)};padding-bottom:6px;margin-bottom:12px;">
+          <span class="cat-icon">${m.icon}</span>
+          <span class="cat-name">${m.name}</span>
+          <span class="cat-desc">${m.desc}</span>
+          <span class="cat-count">${inCat.length}件</span>
+        </div>
+        <div class="skill-grid">${inCat.map(makeCard).join('')}</div>
+      </div>`;
+    });
+  } else {
+    html = `<div class="skill-grid">${filtered.map(makeCard).join('')}</div>`;
+    if(!filtered.length) html = `<div class="no-result"><div class="nr-icon">🔍</div>該当するスキルが見つかりませんでした</div>`;
+  }
+  document.getElementById('grid').innerHTML = html;
+}
+
+function renderAssets(type){
+  const filtered = type==='all' ? ASSETS : ASSETS.filter(a=>a.type===type);
+  const typeLabel = {agent:'🤖 エージェント',app:'📱 アプリ',knowledge:'📚 Knowledge',skill:'⚗️ スキル定義',style:'🧬 スタイル型',output:'📄 成果物サンプル'};
+  const rows = filtered.map(a=>`<tr>
+    <td><span class="rt-name">${a.name}</span></td>
+    <td><span class="rt-badge rt-${a.type}">${typeLabel[a.type]||a.type}</span></td>
+    <td><span class="rt-how">${a.how}</span></td>
+    <td>${a.purpose}</td>
+    <td><span class="rt-path">${a.path}</span></td>
+    <td><span class="status-dot ${a.status==='active'?'sd-active':'sd-dev'}"></span>${a.status==='active'?'運用中':'開発中'}</td>
+  </tr>`).join('');
+  document.getElementById('reg-body').innerHTML = rows;
+}
+
+// =====================================================
+// SEARCH & SUGGEST
+// =====================================================
+function suggest(q){
+  if(!q || q.length < 2){ return []; }
+  const lq = q.toLowerCase();
+  let results = [];
+  SUGGEST_RULES.forEach(r=>{
+    if(r.kw.some(k=>lq.includes(k))){
+      r.skills.forEach(sid=>{
+        const sk = SKILLS.find(s=>s.id===sid);
+        if(sk && !results.find(r2=>r2.id===sk.id)){
+          results.push({...sk, reason: r.reason});
+        }
+      });
+    }
+  });
+  // Also fuzzy match skill names/tags
+  SKILLS.forEach(s=>{
+    if(!results.find(r=>r.id===s.id)){
+      const match = [s.cmd,s.title,...s.tags].some(t=>t.toLowerCase().includes(lq));
+      if(match) results.push(s);
+    }
+  });
+  return results.slice(0,5);
+}
+
+function updateSuggestPanel(q){
+  const panel = document.getElementById('suggest-panel');
+  if(!q || q.length<2){ panel.classList.remove('open'); return; }
+  const items = suggest(q);
+  if(!items.length){ panel.classList.remove('open'); return; }
+  panel.innerHTML = items.map(s=>`<div class="sp-item" onclick="selectSkill('${s.id}')">
+    <span>${s.icon}</span>
+    <span class="sp-cmd">${s.cmd}</span>
+    <span class="sp-reason">${s.reason||s.title}</span>
+    <span class="sp-badge">${CAT_META[s.cat]?.name||s.cat}</span>
+  </div>`).join('');
+  panel.classList.add('open');
+}
+
+function updateRecommendBox(q){
+  const box = document.getElementById('rec-box');
+  const cards = document.getElementById('rec-cards');
+  if(!q || q.length<2){ box.classList.remove('visible'); return; }
+  const items = suggest(q).slice(0,3);
+  if(!items.length){ box.classList.remove('visible'); return; }
+  cards.innerHTML = items.map(s=>`<div class="rec-card" onclick="selectSkill('${s.id}')">
+    <div class="rc-cmd">${s.icon} ${s.cmd}</div>
+    <div class="rc-reason">${s.reason||s.title}</div>
+  </div>`).join('');
+  box.classList.add('visible');
+}
+
+function selectSkill(id){
+  document.getElementById('suggest-panel').classList.remove('open');
+  // Scroll to card
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if(card){
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+    card.style.boxShadow='0 0 0 3px #ED8936';
+    setTimeout(()=>{ card.style.boxShadow=''; },2000);
+  }
+}
+
+// =====================================================
+// TABS & REGISTRY
+// =====================================================
+function setupTabs(){
+  document.querySelectorAll('.ct').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.ct').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      const skillsSec = document.getElementById('skills-section');
+      const regSec = document.getElementById('registry');
+      const importFlow = document.getElementById('import-flow');
+      if(cat==='registry'){
+        skillsSec.style.display='none';
+        regSec.style.display='block';
+        importFlow.style.display='none';
+        renderAssets('all');
+        document.querySelectorAll('.rf').forEach(r=>r.classList.remove('active'));
+        document.querySelector('.rf[data-rtype="all"]').classList.add('active');
+      } else {
+        skillsSec.style.display='block';
+        regSec.style.display='none';
+        importFlow.style.display = (cat==='all'||cat==='import') ? 'block' : 'none';
+        renderSkills(cat, '');
+      }
+      document.getElementById('q').value='';
+      document.getElementById('rec-box').classList.remove('visible');
+    });
+  });
+}
+
+function setupSearch(){
+  const input = document.getElementById('q');
+  let timer;
+  input.addEventListener('input', ()=>{
+    clearTimeout(timer);
+    const q = input.value.trim();
+    timer = setTimeout(()=>{
+      updateSuggestPanel(q);
+      updateRecommendBox(q);
+      if(q.length>=2){
+        renderSkills('all', q);
+        document.getElementById('import-flow').style.display='none';
+        // Deactivate tabs
+        document.querySelectorAll('.ct').forEach(b=>b.classList.remove('active'));
+      } else if(!q){
+        renderSkills('all','');
+        document.getElementById('import-flow').style.display='block';
+        document.querySelector('.ct[data-cat="all"]').classList.add('active');
+      }
+    }, 200);
+  });
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('.dh-search')) document.getElementById('suggest-panel').classList.remove('open');
+  });
+}
+
+function setupRegistryFilters(){
+  document.querySelectorAll('.rf').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.rf').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAssets(btn.dataset.rtype);
+    });
+  });
+}
+
+// =====================================================
+// INIT
+// =====================================================
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderSkills('all','');
+  setupTabs();
+  setupSearch();
+  setupRegistryFilters();
+});
+</script>
+</body>
+</html>
