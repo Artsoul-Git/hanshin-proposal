@@ -4,7 +4,11 @@
   var current     = 0;
   var SLUG        = window.SLIDE_SLUG || 'default';
   var NOTES_KEY   = SLUG + '_presenterNotes';
+  var EDITS_KEY   = SLUG + '_slideEdits';
   var ZOOM_KEY    = SLUG + '_presenterZoom';
+
+  var slideEdits = {};
+  try { slideEdits = JSON.parse(localStorage.getItem(EDITS_KEY) || '{}'); } catch (e) {}
   var HSPLIT_KEY  = SLUG + '_presenterHSplit';
   var VSPLIT_KEY  = SLUG + '_presenterVSplit';
   var FONT_KEY    = SLUG + '_presenterNotesFontSize';
@@ -165,6 +169,7 @@
       var slide = frag.querySelector('.slide');
       if (slide) {
         slide.dataset.index = index;
+        if (slideEdits[index] !== undefined) slide.innerHTML = slideEdits[index];
         slide.classList.add('active');
       }
       container.appendChild(frag);

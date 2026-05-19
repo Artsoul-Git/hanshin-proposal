@@ -43,6 +43,14 @@
       <button class="zoom-in" title="拡大 (+)">＋</button>
       <button class="zoom-reset" title="リセット">リセット</button>
     </div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <button id="idx-deploy-btn" onclick="idxDeploy()"
+        style="background:#6F911D;color:#fff;border:none;border-radius:5px;padding:6px 14px;
+               font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap">
+        🚀 本番へ反映
+      </button>
+      <span id="idx-deploy-msg" style="font-size:11px;max-width:200px;line-height:1.4;display:none"></span>
+    </div>
   </div>
 
   <div class="export-overlay">
@@ -291,5 +299,34 @@
 
   <script src="js/slides.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    function idxDeploy() {
+      var slug = (window.SLIDE_SLUG || '').trim();
+      if (!slug) { alert('スラッグが取得できません。localhost:8765 経由でアクセスしてください。'); return; }
+      var btn = document.getElementById('idx-deploy-btn');
+      var msg = document.getElementById('idx-deploy-msg');
+      btn.disabled = true;
+      btn.textContent = '⏳ push中...';
+      msg.style.display = 'none';
+      fetch('http://localhost:8765/' + slug + '/api/deploy', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}'
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        btn.disabled = false;
+        btn.textContent = '🚀 本番へ反映';
+        msg.style.display = 'inline';
+        msg.style.color = d.ok ? '#8bc34a' : '#f44';
+        msg.textContent = d.ok ? '✅ 反映完了（約60秒で更新）' : '❌ ' + d.message;
+      })
+      .catch(function(){
+        btn.disabled = false;
+        btn.textContent = '🚀 本番へ反映';
+        msg.style.display = 'inline';
+        msg.style.color = '#f44';
+        msg.textContent = '❌ サーバー未起動。VBSを起動してください。';
+      });
+    }
+  </script>
 </body>
 </html>

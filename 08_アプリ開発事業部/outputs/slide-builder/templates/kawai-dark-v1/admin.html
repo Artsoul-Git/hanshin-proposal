@@ -139,6 +139,46 @@
       background: #1e1e1e;
       margin: 8px 0 16px;
     }
+    .btn-deploy {
+      background: #6F911D;
+      color: #fff;
+      font-size: 13px;
+      padding: 10px 22px;
+      border-radius: 7px;
+      border: none;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-deploy:hover { background: #5e7a18; }
+    .btn-deploy:disabled { background: #333; color: #666; cursor: not-allowed; }
+    .deploy-status {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      padding: 10px 14px;
+      border-radius: 6px;
+      display: none;
+    }
+    .deploy-status.ok  { background: #0e1f00; color: #8bc34a; border: 1px solid #2a4400; }
+    .deploy-status.err { background: #1f0000; color: #f44; border: 1px solid #440000; }
+    .deploy-status.ing { background: #101820; color: #6b9; border: 1px solid #1a3a2a; }
+    .local-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 6px;
+    }
+    .local-link a { color: #6F911D; word-break: break-all; }
+    .server-offline {
+      font-size: 12px;
+      color: rgba(255,255,255,.3);
+      line-height: 1.7;
+    }
   </style>
 </head>
 <body>
@@ -183,8 +223,102 @@
     </div>
   </div>
 
+  <!-- ローカル開発環境 -->
+  <div class="card" id="local-env-card">
+    <div class="card-title">ローカル開発環境</div>
+    <div id="local-links-online" style="display:none">
+      <div class="local-link">編集・発表:&nbsp;<a id="ll-index" href="#" target="_blank">フル操作画面</a></div>
+      <div class="local-link">受講者プレビュー:&nbsp;<a id="ll-viewer" href="#" target="_blank">viewer（パスなし）</a></div>
+      <div class="local-link">プレゼンター:&nbsp;<a id="ll-presenter" href="#" target="_blank">presenter（パスなし）</a></div>
+      <p style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.25)">
+        ※ localhost の3画面は同じ localStorage を共有 → 編集が即プレビューに反映されます
+      </p>
+    </div>
+    <div id="local-links-offline" class="server-offline">
+      スライドサーバーが起動していません。<br>
+      <code style="color:#6F911D">スライドサーバー起動.vbs</code> をダブルクリックして起動してください。<br>
+      起動後、このページをリロードするとローカルリンクが表示されます。
+    </div>
+  </div>
+
+  <!-- 本番へ反映 -->
+  <div class="card">
+    <div class="card-title">本番へ反映</div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:14px;line-height:1.7">
+      slides.js を GitHub Pages に push します。<br>
+      受講者URL・プレゼンターURLに反映されるまで約60秒かかります。
+    </p>
+    <button class="btn-deploy" id="deploy-btn" onclick="deployToGitHub()">🚀 本番へ反映</button>
+    <div class="deploy-status" id="deploy-status"></div>
+  </div>
+
   <script>
+    var SLIDE_SERVER_PORT = 8765;
     var PWD_KEY = 'presenterPwd';
+
+    /* ---- スラッグを URL から取得 ---- */
+    function getSlug() {
+      var parts = window.location.pathname.split('/').filter(function (p) { return p && p !== ''; });
+      if (parts.length >= 2) return parts[parts.length - 2];
+      return null;
+    }
+    var SLUG = getSlug();
+    var SERVER_BASE = 'http://localhost:' + SLIDE_SERVER_PORT + '/' + SLUG;
+
+    /* ---- ローカルサーバー確認 ---- */
+    function checkLocalServer() {
+      if (!SLUG) return;
+      fetch(SERVER_BASE + '/api/ping', { method: 'POST' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.ok) showLocalLinks();
+        })
+        .catch(function () {
+          document.getElementById('local-links-offline').style.display = 'block';
+          document.getElementById('local-links-online').style.display = 'none';
+        });
+    }
+
+    function showLocalLinks() {
+      document.getElementById('local-links-online').style.display = 'block';
+      document.getElementById('local-links-offline').style.display = 'none';
+      document.getElementById('ll-index').href     = SERVER_BASE + '/index.html';
+      document.getElementById('ll-viewer').href    = SERVER_BASE + '/viewer.html';
+      document.getElementById('ll-presenter').href = SERVER_BASE + '/presenter.html';
+    }
+
+    /* ---- 本番へ反映 ---- */
+    function deployToGitHub() {
+      if (!SLUG) {
+        alert('スラッグを取得できませんでした。admin.html の場所を確認してください。');
+        return;
+      }
+      var btn = document.getElementById('deploy-btn');
+      var status = document.getElementById('deploy-status');
+      btn.disabled = true;
+      status.className = 'deploy-status ing';
+      status.style.display = 'block';
+      status.textContent = '⏳ GitHub へ push 中...';
+
+      fetch('http://localhost:' + SLIDE_SERVER_PORT + '/' + SLUG + '/api/deploy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        btn.disabled = false;
+        status.className = 'deploy-status ' + (d.ok ? 'ok' : 'err');
+        status.textContent = d.ok ? '✅ ' + d.message : '❌ ' + d.message;
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        status.className = 'deploy-status err';
+        status.textContent = '❌ サーバーに接続できません。\nスライドサーバー起動.vbs を起動してから試してください。';
+      });
+    }
+
+    checkLocalServer();
 
     /* ---- Share URL ---- */
     var shareUrl = location.href.replace(/admin\.html.*$/, 'viewer.html');
