@@ -908,14 +908,15 @@
   function dpMakeDraggable(el) {
     if (el.dataset.dpDrag) return;
     el.dataset.dpDrag = '1';
-    var dragging = false, ox = 0, oy = 0, sl = 0, st = 0;
+    var pending = false, moved = false, ox = 0, oy = 0, sl = 0, st = 0;
     el.addEventListener('mousedown', function (e) {
       if (!editMode) return;
       if (el.getAttribute('contenteditable') === 'true') return;
       if (e.button !== 0) return;
       e.preventDefault(); e.stopPropagation();
       dpSelectEl(el);
-      dragging = true;
+      pending = true;
+      moved = false;
       ox = e.clientX; oy = e.clientY;
       var sr = dpSlideRect();
       sl = el.style.left.endsWith('%') ? parseFloat(el.style.left) / 100 * sr.width : parseFloat(el.style.left) || 0;
@@ -924,18 +925,25 @@
       document.addEventListener('mouseup',   onUp);
     });
     function onMove(e) {
-      if (!dragging) return;
+      if (!pending) return;
+      if (!moved) {
+        if (Math.abs(e.clientX - ox) < 5 && Math.abs(e.clientY - oy) < 5) return;
+        moved = true;
+      }
       el.style.left = (sl + e.clientX - ox) + 'px';
       el.style.top  = (st + e.clientY - oy) + 'px';
       dpUpdateSelBox(); dpSyncPosSize();
     }
     function onUp() {
-      if (!dragging) return;
-      dragging = false;
+      var wasMoved = moved;
+      pending = false;
+      moved = false;
       document.removeEventListener('mousemove', onMove);
       document.removeEventListener('mouseup',   onUp);
-      var slide = getSlide(current);
-      if (slide) persistCurrentEdit(current, slide);
+      if (wasMoved) {
+        var slide = getSlide(current);
+        if (slide) persistCurrentEdit(current, slide);
+      }
     }
   }
 
@@ -1099,9 +1107,15 @@
       if (!btn) return;
       btn.addEventListener('mousedown', function (e) {
         e.preventDefault();
-        if (!dpSelEl) return;
+        if (!dpSelEl || !dpSelEl.classList.contains('dp-el-text')) return;
         dpSelEl.setAttribute('contenteditable', 'true'); dpSelEl.focus();
+        var range = document.createRange();
+        range.selectNodeContents(dpSelEl);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
         document.execCommand(cmd);
+        sel.removeAllRanges();
         dpSelEl.setAttribute('contenteditable', 'false');
         persistCurrentEdit(current, getSlide(current));
       });
@@ -1115,7 +1129,23 @@
     });
 
     var tci = document.getElementById('dp-txt-color');
-    if (tci) tci.addEventListener('input', function () { if (!dpSelEl) return; dpSelEl.style.color = this.value; persistCurrentEdit(current, getSlide(current)); });
+    if (tci) tci.addEventListener('input', function () {
+      if (!dpSelEl) return;
+      if (dpSelEl.classList.contains('dp-el-text')) {
+        dpSelEl.setAttribute('contenteditable', 'true'); dpSelEl.focus();
+        var range = document.createRange();
+        range.selectNodeContents(dpSelEl);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        document.execCommand('foreColor', false, this.value);
+        sel.removeAllRanges();
+        dpSelEl.setAttribute('contenteditable', 'false');
+      } else {
+        dpSelEl.style.color = this.value;
+      }
+      persistCurrentEdit(current, getSlide(current));
+    });
 
     var fci = document.getElementById('dp-fill');
     if (fci) fci.addEventListener('input', function () {
