@@ -10,12 +10,11 @@
 08_アプリ開発事業部/outputs/slide-builder/   ← ツール本体（ここ）
 ├── index.html              ← ブラウザ補助ツール（プロンプト生成・コマンド確認）
 ├── new-seminar.py          ← CLI: テンプレートから新規プロジェクト生成
-├── templates/              ← デザインテンプレート
-│   └── kawai-dark-v1/      ← 黒背景グリーンアクセント（デフォルト）
-│       ├── css/            ← スタイルシート
-│       ├── js/             ← ロジック（app.js, presenter.js, slides-template.js）
-│       ├── *.html          ← 各ページテンプレート
-│       └── template-spec.md ← デザイン仕様書
+├── slide-server.py         ← ローカル開発サーバー（localhost:8765）
+├── templates/              ← デザインテンプレート（3種類）
+│   ├── ascolor-minimal/    ← ASコーポレートカラー（緑）+ 編集可能PPTX付き
+│   ├── kawai-dark-v1/      ← 黒背景グリーンアクセント（デフォルト）
+│   └── monotone-minimal/   ← モノトーン
 ├── projects/               ← 作業中ステージング（完成後は06_セミナー事業部に移動）
 └── README.md               ← このファイル
 
@@ -23,6 +22,21 @@
 ├── 契約書AIチェックセミナー/
 ├── morai-prompt/           ← もらったプロンプトを使い倒そう！
 └── m2/                     ← 同セミナー 画像版
+```
+
+---
+
+## テンプレートの選び方
+
+| テンプレート名 | 外観 | 用途 | 編集可能PPTX |
+|--------------|------|------|:-----------:|
+| `ascolor-minimal` | ASコーポレートグリーン（#6F911D）、白ベース | AS主催・よろず・公式セミナー | **あり** |
+| `kawai-dark-v1` | 黒背景グリーンアクセント、Canvaライク | カジュアル・一般向け（デフォルト） | なし |
+| `monotone-minimal` | モノトーン | 印刷・資料配布向け | なし |
+
+```powershell
+# テンプレートを指定して生成
+python new-seminar.py --slug "my-seminar" --title "マイセミナー" --template ascolor-minimal
 ```
 
 ---
@@ -56,7 +70,8 @@ Kai がヒアリング → slides.js 生成 → GitHub デプロイまで自動�
 ```powershell
 python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py `
   --slug "my-seminar" `
-  --title "マイセミナー"
+  --title "マイセミナー" `
+  --template ascolor-minimal
 ```
 
 生成先（ステージング）: `outputs/slide-builder/projects/my-seminar/`
@@ -97,6 +112,67 @@ Move-Item "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_ア
 
 ---
 
+## PPTX出力の種類（ascolor-minimal）
+
+`ascolor-minimal` テンプレートには PPTX 出力が **2種類** あります。
+
+### PPTX出力（通常版）
+
+| 項目 | 内容 |
+|------|------|
+| 方式 | html2canvas でスライドを画像キャプチャ → PPTX に貼り付け |
+| 編集 | ❌ PowerPoint でテキスト編集不可（画像として埋め込み） |
+| 品質 | ◎ ブラウザの見た目を完全再現（フォント・CSS効果含む） |
+| 用途 | そのまま配布・印刷用途 |
+
+### 編集可能PPTX（テキスト編集可能版）
+
+| 項目 | 内容 |
+|------|------|
+| 方式 | slides.js のHTMLを解析 → PptxGenJS ネイティブAPIで図形・テキストを配置 |
+| 編集 | ✅ PowerPoint でテキスト・図形を自由に編集可能 |
+| 品質 | △ レイアウトは近似再現（CSSエフェクト・画像は非対応） |
+| フォント | Noto Sans JP / Noto Sans JP Black（要インストール） |
+| 用途 | 研修後の参加者配布・内容のカスタマイズ |
+| ファイル | `js/export-text.js` |
+
+#### 対応スライドタイプ
+
+| スライドクラス | 種別 | 再現精度 |
+|--------------|------|---------|
+| `slide-cover` | カバー | ◎ |
+| `slide-impact` | インパクト | ◎ |
+| `slide-section` | セクション区切り | ◎ |
+| `slide-ending` | エンディング | ◎ |
+| コンテンツ：`s-list` | 箇条書き | ◎ |
+| コンテンツ：`s-num-list` | 番号付きリスト | ◎ |
+| コンテンツ：`s-steps` | ステップ | ◎ |
+| コンテンツ：`s-flow` | フロー図 | ◎ |
+| コンテンツ：`s-point-list` | ポイントリスト | ◎ |
+| コンテンツ：`s-compare` | 比較表 | ◎ |
+| コンテンツ：`s-prompt-box` | プロンプトボックス | ◎ |
+| コンテンツ：複合（callout+prompt+list） | 複合レイアウト | ◎ |
+| 挿入画像（`<img>`タグ） | 画像 | ❌ 非対応 |
+
+#### フォントのインストール（初回のみ）
+
+PowerPoint で正しく表示するには Noto Sans JP のインストールが必要。
+
+```
+Google Fonts から "Noto Sans JP" をダウンロードしてインストール
+https://fonts.google.com/noto/specimen/Noto+Sans+JP
+ウェイト: Regular (400), Black (900) を必ずインストール
+```
+
+#### 使い方
+
+1. ブラウザで `index.html` を開く
+2. エクスポートバーの「**編集可能PPTX**」ボタンをクリック
+3. `{スラッグ名}_editable.pptx` がダウンロードされる
+4. PowerPoint で開いてテキストを編集
+
+---
+
 ## ファイル・フォルダ名のルール
 
 GitHub Pages で正常に動くよう、以下のルールを守ること。
@@ -122,10 +198,26 @@ GitHub Pages で正常に動くよう、以下のルールを守ること。
 
 ### 既存テンプレートをブラッシュアップ
 
-1. `templates/kawai-dark-v1/css/style.css` を編集
+1. `templates/{テンプレート名}/css/style.css` を編集
 2. `template-spec.md` のバージョン履歴を更新
 3. 変更は次回以降の `new-seminar.py` 実行から反映される
 4. 既存プロジェクトには影響なし（各プロジェクトが独立コピーを持つ）
+
+### 編集可能PPTXを他テンプレートに展開する方法
+
+`export-text.js` は ascolor-minimal のカラーパレット・コンポーネント構造に対応している。
+他テンプレートに展開する場合は以下を修正する：
+
+1. `js/export-text.js` をテンプレートの `js/` フォルダにコピー
+2. ファイル冒頭の `var C = { ... }` でカラーパレットをそのテンプレートに合わせる
+3. `index.html` にボタンとスクリプト読み込みを追加：
+   ```html
+   <!-- export-bar 内 -->
+   <button class="export-pptx-text" onclick="exportTextPptx()" title="テキスト編集可能なPPTX">編集可能PPTX</button>
+
+   <!-- </body> 直前 -->
+   <script src="js/export-text.js"></script>
+   ```
 
 ---
 
@@ -164,4 +256,7 @@ ls 08_アプリ開発事業部/outputs/slide-builder/projects/
 
 # 完成済みセミナー一覧
 ls 06_セミナー事業部/outputs/
+
+# ローカル開発サーバー起動（localhost:8765）
+python 08_アプリ開発事業部/outputs/slide-builder/slide-server.py
 ```
