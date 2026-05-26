@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阪神素地 × ワークマン戦略転用｜5路線販路拡大提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --c-navy:#0e2a47;
+  --c-orange:#ea580c;
+  --c-orange-dark:#9a3412;
+  --c-green:#2e7d51;
+  --c-yellow:#fbbf24;
+  --c-bg:#f5f7fa;
+  --c-card:#fff;
+  --c-text:#1a1a1a;
+  --c-muted:#6b7280;
+  --c-border:#e5e7eb;
+  --c-accent-bg:#fff7ed;
+  --shadow:0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg:0 8px 24px rgba(0,0,0,0.12);
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--c-bg);color:var(--c-text);
+  line-height:1.7;font-size:clamp(14px,1.6vw,16px);
+}
+a{color:var(--c-orange-dark);text-decoration:underline}
+a:hover{color:var(--c-orange)}
+
+/* ===== HERO ===== */
+.hero{
+  background:linear-gradient(135deg,#1a1a1a 0%,var(--c-navy) 60%,var(--c-orange) 100%);
+  color:#fff;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;top:-30%;right:-15%;width:70%;height:160%;
+  background:radial-gradient(circle,rgba(251,191,36,0.15),transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{
+  display:inline-block;background:rgba(251,191,36,0.25);
+  border:1px solid rgba(251,191,36,0.5);
+  padding:6px 14px;border-radius:20px;font-size:0.85rem;
+  margin-bottom:20px;letter-spacing:0.05em;color:#fef3c7;
+}
+.hero h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.3;margin-bottom:18px}
+.hero h1 .accent{color:var(--c-yellow)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);opacity:0.92;max-width:780px;margin-bottom:32px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:0.9rem;opacity:0.85}
+.hero-meta span::before{content:"●";margin-right:6px;color:var(--c-yellow)}
+
+/* ===== NAV ===== */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);
+  border-bottom:2px solid var(--c-orange);
+  padding:10px clamp(20px,5vw,60px);
+  overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;
+}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none}
+nav.toc a{
+  display:inline-block;padding:6px 12px;border-radius:6px;
+  text-decoration:none;color:var(--c-navy);font-size:0.85rem;
+  transition:all 0.2s;
+}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-orange)}
+
+/* ===== SECTION ===== */
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{
+  font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;color:var(--c-navy);
+  position:relative;padding-left:18px;margin-bottom:12px;line-height:1.4;
+}
+section h2::before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:6px;
+  background:linear-gradient(180deg,var(--c-orange),var(--c-navy));border-radius:3px;
+}
+section h3{
+  font-size:clamp(1.1rem,2vw,1.3rem);font-weight:700;color:var(--c-navy);
+  margin-top:24px;margin-bottom:12px;
+}
+section .lead{
+  font-size:clamp(0.95rem,1.6vw,1.05rem);color:var(--c-muted);
+  margin-bottom:28px;max-width:900px;
+}
+
+/* ===== KEY MESSAGE ===== */
+.key-message{
+  background:linear-gradient(135deg,#1a1a1a 0%,var(--c-navy) 100%);
+  color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);
+  margin:24px 0;position:relative;overflow:hidden;
+}
+.key-message::before{
+  content:"❝";position:absolute;top:-30px;left:10px;
+  font-size:160px;opacity:0.1;font-family:serif;
+}
+.key-message .km-label{
+  display:inline-block;background:var(--c-yellow);color:#1a1a1a;
+  padding:4px 12px;border-radius:4px;font-weight:700;
+  font-size:0.85rem;margin-bottom:12px;
+}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.3rem);font-weight:500;line-height:1.6}
+.key-message .km-text strong{color:var(--c-yellow);font-weight:900}
+
+/* ===== CARDS ===== */
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.grid-5{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:clamp(16px,2.5vw,24px);box-shadow:var(--shadow);
+  border:1px solid var(--c-border);transition:transform 0.2s,box-shadow 0.2s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card h4{font-size:1.05rem;color:var(--c-navy);margin-bottom:10px;font-weight:700}
+.card .stat{font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;color:var(--c-orange);line-height:1.1;margin:8px 0}
+.card .stat-sub{font-size:0.8rem;color:var(--c-muted)}
+.card.navy .stat{color:var(--c-navy)}
+.card.green .stat{color:var(--c-green)}
+.card.accent{background:var(--c-accent-bg);border-color:#fed7aa}
+
+/* ===== 10 PRINCIPLES ===== */
+.principles-10{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:16px}
+.principle-10{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:18px;border-left:5px solid var(--c-orange);
+  box-shadow:var(--shadow);position:relative;
+}
+.principle-10 .num{
+  position:absolute;top:-10px;right:14px;
+  display:inline-block;min-width:36px;height:36px;line-height:36px;
+  background:linear-gradient(135deg,#1a1a1a,var(--c-orange));color:#fff;
+  border-radius:50%;text-align:center;font-weight:900;font-size:1.1rem;
+  padding:0 8px;
+}
+.principle-10 h4{
+  font-size:1rem;color:var(--c-navy);margin-bottom:8px;
+  padding-right:50px;font-weight:700;
+}
+.principle-10 .what{font-size:0.85rem;color:var(--c-text);margin-bottom:8px}
+.principle-10 .map{
+  background:var(--c-accent-bg);padding:8px 12px;border-radius:6px;
+  font-size:0.82rem;color:var(--c-orange-dark);font-weight:500;
+}
+.principle-10 .map::before{content:"→ 阪神素地への転用：";font-weight:700;display:block;margin-bottom:2px;color:var(--c-navy)}
+
+/* ===== MAPPING TABLE ===== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{background:#1a1a1a;color:#fff;padding:12px;text-align:left;font-weight:700;font-size:0.85rem}
+table th.orange{background:var(--c-orange)}
+table th.navy{background:var(--c-navy)}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:last-child td{border-bottom:none}
+table tr:nth-child(even) td{background:#fafafa}
+table .num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* ===== 5 ROUTES OVERVIEW ===== */
+.routes-overview{
+  display:grid;gap:14px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  margin-top:20px;
+}
+.route-card{
+  border-radius:var(--radius);padding:20px;
+  position:relative;overflow:hidden;color:#fff;
+  box-shadow:var(--shadow);transition:transform 0.2s;
+  min-height:200px;display:flex;flex-direction:column;
+}
+.route-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.route-card.r1{background:linear-gradient(135deg,#16a34a,#15803d)}
+.route-card.r2{background:linear-gradient(135deg,#9333ea,#6b21a8)}
+.route-card.r3{background:linear-gradient(135deg,#0e2a47,#1f3f63)}
+.route-card.r4{background:linear-gradient(135deg,#ea580c,#9a3412)}
+.route-card.r5{background:linear-gradient(135deg,#dc2626,#991b1b)}
+.route-card .num{
+  font-size:3rem;font-weight:900;opacity:0.3;
+  position:absolute;top:-10px;right:14px;line-height:1;
+}
+.route-card .flag{font-size:1.5rem;margin-bottom:6px}
+.route-card h4{font-size:1.1rem;margin-bottom:10px;font-weight:900}
+.route-card p{font-size:0.85rem;opacity:0.95;margin-bottom:8px}
+.route-card .target{
+  background:rgba(255,255,255,0.15);
+  padding:6px 10px;border-radius:6px;
+  font-size:0.78rem;margin-top:auto;
+}
+.route-card .target::before{content:"🎯 ";}
+
+/* ===== 4QM ===== */
+.matrix{
+  display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;
+  gap:0;margin:20px 0;min-height:520px;
+}
+.matrix .y-axis{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(180deg,#fee2e2,#dcfce7);
+}
+.matrix .x-axis{
+  grid-column:2;grid-row:2;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(90deg,#dcfce7,#fee2e2);
+}
+.matrix .quadrant-grid{
+  grid-column:2;grid-row:1;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:2px;background:var(--c-border);
+}
+.matrix .q{
+  background:var(--c-card);padding:18px;position:relative;
+  display:flex;flex-direction:column;gap:8px;
+}
+.matrix .q.q1{background:#ecfdf5}
+.matrix .q.q2{background:#fef3c7}
+.matrix .q.q3{background:#dbeafe}
+.matrix .q.q4{background:#fee2e2}
+.matrix .q-label{
+  position:absolute;top:8px;right:10px;font-size:0.7rem;
+  font-weight:700;color:var(--c-muted);text-transform:uppercase;
+}
+.matrix .q-title{font-weight:700;color:var(--c-navy);font-size:0.95rem;margin-bottom:6px}
+.matrix .route-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--c-card);border:2px solid var(--c-border);
+  border-radius:8px;padding:6px 10px;font-size:0.82rem;
+  font-weight:700;color:var(--c-navy);margin:2px;
+}
+.matrix .route-chip.r1{border-color:#16a34a;background:#dcfce7}
+.matrix .route-chip.r2{border-color:#9333ea;background:#f3e8ff}
+.matrix .route-chip.r3{border-color:#0e2a47;background:#dbeafe}
+.matrix .route-chip.r4{border-color:#ea580c;background:#fed7aa}
+.matrix .route-chip.r5{border-color:#dc2626;background:#fecaca}
+
+@media (max-width:600px){
+  .matrix{grid-template-columns:30px 1fr;min-height:600px}
+  .matrix .q{padding:12px}
+  .matrix .q-title{font-size:0.85rem}
+  .matrix .route-chip{font-size:0.74rem;padding:4px 7px}
+}
+
+/* ===== TABS ===== */
+.tabs{margin-top:20px}
+.tab-buttons{
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-bottom:2px solid var(--c-border);margin-bottom:16px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.tab-buttons button{
+  border:none;background:transparent;padding:10px 16px;cursor:pointer;
+  font-weight:700;color:var(--c-muted);
+  border-bottom:3px solid transparent;font-family:inherit;
+  font-size:0.88rem;transition:all 0.2s;flex-shrink:0;
+}
+.tab-buttons button:hover{color:var(--c-navy)}
+.tab-buttons button.active{color:var(--c-orange);border-bottom-color:var(--c-orange)}
+.tab-content{display:none;animation:fadein 0.3s}
+.tab-content.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== PERSONA ===== */
+.persona{
+  display:grid;gap:16px;
+  grid-template-columns:200px 1fr;
+  background:linear-gradient(135deg,#fff,#fafafa);
+  border-radius:var(--radius);padding:24px;
+  border-left:6px solid var(--c-orange);box-shadow:var(--shadow);
+  margin:16px 0;
+}
+.persona .avatar{
+  background:linear-gradient(135deg,var(--c-orange),var(--c-orange-dark));
+  border-radius:var(--radius);padding:16px;color:#fff;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;min-height:200px;justify-content:center;
+}
+.persona .avatar .emoji{font-size:3.5rem;margin-bottom:8px;line-height:1}
+.persona .avatar .name{font-weight:900;font-size:1.1rem;margin-bottom:4px}
+.persona .avatar .age{font-size:0.85rem;opacity:0.9}
+.persona .avatar .role{font-size:0.78rem;opacity:0.8;margin-top:4px}
+.persona .details h5{
+  font-size:0.75rem;color:var(--c-orange);font-weight:700;
+  text-transform:uppercase;letter-spacing:0.05em;margin-top:8px;margin-bottom:4px;
+}
+.persona .details p{font-size:0.92rem;margin-bottom:8px;line-height:1.6}
+.persona .quote{
+  background:#fff;border-left:3px solid var(--c-orange);
+  padding:10px 14px;font-style:italic;color:#1a1a1a;
+  border-radius:6px;font-size:0.92rem;margin:8px 0;
+}
+.persona .quote::before{content:"💭 ";}
+.persona ul{margin:6px 0 8px 20px;font-size:0.88rem}
+.persona ul li{margin-bottom:3px}
+
+@media (max-width:600px){
+  .persona{grid-template-columns:1fr}
+  .persona .avatar{min-height:auto;flex-direction:row;justify-content:flex-start;gap:14px;text-align:left}
+}
+
+/* ===== STRATEGY/TACTIC BOX ===== */
+.strat-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:12px}
+.strat-box{
+  background:#fff;border-radius:var(--radius);padding:16px;
+  box-shadow:var(--shadow);border-top:4px solid var(--c-orange);
+}
+.strat-box.green{border-top-color:var(--c-green)}
+.strat-box.navy{border-top-color:var(--c-navy)}
+.strat-box h5{
+  font-size:0.95rem;font-weight:700;color:var(--c-navy);margin-bottom:10px;
+}
+.strat-box h5::before{content:"";display:inline-block;width:10px;height:10px;background:var(--c-orange);border-radius:50%;margin-right:8px;vertical-align:middle}
+.strat-box.green h5::before{background:var(--c-green)}
+.strat-box.navy h5::before{background:var(--c-navy)}
+.strat-box ul{margin-left:20px;font-size:0.88rem}
+.strat-box ul li{margin-bottom:4px}
+
+/* ===== INFOBOX ===== */
+.info-box{
+  background:#fef3c7;border-left:4px solid var(--c-orange);
+  padding:12px 16px;border-radius:6px;margin:12px 0;font-size:0.88rem;
+}
+.info-box::before{content:"💡 ";font-weight:700;color:var(--c-orange)}
+.info-box.warn{background:#fee2e2;border-left-color:#dc2626}
+.info-box.warn::before{content:"⚠️ ";color:#dc2626}
+
+/* ===== FLOW ===== */
+.flow-wrap{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);overflow-x:auto;
+}
+.mermaid{font-family:'Noto Sans JP',sans-serif !important}
+
+/* ===== CHART CONTAINER ===== */
+.chart-box{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);margin:16px 0;
+}
+.chart-box h4{font-size:0.95rem;color:var(--c-navy);margin-bottom:10px;font-weight:700}
+.chart-canvas-wrap{
+  position:relative;
+  width:100%;
+  height:320px;
+}
+.chart-canvas-wrap canvas{max-height:100%}
+.chart-box .source{font-size:0.72rem;color:var(--c-muted);margin-top:8px}
+.chart-box .source::before{content:"出典: "}
+@media (max-width:600px){
+  .chart-canvas-wrap{height:260px}
+}
+
+/* ===== ROADMAP ===== */
+.roadmap{margin:20px 0}
+.roadmap .row{display:grid;grid-template-columns:160px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.roadmap .row-label{font-size:0.85rem;font-weight:700;color:var(--c-navy)}
+.roadmap .row-bar{background:var(--c-border);height:32px;border-radius:6px;display:grid;grid-template-columns:repeat(24,1fr)}
+.roadmap .row-bar .seg{
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:0.72rem;font-weight:700;padding:0 8px;
+  white-space:nowrap;overflow:hidden;
+}
+.roadmap .seg.r1{background:#16a34a}
+.roadmap .seg.r2{background:#9333ea}
+.roadmap .seg.r3{background:#0e2a47}
+.roadmap .seg.r4{background:#ea580c}
+.roadmap .seg.r5{background:#dc2626}
+.roadmap .header{margin-bottom:4px;color:var(--c-muted);font-size:0.7rem}
+.roadmap .header .row-bar{background:transparent}
+.roadmap .header .row-bar > div{text-align:center;font-size:0.65rem;color:var(--c-muted);padding:4px 0}
+
+@media (max-width:600px){
+  .roadmap .row{grid-template-columns:100px 1fr}
+  .roadmap .row-label{font-size:0.75rem}
+}
+
+/* ===== ACCORDION ===== */
+details{
+  background:var(--c-card);border-radius:var(--radius);
+  margin-bottom:12px;border:1px solid var(--c-border);overflow:hidden;
+}
+details summary{
+  padding:14px 20px;cursor:pointer;font-weight:700;
+  color:var(--c-navy);font-size:0.95rem;
+  display:flex;align-items:center;gap:10px;list-style:none;
+  background:var(--c-card);transition:background 0.2s;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:"▶";color:var(--c-orange);font-size:0.7rem;
+  transition:transform 0.2s;flex-shrink:0;
+}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px}
+details .details-body p{margin-bottom:8px;font-size:0.9rem}
+details .details-body ul{margin:8px 0 8px 20px;font-size:0.88rem}
+
+/* ===== POSSIBILITY METER ===== */
+.meter{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:0.85rem}
+.meter .label{min-width:80px;font-weight:700;color:var(--c-navy)}
+.meter .bar{flex:1;background:var(--c-border);height:14px;border-radius:7px;overflow:hidden;position:relative}
+.meter .fill{height:100%;background:linear-gradient(90deg,var(--c-green),var(--c-orange));border-radius:7px;transition:width 0.4s}
+.meter .val{min-width:36px;text-align:right;font-weight:700;color:var(--c-navy)}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#1a1a1a;color:#fff;padding:32px clamp(20px,5vw,60px);
+  text-align:center;font-size:0.85rem;opacity:0.9;
+}
+footer a{color:var(--c-yellow)}
+
+/* ===== UTILITY ===== */
+.center{text-align:center}
+.muted{color:var(--c-muted);font-size:0.85rem}
+hr.divider{border:none;height:1px;background:var(--c-border);margin:24px 0}
+.tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700;background:var(--c-accent-bg);color:var(--c-orange-dark);margin-right:6px}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#0e2a47 60%,#ea580c 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地 × ワークマン戦略転用 5路線提案</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#fbbf24;color:#1a1a1a;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit;transition:background 0.2s">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('hanshin_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('hanshin_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">STRATEGIC ADVISORY ｜ 2026-05-27</span>
+    <h1>ワークマンに学ぶ<br><span class="accent">「客層拡大×PB集中×アンバサダー」</span>戦略の<br>阪神素地への転用ロードマップ</h1>
+    <p class="hero-sub">職人だけの店から1,500店舗体制へ成長したワークマンの10の成功原則を多視点解析し、阪神素地様の商品・技術・ターゲット属性とマッチする5路線（国内3＋国外2）を具体的に提案します。</p>
+    <div class="hero-meta">
+      <span>ファクトチェック済</span>
+      <span>ペルソナ・インサイト言語化済</span>
+    </div>
+  </div>
+</header>
+
+<!-- ====== TOC ====== -->
+<nav class="toc">
+  <ul>
+    <li><a href="#summary">サマリー</a></li>
+    <li><a href="#workman-facts">WM実績</a></li>
+    <li><a href="#workman-10">WM10カ条</a></li>
+    <li><a href="#mapping">転用マップ</a></li>
+    <li><a href="#match">適合性</a></li>
+    <li><a href="#routes">5路線概要</a></li>
+    <li><a href="#matrix">4象限マトリクス</a></li>
+    <li><a href="#detail">5路線詳細</a></li>
+    <li><a href="#roadmap">統合ロードマップ</a></li>
+    <li><a href="#financials">収益・リスク</a></li>
+    <li><a href="#sources">出典</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ====== SUMMARY ====== -->
+<section id="summary">
+  <h2>1. エグゼクティブサマリー</h2>
+  <p class="lead">ワークマンは「職人だけの作業服チェーン」から、客層拡大とブルーオーシャン戦略で年商1,752億円規模に成長しました。阪神素地様も同じく「水辺×足元×現場機能」という独自のブルーオーシャンを保有しています。本提言は、その経営手法を阪神素地様の商品ラインに転用し、5路線で顧客と利益率を拡張する戦略アドバイザリーです。</p>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">
+      ワークマンが10年で証明したのは<br>
+      <strong>「機能で勝つ × 客層を変える × 価格は崩さない」</strong> の三位一体。<br>
+      阪神素地様には既にすべての素材が揃っている。<br>
+      足りないのは <strong>「ブランド分節化」と「アンバサダー戦略」</strong> です。
+    </p>
+  </div>
+
+  <h3>5路線の全体像（国内3＋国外2）</h3>
+  <div class="routes-overview">
+    <div class="route-card r1">
+      <span class="num">01</span>
+      <span class="flag">🌾 国内</span>
+      <h4>道具女子<br>路線</h4>
+      <p>農業女子・キャンプ女子・ガーデナーの「映える長靴」</p>
+      <div class="target">のら子さん（42・農家3代目）</div>
+    </div>
+    <div class="route-card r2">
+      <span class="num">02</span>
+      <span class="flag">👵 国内</span>
+      <h4>シニア・リカバリー<br>路線</h4>
+      <p>「介護靴に見えない介護機能」シューズ</p>
+      <div class="target">フミ子さん（72・介護家族）</div>
+    </div>
+    <div class="route-card r3">
+      <span class="num">03</span>
+      <span class="flag">🏛️ 国内</span>
+      <h4>法人・自治体<br>BCP路線</h4>
+      <p>防災備蓄・建設・電力・公共調達の専門化</p>
+      <div class="target">岡村課長（45・市役所防災課）</div>
+    </div>
+    <div class="route-card r4">
+      <span class="num">04</span>
+      <span class="flag">🌏 国外</span>
+      <h4>台湾・東南アジア<br>越境EC路線</h4>
+      <p>日本品質を「気候適合×釣りブーム」で輸出</p>
+      <div class="target">リー・ジエ（28・台北のSE）</div>
+    </div>
+    <div class="route-card r5">
+      <span class="num">05</span>
+      <span class="flag">🎣 国外</span>
+      <h4>欧米プレミアム<br>路線</h4>
+      <p>Made in Japan × 職人技 × フライフィッシング</p>
+      <div class="target">ジョン・ミラー（55・米コロラド）</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WORKMAN FACTS ====== -->
+<section id="workman-facts">
+  <h2>2. ワークマンの実績（ファクト）</h2>
+  <p class="lead">本提言の土台となる、ワークマン株式会社の公開数値です。すべて公式IR・決算資料・報道に基づきます。</p>
+
+  <div class="grid grid-4">
+    <div class="card">
+      <h4>チェーン全店売上高</h4>
+      <div class="stat">1,752<span style="font-size:1rem">億円</span></div>
+      <div class="stat-sub">2024年3月期（2018年比 約2.2倍）</div>
+    </div>
+    <div class="card navy">
+      <h4>PB比率</h4>
+      <div class="stat">68.5%</div>
+      <div class="stat-sub">2025年3月期（前年67.8%から上昇）</div>
+    </div>
+    <div class="card green">
+      <h4>広告宣伝費率</h4>
+      <div class="stat">0.8%</div>
+      <div class="stat-sub">2021年TV CM完全撤退・SNS/アンバサダーへシフト</div>
+    </div>
+    <div class="card">
+      <h4>2030年売上目標</h4>
+      <div class="stat">2,400<span style="font-size:1rem">億円</span></div>
+      <div class="stat-sub">5カ年中期計画（営業利益350億円・1,300店）</div>
+    </div>
+  </div>
+
+  <h3>客層拡大の歩み</h3>
+  <div class="chart-box">
+    <h4>ワークマン売上高の成長（億円）</h4>
+    <div class="chart-canvas-wrap"><canvas id="chartWMGrowth"></canvas></div>
+    <div class="source">ワークマン IR資料・決算説明会資料／2030年は計画値</div>
+  </div>
+
+  <h3>商品ブランド体系</h3>
+  <div class="grid grid-3">
+    <div class="card accent">
+      <h4>イージス（AEGIS）</h4>
+      <p>高機能防水・防寒シリーズ。耐水圧3万mmなど大手アウトドアブランドに匹敵する性能を1万円以下で提供。</p>
+      <p class="muted" style="margin-top:8px">→ <strong>「機能で勝つ」原則のフラッグシップ</strong></p>
+    </div>
+    <div class="card accent">
+      <h4>フィールドコア（FieldCore）</h4>
+      <p>アウトドアウェアPB。キャンプ・登山愛好家にUGC拡散で支持を獲得。</p>
+      <p class="muted" style="margin-top:8px">→ <strong>「客層拡大」を支える専用ライン</strong></p>
+    </div>
+    <div class="card accent">
+      <h4>イナレム（INAREM）</h4>
+      <p>2026年新作レインスーツ。SNSで「大手アウトドアメーカーも驚く防水ウェア」と話題に。</p>
+      <p class="muted" style="margin-top:8px">→ <strong>「アンバサダー共創」の成果</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WORKMAN 10 ====== -->
+<section id="workman-10">
+  <h2>3. ワークマン成功戦略 多視点解析【10カ条】</h2>
+  <p class="lead">経営学・マーケティング・組織論・IT・グローバル戦略の5視点から、ワークマンの成功要因を10原則に抽出しました。それぞれに阪神素地様への転用ポイントを記載しています。</p>
+
+  <div class="principles-10">
+    <div class="principle-10">
+      <span class="num">01</span>
+      <h4>客層拡大の意思決定</h4>
+      <p class="what">2014年SWOT分析で「建設技能労働者は2040年に2-3割減」と試算。プロ職人だけの戦略を捨て、一般客・女性・アウトドア層へ拡張する意思決定をした。</p>
+      <div class="map">釣り人口は25年で-75%。同じ縮小トレンドに直面しており、客層拡大の意思決定が急務。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">02</span>
+      <h4>ブルーオーシャン特定</h4>
+      <p class="what">「高機能×低価格」という4,000億円の空白市場を発見。有名アウトドアは高機能・高価格／廉価品は低機能の二極構造に楔を打った。</p>
+      <div class="map">「水辺特化×現場機能×継続メンテ」は他社が手薄。フィッシング大手も鮎・防災・農業の同時カバーは未開拓。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">03</span>
+      <h4>PB集中投下</h4>
+      <p class="what">PB比率68.5%。ブランド数を絞ってコストと人材を集中投下し、機能性と価格の両立を実現。</p>
+      <div class="map">既に自社開発（CRスポンジ製造・東レ透湿防水使用）。ブランドを「水辺」「現場」「シニア」の3軸に集約する余地大。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">04</span>
+      <h4>アンバサダー戦略</h4>
+      <p class="what">フォロワー数ではなく「熱量とアーリーアダプター性」で選定。約40名（うち15名は共同開発）。</p>
+      <div class="map">釣り師・農業女子・介護家族・防災担当者から「現場熱量の高い10名」を選抜可能。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">05</span>
+      <h4>製品共同開発</h4>
+      <p class="what">アンバサダーが商品設計に参画。「使う人が作る」を徹底し、現場ニーズを商品化スピードに直結。</p>
+      <div class="map">既に「京の農林女子」「青森・愛媛果樹農家」とコラボ実績あり。これを戦略化・継続化できる土台がある。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">06</span>
+      <h4>UGC × TV CM撤退</h4>
+      <p class="what">2021年TV CM完全撤退。広告費率0.8%。浮いた予算は商品展示会とSNSインフルエンサー施策へ。</p>
+      <div class="map">阪神素地様は元々TV CM未投下。UGC設計を一気に整備すれば、ワークマン以上に効率化可能。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">07</span>
+      <h4>機能格付け宣言</h4>
+      <p class="what">「耐雨度」「防寒度」「ストレッチ度」「美脚度」を3〜5段階で見える化。素人でも選びやすくした。</p>
+      <div class="map">阪神素地様も「耐水度」「現場機能度」「耐油度」「軽量度」を格付表示可能。これだけで選びやすさが激変する。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">08</span>
+      <h4>業態多層化</h4>
+      <p class="what">プロ向けワークマン／一般向けワークマンプラス／女性向け#ワークマン女子の3業態で客層×店舗を分節化。</p>
+      <div class="map">店舗は持たないが、サブブランド＋専用LP＋専用SNSで同じ分節化が可能（D2C型多層化）。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">09</span>
+      <h4>エクセル経営（データ）</h4>
+      <p class="what">土屋哲雄専務主導のExcel経営→Python活用へ進化。全社員データドリブン。</p>
+      <div class="map">v1企画書の「代理店データ還元レポート」と直結。データ経営の組織変革は同時進行できる。</div>
+    </div>
+    <div class="principle-10">
+      <span class="num">10</span>
+      <h4>海外段階展開</h4>
+      <p class="what">2029年台湾1号店→東南アジアへ。気候類似性とリサーチを徹底してから本格進出。</p>
+      <div class="map">中国JVが既にあり、台湾・東南アジアの釣りブーム・農業共通需要にアクセス可能。先行者利益あり。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MAPPING ====== -->
+<section id="mapping">
+  <h2>4. ワークマン → 阪神素地 転用マップ</h2>
+  <p class="lead">10カ条のうち、特に阪神素地様の現状に最もインパクトが大きい5要素を抽出し、対応ブランド・商品ラインを明示します。</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th class="orange">ワークマン要素</th>
+        <th class="navy">阪神素地への転用</th>
+        <th>対応商品ライン</th>
+        <th>結果イメージ</th>
+      </tr>
+      <tr>
+        <td><strong>ワークマンプラス</strong><br>（一般客向け業態）</td>
+        <td>「Hanshin Field+」（仮）<br>道具女子向けD2C＋EC</td>
+        <td>FU5014 / らく足袋 / 鮎タイツ女性モデル</td>
+        <td>SNS映え×機能×日本製の三拍子で、農業女子・キャンプ層へ</td>
+      </tr>
+      <tr>
+        <td><strong>#ワークマン女子</strong><br>（女性専用業態）</td>
+        <td>「あなた想いプラス」<br>シニア・介護家族向けD2C</td>
+        <td>あなた想いシリーズ / 羽マジックシューズ / LE3950・ME2950</td>
+        <td>「介護靴に見えない介護機能」で家族の罪悪感を解消</td>
+      </tr>
+      <tr>
+        <td><strong>イージス</strong><br>（高機能フラッグシップ）</td>
+        <td>「BOSAI by 阪神素地」<br>法人・自治体BCP専門ライン</td>
+        <td>BW-80 透湿防水ウェーダー / BN-860 多機能ブーツ</td>
+        <td>機能格付け×全省庁統一資格×防衛省実績で法人BtoBに突破口</td>
+      </tr>
+      <tr>
+        <td><strong>アンバサダー40名</strong><br>（製品共同開発）</td>
+        <td>「現場熱量10名」<br>釣り師・農業女子・介護家族・防災</td>
+        <td>全ライン横断</td>
+        <td>UGC自動拡散と次世代商品の現場発アイデア源泉</td>
+      </tr>
+      <tr>
+        <td><strong>機能格付け宣言</strong></td>
+        <td>「現場格付け」<br>耐水・耐油・耐摩耗・軽量・反射の5軸</td>
+        <td>全商品</td>
+        <td>素人でも選べる店頭・EC・LPの強力な購買補助情報</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="info-box">
+    <strong>ポイント：</strong>ワークマンの「業態多層化（店舗）」を、阪神素地様では「<strong>サブブランド×専用LP×専用SNS</strong>」で代替できます。店舗投資なしで同じ顧客分節化が可能であり、これは中小製造業の競争優位になります。
+  </div>
+</section>
+
+<!-- ====== MATCH ====== -->
+<section id="match">
+  <h2>5. なぜワークマン戦略が阪神素地に適合するのか</h2>
+  <p class="lead">企業規模・売上は大きく異なりますが、顧客特性・商品特性・戦略余地は驚くほど共通しています。</p>
+
+  <div class="grid grid-2">
+    <div class="card accent">
+      <h4>共通点① プロ・現場発の機能</h4>
+      <p>両社とも「現場で使うプロが認める機能」を出発点としている。<br>
+      ワークマン → 建設職人／阪神素地 → 釣り師・農家・自衛隊。</p>
+    </div>
+    <div class="card accent">
+      <h4>共通点② 価格×機能の優位</h4>
+      <p>大手専門ブランド（モンベル、シマノ、ダイワ）と比べ、機能を維持しながら価格優位を持つ点が共通。</p>
+    </div>
+    <div class="card accent">
+      <h4>共通点③ 縮小ベース市場からの脱出</h4>
+      <p>WMは「建設職人2040年に2-3割減」／阪神素地は「釣り人口25年で-75%」。同じ構造的縮小に直面している。</p>
+    </div>
+    <div class="card accent">
+      <h4>共通点④ 既に内製・PB力を保有</h4>
+      <p>両社とも自社開発・自社調達のPBを持つ。「ブランド設計を変えれば客層拡大できる」段階。</p>
+    </div>
+    <div class="card accent">
+      <h4>共通点⑤ 女性・シニア・アウトドアの追い風</h4>
+      <p>WMが取り込んだのと同じ層が阪神素地様にも追い風。70代釣り増、農業女子増、介護人口増。</p>
+    </div>
+    <div class="card accent">
+      <h4>共通点⑥ 海外で日本品質が評価</h4>
+      <p>ワークマンは台湾観光客に評価され海外展開を決意。阪神素地様も「日本製ウェーダー」のアジア評価が高い。</p>
+    </div>
+  </div>
+
+  <div class="info-box warn">
+    <strong>注意：</strong>異なる点は「店舗規模」「広告投資余力」「フランチャイズ網」。阪神素地様はこれらが小さい分、<strong>「サブブランドD2C」「アンバサダー共創」「越境EC」</strong>の効率重視アプローチが現実解になります。
+  </div>
+</section>
+
+<!-- ====== ROUTES OVERVIEW ====== -->
+<section id="routes">
+  <h2>6. 5路線オーバービュー</h2>
+  <p class="lead">国内3＋国外2の5路線を、ターゲット市場規模・取り組み難易度・想定収益で比較します。</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th>路線</th>
+        <th>ターゲット市場</th>
+        <th>想定市場規模（年）</th>
+        <th>3年目想定売上</th>
+        <th>難易度</th>
+      </tr>
+      <tr>
+        <td><strong>① 道具女子</strong></td>
+        <td>農業女子・ガーデナー・キャンプ女子</td>
+        <td>農業女子だけで100万人規模／長靴履物市場</td>
+        <td>1.5〜3億円</td>
+        <td>★★☆☆☆</td>
+      </tr>
+      <tr>
+        <td><strong>② シニア・リカバリー</strong></td>
+        <td>65歳以上 3,653万人（内閣府）</td>
+        <td>介護靴・リハ靴市場推定100億円</td>
+        <td>1〜2億円</td>
+        <td>★★☆☆☆</td>
+      </tr>
+      <tr>
+        <td><strong>③ 法人・自治体BCP</strong></td>
+        <td>自治体1,718／BCP実施法人約12万社</td>
+        <td>防災用品市場推定500億円</td>
+        <td>2〜5億円</td>
+        <td>★★★☆☆</td>
+      </tr>
+      <tr>
+        <td><strong>④ 台湾・東南アジア</strong></td>
+        <td>台湾・タイ・ベトナムの釣り＋農業</td>
+        <td>アジア釣り市場急成長（中国主導）</td>
+        <td>1〜3億円</td>
+        <td>★★★★☆</td>
+      </tr>
+      <tr>
+        <td><strong>⑤ 欧米プレミアム</strong></td>
+        <td>北米・欧州フライフィッシング愛好家</td>
+        <td>世界釣り具市場170億ドル</td>
+        <td>5,000万〜1.5億円</td>
+        <td>★★★★★</td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="muted">※想定売上は業界平均と類似事例からのKai推計。実行前にパイロット運用での検証を推奨。</p>
+</section>
+
+<!-- ====== 4QM ====== -->
+<section id="matrix">
+  <h2>7. 5路線の優先度4象限マトリクス</h2>
+  <p class="lead">影響度（収益＋戦略インパクト）と実行難易度の2軸で5路線を整理しました。</p>
+
+  <div class="matrix">
+    <div class="y-axis">影響度 低 ←　→ 高</div>
+    <div class="quadrant-grid">
+      <div class="q q1">
+        <span class="q-label">Quick Win</span>
+        <div class="q-title">① 即実行（影響大・易）</div>
+        <span class="route-chip r1">🌾 ①道具女子</span>
+        <span class="route-chip r2">👵 ②シニア</span>
+        <p class="muted" style="font-size:0.78rem;margin-top:6px">既存商品×ブランド設計のみで動かせる<br>初年度から効果測定可能</p>
+      </div>
+      <div class="q q2">
+        <span class="q-label">Strategic</span>
+        <div class="q-title">② 戦略投資（影響大・難）</div>
+        <span class="route-chip r3">🏛️ ③法人BCP</span>
+        <span class="route-chip r4">🌏 ④台湾・東南</span>
+        <p class="muted" style="font-size:0.78rem;margin-top:6px">専任ユニット必要だが収益インパクト大<br>2〜3年で大きな柱に育つ</p>
+      </div>
+      <div class="q q3">
+        <span class="q-label">—</span>
+        <div class="q-title">③ 充実枠（影響中・易）</div>
+        <p class="muted" style="font-size:0.78rem;margin-top:6px">今回該当なし（5路線とも上位象限）</p>
+      </div>
+      <div class="q q4">
+        <span class="q-label">Reserve</span>
+        <div class="q-title">④ 様子見（影響小〜中・難）</div>
+        <span class="route-chip r5">🎣 ⑤欧米プレミアム</span>
+        <p class="muted" style="font-size:0.78rem;margin-top:6px">市場大だが認知獲得が困難<br>4路線が動いてから着手推奨</p>
+      </div>
+    </div>
+    <div class="x-axis">実行難易度 易 ←　→ 難</div>
+  </div>
+
+  <div class="info-box">
+    <strong>推奨順序：</strong>① Quick Win（路線①②）を6ヶ月で立ち上げ → ② Strategic（路線③④）を1〜2年目で本格化 → ④ Reserve（路線⑤）を3年目以降の検討に。
+  </div>
+</section>
+
+<!-- ====== ROUTE DETAILS ====== -->
+<section id="detail">
+  <h2>8. 各路線の詳細（ペルソナ・戦略・戦術）</h2>
+  <p class="lead">各路線について、ペルソナのインサイト・こだわり・満足感情ポイントから戦略・戦術までを言語化します（タブ切替）。</p>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="r1">🌾 ① 道具女子</button>
+      <button class="tab-btn" data-tab="r2">👵 ② シニア</button>
+      <button class="tab-btn" data-tab="r3">🏛️ ③ 法人BCP</button>
+      <button class="tab-btn" data-tab="r4">🌏 ④ 台湾・東南</button>
+      <button class="tab-btn" data-tab="r5">🎣 ⑤ 欧米プレミアム</button>
+    </div>
+
+    <!-- ====== R1 ====== -->
+    <div class="tab-content active" id="r1">
+      <h3>路線① 道具女子（国内）</h3>
+      <p><span class="tag">転用WM要素</span> ワークマンプラス × #ワークマン女子 × フィールドコア</p>
+
+      <div class="persona">
+        <div class="avatar">
+          <div class="emoji">🌾</div>
+          <div class="name">のら子さん</div>
+          <div class="age">42歳・女性</div>
+          <div class="role">愛媛のみかん農家3代目</div>
+        </div>
+        <div class="details">
+          <h5>📍 プロフィール</h5>
+          <p>夫と共同経営、小学生の子供2人。Instagram @nora_mikan_3rd でフォロワー1,200人。普段は黒の長靴で農作業、参観日は普通のスニーカーに履き替える。</p>
+
+          <h5>💭 本音のインサイト</h5>
+          <p class="quote">「夫の作業靴は工務店で買うとカッコいいのに、私の長靴はダサい。SNSに作業姿を載せたいけど、足元が野暮ったくて写真映えしない。農業女子のお手本になりたいのに」</p>
+
+          <h5>🎯 こだわり</h5>
+          <ul>
+            <li>① <strong>色とフォルム</strong>：無地黒以外、くすみカラー・くすみグリーン</li>
+            <li>② <strong>軽さ</strong>：1日8時間履いても疲れない</li>
+            <li>③ <strong>脱ぎ履きしやすさ</strong>：片手で絞れるフード</li>
+            <li>④ <strong>土詰まり防止ソール</strong></li>
+            <li>⑤ <strong>SNS映え</strong>：撮影しても恥ずかしくない</li>
+          </ul>
+
+          <h5>😊 満足感情ポイント</h5>
+          <ul>
+            <li>「インスタで『その長靴どこの？』とDMが来る瞬間」</li>
+            <li>「夫から『おしゃれだな』と言われる」</li>
+            <li>「同業の農家女子から『真似したい』と言われる」</li>
+            <li>「子供の参観日にカジュアル使いできる」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>戦略・戦術</h3>
+      <div class="strat-grid">
+        <div class="strat-box">
+          <h5>戦略：サブブランド独立化</h5>
+          <ul>
+            <li>「Hanshin Field+」（仮称）として独立ロゴ・パッケージ</li>
+            <li>母体「阪神素地」は表記せず、おしゃれブランドとして展開</li>
+            <li>既存FU5014・らく足袋ベースに4色×3型展開</li>
+          </ul>
+        </div>
+        <div class="strat-box green">
+          <h5>戦術：UGC・アンバサダー</h5>
+          <ul>
+            <li>農業女子アンバサダー10名（フォロワー500〜5,000の現場熱量重視）</li>
+            <li>商品共同開発（色・形・ポケット位置）</li>
+            <li>Instagram #私の農仕事 投稿コンテスト</li>
+          </ul>
+        </div>
+        <div class="strat-box navy">
+          <h5>販路：直販＋セレクト</h5>
+          <ul>
+            <li>Shopify自社EC＋楽天市場店</li>
+            <li>JA直売所・農業女子イベント出店</li>
+            <li>無印・ナチュラル系セレクトショップ卸</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>なぜこの路線が可能性高いか</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>市場の追い風：</strong>「のらスタイル」「フーソレイユ」など先行ブランドあり＝市場存在の証明済み</li>
+            <li><strong>商品アセット：</strong>FU5014（青森・愛媛果樹農家コラボ済）の応用展開で開発コスト最小化</li>
+            <li><strong>SNS拡散性：</strong>農業女子コミュニティはInstagram・XでUGC文化が成熟</li>
+            <li><strong>代理店反感ゼロ：</strong>既存釣具店ルートとは販路が完全に異なる</li>
+            <li><strong>利益率：</strong>D2C型のため代理店マージン分が利益として残る</li>
+          </ul>
+          <div class="meter"><span class="label">市場性</span><div class="bar"><div class="fill" style="width:78%"></div></div><span class="val">78</span></div>
+          <div class="meter"><span class="label">実行性</span><div class="bar"><div class="fill" style="width:82%"></div></div><span class="val">82</span></div>
+          <div class="meter"><span class="label">利益率</span><div class="bar"><div class="fill" style="width:75%"></div></div><span class="val">75</span></div>
+          <div class="meter"><span class="label">3年成長</span><div class="bar"><div class="fill" style="width:72%"></div></div><span class="val">72</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ====== R2 ====== -->
+    <div class="tab-content" id="r2">
+      <h3>路線② シニア・リカバリー（国内）</h3>
+      <p><span class="tag">転用WM要素</span> #ワークマン女子 × リカバリーウェア参入 × 機能格付け</p>
+
+      <div class="persona">
+        <div class="avatar" style="background:linear-gradient(135deg,#9333ea,#6b21a8)">
+          <div class="emoji">👵</div>
+          <div class="name">フミ子さん</div>
+          <div class="age">72歳・女性</div>
+          <div class="role">夫の軽度介護中・年金生活</div>
+        </div>
+        <div class="details">
+          <h5>📍 プロフィール</h5>
+          <p>持ち家。週3回スーパーへ徒歩、月2回病院通院。近所友人とランチ会、孫が月1で遊びに来る。スマホは娘から教わったLINEのみ。</p>
+
+          <h5>💭 本音のインサイト</h5>
+          <p class="quote">「滑って転んで骨折したら、寝たきりが怖い。でも介護用品店で買うのは恥ずかしいし、介護靴丸出しのデザインは嫌。普通の靴に見える靴で、ちゃんと滑らない、軽い、自分で履けるものがほしい」</p>
+
+          <h5>🎯 こだわり</h5>
+          <ul>
+            <li>① <strong>滑り止め</strong>：水回り・雨の日も安心</li>
+            <li>② <strong>自分で履ける</strong>：マジックテープ・甲が大きく開く</li>
+            <li>③ <strong>軽さ</strong>：足が上がりにくいから少しでも軽く</li>
+            <li>④ <strong>普通の靴に見える</strong>：友人の前で恥ずかしくない</li>
+            <li>⑤ <strong>むくみ対応</strong>：幅広設計・伸縮</li>
+          </ul>
+
+          <h5>😊 満足感情ポイント</h5>
+          <ul>
+            <li>「孫に『おばあちゃんの靴いいね』と言われる」</li>
+            <li>「友人と歩く時、ハイヒールの友人に置いていかれない」</li>
+            <li>「娘から『お母さん、これ買ってよかったね』と褒められる」</li>
+            <li>「医者から『姿勢いいですね』と言われる」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>戦略・戦術</h3>
+      <div class="strat-grid">
+        <div class="strat-box">
+          <h5>戦略：見えない介護機能</h5>
+          <ul>
+            <li>「あなた想いプラス」サブブランド</li>
+            <li>介護靴に見えない普通の靴デザイン</li>
+            <li>機能は「滑り止め・脱ぎ履き・軽量・足むくみ」の4格付け</li>
+          </ul>
+        </div>
+        <div class="strat-box green">
+          <h5>戦術：娘・嫁経由マーケ</h5>
+          <ul>
+            <li>本人ではなく「親の靴を選ぶ娘（40-50代女性）」がターゲット</li>
+            <li>Instagram「親孝行ギフト」「敬老の日」訴求</li>
+            <li>ケアマネ・地域包括センター向け説明資料</li>
+          </ul>
+        </div>
+        <div class="strat-box navy">
+          <h5>販路：通販＋ドラッグストア</h5>
+          <ul>
+            <li>楽天市場＋Amazon＋自社EC</li>
+            <li>ドラッグストア（ウエルシア・ツルハ）卸</li>
+            <li>介護用品卸（フットマーク・ヤマシタ）</li>
+            <li>地域包括支援センター推薦リスト掲載</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>なぜこの路線が可能性高いか</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>市場規模：</strong>65歳以上3,653万人。介護靴・リハ靴市場は今後10年拡大確実</li>
+            <li><strong>競合優位：</strong>徳武産業「あゆみシューズ」は介護用品売り場限定。普通の靴売り場で買える「見えない介護機能」は競合薄</li>
+            <li><strong>商品アセット：</strong>「あなた想い」シリーズ・羽マジックシューズが既存</li>
+            <li><strong>購買意思決定者：</strong>娘世代の親孝行ギフト需要が拡大中</li>
+            <li><strong>リピート性：</strong>消耗品＋本人＋夫＋友人紹介でLTV高い</li>
+          </ul>
+          <div class="meter"><span class="label">市場性</span><div class="bar"><div class="fill" style="width:85%"></div></div><span class="val">85</span></div>
+          <div class="meter"><span class="label">実行性</span><div class="bar"><div class="fill" style="width:75%"></div></div><span class="val">75</span></div>
+          <div class="meter"><span class="label">利益率</span><div class="bar"><div class="fill" style="width:70%"></div></div><span class="val">70</span></div>
+          <div class="meter"><span class="label">3年成長</span><div class="bar"><div class="fill" style="width:80%"></div></div><span class="val">80</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ====== R3 ====== -->
+    <div class="tab-content" id="r3">
+      <h3>路線③ 法人・自治体BCP（国内）</h3>
+      <p><span class="tag">転用WM要素</span> イージス × 機能格付け × プロ向けライン</p>
+
+      <div class="persona">
+        <div class="avatar" style="background:linear-gradient(135deg,#0e2a47,#1f3f63)">
+          <div class="emoji">🏛️</div>
+          <div class="name">岡村課長</div>
+          <div class="age">45歳・男性</div>
+          <div class="role">神戸市役所 防災課</div>
+        </div>
+        <div class="details">
+          <h5>📍 プロフィール</h5>
+          <p>地方公務員20年、防災課5年目。妻＋中学生2人。年1回の地域防災訓練の責任者。予算は議会承認制、調達は競争入札or随意契約。</p>
+
+          <h5>💭 本音のインサイト</h5>
+          <p class="quote">「BCPで備蓄しているけど、災害時に職員が本当に使えるか不安。海外メーカーは品質バラつきがあるし、議会で『なぜこの製品か』と聞かれた時に答えられる根拠が欲しい。コスト削減プレッシャーもあるが、災害時に職員が困ったら責任は私」</p>
+
+          <h5>🎯 こだわり</h5>
+          <ul>
+            <li>① <strong>機能の数値証明</strong>：耐水・防寒・耐油の数値表記</li>
+            <li>② <strong>採用実績</strong>：他自治体・防衛省・大手企業の導入</li>
+            <li>③ <strong>調達のしやすさ</strong>：全省庁統一資格・電子調達対応</li>
+            <li>④ <strong>耐用年数</strong>：備蓄期間中の劣化保証</li>
+            <li>⑤ <strong>国内メーカー</strong>：継続調達・修理対応の安心</li>
+          </ul>
+
+          <h5>😊 満足感情ポイント</h5>
+          <ul>
+            <li>「議会で『なぜこの製品か』に対して、数値とエビデンスで答えられる」</li>
+            <li>「災害訓練で職員が『これいいですね』と言ってくれる」</li>
+            <li>「他の自治体から『どこで調達してる？』と聞かれる」</li>
+            <li>「コスト削減と品質向上を同時に達成して評価される」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>戦略・戦術</h3>
+      <div class="strat-grid">
+        <div class="strat-box">
+          <h5>戦略：BCP専門ライン構築</h5>
+          <ul>
+            <li>「BOSAI by 阪神素地」サブブランド</li>
+            <li>BW-80・BN-860を主軸に法人BtoB専用カタログ</li>
+            <li>機能5格付け（耐水・防寒・耐油・反射・耐摩耗）見える化</li>
+          </ul>
+        </div>
+        <div class="strat-box green">
+          <h5>戦術：法人BtoB専任ユニット</h5>
+          <ul>
+            <li>岡山営業部に専任1名（既存営業エースを抜擢）</li>
+            <li>最初は兵庫・岡山・大阪の県・上位10市から</li>
+            <li>JA・電力・建設・ゼネコンへ横展開</li>
+          </ul>
+        </div>
+        <div class="strat-box navy">
+          <h5>販路：直販＋官公需＋専門商社</h5>
+          <ul>
+            <li>全省庁統一資格・防衛省実績の前面化</li>
+            <li>Amazonビジネス出店</li>
+            <li>防災用品商社（ジョイント）・BCP コンサル経由</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>なぜこの路線が可能性高いか</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>政府方針：</strong>政府は「激甚化・頻発化する災害」への事前備えを重視＝予算追い風</li>
+            <li><strong>既存実績：</strong>防衛省胴付き長靴の調達実績6件＝信頼の証明</li>
+            <li><strong>資格：</strong>全省庁統一資格保有＝官公需入札への直接アクセス</li>
+            <li><strong>競合薄：</strong>大手は防災カテゴリ専業ではない／専業は機能浅い</li>
+            <li><strong>単価：</strong>1法人案件で100〜1,000万円規模になり得る</li>
+          </ul>
+          <div class="meter"><span class="label">市場性</span><div class="bar"><div class="fill" style="width:88%"></div></div><span class="val">88</span></div>
+          <div class="meter"><span class="label">実行性</span><div class="bar"><div class="fill" style="width:62%"></div></div><span class="val">62</span></div>
+          <div class="meter"><span class="label">利益率</span><div class="bar"><div class="fill" style="width:80%"></div></div><span class="val">80</span></div>
+          <div class="meter"><span class="label">3年成長</span><div class="bar"><div class="fill" style="width:85%"></div></div><span class="val">85</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ====== R4 ====== -->
+    <div class="tab-content" id="r4">
+      <h3>路線④ 台湾・東南アジア 越境EC（国外）</h3>
+      <p><span class="tag">転用WM要素</span> 海外段階展開（台湾→東南アジア）× 気候類似性</p>
+
+      <div class="persona">
+        <div class="avatar" style="background:linear-gradient(135deg,#ea580c,#9a3412)">
+          <div class="emoji">🌏</div>
+          <div class="name">リー・ジエ</div>
+          <div class="age">28歳・男性</div>
+          <div class="role">台北のSE・週末釣り愛好家</div>
+        </div>
+        <div class="details">
+          <h5>📍 プロフィール</h5>
+          <p>月収約12万台湾ドル（日本円換算 約60万円）。週末は北部の渓流・沿岸で釣り。Instagram @leijie_fishing でフォロワー2,500人。日本旅行は年1〜2回。</p>
+
+          <h5>💭 本音のインサイト</h5>
+          <p class="quote">「日本製の釣具に憧れている。日本旅行で買おうとしたけどサイズ展開が日本人向けで合わなかった。中国本土ブランドは品質が不安。台湾の現地ブランドは選択肢が少ない。日本のメーカーが台湾向けに正規販売してくれたら絶対に買う」</p>
+
+          <h5>🎯 こだわり</h5>
+          <ul>
+            <li>① <strong>日本ブランドの正規品</strong>：偽物・並行輸入は避けたい</li>
+            <li>② <strong>SNS映え</strong>：日本ブランドの写真は周囲に自慢できる</li>
+            <li>③ <strong>気候適合</strong>：台湾の高温多湿で使える素材</li>
+            <li>④ <strong>サイズ展開</strong>：台湾人体型（やや小柄）に合うサイズ</li>
+            <li>⑤ <strong>中国語サポート</strong>：説明書・問合せが中国語</li>
+          </ul>
+
+          <h5>😊 満足感情ポイント</h5>
+          <ul>
+            <li>「Instagramに日本ブランドの写真を上げて『どこで買った？』とDMが来る」</li>
+            <li>「釣り仲間の集まりで『これ日本製だよ』と話せる」</li>
+            <li>「日本のYouTube釣り動画と同じ装備が手に入る」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>戦略・戦術</h3>
+      <div class="strat-grid">
+        <div class="strat-box">
+          <h5>戦略：日本品質×アジア最適化</h5>
+          <ul>
+            <li>中国広東省JV「WINNING INDUSTRIAL」を販売拠点化</li>
+            <li>台湾→ベトナム→タイの順で段階展開</li>
+            <li>「Made in Japan / Designed by Japan」の二段階訴求</li>
+          </ul>
+        </div>
+        <div class="strat-box green">
+          <h5>戦術：越境EC＋現地KOL</h5>
+          <ul>
+            <li>ASIAN PORTAL FISHING（日本釣具300社越境EC）参画</li>
+            <li>蝦皮（Shopee）・台湾Amazonに公式店</li>
+            <li>台湾現地釣り系YouTuber 3〜5名へ商品提供</li>
+            <li>中国京東・天猫国際（中国大陸向け）</li>
+          </ul>
+        </div>
+        <div class="strat-box navy">
+          <h5>販路：オムニチャネル</h5>
+          <ul>
+            <li>越境EC（Shopee Taiwan・京東）</li>
+            <li>現地釣具専門店3〜5社への卸</li>
+            <li>インバウンド連動（訪日体験→帰国後購入）</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>なぜこの路線が可能性高いか</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>中国JV既存：</strong>製造拠点WINNING INDUSTRIALを販売拠点に格上げできる</li>
+            <li><strong>市場急成長：</strong>中国の若者に釣りブーム到来／台湾はワークマンが台湾人向けに沖縄で好評を確認済み（同じ気候）</li>
+            <li><strong>越境ECインフラ：</strong>ASIAN PORTAL FISHINGが日本300社集約サイトとして稼働中</li>
+            <li><strong>日本ブランド評価：</strong>シマノが中国工場で「コロナ後の入門セット」需要を捉えた前例あり</li>
+            <li><strong>気候類似性：</strong>台湾と日本西日本は気候が近い＝そのまま輸出可能</li>
+          </ul>
+          <div class="meter"><span class="label">市場性</span><div class="bar"><div class="fill" style="width:80%"></div></div><span class="val">80</span></div>
+          <div class="meter"><span class="label">実行性</span><div class="bar"><div class="fill" style="width:55%"></div></div><span class="val">55</span></div>
+          <div class="meter"><span class="label">利益率</span><div class="bar"><div class="fill" style="width:72%"></div></div><span class="val">72</span></div>
+          <div class="meter"><span class="label">3年成長</span><div class="bar"><div class="fill" style="width:78%"></div></div><span class="val">78</span></div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ====== R5 ====== -->
+    <div class="tab-content" id="r5">
+      <h3>路線⑤ 欧米プレミアム（国外）</h3>
+      <p><span class="tag">転用WM要素</span> 機能格付け × Made in Japan × ニッチ深掘り</p>
+
+      <div class="persona">
+        <div class="avatar" style="background:linear-gradient(135deg,#dc2626,#991b1b)">
+          <div class="emoji">🎣</div>
+          <div class="name">ジョン・ミラー</div>
+          <div class="age">55歳・男性</div>
+          <div class="role">米コロラド州・フライ歴30年</div>
+        </div>
+        <div class="details">
+          <h5>📍 プロフィール</h5>
+          <p>年収12万ドルのエンジニア。フライフィッシング歴30年、毎週末ロッキー山脈の渓流へ。妻＋成人した娘1人。Reddit r/flyfishing でアクティブ。</p>
+
+          <h5>💭 本音のインサイト</h5>
+          <p class="quote">「Simms・Patagoniaは素晴らしいが、もう30年同じ。差別化したい。日本の職人技には興味がある。日本の渓流文化の道具を、英語で正規購入できれば理想。価格は気にしない。本物が欲しい」</p>
+
+          <h5>🎯 こだわり</h5>
+          <ul>
+            <li>① <strong>Made in Japan</strong>：職人がつくった物語性</li>
+            <li>② <strong>軽量・コンパクト</strong>：飛行機で運べる</li>
+            <li>③ <strong>パーツ修理対応</strong>：長く使える</li>
+            <li>④ <strong>英語サポート</strong>：購入・修理依頼が英語で完結</li>
+            <li>⑤ <strong>希少性</strong>：周囲が持っていない</li>
+          </ul>
+
+          <h5>😊 満足感情ポイント</h5>
+          <ul>
+            <li>「フライフィッシング仲間に『この日本ブランド、知ってる？』と語れる」</li>
+            <li>「ガイドツアーで他の釣り客から『どこのブランド？』と聞かれる」</li>
+            <li>「YouTube動画で『日本のクラフトマンシップ』を紹介する」</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>戦略・戦術</h3>
+      <div class="strat-grid">
+        <div class="strat-box">
+          <h5>戦略：プレミアム高付加価値</h5>
+          <ul>
+            <li>「HANSHIN HERITAGE」プレミアムライン（仮称）</li>
+            <li>日本国内製造のFX-590ベース、限定生産</li>
+            <li>価格は3〜5倍（500〜1,000ドル）で訴求</li>
+          </ul>
+        </div>
+        <div class="strat-box green">
+          <h5>戦術：英語コンテンツ＋現地メディア</h5>
+          <ul>
+            <li>英語LPに「職人ストーリー」「姫路工場映像」</li>
+            <li>米フライフィッシング雑誌（Fly Fisherman, MidCurrent）レビュー依頼</li>
+            <li>Redditコミュニティでの紹介</li>
+            <li>米国ガイドサービス事業者への試供品提供</li>
+          </ul>
+        </div>
+        <div class="strat-box navy">
+          <h5>販路：限定流通</h5>
+          <ul>
+            <li>専門小売店3〜5社（米・欧）への限定卸</li>
+            <li>Amazon US（高付加価値ブランドストア）</li>
+            <li>eBay 日本ストア（既出店ノウハウ活用）</li>
+            <li>自社英語ECサイト（Shopify Multi-currency）</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>なぜこの路線が「Reserve」か（実行は3年目以降推奨）</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>市場性：</strong>世界釣り具市場170億ドルでプレミアム層は確実に存在</li>
+            <li><strong>難易度：</strong>言語・物流・規制（米国輸出規制）・修理オペレーションが複雑</li>
+            <li><strong>認知獲得：</strong>無名ブランドが米国で立ち上がるには3〜5年必要</li>
+            <li><strong>先行投資：</strong>英語サイト・カタログ・パッケージで500〜1,000万円</li>
+            <li><strong>推奨：</strong>路線①〜④で2〜3年の組織体力を作ってから着手</li>
+          </ul>
+          <div class="meter"><span class="label">市場性</span><div class="bar"><div class="fill" style="width:65%"></div></div><span class="val">65</span></div>
+          <div class="meter"><span class="label">実行性</span><div class="bar"><div class="fill" style="width:30%"></div></div><span class="val">30</span></div>
+          <div class="meter"><span class="label">利益率</span><div class="bar"><div class="fill" style="width:88%"></div></div><span class="val">88</span></div>
+          <div class="meter"><span class="label">3年成長</span><div class="bar"><div class="fill" style="width:45%"></div></div><span class="val">45</span></div>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====== ROADMAP ====== -->
+<section id="roadmap">
+  <h2>9. 5路線統合ロードマップ（24ヶ月）</h2>
+  <p class="lead">5路線を並行ではなく段階的に立ち上げ、組織・キャッシュフロー・学習を最適化します。</p>
+
+  <div class="roadmap">
+    <div class="row header">
+      <div class="row-label"></div>
+      <div class="row-bar">
+        <div style="grid-column:1/4">Q1 (M1-3)</div>
+        <div style="grid-column:4/7">Q2 (M4-6)</div>
+        <div style="grid-column:7/10">Q3 (M7-9)</div>
+        <div style="grid-column:10/13">Q4 (M10-12)</div>
+        <div style="grid-column:13/16">Q5 (M13-15)</div>
+        <div style="grid-column:16/19">Q6 (M16-18)</div>
+        <div style="grid-column:19/22">Q7 (M19-21)</div>
+        <div style="grid-column:22/25">Q8 (M22-24)</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-label">①道具女子</div>
+      <div class="row-bar"><div class="seg r1" style="grid-column:1/3">設計</div><div class="seg r1" style="grid-column:3/9">パイロット</div><div class="seg r1" style="grid-column:9/25">本格展開</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">②シニア</div>
+      <div class="row-bar"><div class="seg r2" style="grid-column:2/5">設計</div><div class="seg r2" style="grid-column:5/12">パイロット</div><div class="seg r2" style="grid-column:12/25">本格展開</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">③法人BCP</div>
+      <div class="row-bar"><div class="seg r3" style="grid-column:4/8">専任配置・準備</div><div class="seg r3" style="grid-column:8/16">自治体アプローチ</div><div class="seg r3" style="grid-column:16/25">JA・建設・大企業</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">④台湾・東南</div>
+      <div class="row-bar"><div class="seg r4" style="grid-column:7/12">越境EC接続・JV協議</div><div class="seg r4" style="grid-column:12/19">台湾本格・ベトナム調査</div><div class="seg r4" style="grid-column:19/25">タイ展開</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">⑤欧米</div>
+      <div class="row-bar"><div class="seg r5" style="grid-column:19/25">英語サイト準備・レビュー獲得</div></div>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:12px">緑＝①道具女子／紫＝②シニア／紺＝③法人BCP／橙＝④台湾・東南／赤＝⑤欧米</p>
+</section>
+
+<!-- ====== FINANCIALS ====== -->
+<section id="financials">
+  <h2>10. 想定収益とリスク</h2>
+  <p class="lead">5路線フル稼働時の3年目想定売上と、それを実現するうえでのリスクを整理します。</p>
+
+  <h3>3年目想定売上構成（5路線合計 6〜15億円）</h3>
+  <div class="chart-box">
+    <h4>路線別 3年目想定売上（億円・中位シナリオ）</h4>
+    <div class="chart-canvas-wrap"><canvas id="chartRevenue"></canvas></div>
+    <div class="source">業界平均と類似事例からの推計／実行前にパイロット運用での検証推奨</div>
+  </div>
+
+  <h3>主要リスクと対策</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>リスク</th><th>影響</th><th>対策</th></tr>
+      <tr><td>サブブランド乱立で組織が分散</td><td>大</td><td>路線①②を6ヶ月先行、③④は1年遅らせて段階投入</td></tr>
+      <tr><td>既存代理店の警戒・反感</td><td>中</td><td>サブブランドは代理店扱い対象外として明確に切り分け／代理店レポートで関係強化</td></tr>
+      <tr><td>越境ECの法規制・関税</td><td>中</td><td>ASIAN PORTAL FISHING等の既存基盤を使い、自社で法務リスクを抱えない</td></tr>
+      <tr><td>アンバサダー炎上</td><td>小〜中</td><td>選定基準を熱量＋人柄重視／契約で発信ガイドライン共有</td></tr>
+      <tr><td>製造キャパシティ不足</td><td>中</td><td>中国JV製造を維持しつつ、姫路工場の戦略商品（プレミアム・修理）特化</td></tr>
+      <tr><td>シニア路線で「介護臭」が出る</td><td>大</td><td>「あなた想いプラス」のデザイン・パッケージは普通の靴ブランド水準に徹底</td></tr>
+    </table>
+  </div>
+
+  <h3>必要投資概算（2年間累計）</h3>
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>サブブランド構築</h4>
+      <div class="stat">300<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">LP・パッケージ・撮影（路線①②）</div>
+    </div>
+    <div class="card">
+      <h4>法人BtoB専任人件費</h4>
+      <div class="stat">800<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">専任1名×2年（路線③）</div>
+    </div>
+    <div class="card">
+      <h4>越境EC・海外展開</h4>
+      <div class="stat">500<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">登録費・翻訳・現地KOL（路線④）</div>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:12px">合計 約1,600万円（2年間）／3年目想定売上 6〜15億円に対して投資効率は高い</p>
+</section>
+
+<!-- ====== SOURCES ====== -->
+<section id="sources">
+  <h2>11. 出典・エビデンス一覧</h2>
+  <p class="lead">本提言の数値根拠はすべて公開情報に基づきます。</p>
+
+  <details>
+    <summary>📊 ワークマンの数値・戦略</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.workman.co.jp/ir_info/pdf/2025/44ki_03_kessan.pdf" target="_blank" rel="noopener">ワークマン 2025年3月期 決算説明会資料</a></li>
+        <li><a href="https://note.com/insideir/n/n26f9c2e7c49e" target="_blank" rel="noopener">PB比率68.5%とビジネスモデル解説（Inside IR）</a></li>
+        <li><a href="https://www.ryutsuu.biz/strategy/r051313.html" target="_blank" rel="noopener">2030年売上2,400億円・1,300店目標（流通ニュース）</a></li>
+        <li><a href="https://www.businessinsider.jp/article/263761/" target="_blank" rel="noopener">広告宣伝費率0.8%（Business Insider）</a></li>
+        <li><a href="https://review.tanabeconsulting.co.jp/modelcompanies/24682/" target="_blank" rel="noopener">ワークマンのブランディング戦略（タナベコンサルティング）</a></li>
+        <li><a href="https://yui-marke.com/article/1797/" target="_blank" rel="noopener">ブルーオーシャン4,000億円空白市場戦略</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>📣 アンバサダー・UGC戦略</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://pr-genic.com/4039" target="_blank" rel="noopener">アンバサダー40名・15名共同開発・25名情報発信（PR GENIC）</a></li>
+        <li><a href="https://netkeizai.com/articles/detail/5382" target="_blank" rel="noopener">2021年TV CM完全撤退（日本ネット経済新聞）</a></li>
+        <li><a href="https://www.commercepick.com/archives/3793" target="_blank" rel="noopener">目指すは広告費0円（Commerce Pick）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🌏 海外戦略</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.fashionsnap.com/article/2025-05-12/workman-overseas/" target="_blank" rel="noopener">2029年台湾1号店オープン計画（Fashionsnap）</a></li>
+        <li><a href="https://www.nikkei.com/article/DGXZQOUC2289V0S3A820C2000000/" target="_blank" rel="noopener">海外進出・台湾＋沖縄旗艦店（日本経済新聞）</a></li>
+        <li><a href="https://fishing.asian-portal.shop/merchants.html" target="_blank" rel="noopener">ASIAN PORTAL FISHING（日本釣具300社越境EC）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>💻 データ経営・組織</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.ntt.com/bizon/excel-management.html" target="_blank" rel="noopener">土屋哲雄専務「エクセル経営」（NTTドコモビジネス）</a></li>
+        <li><a href="https://diamond-rm.net/technology/dx/481648/" target="_blank" rel="noopener">エクセル経営からPython活用へ（ダイヤモンド・チェーンストア）</a></li>
+        <li><a href="https://prtimes.jp/main/html/rd/p/000000043.000013308.html" target="_blank" rel="noopener">機能格付け宣言（ワークマンPR TIMES）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🎯 阪神素地・市場関連</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.jpc-net.jp/research/detail/007085.html" target="_blank" rel="noopener">レジャー白書2024（釣り参加人口510万人）</a></li>
+        <li><a href="https://www.bowinsgarmentfactory.com/industry-trends/top-10-global-womens.html" target="_blank" rel="noopener">グローバル女性釣りアパレル46.8億ドル市場</a></li>
+        <li><a href="https://www8.cao.go.jp/kourei/whitepaper/w-2025/html/zenbun/s1_1_1.html" target="_blank" rel="noopener">内閣府 高齢社会白書（65歳以上3,653万人）</a></li>
+        <li><a href="https://www.maff.go.jp/j/kobetu_ninaite/251225_meguzi.pdf" target="_blank" rel="noopener">農水省 農業経営をめぐる情勢（基幹的農業従事者102万人）</a></li>
+        <li><a href="https://hanshinkiji.co.jp/" target="_blank" rel="noopener">阪神素地株式会社 公式サイト</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="info-box" style="margin-top:20px">
+    <strong>数値の取り扱い：</strong>市場規模・人口統計は公的データ。3年目想定売上・ペルソナ設定・利益率推計は業界平均と類似事例からのKai推計。実行前にパイロット運用での検証を推奨します。
+  </div>
+</section>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <p>阪神素地 × ワークマン戦略転用 5路線販路拡大提案</p>
+  <p>2026-05-27</p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料は阪神素地株式会社様への独立アドバイザリー資料です。第三者への共有はお控えください。</p>
+</footer>
+
+<script>
+// ===== TABS =====
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  });
+});
+
+// ===== CHART: WM growth =====
+const ctxW=document.getElementById('chartWMGrowth');
+new Chart(ctxW,{
+  type:'line',
+  data:{
+    labels:['2018','2019','2020','2021','2022','2023','2024','2030(目標)'],
+    datasets:[{
+      label:'チェーン全店売上高（億円）',
+      data:[797,1023,1220,1311,1397,1620,1752,2400],
+      borderColor:'#ea580c',
+      backgroundColor:'rgba(234,88,12,0.18)',
+      fill:true,
+      tension:0.3,
+      pointBackgroundColor:'#0e2a47',
+      pointRadius:5,
+      pointHoverRadius:7,
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y+'億円'}}
+    },
+    scales:{
+      y:{beginAtZero:true,ticks:{callback:v=>v+'億円'}}
+    }
+  }
+});
+
+// ===== CHART: Revenue forecast =====
+const ctxR=document.getElementById('chartRevenue');
+new Chart(ctxR,{
+  type:'bar',
+  data:{
+    labels:['①道具女子','②シニア','③法人BCP','④台湾・東南','⑤欧米'],
+    datasets:[{
+      label:'3年目想定売上（億円・中位）',
+      data:[2.2,1.5,3.5,2.0,0.8],
+      backgroundColor:['#16a34a','#9333ea','#0e2a47','#ea580c','#dc2626'],
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y+'億円'}}
+    },
+    scales:{
+      y:{beginAtZero:true,ticks:{callback:v=>v+'億円'}}
+    }
+  }
+});
+
+// ===== MERMAID =====
+mermaid.initialize({
+  startOnLoad:true,
+  theme:'default',
+  themeVariables:{
+    fontFamily:'Noto Sans JP, sans-serif',
+    primaryColor:'#0e2a47',
+    primaryTextColor:'#fff',
+    primaryBorderColor:'#0e2a47',
+    lineColor:'#ea580c',
+    secondaryColor:'#fbbf24',
+    tertiaryColor:'#fff7ed'
+  },
+  flowchart:{useMaxWidth:true,htmlLabels:true}
+});
+</script>
+
+</body>
+</html>
