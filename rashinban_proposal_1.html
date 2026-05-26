@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧭 卸＝広告投資の再定義 — 阪神素地様 販路拡大コンパス</title>
+<style>
+/* ============================================================
+   RASHINBAN — 目標達成コンパス  v1.0
+   生成: Kai (Claude Code)
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #070B14; --surface: #0F1720; --surface2: #162030;
+  --border: #1A2A3D; --text: #E2E8F0; --muted: #64748B; --dim: #94A3B8;
+  --primary: #6366F1; --primary-glow: rgba(99,102,241,.25);
+  --secondary: #8B5CF6; --success: #10B981;
+  --warn: #F59E0B; --danger: #EF4444;
+  --kai-bg: #0D0820; --kai-border: #4C1D95; --kai-text: #C4B5FD; --kai-hi: #DDD6FE;
+  --t0:#EF4444; --t1:#F97316; --t2:#EAB308; --t3:#22C55E;
+  --t4:#06B6D4; --t5:#6366F1; --t6:#8B5CF6; --t7:#EC4899;
+}
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Hiragino Sans','Yu Gothic UI',sans-serif; font-size:14px; line-height:1.6; min-height:100vh; }
+h2 { font-size:18px; font-weight:700; }
+h3 { font-size:15px; font-weight:600; }
+
+/* ---- HEADER ---- */
+.hdr { position:sticky; top:0; z-index:100; background:rgba(7,11,20,.96); backdrop-filter:blur(12px);
+       border-bottom:1px solid var(--border); padding:0 20px; height:56px;
+       display:flex; align-items:center; gap:14px; }
+.hdr-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#6366F1,#8B5CF6,#EC4899);
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.hdr-theme { flex:1; font-size:13px; color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hdr-prog { display:flex; align-items:center; gap:8px; }
+.prog-bar { width:100px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#6366F1,#8B5CF6); transition:width .4s; }
+.prog-pct { font-size:11px; color:var(--muted); min-width:30px; text-align:right; }
+.hdr-btn { background:var(--surface); border:1px solid var(--border); color:var(--dim);
+           padding:5px 11px; border-radius:6px; cursor:pointer; font-size:12px; transition:all .15s; }
+.hdr-btn:hover { background:var(--surface2); color:var(--text); }
+
+/* ---- NAV ---- */
+.nav { display:flex; gap:2px; padding:10px 20px 0; border-bottom:1px solid var(--border);
+       overflow-x:auto; background:var(--bg); }
+.tab { padding:7px 14px; border-radius:6px 6px 0 0; cursor:pointer; font-size:13px;
+       font-weight:500; color:var(--muted); border:1px solid transparent; border-bottom:none;
+       white-space:nowrap; position:relative; bottom:-1px; transition:all .15s; }
+.tab:hover { color:var(--text); background:var(--surface); }
+.tab.on { color:var(--primary); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+
+/* ---- VIEWS ---- */
+.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view.on { display:block; }
+
+/* ---- CARDS ---- */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(99,102,241,.12));
+             border:1px solid rgba(99,102,241,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
+.goal-tag { display:inline-block; background:rgba(99,102,241,.18); color:#A5B4FC;
+            padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
+.goal-meta { font-size:12px; color:var(--dim); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+
+/* ---- STATS ---- */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
+.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- KAI CARD ---- */
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px;
+            padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
+.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px;
+                    border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%); }
+.kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#8B5CF6);
+          display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
+.kai-rl { font-size:11px; color:var(--kai-text); }
+.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
+.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(239,68,68,.1);
+             border-left:3px solid var(--danger); border-radius:0 6px 6px 0;
+             color:#FCA5A5; font-size:13px; font-style:italic; }
+.kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
+.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
+
+/* ---- SECTION TITLE ---- */
+.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase;
+       letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ---- TOP ACTIONS ---- */
+.act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
+.act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+            padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px;
+            transition:all .15s; }
+.act-item:hover { background:var(--surface2); border-color:var(--primary); transform:translateY(-1px); }
+.act-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.act-tx { font-size:12px; }
+.act-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- MANDALA ---- */
+.mandala-note { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.mandala-wrap { overflow-x:auto; }
+.m-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:2px;
+          width:100%; max-width:780px; margin:0 auto; aspect-ratio:1; }
+.mc { display:flex; align-items:center; justify-content:center; text-align:center;
+      font-size:9.5px; line-height:1.25; border-radius:3px; padding:2px;
+      transition:transform .12s, box-shadow .12s; overflow:hidden; word-break:break-all; }
+.mc.cp { cursor:pointer; }
+.mc.cp:hover { transform:scale(1.09); z-index:10; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+.mc.center { background:linear-gradient(135deg,#6366F1,#8B5CF6); color:#fff; font-weight:800; font-size:10px; z-index:5; }
+.mc.theme { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.tr  { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.item { font-size:9px; }
+.mc.empty { background:var(--surface); opacity:.25; }
+.m-legend { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.m-leg { display:flex; align-items:center; gap:5px; font-size:12px; padding:3px 10px;
+         background:var(--surface); border:1px solid var(--border); border-radius:20px;
+         cursor:pointer; transition:border-color .15s; }
+.m-leg:hover { border-color:var(--primary); }
+.m-leg-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* ---- MATRIX ---- */
+.bc { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); margin-bottom:14px; flex-wrap:wrap; }
+.bc a { color:var(--muted); cursor:pointer; text-decoration:none; }
+.bc a:hover { color:var(--primary); }
+.bc .cur { color:var(--text); }
+.bc-sep { opacity:.4; }
+.t-pills { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer;
+          border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
+.t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.mx-wrap { display:flex; gap:8px; align-items:stretch; }
+.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted);
+         display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-inner { flex:1; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+           gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; position:relative; }
+.mx-cross::before, .mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
+.mx-cross::after { top:50%; left:0; right:0; height:1px; }
+.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
+.quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
+.quad.q-tr { background:rgba(239,68,68,.06); }
+.quad.q-tl { background:rgba(99,102,241,.06); }
+.quad.q-br { background:rgba(245,158,11,.06); }
+.quad.q-bl { background:rgba(100,116,139,.04); }
+.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px;
+      padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s;
+      display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.qi-tx { flex:1; line-height:1.4; }
+.qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+           padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
+
+/* ---- FLOW ---- */
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+          padding:10px 14px; margin-bottom:18px; }
+.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-ctx-t { font-size:15px; font-weight:700; }
+.fl-steps { position:relative; padding-left:38px; }
+.fl-step { position:relative; margin-bottom:14px; }
+.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px;
+                   width:2px; background:var(--border); }
+.fl-step:last-child::before { display:none; }
+.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px;
+           border-radius:50%; display:flex; align-items:center; justify-content:center;
+           font-size:12px; z-index:1; font-weight:700; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
+.fl-card.done { opacity:.55; }
+.fl-card.done .fl-title { text-decoration:line-through; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
+.fb-act  { background:rgba(99,102,241,.14); color:#A5B4FC; }
+.fb-dec  { background:rgba(245,158,11,.14); color:#FCD34D; }
+.fb-mil  { background:rgba(16,185,129,.14); color:#6EE7B7; }
+.fb-wrn  { background:rgba(239,68,68,.14); color:#FCA5A5; }
+.fb-dur  { background:rgba(100,116,139,.14); color:var(--muted); }
+.fb-out  { background:rgba(6,182,212,.14); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer;
+            font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-check.done { text-decoration:line-through; opacity:.5; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+          padding:12px 14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
+.fk-tx  { font-size:13px; color:var(--kai-text); line-height:1.7; }
+
+/* ---- GANTT ---- */
+.gt-wrap { overflow-x:auto; }
+.gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
+.gt-wk  { flex:1; text-align:center; font-size:10px; color:var(--muted);
+          padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
+.gt-phase { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase;
+            letter-spacing:.5px; padding:8px 0 4px; }
+.gt-row { display:flex; align-items:center; margin-bottom:3px; min-height:30px; }
+.gt-name { width:190px; min-width:190px; font-size:12px; padding-right:10px;
+           overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--dim); }
+.gt-bars { flex:1; position:relative; height:28px; }
+.gt-bar { position:absolute; height:18px; top:5px; border-radius:4px; padding:0 6px;
+          font-size:9.5px; color:#fff; font-weight:500; display:flex; align-items:center;
+          overflow:hidden; white-space:nowrap; transition:opacity .15s; }
+.gt-bar:hover { opacity:.8; }
+.gt-bar.crit { box-shadow:0 0 8px rgba(239,68,68,.45); }
+.gt-bar.ms { width:18px !important; border-radius:50%; padding:0; justify-content:center; font-size:11px; }
+.gt-legend { display:flex; gap:12px; margin-bottom:10px; font-size:12px; color:var(--muted); }
+.gt-leg-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+
+/* ---- KAI FLOAT ---- */
+#kai-float { position:fixed; bottom:18px; right:18px; z-index:200; width:340px; }
+.kf-panel { display:none; background:var(--kai-bg); border:1px solid var(--kai-border);
+            border-radius:12px; padding:14px; margin-bottom:7px;
+            max-height:380px; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.kf-panel.on { display:block; }
+.kf-sec { margin-bottom:14px; }
+.kf-sec-t { font-size:11px; color:var(--kai-text); font-weight:600; letter-spacing:.4px; opacity:.65; margin-bottom:7px; }
+.kf-ins { font-size:13px; color:var(--kai-text); line-height:1.65; padding:8px 10px;
+          background:rgba(255,255,255,.04); border-radius:6px; margin-bottom:5px; }
+.kf-btn { background:linear-gradient(135deg,#4C1D95,#6366F1); border:1px solid #7C3AED;
+          border-radius:10px; padding:9px 14px; cursor:pointer; display:flex;
+          align-items:center; gap:8px; box-shadow:0 4px 20px rgba(99,102,241,.3);
+          transition:all .2s; color:#fff; width:100%; }
+.kf-btn:hover { box-shadow:0 6px 28px rgba(99,102,241,.5); transform:translateY(-1px); }
+.kf-av { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.18);
+         display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+.kf-lbl { flex:1; font-size:13px; font-weight:700; }
+.kf-arr { font-size:11px; opacity:.8; }
+
+/* ---- UTIL ---- */
+.btn { padding:7px 14px; border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; border:none; transition:all .15s; }
+.btn-g { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-g:hover { background:var(--surface2); color:var(--text); }
+.empty-s { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-s-i { font-size:40px; margin-bottom:10px; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+@media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0e2a47 0%,#1f3f63 60%,#2e7d51 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:-apple-system,'Hiragino Sans',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地様 販路拡大コンパス</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('hanshin_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('hanshin_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ═══ HEADER ═══ -->
+<header class="hdr">
+  <div class="hdr-logo">🧭 目標達成コンパス</div>
+  <div class="hdr-theme" id="hTheme"></div>
+  <div class="hdr-prog">
+    <span class="prog-pct" id="hPct">0%</span>
+    <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
+  </div>
+  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="tab on"  onclick="go('dashboard',this)">📊 ダッシュボード</div>
+  <div class="tab"     onclick="go('mandala',this)">🌸 マンダラ</div>
+  <div class="tab"     onclick="go('matrix',this)">⊞ マトリクス</div>
+  <div class="tab"     onclick="go('flow',this)">→ フロー</div>
+  <div class="tab"     onclick="go('gantt',this)">📅 ガント</div>
+</nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="v-dashboard" class="view on">
+  <div class="goal-card">
+    <div class="goal-tag">目標テーマ</div>
+    <div class="goal-title" id="dTheme"></div>
+    <div class="goal-meta" id="dMeta"></div>
+    <div class="goal-bg" id="dBg"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">8</div><div class="stat-l">主要テーマ</div></div>
+    <div class="stat"><div class="stat-v">64</div><div class="stat-l">アクション項目</div></div>
+    <div class="stat"><div class="stat-v" id="sFlows">0</div><div class="stat-l">フロー図</div></div>
+    <div class="stat"><div class="stat-v" id="sPct">0%</div><div class="stat-l">実行進捗</div></div>
+  </div>
+  <div class="kai-card">
+    <div class="kai-hdr">
+      <div class="kai-av">K</div>
+      <div><div class="kai-nm">Kai — ストラテジックコンサルタント</div><div class="kai-rl">あなたの目標達成を最短距離で実現する</div></div>
+    </div>
+    <div class="kai-sum" id="kSum"></div>
+    <div class="kai-verd" id="kVerd"></div>
+    <div class="kai-tags" id="kTags"></div>
+  </div>
+  <div class="sec">最優先で着手すべきアクション</div>
+  <div class="act-grid" id="dActs"></div>
+</div>
+
+<!-- ═══ MANDALA ═══ -->
+<div id="v-mandala" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <h2>マンダラチャート</h2>
+    <button class="btn btn-g" onclick="go('matrix',null)">マトリクスを見る →</button>
+  </div>
+  <div class="mandala-note">テーマセル（色付き）をクリック → 優先度マトリクスへ</div>
+  <div class="mandala-wrap"><div class="m-grid" id="mGrid"></div></div>
+  <div class="m-legend" id="mLeg"></div>
+</div>
+
+<!-- ═══ MATRIX ═══ -->
+<div id="v-matrix" class="view">
+  <div class="bc" id="mxBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="mxBcTh">マトリクス</span>
+  </div>
+  <div class="t-pills" id="tPills"></div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度 ↑</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">→ 緊急度</div>
+    </div>
+  </div>
+  <div class="mx-kai" id="mxKai" style="display:none;">
+    <div class="mk-lbl">🧭 Kai アドバイス</div>
+    <div id="mxKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ FLOW ═══ -->
+<div id="v-flow" class="view">
+  <div class="bc" id="flBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="flBcIt">フロー</span>
+  </div>
+  <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
+  <div id="flEmpty" class="empty-s">
+    <div class="empty-s-i">→</div>
+    <div>マトリクスの項目をクリックするとフローが表示されます</div>
+  </div>
+  <div class="fl-steps" id="flSteps"></div>
+  <div class="fl-kai" id="flKai" style="display:none;">
+    <div class="fk-lbl">🧭 Kai アドバイス</div>
+    <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ GANTT ═══ -->
+<div id="v-gantt" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <h2 id="gtTitle">実行タイムライン</h2>
+    <div class="gt-legend">
+      <span><span class="gt-leg-dot" style="background:var(--danger)"></span>クリティカル</span>
+      <span><span class="gt-leg-dot" style="background:var(--primary)"></span>通常</span>
+      <span><span class="gt-leg-dot" style="background:var(--success);border-radius:50%"></span>マイルストーン</span>
+    </div>
+  </div>
+  <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<!-- ═══ KAI FLOAT ═══ -->
+<div id="kai-float">
+  <div class="kf-panel" id="kfPanel"></div>
+  <button class="kf-btn" onclick="toggleKai()">
+    <div class="kf-av">K</div>
+    <span class="kf-lbl">Kai に相談する</span>
+    <span class="kf-arr" id="kfArr">▲</span>
+  </button>
+</div>
+
+<script>
+/* ================================================================
+   DATA — Kai が以下の REPLACE_ マーカーを実際の内容に置き換えて生成する
+   ================================================================ */
+const DATA = {
+  meta: {
+    theme:        "卸＝広告投資の再定義 — 顧客リスト基盤の構築",
+    background:   "釣り市場25年で-75%（2,020万→510万人）の構造的縮小下、阪神素地様は約690社の代理店網と8チャネルのECモールに広く商品が並ぶ一方で、顧客が誰だか1人も分からない状態。代理店との関係を1ミリも壊さずに、顧客と直接つながる仕組みを6ヶ月で構築する。",
+    targetPeriod: "12ヶ月（パイロット3ヶ月＋本格運用9ヶ月）",
+    constraints:  "従業員21人の小規模組織／代理店反感ゼロが絶対条件／初期投資150〜300万円以内",
+    createdAt:    "2026-05-27"
+  },
+  kai: {
+    summary:           "貴社は『広告は出ているが顧客が見えない』状態にある。代理店690社という強力なチャネルが既にあり、ECモール8チャネルにも展開済み。問題は『広さ』ではなく『買った顧客が誰だか分からない』こと。直販に踏み込まず、代理店との関係を強化したまま顧客リストを構築する三層構造への転換が、最大の成長レバーとなる。",
+    coreIssue:         "年間数万足売れているのに、買った顧客が誰だか1人も分からない情報資産ゼロ状態",
+    topPriority:       "1SKUで同梱QRパイロット開始（30日以内・初期投資15万円）",
+    consultantVerdict: "『直販しない』を一律ルールから条件付ルールに変えないと、釣り市場縮小に飲み込まれる。6ヶ月以内に動かないと手遅れになる。",
+    strengths: [
+      "代理店約690社の強力な広告兼販売網",
+      "サイズオーダー・修理対応など稀有な顧客接点アセット",
+      "全省庁統一資格・防衛省実績による信頼性"
+    ],
+    risks: [
+      "代理店との関係性を壊すリスクの認識不足",
+      "顧客データ取得後の活用ノウハウ未整備",
+      "施策の同時着手による組織分散"
+    ],
+    themeInsights: [
+      { index: 0, insight: "五箇条を経営会議で承認する。これが全施策のゴーサインとなる。社内文書化が最優先。" },
+      { index: 1, insight: "FU5014で同梱QRパイロットが最速。15万円・30日で動かせる。ここから全てが始まる。" },
+      { index: 2, insight: "修理オンライン化で代理店に紹介手数料を還元する設計が反感対策の肝。修理＝最も濃い顧客接点。" },
+      { index: 3, insight: "データ還元レポートが『情報の互恵関係』を作り、代理店を味方に変える。これが五箇条第4条の実装。" },
+      { index: 4, insight: "サイズオーダーWeb化は売上完全代理店経由＝代理店が大歓迎する施策。希少な強みのデジタル化。" },
+      { index: 5, insight: "メルマガには直販リンクを入れず販売店マップ誘導を徹底する。SNS資産を顧客リスト資産へ。" },
+      { index: 6, insight: "保証クラウド・LINEは6ヶ月後の基盤拡張フェーズ。今は急がず、リスト構築を優先。" },
+      { index: 7, insight: "AI需要予測など高度活用は2年目以降。まず顧客リストを作ることが先決。組織は1名から。" }
+    ]
+  },
+  mandala: {
+    center: "卸＝広告投資。顧客リスト基盤を構築",
+    themes: [
+      {
+        index: 0,
+        name: "現状診断・五箇条",
+        description: "全施策の前提となる経営合意。代理店反感ゼロの五箇条を社内承認する。",
+        color: "#EF4444",
+        bgLight: "rgba(239,68,68,.13)",
+        items: [
+          { id: "t0-0", text: "顧客リストゼロを可視化", description: "経営会議で『顧客が誰だか分からない』事実を共有", priority: 1 },
+          { id: "t0-1", text: "EC8チャネル販売実態棚卸し", description: "アスクル781・モノタロウ177品など実数把握", priority: 1 },
+          { id: "t0-2", text: "釣り市場-75%トレンド共有", description: "1998年2,020万→2023年510万人の構造変化を経営陣に提示", priority: 2 },
+          { id: "t0-3", text: "五箇条の経営会議承認", description: "代理店反感ゼロ原則を文書化・全社判定基準化", priority: 1 },
+          { id: "t0-4", text: "五箇条の代理店説明資料", description: "営業訪問時に手渡せる1枚資料を整備", priority: 2 },
+          { id: "t0-5", text: "リピート率の仮値設定", description: "現状計測不能。業界平均から仮値で開始", priority: 3 },
+          { id: "t0-6", text: "LTV/CAC仮説値の設定", description: "経営判断指標の基準を設ける", priority: 2 },
+          { id: "t0-7", text: "代理店上位50店リスト精査", description: "活性化対象を絞り込み", priority: 2 }
+        ]
+      },
+      {
+        index: 1,
+        name: "同梱QR施策",
+        description: "全商品同梱の3年延長保証QR。顧客リスト構築の主軸。",
+        color: "#F97316",
+        bgLight: "rgba(249,115,22,.13)",
+        items: [
+          { id: "t1-0", text: "パイロットSKU選定", description: "果樹専用長靴FU5014で先行検証推奨", priority: 1 },
+          { id: "t1-1", text: "A6保証カード印刷物", description: "3年保証訴求／QR大型表示", priority: 1 },
+          { id: "t1-2", text: "LP制作（STUDIO等）", description: "10〜15万円・ノーコードで構築", priority: 1 },
+          { id: "t1-3", text: "DB選定（kintone等）", description: "月3,000円〜で開始", priority: 1 },
+          { id: "t1-4", text: "代理店690社プルダウン", description: "購入店必須選択の仕組み", priority: 2 },
+          { id: "t1-5", text: "3年延長保証規約整備", description: "コスト負担少なく実現可能な範囲", priority: 2 },
+          { id: "t1-6", text: "効果測定KPI設計", description: "登録率・代理店別分布・CAC換算", priority: 2 },
+          { id: "t1-7", text: "全SKU展開計画", description: "M4以降に順次拡大", priority: 3 }
+        ]
+      },
+      {
+        index: 2,
+        name: "修理オンライン化",
+        description: "業界稀有な強み修理対応をWeb化。代理店紹介手数料還元で反感ゼロ化。",
+        color: "#EAB308",
+        bgLight: "rgba(234,179,8,.13)",
+        items: [
+          { id: "t2-0", text: "Web受付フォーム", description: "写真3枚アップロード＋症状選択", priority: 1 },
+          { id: "t2-1", text: "Stripe/PayPay決済", description: "見積→決済→集荷の一気通貫", priority: 1 },
+          { id: "t2-2", text: "ヤマト集荷API連携", description: "顧客の手間を最小化", priority: 2 },
+          { id: "t2-3", text: "代理店紹介手数料規程", description: "修理代の5〜10%を販売店にバック", priority: 1 },
+          { id: "t2-4", text: "修理データ蓄積", description: "型番×故障部位×使用年数を集計", priority: 2 },
+          { id: "t2-5", text: "次回購入クーポン", description: "代理店経由の再購入を促進", priority: 2 },
+          { id: "t2-6", text: "自己修理キット販売連動", description: "DIY層も代理店経由で取り込む", priority: 3 },
+          { id: "t2-7", text: "修理経由リピート計測", description: "目標：修理者の20〜30%が再購入", priority: 2 }
+        ]
+      },
+      {
+        index: 3,
+        name: "代理店データ還元",
+        description: "取得した顧客データを匿名化集計し代理店に四半期還元。情報の互恵関係。",
+        color: "#22C55E",
+        bgLight: "rgba(34,197,94,.13)",
+        items: [
+          { id: "t3-0", text: "Excelテンプレ設計", description: "A4 2ページの読みやすいレポート", priority: 1 },
+          { id: "t3-1", text: "上位50代理店β配布", description: "営業訪問時に手渡し＋解説", priority: 1 },
+          { id: "t3-2", text: "個人情報匿名化ルール", description: "年齢層・性別・地域までで個人特定不可", priority: 1 },
+          { id: "t3-3", text: "代理店FB収集", description: "β版反応をヒアリング→改善", priority: 2 },
+          { id: "t3-4", text: "全690社展開計画", description: "四半期1回・自動生成体制", priority: 2 },
+          { id: "t3-5", text: "BIツール化（Looker等）", description: "半年後の高度化", priority: 3 },
+          { id: "t3-6", text: "販促提案連動", description: "客層レポートに基づく仕入提案", priority: 2 },
+          { id: "t3-7", text: "代理店NPS計測", description: "目標：+20以上の関係強化指標", priority: 3 }
+        ]
+      },
+      {
+        index: 4,
+        name: "サイズオーダーWeb化",
+        description: "希少な強みサイズオーダーを全国どこからでも受付可。売上は完全代理店経由。",
+        color: "#06B6D4",
+        bgLight: "rgba(6,182,212,.13)",
+        items: [
+          { id: "t4-0", text: "採寸ガイド動画", description: "既存YouTube素材を再編集", priority: 2 },
+          { id: "t4-1", text: "Webオーダーフォーム", description: "30〜50万円で外注", priority: 2 },
+          { id: "t4-2", text: "代理店マップ機能", description: "Google Maps埋込で最寄り3店表示", priority: 2 },
+          { id: "t4-3", text: "代理店FAX受注通知", description: "Web入力→該当代理店へ自動転送", priority: 2 },
+          { id: "t4-4", text: "パイロット代理店10社", description: "先行運用→改善→全国展開", priority: 2 },
+          { id: "t4-5", text: "売上完全代理店経由オペ", description: "代理店反感ゼロを担保", priority: 1 },
+          { id: "t4-6", text: "採寸ノウハウデジタル化", description: "代理店店頭でも参照可能に", priority: 3 },
+          { id: "t4-7", text: "リードタイム最適化", description: "目標4週間以内", priority: 3 }
+        ]
+      },
+      {
+        index: 5,
+        name: "SNS→メール導線",
+        description: "既存SNS資産を顧客リストに転換。直販リンク無しで販売店誘導を徹底。",
+        color: "#6366F1",
+        bgLight: "rgba(99,102,241,.13)",
+        items: [
+          { id: "t5-0", text: "人気動画上位5本にCTA", description: "鮎タイツ・ウェーダー使い方動画から", priority: 1 },
+          { id: "t5-1", text: "LP制作（簡易）", description: "PDF提供→メアド取得", priority: 1 },
+          { id: "t5-2", text: "Mailchimp無料導入", description: "月0〜5,000円で開始", priority: 1 },
+          { id: "t5-3", text: "ウェルカムメール設計", description: "販売店マップを必ず提供", priority: 2 },
+          { id: "t5-4", text: "月2回配信のコンテンツ計画", description: "新商品・メンテ・修理・季節", priority: 2 },
+          { id: "t5-5", text: "Instagram投稿連動", description: "ストーリー・リンク誘導", priority: 2 },
+          { id: "t5-6", text: "Open率・CTR計測", description: "ベンチマーク確立", priority: 3 },
+          { id: "t5-7", text: "Facebook連動", description: "既存稼働アカウントを活用", priority: 3 }
+        ]
+      },
+      {
+        index: 6,
+        name: "保証クラウド・LINE",
+        description: "M6以降の基盤拡張。My阪神素地とLINE故障診断で顧客接点深化。",
+        color: "#8B5CF6",
+        bgLight: "rgba(139,92,246,.13)",
+        items: [
+          { id: "t6-0", text: "CRM選定（HubSpot等）", description: "50〜80万円で導入", priority: 3 },
+          { id: "t6-1", text: "My阪神素地会員機能", description: "所持商品一覧・修理連携", priority: 3 },
+          { id: "t6-2", text: "会員特典設計", description: "保証延長・先行案内・限定ノベルティ", priority: 3 },
+          { id: "t6-3", text: "LINE公式開設", description: "無料アカウントで開始", priority: 2 },
+          { id: "t6-4", text: "故障診断ボット", description: "症状選択→自己修理 or 依頼", priority: 3 },
+          { id: "t6-5", text: "自己修理動画コンテンツ", description: "代理店経由のキット販売連動", priority: 3 },
+          { id: "t6-6", text: "既存登録者の移行招待", description: "M1〜5の蓄積データを統合", priority: 3 },
+          { id: "t6-7", text: "LINE→修理オンライン連携", description: "症状確定→施策2フォームへ", priority: 3 }
+        ]
+      },
+      {
+        index: 7,
+        name: "データ活用・組織",
+        description: "全施策を支えるデータ活用基盤と運用組織。1名体制から始める。",
+        color: "#EC4899",
+        bgLight: "rgba(236,72,153,.13)",
+        items: [
+          { id: "t7-0", text: "顧客リストDB一元管理", description: "QR・修理・メルマガ全データ統合", priority: 2 },
+          { id: "t7-1", text: "代理店別売上ダッシュボード", description: "月次自動更新", priority: 2 },
+          { id: "t7-2", text: "パート/兼任1名で運用開始", description: "月10〜20万円程度", priority: 1 },
+          { id: "t7-3", text: "五箇条違反検知チェック", description: "全施策実行前のセルフチェック", priority: 2 },
+          { id: "t7-4", text: "AI需要予測（Year2）", description: "在庫最適化・新商品企画", priority: 3 },
+          { id: "t7-5", text: "データ活用研修", description: "営業・企画チームへ展開", priority: 3 },
+          { id: "t7-6", text: "ROI試算アップデート", description: "実績データで継続検証", priority: 2 },
+          { id: "t7-7", text: "四半期経営レビュー", description: "進捗・課題・次手の共有会議体", priority: 2 }
+        ]
+      }
+    ]
+  },
+  matrices: [
+    {
+      themeIndex: 0, title: "現状診断・五箇条 優先度マトリクス",
+      kaiInsight: "五箇条の経営承認なくして何も始まらない。M1の最優先課題。代理店反感ゼロという原則を全社判定基準化することが、すべての施策の安全装置になる。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q0-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "五箇条の経営会議承認", detail: "M1中の最優先" },
+          { text: "顧客リストゼロを可視化", detail: "認識合わせから" },
+          { text: "EC8チャネル販売実態棚卸し", detail: "現状把握" }
+        ]},
+        { id: "q0-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "釣り市場-75%トレンド共有", detail: "中長期の経営判断材料" },
+          { text: "LTV/CAC仮説値の設定", detail: "経営判断指標" }
+        ]},
+        { id: "q0-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "代理店上位50店リスト精査", detail: "営業部マターで進行" },
+          { text: "五箇条の代理店説明資料", detail: "営業用1枚資料" }
+        ]},
+        { id: "q0-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "リピート率の仮値設定", detail: "現状計測不能" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 1, title: "同梱QR施策 優先度マトリクス",
+      kaiInsight: "FU5014パイロットは30日で動かせる最速案件。LP10万円・印刷1万円・DB無料枠で15万円が現実解。全SKU展開は効果測定後。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q1-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "パイロットSKU選定", detail: "FU5014推奨" },
+          { text: "LP制作（STUDIO等）", detail: "10〜15万円・ノーコード" },
+          { text: "DB選定（kintone等）", detail: "月3,000円〜" }
+        ]},
+        { id: "q1-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "A6保証カード印刷物", detail: "デザイン後に発注" },
+          { text: "効果測定KPI設計", detail: "パイロット2週目までに" }
+        ]},
+        { id: "q1-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "代理店690社プルダウン", detail: "既存リストから流用" },
+          { text: "3年延長保証規約整備", detail: "法務確認後" }
+        ]},
+        { id: "q1-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "全SKU展開計画", detail: "M4以降に検討" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 2, title: "修理オンライン化 優先度マトリクス",
+      kaiInsight: "代理店紹介手数料還元が反感対策の核心。修理経由のリピート購入率20〜30%を実現するには、修理完了後の販売店紹介が決め手になる。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q2-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "Web受付フォーム", detail: "60日で運用開始" },
+          { text: "Stripe/PayPay決済", detail: "決済→集荷自動化" },
+          { text: "代理店紹介手数料規程", detail: "M1中に文書化" }
+        ]},
+        { id: "q2-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "修理データ蓄積", detail: "故障パターン分析へ" },
+          { text: "修理経由リピート計測", detail: "効果指標" }
+        ]},
+        { id: "q2-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "ヤマト集荷API連携", detail: "外注で実装" },
+          { text: "次回購入クーポン", detail: "クーポンシステム流用" }
+        ]},
+        { id: "q2-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "自己修理キット販売連動", detail: "施策7と統合で検討" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 3, title: "代理店データ還元 優先度マトリクス",
+      kaiInsight: "五箇条第4条の実装。匿名化ルールを最初に決めること。Excelテンプレで上位50店から始め、反応を見てBIツール化へ進む段階的アプローチが安全。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q3-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "Excelテンプレ設計", detail: "M2でβ版完成" },
+          { text: "個人情報匿名化ルール", detail: "法務確認" },
+          { text: "上位50代理店β配布", detail: "営業訪問時手渡し" }
+        ]},
+        { id: "q3-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "全690社展開計画", detail: "M4から順次" },
+          { text: "販促提案連動", detail: "客層に応じた仕入提案" }
+        ]},
+        { id: "q3-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "代理店FB収集", detail: "営業ヒアリング" }
+        ]},
+        { id: "q3-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "BIツール化（Looker等）", detail: "半年後検討" },
+          { text: "代理店NPS計測", detail: "Year2以降" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 4, title: "サイズオーダーWeb化 優先度マトリクス",
+      kaiInsight: "代理店から大歓迎される唯一の施策。売上完全代理店経由のオペレーション設計が成功の鍵。パイロット10社で改善してから全国展開。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q4-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "売上完全代理店経由オペ", detail: "反感ゼロの設計" },
+          { text: "Webオーダーフォーム", detail: "30〜50万円外注" }
+        ]},
+        { id: "q4-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "代理店マップ機能", detail: "Google Maps連携" },
+          { text: "代理店FAX受注通知", detail: "自動転送設計" },
+          { text: "パイロット代理店10社", detail: "先行運用" }
+        ]},
+        { id: "q4-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "採寸ガイド動画", detail: "既存素材活用" }
+        ]},
+        { id: "q4-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "採寸ノウハウデジタル化", detail: "M9以降" },
+          { text: "リードタイム最適化", detail: "運用後改善" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 5, title: "SNS→メール導線 優先度マトリクス",
+      kaiInsight: "Mailchimp無料プランで月0円から始められる即時施策。既存YouTube動画にCTAリンク追加するだけで30日で動く。直販リンク禁止が反感対策の絶対条件。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q5-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "人気動画上位5本にCTA", detail: "30日で実装可" },
+          { text: "Mailchimp無料導入", detail: "月0〜5,000円" },
+          { text: "LP制作（簡易）", detail: "5〜15万円" }
+        ]},
+        { id: "q5-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "ウェルカムメール設計", detail: "販売店マップ必須" },
+          { text: "月2回配信のコンテンツ計画", detail: "編集カレンダー" }
+        ]},
+        { id: "q5-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "Instagram投稿連動", detail: "既存運用に組み込み" },
+          { text: "Facebook連動", detail: "既存稼働アカウント活用" }
+        ]},
+        { id: "q5-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "Open率・CTR計測", detail: "数値が溜まってから" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 6, title: "保証クラウド・LINE 優先度マトリクス",
+      kaiInsight: "急がない領域。M1〜5で同梱QR・修理・代理店レポートが回り始めてから拡張する。LINE公式は無料で先に箱だけ作っておく価値あり。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q6-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "LINE公式開設", detail: "無料アカウント・箱を作る" }
+        ]},
+        { id: "q6-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "CRM選定（HubSpot等）", detail: "M6以降に検討" },
+          { text: "My阪神素地会員機能", detail: "施策1の進化形" },
+          { text: "会員特典設計", detail: "リピート施策" }
+        ]},
+        { id: "q6-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "既存登録者の移行招待", detail: "施策1完了後" }
+        ]},
+        { id: "q6-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "故障診断ボット", detail: "Year2検討" },
+          { text: "自己修理動画コンテンツ", detail: "他施策完了後" },
+          { text: "LINE→修理オンライン連携", detail: "段階的に" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 7, title: "データ活用・組織 優先度マトリクス",
+      kaiInsight: "パート1名で運用開始が現実解。最初から完璧なシステムは目指さない。AI需要予測などはYear2以降。M1〜6は人間のオペレーションで回す。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q7-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "パート/兼任1名で運用開始", detail: "M1から配置" },
+          { text: "五箇条違反検知チェック", detail: "全施策の入口" }
+        ]},
+        { id: "q7-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "顧客リストDB一元管理", detail: "M3までに体系化" },
+          { text: "代理店別売上ダッシュボード", detail: "施策3と連動" },
+          { text: "四半期経営レビュー", detail: "会議体設定" }
+        ]},
+        { id: "q7-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "ROI試算アップデート", detail: "実績データで継続" }
+        ]},
+        { id: "q7-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "AI需要予測（Year2）", detail: "実績データ蓄積後" },
+          { text: "データ活用研修", detail: "運用安定後" }
+        ]}
+      ]
+    }
+  ],
+  flows: [
+    {
+      id: "fl-1-0", themeIndex: 1, quadrant: "q1-tr", sourceItem: "パイロットSKU選定",
+      title: "FU5014で同梱QRパイロット起動フロー",
+      kaiComment: "30日で動かせる最速案件。LP・DB・印刷物を並列で進めるのが鍵。代理店への事前説明を必ず行う。",
+      steps: [
+        { order: 1, title: "経営会議で五箇条＋パイロット計画承認", description: "五箇条と同時にFU5014パイロット計画を承認。投資15万円・期間3ヶ月。", type: "decision", duration: "Day1", output: "経営会議議事録" },
+        { order: 2, title: "LP制作発注（STUDIO/ペライチ）", description: "ノーコードツールで3年延長保証＋使い方動画LPを構築。10〜15万円。", type: "action", duration: "10日", output: "LP（HTTPS）" },
+        { order: 3, title: "DB構築（kintone or HubSpot無料）", description: "登録フォーム→DB→自動メール返信の流れを設計。代理店リスト690社プルダウン化。", type: "action", duration: "10日", output: "登録DB" },
+        { order: 4, title: "A6保証カード印刷物デザイン・発注", description: "QR・3年延長保証訴求・ブランドロゴ。1,000枚で約1万円。", type: "action", duration: "10日", output: "保証カード1,000枚" },
+        { order: 5, title: "代理店上位50店への事前説明", description: "営業訪問時に『お客様アフターサービス強化』として説明。データ還元レポートβ版もチラ見せ。", type: "warning", duration: "5日", output: "代理店説明資料配布完了" },
+        { order: 6, title: "FU5014出荷ボックスに同梱開始", description: "営業部経由で出荷時に保証カードを同梱。最初の1ヶ月でデータを集める。", type: "milestone", duration: "30日", output: "初回登録100件以上" },
+        { order: 7, title: "効果測定とKPIレビュー", description: "登録率・代理店別分布・購入理由クロス集計。経営層へ報告。", type: "decision", duration: "5日", output: "KPIレポート" }
+      ]
+    },
+    {
+      id: "fl-2-0", themeIndex: 2, quadrant: "q2-tr", sourceItem: "Web受付フォーム",
+      title: "修理オンライン受付フロー構築",
+      kaiComment: "顧客接点の深化と代理店紹介手数料還元の二刀流。修理＝最も濃いコミュニケーション機会を活かす。",
+      steps: [
+        { order: 1, title: "現行修理業務フローのドキュメント化", description: "電話・FAX受付の現状フロー・処理時間・人員配置を整理。Web化のbefore/after設計。", type: "action", duration: "1週間", output: "現行フロー図" },
+        { order: 2, title: "Webフォーム外注発注", description: "WordPress＋Contact Form 7＋画像アップロード。30〜50万円。", type: "action", duration: "3週間", output: "Webフォーム稼働" },
+        { order: 3, title: "Stripe/PayPay決済導入", description: "見積→決済の自動化。手数料3.6%程度。", type: "action", duration: "1週間", output: "決済システム連携" },
+        { order: 4, title: "代理店紹介手数料規程の経営会議承認", description: "修理代の5〜10%を販売店にバック。代理店との関係強化の核心。", type: "decision", duration: "Day1", output: "手数料規程文書" },
+        { order: 5, title: "ヤマト集荷API連携", description: "顧客は集荷依頼ボタンだけで完了。手間ゼロの体験。", type: "action", duration: "2週間", output: "集荷自動化" },
+        { order: 6, title: "代理店向けキックオフ説明会", description: "上位50代理店に修理紹介手数料の仕組みを説明。協力体制を作る。", type: "milestone", duration: "5日", output: "代理店説明完了" },
+        { order: 7, title: "公開・初月500件目標", description: "公開後30日で500件の修理受付を目指す。", type: "milestone", duration: "30日", output: "受付500件" }
+      ]
+    },
+    {
+      id: "fl-3-0", themeIndex: 3, quadrant: "q3-tr", sourceItem: "上位50代理店β配布",
+      title: "代理店データ還元レポートβ運用",
+      kaiComment: "情報の互恵関係を作る最重要施策。営業がレポート手渡し時に対話することで、代理店との関係が一気に深まる。",
+      steps: [
+        { order: 1, title: "Excelテンプレ設計", description: "A4 2ページ：客層・購入商品・リピート率・修理紹介手数料・販促提案", type: "action", duration: "1週間", output: "Excelテンプレ" },
+        { order: 2, title: "個人情報匿名化ルール策定", description: "年齢層・性別・地域までで個人特定不可。法務確認必須。", type: "warning", duration: "1週間", output: "匿名化ルール文書" },
+        { order: 3, title: "上位50代理店リスト精査", description: "売上上位＋関係性良好＋協力的な店舗を選定。", type: "action", duration: "1週間", output: "対象代理店リスト" },
+        { order: 4, title: "β版レポート作成（上位50店分）", description: "施策1・2のデータをもとに自動生成。1代理店あたり数分。", type: "action", duration: "1週間", output: "β版レポート50枚" },
+        { order: 5, title: "営業訪問でレポート手渡し", description: "発注業務の合間に対話的に渡す。反応をヒアリング。", type: "action", duration: "1ヶ月", output: "全50店配布完了" },
+        { order: 6, title: "改善版設計", description: "代理店フィードバックを反映。フォーマット・項目を改善。", type: "action", duration: "2週間", output: "改善版テンプレ" },
+        { order: 7, title: "全690店展開準備", description: "Year2に向けて、全代理店展開のスケジュール・自動化設計。", type: "milestone", duration: "1ヶ月", output: "全店展開計画" }
+      ]
+    }
+  ],
+  gantt: {
+    title: "12ヶ月実行ロードマップ",
+    totalWeeks: 24,
+    phases: [
+      {
+        name: "Phase1：合意・準備（W1〜W4）",
+        color: "#EF4444",
+        tasks: [
+          { name: "五箇条経営承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false },
+          { name: "現状診断・EC実態棚卸", startWeek: 1, endWeek: 4, isCritical: false, milestone: false },
+          { name: "五箇条承認完了", startWeek: 2, endWeek: 2, isCritical: false, milestone: true }
+        ]
+      },
+      {
+        name: "Phase2：パイロット（W3〜W12）",
+        color: "#F97316",
+        tasks: [
+          { name: "同梱QRパイロット（FU5014）", startWeek: 3, endWeek: 12, isCritical: true, milestone: false },
+          { name: "修理オンラインWebフォーム開発", startWeek: 5, endWeek: 11, isCritical: false, milestone: false },
+          { name: "代理店レポートβ作成・配布", startWeek: 7, endWeek: 14, isCritical: false, milestone: false },
+          { name: "SNS→メール導線・LP", startWeek: 5, endWeek: 9, isCritical: false, milestone: false },
+          { name: "パイロット効果検証", startWeek: 12, endWeek: 12, isCritical: false, milestone: true }
+        ]
+      },
+      {
+        name: "Phase3：本格運用（W13〜W20）",
+        color: "#22C55E",
+        tasks: [
+          { name: "同梱QR全SKU展開", startWeek: 13, endWeek: 24, isCritical: false, milestone: false },
+          { name: "修理オンライン本格運用", startWeek: 12, endWeek: 24, isCritical: false, milestone: false },
+          { name: "サイズオーダーWeb化", startWeek: 14, endWeek: 22, isCritical: false, milestone: false },
+          { name: "代理店レポート全690店展開", startWeek: 16, endWeek: 24, isCritical: false, milestone: false }
+        ]
+      },
+      {
+        name: "Phase4：拡張・統合（W21〜W24）",
+        color: "#6366F1",
+        tasks: [
+          { name: "LINE公式・チャットボット", startWeek: 18, endWeek: 24, isCritical: false, milestone: false },
+          { name: "保証クラウド化検討", startWeek: 20, endWeek: 24, isCritical: false, milestone: false },
+          { name: "1年目総括・Year2計画", startWeek: 24, endWeek: 24, isCritical: false, milestone: true }
+        ]
+      }
+    ]
+  }
+};
+
+/* ================================================================
+   STATE
+   ================================================================ */
+const TC = ['#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#6366F1','#8B5CF6','#EC4899'];
+const TBG= ['rgba(239,68,68,.13)','rgba(249,115,22,.13)','rgba(234,179,8,.13)','rgba(34,197,94,.13)',
+            'rgba(6,182,212,.13)','rgba(99,102,241,.13)','rgba(139,92,246,.13)','rgba(236,72,153,.13)'];
+let curTheme = 0;
+const SK = 'rsh_' + encodeURIComponent(DATA.meta.theme || 'x');
+const checks = () => { try { return JSON.parse(localStorage.getItem(SK)||'{}'); } catch { return {}; } };
+const saveCheck = (id, v) => {
+  const c = checks(); c[id] = v;
+  localStorage.setItem(SK, JSON.stringify(c));
+  updatePct();
+};
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function go(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('v-' + name).classList.add('on');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  if (tabEl) { tabEl.classList.add('on'); }
+  else {
+    const idx = {dashboard:0,mandala:1,matrix:2,flow:3,gantt:4}[name];
+    if (idx != null) document.querySelectorAll('.tab')[idx].classList.add('on');
+  }
+  if (name === 'mandala') renderMandala();
+  if (name === 'matrix')  renderMatrix(curTheme);
+  if (name === 'gantt')   renderGantt();
+}
+
+function goMatrix(ti) { curTheme = ti; go('matrix', null); }
+function goFlow(ti, qid, itemTx) {
+  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx)
+           || DATA.flows.find(f => f.themeIndex === ti)
+           || DATA.flows[0];
+  const th = DATA.mandala.themes[ti];
+  document.getElementById('flBcTh').textContent = th ? th.name : 'マトリクス';
+  document.getElementById('flBcIt').textContent = itemTx || 'フロー';
+  document.getElementById('flCtx').textContent = itemTx;
+  if (fl) { renderFlow(fl); }
+  else {
+    document.getElementById('flEmpty').style.display = 'block';
+    document.getElementById('flSteps').innerHTML = '';
+    document.getElementById('flKai').style.display = 'none';
+  }
+  go('flow', null);
+}
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function initDash() {
+  const m = DATA.meta, k = DATA.kai;
+  document.getElementById('hTheme').textContent  = m.theme;
+  document.getElementById('dTheme').textContent  = m.theme;
+  document.getElementById('dMeta').textContent   = '作成日: ' + m.createdAt + (m.targetPeriod ? '　目標期間: ' + m.targetPeriod : '');
+  document.getElementById('dBg').textContent     = m.background;
+  document.getElementById('kSum').textContent    = k.summary;
+  document.getElementById('kVerd').textContent   = '⚠️ ' + k.consultantVerdict;
+  document.getElementById('sFlows').textContent  = DATA.flows.length;
+
+  const tg = document.getElementById('kTags');
+  (k.strengths||[]).forEach(s => { const x=document.createElement('span'); x.className='ktag ok'; x.textContent='✓ '+s; tg.appendChild(x); });
+  (k.risks||[]).forEach(r    => { const x=document.createElement('span'); x.className='ktag ng'; x.textContent='⚠ '+r;  tg.appendChild(x); });
+
+  const ag = document.getElementById('dActs');
+  DATA.mandala.themes.forEach(th => {
+    const top = th.items.filter(i => i.priority===1)[0];
+    if (!top) return;
+    const col = th.color || TC[th.index];
+    const d = document.createElement('div'); d.className='act-item';
+    d.onclick = () => goMatrix(th.index);
+    d.innerHTML = `<div class="act-dot" style="background:${col}"></div><div><div class="act-tx"><strong>${th.name}</strong></div><div class="act-sub">${top.text}</div></div>`;
+    ag.appendChild(d);
+  });
+  updatePct();
+}
+
+function updatePct() {
+  const c = checks();
+  const total = DATA.flows.reduce((s,f)=>s+f.steps.length,0)||1;
+  const done  = Object.values(c).filter(Boolean).length;
+  const p = Math.round(done/total*100);
+  document.getElementById('hPct').textContent = p+'%';
+  document.getElementById('hFill').style.width = p+'%';
+  document.getElementById('sPct').textContent  = p+'%';
+}
+
+/* ================================================================
+   MANDALA
+   ================================================================ */
+const SG  = [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+const CP  = [[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+const IO  = [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]];
+
+function renderMandala() {
+  const grid = Array.from({length:9},()=>Array(9).fill({t:'empty'}));
+  grid[4][4] = {t:'center'};
+  DATA.mandala.themes.forEach((th,ti) => {
+    const [cr,cc]=CP[ti]; grid[cr][cc]={t:'theme',th,ti};
+    const [sr,sc]=SG[ti]; grid[sr+1][sc+1]={t:'tr',th,ti};
+    th.items.forEach((item,ii)=>{ const [or,oc]=IO[ii]; grid[sr+or][sc+oc]={t:'item',item,th,ti}; });
+  });
+  const g=document.getElementById('mGrid'); g.innerHTML='';
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+    const cell=grid[r][c], d=document.createElement('div'); d.className='mc';
+    if(cell.t==='center'){
+      d.classList.add('center'); d.textContent=DATA.mandala.center;
+    } else if(cell.t==='theme'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('theme','cp'); d.style.background=col;
+      d.textContent=cell.th.name; d.title=cell.th.description||'';
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='tr'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('tr','cp'); d.style.background=col; d.style.color='#fff';
+      d.textContent=cell.th.name;
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='item'){
+      const bg=cell.th.bgLight||TBG[cell.ti];
+      d.classList.add('item'); d.style.background=bg; d.style.color='var(--dim)';
+      d.textContent=cell.item.text; d.title=cell.item.description||cell.item.text;
+    } else { d.classList.add('empty'); }
+    g.appendChild(d);
+  }
+  const leg=document.getElementById('mLeg'); leg.innerHTML='';
+  DATA.mandala.themes.forEach((th,ti)=>{
+    const col=th.color||TC[ti];
+    const l=document.createElement('div'); l.className='m-leg';
+    l.onclick=()=>goMatrix(ti);
+    l.innerHTML=`<div class="m-leg-dot" style="background:${col}"></div>${th.name}`;
+    leg.appendChild(l);
+  });
+}
+
+/* ================================================================
+   MATRIX
+   ================================================================ */
+function renderMatrix(ti) {
+  curTheme=ti;
+  const th=DATA.mandala.themes[ti], mx=DATA.matrices[ti]||DATA.matrices[0];
+  document.getElementById('mxBcTh').textContent=th?th.name:'マトリクス';
+
+  const pp=document.getElementById('tPills'); pp.innerHTML='';
+  DATA.mandala.themes.forEach((t,i)=>{
+    const col=t.color||TC[i];
+    const p=document.createElement('div'); p.className='t-pill'+(i===ti?' on':'');
+    p.style.background=col; p.textContent=t.name;
+    p.onclick=()=>renderMatrix(i); pp.appendChild(p);
+  });
+
+  if(!mx) return;
+  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'重要度');
+  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+'→';
+
+  const g=document.getElementById('mxGrid');
+  Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
+
+  ['tl','tr','bl','br'].forEach(pos=>{
+    const qd=mx.quadrants.find(q=>q.pos===pos);
+    const d=document.createElement('div'); d.className='quad q-'+pos;
+    if(qd){
+      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
+      (qd.items||[]).forEach(item=>{
+        const it=document.createElement('div'); it.className='qi';
+        it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}
+                      </div><div class="qi-ar">→</div>`;
+        it.onclick=()=>goFlow(ti,qd.id,item.text);
+        d.appendChild(it);
+      });
+    }
+    g.appendChild(d);
+  });
+
+  if(mx.kaiInsight){
+    document.getElementById('mxKaiTx').textContent=mx.kaiInsight;
+    document.getElementById('mxKai').style.display='block';
+  } else { document.getElementById('mxKai').style.display='none'; }
+}
+
+/* ================================================================
+   FLOW
+   ================================================================ */
+const SICO = {
+  action:    {bg:'rgba(99,102,241,.2)', col:'#A5B4FC', ic:'▶', cls:'fb-act',  lbl:'アクション'},
+  decision:  {bg:'rgba(245,158,11,.2)',  col:'#FCD34D', ic:'◆', cls:'fb-dec',  lbl:'判断'},
+  milestone: {bg:'rgba(16,185,129,.2)',  col:'#6EE7B7', ic:'★', cls:'fb-mil',  lbl:'マイルストーン'},
+  warning:   {bg:'rgba(239,68,68,.2)',   col:'#FCA5A5', ic:'!', cls:'fb-wrn',  lbl:'注意'}
+};
+
+function renderFlow(fl) {
+  const c=checks(), con=document.getElementById('flSteps'); con.innerHTML='';
+  document.getElementById('flEmpty').style.display='none';
+  fl.steps.forEach(step=>{
+    const si=SICO[step.type]||SICO.action;
+    const cid=fl.id+'-s'+step.order;
+    const ck=c[cid]||false;
+    const d=document.createElement('div'); d.className='fl-step';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card${ck?' done':''}">
+        <div class="fl-ord">STEP ${step.order}</div>
+        <div class="fl-title">${step.title}</div>
+        <div class="fl-desc">${step.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
+          ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
+        </div>
+        <label class="fl-check${ck?' done':''}">
+          <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
+          完了としてマーク
+        </label>
+      </div>`;
+    con.appendChild(d);
+  });
+  if(fl.kaiComment){
+    document.getElementById('flKaiTx').textContent=fl.kaiComment;
+    document.getElementById('flKai').style.display='block';
+  } else { document.getElementById('flKai').style.display='none'; }
+}
+
+function onCk(el) {
+  saveCheck(el.dataset.cid, el.checked);
+  const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
+  el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
+             : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   GANTT
+   ================================================================ */
+function renderGantt() {
+  const g=DATA.gantt, wk=g.totalWeeks||24;
+  document.getElementById('gtTitle').textContent=g.title||'実行タイムライン';
+  const con=document.getElementById('gtChart'); con.innerHTML='';
+
+  const hdr=document.createElement('div'); hdr.className='gt-hdr';
+  for(let w=1;w<=wk;w++){
+    const wd=document.createElement('div'); wd.className='gt-wk';
+    wd.textContent=(w%4===0)?'W'+w:''; hdr.appendChild(wd);
+  }
+  con.appendChild(hdr);
+
+  g.phases.forEach(ph=>{
+    const pl=document.createElement('div'); pl.className='gt-phase';
+    pl.textContent=ph.name; con.appendChild(pl);
+    ph.tasks.forEach(task=>{
+      const row=document.createElement('div'); row.className='gt-row';
+      const nm=document.createElement('div'); nm.className='gt-name';
+      nm.textContent=task.name; nm.title=task.name; row.appendChild(nm);
+      const bw=document.createElement('div'); bw.className='gt-bars';
+      bw.style.flex='1'; bw.style.position='relative'; bw.style.height='28px';
+      const bar=document.createElement('div');
+      bar.className='gt-bar'+(task.isCritical?' crit':'')+(task.milestone?' ms':'');
+      bar.style.left=((task.startWeek-1)/wk*100)+'%';
+      bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
+      bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary))'));
+      bar.textContent=task.milestone?'◆':task.name;
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
+    });
+  });
+}
+
+/* ================================================================
+   KAI FLOAT PANEL
+   ================================================================ */
+function buildKaiPanel(){
+  const k=DATA.kai, p=document.getElementById('kfPanel');
+  let h=`<div class="kf-sec"><div class="kf-sec-t">📌 コアイシュー</div>
+           <div class="kf-ins">${k.coreIssue||'—'}</div></div>
+          <div class="kf-sec"><div class="kf-sec-t">🎯 最優先アクション</div>
+           <div class="kf-ins">${k.topPriority||'—'}</div></div>`;
+  if(k.themeInsights&&k.themeInsights.length){
+    h+=`<div class="kf-sec"><div class="kf-sec-t">🧭 テーマ別アドバイス</div>`;
+    k.themeInsights.forEach(ti=>{
+      const th=DATA.mandala.themes[ti.index];
+      const col=th?(th.color||TC[ti.index]):'#6366F1';
+      h+=`<div class="kf-ins" style="border-left:3px solid ${col};padding-left:10px">
+            <strong style="color:${col}">${th?th.name:'テーマ'+(ti.index+1)}</strong><br>${ti.insight}</div>`;
+    });
+    h+='</div>';
+  }
+  p.innerHTML=h;
+}
+
+function toggleKai(){
+  const p=document.getElementById('kfPanel'), a=document.getElementById('kfArr');
+  p.classList.toggle('on'); a.textContent=p.classList.contains('on')?'▼':'▲';
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDash(); renderMandala(); buildKaiPanel();
+  if(DATA.matrices.length) renderMatrix(0);
+  document.getElementById('flEmpty').style.display='block';
+  document.getElementById('flSteps').innerHTML='';
+  document.getElementById('flKai').style.display='none';
+});
+</script>
+</body>
+</html>

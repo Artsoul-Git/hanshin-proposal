@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧭 ワークマン戦略転用5路線 — 阪神素地様 客層拡大コンパス</title>
+<style>
+/* ============================================================
+   RASHINBAN — 目標達成コンパス  v1.0
+   生成: Kai (Claude Code)
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #070B14; --surface: #0F1720; --surface2: #162030;
+  --border: #1A2A3D; --text: #E2E8F0; --muted: #64748B; --dim: #94A3B8;
+  --primary: #6366F1; --primary-glow: rgba(99,102,241,.25);
+  --secondary: #8B5CF6; --success: #10B981;
+  --warn: #F59E0B; --danger: #EF4444;
+  --kai-bg: #0D0820; --kai-border: #4C1D95; --kai-text: #C4B5FD; --kai-hi: #DDD6FE;
+  --t0:#EF4444; --t1:#F97316; --t2:#EAB308; --t3:#22C55E;
+  --t4:#06B6D4; --t5:#6366F1; --t6:#8B5CF6; --t7:#EC4899;
+}
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'Hiragino Sans','Yu Gothic UI',sans-serif; font-size:14px; line-height:1.6; min-height:100vh; }
+h2 { font-size:18px; font-weight:700; }
+h3 { font-size:15px; font-weight:600; }
+
+/* ---- HEADER ---- */
+.hdr { position:sticky; top:0; z-index:100; background:rgba(7,11,20,.96); backdrop-filter:blur(12px);
+       border-bottom:1px solid var(--border); padding:0 20px; height:56px;
+       display:flex; align-items:center; gap:14px; }
+.hdr-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#6366F1,#8B5CF6,#EC4899);
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.hdr-theme { flex:1; font-size:13px; color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hdr-prog { display:flex; align-items:center; gap:8px; }
+.prog-bar { width:100px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#6366F1,#8B5CF6); transition:width .4s; }
+.prog-pct { font-size:11px; color:var(--muted); min-width:30px; text-align:right; }
+.hdr-btn { background:var(--surface); border:1px solid var(--border); color:var(--dim);
+           padding:5px 11px; border-radius:6px; cursor:pointer; font-size:12px; transition:all .15s; }
+.hdr-btn:hover { background:var(--surface2); color:var(--text); }
+
+/* ---- NAV ---- */
+.nav { display:flex; gap:2px; padding:10px 20px 0; border-bottom:1px solid var(--border);
+       overflow-x:auto; background:var(--bg); }
+.tab { padding:7px 14px; border-radius:6px 6px 0 0; cursor:pointer; font-size:13px;
+       font-weight:500; color:var(--muted); border:1px solid transparent; border-bottom:none;
+       white-space:nowrap; position:relative; bottom:-1px; transition:all .15s; }
+.tab:hover { color:var(--text); background:var(--surface); }
+.tab.on { color:var(--primary); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+
+/* ---- VIEWS ---- */
+.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view.on { display:block; }
+
+/* ---- CARDS ---- */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(99,102,241,.12));
+             border:1px solid rgba(99,102,241,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
+.goal-tag { display:inline-block; background:rgba(99,102,241,.18); color:#A5B4FC;
+            padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
+.goal-meta { font-size:12px; color:var(--dim); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+
+/* ---- STATS ---- */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
+.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- KAI CARD ---- */
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px;
+            padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
+.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px;
+                    border-radius:50%; background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 70%); }
+.kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#6366F1,#8B5CF6);
+          display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
+.kai-rl { font-size:11px; color:var(--kai-text); }
+.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
+.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(239,68,68,.1);
+             border-left:3px solid var(--danger); border-radius:0 6px 6px 0;
+             color:#FCA5A5; font-size:13px; font-style:italic; }
+.kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
+.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
+
+/* ---- SECTION TITLE ---- */
+.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase;
+       letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ---- TOP ACTIONS ---- */
+.act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
+.act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+            padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px;
+            transition:all .15s; }
+.act-item:hover { background:var(--surface2); border-color:var(--primary); transform:translateY(-1px); }
+.act-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.act-tx { font-size:12px; }
+.act-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- MANDALA ---- */
+.mandala-note { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.mandala-wrap { overflow-x:auto; }
+.m-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:2px;
+          width:100%; max-width:780px; margin:0 auto; aspect-ratio:1; }
+.mc { display:flex; align-items:center; justify-content:center; text-align:center;
+      font-size:9.5px; line-height:1.25; border-radius:3px; padding:2px;
+      transition:transform .12s, box-shadow .12s; overflow:hidden; word-break:break-all; }
+.mc.cp { cursor:pointer; }
+.mc.cp:hover { transform:scale(1.09); z-index:10; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+.mc.center { background:linear-gradient(135deg,#6366F1,#8B5CF6); color:#fff; font-weight:800; font-size:10px; z-index:5; }
+.mc.theme { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.tr  { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.item { font-size:9px; }
+.mc.empty { background:var(--surface); opacity:.25; }
+.m-legend { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.m-leg { display:flex; align-items:center; gap:5px; font-size:12px; padding:3px 10px;
+         background:var(--surface); border:1px solid var(--border); border-radius:20px;
+         cursor:pointer; transition:border-color .15s; }
+.m-leg:hover { border-color:var(--primary); }
+.m-leg-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* ---- MATRIX ---- */
+.bc { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); margin-bottom:14px; flex-wrap:wrap; }
+.bc a { color:var(--muted); cursor:pointer; text-decoration:none; }
+.bc a:hover { color:var(--primary); }
+.bc .cur { color:var(--text); }
+.bc-sep { opacity:.4; }
+.t-pills { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer;
+          border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
+.t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.mx-wrap { display:flex; gap:8px; align-items:stretch; }
+.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted);
+         display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-inner { flex:1; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+           gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; position:relative; }
+.mx-cross::before, .mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
+.mx-cross::after { top:50%; left:0; right:0; height:1px; }
+.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
+.quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
+.quad.q-tr { background:rgba(239,68,68,.06); }
+.quad.q-tl { background:rgba(99,102,241,.06); }
+.quad.q-br { background:rgba(245,158,11,.06); }
+.quad.q-bl { background:rgba(100,116,139,.04); }
+.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px;
+      padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s;
+      display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.qi-tx { flex:1; line-height:1.4; }
+.qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+           padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
+
+/* ---- FLOW ---- */
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+          padding:10px 14px; margin-bottom:18px; }
+.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-ctx-t { font-size:15px; font-weight:700; }
+.fl-steps { position:relative; padding-left:38px; }
+.fl-step { position:relative; margin-bottom:14px; }
+.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px;
+                   width:2px; background:var(--border); }
+.fl-step:last-child::before { display:none; }
+.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px;
+           border-radius:50%; display:flex; align-items:center; justify-content:center;
+           font-size:12px; z-index:1; font-weight:700; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
+.fl-card.done { opacity:.55; }
+.fl-card.done .fl-title { text-decoration:line-through; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
+.fb-act  { background:rgba(99,102,241,.14); color:#A5B4FC; }
+.fb-dec  { background:rgba(245,158,11,.14); color:#FCD34D; }
+.fb-mil  { background:rgba(16,185,129,.14); color:#6EE7B7; }
+.fb-wrn  { background:rgba(239,68,68,.14); color:#FCA5A5; }
+.fb-dur  { background:rgba(100,116,139,.14); color:var(--muted); }
+.fb-out  { background:rgba(6,182,212,.14); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer;
+            font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-check.done { text-decoration:line-through; opacity:.5; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+          padding:12px 14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
+.fk-tx  { font-size:13px; color:var(--kai-text); line-height:1.7; }
+
+/* ---- GANTT ---- */
+.gt-wrap { overflow-x:auto; }
+.gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
+.gt-wk  { flex:1; text-align:center; font-size:10px; color:var(--muted);
+          padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
+.gt-phase { font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase;
+            letter-spacing:.5px; padding:8px 0 4px; }
+.gt-row { display:flex; align-items:center; margin-bottom:3px; min-height:30px; }
+.gt-name { width:190px; min-width:190px; font-size:12px; padding-right:10px;
+           overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--dim); }
+.gt-bars { flex:1; position:relative; height:28px; }
+.gt-bar { position:absolute; height:18px; top:5px; border-radius:4px; padding:0 6px;
+          font-size:9.5px; color:#fff; font-weight:500; display:flex; align-items:center;
+          overflow:hidden; white-space:nowrap; transition:opacity .15s; }
+.gt-bar:hover { opacity:.8; }
+.gt-bar.crit { box-shadow:0 0 8px rgba(239,68,68,.45); }
+.gt-bar.ms { width:18px !important; border-radius:50%; padding:0; justify-content:center; font-size:11px; }
+.gt-legend { display:flex; gap:12px; margin-bottom:10px; font-size:12px; color:var(--muted); }
+.gt-leg-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+
+/* ---- KAI FLOAT ---- */
+#kai-float { position:fixed; bottom:18px; right:18px; z-index:200; width:340px; }
+.kf-panel { display:none; background:var(--kai-bg); border:1px solid var(--kai-border);
+            border-radius:12px; padding:14px; margin-bottom:7px;
+            max-height:380px; overflow-y:auto; box-shadow:0 8px 40px rgba(0,0,0,.5); }
+.kf-panel.on { display:block; }
+.kf-sec { margin-bottom:14px; }
+.kf-sec-t { font-size:11px; color:var(--kai-text); font-weight:600; letter-spacing:.4px; opacity:.65; margin-bottom:7px; }
+.kf-ins { font-size:13px; color:var(--kai-text); line-height:1.65; padding:8px 10px;
+          background:rgba(255,255,255,.04); border-radius:6px; margin-bottom:5px; }
+.kf-btn { background:linear-gradient(135deg,#4C1D95,#6366F1); border:1px solid #7C3AED;
+          border-radius:10px; padding:9px 14px; cursor:pointer; display:flex;
+          align-items:center; gap:8px; box-shadow:0 4px 20px rgba(99,102,241,.3);
+          transition:all .2s; color:#fff; width:100%; }
+.kf-btn:hover { box-shadow:0 6px 28px rgba(99,102,241,.5); transform:translateY(-1px); }
+.kf-av { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.18);
+         display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; flex-shrink:0; }
+.kf-lbl { flex:1; font-size:13px; font-weight:700; }
+.kf-arr { font-size:11px; opacity:.8; }
+
+/* ---- UTIL ---- */
+.btn { padding:7px 14px; border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; border:none; transition:all .15s; }
+.btn-g { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-g:hover { background:var(--surface2); color:var(--text); }
+.empty-s { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-s-i { font-size:40px; margin-bottom:10px; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+@media print { .hdr-btn,#kai-float,.nav { display:none !important; } .view { display:block !important; } body { background:#fff; color:#000; } }
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#0e2a47 60%,#ea580c 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:-apple-system,'Hiragino Sans',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地様 客層拡大コンパス</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#fbbf24;color:#1a1a1a;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('hanshin_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('hanshin_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ═══ HEADER ═══ -->
+<header class="hdr">
+  <div class="hdr-logo">🧭 目標達成コンパス</div>
+  <div class="hdr-theme" id="hTheme"></div>
+  <div class="hdr-prog">
+    <span class="prog-pct" id="hPct">0%</span>
+    <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
+  </div>
+  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="tab on"  onclick="go('dashboard',this)">📊 ダッシュボード</div>
+  <div class="tab"     onclick="go('mandala',this)">🌸 マンダラ</div>
+  <div class="tab"     onclick="go('matrix',this)">⊞ マトリクス</div>
+  <div class="tab"     onclick="go('flow',this)">→ フロー</div>
+  <div class="tab"     onclick="go('gantt',this)">📅 ガント</div>
+</nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="v-dashboard" class="view on">
+  <div class="goal-card">
+    <div class="goal-tag">目標テーマ</div>
+    <div class="goal-title" id="dTheme"></div>
+    <div class="goal-meta" id="dMeta"></div>
+    <div class="goal-bg" id="dBg"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">8</div><div class="stat-l">主要テーマ</div></div>
+    <div class="stat"><div class="stat-v">64</div><div class="stat-l">アクション項目</div></div>
+    <div class="stat"><div class="stat-v" id="sFlows">0</div><div class="stat-l">フロー図</div></div>
+    <div class="stat"><div class="stat-v" id="sPct">0%</div><div class="stat-l">実行進捗</div></div>
+  </div>
+  <div class="kai-card">
+    <div class="kai-hdr">
+      <div class="kai-av">K</div>
+      <div><div class="kai-nm">Kai — ストラテジックコンサルタント</div><div class="kai-rl">あなたの目標達成を最短距離で実現する</div></div>
+    </div>
+    <div class="kai-sum" id="kSum"></div>
+    <div class="kai-verd" id="kVerd"></div>
+    <div class="kai-tags" id="kTags"></div>
+  </div>
+  <div class="sec">最優先で着手すべきアクション</div>
+  <div class="act-grid" id="dActs"></div>
+</div>
+
+<!-- ═══ MANDALA ═══ -->
+<div id="v-mandala" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <h2>マンダラチャート</h2>
+    <button class="btn btn-g" onclick="go('matrix',null)">マトリクスを見る →</button>
+  </div>
+  <div class="mandala-note">テーマセル（色付き）をクリック → 優先度マトリクスへ</div>
+  <div class="mandala-wrap"><div class="m-grid" id="mGrid"></div></div>
+  <div class="m-legend" id="mLeg"></div>
+</div>
+
+<!-- ═══ MATRIX ═══ -->
+<div id="v-matrix" class="view">
+  <div class="bc" id="mxBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="mxBcTh">マトリクス</span>
+  </div>
+  <div class="t-pills" id="tPills"></div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度 ↑</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">→ 緊急度</div>
+    </div>
+  </div>
+  <div class="mx-kai" id="mxKai" style="display:none;">
+    <div class="mk-lbl">🧭 Kai アドバイス</div>
+    <div id="mxKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ FLOW ═══ -->
+<div id="v-flow" class="view">
+  <div class="bc" id="flBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="flBcIt">フロー</span>
+  </div>
+  <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">—</div></div>
+  <div id="flEmpty" class="empty-s">
+    <div class="empty-s-i">→</div>
+    <div>マトリクスの項目をクリックするとフローが表示されます</div>
+  </div>
+  <div class="fl-steps" id="flSteps"></div>
+  <div class="fl-kai" id="flKai" style="display:none;">
+    <div class="fk-lbl">🧭 Kai アドバイス</div>
+    <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ GANTT ═══ -->
+<div id="v-gantt" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <h2 id="gtTitle">実行タイムライン</h2>
+    <div class="gt-legend">
+      <span><span class="gt-leg-dot" style="background:var(--danger)"></span>クリティカル</span>
+      <span><span class="gt-leg-dot" style="background:var(--primary)"></span>通常</span>
+      <span><span class="gt-leg-dot" style="background:var(--success);border-radius:50%"></span>マイルストーン</span>
+    </div>
+  </div>
+  <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<!-- ═══ KAI FLOAT ═══ -->
+<div id="kai-float">
+  <div class="kf-panel" id="kfPanel"></div>
+  <button class="kf-btn" onclick="toggleKai()">
+    <div class="kf-av">K</div>
+    <span class="kf-lbl">Kai に相談する</span>
+    <span class="kf-arr" id="kfArr">▲</span>
+  </button>
+</div>
+
+<script>
+/* ================================================================
+   DATA — Kai が以下の REPLACE_ マーカーを実際の内容に置き換えて生成する
+   ================================================================ */
+const DATA = {
+  meta: {
+    theme:        "ワークマン戦略転用5路線 — 客層拡大の構造分解",
+    background:   "ワークマンは『建設職人2040年に2-3割減』の構造的縮小から、客層拡大とPB集中で年商1,752億円規模に成長（2018年比2.2倍）。阪神素地様も同じ構造的縮小（釣り人口-75%）に直面しつつ、独自のブルーオーシャン『水辺×足元×現場機能』を保有。WMの成功原則を5路線（国内3＋国外2）に転用する。",
+    targetPeriod: "24ヶ月（パイロット6ヶ月＋本格展開18ヶ月）",
+    constraints:  "従業員21人の小規模組織／既存B2B卸構造を壊さない／2年累計投資1,600万円以内",
+    createdAt:    "2026-05-27"
+  },
+  kai: {
+    summary:           "ワークマンが10年で証明したのは『機能で勝つ×客層を変える×価格は崩さない』の三位一体。阪神素地様には既にすべての素材（PB力・現場機能・コラボ実績・全省庁資格）が揃っている。足りないのは『ブランド分節化』と『アンバサダー戦略』のみ。5路線並行ではなく段階展開で組織を分散させず、3年目で6〜15億円規模の新収益を狙う。",
+    coreIssue:         "釣り単軸の縮小依存。客層拡大ブランド分節と海外チャネルが未着手",
+    topPriority:       "路線①道具女子のサブブランド設計に着手（30日以内）",
+    consultantVerdict: "WMの『業態多層化』はサブブランド×LP×SNSで代替可能。店舗投資なしで同じ客層拡大ができる中小製造業の競争優位を逃すな。",
+    strengths: [
+      "PB自社開発力（CRスポンジ製造・東レ透湿防水加工）",
+      "既存コラボ実績（京の農林女子・青森愛媛果樹農家）",
+      "中国JV WINNING INDUSTRIAL の海外拠点アセット"
+    ],
+    risks: [
+      "5路線同時着手による組織分散・資源希釈",
+      "サブブランド乱立で本体ブランドが薄まる",
+      "欧米プレミアム路線で認知獲得に3〜5年かかる過小評価"
+    ],
+    themeInsights: [
+      { index: 0, insight: "WM10カ条は阪神素地に9割転用可能。特に客層拡大・PB集中・機能格付け・アンバサダーが効く。" },
+      { index: 1, insight: "五箇条を経営承認するのは提案①と同じ。全5路線の判定基準として運用する。" },
+      { index: 2, insight: "道具女子は最速で動く路線。既存FU5014ベースで6ヶ月以内に試せる。WM女子モデルを転用。" },
+      { index: 3, insight: "シニア路線は『見えない介護機能』が肝。あなた想いシリーズを独立LP化する。WMリカバリー参入と同じ発想。" },
+      { index: 4, insight: "法人BCPは官公需資格×防衛省実績で勝負。WMイージスのプロ路線と同じ高機能フラッグシップ。" },
+      { index: 5, insight: "台湾・東南アジアは中国JVを販社化することが最大のレバー。WMの『気候類似性』判断を踏襲。" },
+      { index: 6, insight: "欧米プレミアムはReserve領域。市場大だが認知獲得3〜5年。4路線が動いてから着手。" },
+      { index: 7, insight: "5路線を支えるデータ・組織・収益基盤。専任ユニットと顧客リスト連動が成功条件。" }
+    ]
+  },
+  mandala: {
+    center: "客層拡大×PB集中×アンバサダー＝5路線展開",
+    themes: [
+      {
+        index: 0,
+        name: "WM10カ条の理解",
+        description: "ワークマンの成功10原則を多視点解析。阪神素地への転用ポイントを明確化。",
+        color: "#EF4444",
+        bgLight: "rgba(239,68,68,.13)",
+        items: [
+          { id: "t0-0", text: "客層拡大意思決定（10カ条①）", description: "建設職人2040年-2~3割減から一般客へ拡張したWMの決断", priority: 1 },
+          { id: "t0-1", text: "ブルーオーシャン特定（②）", description: "高機能×低価格4,000億円空白市場の発見", priority: 1 },
+          { id: "t0-2", text: "PB集中投下（③）", description: "PB比率68.5%。少数ブランドに集中", priority: 1 },
+          { id: "t0-3", text: "アンバサダー戦略（④）", description: "フォロワー数より熱量。40名中15名は共同開発", priority: 1 },
+          { id: "t0-4", text: "製品共同開発（⑤）", description: "使う人が作る。現場ニーズを商品化スピードに直結", priority: 2 },
+          { id: "t0-5", text: "UGC×TV CM撤退（⑥）", description: "広告費率0.8%。SNSとアンバサダーへシフト", priority: 2 },
+          { id: "t0-6", text: "機能格付け宣言（⑦）", description: "耐雨度・防寒度を3〜5段階で可視化", priority: 2 },
+          { id: "t0-7", text: "海外段階展開（⑩）", description: "2029年台湾→東南アジアの慎重な進出", priority: 3 }
+        ]
+      },
+      {
+        index: 1,
+        name: "五箇条と代理店対策",
+        description: "提案①の五箇条を全5路線の判定基準として運用。代理店反感ゼロを担保。",
+        color: "#F97316",
+        bgLight: "rgba(249,115,22,.13)",
+        items: [
+          { id: "t1-0", text: "五箇条の経営承認", description: "代理店反感ゼロ原則を文書化", priority: 1 },
+          { id: "t1-1", text: "サブブランドは代理店扱い対象外", description: "新ブランドは代理店と棲み分け", priority: 1 },
+          { id: "t1-2", text: "直販価格≧代理店推奨小売価格", description: "価格競合させない原則", priority: 1 },
+          { id: "t1-3", text: "顧客に必ず販売店マップ提示", description: "全接点で紹介戻し徹底", priority: 2 },
+          { id: "t1-4", text: "代理店データ還元レポート連動", description: "提案①施策3と同じ枠組み", priority: 2 },
+          { id: "t1-5", text: "メーカー保証を旗印に", description: "データ取得目的の正当化", priority: 2 },
+          { id: "t1-6", text: "代理店説明資料の整備", description: "新路線開始時の事前説明", priority: 2 },
+          { id: "t1-7", text: "五箇条違反検知チェック運用", description: "全施策の入口セルフチェック", priority: 3 }
+        ]
+      },
+      {
+        index: 2,
+        name: "路線①道具女子",
+        description: "農業女子・キャンプ女子・ガーデナー向けサブブランド。WM女子モデル転用。",
+        color: "#EAB308",
+        bgLight: "rgba(234,179,8,.13)",
+        items: [
+          { id: "t2-0", text: "Hanshin Field+ブランド設計", description: "独立ロゴ・パッケージ・世界観", priority: 1 },
+          { id: "t2-1", text: "ペルソナのら子確定", description: "42歳・愛媛みかん農家3代目", priority: 1 },
+          { id: "t2-2", text: "FU5014を4色×3型に展開", description: "くすみカラー・SNS映え設計", priority: 1 },
+          { id: "t2-3", text: "農業女子アンバサダー10名選定", description: "フォロワー500〜5,000の現場熱量重視", priority: 1 },
+          { id: "t2-4", text: "Shopify自社EC＋楽天店", description: "サブブランド独立販路", priority: 2 },
+          { id: "t2-5", text: "JA直売所・農業女子イベント出店", description: "オフライン接点", priority: 2 },
+          { id: "t2-6", text: "Instagram投稿コンテスト", description: "#私の農仕事 でUGC生成", priority: 2 },
+          { id: "t2-7", text: "無印・ナチュラル系卸打診", description: "セレクトショップ販路開拓", priority: 3 }
+        ]
+      },
+      {
+        index: 3,
+        name: "路線②シニア・リカバリー",
+        description: "シニア・介護家族向け。介護靴に見えない介護機能。WMリカバリー参入を転用。",
+        color: "#22C55E",
+        bgLight: "rgba(34,197,94,.13)",
+        items: [
+          { id: "t3-0", text: "あなた想いプラスLP独立化", description: "Shopify初期費用30万円", priority: 1 },
+          { id: "t3-1", text: "ペルソナフミ子確定", description: "72歳・夫の介護中・年金生活", priority: 1 },
+          { id: "t3-2", text: "見えない介護機能訴求", description: "普通の靴デザイン×滑り止め・脱ぎ履き", priority: 1 },
+          { id: "t3-3", text: "娘・嫁経由マーケ設計", description: "親孝行ギフト・敬老の日訴求", priority: 1 },
+          { id: "t3-4", text: "Amazonブランドストア開設", description: "並行販路の確立", priority: 2 },
+          { id: "t3-5", text: "ドラッグストア卸打診", description: "ウエルシア・ツルハ・ココカラ", priority: 2 },
+          { id: "t3-6", text: "介護用品卸との商談", description: "フットマーク・ヤマシタ", priority: 2 },
+          { id: "t3-7", text: "ケアマネ向け説明資料", description: "地域包括支援センター推薦", priority: 3 }
+        ]
+      },
+      {
+        index: 4,
+        name: "路線③法人・自治体BCP",
+        description: "防災備蓄・建設・電力・公共調達。WMイージスのプロ路線を転用。",
+        color: "#06B6D4",
+        bgLight: "rgba(6,182,212,.13)",
+        items: [
+          { id: "t4-0", text: "BOSAI by 阪神素地ブランド", description: "法人BtoB専用カタログ・サブブランド", priority: 1 },
+          { id: "t4-1", text: "ペルソナ岡村課長確定", description: "45歳・市役所防災課", priority: 1 },
+          { id: "t4-2", text: "法人BtoB専任1名配置", description: "岡山営業部にアサイン", priority: 1 },
+          { id: "t4-3", text: "兵庫・岡山・大阪の防災課訪問", description: "県＋上位10市＝計約20先", priority: 1 },
+          { id: "t4-4", text: "機能5格付け表示", description: "耐水・防寒・耐油・反射・耐摩耗", priority: 2 },
+          { id: "t4-5", text: "全省庁統一資格・防衛省実績訴求", description: "提案書A4 4ページパッケージ化", priority: 2 },
+          { id: "t4-6", text: "JA全農・農協アプローチ", description: "東京・大阪の購買窓口", priority: 2 },
+          { id: "t4-7", text: "防災用品商社経由販路", description: "ジョイント等のBCPコンサル経由", priority: 3 }
+        ]
+      },
+      {
+        index: 5,
+        name: "路線④台湾・東南アジア",
+        description: "WM海外段階展開を転用。中国JVを販社化＋台湾→東南アジア。",
+        color: "#6366F1",
+        bgLight: "rgba(99,102,241,.13)",
+        items: [
+          { id: "t5-0", text: "WINNING INDUSTRIAL販社化", description: "中国JVを製造＋販売拠点に格上げ", priority: 1 },
+          { id: "t5-1", text: "ペルソナリー・ジエ確定", description: "28歳・台北のSE・週末釣り", priority: 1 },
+          { id: "t5-2", text: "ASIAN PORTAL FISHING出品", description: "日本釣具300社越境ECサイト参画", priority: 1 },
+          { id: "t5-3", text: "蝦皮Taiwan・京東公式店", description: "台湾と中国大陸向け", priority: 2 },
+          { id: "t5-4", text: "台湾現地釣りKOL 3〜5名", description: "YouTuberに商品提供", priority: 2 },
+          { id: "t5-5", text: "Amazon Global英語・中国語ページ", description: "サイズ展開を台湾人体型に調整", priority: 2 },
+          { id: "t5-6", text: "インバウンド釣り業者連携", description: "VELTRA掲載業者にレンタル供給", priority: 2 },
+          { id: "t5-7", text: "ベトナム・タイ調査", description: "次の段階展開先のリサーチ", priority: 3 }
+        ]
+      },
+      {
+        index: 6,
+        name: "路線⑤欧米プレミアム",
+        description: "Reserve領域。Made in Japan×職人技×フライフィッシング。Year3以降。",
+        color: "#8B5CF6",
+        bgLight: "rgba(139,92,246,.13)",
+        items: [
+          { id: "t6-0", text: "HANSHIN HERITAGE設計", description: "プレミアムライン・限定生産", priority: 3 },
+          { id: "t6-1", text: "ペルソナジョン・ミラー確定", description: "55歳・米コロラド・フライ歴30年", priority: 3 },
+          { id: "t6-2", text: "英語LP＋職人ストーリー映像", description: "姫路工場の映像化", priority: 3 },
+          { id: "t6-3", text: "米フライ雑誌レビュー依頼", description: "Fly Fisherman・MidCurrent", priority: 3 },
+          { id: "t6-4", text: "Reddit r/flyfishing展開", description: "コミュニティでの認知獲得", priority: 3 },
+          { id: "t6-5", text: "Amazon US・eBay日本ストア", description: "既出店ノウハウ活用", priority: 3 },
+          { id: "t6-6", text: "Shopify Multi-currency EC", description: "自社英語ECサイト", priority: 3 },
+          { id: "t6-7", text: "米国ガイド事業者試供品", description: "現地プロへの導入" , priority: 3 }
+        ]
+      },
+      {
+        index: 7,
+        name: "データ・組織・収益",
+        description: "5路線を支える基盤。専任ユニット・顧客リスト連動・収益管理。",
+        color: "#EC4899",
+        bgLight: "rgba(236,72,153,.13)",
+        items: [
+          { id: "t7-0", text: "路線別損益管理", description: "サブブランド単位のPL", priority: 2 },
+          { id: "t7-1", text: "5路線統合顧客DB", description: "提案①顧客リスト基盤と連動", priority: 2 },
+          { id: "t7-2", text: "路線①②専任パート1名", description: "国内サブブランド運用", priority: 1 },
+          { id: "t7-3", text: "路線③法人BtoB専任1名", description: "営業部から専任化", priority: 1 },
+          { id: "t7-4", text: "路線④台湾担当兼任", description: "中国JV経由・営業部兼任", priority: 2 },
+          { id: "t7-5", text: "アンバサダー契約管理", description: "発信ガイドライン共有", priority: 2 },
+          { id: "t7-6", text: "投資1,600万円の予算管理", description: "2年累計の進捗トラッキング", priority: 2 },
+          { id: "t7-7", text: "3年目6〜15億円目標管理", description: "路線別目標値の年次レビュー", priority: 3 }
+        ]
+      }
+    ]
+  },
+  matrices: [
+    {
+      themeIndex: 0, title: "WM10カ条 転用優先度マトリクス",
+      kaiInsight: "10カ条のうち、客層拡大・PB集中・アンバサダー・機能格付けは即適用可能。海外段階展開は2年目以降の戦略課題。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q0-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "客層拡大意思決定（10カ条①）", detail: "経営層の合意形成" },
+          { text: "ブルーオーシャン特定（②）", detail: "水辺×足元×現場機能を明文化" },
+          { text: "PB集中投下（③）", detail: "既存PBブランドの集約検討" }
+        ]},
+        { id: "q0-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "アンバサダー戦略（④）", detail: "選定基準と契約モデル設計" },
+          { text: "製品共同開発（⑤）", detail: "コラボ実績の戦略化" }
+        ]},
+        { id: "q0-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "UGC×TV CM撤退（⑥）", detail: "もともと未投下＝完了" },
+          { text: "機能格付け宣言（⑦）", detail: "デザイナー作業に外注可" }
+        ]},
+        { id: "q0-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "海外段階展開（⑩）", detail: "Year2以降" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 1, title: "五箇条と代理店対策 マトリクス",
+      kaiInsight: "提案①の五箇条をそのまま運用。サブブランド戦略では『代理店扱い対象外』の明確化が最重要。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q1-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "五箇条の経営承認", detail: "提案①と同じ" },
+          { text: "サブブランドは代理店扱い対象外", detail: "棲み分け明文化" },
+          { text: "直販価格≧代理店推奨小売価格", detail: "全路線で徹底" }
+        ]},
+        { id: "q1-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "顧客に必ず販売店マップ提示", detail: "5路線とも紹介戻し" },
+          { text: "代理店データ還元レポート連動", detail: "提案①施策3" }
+        ]},
+        { id: "q1-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "メーカー保証を旗印に", detail: "コミュニケーション方針" },
+          { text: "代理店説明資料の整備", detail: "営業ツール" }
+        ]},
+        { id: "q1-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "五箇条違反検知チェック運用", detail: "運用安定後" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 2, title: "路線①道具女子 マトリクス",
+      kaiInsight: "最速で動かせる路線。FU5014ベースの色展開とのら子ペルソナへの訴求設計が肝。WM女子モデルの転用が9割。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q2-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "Hanshin Field+ブランド設計", detail: "30日で骨格" },
+          { text: "ペルソナのら子確定", detail: "顧客像言語化" },
+          { text: "FU5014を4色×3型に展開", detail: "商品開発キック" }
+        ]},
+        { id: "q2-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "農業女子アンバサダー10名選定", detail: "選定基準確立" },
+          { text: "Shopify自社EC＋楽天店", detail: "立ち上げ準備" }
+        ]},
+        { id: "q2-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "Instagram投稿コンテスト", detail: "SNS担当に委任" },
+          { text: "JA直売所・農業女子イベント", detail: "出店オペ外注可" }
+        ]},
+        { id: "q2-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "無印・ナチュラル系卸打診", detail: "ブランド確立後" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 3, title: "路線②シニア・リカバリー マトリクス",
+      kaiInsight: "あなた想いシリーズの独立LPと娘世代マーケが鍵。介護臭を出さず普通の靴ブランドに見せる徹底が肝。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q3-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "あなた想いプラスLP独立化", detail: "Shopifyで構築" },
+          { text: "ペルソナフミ子確定", detail: "言語化を最初に" },
+          { text: "見えない介護機能訴求", detail: "コアメッセージ" },
+          { text: "娘・嫁経由マーケ設計", detail: "決定者は親じゃない" }
+        ]},
+        { id: "q3-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "Amazonブランドストア開設", detail: "並行販路" },
+          { text: "ドラッグストア卸打診", detail: "ウエルシア等" }
+        ]},
+        { id: "q3-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "介護用品卸との商談", detail: "営業に委任" }
+        ]},
+        { id: "q3-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "ケアマネ向け説明資料", detail: "卸が進捗してから" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 4, title: "路線③法人・自治体BCP マトリクス",
+      kaiInsight: "全省庁統一資格と防衛省実績が他社にない強み。専任配置と機能5格付け表示が突破口。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q4-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "法人BtoB専任1名配置", detail: "営業エースから" },
+          { text: "BOSAI by 阪神素地ブランド", detail: "サブブランド設計" },
+          { text: "兵庫・岡山・大阪の防災課訪問", detail: "20先からスタート" }
+        ]},
+        { id: "q4-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "ペルソナ岡村課長確定", detail: "提案資料の前提" },
+          { text: "機能5格付け表示", detail: "全商品横展開" },
+          { text: "全省庁統一資格・防衛省実績訴求", detail: "提案パッケージ化" }
+        ]},
+        { id: "q4-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "JA全農・農協アプローチ", detail: "営業ローテーション" }
+        ]},
+        { id: "q4-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "防災用品商社経由販路", detail: "直販で成果出てから" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 5, title: "路線④台湾・東南アジア マトリクス",
+      kaiInsight: "中国JV WINNING INDUSTRIALを販社化することが最大のレバー。ASIAN PORTAL接続は今すぐ動ける。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q5-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "ASIAN PORTAL FISHING出品", detail: "既存基盤を活用" },
+          { text: "WINNING INDUSTRIAL販社化協議", detail: "JV契約再協議" }
+        ]},
+        { id: "q5-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "ペルソナリー・ジエ確定", detail: "台湾向け訴求設計" },
+          { text: "蝦皮Taiwan・京東公式店", detail: "現地ECモール" },
+          { text: "Amazon Global英語・中国語ページ", detail: "サイズ調整含む" }
+        ]},
+        { id: "q5-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "台湾現地釣りKOL 3〜5名", detail: "現地代理店経由で" },
+          { text: "インバウンド釣り業者連携", detail: "営業に委任" }
+        ]},
+        { id: "q5-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "ベトナム・タイ調査", detail: "台湾実績出てから" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 6, title: "路線⑤欧米プレミアム マトリクス（Reserve）",
+      kaiInsight: "全項目Reserve領域。市場大だが認知獲得3〜5年。1〜4路線で組織体力を作ってから着手。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q6-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+        ]},
+        { id: "q6-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "HANSHIN HERITAGE設計", detail: "Year3に向けたコンセプト" },
+          { text: "ペルソナジョン・ミラー確定", detail: "Reserve前提の像" }
+        ]},
+        { id: "q6-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "Shopify Multi-currency EC", detail: "Year2末に準備" }
+        ]},
+        { id: "q6-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "英語LP＋職人ストーリー映像", detail: "Year3" },
+          { text: "米フライ雑誌レビュー依頼", detail: "Year3" },
+          { text: "Reddit r/flyfishing展開", detail: "Year3" },
+          { text: "米国ガイド事業者試供品", detail: "Year3" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 7, title: "データ・組織・収益 マトリクス",
+      kaiInsight: "5路線の運用を支える人員配置が最優先。路線①②パート1名・路線③専任1名・路線④兼任で初期投資を抑える。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q7-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "路線①②専任パート1名", detail: "M1から配置" },
+          { text: "路線③法人BtoB専任1名", detail: "営業部から専任化" }
+        ]},
+        { id: "q7-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "路線別損益管理", detail: "サブブランドPL" },
+          { text: "5路線統合顧客DB", detail: "提案①と連動" },
+          { text: "投資1,600万円の予算管理", detail: "2年累計" }
+        ]},
+        { id: "q7-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "路線④台湾担当兼任", detail: "中国JV経由" },
+          { text: "アンバサダー契約管理", detail: "総務に委任" }
+        ]},
+        { id: "q7-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "3年目6〜15億円目標管理", detail: "年次レビュー" }
+        ]}
+      ]
+    }
+  ],
+  flows: [
+    {
+      id: "fl-2-0", themeIndex: 2, quadrant: "q2-tr", sourceItem: "Hanshin Field+ブランド設計",
+      title: "路線①道具女子サブブランド立ち上げ",
+      kaiComment: "WMプラス＋WM女子のモデルを転用。3ヶ月で基盤・6ヶ月で本格稼働。代理店との棲み分けが大前提。",
+      steps: [
+        { order: 1, title: "経営会議で路線①承認＋投資300万円承認", description: "サブブランド戦略・五箇条運用・代理店反感ゼロ前提の合意。", type: "decision", duration: "Day1", output: "経営会議議事録" },
+        { order: 2, title: "ブランドネーミング・ロゴ確定", description: "Hanshin Field+ 等の候補から確定。商標確認。", type: "action", duration: "3週間", output: "ブランドアセット" },
+        { order: 3, title: "FU5014ベース4色×3型の商品設計", description: "くすみカラー・SNS映え・既存ラスト流用で開発コスト最小化。", type: "action", duration: "1ヶ月", output: "商品ラインアップ" },
+        { order: 4, title: "農業女子アンバサダー10名スカウト", description: "フォロワー500〜5,000の現場熱量重視。3名は商品共同開発に。", type: "action", duration: "1ヶ月", output: "アンバサダー10名契約" },
+        { order: 5, title: "Shopify EC＋楽天店構築", description: "サブブランド独立販路。撮影・ライティング・SEO設定。", type: "action", duration: "1ヶ月", output: "EC公開" },
+        { order: 6, title: "代理店上位50店への事前説明", description: "『新ブランドは代理店扱い対象外』の棲み分けを明確化。反感ゼロ対策。", type: "warning", duration: "2週間", output: "代理店説明完了" },
+        { order: 7, title: "ローンチ＋Instagramコンテスト", description: "#私の農仕事 でUGC生成。月商100万円〜目標。", type: "milestone", duration: "1ヶ月", output: "ローンチ＋月商100万円" }
+      ]
+    },
+    {
+      id: "fl-4-0", themeIndex: 4, quadrant: "q4-tr", sourceItem: "法人BtoB専任1名配置",
+      title: "路線③法人・自治体BCP専任ユニット起動",
+      kaiComment: "WMイージスのプロ路線を転用。全省庁統一資格と防衛省実績が他社にない強み。最初の3ヶ月は防災課集中。",
+      steps: [
+        { order: 1, title: "専任1名アサイン（既存営業エース or 中途）", description: "岡山営業部に配置。法人BtoB専任職務記述書。", type: "decision", duration: "1ヶ月", output: "専任配置" },
+        { order: 2, title: "BOSAI by 阪神素地カタログ制作", description: "A4 4ページ：資格＋実績＋透湿防水ウェーダー＋多機能ブーツ＋価格＋導入事例。", type: "action", duration: "1ヶ月", output: "法人向けカタログ" },
+        { order: 3, title: "機能5格付け（耐水・防寒・耐油・反射・耐摩耗）", description: "全商品に3〜5段階表示。素人でも選びやすい購買補助情報。", type: "action", duration: "3週間", output: "格付け表" },
+        { order: 4, title: "兵庫・岡山・大阪の防災課宛DM＋訪問", description: "県防災課＋上位10市の防災課＝計約20先。事前DM→訪問アポ。", type: "action", duration: "2ヶ月", output: "20先訪問完了" },
+        { order: 5, title: "BCP備蓄品リストのヒアリング", description: "現状調達品・調達ルート・予算サイクル・更新タイミング。", type: "action", duration: "2ヶ月", output: "ヒアリング集計" },
+        { order: 6, title: "提案ヒット案件のクロージング", description: "20先中3〜5先で小ロット試験導入を目指す。", type: "milestone", duration: "3ヶ月", output: "受注3〜5先" },
+        { order: 7, title: "JA全農・建設・電力への横展開", description: "自治体実績を引っ提げて法人ターゲットへ拡張。", type: "milestone", duration: "3ヶ月", output: "横展開アプローチ" }
+      ]
+    },
+    {
+      id: "fl-5-0", themeIndex: 5, quadrant: "q5-tr", sourceItem: "ASIAN PORTAL FISHING出品",
+      title: "越境ECチャネル接続",
+      kaiComment: "既存基盤を活用する最速ルート。ASIAN PORTALは日本釣具300社集約サイトで初年度5億円目標。出品交渉から始める。",
+      steps: [
+        { order: 1, title: "ASIAN PORTAL FISHINGに参画打診メール", description: "株式会社ASIAN PORTAL 大谷社長宛。月額参加費・成約手数料を確認。", type: "action", duration: "1週間", output: "参画契約" },
+        { order: 2, title: "初期出品20SKU選定", description: "ウェーダー・鮎タイツ・フェルトスパイクなど海外人気品。", type: "action", duration: "2週間", output: "出品商品リスト" },
+        { order: 3, title: "中国語・英語商品ページ整備", description: "翻訳＋台湾人体型サイズ調整。日本品質訴求コピー。", type: "action", duration: "1ヶ月", output: "多言語ページ" },
+        { order: 4, title: "WINNING INDUSTRIAL販社化協議", description: "中国JVを製造のみから販売拠点へ格上げ。契約再協議。", type: "warning", duration: "2ヶ月", output: "JV契約更新" },
+        { order: 5, title: "蝦皮（Shopee Taiwan）公式店開設", description: "台湾向けD2C。中国京東・天猫国際も並行検討。", type: "action", duration: "1ヶ月", output: "台湾EC公開" },
+        { order: 6, title: "台湾現地釣りKOL 3〜5名へ商品提供", description: "日本旅行帰り・週末釣り愛好家系のKOLにターゲット。", type: "action", duration: "1ヶ月", output: "KOLレビュー獲得" },
+        { order: 7, title: "初年度売上1,000万円目標", description: "ASIAN PORTAL＋蝦皮＋Amazon Global合算で。3年目1〜3億円へ。", type: "milestone", duration: "12ヶ月", output: "初年度売上達成" }
+      ]
+    }
+  ],
+  gantt: {
+    title: "24ヶ月実行ロードマップ（5路線段階展開）",
+    totalWeeks: 24,
+    phases: [
+      {
+        name: "Phase1：合意・準備（W1〜W4）",
+        color: "#EF4444",
+        tasks: [
+          { name: "五箇条＋5路線承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false },
+          { name: "WM10カ条社内研修", startWeek: 1, endWeek: 3, isCritical: false, milestone: false },
+          { name: "Phase1完了", startWeek: 4, endWeek: 4, isCritical: false, milestone: true }
+        ]
+      },
+      {
+        name: "Phase2：路線①②国内サブブランド（W3〜W12）",
+        color: "#EAB308",
+        tasks: [
+          { name: "路線①道具女子ブランド設計", startWeek: 3, endWeek: 6, isCritical: true, milestone: false },
+          { name: "路線①Shopify構築・アンバサダー", startWeek: 6, endWeek: 10, isCritical: false, milestone: false },
+          { name: "路線①ローンチ", startWeek: 10, endWeek: 24, isCritical: false, milestone: false },
+          { name: "路線②あなた想いプラスLP独立化", startWeek: 4, endWeek: 8, isCritical: false, milestone: false },
+          { name: "路線②ドラッグストア卸商談", startWeek: 8, endWeek: 16, isCritical: false, milestone: false }
+        ]
+      },
+      {
+        name: "Phase3：路線③法人BCP（W5〜W18）",
+        color: "#06B6D4",
+        tasks: [
+          { name: "法人BtoB専任配置・カタログ制作", startWeek: 5, endWeek: 8, isCritical: true, milestone: false },
+          { name: "兵庫・岡山・大阪の防災課訪問", startWeek: 8, endWeek: 16, isCritical: false, milestone: false },
+          { name: "JA・建設・電力横展開", startWeek: 14, endWeek: 24, isCritical: false, milestone: false }
+        ]
+      },
+      {
+        name: "Phase4：路線④台湾・東南アジア（W9〜W20）",
+        color: "#6366F1",
+        tasks: [
+          { name: "ASIAN PORTAL接続・JV協議", startWeek: 9, endWeek: 14, isCritical: false, milestone: false },
+          { name: "蝦皮Taiwan・京東公式店", startWeek: 14, endWeek: 20, isCritical: false, milestone: false },
+          { name: "ベトナム・タイ調査", startWeek: 18, endWeek: 24, isCritical: false, milestone: false }
+        ]
+      },
+      {
+        name: "Phase5：路線⑤欧米準備（W19〜W24）",
+        color: "#8B5CF6",
+        tasks: [
+          { name: "英語サイト準備・レビュー獲得", startWeek: 19, endWeek: 24, isCritical: false, milestone: false },
+          { name: "2年目総括・3年目目標設定", startWeek: 24, endWeek: 24, isCritical: false, milestone: true }
+        ]
+      }
+    ]
+  }
+};
+
+/* ================================================================
+   STATE
+   ================================================================ */
+const TC = ['#EF4444','#F97316','#EAB308','#22C55E','#06B6D4','#6366F1','#8B5CF6','#EC4899'];
+const TBG= ['rgba(239,68,68,.13)','rgba(249,115,22,.13)','rgba(234,179,8,.13)','rgba(34,197,94,.13)',
+            'rgba(6,182,212,.13)','rgba(99,102,241,.13)','rgba(139,92,246,.13)','rgba(236,72,153,.13)'];
+let curTheme = 0;
+const SK = 'rsh_' + encodeURIComponent(DATA.meta.theme || 'x');
+const checks = () => { try { return JSON.parse(localStorage.getItem(SK)||'{}'); } catch { return {}; } };
+const saveCheck = (id, v) => {
+  const c = checks(); c[id] = v;
+  localStorage.setItem(SK, JSON.stringify(c));
+  updatePct();
+};
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function go(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('v-' + name).classList.add('on');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  if (tabEl) { tabEl.classList.add('on'); }
+  else {
+    const idx = {dashboard:0,mandala:1,matrix:2,flow:3,gantt:4}[name];
+    if (idx != null) document.querySelectorAll('.tab')[idx].classList.add('on');
+  }
+  if (name === 'mandala') renderMandala();
+  if (name === 'matrix')  renderMatrix(curTheme);
+  if (name === 'gantt')   renderGantt();
+}
+
+function goMatrix(ti) { curTheme = ti; go('matrix', null); }
+function goFlow(ti, qid, itemTx) {
+  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx)
+           || DATA.flows.find(f => f.themeIndex === ti)
+           || DATA.flows[0];
+  const th = DATA.mandala.themes[ti];
+  document.getElementById('flBcTh').textContent = th ? th.name : 'マトリクス';
+  document.getElementById('flBcIt').textContent = itemTx || 'フロー';
+  document.getElementById('flCtx').textContent = itemTx;
+  if (fl) { renderFlow(fl); }
+  else {
+    document.getElementById('flEmpty').style.display = 'block';
+    document.getElementById('flSteps').innerHTML = '';
+    document.getElementById('flKai').style.display = 'none';
+  }
+  go('flow', null);
+}
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function initDash() {
+  const m = DATA.meta, k = DATA.kai;
+  document.getElementById('hTheme').textContent  = m.theme;
+  document.getElementById('dTheme').textContent  = m.theme;
+  document.getElementById('dMeta').textContent   = '作成日: ' + m.createdAt + (m.targetPeriod ? '　目標期間: ' + m.targetPeriod : '');
+  document.getElementById('dBg').textContent     = m.background;
+  document.getElementById('kSum').textContent    = k.summary;
+  document.getElementById('kVerd').textContent   = '⚠️ ' + k.consultantVerdict;
+  document.getElementById('sFlows').textContent  = DATA.flows.length;
+
+  const tg = document.getElementById('kTags');
+  (k.strengths||[]).forEach(s => { const x=document.createElement('span'); x.className='ktag ok'; x.textContent='✓ '+s; tg.appendChild(x); });
+  (k.risks||[]).forEach(r    => { const x=document.createElement('span'); x.className='ktag ng'; x.textContent='⚠ '+r;  tg.appendChild(x); });
+
+  const ag = document.getElementById('dActs');
+  DATA.mandala.themes.forEach(th => {
+    const top = th.items.filter(i => i.priority===1)[0];
+    if (!top) return;
+    const col = th.color || TC[th.index];
+    const d = document.createElement('div'); d.className='act-item';
+    d.onclick = () => goMatrix(th.index);
+    d.innerHTML = `<div class="act-dot" style="background:${col}"></div><div><div class="act-tx"><strong>${th.name}</strong></div><div class="act-sub">${top.text}</div></div>`;
+    ag.appendChild(d);
+  });
+  updatePct();
+}
+
+function updatePct() {
+  const c = checks();
+  const total = DATA.flows.reduce((s,f)=>s+f.steps.length,0)||1;
+  const done  = Object.values(c).filter(Boolean).length;
+  const p = Math.round(done/total*100);
+  document.getElementById('hPct').textContent = p+'%';
+  document.getElementById('hFill').style.width = p+'%';
+  document.getElementById('sPct').textContent  = p+'%';
+}
+
+/* ================================================================
+   MANDALA
+   ================================================================ */
+const SG  = [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+const CP  = [[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+const IO  = [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]];
+
+function renderMandala() {
+  const grid = Array.from({length:9},()=>Array(9).fill({t:'empty'}));
+  grid[4][4] = {t:'center'};
+  DATA.mandala.themes.forEach((th,ti) => {
+    const [cr,cc]=CP[ti]; grid[cr][cc]={t:'theme',th,ti};
+    const [sr,sc]=SG[ti]; grid[sr+1][sc+1]={t:'tr',th,ti};
+    th.items.forEach((item,ii)=>{ const [or,oc]=IO[ii]; grid[sr+or][sc+oc]={t:'item',item,th,ti}; });
+  });
+  const g=document.getElementById('mGrid'); g.innerHTML='';
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+    const cell=grid[r][c], d=document.createElement('div'); d.className='mc';
+    if(cell.t==='center'){
+      d.classList.add('center'); d.textContent=DATA.mandala.center;
+    } else if(cell.t==='theme'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('theme','cp'); d.style.background=col;
+      d.textContent=cell.th.name; d.title=cell.th.description||'';
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='tr'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('tr','cp'); d.style.background=col; d.style.color='#fff';
+      d.textContent=cell.th.name;
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='item'){
+      const bg=cell.th.bgLight||TBG[cell.ti];
+      d.classList.add('item'); d.style.background=bg; d.style.color='var(--dim)';
+      d.textContent=cell.item.text; d.title=cell.item.description||cell.item.text;
+    } else { d.classList.add('empty'); }
+    g.appendChild(d);
+  }
+  const leg=document.getElementById('mLeg'); leg.innerHTML='';
+  DATA.mandala.themes.forEach((th,ti)=>{
+    const col=th.color||TC[ti];
+    const l=document.createElement('div'); l.className='m-leg';
+    l.onclick=()=>goMatrix(ti);
+    l.innerHTML=`<div class="m-leg-dot" style="background:${col}"></div>${th.name}`;
+    leg.appendChild(l);
+  });
+}
+
+/* ================================================================
+   MATRIX
+   ================================================================ */
+function renderMatrix(ti) {
+  curTheme=ti;
+  const th=DATA.mandala.themes[ti], mx=DATA.matrices[ti]||DATA.matrices[0];
+  document.getElementById('mxBcTh').textContent=th?th.name:'マトリクス';
+
+  const pp=document.getElementById('tPills'); pp.innerHTML='';
+  DATA.mandala.themes.forEach((t,i)=>{
+    const col=t.color||TC[i];
+    const p=document.createElement('div'); p.className='t-pill'+(i===ti?' on':'');
+    p.style.background=col; p.textContent=t.name;
+    p.onclick=()=>renderMatrix(i); pp.appendChild(p);
+  });
+
+  if(!mx) return;
+  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'重要度');
+  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+'→';
+
+  const g=document.getElementById('mxGrid');
+  Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
+
+  ['tl','tr','bl','br'].forEach(pos=>{
+    const qd=mx.quadrants.find(q=>q.pos===pos);
+    const d=document.createElement('div'); d.className='quad q-'+pos;
+    if(qd){
+      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
+      (qd.items||[]).forEach(item=>{
+        const it=document.createElement('div'); it.className='qi';
+        it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}
+                      </div><div class="qi-ar">→</div>`;
+        it.onclick=()=>goFlow(ti,qd.id,item.text);
+        d.appendChild(it);
+      });
+    }
+    g.appendChild(d);
+  });
+
+  if(mx.kaiInsight){
+    document.getElementById('mxKaiTx').textContent=mx.kaiInsight;
+    document.getElementById('mxKai').style.display='block';
+  } else { document.getElementById('mxKai').style.display='none'; }
+}
+
+/* ================================================================
+   FLOW
+   ================================================================ */
+const SICO = {
+  action:    {bg:'rgba(99,102,241,.2)', col:'#A5B4FC', ic:'▶', cls:'fb-act',  lbl:'アクション'},
+  decision:  {bg:'rgba(245,158,11,.2)',  col:'#FCD34D', ic:'◆', cls:'fb-dec',  lbl:'判断'},
+  milestone: {bg:'rgba(16,185,129,.2)',  col:'#6EE7B7', ic:'★', cls:'fb-mil',  lbl:'マイルストーン'},
+  warning:   {bg:'rgba(239,68,68,.2)',   col:'#FCA5A5', ic:'!', cls:'fb-wrn',  lbl:'注意'}
+};
+
+function renderFlow(fl) {
+  const c=checks(), con=document.getElementById('flSteps'); con.innerHTML='';
+  document.getElementById('flEmpty').style.display='none';
+  fl.steps.forEach(step=>{
+    const si=SICO[step.type]||SICO.action;
+    const cid=fl.id+'-s'+step.order;
+    const ck=c[cid]||false;
+    const d=document.createElement('div'); d.className='fl-step';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card${ck?' done':''}">
+        <div class="fl-ord">STEP ${step.order}</div>
+        <div class="fl-title">${step.title}</div>
+        <div class="fl-desc">${step.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
+          ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
+        </div>
+        <label class="fl-check${ck?' done':''}">
+          <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
+          完了としてマーク
+        </label>
+      </div>`;
+    con.appendChild(d);
+  });
+  if(fl.kaiComment){
+    document.getElementById('flKaiTx').textContent=fl.kaiComment;
+    document.getElementById('flKai').style.display='block';
+  } else { document.getElementById('flKai').style.display='none'; }
+}
+
+function onCk(el) {
+  saveCheck(el.dataset.cid, el.checked);
+  const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
+  el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
+             : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   GANTT
+   ================================================================ */
+function renderGantt() {
+  const g=DATA.gantt, wk=g.totalWeeks||24;
+  document.getElementById('gtTitle').textContent=g.title||'実行タイムライン';
+  const con=document.getElementById('gtChart'); con.innerHTML='';
+
+  const hdr=document.createElement('div'); hdr.className='gt-hdr';
+  for(let w=1;w<=wk;w++){
+    const wd=document.createElement('div'); wd.className='gt-wk';
+    wd.textContent=(w%4===0)?'W'+w:''; hdr.appendChild(wd);
+  }
+  con.appendChild(hdr);
+
+  g.phases.forEach(ph=>{
+    const pl=document.createElement('div'); pl.className='gt-phase';
+    pl.textContent=ph.name; con.appendChild(pl);
+    ph.tasks.forEach(task=>{
+      const row=document.createElement('div'); row.className='gt-row';
+      const nm=document.createElement('div'); nm.className='gt-name';
+      nm.textContent=task.name; nm.title=task.name; row.appendChild(nm);
+      const bw=document.createElement('div'); bw.className='gt-bars';
+      bw.style.flex='1'; bw.style.position='relative'; bw.style.height='28px';
+      const bar=document.createElement('div');
+      bar.className='gt-bar'+(task.isCritical?' crit':'')+(task.milestone?' ms':'');
+      bar.style.left=((task.startWeek-1)/wk*100)+'%';
+      bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
+      bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary))'));
+      bar.textContent=task.milestone?'◆':task.name;
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
+    });
+  });
+}
+
+/* ================================================================
+   KAI FLOAT PANEL
+   ================================================================ */
+function buildKaiPanel(){
+  const k=DATA.kai, p=document.getElementById('kfPanel');
+  let h=`<div class="kf-sec"><div class="kf-sec-t">📌 コアイシュー</div>
+           <div class="kf-ins">${k.coreIssue||'—'}</div></div>
+          <div class="kf-sec"><div class="kf-sec-t">🎯 最優先アクション</div>
+           <div class="kf-ins">${k.topPriority||'—'}</div></div>`;
+  if(k.themeInsights&&k.themeInsights.length){
+    h+=`<div class="kf-sec"><div class="kf-sec-t">🧭 テーマ別アドバイス</div>`;
+    k.themeInsights.forEach(ti=>{
+      const th=DATA.mandala.themes[ti.index];
+      const col=th?(th.color||TC[ti.index]):'#6366F1';
+      h+=`<div class="kf-ins" style="border-left:3px solid ${col};padding-left:10px">
+            <strong style="color:${col}">${th?th.name:'テーマ'+(ti.index+1)}</strong><br>${ti.insight}</div>`;
+    });
+    h+='</div>';
+  }
+  p.innerHTML=h;
+}
+
+function toggleKai(){
+  const p=document.getElementById('kfPanel'), a=document.getElementById('kfArr');
+  p.classList.toggle('on'); a.textContent=p.classList.contains('on')?'▼':'▲';
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDash(); renderMandala(); buildKaiPanel();
+  if(DATA.matrices.length) renderMatrix(0);
+  document.getElementById('flEmpty').style.display='block';
+  document.getElementById('flSteps').innerHTML='';
+  document.getElementById('flKai').style.display='none';
+});
+</script>
+</body>
+</html>
