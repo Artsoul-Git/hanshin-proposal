@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阪神素地株式会社 販路拡大アドバイザリー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --c-navy:#0e2a47;
+  --c-navy-2:#1f3f63;
+  --c-green:#2e7d51;
+  --c-orange:#d97706;
+  --c-red:#c2410c;
+  --c-bg:#f5f7fa;
+  --c-card:#ffffff;
+  --c-text:#1a1a1a;
+  --c-muted:#6b7280;
+  --c-border:#e5e7eb;
+  --c-accent-bg:#eef4f1;
+  --shadow:0 2px 8px rgba(14,42,71,0.08);
+  --shadow-lg:0 8px 24px rgba(14,42,71,0.12);
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--c-bg);
+  color:var(--c-text);
+  line-height:1.7;
+  font-size:clamp(14px,1.6vw,16px);
+}
+img{max-width:100%;height:auto}
+a{color:var(--c-navy-2);text-decoration:underline}
+a:hover{color:var(--c-orange)}
+
+/* ===== HERO ===== */
+.hero{
+  background:linear-gradient(135deg,var(--c-navy) 0%,var(--c-navy-2) 60%,var(--c-green) 100%);
+  color:#fff;
+  padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-20%;
+  width:80%;height:200%;
+  background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{
+  display:inline-block;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  padding:6px 14px;border-radius:20px;font-size:0.85rem;
+  margin-bottom:20px;letter-spacing:0.05em;
+}
+.hero h1{
+  font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.3;
+  margin-bottom:18px;
+}
+.hero h1 .accent{color:#7fd3a8}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{
+  display:flex;gap:20px;flex-wrap:wrap;font-size:0.9rem;opacity:0.85;
+}
+.hero-meta span::before{content:"●";margin-right:6px;color:#7fd3a8}
+
+/* ===== NAV ===== */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--c-border);
+  padding:10px clamp(20px,5vw,60px);
+  overflow-x:auto;
+  white-space:nowrap;
+  -webkit-overflow-scrolling:touch;
+}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none}
+nav.toc a{
+  display:inline-block;padding:6px 12px;border-radius:6px;
+  text-decoration:none;color:var(--c-navy);font-size:0.85rem;
+  transition:all 0.2s;
+}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-green)}
+
+/* ===== SECTION ===== */
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{
+  font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;
+  color:var(--c-navy);position:relative;
+  padding-left:18px;margin-bottom:12px;line-height:1.4;
+}
+section h2::before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:6px;
+  background:linear-gradient(180deg,var(--c-green),var(--c-navy));
+  border-radius:3px;
+}
+section h3{
+  font-size:clamp(1.1rem,2vw,1.3rem);font-weight:700;
+  color:var(--c-navy);margin-top:24px;margin-bottom:12px;
+}
+section .lead{
+  font-size:clamp(0.95rem,1.6vw,1.05rem);
+  color:var(--c-muted);margin-bottom:28px;max-width:900px;
+}
+
+/* ===== CARDS / GRID ===== */
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{
+  background:var(--c-card);border-radius:var(--radius);padding:clamp(16px,2.5vw,24px);
+  box-shadow:var(--shadow);border:1px solid var(--c-border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card h4{font-size:1.05rem;color:var(--c-navy);margin-bottom:10px;font-weight:700}
+.card p{font-size:0.92rem;color:var(--c-text)}
+.card .stat{
+  font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;
+  color:var(--c-green);line-height:1.1;margin:8px 0;
+}
+.card .stat-sub{font-size:0.8rem;color:var(--c-muted)}
+.card.danger .stat{color:var(--c-red)}
+.card.warn .stat{color:var(--c-orange)}
+.card.accent{background:var(--c-accent-bg);border-color:#cfe2d6}
+
+/* ===== KEY MESSAGE ===== */
+.key-message{
+  background:linear-gradient(135deg,var(--c-navy) 0%,var(--c-navy-2) 100%);
+  color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);
+  margin:24px 0;position:relative;overflow:hidden;
+}
+.key-message::before{
+  content:"❝";position:absolute;top:-30px;left:10px;
+  font-size:160px;opacity:0.1;font-family:serif;
+}
+.key-message .km-label{
+  display:inline-block;background:#7fd3a8;color:var(--c-navy);
+  padding:4px 12px;border-radius:4px;font-weight:700;
+  font-size:0.85rem;margin-bottom:12px;
+}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.3rem);font-weight:500;line-height:1.6}
+.key-message .km-text strong{color:#7fd3a8;font-weight:900}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{
+  background:var(--c-navy);color:#fff;padding:12px;text-align:left;
+  font-weight:700;font-size:0.85rem;
+}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:last-child td{border-bottom:none}
+table tr:nth-child(even) td{background:#fafafa}
+table .num{text-align:right;font-variant-numeric:tabular-nums}
+table .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700}
+.badge.high{background:#fee2e2;color:#b91c1c}
+.badge.mid{background:#fef3c7;color:#92400e}
+.badge.low{background:#dcfce7;color:#166534}
+
+/* ===== ACCORDION ===== */
+details{
+  background:var(--c-card);border-radius:var(--radius);
+  margin-bottom:12px;border:1px solid var(--c-border);
+  overflow:hidden;
+}
+details summary{
+  padding:16px 20px;cursor:pointer;font-weight:700;
+  color:var(--c-navy);font-size:1rem;
+  display:flex;align-items:center;gap:10px;list-style:none;
+  background:var(--c-card);transition:background 0.2s;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:"▶";color:var(--c-green);font-size:0.7rem;
+  transition:transform 0.2s;flex-shrink:0;
+}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px}
+details .details-body p{margin-bottom:10px}
+details .details-body ul{margin:10px 0 10px 20px}
+details .details-body li{margin-bottom:6px}
+
+/* ===== TABS ===== */
+.tabs{margin-top:20px}
+.tab-buttons{
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-bottom:2px solid var(--c-border);margin-bottom:16px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.tab-buttons button{
+  border:none;background:transparent;
+  padding:10px 16px;cursor:pointer;font-weight:700;
+  color:var(--c-muted);border-bottom:3px solid transparent;
+  font-family:inherit;font-size:0.88rem;
+  transition:all 0.2s;flex-shrink:0;
+}
+.tab-buttons button:hover{color:var(--c-navy)}
+.tab-buttons button.active{
+  color:var(--c-green);border-bottom-color:var(--c-green);
+}
+.tab-content{display:none;animation:fadein 0.3s}
+.tab-content.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== 4QM ===== */
+.matrix{
+  display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;
+  gap:0;margin:20px 0;min-height:480px;
+}
+.matrix .y-axis{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(180deg,#fee2e2,#dcfce7);
+}
+.matrix .x-axis{
+  grid-column:2;grid-row:2;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(90deg,#dcfce7,#fee2e2);
+}
+.matrix .quadrant-grid{
+  grid-column:2;grid-row:1;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:2px;background:var(--c-border);
+}
+.matrix .q{
+  background:var(--c-card);padding:16px;position:relative;
+  display:flex;flex-direction:column;gap:8px;
+}
+.matrix .q.q1{background:#ecfdf5}
+.matrix .q.q2{background:#fef3c7}
+.matrix .q.q3{background:#dbeafe}
+.matrix .q.q4{background:#fee2e2}
+.matrix .q-label{
+  position:absolute;top:8px;right:10px;font-size:0.7rem;
+  font-weight:700;color:var(--c-muted);text-transform:uppercase;
+}
+.matrix .q-title{font-weight:700;color:var(--c-navy);font-size:0.95rem;margin-bottom:6px}
+.matrix .chip{
+  display:inline-block;background:var(--c-card);
+  border:1px solid var(--c-border);border-radius:6px;
+  padding:4px 10px;font-size:0.8rem;font-weight:500;
+  margin:2px;color:var(--c-navy);
+}
+.matrix .chip.high{border-color:var(--c-green);background:#dcfce7;color:#166534;font-weight:700}
+
+@media (max-width:600px){
+  .matrix{grid-template-columns:30px 1fr;min-height:560px}
+  .matrix .q{padding:10px}
+  .matrix .q-title{font-size:0.85rem}
+  .matrix .chip{font-size:0.72rem;padding:3px 7px}
+}
+
+/* ===== FLOW ===== */
+.flow-wrap{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);overflow-x:auto;
+}
+.mermaid{font-family:'Noto Sans JP',sans-serif !important}
+
+/* ===== ROADMAP / GANTT ===== */
+.roadmap{margin:20px 0}
+.roadmap .row{
+  display:grid;grid-template-columns:140px 1fr;
+  gap:8px;align-items:center;margin-bottom:8px;
+}
+.roadmap .row-label{
+  font-size:0.85rem;font-weight:700;color:var(--c-navy);
+}
+.roadmap .row-bar{
+  background:var(--c-border);height:32px;border-radius:6px;
+  position:relative;display:grid;grid-template-columns:repeat(12,1fr);
+}
+.roadmap .row-bar .seg{
+  background:var(--c-green);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:0.75rem;font-weight:700;
+  padding:0 8px;white-space:nowrap;overflow:hidden;
+}
+.roadmap .seg.blue{background:var(--c-navy-2)}
+.roadmap .seg.orange{background:var(--c-orange)}
+.roadmap .header{margin-bottom:4px;color:var(--c-muted);font-size:0.75rem}
+.roadmap .header .row-bar{
+  background:transparent;
+}
+.roadmap .header .row-bar > div{
+  text-align:center;border-left:1px dashed var(--c-border);
+  font-size:0.7rem;color:var(--c-muted);padding:4px 0;
+}
+
+@media (max-width:600px){
+  .roadmap .row{grid-template-columns:100px 1fr}
+  .roadmap .row-label{font-size:0.75rem}
+}
+
+/* ===== FIVE PRINCIPLES ===== */
+.principles{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:16px}
+.principle{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;border-left:5px solid var(--c-green);
+  box-shadow:var(--shadow);
+}
+.principle .num{
+  display:inline-block;width:32px;height:32px;
+  background:var(--c-navy);color:#fff;border-radius:50%;
+  text-align:center;line-height:32px;font-weight:900;
+  margin-right:10px;
+}
+.principle h4{display:inline;font-size:1rem;color:var(--c-navy)}
+.principle .rule{font-weight:700;color:var(--c-navy);margin:10px 0 8px 0}
+.principle .ng{color:var(--c-red);font-size:0.85rem;margin-bottom:4px}
+.principle .ng::before{content:"❌ ";font-weight:700}
+.principle .ok{color:var(--c-green);font-size:0.85rem}
+.principle .ok::before{content:"✅ ";font-weight:700}
+
+/* ===== STORY ===== */
+.story{
+  background:var(--c-accent-bg);border-radius:var(--radius);
+  padding:20px;margin:16px 0;border-left:4px solid var(--c-green);
+}
+.story h5{
+  font-size:0.85rem;color:var(--c-green);font-weight:700;
+  text-transform:uppercase;margin-bottom:8px;letter-spacing:0.05em;
+}
+.story p{font-size:0.92rem;color:var(--c-text);line-height:1.8}
+.story p + p{margin-top:10px}
+
+/* ===== CHART CONTAINER ===== */
+.chart-box{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);
+  margin:16px 0;
+}
+.chart-box h4{
+  font-size:0.95rem;color:var(--c-navy);margin-bottom:10px;
+  font-weight:700;
+}
+.chart-canvas-wrap{
+  position:relative;
+  width:100%;
+  height:320px;
+}
+.chart-canvas-wrap.tall{height:380px}
+.chart-canvas-wrap canvas{max-height:100%}
+.chart-box .source{
+  font-size:0.72rem;color:var(--c-muted);margin-top:8px;
+}
+.chart-box .source::before{content:"出典: "}
+@media (max-width:600px){
+  .chart-canvas-wrap{height:260px}
+  .chart-canvas-wrap.tall{height:340px}
+}
+
+/* ===== INFOBOX ===== */
+.info-box{
+  background:#fef3c7;border-left:4px solid var(--c-orange);
+  padding:12px 16px;border-radius:6px;margin:12px 0;font-size:0.88rem;
+}
+.info-box::before{content:"💡 ";font-weight:700;color:var(--c-orange)}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--c-navy);color:#fff;
+  padding:32px clamp(20px,5vw,60px);text-align:center;
+  font-size:0.85rem;opacity:0.9;
+}
+footer a{color:#7fd3a8}
+
+/* ===== UTILITY ===== */
+.center{text-align:center}
+.muted{color:var(--c-muted);font-size:0.85rem}
+.badge-tag{
+  display:inline-block;padding:3px 10px;border-radius:12px;
+  font-size:0.72rem;font-weight:700;
+  background:var(--c-accent-bg);color:var(--c-green);
+  margin-right:6px;
+}
+.priority{
+  display:inline-block;color:var(--c-orange);font-weight:900;
+  letter-spacing:0.05em;
+}
+hr.divider{
+  border:none;height:1px;background:var(--c-border);margin:24px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0e2a47 0%,#1f3f63 60%,#2e7d51 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地株式会社 販路拡大アドバイザリー</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit;transition:background 0.2s">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('hanshin_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('hanshin_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">CLIENT ADVISORY ｜ 2026-05-27</span>
+    <h1>「代理店ルートは<span class="accent">広告投資</span>」<br>と再定義する販路拡大戦略</h1>
+    <p class="hero-sub">阪神素地株式会社様のための、現状維持 × 低コスト × 代理店反感ゼロで「顧客リスト基盤」を構築する6視点・7施策アドバイザリー</p>
+    <div class="hero-meta">
+      <span>v3 詳細版</span>
+      <span>ファクトチェック済</span>
+    </div>
+  </div>
+</header>
+
+<!-- ====== TOC ====== -->
+<nav class="toc">
+  <ul>
+    <li><a href="#summary">サマリー</a></li>
+    <li><a href="#current">現状の可視化</a></li>
+    <li><a href="#issues">3つの本質課題</a></li>
+    <li><a href="#core">戦略の核</a></li>
+    <li><a href="#five">五箇条</a></li>
+    <li><a href="#actions">7施策（詳細）</a></li>
+    <li><a href="#matrix">4象限マトリクス</a></li>
+    <li><a href="#flow">フロー図</a></li>
+    <li><a href="#roi">ROI試算</a></li>
+    <li><a href="#roadmap">ロードマップ</a></li>
+    <li><a href="#support">支援内容</a></li>
+    <li><a href="#sources">出典</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ====== SUMMARY ====== -->
+<section id="summary">
+  <h2>1. エグゼクティブサマリー</h2>
+  <p class="lead">本提言は、貴社の既存B2B卸構造（代理店約690社）を一切壊さず、その先にいる顧客と直接つながる仕組みを構築するための戦略アドバイザリーです。</p>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">
+      代理店ルートはやめません。<br>
+      <strong>「全国に展開された広告掲示板」として再評価</strong>します。<br>
+      違うのは、その先で<strong>顧客と直接つながる仕組み</strong>を作ることです。
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>① 同梱QRでユーザー登録</h4>
+      <p>3年延長保証＋使い方動画と引き換えに、顧客情報＋お買い上げ店を取得</p>
+      <p class="muted" style="margin-top:8px">▶ 30日で1SKUパイロット可／初期費用 約15万円</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>② 修理サービスのオンライン化</h4>
+      <p>既存の希少な顧客接点をWeb化。代理店には紹介手数料を還元</p>
+      <p class="muted" style="margin-top:8px">▶ 60日で運用開始可／初期費用 30〜50万円</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>③ 代理店データ還元レポート</h4>
+      <p>取得した顧客傾向を代理店ごとに匿名化レポートで還元＝反感ゼロの担保</p>
+      <p class="muted" style="margin-top:8px">▶ 90日でβ版／追加コスト ほぼゼロ</p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    総初期投資 150〜300万円・運用月額5〜20万円で、1年後に <strong>顧客リスト5,000〜15,000件</strong> を構築できる見込み。これは「広告効果が測れる阪神素地」への第一歩です。
+  </div>
+</section>
+
+<!-- ====== CURRENT ====== -->
+<section id="current">
+  <h2>2. 現状の可視化</h2>
+  <p class="lead">公的データ・公式情報・ECモール実調査に基づき、貴社を取り巻く市場環境と現在の販路実態を可視化します。</p>
+
+  <h3>2-1. 会社プロファイル（公式情報ベース）</h3>
+  <div class="grid grid-4">
+    <div class="card">
+      <h4>創業</h4>
+      <div class="stat">1907</div>
+      <div class="stat-sub">年（設立 1948年）</div>
+    </div>
+    <div class="card">
+      <h4>代理店網</h4>
+      <div class="stat">約690</div>
+      <div class="stat-sub">社（釣具・履物問屋／小売店）</div>
+    </div>
+    <div class="card">
+      <h4>従業員</h4>
+      <div class="stat">21</div>
+      <div class="stat-sub">人</div>
+    </div>
+    <div class="card">
+      <h4>EC展開</h4>
+      <div class="stat">8+</div>
+      <div class="stat-sub">主要モール（実数調査）</div>
+    </div>
+  </div>
+
+  <h3>2-2. 国内釣り市場の構造変化</h3>
+  <div class="grid grid-3">
+    <div class="card danger">
+      <h4>参加人口（25年比較）</h4>
+      <div class="stat">▲75%</div>
+      <div class="stat-sub">2,020万人(1998年) → 510万人(2023年)</div>
+    </div>
+    <div class="card warn">
+      <h4>1人当たり年間費用</h4>
+      <div class="stat">5.2<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">支出は維持。市場の「単価上昇×ボリューム縮小」</div>
+    </div>
+    <div class="card">
+      <h4>大手釣具メーカー売上</h4>
+      <div class="stat">1,127<span style="font-size:1rem">億円</span></div>
+      <div class="stat-sub">グローブライド2024年3月期（前期比▲6.1%）</div>
+    </div>
+  </div>
+
+  <h3>2-3. 主要ECモールでの貴社製品取扱状況（2026-05調査）</h3>
+  <div class="chart-box">
+    <h4>主要ECモール 阪神素地ブランド掲載アイテム数</h4>
+    <div class="chart-canvas-wrap tall"><canvas id="chartEC"></canvas></div>
+    <div class="source">各社サイト実調査（2026年5月時点）</div>
+  </div>
+  <div class="info-box">
+    「インターネット通販で購入可能」という認識を超え、実態は<strong>8チャネル以上の大手ECに大量出品中</strong>。問題は「広さ」ではなく <strong>「広く出ているのに顧客が誰だか分からない」</strong> ことにあります。
+  </div>
+
+  <h3>2-4. 隣接市場の成長機会</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>🌍 グローバル女性釣りアパレル市場</h4>
+      <div class="stat">46.8<span style="font-size:1rem">億ドル</span></div>
+      <div class="stat-sub">年8.2%成長見込み（2031年まで）</div>
+      <p class="muted" style="margin-top:8px">日本でも70代釣り人口は増加。シニア・女性は成長セグメント</p>
+    </div>
+    <div class="card">
+      <h4>👵 65歳以上人口（日本）</h4>
+      <div class="stat">3,653<span style="font-size:1rem">万人</span></div>
+      <div class="stat-sub">令和7年見込（内閣府）</div>
+      <p class="muted" style="margin-top:8px">「あなた想いシリーズ」「羽マジックシューズ」の市場は構造的に拡大</p>
+    </div>
+    <div class="card">
+      <h4>🌾 基幹的農業従事者</h4>
+      <div class="stat">102<span style="font-size:1rem">万人</span></div>
+      <div class="stat-sub">平均年齢67.6歳（農水省2025）</div>
+      <p class="muted" style="margin-top:8px">果樹専用長靴FU5014など省力化機能の価値は上昇</p>
+    </div>
+    <div class="card">
+      <h4>🌏 アジア越境ECチャネル</h4>
+      <div class="stat">5<span style="font-size:1rem">億円</span></div>
+      <div class="stat-sub">ASIAN PORTAL FISHING初年度目標</div>
+      <p class="muted" style="margin-top:8px">日本釣具300社集約。中国の若年層に釣りブーム</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ISSUES ====== -->
+<section id="issues">
+  <h2>3. 販路拡大における3つの本質課題</h2>
+  <p class="lead">現状の数字を踏まえると、貴社が次の成長に向けて解くべき本質課題は以下3点です（クリックで詳細展開）。</p>
+
+  <details open>
+    <summary>課題1：顧客が「誰だか分からない」 — リストゼロ問題</summary>
+    <div class="details-body">
+      <p>例：果樹専用長靴 FU5014 が年間1,000足売れたとして—</p>
+      <ul>
+        <li>買ったのは青森のりんご農家？愛媛のみかん農家？山梨のぶどう農家？</li>
+        <li>男性？女性？50代？70代？</li>
+        <li>何足目の購入？最初の1足？買い替え？</li>
+      </ul>
+      <p><strong>すべて分からない。</strong>これは「直販していないから当然」ではなく、「直販しなくても取得できる方法を実装していないだけ」。</p>
+      <p>新商品「鮎タイツ FX-620」を出した時、刺さるのは既存ウェーダー購入者ですが、リストがなければDMが打てない。結果は代理店任せ＝代理店販売員の記憶頼みになります。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>課題2：「広告効果」が測れていない — 卸＝広告という視点の不在</summary>
+    <div class="details-body">
+      <p>兵庫県のA店（年間取引300万円）と岡山県のB店（年間取引300万円）は同じ売上でも、客層は違うはず。A店は鮎タイツが7割、B店は防災ブーツが7割、というケースが普通にあり得ます。</p>
+      <ul>
+        <li>これが分かれば、A店向けには鮎タイツ販促ツール、B店向けには防災カタログ、という個別対応ができる</li>
+        <li>今は均一なカタログ・販促物を送るだけ＝広告効率が悪い</li>
+        <li>年間広告費（代理店マージン総額）は推定数千万〜数億円規模なのに、CAC（顧客獲得コスト）もLTVも測定不能</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>課題3：「修理・カスタムオーダー」という稀有な顧客接点を活かしきれていない</summary>
+    <div class="details-body">
+      <p>貴社の「修理対応・サイズオーダー対応」は業界でも稀な強みであり、メーカーと顧客が直接やり取りする数少ない正当な場面です。</p>
+      <ul>
+        <li>現状：電話・FAX・代理店経由＋紙の修理伝票が中心と推測</li>
+        <li>使用シーン・購入経路・他の所持商品・満足度などは記録されない</li>
+        <li>修理完了→返送→終わり（次回購入につなげる仕組みなし）</li>
+      </ul>
+      <p>銀行窓口で対応してくれた素敵な担当者の名前を覚えていない感覚に似ています。「いい銀行だった」とは思うが、その後の取引深化につながらない状態です。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ====== CORE STRATEGY ====== -->
+<section id="core">
+  <h2>4. 戦略の核：三層構造への転換</h2>
+  <p class="lead">代理店を「販売チャネル」から「広告兼販売」と再定義し、その先に「顧客リスト基盤」と「直接接点層」を追加します。</p>
+
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart TD
+  classDef maker fill:#0e2a47,color:#fff,stroke:#0e2a47
+  classDef dealer fill:#1f3f63,color:#fff,stroke:#1f3f63
+  classDef customer fill:#dcfce7,color:#0e2a47,stroke:#2e7d51
+  classDef direct fill:#d97706,color:#fff,stroke:#d97706
+  classDef data fill:#7fd3a8,color:#0e2a47,stroke:#2e7d51
+
+  M["阪神素地（メーカー）"]:::maker
+  D["代理店 約690社<br/>＋ ECモール 8チャネル<br/>（広告兼販売）"]:::dealer
+  C["顧客<br/>（リスト化＋LTV最大化）"]:::customer
+  DATA["①顧客データ取得層<br/>QR / 修理 / 保証クラウド"]:::data
+  DR["②直接接点層<br/>修理／カスタム／サブブランド／コミュニティ"]:::direct
+  RP["代理店レポート<br/>（データ還元）"]:::data
+
+  M -->|商品卸| D
+  D -->|販売| C
+  C -.->|自発登録| DATA
+  DATA --> M
+  M -->|アフター・修理・新商品案内| DR
+  DR -.->|お近くの販売店紹介| D
+  M -->|匿名化レポート| RP
+  RP --> D
+    </pre>
+  </div>
+
+  <div class="info-box">
+    ポイント：①の顧客データ取得は代理店との関係を1ミリも侵食しません。②の直接接点も「代理店が扱わない領域」に限定。代理店には<strong>データを還元することで関係がむしろ深まる</strong>設計です。
+  </div>
+</section>
+
+<!-- ====== FIVE PRINCIPLES ====== -->
+<section id="five">
+  <h2>5. 代理店反感ゼロの五箇条</h2>
+  <p class="lead">直接顧客接点を増やす全施策は、必ずこの5原則に従います。社内文書化し、判定基準として運用することを推奨します。</p>
+
+  <div class="principles">
+    <div class="principle">
+      <span class="num">1</span><h4>直販価格 ≧ 代理店推奨小売価格</h4>
+      <p class="rule">価格競合させない</p>
+      <p class="ng">自社サイトで定価20%引きで売る</p>
+      <p class="ok">直販は定価／代理店経由は店ごとセール可</p>
+    </div>
+    <div class="principle">
+      <span class="num">2</span><h4>直販は代理店が扱わない領域に限定</h4>
+      <p class="rule">領域を切り分ける</p>
+      <p class="ng">Amazonで通常商品の直販開始</p>
+      <p class="ok">修理／カスタム／付属品単品／旧モデル等</p>
+    </div>
+    <div class="principle">
+      <span class="num">3</span><h4>顧客に「お近くの販売店」を必ず提示</h4>
+      <p class="rule">紹介戻しを徹底</p>
+      <p class="ng">メルマガで公式ストアCTA</p>
+      <p class="ok">全接点で販売店マップを優先表示</p>
+    </div>
+    <div class="principle">
+      <span class="num">4</span><h4>代理店にデータを還元する</h4>
+      <p class="rule">情報の互恵関係</p>
+      <p class="ng">メーカーがデータを独占</p>
+      <p class="ok">代理店ごとの匿名化レポートを四半期配布</p>
+    </div>
+    <div class="principle">
+      <span class="num">5</span><h4>「メーカー保証」「アフター」を旗印に</h4>
+      <p class="rule">取得目的の正当性</p>
+      <p class="ng">「マーケのために集める」と説明</p>
+      <p class="ok">「品質保証と補修品質向上のため」</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 7 ACTIONS ====== -->
+<section id="actions">
+  <h2>6. 7つの即実行施策（詳細）</h2>
+  <p class="lead">既存B2B卸構造を一切壊さず、6ヶ月以内に着手・1年以内に効果測定できる施策を優先度順に解説します（タブ切替）。</p>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="t1">★★★ 1. 同梱QR</button>
+      <button class="tab-btn" data-tab="t2">★★★ 2. 修理オンライン</button>
+      <button class="tab-btn" data-tab="t3">★★★ 3. 代理店レポート</button>
+      <button class="tab-btn" data-tab="t4">★★ 4. サイズオーダーWeb</button>
+      <button class="tab-btn" data-tab="t5">★★ 5. SNS→メール</button>
+      <button class="tab-btn" data-tab="t6">★★ 6. 保証クラウド</button>
+      <button class="tab-btn" data-tab="t7">★ 7. 故障診断ボット</button>
+    </div>
+
+    <!-- TAB 1 -->
+    <div class="tab-content active" id="t1">
+      <h3>施策1：商品同梱QR「ユーザー登録＋使い方ガイド」</h3>
+      <p>全商品の段ボール内に A6 保証カード＋QRコードを同梱。QR から「3年延長保証＋使い方動画」を提供する代わりに、顧客情報＋お買い上げ店を取得します。</p>
+
+      <div class="story">
+        <h5>📖 お客さんの体験ストーリー</h5>
+        <p>鮎釣り愛好家の佐藤さん（50代・京都）が、地元釣具店「フィッシング山田」でFX-590ウェーダーを購入。帰宅して箱を開けるとA6保証カードを発見。</p>
+        <p>QRをスマホで読み取り、3分で氏名・住所・サイズ・お買い上げ店（プルダウンから「フィッシング山田」選択）を登録。</p>
+        <p>翌週、保証書PDFと使いこなしガイドがメールで届く。1ヶ月後にはメンテナンス動画も。<strong>「メーカーがちゃんと面倒を見てくれる」と好印象</strong>を持ち、次回も阪神素地・フィッシング山田で買おうと思う。</p>
+      </div>
+
+      <details>
+        <summary>代理店「フィッシング山田」から見た景色</summary>
+        <div class="details-body">
+          <ul>
+            <li>売上は1ミリも変わらない（佐藤さんは山田で正価で買った）</li>
+            <li>四半期後、阪神素地から「貴店経由のお客様レポート」が届く</li>
+            <li>「鮎釣り客が4割、リピート率15%」など店舗別客層が見える</li>
+            <li>メーカー側から「鮎釣りシーズン店頭POP」が販促資料として届く</li>
+            <li>「我々を大切にしてくれるメーカーだ」と認識が深まる</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>メーカーの動き（準備・運用・データ）</summary>
+        <div class="details-body">
+          <p><strong>準備期間：30〜60日</strong></p>
+          <ul>
+            <li>LP制作（STUDIO／ペライチ／Shopify）：10〜15万円</li>
+            <li>データベース（kintone月3,000円〜／HubSpot無料／Googleフォーム）</li>
+            <li>A6保証カード印刷：1,000枚で約1万円</li>
+            <li>代理店リスト690社をプルダウン化</li>
+          </ul>
+          <p><strong>運用後にメーカーに集まるデータ：</strong></p>
+          <ul>
+            <li>顧客氏名・住所・サイズ・使用シーン</li>
+            <li>代理店ごとの販売シェア（リアルタイム可視化）</li>
+            <li>商品×サイズ×使用シーンのクロス分析</li>
+            <li>リピート率・買い替えサイクル</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>よくある失敗パターンと対策</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>QR読まれない</strong> → 「3年延長保証」を強訴求（実費負担ほぼゼロ）</li>
+            <li><strong>入力途中で離脱</strong> → 必須項目を5〜6個に絞る</li>
+            <li><strong>代理店が警戒</strong> → 営業が事前に「アフターサービス強化のため」と説明＋レポート提示</li>
+            <li><strong>データが眠る</strong> → 月次レポートの活用先を先に決める</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資（LP・印刷物・DB）</td><td class="num">15〜30万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">5,000〜30,000円</td></tr>
+          <tr><td>1年後の登録顧客リスト</td><td class="num">3,000〜5,000件（想定）</td></tr>
+          <tr><td>1件当たり獲得コスト換算（CAC）</td><td class="num">60〜100円（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div class="tab-content" id="t2">
+      <h3>施策2：修理サービスのオンライン受付窓口</h3>
+      <p>既存の修理サービスをWeb受付化。写真3枚アップロード→見積→決済→集荷→修理→返送までを一気通貫で。代理店には紹介手数料を還元します。</p>
+
+      <div class="story">
+        <h5>📖 お客さんの体験ストーリー</h5>
+        <p>3年使ったウェーダーの膝部分から水漏れし始めた田中さん（60代）。「阪神素地 ウェーダー 修理」で検索→公式サイトの「修理オンライン受付」へ。</p>
+        <p>写真3枚（型番／破損箇所／全体）をアップロード、症状を選択、お客様情報入力。3営業日以内に見積メール（8,000円／納期2週間）。</p>
+        <p>了承ボタン→ヤマト集荷自動依頼→2週間後に修理完了品が返送。同梱の修理レポートに「次回は<strong>お買い上げ店『〇〇釣具店』で500円OFFクーポン</strong>もご利用いただけます」。</p>
+      </div>
+
+      <details>
+        <summary>代理店から見た景色（紹介手数料還元の仕組み）</summary>
+        <div class="details-body">
+          <ul>
+            <li>修理代金の5〜10%を「お買い上げ店紹介手数料」として代理店にバック</li>
+            <li>代理店からすると「うちで売った客の修理が来ると、自動的に手数料が入る」状態</li>
+            <li>代理店自らが「修理は阪神素地公式へ」と顧客に案内するようになる</li>
+            <li>修理経由のリピート購入も代理店に流れる</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>メーカーの動き</summary>
+        <div class="details-body">
+          <p><strong>準備期間：60〜90日</strong></p>
+          <ul>
+            <li>WordPress＋Contact Form 7＋画像アップロードプラグイン（外注30〜50万円）</li>
+            <li>決済システム（Stripe/Square/PayPay、手数料3.6%程度）</li>
+            <li>ヤマトビジネスメンバーズで集荷連携</li>
+            <li>既存修理担当者で運用開始可能</li>
+          </ul>
+          <p><strong>収集データ：</strong>故障パターン（型番×部位×使用年数）、修理者属性、購入経路認知の弱さ指標</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">30〜50万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">5,000〜20,000円</td></tr>
+          <tr><td>1年後の修理受付件数</td><td class="num">500〜1,500件（想定）</td></tr>
+          <tr><td>修理1件平均単価</td><td class="num">5,000〜10,000円</td></tr>
+          <tr><td>修理経由リピート購入率</td><td class="num">20〜30%（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div class="tab-content" id="t3">
+      <h3>施策3：代理店向け「顧客データ還元レポート」</h3>
+      <p>施策1・2で取得したデータを匿名化集計し、代理店ごと四半期レポートを配布。これが <strong>「五箇条 第4条」を担保する反感対策の主役</strong> です。</p>
+
+      <div class="story">
+        <h5>📖 代理店店長の体験ストーリー</h5>
+        <p>営業担当が「フィッシング山田」を訪問。発注業務の合間に：「山田店長、これ、貴店向けの『四半期顧客レポート』です」</p>
+        <p>A4 2ページのレポートには：「貴店経由ユーザー登録42名／推定50代42%・60代33%／鮎釣り67%・渓流21%／上位購入①FX-590・②BC-101・③FX-620／リピート率22%（業界平均超え）／修理紹介手数料4,200円」</p>
+        <p>山田店長：「うちは鮎釣り客に強かったのか！じゃあ鮎タイツ陳列を増やそう」「修理紹介で勝手にお金が入ってる」「<strong>阪神素地さんがここまで支援してくれるとは</strong>」</p>
+      </div>
+
+      <details>
+        <summary>メーカーの運用イメージ</summary>
+        <div class="details-body">
+          <p><strong>準備期間：60〜90日</strong></p>
+          <ul>
+            <li>Excelテンプレ設計（初期5〜10万円）</li>
+            <li>上位50代理店向けβ版作成→反応ヒアリング→改善</li>
+            <li>半年後にBIツール化（Looker Studio無料／Power BI Pro月1,800円）</li>
+          </ul>
+          <p><strong>業務イメージ：</strong>四半期1回、自動生成（テンプレマクロで1代理店あたり数分）。上位50店は営業手渡し＋解説。</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">5〜10万円（Excelのみ）</td></tr>
+          <tr><td>BIツール化（半年後）</td><td class="num">30〜80万円</td></tr>
+          <tr><td>代理店NPS向上見込み</td><td class="num">+15〜25ポイント</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div class="tab-content" id="t4">
+      <h3>施策4：サイズオーダー受付のオンライン化</h3>
+      <p>貴社の希少な強み「サイズオーダー」をWebで採寸・注文できる仕組みに。ただし<strong>受注は代理店経由必須</strong>とすることで、代理店から大歓迎される設計に。</p>
+
+      <div class="story">
+        <h5>📖 お客さんの体験ストーリー</h5>
+        <p>愛知の主婦・木村さん。市販ウェーダーは大きすぎて困っていた。検索でWebサイズオーダーを発見→採寸動画を見ながら入力→「FX-590カスタム 38,000円／納期4週間」。</p>
+        <p>続いて「お近くのお取り扱い店舗からお選びください」→最寄り3店マップ表示→「フィッシング鈴木」選択。</p>
+        <p>翌日、フィッシング鈴木に阪神素地から受注通知FAX。店長から木村さんに電話「ご来店いただけますか？」。木村さんは店舗で支払い、4週間後に受取。<strong>売上は完全に代理店経由</strong>。</p>
+      </div>
+
+      <details>
+        <summary>代理店から見た景色</summary>
+        <div class="details-body">
+          <ul>
+            <li>黙っていてもサイズオーダー客が紹介されてくる</li>
+            <li>採寸ノウハウがない店もメーカー側のガイドで対応可能</li>
+            <li>売上は通常販売と同じ仕組み</li>
+            <li><strong>代理店からは大歓迎施策</strong></li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">30〜50万円</td></tr>
+          <tr><td>1年後のWebサイズオーダー件数</td><td class="num">100〜300件（想定）</td></tr>
+          <tr><td>1件当たり単価</td><td class="num">30,000〜80,000円</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5 -->
+    <div class="tab-content" id="t5">
+      <h3>施策5：YouTube・Instagram→メール登録CTA</h3>
+      <p>既存SNSコンテンツの説明欄に「使い方ガイドPDF無料プレゼント」CTAを追加。フォロワー資産を「メールリスト資産」に転換します。</p>
+
+      <div class="story">
+        <h5>📖 ユーザー体験</h5>
+        <p>釣り初心者の山本さんが公式YouTube「鮎タイツの使い方」視聴。説明欄「初心者向け鮎釣りガイドPDF無料プレゼント」リンクをタップ→簡易登録→PDFと「お近くの取扱店マップ」を即時送付。</p>
+        <p>月2回、阪神素地から新商品案内・メンテ動画・修理サービス案内。<strong>メルマガに直販リンクは含めず</strong>、必ず販売店マップへ誘導。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">5〜15万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">0〜5,000円（Mailchimp無料枠）</td></tr>
+          <tr><td>1年後メルマガ登録数</td><td class="num">1,000〜3,000人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 6 -->
+    <div class="tab-content" id="t6">
+      <h3>施策6：「メーカー保証書」のクラウド化（My阪神素地）</h3>
+      <p>紙の保証書をクラウド化。所持商品全部が一画面で見える「My阪神素地」アカウントを提供。修理・新商品案内が自然に流れる土台になります。</p>
+
+      <details>
+        <summary>会員特典の例</summary>
+        <div class="details-body">
+          <ul>
+            <li>3年保証延長（自動適用）</li>
+            <li>新商品先行案内（直販リンクなし／販売店紹介付き）</li>
+            <li>修理優先受付</li>
+            <li>限定ノベルティ年1回</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">50〜80万円</td></tr>
+          <tr><td>1年後の会員数</td><td class="num">2,000〜5,000人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 7 -->
+    <div class="tab-content" id="t7">
+      <h3>施策7：LINE公式「故障診断・修理ナビ」チャットボット</h3>
+      <p>LINE公式で症状を選ぶと、自己修理動画 or 修理オンライン受付に誘導。修理キットは代理店経由販売とし、代理店に新収益源を提供します。</p>
+
+      <details>
+        <summary>会話フロー例</summary>
+        <div class="details-body">
+          <p>「①故障診断 ②修理依頼 ③使い方相談 ④店舗検索 ⑤新商品情報」<br>
+          ①→「水漏れ／破れ／ファスナー／フェルト剥がれ」<br>
+          水漏れ→「ヒザ／お尻／足首／全体」<br>
+          ヒザ→「ピンホール可能性大。A.自分で直す B.メーカーに依頼」<br>
+          A→修理キット販売店マップ＋自己修理動画／B→施策2の受付フォーム</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">10〜20万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">0〜5,000円</td></tr>
+          <tr><td>1年後LINE友だち数</td><td class="num">1,000〜3,000人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>7施策の総合効果（1年後到達目標）</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>指標</th><th>現状</th><th>1年後目標</th></tr>
+      <tr><td>顧客リスト件数</td><td>0件（推定）</td><td><strong>5,000〜15,000件</strong></td></tr>
+      <tr><td>代理店別売上可視化率</td><td>0%</td><td><strong>上位50店100%／全店70%</strong></td></tr>
+      <tr><td>修理依頼の自社直接受付比率</td><td>推定10%以下</td><td><strong>40%以上</strong></td></tr>
+      <tr><td>メルマガ到達</td><td>0</td><td><strong>3,000人</strong></td></tr>
+      <tr><td>代理店NPS</td><td>不明</td><td><strong>+20以上</strong></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====== MATRIX ====== -->
+<section id="matrix">
+  <h2>7. 優先度4象限マトリクス</h2>
+  <p class="lead">影響度と実行難易度の2軸で全11施策（7即実行＋4中長期）を整理しました。</p>
+
+  <div class="matrix">
+    <div class="y-axis">影響度 低 ←　→ 高</div>
+    <div class="quadrant-grid">
+      <div class="q q1">
+        <span class="q-label">Quick Win</span>
+        <div class="q-title">① 即実行（影響大・易）</div>
+        <span class="chip high">★★★ 1. 同梱QR</span>
+        <span class="chip high">★★★ 2. 修理オンライン</span>
+        <span class="chip high">★★★ 3. 代理店レポート</span>
+      </div>
+      <div class="q q2">
+        <span class="q-label">Strategic</span>
+        <div class="q-title">② 戦略投資（影響大・難）</div>
+        <span class="chip">A. 法人BtoB専門化</span>
+        <span class="chip">C. 越境EC×インバウンド</span>
+        <span class="chip">D. クロロプレンOEM</span>
+      </div>
+      <div class="q q3">
+        <span class="q-label">Fill-in</span>
+        <div class="q-title">③ 充実枠（影響中・易）</div>
+        <span class="chip">4. サイズオーダーWeb</span>
+        <span class="chip">5. SNS→メール</span>
+        <span class="chip">6. 保証クラウド</span>
+      </div>
+      <div class="q q4">
+        <span class="q-label">Reserve</span>
+        <div class="q-title">④ 様子見（影響小・難）</div>
+        <span class="chip">7. 故障診断ボット</span>
+        <span class="chip">B. サブブランドD2C</span>
+        <span class="chip">E. ペット・体験事業</span>
+      </div>
+    </div>
+    <div class="x-axis">実行難易度 易 ←　→ 難</div>
+  </div>
+
+  <div class="info-box">
+    <strong>推奨着手順序：</strong>①Quick Win（30〜90日） → ③Fill-in（4〜6ヶ月） → ②Strategic（6ヶ月以降） → ④Reserve（1年以降検討）
+  </div>
+</section>
+
+<!-- ====== FLOW ====== -->
+<section id="flow">
+  <h2>8. 顧客体験フロー図（施策1の例）</h2>
+  <p class="lead">最優先施策「同梱QR」を題材に、顧客・代理店・メーカーの動きをフロー化します。</p>
+
+  <div class="flow-wrap">
+    <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant C as 顧客（佐藤さん）
+  participant D as 代理店（フィッシング山田）
+  participant M as メーカー（阪神素地）
+  participant DB as 顧客データベース
+
+  D->>C: 阪神素地ウェーダーを販売（正価）
+  C->>C: 帰宅して開梱→A6保証カード発見
+  C->>M: QR読込→3分でユーザー登録<br/>（氏名・住所・サイズ・お買い上げ店）
+  M->>DB: データ蓄積
+  M->>C: 保証書PDF＋使い方動画リンクをメール
+  Note over M,C: 1ヶ月後：メンテ動画／新商品案内（販売店マップ付）
+  M->>D: 四半期レポート配布<br/>「貴店経由○○名／鮎釣り客層強い／販促提案」
+  D->>D: 鮎タイツ陳列強化→翌期売上アップ
+  C->>D: 次回購入もフィッシング山田で
+    </pre>
+  </div>
+
+  <div class="info-box">
+    重要：QR登録時に「お買い上げ店」をプルダウン必須にすることで、代理店ごとの顧客分布が見える化されます。これが施策3（代理店レポート）の入力データになります。
+  </div>
+</section>
+
+<!-- ====== ROI ====== -->
+<section id="roi">
+  <h2>9. 投資対効果（ROI）シミュレーション</h2>
+  <p class="lead">7施策すべて実施した場合の投資額と、1年後の顧客リスト・売上ポテンシャルを試算します（想定値・要検証）。</p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>総初期投資</h4>
+      <div class="stat">150〜300<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">7施策フル実施時</div>
+    </div>
+    <div class="card">
+      <h4>月次運用コスト</h4>
+      <div class="stat">5〜20<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">継続費</div>
+    </div>
+    <div class="card accent">
+      <h4>年間売上ポテンシャル</h4>
+      <div class="stat">2,500<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">リスト1万件×LTV5万円×5%</div>
+    </div>
+  </div>
+
+  <details>
+    <summary>ROI試算の前提（クリックで詳細）</summary>
+    <div class="details-body">
+      <ul>
+        <li><strong>リスト構築：</strong>施策1の同梱QR（月300〜500件）＋施策2修理（月50〜100件）＋施策5メール（月100〜250件）＋施策7LINE（月100〜200件）の合算</li>
+        <li><strong>LTV 5万円：</strong>業界平均ウェーダー単価＋付属品＋次回買い替えサイクル4〜5年を踏まえた仮値</li>
+        <li><strong>リピート転換率5%：</strong>業界一般的なメールマーケ平均（メーカー直販誘導率ではなく代理店送客含む）</li>
+        <li><strong>副次効果：</strong>代理店NPS向上による発注継続率改善、商品開発の精度向上、新セグメント（介護・防災）への提案精度向上</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ====== ROADMAP ====== -->
+<section id="roadmap">
+  <h2>10. 12ヶ月ロードマップ</h2>
+  <p class="lead">即実行3施策から始め、6ヶ月で基盤構築、その後に中長期視点へ広げる段階的アプローチを提案します。</p>
+
+  <div class="roadmap">
+    <div class="row header">
+      <div class="row-label"></div>
+      <div class="row-bar">
+        <div>M1</div><div>M2</div><div>M3</div><div>M4</div><div>M5</div><div>M6</div>
+        <div>M7</div><div>M8</div><div>M9</div><div>M10</div><div>M11</div><div>M12</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-label">五箇条社内承認</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/2">承認</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策1：同梱QR</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/3">設計</div><div class="seg" style="grid-column:3/13">パイロット→本格運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策2：修理オンライン</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/3">設計</div><div class="seg" style="grid-column:3/13">本格運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策3：代理店レポート</div>
+      <div class="row-bar"><div class="seg" style="grid-column:2/4">β版</div><div class="seg" style="grid-column:4/13">配布拡大</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策4：サイズオーダーWeb</div>
+      <div class="row-bar"><div class="seg blue" style="grid-column:3/5">設計</div><div class="seg blue" style="grid-column:5/13">運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策5・7：SNS→メール／LINE</div>
+      <div class="row-bar"><div class="seg blue" style="grid-column:2/5">立ち上げ</div><div class="seg blue" style="grid-column:5/13">継続運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策6：保証クラウド</div>
+      <div class="row-bar"><div class="seg blue" style="grid-column:5/8">構築</div><div class="seg blue" style="grid-column:8/13">運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">視点A：法人BtoB</div>
+      <div class="row-bar"><div class="seg orange" style="grid-column:7/13">専任配置→自治体／JAアプローチ</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">視点C：越境EC</div>
+      <div class="row-bar"><div class="seg orange" style="grid-column:8/13">ASIAN PORTAL接続／インバウンド連携</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">視点D：OEM受託拡大</div>
+      <div class="row-bar"><div class="seg orange" style="grid-column:9/13">提案書作成→打診</div></div>
+    </div>
+  </div>
+
+  <p class="muted" style="margin-top:12px">緑＝最優先即実行／紺＝強化施策／オレンジ＝中長期戦略投資</p>
+</section>
+
+<!-- ====== SUPPORT ====== -->
+<section id="support">
+  <h2>11. 支援内容イメージ</h2>
+  <p class="lead">阪神素地様のリソースを最大限活かしつつ、AI＆データ領域を中心に伴走支援します。</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>フェーズ</th><th>内容</th><th>支援領域</th></tr>
+      <tr><td>Month 1</td><td>戦略合意・五箇条社内承認・QR同梱パイロット設計</td><td>経営層WS／LP制作支援／印刷物デザイン</td></tr>
+      <tr><td>Month 2-3</td><td>QR同梱本格運用／修理オンライン化開発／代理店レポートβ</td><td>Webフォーム実装／HubSpot・kintone導入支援／レポートテンプレ作成</td></tr>
+      <tr><td>Month 4-6</td><td>5施策本格運用／法人BtoB営業ツール整備</td><td>データ可視化AIエージェント／法人提案書テンプレ作成</td></tr>
+      <tr><td>Month 7-12</td><td>越境EC打診／OEM提案書作成／サブブランドLP</td><td>海外EC接続支援／OEM資料制作／Shopify構築</td></tr>
+      <tr><td>Year 2</td><td>データ活用フェーズ</td><td>AI需要予測モデル／顧客インサイトレポート</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====== SOURCES ====== -->
+<section id="sources">
+  <h2>12. 出典・エビデンス一覧</h2>
+  <p class="lead">本提言の数値根拠は、すべて公開情報に基づきます。推定値・想定値はその旨を明記しています。</p>
+
+  <details>
+    <summary>📊 市場・統計データ</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.jpc-net.jp/research/detail/007085.html" target="_blank" rel="noopener">日本生産性本部「レジャー白書2024」（2023年釣り参加人口510万人）</a></li>
+        <li><a href="https://www.jpc-net.jp/research/assets/pdf/app_2024_leisure_pre.pdf" target="_blank" rel="noopener">レジャー白書2024 速報資料（公式PDF）</a></li>
+        <li><a href="https://baysidecouncil.net/archives/7769" target="_blank" rel="noopener">釣り人口・釣り市場の長期推移（リアルフィッシングカウンシル）</a></li>
+        <li><a href="https://baysidecouncil.net/archives/7859" target="_blank" rel="noopener">日本の釣り・釣具業界市場規模（〜2024年）</a></li>
+        <li><a href="https://www.bowinsgarmentfactory.com/industry-trends/top-10-global-womens.html" target="_blank" rel="noopener">グローバル女性釣りアパレル市場46.8億ドル（年8.2%成長）</a></li>
+        <li><a href="https://www8.cao.go.jp/kourei/whitepaper/w-2025/html/zenbun/s1_1_1.html" target="_blank" rel="noopener">内閣府「高齢社会白書」（65歳以上人口3,653万人）</a></li>
+        <li><a href="https://www.maff.go.jp/j/kobetu_ninaite/251225_meguzi.pdf" target="_blank" rel="noopener">農水省「農業経営をめぐる情勢について」（基幹的農業従事者102万人）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🛒 ECモール出品状況（2026-05 実調査）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.askul.co.jp/m/4006001-40060010242/" target="_blank" rel="noopener">アスクル 阪神素地（781品）</a></li>
+        <li><a href="https://www.monotaro.com/s/b-5665/" target="_blank" rel="noopener">モノタロウ 阪神素地（177品）</a></li>
+        <li><a href="https://www.amazon.co.jp/s?rh=n%3A15683161%2Cp_4%3A%E9%98%AA%E7%A5%9E%E7%B4%A0%E5%9C%B0" target="_blank" rel="noopener">Amazon.co.jp 阪神素地</a></li>
+        <li><a href="https://search.rakuten.co.jp/search/mall/%E3%82%A6%E3%82%A7%E3%83%BC%E3%83%80%E3%83%BC+%E9%98%AA%E7%A5%9E%E7%B4%A0%E5%9C%B0/" target="_blank" rel="noopener">楽天市場 阪神素地ウェーダー（2,818件）</a></li>
+        <li><a href="https://jp.misumi-ec.com/vona2/maker/hanshin_shaving/fs_health/T3700000000/T3705000000/?Page=1" target="_blank" rel="noopener">ミスミ 阪神素地</a></li>
+        <li><a href="https://www.naturum.co.jp/search/?mode=brand&makercode=294" target="_blank" rel="noopener">ナチュラム 阪神素地</a></li>
+        <li><a href="https://www.yodobashi.com/maker/0000020237/" target="_blank" rel="noopener">ヨドバシ.com 阪神素地</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏢 公式・一次情報</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://hanshinkiji.co.jp/" target="_blank" rel="noopener">阪神素地株式会社 公式サイト</a></li>
+        <li><a href="https://hanshinkiji.co.jp/company/" target="_blank" rel="noopener">会社案内（従業員21人・代理店約690社）</a></li>
+        <li><a href="https://info.gbiz.go.jp/hojin/ichiran?hojinBango=5140001044168" target="_blank" rel="noopener">gBizINFO（防衛省調達実績・全省庁統一資格）</a></li>
+        <li><a href="https://www.resona-gr.co.jp/holdings/news/info/detail/20230331_2953.html" target="_blank" rel="noopener">りそな事業承継ファンド投資リリース（2023-03）</a></li>
+        <li><a href="https://www.facebook.com/hanshinkiji/" target="_blank" rel="noopener">公式 Facebook</a></li>
+        <li><a href="https://www.instagram.com/hanshinkiji_official/" target="_blank" rel="noopener">公式 Instagram</a></li>
+        <li><a href="https://www.youtube.com/channel/UCXGAOj5OkOo4_O4VvfnZhkg" target="_blank" rel="noopener">公式 YouTube チャンネル</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🌏 海外・越境EC・インバウンド</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://fishing.asian-portal.shop/merchants.html" target="_blank" rel="noopener">ASIAN PORTAL FISHING（日本釣具300社越境EC・初年度5億円目標）</a></li>
+        <li><a href="https://pallu.jp/ec/China-Fishing-gear.html" target="_blank" rel="noopener">中国越境EC・若年層釣りブーム</a></li>
+        <li><a href="https://www.veltra.com/jp/japan/ctg/168685:%E9%87%A3%E3%82%8A/" target="_blank" rel="noopener">VELTRA インバウンド釣り体験</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🥾 競合・周辺市場</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://my-best.com/1766" target="_blank" rel="noopener">介護シューズ市場・主要メーカー比較</a></li>
+        <li><a href="https://my-best.com/6182" target="_blank" rel="noopener">農業女子向け長靴ブランド（のらスタイル・フーソレイユ等）</a></li>
+        <li><a href="https://deallab.info/fishing-equipment/" target="_blank" rel="noopener">釣り具・フィッシングメーカー世界市場シェア</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="info-box" style="margin-top:20px">
+    <strong>数値の取り扱いについて：</strong>市場規模・人口統計などは公的データを引用。顧客リスト件数・ROI試算など「想定」「見込み」と明記している数値は、業界平均と他社事例を参考にしたKaiの推計です。実行前にパイロット運用で検証することを推奨します。
+  </div>
+</section>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <p>阪神素地株式会社 販路拡大アドバイザリー v3 詳細版</p>
+  <p>2026-05-27</p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料は阪神素地株式会社様への独立アドバイザリー資料です。第三者への共有はお控えください。</p>
+</footer>
+
+<script>
+// ===== TABS =====
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  });
+});
+
+// ===== CHART: EC channels =====
+const ctxE=document.getElementById('chartEC');
+new Chart(ctxE,{
+  type:'bar',
+  data:{
+    labels:['アスクル','モノタロウ','楽天市場','Amazon','ナチュラム','ミスミ','ヨドバシ','岡野釣具'],
+    datasets:[{
+      label:'掲載アイテム数',
+      data:[781,177,2818,200,300,150,100,80],
+      backgroundColor:['#0e2a47','#1f3f63','#2e7d51','#d97706','#7fd3a8','#1f3f63','#0e2a47','#2e7d51'],
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    indexAxis:'y',
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.x+'品（'+(c.label==='楽天市場'||c.label==='Amazon'||c.label==='ナチュラム'||c.label==='ミスミ'||c.label==='ヨドバシ'||c.label==='岡野釣具'?'参考値':'実数')+'）'}}
+    },
+    scales:{x:{beginAtZero:true,ticks:{callback:v=>v+'品'}}}
+  }
+});
+
+// ===== MERMAID =====
+mermaid.initialize({
+  startOnLoad:true,
+  theme:'default',
+  themeVariables:{
+    fontFamily:'Noto Sans JP, sans-serif',
+    primaryColor:'#0e2a47',
+    primaryTextColor:'#fff',
+    primaryBorderColor:'#0e2a47',
+    lineColor:'#2e7d51',
+    secondaryColor:'#7fd3a8',
+    tertiaryColor:'#eef4f1'
+  },
+  flowchart:{useMaxWidth:true,htmlLabels:true},
+  sequence:{useMaxWidth:true,actorMargin:50,boxMargin:10}
+});
+</script>
+
+</body>
+</html>

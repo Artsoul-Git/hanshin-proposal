@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阪神素地株式会社 提案書ポータル</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:linear-gradient(135deg,#0e2a47 0%,#1f3f63 50%,#2e7d51 100%);
+  min-height:100vh;color:#1a1a1a;line-height:1.7;
+  padding:clamp(20px,4vw,40px);
+}
+.container{max-width:900px;margin:0 auto}
+.header{
+  text-align:center;color:#fff;
+  padding:clamp(30px,5vw,60px) 0;
+}
+.header h1{
+  font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;
+  margin-bottom:12px;line-height:1.4;
+}
+.header p{font-size:clamp(0.9rem,1.6vw,1.05rem);opacity:0.9}
+.cards{
+  display:grid;gap:clamp(16px,3vw,24px);
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  margin-top:clamp(20px,4vw,40px);
+}
+.card{
+  background:#fff;border-radius:16px;
+  padding:clamp(20px,3vw,32px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+  transition:transform 0.2s,box-shadow 0.2s;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  border-top:6px solid #2e7d51;
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
+.card.workman{border-top-color:#ea580c}
+.card .tag{
+  display:inline-block;
+  padding:4px 12px;border-radius:12px;
+  font-size:0.72rem;font-weight:700;
+  background:#eef4f1;color:#2e7d51;
+  margin-bottom:16px;width:fit-content;
+}
+.card.workman .tag{background:#fff7ed;color:#ea580c}
+.card h2{
+  font-size:clamp(1.1rem,2vw,1.3rem);font-weight:900;
+  color:#0e2a47;margin-bottom:12px;line-height:1.4;
+}
+.card p{font-size:0.9rem;color:#444;margin-bottom:16px;flex:1}
+.card .meta{
+  display:flex;gap:8px;flex-wrap:wrap;
+  font-size:0.75rem;color:#666;margin-bottom:16px;
+}
+.card .meta span{background:#f5f7fa;padding:3px 8px;border-radius:4px}
+.card .btn{
+  display:inline-block;padding:12px 20px;
+  background:#2e7d51;color:#fff;text-align:center;
+  border-radius:8px;font-weight:700;font-size:0.95rem;
+  transition:background 0.2s;
+}
+.card.workman .btn{background:#ea580c}
+.card:hover .btn{background:#0e2a47}
+.footer{
+  text-align:center;color:#fff;opacity:0.7;
+  margin-top:clamp(30px,5vw,60px);font-size:0.8rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0e2a47 0%,#1f3f63 60%,#2e7d51 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地株式会社 提案書ポータル</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('hanshin_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('hanshin_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<div class="container">
+  <div class="header">
+    <h1>阪神素地株式会社<br>販路拡大アドバイザリー</h1>
+    <p>2026-05-27 ／ 2つの提案書からお選びください</p>
+  </div>
+
+  <div class="cards">
+    <a href="proposal.html" class="card">
+      <span class="tag">提案書 ①</span>
+      <h2>「卸ルート＝広告投資」<br>と再定義する販路拡大戦略</h2>
+      <p>既存B2B卸構造を維持しつつ、顧客リスト基盤を構築する6視点・7施策アドバイザリー。現状分析・代理店反感ゼロの五箇条・即実行施策まで。</p>
+      <div class="meta">
+        <span>現状の可視化</span>
+        <span>低コスト即実行</span>
+        <span>代理店反感ゼロ</span>
+      </div>
+      <span class="btn">提案書を開く →</span>
+    </a>
+
+    <a href="proposal_workman.html" class="card workman">
+      <span class="tag">提案書 ②</span>
+      <h2>ワークマン戦略転用<br>5路線販路拡大ロードマップ</h2>
+      <p>ワークマン成功戦略10カ条の多視点解析と、阪神素地への転用5路線（国内3＋国外2）。ペルソナ・インサイト・戦略・戦術まで言語化。</p>
+      <div class="meta">
+        <span>ワークマン10カ条</span>
+        <span>5路線×ペルソナ</span>
+        <span>4象限マトリクス</span>
+      </div>
+      <span class="btn">提案書を開く →</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>本資料は阪神素地株式会社様への限定公開資料です</p>
+    <p style="margin-top:6px">無断転載・第三者共有はお控えください</p>
+  </div>
+</div>
+
+</body>
+</html>
