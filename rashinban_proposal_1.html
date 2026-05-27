@@ -613,6 +613,86 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 .fl-prompt-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.4); }
 .fl-prompt-btn.copied { background: linear-gradient(135deg, #059669, #10b981); }
 
+/* ============================================================
+   v6 追加：現在ビューのみ印刷／テーマピル説明ツールチップ／コアイシュー表示
+   ============================================================ */
+/* テーマピル：ホバー時に概要説明を下に表示 */
+.t-pills { position: relative; padding-bottom: 4px; }
+.t-pill { position: relative; }
+.t-pill[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  width: 320px;
+  max-width: 90vw;
+  text-align: left;
+  line-height: 1.7;
+  z-index: 100;
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+  letter-spacing: 0.01em;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 1;
+}
+.t-pill[data-tip]:hover::before {
+  content: '';
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-bottom-color: #1e293b;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* 浮動Kaiパネル非表示（汎用化のため） */
+#kai-float { display: none !important; }
+
+/* マトリクスのコアイシュー＋最優先アクション枠（ワンポイントアドバイスの下） */
+.mx-core {
+  margin-top: 12px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 600px) { .mx-core { grid-template-columns: 1fr; } }
+.mx-core-block { padding: 8px 0; }
+.mx-core-lbl {
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.mx-core-lbl.issue { color: var(--danger); }
+.mx-core-lbl.prio  { color: var(--success); }
+.mx-core-tx { font-size: 14px; color: var(--text); line-height: 1.75; }
+
+/* 印刷：現在表示中のビューのみ */
+@media print {
+  /* 全view非表示にしてから .view.on のみ表示 */
+  .view { display: none !important; page-break-after: avoid !important; }
+  .view.on { display: block !important; page-break-after: avoid !important; max-width: 100% !important; padding: 0 !important; }
+  /* テーマピルツールチップを印刷で消す */
+  .t-pill[data-tip]:hover::after, .t-pill[data-tip]:hover::before { display: none !important; }
+  /* プロンプトアコーディオンも印刷時は閉じる扱い */
+  .fl-prompt summary { background: #f1f5f9 !important; }
+  .fl-prompt:not([open]) .fl-prompt-body { display: none !important; }
+}
+
 /* MOBILE フォント保持 */
 @media (max-width: 600px) {
   html body { font-size: 15px !important; }
@@ -758,7 +838,7 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
   <div class="kai-card">
     <div class="kai-hdr">
       <div class="kai-av">K</div>
-      <div><div class="kai-nm">Kai — ストラテジックコンサルタント</div><div class="kai-rl">あなたの目標達成を最短距離で実現する</div></div>
+      <div><div class="kai-nm">分析サマリー</div><div class="kai-rl">目標達成までの構造と最短ルート</div></div>
     </div>
     <div class="kai-sum" id="kSum"></div>
     <div class="kai-verd" id="kVerd"></div>
@@ -795,8 +875,18 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
     </div>
   </div>
   <div class="mx-kai" id="mxKai" style="display:none;">
-    <div class="mk-lbl">🧭 Kai アドバイス</div>
+    <div class="mk-lbl">💡 ワンポイントアドバイス</div>
     <div id="mxKaiTx"></div>
+    <div class="mx-core" id="mxCore" style="display:none;">
+      <div class="mx-core-block">
+        <div class="mx-core-lbl issue">🎯 コアイシュー</div>
+        <div class="mx-core-tx" id="mxCoreIssue"></div>
+      </div>
+      <div class="mx-core-block">
+        <div class="mx-core-lbl prio">⚡ 最優先アクション</div>
+        <div class="mx-core-tx" id="mxTopPrio"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -816,7 +906,7 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
   </div>
   <div class="fl-steps" id="flSteps"></div>
   <div class="fl-kai" id="flKai" style="display:none;">
-    <div class="fk-lbl">🧭 Kai アドバイス</div>
+    <div class="fk-lbl">💡 ワンポイントアドバイス</div>
     <div class="fk-tx" id="flKaiTx"></div>
   </div>
 </div>
@@ -1462,6 +1552,9 @@ function renderMatrix(ti) {
     const col=t.color||TC[i];
     const p=document.createElement('div'); p.className='t-pill'+(i===ti?' on':'');
     p.style.background=col; p.textContent=t.name;
+    const insight=(DATA.kai && DATA.kai.themeInsights||[]).find(x=>x.index===i);
+    const tip=(insight && insight.insight) || t.description || '';
+    if(tip) p.setAttribute('data-tip', tip);
     p.onclick=()=>renderMatrix(i); pp.appendChild(p);
   });
 
@@ -1494,10 +1587,19 @@ function renderMatrix(ti) {
     g.appendChild(d);
   });
 
-  if(mx.kaiInsight){
+  const hasInsight=!!mx.kaiInsight;
+  const hasCore=DATA.kai && (DATA.kai.coreIssue || DATA.kai.topPriority);
+  if(hasInsight){
     document.getElementById('mxKaiTx').textContent=mx.kaiInsight;
-    document.getElementById('mxKai').style.display='block';
-  } else { document.getElementById('mxKai').style.display='none'; }
+  } else {
+    document.getElementById('mxKaiTx').textContent='';
+  }
+  if(hasCore){
+    document.getElementById('mxCoreIssue').textContent=(DATA.kai.coreIssue||'—');
+    document.getElementById('mxTopPrio').textContent=(DATA.kai.topPriority||'—');
+    document.getElementById('mxCore').style.display='grid';
+  } else { document.getElementById('mxCore').style.display='none'; }
+  document.getElementById('mxKai').style.display=(hasInsight||hasCore)?'block':'none';
 }
 
 /* ================================================================
