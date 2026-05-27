@@ -681,6 +681,29 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 .mx-core-lbl.prio  { color: var(--success); }
 .mx-core-tx { font-size: 14px; color: var(--text); line-height: 1.75; }
 
+/* ============================================================
+   v7 追加：ツールチップ最前面化／マンダラ3×3グループ間隔／レジェンド削除
+   ============================================================ */
+/* ツールチップが他要素の下に潜らないように親のoverflowを開放＋最前面 */
+.tabs, .view, .card, .mx-wrap, .mx-inner, .t-pills { overflow: visible !important; }
+.t-pill { z-index: 1; }
+.t-pill:hover { z-index: 1000; }
+.t-pill[data-tip]:hover::after,
+.t-pill[data-tip]:hover::before { z-index: 9999 !important; }
+
+/* マンダラ：3×3グループごとに視覚的な隙間 */
+.m-grid .mc:nth-child(9n+3),
+.m-grid .mc:nth-child(9n+6) {
+  margin-right: 7px;
+}
+.m-grid .mc:nth-child(n+19):nth-child(-n+27),
+.m-grid .mc:nth-child(n+46):nth-child(-n+54) {
+  margin-bottom: 7px;
+}
+
+/* マンダラページ下の9個ボタン（レジェンド）削除 */
+.m-legend, #mLeg { display: none !important; }
+
 /* 印刷：現在表示中のビューのみ */
 @media print {
   /* 全view非表示にしてから .view.on のみ表示 */
@@ -867,13 +890,6 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
     <span class="cur" id="mxBcTh">マトリクス</span>
   </div>
   <div class="t-pills" id="tPills"></div>
-  <div class="mx-wrap">
-    <div class="mx-ay" id="mxAy">重要度 ↑</div>
-    <div class="mx-inner">
-      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
-      <div class="mx-ax" id="mxAx">→ 緊急度</div>
-    </div>
-  </div>
   <div class="mx-kai" id="mxKai" style="display:none;">
     <div class="mk-lbl">💡 ワンポイントアドバイス</div>
     <div id="mxKaiTx"></div>
@@ -886,6 +902,13 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
         <div class="mx-core-lbl prio">⚡ 最優先アクション</div>
         <div class="mx-core-tx" id="mxTopPrio"></div>
       </div>
+    </div>
+  </div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度 ↑</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">→ 緊急度</div>
     </div>
   </div>
 </div>
@@ -1432,20 +1455,60 @@ function go(name, tabEl) {
 
 function goMatrix(ti) { curTheme = ti; go('matrix', null); }
 function goFlow(ti, qid, itemTx) {
-  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx)
-           || DATA.flows.find(f => f.themeIndex === ti)
-           || DATA.flows[0];
+  // exact match のみ：選択された具体的なアクションに対応するフローを探す
+  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx);
   const th = DATA.mandala.themes[ti];
   document.getElementById('flBcTh').textContent = th ? th.name : 'マトリクス';
   document.getElementById('flBcIt').textContent = itemTx || 'フロー';
   document.getElementById('flCtx').textContent = itemTx;
-  if (fl) { renderFlow(fl); }
-  else {
-    document.getElementById('flEmpty').style.display = 'block';
-    document.getElementById('flSteps').innerHTML = '';
-    document.getElementById('flKai').style.display = 'none';
+  if (fl) {
+    renderFlow(fl);
+  } else {
+    renderDynamicFlow(ti, qid, itemTx);
   }
   go('flow', null);
+}
+
+function renderDynamicFlow(ti, qid, itemTx) {
+  const th=DATA.mandala.themes[ti];
+  const mx=DATA.matrices[ti];
+  const quad=mx?mx.quadrants.find(q=>q.id===qid):null;
+  const item=quad?quad.items.find(i=>i.text===itemTx):null;
+  document.getElementById('flEmpty').style.display='none';
+  const con=document.getElementById('flSteps'); con.innerHTML='';
+  if(item){
+    const fakeStep={
+      order:1,
+      title:item.text,
+      description:item.detail||'このアクションの詳細フロー（複数ステップ）は未構築です。下の「🪄 詳細フロー作成プロンプト」を外部AIに投げると、Mermaid形式のフロー図＋実行ステップ＋チェックリスト＋リカバリープランが得られます。',
+      type:'action',
+      duration:'要見積',
+      output:'要定義',
+      kaiHint:'実行前の3チェック：①担当者と期限は決まったか／②必要リソース（人・予算・ツール）は確保したか／③完了基準（成果物）は明確か'
+    };
+    const si=SICO[fakeStep.type]||SICO.action;
+    const d=document.createElement('div'); d.className='fl-step';
+    const quadCls=quad?(quad.pos==='tr'?'fb-wrn':quad.pos==='tl'?'fb-act':quad.pos==='br'?'fb-dec':'fb-out'):'fb-dur';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card">
+        <div class="fl-ord">STEP ${fakeStep.order}</div>
+        <div class="fl-title">${fakeStep.title}</div>
+        <div class="fl-desc">${fakeStep.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${th?`<span class="fbg fb-dur">📂 ${th.name}</span>`:''}
+          ${quad?`<span class="fbg ${quadCls}">${quad.label||''}</span>`:''}
+        </div>
+        <div class="fl-hint">${fakeStep.kaiHint}</div>
+        ${buildFlowPromptHTML(fakeStep)}
+      </div>`;
+    con.appendChild(d);
+  } else {
+    con.innerHTML='<div class="empty-s"><div class="empty-s-i">→</div><div>項目情報が見つかりません</div></div>';
+  }
+  document.getElementById('flKaiTx').textContent=th?`「${th.name}」のテーマから選択したアクションです。下記プロンプトを Claude / ChatGPT / Gemini に投げると、詳細なフロー図と実行手順がその場で生成できます。`:'';
+  document.getElementById('flKai').style.display='block';
 }
 
 /* ================================================================
