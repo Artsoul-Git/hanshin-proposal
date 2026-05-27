@@ -704,6 +704,78 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 /* マンダラページ下の9個ボタン（レジェンド）削除 */
 .m-legend, #mLeg { display: none !important; }
 
+/* ============================================================
+   v8 追加：用語UX／Phase実行フェーズ／ガント細線／ktag濃く／ピル濃く
+   ============================================================ */
+/* 分析サマリーの強み・リスク帯：背景濃く文字も濃く */
+.ktag.ok {
+  background: #d1fae5 !important;
+  color: #065f46 !important;
+  border: 1px solid rgba(5,150,105,.3) !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+}
+.ktag.ng {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  border: 1px solid rgba(220,38,38,.30) !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+}
+
+/* 分析サマリーのアイコン（K→📊絵文字） */
+.kai-av {
+  background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+  font-size: 18px !important;
+}
+
+/* テーマピル：非選択も読みやすい濃度に */
+.t-pill { opacity: 0.78 !important; }
+.t-pill.on { opacity: 1 !important; }
+.t-pill:hover { opacity: 1 !important; }
+
+/* ガント：週ごとの縦線＋行間の薄い横線 */
+.gt-bars {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(148,163,184,0) 0, rgba(148,163,184,0) calc(100% / 24 - 1px), rgba(148,163,184,.25) calc(100% / 24 - 1px), rgba(148,163,184,.25) calc(100% / 24));
+  background-size: calc(100% / 24 * 4) 100%;
+}
+.gt-bars::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(148,163,184,0) 0, rgba(148,163,184,0) calc(100% / 24 - 1px), rgba(148,163,184,.12) calc(100% / 24 - 1px), rgba(148,163,184,.12) calc(100% / 24));
+  background-size: calc(100% / 24) 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.gt-bar { z-index: 1; }
+.gt-row { border-bottom: 1px dashed rgba(148,163,184,.2); padding: 1px 0; }
+.gt-row:last-child { border-bottom: none; }
+
+/* Phase に flow直行タスクが含まれることを示す「実行フェーズ」バッジ */
+.gt-exec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 14px;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: 0 2px 8px rgba(37,99,235,.28);
+  vertical-align: middle;
+  text-transform: none;
+}
+.gt-exec-badge::before { content: "▶"; font-size: 9px; }
+
 /* 印刷：現在表示中のビューのみ */
 @media print {
   /* 全view非表示にしてから .view.on のみ表示 */
@@ -860,7 +932,7 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
   </div>
   <div class="kai-card">
     <div class="kai-hdr">
-      <div class="kai-av">K</div>
+      <div class="kai-av">📊</div>
       <div><div class="kai-nm">分析サマリー</div><div class="kai-rl">目標達成までの構造と最短ルート</div></div>
     </div>
     <div class="kai-sum" id="kSum"></div>
@@ -965,7 +1037,7 @@ const DATA = {
   meta: {
     theme:        "ワークマン戦略転用5路線 — 客層拡大の構造分解",
     background:   "ワークマンは『建設職人2040年に2-3割減』の構造的縮小から、客層拡大とPB集中で年商1,752億円規模に成長（2018年比2.2倍）。阪神素地様も同じ構造的縮小（釣り人口-75%）に直面しつつ、独自のブルーオーシャン『水辺×足元×現場機能』を保有。WMの成功原則を5路線（国内3＋国外2）に転用する。",
-    targetPeriod: "24ヶ月（パイロット6ヶ月＋本格展開18ヶ月）",
+    targetPeriod: "24ヶ月（先行運用6ヶ月＋本格展開18ヶ月）",
     constraints:  "従業員21人の小規模組織／既存B2B卸構造を壊さない／2年累計投資1,600万円以内",
     createdAt:    "2026-05-27"
   },
@@ -1794,7 +1866,9 @@ function renderGantt() {
 
   g.phases.forEach(ph=>{
     const pl=document.createElement('div'); pl.className='gt-phase';
-    pl.textContent=ph.name; con.appendChild(pl);
+    const hasFlow=(ph.tasks||[]).some(t=>t.linkTo&&t.linkTo.type==='flow');
+    pl.innerHTML=ph.name+(hasFlow?'<span class="gt-exec-badge">実行フェーズ・詳細手順あり</span>':'');
+    con.appendChild(pl);
     ph.tasks.forEach(task=>{
       const row=document.createElement('div'); row.className='gt-row';
       const nm=document.createElement('div'); nm.className='gt-name';
