@@ -456,6 +456,163 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 .gt-bar:hover { opacity: 0.85; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
 .gt-bar.ms { cursor: pointer !important; }
 
+/* ============================================================
+   v5 追加：マンダラ3行制限／軸ラベル再設計／プロンプトUI
+   ============================================================ */
+/* マンダラ：横長微調整＋3行制限 */
+.m-grid { aspect-ratio: 16/10 !important; max-width: 1180px !important; }
+.mc.item {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  word-break: break-word;
+  text-overflow: ellipsis;
+}
+
+/* マトリクス Y軸ラベル：縦書き解除＋3パーツ縦並び（高→重要度→低） */
+.mx-ay {
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 15px !important;
+  padding: 14px 6px !important;
+  background: linear-gradient(180deg, rgba(239,68,68,.10) 0%, transparent 50%, rgba(37,99,235,.10) 100%) !important;
+  border-radius: 12px !important;
+  min-width: 76px !important;
+  gap: 8px !important;
+  line-height: 1.4 !important;
+}
+.mx-ay .ax-pole {
+  font-weight: 800 !important;
+  color: var(--text) !important;
+  font-size: 14.5px !important;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+.mx-ay .ax-pole.high { color: #b91c1c !important; }
+.mx-ay .ax-pole.low { color: #1d4ed8 !important; }
+.mx-ay .ax-label {
+  writing-mode: vertical-lr !important;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  color: #ffffff !important;
+  padding: 12px 7px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 0 2px 6px rgba(99,102,241,.3);
+}
+
+/* マトリクス X軸ラベル：3パーツ横並び（低←緊急度→高） */
+.mx-ax {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 15px !important;
+  padding: 12px 18px !important;
+  background: linear-gradient(90deg, rgba(37,99,235,.10) 0%, transparent 50%, rgba(239,68,68,.10) 100%) !important;
+  border-radius: 12px !important;
+  margin-top: 12px !important;
+  gap: 16px !important;
+}
+.mx-ax .ax-pole {
+  font-weight: 800 !important;
+  color: var(--text) !important;
+  font-size: 14.5px !important;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+.mx-ax .ax-pole.low { color: #1d4ed8 !important; }
+.mx-ax .ax-pole.high { color: #b91c1c !important; }
+.mx-ax .ax-label {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #ffffff !important;
+  padding: 7px 18px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 0 2px 6px rgba(245,158,11,.3);
+}
+
+/* フロー：プロンプト生成アコーディオン */
+.fl-prompt {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+.fl-prompt summary {
+  padding: 11px 16px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ede9fe 0%, #f5f3ff 100%);
+  font-weight: 700;
+  font-size: 14px;
+  color: #5b21b6;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fl-prompt summary::-webkit-details-marker { display: none; }
+.fl-prompt summary::before {
+  content: "▶";
+  color: #7c3aed;
+  font-size: 10px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.fl-prompt[open] summary::before { transform: rotate(90deg); }
+.fl-prompt summary:hover { background: linear-gradient(90deg, #ddd6fe 0%, #ede9fe 100%); }
+.fl-prompt-body {
+  padding: 14px 16px;
+  background: #fafbfc;
+}
+.fl-prompt-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.65;
+}
+.fl-prompt-code {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-family: 'Menlo','Monaco','Courier New',monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #334155;
+}
+.fl-prompt-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.fl-prompt-btn {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(37,99,235,.25);
+}
+.fl-prompt-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.4); }
+.fl-prompt-btn.copied { background: linear-gradient(135deg, #059669, #10b981); }
+
 /* MOBILE フォント保持 */
 @media (max-width: 600px) {
   html body { font-size: 15px !important; }
@@ -1281,6 +1438,10 @@ function renderMandala() {
       const bg=cell.th.bgLight||TBG[cell.ti];
       d.classList.add('item'); d.style.background=bg; d.style.color='var(--dim)';
       d.textContent=cell.item.text; d.title=cell.item.description||cell.item.text;
+      const len=cell.item.text.length;
+      if(len>26) d.style.fontSize='9.5px';
+      else if(len>20) d.style.fontSize='10.5px';
+      else if(len>14) d.style.fontSize='11.5px';
     } else { d.classList.add('empty'); }
     g.appendChild(d);
   }
@@ -1311,8 +1472,14 @@ function renderMatrix(ti) {
   });
 
   if(!mx) return;
-  document.getElementById('mxAy').innerHTML='↑ '+(mx.yAxis?.highLabel||'高')+'<br>'+(mx.yAxis?.label||'重要度')+'<br>↓ '+(mx.yAxis?.lowLabel||'低');
-  document.getElementById('mxAx').innerHTML='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+' →';
+  document.getElementById('mxAy').innerHTML=
+    '<span class="ax-pole high">↑ '+(mx.yAxis?.highLabel||'高重要')+'</span>'+
+    '<span class="ax-label">'+(mx.yAxis?.label||'重要度')+'</span>'+
+    '<span class="ax-pole low">↓ '+(mx.yAxis?.lowLabel||'低重要')+'</span>';
+  document.getElementById('mxAx').innerHTML=
+    '<span class="ax-pole low">← '+(mx.xAxis?.lowLabel||'低緊急')+'</span>'+
+    '<span class="ax-label">'+(mx.xAxis?.label||'緊急度')+'</span>'+
+    '<span class="ax-pole high">'+(mx.xAxis?.highLabel||'高緊急')+' →</span>';
 
   const g=document.getElementById('mxGrid');
   Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
@@ -1369,6 +1536,7 @@ function renderFlow(fl) {
           ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
         </div>
         ${step.kaiHint?`<div class="fl-hint">${step.kaiHint}</div>`:''}
+        ${buildFlowPromptHTML(step)}
         <label class="fl-check${ck?' done':''}">
           <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
           完了としてマーク
@@ -1387,6 +1555,61 @@ function onCk(el) {
   const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
   el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
              : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   FLOW PROMPT GENERATOR — 外部AI用プロンプト生成
+   ================================================================ */
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildFlowPromptHTML(step){
+  const prompt = `あなたは業務プロセス設計の専門家です。以下のタスクを、実践レベルの詳細フロー（Mermaid記法）と実行アドバイスにまで構造分解してください。
+
+【対象タスク】
+タイトル：${step.title}
+概要：${step.description}
+所要時間：${step.duration||'未定'}
+成果物：${step.output||'未定'}
+つまずきポイント：${step.kaiHint||'なし'}
+
+【出力フォーマット】
+1. Mermaid記法のflowchartコード（コードブロックで出力／draw.io互換）
+   - 5〜10サブステップ
+   - 分岐・判断ポイント（{}で表現）を含める
+   - 開始/終了ノード明示
+   - 例: flowchart TD\\n  A([開始]) --> B[ステップ1]\\n  B --> C{判断}\\n  ...
+
+2. 各サブステップの実行アドバイス（番号付きリスト）
+   - 担当者・必要時間・使用ツール
+   - 具体的な注意点（その場で発生しがちな失敗）
+   - 確認チェックリスト3項目
+
+3. 失敗時のリカバリープラン（短く）
+
+【制約】
+- 専門用語は最小限。中小企業の現場で運用可能な粒度
+- 1サブステップは1日以内で完結できる粒度
+- 出力は日本語で`;
+  return `<details class="fl-prompt">
+    <summary>🪄 詳細フロー作成プロンプトを取得（外部AIにコピペ）</summary>
+    <div class="fl-prompt-body">
+      <p class="fl-prompt-desc">このプロンプトを Claude / ChatGPT / Gemini に貼り付けると、Mermaid形式のフロー図＋実行アドバイス＋チェックリスト＋リカバリープランが得られます（draw.ioへコピペ可）。</p>
+      <pre class="fl-prompt-code">${escHtml(prompt)}</pre>
+      <div class="fl-prompt-actions">
+        <button class="fl-prompt-btn" onclick="copyPrompt(this)">📋 プロンプトをコピー</button>
+      </div>
+    </div>
+  </details>`;
+}
+function copyPrompt(btn){
+  const code=btn.parentElement.previousElementSibling.textContent;
+  const done=()=>{btn.textContent='✅ コピー完了'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='📋 プロンプトをコピー'; btn.classList.remove('copied');},2000);};
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(code).then(done).catch(()=>{
+      const ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
+    });
+  } else {
+    const ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
+  }
 }
 
 /* ================================================================
