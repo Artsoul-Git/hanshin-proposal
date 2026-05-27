@@ -251,6 +251,113 @@ h3 { font-size:15px; font-weight:600; }
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ============================================================
+   サイボウズ Office 風 × 判読性アップ（v2）
+   ============================================================ */
+:root {
+  --bg: #f1f5f9;            /* 柔らかいブルーグレー */
+  --surface2: #f8fafc;
+  --border: #e2e8f0;        /* 柔らかい境界線 */
+  --primary: #3b82f6;       /* やや明るく親しみ感 */
+  --kai-bg: #f5f3ff;        /* ラベンダーホワイト */
+  --kai-border: #ddd6fe;
+}
+body { font-size: 15.5px !important; line-height: 1.75 !important; letter-spacing: 0.01em; }
+h2 { font-size: 22px !important; font-weight: 700; letter-spacing: 0.02em; }
+h3 { font-size: 17px !important; font-weight: 600; }
+
+/* GOAL CARD */
+.goal-card { border-radius: 18px !important; padding: 28px !important; border: 1px solid #dbeafe !important; background: linear-gradient(135deg,#ffffff 0%,#eff6ff 100%) !important; }
+.goal-tag { font-size: 12.5px !important; padding: 5px 14px !important; background: rgba(59,130,246,.12) !important; color: #1d4ed8 !important; border-radius: 999px !important; font-weight: 600; }
+.goal-title { font-size: 26px !important; font-weight: 800; letter-spacing: 0.01em; }
+.goal-meta { font-size: 13px !important; }
+.goal-bg { font-size: 15px !important; line-height: 1.85 !important; }
+
+/* STATS */
+.stat { padding: 20px !important; border-radius: 14px !important; }
+.stat-v { font-size: 32px !important; font-weight: 800; }
+.stat-l { font-size: 13px !important; margin-top: 4px !important; }
+
+/* KAI */
+.kai-card { padding: 24px !important; border-radius: 16px !important; }
+.kai-av { width: 36px !important; height: 36px !important; font-size: 14px !important; }
+.kai-nm { font-size: 15.5px !important; }
+.kai-rl { font-size: 12.5px !important; }
+.kai-sum { font-size: 15.5px !important; line-height: 1.9 !important; }
+.kai-verd { font-size: 14.5px !important; padding: 12px 16px !important; line-height: 1.7; }
+.ktag { font-size: 12.5px !important; padding: 4px 12px !important; border-radius: 999px !important; }
+
+/* SECTION */
+.sec { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 16px !important; }
+
+/* ACTIONS */
+.act-item { padding: 14px 16px !important; border-radius: 12px !important; gap: 10px !important; }
+.act-tx { font-size: 14px !important; }
+.act-sub { font-size: 12.5px !important; margin-top: 4px !important; }
+.act-dot { width: 11px !important; height: 11px !important; }
+
+/* NAV */
+.nav { padding: 12px 20px 0 !important; }
+.tab { font-size: 14.5px !important; padding: 10px 18px !important; border-radius: 10px 10px 0 0 !important; }
+
+/* CARD */
+.card { padding: 24px !important; border-radius: 16px !important; }
+
+/* MANDALA */
+.mandala-note { font-size: 13.5px !important; margin-bottom: 18px !important; }
+.m-grid { gap: 3px !important; max-width: 900px !important; }
+.mc { font-size: 11.5px !important; padding: 4px !important; border-radius: 5px !important; line-height: 1.3 !important; }
+.mc.center { font-size: 13px !important; }
+.mc.theme, .mc.tr { font-size: 12px !important; }
+.mc.item { font-size: 10.5px !important; }
+.m-leg { font-size: 13px !important; padding: 5px 12px !important; }
+
+/* MATRIX */
+.bc { font-size: 13.5px !important; }
+.t-pill { font-size: 13.5px !important; padding: 6px 14px !important; }
+.quad-lbl { font-size: 14.5px !important; }
+.quad-desc { font-size: 12px !important; margin-bottom: 10px !important; }
+.qi { font-size: 13.5px !important; padding: 10px 13px !important; border-radius: 8px !important; gap: 8px !important; }
+.qi-dt { font-size: 12px !important; margin-top: 4px !important; }
+.mx-kai { font-size: 14.5px !important; padding: 14px 18px !important; line-height: 1.75 !important; }
+.mk-lbl { font-size: 12px !important; margin-bottom: 6px !important; }
+
+/* FLOW */
+.fl-ctx { padding: 14px 18px !important; border-radius: 10px !important; }
+.fl-ctx-l { font-size: 12px !important; }
+.fl-ctx-t { font-size: 17px !important; }
+.fl-card { padding: 16px 18px !important; border-radius: 12px !important; }
+.fl-ord { font-size: 12px !important; margin-bottom: 5px !important; }
+.fl-title { font-size: 16px !important; margin-bottom: 8px !important; }
+.fl-desc { font-size: 14.5px !important; line-height: 1.75 !important; }
+.fbg { font-size: 12.5px !important; padding: 3px 10px !important; border-radius: 5px !important; }
+.fl-check { font-size: 13.5px !important; padding: 6px 0 !important; }
+.fl-kai { padding: 14px 18px !important; }
+.fk-lbl { font-size: 13px !important; margin-bottom: 6px !important; }
+.fk-tx { font-size: 14.5px !important; line-height: 1.8 !important; }
+
+/* GANTT */
+.gt-name { font-size: 13.5px !important; width: 200px !important; min-width: 200px !important; }
+.gt-phase { font-size: 13.5px !important; }
+.gt-bar { font-size: 11px !important; }
+.gt-wk { font-size: 11px !important; }
+.gt-legend { font-size: 13px !important; }
+
+/* KAI FLOAT */
+.kf-sec-t { font-size: 13px !important; }
+.kf-ins { font-size: 14.5px !important; line-height: 1.75 !important; padding: 10px 12px !important; }
+.kf-lbl { font-size: 14px !important; }
+
+/* MOBILE フォント保持 */
+@media (max-width: 600px) {
+  body { font-size: 14.5px !important; }
+  .mc { font-size: 9px !important; }
+  .mc.center { font-size: 10.5px !important; }
+  .mc.theme, .mc.tr { font-size: 10px !important; }
+  .mc.item { font-size: 9px !important; }
+}
+
 /* ============================================================
    PRINT — A4 landscape マンダラ最適化
    ============================================================ */
