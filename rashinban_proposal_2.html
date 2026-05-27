@@ -367,13 +367,104 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 .kf-ins { font-size: 14.5px !important; line-height: 1.75 !important; padding: 10px 12px !important; }
 .kf-lbl { font-size: 14px !important; }
 
+/* ============================================================
+   v4 追加：マンダラ横長／軸ラベル／4マス線／バッジ／Kai Hint
+   ============================================================ */
+/* マンダラ：横長化＋セル文字拡大 */
+.m-grid {
+  aspect-ratio: 16/11 !important;
+  max-width: 1100px !important;
+  gap: 4px !important;
+  grid-template-rows: repeat(9, 1fr) !important;
+}
+.mc { font-size: 13px !important; padding: 5px !important; border-radius: 6px !important; line-height: 1.4 !important; }
+.mc.center { font-size: 16px !important; font-weight: 900 !important; }
+.mc.theme, .mc.tr { font-size: 14.5px !important; font-weight: 800 !important; }
+.mc.item { font-size: 12.5px !important; color: #1f2937 !important; font-weight: 500 !important; }
+
+/* マトリクス：4象限境界線を明確化＋象限ごとに淡色背景 */
+.mx-wrap { gap: 14px !important; }
+.mx-inner { background: #fff; padding: 6px; border-radius: 14px; }
+.mx-grid {
+  background: #cbd5e1 !important;
+  border: 2px solid #94a3b8 !important;
+  border-radius: 12px !important;
+  gap: 3px !important;
+  overflow: hidden;
+}
+.mx-cross::before { width: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.mx-cross::after { height: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.quad { padding: 18px !important; }
+.quad.q-tr { background: #fef2f2 !important; }
+.quad.q-tl { background: #eff6ff !important; }
+.quad.q-br { background: #fffbeb !important; }
+.quad.q-bl { background: #f8fafc !important; }
+
+/* マトリクス軸ラベル：上下順序修正＋2倍拡大 */
+.mx-ay {
+  writing-mode: vertical-lr !important;
+  transform: none !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  padding: 14px 10px !important;
+  background: linear-gradient(180deg, rgba(239,68,68,.12) 0%, #ffffff 50%, rgba(37,99,235,.10) 100%) !important;
+  border-radius: 10px !important;
+  min-width: 44px !important;
+  letter-spacing: 0.05em;
+  line-height: 1.8 !important;
+}
+.mx-ax {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  padding: 12px 16px !important;
+  background: linear-gradient(90deg, rgba(37,99,235,.10) 0%, #ffffff 50%, rgba(239,68,68,.12) 100%) !important;
+  border-radius: 10px !important;
+  margin-top: 10px !important;
+  letter-spacing: 0.05em;
+}
+
+/* フローバッジ：高コントラスト（濃文字×淡背景） */
+.fbg.fb-act { background: rgba(37,99,235,.10) !important; color: #1e40af !important; font-weight: 700 !important; border: 1px solid rgba(37,99,235,.18); }
+.fbg.fb-dec { background: rgba(217,119,6,.14) !important; color: #92400e !important; font-weight: 700 !important; border: 1px solid rgba(217,119,6,.25); }
+.fbg.fb-mil { background: rgba(5,150,105,.14) !important; color: #065f46 !important; font-weight: 700 !important; border: 1px solid rgba(5,150,105,.25); }
+.fbg.fb-wrn { background: rgba(220,38,38,.10) !important; color: #991b1b !important; font-weight: 700 !important; border: 1px solid rgba(220,38,38,.20); }
+.fbg.fb-dur { background: rgba(71,85,105,.10) !important; color: #1e293b !important; font-weight: 700 !important; border: 1px solid rgba(71,85,105,.18); }
+.fbg.fb-out { background: rgba(8,145,178,.14) !important; color: #155e75 !important; font-weight: 700 !important; border: 1px solid rgba(8,145,178,.25); }
+
+/* フロー：つまずきポイント（kaiHint）ボックス */
+.fl-hint {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #fff7ed 0%, #fffbeb 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 14.5px;
+  color: #78350f;
+  line-height: 1.75;
+}
+.fl-hint::before {
+  content: "⚠️ つまずきポイント　";
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.03em;
+}
+
+/* ガント：クリック可能化 */
+.gt-bar { cursor: pointer !important; transition: all 0.15s; }
+.gt-bar:hover { opacity: 0.85; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
+.gt-bar.ms { cursor: pointer !important; }
+
 /* MOBILE フォント保持 */
 @media (max-width: 600px) {
-  body { font-size: 14.5px !important; }
-  .mc { font-size: 9px !important; }
-  .mc.center { font-size: 10.5px !important; }
-  .mc.theme, .mc.tr { font-size: 10px !important; }
-  .mc.item { font-size: 9px !important; }
+  html body { font-size: 15px !important; }
+  .m-grid { aspect-ratio: 1 !important; max-width: 100% !important; }
+  .mc { font-size: 10px !important; }
+  .mc.center { font-size: 11.5px !important; }
+  .mc.theme, .mc.tr { font-size: 11px !important; }
+  .mc.item { font-size: 10px !important; }
+  .mx-ay, .mx-ax { font-size: 15px !important; }
 }
 
 /* ============================================================
@@ -625,7 +716,7 @@ const DATA = {
     ],
     themeInsights: [
       { index: 0, insight: "WM10カ条は阪神素地に9割転用可能。特に客層拡大・PB集中・機能格付け・アンバサダーが効く。" },
-      { index: 1, insight: "五箇条を経営承認するのは提案①と同じ。全5路線の判定基準として運用する。" },
+      { index: 1, insight: "5か条を経営承認するのは提案①と同じ。全5路線の判定基準として運用する。" },
       { index: 2, insight: "道具女子は最速で動く路線。既存FU5014ベースで6ヶ月以内に試せる。WM女子モデルを転用。" },
       { index: 3, insight: "シニア路線は『見えない介護機能』が肝。あなた想いシリーズを独立LP化する。WMリカバリー参入と同じ発想。" },
       { index: 4, insight: "法人BCPは官公需資格×防衛省実績で勝負。WMイージスのプロ路線と同じ高機能フラッグシップ。" },
@@ -656,19 +747,19 @@ const DATA = {
       },
       {
         index: 1,
-        name: "五箇条と代理店対策",
-        description: "提案①の五箇条を全5路線の判定基準として運用。代理店反感ゼロを担保。",
+        name: "5か条と代理店対策",
+        description: "提案①の5か条を全5路線の判定基準として運用。代理店反感ゼロを担保。",
         color: "#F97316",
         bgLight: "rgba(249,115,22,.13)",
         items: [
-          { id: "t1-0", text: "五箇条の経営承認", description: "代理店反感ゼロ原則を文書化", priority: 1 },
+          { id: "t1-0", text: "5か条の経営承認", description: "代理店反感ゼロ原則を文書化", priority: 1 },
           { id: "t1-1", text: "サブブランドは代理店扱い対象外", description: "新ブランドは代理店と棲み分け", priority: 1 },
           { id: "t1-2", text: "直販価格≧代理店推奨小売価格", description: "価格競合させない原則", priority: 1 },
           { id: "t1-3", text: "顧客に必ず販売店マップ提示", description: "全接点で紹介戻し徹底", priority: 2 },
           { id: "t1-4", text: "代理店データ還元レポート連動", description: "提案①施策3と同じ枠組み", priority: 2 },
           { id: "t1-5", text: "メーカー保証を旗印に", description: "データ取得目的の正当化", priority: 2 },
           { id: "t1-6", text: "代理店説明資料の整備", description: "新路線開始時の事前説明", priority: 2 },
-          { id: "t1-7", text: "五箇条違反検知チェック運用", description: "全施策の入口セルフチェック", priority: 3 }
+          { id: "t1-7", text: "5か条違反検知チェック運用", description: "全施策の入口セルフチェック", priority: 3 }
         ]
       },
       {
@@ -801,13 +892,13 @@ const DATA = {
       ]
     },
     {
-      themeIndex: 1, title: "五箇条と代理店対策 マトリクス",
-      kaiInsight: "提案①の五箇条をそのまま運用。サブブランド戦略では『代理店扱い対象外』の明確化が最重要。",
+      themeIndex: 1, title: "5か条と代理店対策 マトリクス",
+      kaiInsight: "提案①の5か条をそのまま運用。サブブランド戦略では『代理店扱い対象外』の明確化が最重要。",
       xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
       yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
       quadrants: [
         { id: "q1-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
-          { text: "五箇条の経営承認", detail: "提案①と同じ" },
+          { text: "5か条の経営承認", detail: "提案①と同じ" },
           { text: "サブブランドは代理店扱い対象外", detail: "棲み分け明文化" },
           { text: "直販価格≧代理店推奨小売価格", detail: "全路線で徹底" }
         ]},
@@ -820,7 +911,7 @@ const DATA = {
           { text: "代理店説明資料の整備", detail: "営業ツール" }
         ]},
         { id: "q1-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
-          { text: "五箇条違反検知チェック運用", detail: "運用安定後" }
+          { text: "5か条違反検知チェック運用", detail: "運用安定後" }
         ]}
       ]
     },
@@ -974,13 +1065,13 @@ const DATA = {
       title: "路線①道具女子サブブランド立ち上げ",
       kaiComment: "WMプラス＋WM女子のモデルを転用。3ヶ月で基盤・6ヶ月で本格稼働。代理店との棲み分けが大前提。",
       steps: [
-        { order: 1, title: "経営会議で路線①承認＋投資300万円承認", description: "サブブランド戦略・五箇条運用・代理店反感ゼロ前提の合意。", type: "decision", duration: "Day1", output: "経営会議議事録" },
-        { order: 2, title: "ブランドネーミング・ロゴ確定", description: "Hanshin Field+ 等の候補から確定。商標確認。", type: "action", duration: "3週間", output: "ブランドアセット" },
-        { order: 3, title: "FU5014ベース4色×3型の商品設計", description: "くすみカラー・SNS映え・既存ラスト流用で開発コスト最小化。", type: "action", duration: "1ヶ月", output: "商品ラインアップ" },
-        { order: 4, title: "農業女子アンバサダー10名スカウト", description: "フォロワー500〜5,000の現場熱量重視。3名は商品共同開発に。", type: "action", duration: "1ヶ月", output: "アンバサダー10名契約" },
+        { order: 1, title: "経営会議で路線①承認＋投資300万円承認", description: "サブブランド戦略・5か条運用・代理店反感ゼロ前提の合意。", type: "decision", duration: "Day1", output: "経営会議議事録", kaiHint: "『なぜサブブランドなのか』『なぜ阪神素地ブランドではないのか』を経営層に丁寧に説明。WM女子の事例を必ず添えて承認率UP" },
+        { order: 2, title: "ブランドネーミング・ロゴ確定", description: "Hanshin Field+ 等の候補から確定。商標確認。", type: "action", duration: "3週間", output: "ブランドアセット", kaiHint: "商標確認を省略すると後々大問題。J-PlatPatで類似商標を必ずチェック。SNS用ハッシュタグ重複も同時調査" },
+        { order: 3, title: "FU5014ベース4色×3型の商品設計", description: "くすみカラー・SNS映え・既存ラスト流用で開発コスト最小化。", type: "action", duration: "1ヶ月", output: "商品ラインアップ", kaiHint: "色選定は社内会議ではなく、ターゲット農業女子3名にプロトタイプ写真でアンケートを取る。意外な色が刺さる" },
+        { order: 4, title: "農業女子アンバサダー10名スカウト", description: "フォロワー500〜5,000の現場熱量重視。3名は商品共同開発に。", type: "action", duration: "1ヶ月", output: "アンバサダー10名契約", kaiHint: "フォロワー数より『投稿頻度』と『熱量』。週3回以上投稿してる人が炎上リスク低くROI高い。ギフト契約だけでなく正式契約書を" },
         { order: 5, title: "Shopify EC＋楽天店構築", description: "サブブランド独立販路。撮影・ライティング・SEO設定。", type: "action", duration: "1ヶ月", output: "EC公開" },
-        { order: 6, title: "代理店上位50店への事前説明", description: "『新ブランドは代理店扱い対象外』の棲み分けを明確化。反感ゼロ対策。", type: "warning", duration: "2週間", output: "代理店説明完了" },
-        { order: 7, title: "ローンチ＋Instagramコンテスト", description: "#私の農仕事 でUGC生成。月商100万円〜目標。", type: "milestone", duration: "1ヶ月", output: "ローンチ＋月商100万円" }
+        { order: 6, title: "代理店上位50店への事前説明", description: "『新ブランドは代理店扱い対象外』の棲み分けを明確化。反感ゼロ対策。", type: "warning", duration: "2週間", output: "代理店説明完了", kaiHint: "ここを甘くするとサブブランド戦略全体が崩壊する。『阪神素地ブランド本体は今後も代理店経由で強化』を必ず明言する" },
+        { order: 7, title: "ローンチ＋Instagramコンテスト", description: "#私の農仕事 でUGC生成。月商100万円〜目標。", type: "milestone", duration: "1ヶ月", output: "ローンチ＋月商100万円", kaiHint: "ローンチ初月の数字に一喜一憂しない。UGC育成は3〜6ヶ月の時間軸で。半年で月商300万円目標で構わない" }
       ]
     },
     {
@@ -988,12 +1079,12 @@ const DATA = {
       title: "路線③法人・自治体BCP専任ユニット起動",
       kaiComment: "WMイージスのプロ路線を転用。全省庁統一資格と防衛省実績が他社にない強み。最初の3ヶ月は防災課集中。",
       steps: [
-        { order: 1, title: "専任1名アサイン（既存営業エース or 中途）", description: "岡山営業部に配置。法人BtoB専任職務記述書。", type: "decision", duration: "1ヶ月", output: "専任配置" },
-        { order: 2, title: "BOSAI by 阪神素地カタログ制作", description: "A4 4ページ：資格＋実績＋透湿防水ウェーダー＋多機能ブーツ＋価格＋導入事例。", type: "action", duration: "1ヶ月", output: "法人向けカタログ" },
-        { order: 3, title: "機能5格付け（耐水・防寒・耐油・反射・耐摩耗）", description: "全商品に3〜5段階表示。素人でも選びやすい購買補助情報。", type: "action", duration: "3週間", output: "格付け表" },
-        { order: 4, title: "兵庫・岡山・大阪の防災課宛DM＋訪問", description: "県防災課＋上位10市の防災課＝計約20先。事前DM→訪問アポ。", type: "action", duration: "2ヶ月", output: "20先訪問完了" },
+        { order: 1, title: "専任1名アサイン（既存営業エース or 中途）", description: "岡山営業部に配置。法人BtoB専任職務記述書。", type: "decision", duration: "1ヶ月", output: "専任配置", kaiHint: "既存営業からの兼任はNG。法人BtoBは商談サイクルが3〜6ヶ月で兼任だと釣具店営業に流される。専任化が絶対条件" },
+        { order: 2, title: "BOSAI by 阪神素地カタログ制作", description: "A4 4ページ：資格＋実績＋透湿防水ウェーダー＋多機能ブーツ＋価格＋導入事例。", type: "action", duration: "1ヶ月", output: "法人向けカタログ", kaiHint: "釣具カタログとは別物。写真は『プロ現場感』を全面に。価格は『参考』として記載し交渉余地を残す" },
+        { order: 3, title: "機能5格付け（耐水・防寒・耐油・反射・耐摩耗）", description: "全商品に3〜5段階表示。素人でも選びやすい購買補助情報。", type: "action", duration: "3週間", output: "格付け表", kaiHint: "数値の根拠を必ず併記。試験方法・基準を明示しないと信頼を失う。WMの機能格付け宣言を参考に" },
+        { order: 4, title: "兵庫・岡山・大阪の防災課宛DM＋訪問", description: "県防災課＋上位10市の防災課＝計約20先。事前DM→訪問アポ。", type: "action", duration: "2ヶ月", output: "20先訪問完了", kaiHint: "防災課は5〜7月が予算策定期。8月以降の訪問は次年度予算狙い。タイミングを逆算して動く" },
         { order: 5, title: "BCP備蓄品リストのヒアリング", description: "現状調達品・調達ルート・予算サイクル・更新タイミング。", type: "action", duration: "2ヶ月", output: "ヒアリング集計" },
-        { order: 6, title: "提案ヒット案件のクロージング", description: "20先中3〜5先で小ロット試験導入を目指す。", type: "milestone", duration: "3ヶ月", output: "受注3〜5先" },
+        { order: 6, title: "提案ヒット案件のクロージング", description: "20先中3〜5先で小ロット試験導入を目指す。", type: "milestone", duration: "3ヶ月", output: "受注3〜5先", kaiHint: "0件でも焦らない。最初の3か月は『情報収集と人間関係構築』が本命。受注は4〜6ヶ月目から増え始める" },
         { order: 7, title: "JA全農・建設・電力への横展開", description: "自治体実績を引っ提げて法人ターゲットへ拡張。", type: "milestone", duration: "3ヶ月", output: "横展開アプローチ" }
       ]
     },
@@ -1002,64 +1093,64 @@ const DATA = {
       title: "越境ECチャネル接続",
       kaiComment: "既存基盤を活用する最速ルート。ASIAN PORTALは日本釣具300社集約サイトで初年度5億円目標。出品交渉から始める。",
       steps: [
-        { order: 1, title: "ASIAN PORTAL FISHINGに参画打診メール", description: "株式会社ASIAN PORTAL 大谷社長宛。月額参加費・成約手数料を確認。", type: "action", duration: "1週間", output: "参画契約" },
-        { order: 2, title: "初期出品20SKU選定", description: "ウェーダー・鮎タイツ・フェルトスパイクなど海外人気品。", type: "action", duration: "2週間", output: "出品商品リスト" },
-        { order: 3, title: "中国語・英語商品ページ整備", description: "翻訳＋台湾人体型サイズ調整。日本品質訴求コピー。", type: "action", duration: "1ヶ月", output: "多言語ページ" },
-        { order: 4, title: "WINNING INDUSTRIAL販社化協議", description: "中国JVを製造のみから販売拠点へ格上げ。契約再協議。", type: "warning", duration: "2ヶ月", output: "JV契約更新" },
+        { order: 1, title: "ASIAN PORTAL FISHINGに参画打診メール", description: "株式会社ASIAN PORTAL 大谷社長宛。月額参加費・成約手数料を確認。", type: "action", duration: "1週間", output: "参画契約", kaiHint: "いきなりメールではなく釣具業界の知人経由で紹介を得るのが早い。300社集約サイトは選別がある可能性" },
+        { order: 2, title: "初期出品20SKU選定", description: "ウェーダー・鮎タイツ・フェルトスパイクなど海外人気品。", type: "action", duration: "2週間", output: "出品商品リスト", kaiHint: "売れ筋を出すのではなく『日本らしさ』が伝わる商品を選ぶ。海外で評価される基準は国内と異なる" },
+        { order: 3, title: "中国語・英語商品ページ整備", description: "翻訳＋台湾人体型サイズ調整。日本品質訴求コピー。", type: "action", duration: "1ヶ月", output: "多言語ページ", kaiHint: "Google翻訳ベタ貼りは信頼を失う。台湾在住の日本人または中国語ネイティブにレビュー依頼が必須" },
+        { order: 4, title: "WINNING INDUSTRIAL販社化協議", description: "中国JVを製造のみから販売拠点へ格上げ。契約再協議。", type: "warning", duration: "2ヶ月", output: "JV契約更新", kaiHint: "JV相手との関係性を最優先に。一方的な契約変更は禁物。現地スタッフとの面談を必ず設ける" },
         { order: 5, title: "蝦皮（Shopee Taiwan）公式店開設", description: "台湾向けD2C。中国京東・天猫国際も並行検討。", type: "action", duration: "1ヶ月", output: "台湾EC公開" },
-        { order: 6, title: "台湾現地釣りKOL 3〜5名へ商品提供", description: "日本旅行帰り・週末釣り愛好家系のKOLにターゲット。", type: "action", duration: "1ヶ月", output: "KOLレビュー獲得" },
+        { order: 6, title: "台湾現地釣りKOL 3〜5名へ商品提供", description: "日本旅行帰り・週末釣り愛好家系のKOLにターゲット。", type: "action", duration: "1ヶ月", output: "KOLレビュー獲得", kaiHint: "フォロワー数より『日本好き』度合いを優先。日本旅行頻度が高いKOLは購買意欲も高い視聴者を抱えている" },
         { order: 7, title: "初年度売上1,000万円目標", description: "ASIAN PORTAL＋蝦皮＋Amazon Global合算で。3年目1〜3億円へ。", type: "milestone", duration: "12ヶ月", output: "初年度売上達成" }
       ]
     }
   ],
   gantt: {
-    title: "24ヶ月実行ロードマップ（5路線段階展開）",
+    title: "24ヶ月実行ロードマップ（タスククリックで関連箇所へ）",
     totalWeeks: 24,
     phases: [
       {
         name: "Phase1：合意・準備（W1〜W4）",
         color: "#EF4444",
         tasks: [
-          { name: "五箇条＋5路線承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false },
-          { name: "WM10カ条社内研修", startWeek: 1, endWeek: 3, isCritical: false, milestone: false },
-          { name: "Phase1完了", startWeek: 4, endWeek: 4, isCritical: false, milestone: true }
+          { name: "5か条＋5路線承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false, linkTo: { type: "matrix", themeIndex: 1 } },
+          { name: "WM10カ条社内研修", startWeek: 1, endWeek: 3, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 0 } },
+          { name: "Phase1完了", startWeek: 4, endWeek: 4, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
         ]
       },
       {
         name: "Phase2：路線①②国内サブブランド（W3〜W12）",
         color: "#EAB308",
         tasks: [
-          { name: "路線①道具女子ブランド設計", startWeek: 3, endWeek: 6, isCritical: true, milestone: false },
-          { name: "路線①Shopify構築・アンバサダー", startWeek: 6, endWeek: 10, isCritical: false, milestone: false },
-          { name: "路線①ローンチ", startWeek: 10, endWeek: 24, isCritical: false, milestone: false },
-          { name: "路線②あなた想いプラスLP独立化", startWeek: 4, endWeek: 8, isCritical: false, milestone: false },
-          { name: "路線②ドラッグストア卸商談", startWeek: 8, endWeek: 16, isCritical: false, milestone: false }
+          { name: "路線①道具女子ブランド設計", startWeek: 3, endWeek: 6, isCritical: true, milestone: false, linkTo: { type: "flow", themeIndex: 2, quadrant: "q2-tr", sourceItem: "Hanshin Field+ブランド設計" } },
+          { name: "路線①Shopify構築・アンバサダー", startWeek: 6, endWeek: 10, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 2 } },
+          { name: "路線①ローンチ", startWeek: 10, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 2 } },
+          { name: "路線②あなた想いプラスLP独立化", startWeek: 4, endWeek: 8, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 3 } },
+          { name: "路線②ドラッグストア卸商談", startWeek: 8, endWeek: 16, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 3 } }
         ]
       },
       {
         name: "Phase3：路線③法人BCP（W5〜W18）",
         color: "#06B6D4",
         tasks: [
-          { name: "法人BtoB専任配置・カタログ制作", startWeek: 5, endWeek: 8, isCritical: true, milestone: false },
-          { name: "兵庫・岡山・大阪の防災課訪問", startWeek: 8, endWeek: 16, isCritical: false, milestone: false },
-          { name: "JA・建設・電力横展開", startWeek: 14, endWeek: 24, isCritical: false, milestone: false }
+          { name: "法人BtoB専任配置・カタログ制作", startWeek: 5, endWeek: 8, isCritical: true, milestone: false, linkTo: { type: "flow", themeIndex: 4, quadrant: "q4-tr", sourceItem: "法人BtoB専任1名配置" } },
+          { name: "兵庫・岡山・大阪の防災課訪問", startWeek: 8, endWeek: 16, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 4 } },
+          { name: "JA・建設・電力横展開", startWeek: 14, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 4 } }
         ]
       },
       {
         name: "Phase4：路線④台湾・東南アジア（W9〜W20）",
         color: "#6366F1",
         tasks: [
-          { name: "ASIAN PORTAL接続・JV協議", startWeek: 9, endWeek: 14, isCritical: false, milestone: false },
-          { name: "蝦皮Taiwan・京東公式店", startWeek: 14, endWeek: 20, isCritical: false, milestone: false },
-          { name: "ベトナム・タイ調査", startWeek: 18, endWeek: 24, isCritical: false, milestone: false }
+          { name: "ASIAN PORTAL接続・JV協議", startWeek: 9, endWeek: 14, isCritical: false, milestone: false, linkTo: { type: "flow", themeIndex: 5, quadrant: "q5-tr", sourceItem: "ASIAN PORTAL FISHING出品" } },
+          { name: "蝦皮Taiwan・京東公式店", startWeek: 14, endWeek: 20, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 5 } },
+          { name: "ベトナム・タイ調査", startWeek: 18, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 5 } }
         ]
       },
       {
         name: "Phase5：路線⑤欧米準備（W19〜W24）",
         color: "#8B5CF6",
         tasks: [
-          { name: "英語サイト準備・レビュー獲得", startWeek: 19, endWeek: 24, isCritical: false, milestone: false },
-          { name: "2年目総括・3年目目標設定", startWeek: 24, endWeek: 24, isCritical: false, milestone: true }
+          { name: "英語サイト準備・レビュー獲得", startWeek: 19, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "2年目総括・3年目目標設定", startWeek: 24, endWeek: 24, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
         ]
       }
     ]
@@ -1220,8 +1311,8 @@ function renderMatrix(ti) {
   });
 
   if(!mx) return;
-  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'重要度');
-  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+'→';
+  document.getElementById('mxAy').innerHTML='↑ '+(mx.yAxis?.highLabel||'高')+'<br>'+(mx.yAxis?.label||'重要度')+'<br>↓ '+(mx.yAxis?.lowLabel||'低');
+  document.getElementById('mxAx').innerHTML='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+' →';
 
   const g=document.getElementById('mxGrid');
   Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
@@ -1277,6 +1368,7 @@ function renderFlow(fl) {
           ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
           ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
         </div>
+        ${step.kaiHint?`<div class="fl-hint">${step.kaiHint}</div>`:''}
         <label class="fl-check${ck?' done':''}">
           <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
           完了としてマーク
@@ -1327,7 +1419,16 @@ function renderGantt() {
       bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
       bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary))'));
       bar.textContent=task.milestone?'◆':task.name;
-      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek)+(task.linkTo?' （クリックで関連箇所へ）':'');
+      if(task.linkTo){
+        bar.onclick=()=>{
+          const lt=task.linkTo;
+          if(lt.type==='matrix') goMatrix(lt.themeIndex||0);
+          else if(lt.type==='flow') goFlow(lt.themeIndex||0, lt.quadrant||'', lt.sourceItem||'');
+          else if(lt.type==='mandala') go('mandala', null);
+          else if(lt.type==='dashboard') go('dashboard', null);
+        };
+      }
       bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
     });
   });

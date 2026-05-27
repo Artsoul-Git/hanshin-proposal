@@ -367,13 +367,104 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
 .kf-ins { font-size: 14.5px !important; line-height: 1.75 !important; padding: 10px 12px !important; }
 .kf-lbl { font-size: 14px !important; }
 
+/* ============================================================
+   v4 追加：マンダラ横長／軸ラベル／4マス線／バッジ／Kai Hint
+   ============================================================ */
+/* マンダラ：横長化＋セル文字拡大 */
+.m-grid {
+  aspect-ratio: 16/11 !important;
+  max-width: 1100px !important;
+  gap: 4px !important;
+  grid-template-rows: repeat(9, 1fr) !important;
+}
+.mc { font-size: 13px !important; padding: 5px !important; border-radius: 6px !important; line-height: 1.4 !important; }
+.mc.center { font-size: 16px !important; font-weight: 900 !important; }
+.mc.theme, .mc.tr { font-size: 14.5px !important; font-weight: 800 !important; }
+.mc.item { font-size: 12.5px !important; color: #1f2937 !important; font-weight: 500 !important; }
+
+/* マトリクス：4象限境界線を明確化＋象限ごとに淡色背景 */
+.mx-wrap { gap: 14px !important; }
+.mx-inner { background: #fff; padding: 6px; border-radius: 14px; }
+.mx-grid {
+  background: #cbd5e1 !important;
+  border: 2px solid #94a3b8 !important;
+  border-radius: 12px !important;
+  gap: 3px !important;
+  overflow: hidden;
+}
+.mx-cross::before { width: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.mx-cross::after { height: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.quad { padding: 18px !important; }
+.quad.q-tr { background: #fef2f2 !important; }   /* 赤系：今すぐ着手 */
+.quad.q-tl { background: #eff6ff !important; }   /* 青系：計画的推進 */
+.quad.q-br { background: #fffbeb !important; }   /* 黄系：委任・効率化 */
+.quad.q-bl { background: #f8fafc !important; }   /* 灰系：保留 */
+
+/* マトリクス軸ラベル：上下順序修正＋2倍拡大 */
+.mx-ay {
+  writing-mode: vertical-lr !important;
+  transform: none !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  padding: 14px 10px !important;
+  background: linear-gradient(180deg, rgba(239,68,68,.12) 0%, #ffffff 50%, rgba(37,99,235,.10) 100%) !important;
+  border-radius: 10px !important;
+  min-width: 44px !important;
+  letter-spacing: 0.05em;
+  line-height: 1.8 !important;
+}
+.mx-ax {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  padding: 12px 16px !important;
+  background: linear-gradient(90deg, rgba(37,99,235,.10) 0%, #ffffff 50%, rgba(239,68,68,.12) 100%) !important;
+  border-radius: 10px !important;
+  margin-top: 10px !important;
+  letter-spacing: 0.05em;
+}
+
+/* フローバッジ：高コントラスト（濃文字×淡背景） */
+.fbg.fb-act { background: rgba(37,99,235,.10) !important; color: #1e40af !important; font-weight: 700 !important; border: 1px solid rgba(37,99,235,.18); }
+.fbg.fb-dec { background: rgba(217,119,6,.14) !important; color: #92400e !important; font-weight: 700 !important; border: 1px solid rgba(217,119,6,.25); }
+.fbg.fb-mil { background: rgba(5,150,105,.14) !important; color: #065f46 !important; font-weight: 700 !important; border: 1px solid rgba(5,150,105,.25); }
+.fbg.fb-wrn { background: rgba(220,38,38,.10) !important; color: #991b1b !important; font-weight: 700 !important; border: 1px solid rgba(220,38,38,.20); }
+.fbg.fb-dur { background: rgba(71,85,105,.10) !important; color: #1e293b !important; font-weight: 700 !important; border: 1px solid rgba(71,85,105,.18); }
+.fbg.fb-out { background: rgba(8,145,178,.14) !important; color: #155e75 !important; font-weight: 700 !important; border: 1px solid rgba(8,145,178,.25); }
+
+/* フロー：つまずきポイント（kaiHint）ボックス */
+.fl-hint {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #fff7ed 0%, #fffbeb 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 14.5px;
+  color: #78350f;
+  line-height: 1.75;
+}
+.fl-hint::before {
+  content: "⚠️ つまずきポイント　";
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.03em;
+}
+
+/* ガント：クリック可能化 */
+.gt-bar { cursor: pointer !important; transition: all 0.15s; }
+.gt-bar:hover { opacity: 0.85; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
+.gt-bar.ms { cursor: pointer !important; }
+
 /* MOBILE フォント保持 */
 @media (max-width: 600px) {
-  body { font-size: 14.5px !important; }
-  .mc { font-size: 9px !important; }
-  .mc.center { font-size: 10.5px !important; }
-  .mc.theme, .mc.tr { font-size: 10px !important; }
-  .mc.item { font-size: 9px !important; }
+  html body { font-size: 15px !important; }
+  .m-grid { aspect-ratio: 1 !important; max-width: 100% !important; }
+  .mc { font-size: 10px !important; }
+  .mc.center { font-size: 11.5px !important; }
+  .mc.theme, .mc.tr { font-size: 11px !important; }
+  .mc.item { font-size: 10px !important; }
+  .mx-ay, .mx-ax { font-size: 15px !important; }
 }
 
 /* ============================================================
@@ -624,10 +715,10 @@ const DATA = {
       "施策の同時着手による組織分散"
     ],
     themeInsights: [
-      { index: 0, insight: "五箇条を経営会議で承認する。これが全施策のゴーサインとなる。社内文書化が最優先。" },
+      { index: 0, insight: "5か条を経営会議で承認する。これが全施策のゴーサインとなる。社内文書化が最優先。" },
       { index: 1, insight: "FU5014で同梱QRパイロットが最速。15万円・30日で動かせる。ここから全てが始まる。" },
       { index: 2, insight: "修理オンライン化で代理店に紹介手数料を還元する設計が反感対策の肝。修理＝最も濃い顧客接点。" },
-      { index: 3, insight: "データ還元レポートが『情報の互恵関係』を作り、代理店を味方に変える。これが五箇条第4条の実装。" },
+      { index: 3, insight: "データ還元レポートが『情報の互恵関係』を作り、代理店を味方に変える。これが5か条第4条の実装。" },
       { index: 4, insight: "サイズオーダーWeb化は売上完全代理店経由＝代理店が大歓迎する施策。希少な強みのデジタル化。" },
       { index: 5, insight: "メルマガには直販リンクを入れず販売店マップ誘導を徹底する。SNS資産を顧客リスト資産へ。" },
       { index: 6, insight: "保証クラウド・LINEは6ヶ月後の基盤拡張フェーズ。今は急がず、リスト構築を優先。" },
@@ -639,16 +730,16 @@ const DATA = {
     themes: [
       {
         index: 0,
-        name: "現状診断・五箇条",
-        description: "全施策の前提となる経営合意。代理店反感ゼロの五箇条を社内承認する。",
+        name: "現状診断・5か条",
+        description: "全施策の前提となる経営合意。代理店反感ゼロの5か条を社内承認する。",
         color: "#EF4444",
         bgLight: "rgba(239,68,68,.13)",
         items: [
           { id: "t0-0", text: "顧客リストゼロを可視化", description: "経営会議で『顧客が誰だか分からない』事実を共有", priority: 1 },
           { id: "t0-1", text: "EC8チャネル販売実態棚卸し", description: "アスクル781・モノタロウ177品など実数把握", priority: 1 },
           { id: "t0-2", text: "釣り市場-75%トレンド共有", description: "1998年2,020万→2023年510万人の構造変化を経営陣に提示", priority: 2 },
-          { id: "t0-3", text: "五箇条の経営会議承認", description: "代理店反感ゼロ原則を文書化・全社判定基準化", priority: 1 },
-          { id: "t0-4", text: "五箇条の代理店説明資料", description: "営業訪問時に手渡せる1枚資料を整備", priority: 2 },
+          { id: "t0-3", text: "5か条の経営会議承認", description: "代理店反感ゼロ原則を文書化・全社判定基準化", priority: 1 },
+          { id: "t0-4", text: "5か条の代理店説明資料", description: "営業訪問時に手渡せる1枚資料を整備", priority: 2 },
           { id: "t0-5", text: "リピート率の仮値設定", description: "現状計測不能。業界平均から仮値で開始", priority: 3 },
           { id: "t0-6", text: "LTV/CAC仮説値の設定", description: "経営判断指標の基準を設ける", priority: 2 },
           { id: "t0-7", text: "代理店上位50店リスト精査", description: "活性化対象を絞り込み", priority: 2 }
@@ -766,7 +857,7 @@ const DATA = {
           { id: "t7-0", text: "顧客リストDB一元管理", description: "QR・修理・メルマガ全データ統合", priority: 2 },
           { id: "t7-1", text: "代理店別売上ダッシュボード", description: "月次自動更新", priority: 2 },
           { id: "t7-2", text: "パート/兼任1名で運用開始", description: "月10〜20万円程度", priority: 1 },
-          { id: "t7-3", text: "五箇条違反検知チェック", description: "全施策実行前のセルフチェック", priority: 2 },
+          { id: "t7-3", text: "5か条違反検知チェック", description: "全施策実行前のセルフチェック", priority: 2 },
           { id: "t7-4", text: "AI需要予測（Year2）", description: "在庫最適化・新商品企画", priority: 3 },
           { id: "t7-5", text: "データ活用研修", description: "営業・企画チームへ展開", priority: 3 },
           { id: "t7-6", text: "ROI試算アップデート", description: "実績データで継続検証", priority: 2 },
@@ -777,13 +868,13 @@ const DATA = {
   },
   matrices: [
     {
-      themeIndex: 0, title: "現状診断・五箇条 優先度マトリクス",
-      kaiInsight: "五箇条の経営承認なくして何も始まらない。M1の最優先課題。代理店反感ゼロという原則を全社判定基準化することが、すべての施策の安全装置になる。",
+      themeIndex: 0, title: "現状診断・5か条 優先度マトリクス",
+      kaiInsight: "5か条の経営承認なくして何も始まらない。M1の最優先課題。代理店反感ゼロという原則を全社判定基準化することが、すべての施策の安全装置になる。",
       xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
       yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
       quadrants: [
         { id: "q0-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
-          { text: "五箇条の経営会議承認", detail: "M1中の最優先" },
+          { text: "5か条の経営会議承認", detail: "M1中の最優先" },
           { text: "顧客リストゼロを可視化", detail: "認識合わせから" },
           { text: "EC8チャネル販売実態棚卸し", detail: "現状把握" }
         ]},
@@ -793,7 +884,7 @@ const DATA = {
         ]},
         { id: "q0-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
           { text: "代理店上位50店リスト精査", detail: "営業部マターで進行" },
-          { text: "五箇条の代理店説明資料", detail: "営業用1枚資料" }
+          { text: "5か条の代理店説明資料", detail: "営業用1枚資料" }
         ]},
         { id: "q0-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
           { text: "リピート率の仮値設定", detail: "現状計測不能" }
@@ -850,7 +941,7 @@ const DATA = {
     },
     {
       themeIndex: 3, title: "代理店データ還元 優先度マトリクス",
-      kaiInsight: "五箇条第4条の実装。匿名化ルールを最初に決めること。Excelテンプレで上位50店から始め、反応を見てBIツール化へ進む段階的アプローチが安全。",
+      kaiInsight: "5か条第4条の実装。匿名化ルールを最初に決めること。Excelテンプレで上位50店から始め、反応を見てBIツール化へ進む段階的アプローチが安全。",
       xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
       yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
       quadrants: [
@@ -952,7 +1043,7 @@ const DATA = {
       quadrants: [
         { id: "q7-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
           { text: "パート/兼任1名で運用開始", detail: "M1から配置" },
-          { text: "五箇条違反検知チェック", detail: "全施策の入口" }
+          { text: "5か条違反検知チェック", detail: "全施策の入口" }
         ]},
         { id: "q7-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
           { text: "顧客リストDB一元管理", detail: "M3までに体系化" },
@@ -975,13 +1066,13 @@ const DATA = {
       title: "FU5014で同梱QRパイロット起動フロー",
       kaiComment: "30日で動かせる最速案件。LP・DB・印刷物を並列で進めるのが鍵。代理店への事前説明を必ず行う。",
       steps: [
-        { order: 1, title: "経営会議で五箇条＋パイロット計画承認", description: "五箇条と同時にFU5014パイロット計画を承認。投資15万円・期間3ヶ月。", type: "decision", duration: "Day1", output: "経営会議議事録" },
-        { order: 2, title: "LP制作発注（STUDIO/ペライチ）", description: "ノーコードツールで3年延長保証＋使い方動画LPを構築。10〜15万円。", type: "action", duration: "10日", output: "LP（HTTPS）" },
-        { order: 3, title: "DB構築（kintone or HubSpot無料）", description: "登録フォーム→DB→自動メール返信の流れを設計。代理店リスト690社プルダウン化。", type: "action", duration: "10日", output: "登録DB" },
-        { order: 4, title: "A6保証カード印刷物デザイン・発注", description: "QR・3年延長保証訴求・ブランドロゴ。1,000枚で約1万円。", type: "action", duration: "10日", output: "保証カード1,000枚" },
-        { order: 5, title: "代理店上位50店への事前説明", description: "営業訪問時に『お客様アフターサービス強化』として説明。データ還元レポートβ版もチラ見せ。", type: "warning", duration: "5日", output: "代理店説明資料配布完了" },
+        { order: 1, title: "経営会議で5か条＋パイロット計画承認", description: "5か条と同時にFU5014パイロット計画を承認。投資15万円・期間3ヶ月。", type: "decision", duration: "Day1", output: "経営会議議事録", kaiHint: "『投資15万円』の小ささより『パイロットしないリスク』を強調する方が経営層に響く。1年遅れたら釣り市場縮小に飲まれる、と数字で示す" },
+        { order: 2, title: "LP制作発注（STUDIO/ペライチ）", description: "ノーコードツールで3年延長保証＋使い方動画LPを構築。10〜15万円。", type: "action", duration: "10日", output: "LP（HTTPS）", kaiHint: "BCPサイトのような硬い文面は離脱の原因。鮎釣り愛好家のお客様目線で『3年延長保証』を主役に据える" },
+        { order: 3, title: "DB構築（kintone or HubSpot無料）", description: "登録フォーム→DB→自動メール返信の流れを設計。代理店リスト690社プルダウン化。", type: "action", duration: "10日", output: "登録DB", kaiHint: "代理店690社の単純プルダウン表示は離脱原因。地域→都道府県→店舗の3段階絞り込みが必須" },
+        { order: 4, title: "A6保証カード印刷物デザイン・発注", description: "QR・3年延長保証訴求・ブランドロゴ。1,000枚で約1万円。", type: "action", duration: "10日", output: "保証カード1,000枚", kaiHint: "QRは最低15mm四方を確保。同梱位置は箱を開けてすぐ目に入る上部に。小さいと読まれない" },
+        { order: 5, title: "代理店上位50店への事前説明", description: "営業訪問時に『お客様アフターサービス強化』として説明。データ還元レポートβ版もチラ見せ。", type: "warning", duration: "5日", output: "代理店説明資料配布完了", kaiHint: "ここを省略すると致命的な反感が出る。必ず5か条資料も同時配布し、対話で安心感を作る。『直販はしません』を明言" },
         { order: 6, title: "FU5014出荷ボックスに同梱開始", description: "営業部経由で出荷時に保証カードを同梱。最初の1ヶ月でデータを集める。", type: "milestone", duration: "30日", output: "初回登録100件以上" },
-        { order: 7, title: "効果測定とKPIレビュー", description: "登録率・代理店別分布・購入理由クロス集計。経営層へ報告。", type: "decision", duration: "5日", output: "KPIレポート" }
+        { order: 7, title: "効果測定とKPIレビュー", description: "登録率・代理店別分布・購入理由クロス集計。経営層へ報告。", type: "decision", duration: "5日", output: "KPIレポート", kaiHint: "登録率だけ見ない。代理店別の偏りを必ず確認。偏りが大きい未登録代理店には個別支援を厚くする" }
       ]
     },
     {
@@ -989,13 +1080,13 @@ const DATA = {
       title: "修理オンライン受付フロー構築",
       kaiComment: "顧客接点の深化と代理店紹介手数料還元の二刀流。修理＝最も濃いコミュニケーション機会を活かす。",
       steps: [
-        { order: 1, title: "現行修理業務フローのドキュメント化", description: "電話・FAX受付の現状フロー・処理時間・人員配置を整理。Web化のbefore/after設計。", type: "action", duration: "1週間", output: "現行フロー図" },
-        { order: 2, title: "Webフォーム外注発注", description: "WordPress＋Contact Form 7＋画像アップロード。30〜50万円。", type: "action", duration: "3週間", output: "Webフォーム稼働" },
+        { order: 1, title: "現行修理業務フローのドキュメント化", description: "電話・FAX受付の現状フロー・処理時間・人員配置を整理。Web化のbefore/after設計。", type: "action", duration: "1週間", output: "現行フロー図", kaiHint: "現場の修理担当者を必ず巻き込む。Web化への抵抗を初期段階で潰さないと運用フェーズで衝突する" },
+        { order: 2, title: "Webフォーム外注発注", description: "WordPress＋Contact Form 7＋画像アップロード。30〜50万円。", type: "action", duration: "3週間", output: "Webフォーム稼働", kaiHint: "写真3枚アップロードは合計15MB制限に。スマホ撮影想定で。圧縮処理を自動化しないと顧客が困る" },
         { order: 3, title: "Stripe/PayPay決済導入", description: "見積→決済の自動化。手数料3.6%程度。", type: "action", duration: "1週間", output: "決済システム連携" },
-        { order: 4, title: "代理店紹介手数料規程の経営会議承認", description: "修理代の5〜10%を販売店にバック。代理店との関係強化の核心。", type: "decision", duration: "Day1", output: "手数料規程文書" },
+        { order: 4, title: "代理店紹介手数料規程の経営会議承認", description: "修理代の5〜10%を販売店にバック。代理店との関係強化の核心。", type: "decision", duration: "Day1", output: "手数料規程文書", kaiHint: "5%か10%かは経営判断。最初は10%で代理店の信頼を勝ち取り、運用安定後に7%に下げるのが効果的" },
         { order: 5, title: "ヤマト集荷API連携", description: "顧客は集荷依頼ボタンだけで完了。手間ゼロの体験。", type: "action", duration: "2週間", output: "集荷自動化" },
-        { order: 6, title: "代理店向けキックオフ説明会", description: "上位50代理店に修理紹介手数料の仕組みを説明。協力体制を作る。", type: "milestone", duration: "5日", output: "代理店説明完了" },
-        { order: 7, title: "公開・初月500件目標", description: "公開後30日で500件の修理受付を目指す。", type: "milestone", duration: "30日", output: "受付500件" }
+        { order: 6, title: "代理店向けキックオフ説明会", description: "上位50代理店に修理紹介手数料の仕組みを説明。協力体制を作る。", type: "milestone", duration: "5日", output: "代理店説明完了", kaiHint: "Zoom一斉ではなく、地域別の小規模説明会で対話の場を作る。質疑応答時間を多めに" },
+        { order: 7, title: "公開・初月500件目標", description: "公開後30日で500件の修理受付を目指す。", type: "milestone", duration: "30日", output: "受付500件", kaiHint: "想定より少ない場合、修理サービスの認知不足が原因。Instagram・YouTubeで修理事例を発信する" }
       ]
     },
     {
@@ -1003,57 +1094,57 @@ const DATA = {
       title: "代理店データ還元レポートβ運用",
       kaiComment: "情報の互恵関係を作る最重要施策。営業がレポート手渡し時に対話することで、代理店との関係が一気に深まる。",
       steps: [
-        { order: 1, title: "Excelテンプレ設計", description: "A4 2ページ：客層・購入商品・リピート率・修理紹介手数料・販促提案", type: "action", duration: "1週間", output: "Excelテンプレ" },
-        { order: 2, title: "個人情報匿名化ルール策定", description: "年齢層・性別・地域までで個人特定不可。法務確認必須。", type: "warning", duration: "1週間", output: "匿名化ルール文書" },
+        { order: 1, title: "Excelテンプレ設計", description: "A4 2ページ：客層・購入商品・リピート率・修理紹介手数料・販促提案", type: "action", duration: "1週間", output: "Excelテンプレ", kaiHint: "凝りすぎ厳禁。代理店店長が5秒で『価値を感じる』テンプレが正解。数字より『提案』セクションが重要" },
+        { order: 2, title: "個人情報匿名化ルール策定", description: "年齢層・性別・地域までで個人特定不可。法務確認必須。", type: "warning", duration: "1週間", output: "匿名化ルール文書", kaiHint: "後から問題になりやすい。法務確認は省略禁止。代理店経由で顧客クレームが来た時の対応フローも事前定義" },
         { order: 3, title: "上位50代理店リスト精査", description: "売上上位＋関係性良好＋協力的な店舗を選定。", type: "action", duration: "1週間", output: "対象代理店リスト" },
         { order: 4, title: "β版レポート作成（上位50店分）", description: "施策1・2のデータをもとに自動生成。1代理店あたり数分。", type: "action", duration: "1週間", output: "β版レポート50枚" },
-        { order: 5, title: "営業訪問でレポート手渡し", description: "発注業務の合間に対話的に渡す。反応をヒアリング。", type: "action", duration: "1ヶ月", output: "全50店配布完了" },
+        { order: 5, title: "営業訪問でレポート手渡し", description: "発注業務の合間に対話的に渡す。反応をヒアリング。", type: "action", duration: "1ヶ月", output: "全50店配布完了", kaiHint: "メール送付は絶対NG。手渡しの『対話』に価値がある。営業の表情管理も大事、得意気な顔で渡さない" },
         { order: 6, title: "改善版設計", description: "代理店フィードバックを反映。フォーマット・項目を改善。", type: "action", duration: "2週間", output: "改善版テンプレ" },
         { order: 7, title: "全690店展開準備", description: "Year2に向けて、全代理店展開のスケジュール・自動化設計。", type: "milestone", duration: "1ヶ月", output: "全店展開計画" }
       ]
     }
   ],
   gantt: {
-    title: "12ヶ月実行ロードマップ",
+    title: "12ヶ月実行ロードマップ（タスククリックで関連箇所へ）",
     totalWeeks: 24,
     phases: [
       {
         name: "Phase1：合意・準備（W1〜W4）",
         color: "#EF4444",
         tasks: [
-          { name: "五箇条経営承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false },
-          { name: "現状診断・EC実態棚卸", startWeek: 1, endWeek: 4, isCritical: false, milestone: false },
-          { name: "五箇条承認完了", startWeek: 2, endWeek: 2, isCritical: false, milestone: true }
+          { name: "5か条経営承認", startWeek: 1, endWeek: 2, isCritical: true, milestone: false, linkTo: { type: "matrix", themeIndex: 0 } },
+          { name: "現状診断・EC実態棚卸", startWeek: 1, endWeek: 4, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 0 } },
+          { name: "5か条承認完了", startWeek: 2, endWeek: 2, isCritical: false, milestone: true, linkTo: { type: "matrix", themeIndex: 0 } }
         ]
       },
       {
         name: "Phase2：パイロット（W3〜W12）",
         color: "#F97316",
         tasks: [
-          { name: "同梱QRパイロット（FU5014）", startWeek: 3, endWeek: 12, isCritical: true, milestone: false },
-          { name: "修理オンラインWebフォーム開発", startWeek: 5, endWeek: 11, isCritical: false, milestone: false },
-          { name: "代理店レポートβ作成・配布", startWeek: 7, endWeek: 14, isCritical: false, milestone: false },
-          { name: "SNS→メール導線・LP", startWeek: 5, endWeek: 9, isCritical: false, milestone: false },
-          { name: "パイロット効果検証", startWeek: 12, endWeek: 12, isCritical: false, milestone: true }
+          { name: "同梱QRパイロット（FU5014）", startWeek: 3, endWeek: 12, isCritical: true, milestone: false, linkTo: { type: "flow", themeIndex: 1, quadrant: "q1-tr", sourceItem: "パイロットSKU選定" } },
+          { name: "修理オンラインWebフォーム開発", startWeek: 5, endWeek: 11, isCritical: false, milestone: false, linkTo: { type: "flow", themeIndex: 2, quadrant: "q2-tr", sourceItem: "Web受付フォーム" } },
+          { name: "代理店レポートβ作成・配布", startWeek: 7, endWeek: 14, isCritical: false, milestone: false, linkTo: { type: "flow", themeIndex: 3, quadrant: "q3-tr", sourceItem: "上位50代理店β配布" } },
+          { name: "SNS→メール導線・LP", startWeek: 5, endWeek: 9, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 5 } },
+          { name: "パイロット効果検証", startWeek: 12, endWeek: 12, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
         ]
       },
       {
         name: "Phase3：本格運用（W13〜W20）",
         color: "#22C55E",
         tasks: [
-          { name: "同梱QR全SKU展開", startWeek: 13, endWeek: 24, isCritical: false, milestone: false },
-          { name: "修理オンライン本格運用", startWeek: 12, endWeek: 24, isCritical: false, milestone: false },
-          { name: "サイズオーダーWeb化", startWeek: 14, endWeek: 22, isCritical: false, milestone: false },
-          { name: "代理店レポート全690店展開", startWeek: 16, endWeek: 24, isCritical: false, milestone: false }
+          { name: "同梱QR全SKU展開", startWeek: 13, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 1 } },
+          { name: "修理オンライン本格運用", startWeek: 12, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 2 } },
+          { name: "サイズオーダーWeb化", startWeek: 14, endWeek: 22, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 4 } },
+          { name: "代理店レポート全690店展開", startWeek: 16, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 3 } }
         ]
       },
       {
         name: "Phase4：拡張・統合（W21〜W24）",
         color: "#6366F1",
         tasks: [
-          { name: "LINE公式・チャットボット", startWeek: 18, endWeek: 24, isCritical: false, milestone: false },
-          { name: "保証クラウド化検討", startWeek: 20, endWeek: 24, isCritical: false, milestone: false },
-          { name: "1年目総括・Year2計画", startWeek: 24, endWeek: 24, isCritical: false, milestone: true }
+          { name: "LINE公式・チャットボット", startWeek: 18, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "保証クラウド化検討", startWeek: 20, endWeek: 24, isCritical: false, milestone: false, linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "1年目総括・Year2計画", startWeek: 24, endWeek: 24, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
         ]
       }
     ]
@@ -1214,8 +1305,8 @@ function renderMatrix(ti) {
   });
 
   if(!mx) return;
-  document.getElementById('mxAy').textContent=(mx.yAxis?.highLabel||'↑高')+'\n'+(mx.yAxis?.label||'重要度');
-  document.getElementById('mxAx').textContent='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+'→';
+  document.getElementById('mxAy').innerHTML='↑ '+(mx.yAxis?.highLabel||'高')+'<br>'+(mx.yAxis?.label||'重要度')+'<br>↓ '+(mx.yAxis?.lowLabel||'低');
+  document.getElementById('mxAx').innerHTML='← '+(mx.xAxis?.lowLabel||'低')+' ｜ '+(mx.xAxis?.label||'緊急度')+' ｜ '+(mx.xAxis?.highLabel||'高')+' →';
 
   const g=document.getElementById('mxGrid');
   Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
@@ -1271,6 +1362,7 @@ function renderFlow(fl) {
           ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
           ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
         </div>
+        ${step.kaiHint?`<div class="fl-hint">${step.kaiHint}</div>`:''}
         <label class="fl-check${ck?' done':''}">
           <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
           完了としてマーク
@@ -1321,7 +1413,16 @@ function renderGantt() {
       bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
       bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(ph.color||'var(--primary))'));
       bar.textContent=task.milestone?'◆':task.name;
-      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek);
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek)+(task.linkTo?' （クリックで関連箇所へ）':'');
+      if(task.linkTo){
+        bar.onclick=()=>{
+          const lt=task.linkTo;
+          if(lt.type==='matrix') goMatrix(lt.themeIndex||0);
+          else if(lt.type==='flow') goFlow(lt.themeIndex||0, lt.quadrant||'', lt.sourceItem||'');
+          else if(lt.type==='mandala') go('mandala', null);
+          else if(lt.type==='dashboard') go('dashboard', null);
+        };
+      }
       bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
     });
   });
