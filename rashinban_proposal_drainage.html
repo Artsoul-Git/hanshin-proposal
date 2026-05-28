@@ -1,0 +1,1969 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>🧭 下水道協会戦略コンパス — 阪神素地様</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+/* ============================================================
+   RASHINBAN — 下水道協会戦略コンパス（cyan accent版）
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f3f4f6; --surface: #ffffff; --surface2: #f9fafb;
+  --border: #e5e7eb; --text: #111827; --muted: #6b7280; --dim: #4b5563;
+  --primary: #0891b2; --primary-glow: rgba(8,145,178,.18);
+  --secondary: #06b6d4; --success: #059669;
+  --warn: #d97706; --danger: #dc2626;
+  --kai-bg: #ecfeff; --kai-border: #a5f3fc; --kai-text: #155e75; --kai-hi: #164e63;
+  --t0:#0891b2; --t1:#06b6d4; --t2:#0ea5e9; --t3:#14b8a6;
+  --t4:#22c55e; --t5:#f59e0b; --t6:#8b5cf6; --t7:#ec4899;
+}
+body { background:var(--bg); color:var(--text); font-family:'Noto Sans JP',-apple-system,'Hiragino Sans','Yu Gothic UI',sans-serif; font-size:14px; line-height:1.6; min-height:100vh; }
+h2 { font-size:18px; font-weight:700; }
+h3 { font-size:15px; font-weight:600; }
+
+/* ---- HEADER ---- */
+.hdr { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.92); backdrop-filter:blur(12px);
+       border-bottom:1px solid var(--border); padding:0 20px; height:56px;
+       display:flex; align-items:center; gap:14px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.hdr-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#0891b2,#06b6d4,#14b8a6);
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; white-space:nowrap; }
+.hdr-theme { flex:1; font-size:13px; color:var(--dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hdr-prog { display:flex; align-items:center; gap:8px; }
+.prog-bar { width:100px; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,#0891b2,#14b8a6); transition:width .4s; }
+.prog-pct { font-size:11px; color:var(--muted); min-width:30px; text-align:right; }
+.hdr-btn { background:var(--surface); border:1px solid var(--border); color:var(--dim);
+           padding:5px 11px; border-radius:6px; cursor:pointer; font-size:12px; transition:all .15s; }
+.hdr-btn:hover { background:var(--surface2); color:var(--text); }
+
+/* ---- NAV ---- */
+.nav { display:flex; gap:2px; padding:10px 20px 0; border-bottom:1px solid var(--border);
+       overflow-x:auto; background:var(--bg); }
+.tab { padding:7px 14px; border-radius:6px 6px 0 0; cursor:pointer; font-size:13px;
+       font-weight:500; color:var(--muted); border:1px solid transparent; border-bottom:none;
+       white-space:nowrap; position:relative; bottom:-1px; transition:all .15s; }
+.tab:hover { color:var(--text); background:var(--surface); }
+.tab.on { color:var(--primary); background:var(--surface); border-color:var(--border); border-bottom-color:var(--surface); }
+
+/* ---- VIEWS ---- */
+.view { display:none; padding:20px; max-width:1300px; margin:0 auto; width:100%; }
+.view.on { display:block; }
+
+/* ---- CARDS ---- */
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:16px; }
+.goal-card { background:linear-gradient(135deg,var(--surface),rgba(8,145,178,.12));
+             border:1px solid rgba(8,145,178,.25); border-radius:16px; padding:22px; margin-bottom:20px; }
+.goal-tag { display:inline-block; background:rgba(8,145,178,.18); color:#0e7490;
+            padding:2px 10px; border-radius:20px; font-size:11px; margin-bottom:8px; }
+.goal-title { font-size:22px; font-weight:800; margin-bottom:6px; }
+.goal-meta { font-size:12px; color:var(--dim); }
+.goal-bg { font-size:13px; color:var(--dim); margin-top:10px; line-height:1.7; }
+
+/* ---- STATS ---- */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr);}}
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px; }
+.stat-v { font-size:26px; font-weight:700; color:var(--primary); }
+.stat-l { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- KAI CARD ---- */
+.kai-card { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:12px;
+            padding:18px; margin-bottom:20px; position:relative; overflow:hidden; }
+.kai-card::before { content:''; position:absolute; top:-60px; right:-60px; width:200px; height:200px;
+                    border-radius:50%; background:radial-gradient(circle,rgba(8,145,178,.08) 0%,transparent 70%); }
+.kai-hdr { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.kai-av { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#0891b2,#06b6d4);
+          display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#fff; flex-shrink:0; }
+.kai-nm { font-weight:700; color:var(--kai-hi); font-size:14px; }
+.kai-rl { font-size:11px; color:var(--kai-text); }
+.kai-sum { color:var(--kai-text); line-height:1.75; font-size:14px; }
+.kai-verd { margin-top:12px; padding:9px 14px; background:rgba(220,38,38,.06);
+             border-left:3px solid var(--danger); border-radius:0 6px 6px 0;
+             color:#991b1b; font-size:13px; font-style:italic; }
+.kai-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.ktag { padding:3px 9px; border-radius:20px; font-size:11px; font-weight:500; }
+.ktag.ok { background:rgba(16,185,129,.12); color:#6EE7B7; border:1px solid rgba(16,185,129,.25); }
+.ktag.ng { background:rgba(239,68,68,.12); color:#FCA5A5; border:1px solid rgba(239,68,68,.25); }
+
+/* ---- SECTION TITLE ---- */
+.sec { font-size:13px; font-weight:600; color:var(--muted); text-transform:uppercase;
+       letter-spacing:.8px; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.sec::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* ---- TOP ACTIONS ---- */
+.act-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; }
+.act-item { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+            padding:10px 12px; cursor:pointer; display:flex; align-items:flex-start; gap:8px;
+            transition:all .15s; }
+.act-item:hover { background:var(--surface2); border-color:var(--primary); transform:translateY(-1px); }
+.act-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.act-tx { font-size:12px; }
+.act-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+
+/* ---- MANDALA ---- */
+.mandala-note { font-size:12px; color:var(--muted); margin-bottom:14px; }
+.mandala-wrap { overflow-x:auto; }
+.m-grid { display:grid; grid-template-columns:repeat(9,1fr); gap:2px;
+          width:100%; max-width:780px; margin:0 auto; aspect-ratio:1; }
+.mc { display:flex; align-items:center; justify-content:center; text-align:center;
+      font-size:9.5px; line-height:1.25; border-radius:3px; padding:2px;
+      transition:transform .12s, box-shadow .12s; overflow:hidden; word-break:break-all; }
+.mc.cp { cursor:pointer; }
+.mc.cp:hover { transform:scale(1.09); z-index:10; box-shadow:0 4px 18px rgba(0,0,0,.5); }
+.mc.center { background:linear-gradient(135deg,#0891b2,#06b6d4); color:#fff; font-weight:800; font-size:10px; z-index:5; box-shadow:0 2px 6px rgba(8,145,178,.3); }
+.mc.theme { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.tr  { color:#fff; font-weight:700; font-size:9.5px; }
+.mc.item { font-size:9px; }
+.mc.empty { background:var(--surface); opacity:.25; }
+
+/* ---- MATRIX ---- */
+.bc { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); margin-bottom:14px; flex-wrap:wrap; }
+.bc a { color:var(--muted); cursor:pointer; text-decoration:none; }
+.bc a:hover { color:var(--primary); }
+.bc .cur { color:var(--text); }
+.bc-sep { opacity:.4; }
+.t-pills { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:14px; }
+.t-pill { padding:4px 12px; border-radius:20px; font-size:12px; cursor:pointer;
+          border:1px solid transparent; color:#fff; opacity:.5; transition:all .15s; }
+.t-pill.on { opacity:1; box-shadow:0 2px 10px rgba(0,0,0,.3); }
+.mx-wrap { display:flex; gap:8px; align-items:stretch; }
+.mx-ay { writing-mode:vertical-rl; transform:rotate(180deg); font-size:11px; color:var(--muted);
+         display:flex; align-items:center; justify-content:center; padding:8px 0; flex-shrink:0; }
+.mx-inner { flex:1; }
+.mx-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+           gap:3px; min-height:460px; border:1px solid var(--border); border-radius:8px;
+           overflow:hidden; position:relative; }
+.mx-cross::before, .mx-cross::after { content:''; position:absolute; background:var(--border); z-index:1; pointer-events:none; }
+.mx-cross::before { left:50%; top:0; bottom:0; width:1px; }
+.mx-cross::after { top:50%; left:0; right:0; height:1px; }
+.quad { padding:12px; display:flex; flex-direction:column; gap:6px; min-height:200px; }
+.quad-lbl { font-size:12px; font-weight:700; margin-bottom:2px; }
+.quad-desc { font-size:10px; color:var(--muted); margin-bottom:6px; }
+.quad.q-tr { background:rgba(239,68,68,.06); }
+.quad.q-tl { background:rgba(8,145,178,.06); }
+.quad.q-br { background:rgba(245,158,11,.06); }
+.quad.q-bl { background:rgba(100,116,139,.04); }
+.qi { background:var(--bg); border:1px solid var(--border); border-radius:6px;
+      padding:7px 10px; cursor:pointer; font-size:12px; transition:all .15s;
+      display:flex; align-items:flex-start; gap:6px; }
+.qi:hover { background:var(--surface2); transform:translateX(2px); border-color:var(--primary); }
+.qi-tx { flex:1; line-height:1.4; }
+.qi-dt { font-size:10px; color:var(--muted); margin-top:2px; }
+.qi-ar { color:var(--muted); font-size:10px; flex-shrink:0; margin-top:2px; }
+.mx-ax { text-align:center; font-size:11px; color:var(--muted); margin-top:5px; padding:3px; }
+.mx-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+           padding:12px 14px; margin-top:14px; font-size:13px; color:var(--kai-text); }
+.mk-lbl { font-size:11px; font-weight:600; opacity:.7; margin-bottom:5px; }
+
+/* ---- FLOW ---- */
+.fl-ctx { background:var(--surface); border:1px solid var(--border); border-radius:8px;
+          padding:10px 14px; margin-bottom:18px; }
+.fl-ctx-l { font-size:11px; color:var(--muted); margin-bottom:3px; }
+.fl-ctx-t { font-size:15px; font-weight:700; }
+.fl-steps { position:relative; padding-left:38px; }
+.fl-step { position:relative; margin-bottom:14px; }
+.fl-step::before { content:''; position:absolute; left:-23px; top:30px; bottom:-14px;
+                   width:2px; background:var(--border); }
+.fl-step:last-child::before { display:none; }
+.fl-icon { position:absolute; left:-38px; top:8px; width:30px; height:30px;
+           border-radius:50%; display:flex; align-items:center; justify-content:center;
+           font-size:12px; z-index:1; font-weight:700; }
+.fl-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; transition:all .15s; }
+.fl-card.done { opacity:.55; }
+.fl-card.done .fl-title { text-decoration:line-through; }
+.fl-ord { font-size:10px; color:var(--muted); margin-bottom:3px; }
+.fl-title { font-size:14px; font-weight:700; margin-bottom:5px; }
+.fl-desc { font-size:13px; color:var(--dim); line-height:1.65; }
+.fl-meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:7px; }
+.fbg { font-size:11px; padding:2px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:3px; }
+.fb-act  { background:rgba(8,145,178,.14); color:#0e7490; }
+.fb-dec  { background:rgba(245,158,11,.14); color:#FCD34D; }
+.fb-mil  { background:rgba(16,185,129,.14); color:#6EE7B7; }
+.fb-wrn  { background:rgba(239,68,68,.14); color:#FCA5A5; }
+.fb-dur  { background:rgba(100,116,139,.14); color:var(--muted); }
+.fb-out  { background:rgba(6,182,212,.14); color:#67E8F9; }
+.fl-check { display:flex; align-items:center; gap:7px; margin-top:7px; cursor:pointer;
+            font-size:12px; color:var(--muted); padding:2px 0; }
+.fl-check input { accent-color:var(--primary); cursor:pointer; }
+.fl-check.done { text-decoration:line-through; opacity:.5; }
+.fl-kai { background:var(--kai-bg); border:1px solid var(--kai-border); border-radius:8px;
+          padding:12px 14px; margin-top:18px; }
+.fk-lbl { font-size:11px; color:var(--kai-text); font-weight:600; opacity:.7; margin-bottom:5px; }
+.fk-tx  { font-size:13px; color:var(--kai-text); line-height:1.7; }
+
+/* ---- MERMAID & CHART CONTAINERS ---- */
+.flow-wrap { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+             padding:20px; overflow-x:auto; margin-bottom:18px; }
+.mermaid { font-family:'Noto Sans JP', sans-serif !important; }
+.chart-box { background:var(--surface); border:1px solid var(--border); border-radius:12px;
+             padding:20px; margin-bottom:18px; }
+.chart-box h4 { font-size:15px; color:var(--text); margin-bottom:10px; font-weight:700; }
+.chart-canvas-wrap { position:relative; width:100%; height:340px; }
+.chart-box .source { font-size:11px; color:var(--muted); margin-top:8px; }
+.chart-box .source::before { content:"出典: "; }
+
+/* ---- INFO BOXES ---- */
+.info-box { background:#fef3c7; border-left:4px solid var(--warn); padding:12px 16px;
+            border-radius:6px; margin:12px 0; font-size:13px; }
+.info-box::before { content:"💡 "; font-weight:700; color:var(--warn); }
+.warn-box { background:#fee2e2; border-left:4px solid var(--danger); padding:12px 16px;
+            border-radius:6px; margin:12px 0; font-size:13px; }
+.warn-box::before { content:"⚠️ "; font-weight:700; color:var(--danger); }
+.note-box { background:var(--kai-bg); border-left:4px solid var(--primary); padding:14px 18px;
+            border-radius:8px; margin:16px 0; font-size:13px; }
+.note-box h5 { font-size:14px; color:var(--primary); font-weight:700; margin-bottom:6px; }
+
+/* ---- TABLE ---- */
+.table-wrap { overflow-x:auto; border-radius:10px; box-shadow:0 1px 3px rgba(0,0,0,.04);
+              margin:16px 0; border:1px solid var(--border); }
+table.tbl { width:100%; border-collapse:collapse; background:var(--surface); font-size:13px; }
+table.tbl th { background:#164e63; color:#fff; padding:10px; text-align:left;
+               font-weight:700; font-size:12px; }
+table.tbl td { padding:10px; border-bottom:1px solid var(--border); vertical-align:top; }
+table.tbl tr:last-child td { border-bottom:none; }
+table.tbl tr:nth-child(even) td { background:#fafafa; }
+table.tbl .num { text-align:right; font-variant-numeric:tabular-nums; }
+.badge { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; }
+.badge.high { background:#fee2e2; color:#b91c1c; }
+.badge.mid { background:#fef3c7; color:#92400e; }
+.badge.low { background:#dcfce7; color:#166534; }
+
+/* ---- UTIL ---- */
+.btn { padding:7px 14px; border-radius:7px; cursor:pointer; font-size:12px; font-weight:500; border:none; transition:all .15s; }
+.btn-g { background:transparent; color:var(--muted); border:1px solid var(--border); }
+.btn-g:hover { background:var(--surface2); color:var(--text); }
+.empty-s { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-s-i { font-size:40px; margin-bottom:10px; }
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ============================================================
+   v3 ユーザーフレンドリー再設計
+   ============================================================ */
+:root {
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --surface2: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #475569;
+  --dim:   #334155;
+  --primary: #0891b2;
+  --primary-glow: rgba(8,145,178,.18);
+  --secondary: #06b6d4;
+  --success: #059669;
+  --warn: #d97706;
+  --danger: #dc2626;
+  --kai-bg: #ecfeff;
+  --kai-border: #a5f3fc;
+  --kai-text: #155e75;
+  --kai-hi: #164e63;
+}
+html { font-size: 17px !important; }
+html body { font-size: 17px !important; line-height: 1.8 !important; letter-spacing: 0.015em !important; color: var(--text) !important; }
+h2 { font-size: 26px !important; font-weight: 800 !important; letter-spacing: 0.02em; color: var(--text); }
+h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text); }
+
+.goal-card { border-radius: 18px !important; padding: 28px !important; border: 1px solid #cffafe !important; background: linear-gradient(135deg,#ffffff 0%,#ecfeff 100%) !important; }
+.goal-tag { font-size: 12.5px !important; padding: 5px 14px !important; background: rgba(8,145,178,.12) !important; color: #0e7490 !important; border-radius: 999px !important; font-weight: 600; }
+.goal-title { font-size: 30px !important; font-weight: 800 !important; letter-spacing: 0.01em; color: var(--text) !important; }
+.goal-meta { font-size: 14.5px !important; color: var(--dim) !important; }
+.goal-bg { font-size: 17px !important; line-height: 1.9 !important; color: var(--dim) !important; }
+
+.stat { padding: 22px !important; border-radius: 14px !important; }
+.stat-v { font-size: 38px !important; font-weight: 800 !important; color: var(--primary) !important; }
+.stat-l { font-size: 14px !important; margin-top: 6px !important; color: var(--dim) !important; }
+
+.kai-card { padding: 24px !important; border-radius: 16px !important; }
+.kai-av { width: 36px !important; height: 36px !important; font-size: 14px !important; }
+.kai-nm { font-size: 15.5px !important; }
+.kai-rl { font-size: 12.5px !important; }
+.kai-sum { font-size: 17px !important; line-height: 1.95 !important; color: #164e63 !important; }
+.kai-verd { font-size: 15.5px !important; padding: 14px 18px !important; line-height: 1.75 !important; color: #991b1b !important; font-weight: 500; }
+.ktag { font-size: 12.5px !important; padding: 4px 12px !important; border-radius: 999px !important; }
+
+.sec { font-size: 14px !important; letter-spacing: 1px !important; margin-bottom: 16px !important; }
+
+.act-item { padding: 14px 16px !important; border-radius: 12px !important; gap: 10px !important; }
+.act-tx { font-size: 14px !important; }
+.act-sub { font-size: 12.5px !important; margin-top: 4px !important; }
+.act-dot { width: 11px !important; height: 11px !important; }
+
+.nav { padding: 12px 20px 0 !important; }
+.tab { font-size: 14.5px !important; padding: 10px 18px !important; border-radius: 10px 10px 0 0 !important; }
+
+.card { padding: 24px !important; border-radius: 16px !important; }
+
+.mandala-note { font-size: 13.5px !important; margin-bottom: 18px !important; }
+.m-grid { gap: 4px !important; max-width: 1100px !important; aspect-ratio: 16/11 !important; grid-template-rows: repeat(9, 1fr) !important; }
+.mc { font-size: 13px !important; padding: 5px !important; border-radius: 6px !important; line-height: 1.4 !important; }
+.mc.center { font-size: 16px !important; font-weight: 900 !important; }
+.mc.theme, .mc.tr { font-size: 14.5px !important; font-weight: 800 !important; }
+.mc.item { font-size: 12.5px !important; color: #1f2937 !important; font-weight: 500 !important; }
+
+.bc { font-size: 13.5px !important; }
+.t-pill { font-size: 13.5px !important; padding: 6px 14px !important; }
+.quad-lbl { font-size: 16px !important; font-weight: 800 !important; }
+.quad-desc { font-size: 12.5px !important; color: var(--muted) !important; margin-bottom: 10px !important; }
+.qi { font-size: 15px !important; padding: 12px 15px !important; border-radius: 10px !important; gap: 10px !important; color: var(--text) !important; }
+.qi-dt { font-size: 13px !important; margin-top: 5px !important; color: var(--muted) !important; }
+.mx-kai { font-size: 14.5px !important; padding: 14px 18px !important; line-height: 1.75 !important; }
+.mk-lbl { font-size: 12px !important; margin-bottom: 6px !important; }
+
+.fl-ctx { padding: 14px 18px !important; border-radius: 10px !important; }
+.fl-ctx-l { font-size: 12px !important; }
+.fl-ctx-t { font-size: 17px !important; }
+.fl-card { padding: 16px 18px !important; border-radius: 12px !important; }
+.fl-ord { font-size: 12px !important; margin-bottom: 5px !important; }
+.fl-title { font-size: 18px !important; margin-bottom: 10px !important; color: var(--text) !important; font-weight: 700 !important; }
+.fl-desc { font-size: 16px !important; line-height: 1.85 !important; color: var(--dim) !important; }
+.fbg { font-size: 12.5px !important; padding: 3px 10px !important; border-radius: 5px !important; }
+.fl-check { font-size: 13.5px !important; padding: 6px 0 !important; }
+.fl-kai { padding: 14px 18px !important; }
+.fk-lbl { font-size: 13px !important; margin-bottom: 6px !important; }
+.fk-tx { font-size: 14.5px !important; line-height: 1.8 !important; }
+
+/* マトリクス：4象限境界線を明確化＋象限ごとに淡色背景 */
+.mx-wrap { gap: 14px !important; }
+.mx-inner { background: #fff; padding: 6px; border-radius: 14px; }
+.mx-grid {
+  background: #cbd5e1 !important;
+  border: 2px solid #94a3b8 !important;
+  border-radius: 12px !important;
+  gap: 3px !important;
+  overflow: hidden;
+}
+.mx-cross::before { width: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.mx-cross::after { height: 2px !important; background: #94a3b8 !important; z-index: 2 !important; }
+.quad { padding: 18px !important; }
+.quad.q-tr { background: #fef2f2 !important; }
+.quad.q-tl { background: #ecfeff !important; }
+.quad.q-br { background: #fffbeb !important; }
+.quad.q-bl { background: #f8fafc !important; }
+
+/* マトリクス Y軸ラベル：3パーツ縦並び（高→重要度→低） */
+.mx-ay {
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 15px !important;
+  padding: 14px 6px !important;
+  background: linear-gradient(180deg, rgba(239,68,68,.10) 0%, transparent 50%, rgba(8,145,178,.10) 100%) !important;
+  border-radius: 12px !important;
+  min-width: 76px !important;
+  gap: 8px !important;
+  line-height: 1.4 !important;
+}
+.mx-ay .ax-pole {
+  font-weight: 800 !important;
+  color: var(--text) !important;
+  font-size: 14.5px !important;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+.mx-ay .ax-pole.high { color: #b91c1c !important; }
+.mx-ay .ax-pole.low { color: #0e7490 !important; }
+.mx-ay .ax-label {
+  writing-mode: vertical-lr !important;
+  background: linear-gradient(135deg, #0891b2, #06b6d4) !important;
+  color: #ffffff !important;
+  padding: 12px 7px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 0 2px 6px rgba(8,145,178,.3);
+}
+.mx-ax {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 15px !important;
+  padding: 12px 18px !important;
+  background: linear-gradient(90deg, rgba(8,145,178,.10) 0%, transparent 50%, rgba(239,68,68,.10) 100%) !important;
+  border-radius: 12px !important;
+  margin-top: 12px !important;
+  gap: 16px !important;
+}
+.mx-ax .ax-pole {
+  font-weight: 800 !important;
+  color: var(--text) !important;
+  font-size: 14.5px !important;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+}
+.mx-ax .ax-pole.low { color: #0e7490 !important; }
+.mx-ax .ax-pole.high { color: #b91c1c !important; }
+.mx-ax .ax-label {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #ffffff !important;
+  padding: 7px 18px !important;
+  border-radius: 999px !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 0 2px 6px rgba(245,158,11,.3);
+}
+
+/* フローバッジ：高コントラスト */
+.fbg.fb-act { background: rgba(8,145,178,.10) !important; color: #155e75 !important; font-weight: 700 !important; border: 1px solid rgba(8,145,178,.18); }
+.fbg.fb-dec { background: rgba(217,119,6,.14) !important; color: #92400e !important; font-weight: 700 !important; border: 1px solid rgba(217,119,6,.25); }
+.fbg.fb-mil { background: rgba(5,150,105,.14) !important; color: #065f46 !important; font-weight: 700 !important; border: 1px solid rgba(5,150,105,.25); }
+.fbg.fb-wrn { background: rgba(220,38,38,.10) !important; color: #991b1b !important; font-weight: 700 !important; border: 1px solid rgba(220,38,38,.20); }
+.fbg.fb-dur { background: rgba(71,85,105,.10) !important; color: #1e293b !important; font-weight: 700 !important; border: 1px solid rgba(71,85,105,.18); }
+.fbg.fb-out { background: rgba(6,182,212,.14) !important; color: #155e75 !important; font-weight: 700 !important; border: 1px solid rgba(6,182,212,.25); }
+
+.fl-hint {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #fff7ed 0%, #fffbeb 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 14.5px;
+  color: #78350f;
+  line-height: 1.75;
+}
+.fl-hint::before {
+  content: "⚠️ つまずきポイント　";
+  font-weight: 800;
+  color: #b45309;
+  letter-spacing: 0.03em;
+}
+
+/* ガント */
+.gt-wrap { overflow-x:auto; }
+.gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
+.gt-wk  { flex:1; text-align:center; font-size:10px; color:var(--muted);
+          padding:3px 0; border-left:1px solid var(--border); min-width:20px; }
+.gt-phase { font-size:13.5px; font-weight:600; color:var(--muted); text-transform:uppercase;
+            letter-spacing:.5px; padding:8px 0 4px; }
+.gt-row { display:flex; align-items:center; margin-bottom:3px; min-height:30px;
+          border-bottom: 1px dashed rgba(148,163,184,.2); padding: 1px 0; }
+.gt-row:last-child { border-bottom: none; }
+.gt-name { width:200px; min-width:200px; font-size:13.5px; padding-right:10px;
+           overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--dim); }
+.gt-bars { flex:1; position:relative; height:28px; }
+.gt-bar { position:absolute; height:18px; top:5px; border-radius:4px; padding:0 6px;
+          font-size:11px; color:#fff; font-weight:500; display:flex; align-items:center;
+          overflow:hidden; white-space:nowrap; transition:opacity .15s; cursor:pointer; }
+.gt-bar:hover { opacity:.85; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
+.gt-bar.crit { box-shadow:0 0 8px rgba(239,68,68,.45); }
+.gt-bar.ms { width:18px !important; border-radius:50%; padding:0; justify-content:center; font-size:11px; }
+.gt-legend { display:flex; gap:12px; margin-bottom:10px; font-size:13px; color:var(--muted); }
+.gt-leg-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:4px; }
+
+/* テーマピル：ホバー時に概要説明を下に表示 */
+.t-pills { position: relative; padding-bottom: 4px; }
+.t-pill { position: relative; opacity: 0.78 !important; }
+.t-pill.on { opacity: 1 !important; }
+.t-pill:hover { opacity: 1 !important; }
+.t-pill[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #164e63;
+  color: #ecfeff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  width: 320px;
+  max-width: 90vw;
+  text-align: left;
+  line-height: 1.7;
+  z-index: 9999;
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+  letter-spacing: 0.01em;
+  white-space: normal;
+  pointer-events: none;
+}
+.t-pill[data-tip]:hover::before {
+  content: '';
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-bottom-color: #164e63;
+  z-index: 9999;
+  pointer-events: none;
+}
+.tabs, .view, .card, .mx-wrap, .mx-inner, .t-pills { overflow: visible !important; }
+.t-pill { z-index: 1; }
+.t-pill:hover { z-index: 1000; }
+
+.mx-core {
+  margin-top: 12px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 600px) { .mx-core { grid-template-columns: 1fr; } }
+.mx-core-block { padding: 8px 0; }
+.mx-core-lbl {
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.mx-core-lbl.issue { color: var(--danger); }
+.mx-core-lbl.prio  { color: var(--success); }
+.mx-core-tx { font-size: 14px; color: var(--text); line-height: 1.75; }
+
+/* ktag濃く */
+.ktag.ok {
+  background: #d1fae5 !important;
+  color: #065f46 !important;
+  border: 1px solid rgba(5,150,105,.3) !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+}
+.ktag.ng {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  border: 1px solid rgba(220,38,38,.30) !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+}
+.kai-av {
+  background: linear-gradient(135deg, #0891b2, #06b6d4) !important;
+  font-size: 18px !important;
+}
+
+/* マンダラレジェンド削除 */
+.m-legend, #mLeg { display: none !important; }
+
+/* マンダラ3行制限 */
+.mc.item {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  word-break: break-word;
+  text-overflow: ellipsis;
+}
+
+/* マンダラ：3×3グループごとに視覚的な隙間 */
+.m-grid .mc:nth-child(9n+3),
+.m-grid .mc:nth-child(9n+6) {
+  margin-right: 7px;
+}
+.m-grid .mc:nth-child(n+19):nth-child(-n+27),
+.m-grid .mc:nth-child(n+46):nth-child(-n+54) {
+  margin-bottom: 7px;
+}
+
+/* タブビュー切替時の表示制御 */
+.budget-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin:16px 0; }
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin:16px 0; }
+.risk-grid { display:grid; gap:12px; margin:16px 0; }
+.next-list { counter-reset: nli; padding:0; list-style:none; margin:18px 0; }
+.next-list li { counter-increment: nli; position:relative; padding:18px 18px 18px 64px;
+                background:var(--surface); border:1px solid var(--border); border-radius:12px;
+                margin-bottom:12px; font-size:15px; line-height:1.7; }
+.next-list li::before { content: counter(nli); position:absolute; left:18px; top:18px;
+                        width:34px; height:34px; background:linear-gradient(135deg,#0891b2,#06b6d4);
+                        color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center;
+                        font-weight:900; font-size:16px; }
+.next-list li strong { color: var(--primary); display:block; margin-bottom:4px; font-size:16px; }
+
+/* footer */
+.foot { background:#164e63; color:#ecfeff; padding:24px 20px; text-align:center;
+        font-size:13px; margin-top:40px; }
+.foot p { margin:4px 0; opacity:0.9; }
+.foot .small { font-size:11px; opacity:0.7; }
+
+/* 印刷 */
+@media print {
+  @page { size: A4 landscape; margin: 8mm; }
+  html, body { background:#fff !important; color:#111 !important;
+    -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .hdr, .nav, #password-gate, .hdr-btn, .hdr-prog { display: none !important; }
+  .view { display: block !important; padding: 0 !important; margin: 0 !important; max-width: 100% !important; page-break-after: always; }
+  .view:last-child { page-break-after: auto; }
+  .card, .goal-card, .kai-card, .stat, .act-item, .qi, .fl-card, .fl-ctx {
+    box-shadow: none !important; border: 1px solid #d1d5db !important; page-break-inside: avoid; }
+  .goal-card { background: #fff !important; }
+}
+
+@media (max-width: 600px) {
+  html body { font-size: 15px !important; }
+  .m-grid { aspect-ratio: 1 !important; max-width: 100% !important; }
+  .mc { font-size: 10px !important; }
+  .mc.center { font-size: 11.5px !important; }
+  .mc.theme, .mc.tr { font-size: 11px !important; }
+  .mc.item { font-size: 10px !important; }
+  .mx-ay, .mx-ax { font-size: 15px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#164e63 0%,#0e7490 60%,#0891b2 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地様 下水道協会戦略コンパス</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#164e63;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('drainage_rashinban_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('drainage_rashinban_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ═══ HEADER ═══ -->
+<header class="hdr">
+  <div class="hdr-logo">🧭 下水道協会戦略コンパス</div>
+  <div class="hdr-theme" id="hTheme"></div>
+  <div class="hdr-prog">
+    <span class="prog-pct" id="hPct">0%</span>
+    <div class="prog-bar"><div class="prog-fill" id="hFill" style="width:0%"></div></div>
+  </div>
+  <button class="hdr-btn" onclick="window.print()">🖨️ 印刷</button>
+</header>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav">
+  <div class="tab on"  onclick="go('dashboard',this)">🎯 目標とKai診断</div>
+  <div class="tab"     onclick="go('mandala',this)">🧭 マンダラ</div>
+  <div class="tab"     onclick="go('matrix',this)">📊 マトリクス</div>
+  <div class="tab"     onclick="go('flow',this)">🔀 実行フロー</div>
+  <div class="tab"     onclick="go('gantt',this)">📅 6ヶ月ガント</div>
+  <div class="tab"     onclick="go('budget',this)">💼 予算とKPI</div>
+  <div class="tab"     onclick="go('risk',this)">⚠️ リスクと対策</div>
+  <div class="tab"     onclick="go('next',this)">🎬 次のアクション</div>
+</nav>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="v-dashboard" class="view on">
+  <div class="goal-card">
+    <div class="goal-tag">目標テーマ</div>
+    <div class="goal-title" id="dTheme"></div>
+    <div class="goal-meta" id="dMeta"></div>
+    <div class="goal-bg" id="dBg"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">600</div><div class="stat-l">協会員母集団（人）</div></div>
+    <div class="stat"><div class="stat-v">15</div><div class="stat-l">予算上限（万円）</div></div>
+    <div class="stat"><div class="stat-v">2分</div><div class="stat-l">マイク発言枠</div></div>
+    <div class="stat"><div class="stat-v" id="sPct">0%</div><div class="stat-l">実行進捗</div></div>
+  </div>
+  <div class="kai-card">
+    <div class="kai-hdr">
+      <div class="kai-av">📊</div>
+      <div><div class="kai-nm">Kai分析サマリー</div><div class="kai-rl">下水道協会総会を起点にした「個対多数」転換の本質</div></div>
+    </div>
+    <div class="kai-sum" id="kSum"></div>
+    <div class="kai-verd" id="kVerd"></div>
+    <div class="kai-tags" id="kTags"></div>
+  </div>
+  <div class="sec">最優先で着手すべきアクション</div>
+  <div class="act-grid" id="dActs"></div>
+</div>
+
+<!-- ═══ MANDALA ═══ -->
+<div id="v-mandala" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <h2>マンダラチャート（中央＋8テーマ×8項目＝64アクション）</h2>
+    <button class="btn btn-g" onclick="go('matrix',null)">マトリクスを見る →</button>
+  </div>
+  <div class="mandala-note">テーマセル（色付き）をクリック → 優先度マトリクスへ</div>
+  <div class="mandala-wrap"><div class="m-grid" id="mGrid"></div></div>
+  <div class="m-legend" id="mLeg"></div>
+</div>
+
+<!-- ═══ MATRIX ═══ -->
+<div id="v-matrix" class="view">
+  <div class="bc" id="mxBc">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="mxBcTh">マトリクス</span>
+  </div>
+  <div class="t-pills" id="tPills"></div>
+  <div class="mx-kai" id="mxKai" style="display:none;">
+    <div class="mk-lbl">💡 ワンポイントアドバイス</div>
+    <div id="mxKaiTx"></div>
+    <div class="mx-core" id="mxCore" style="display:none;">
+      <div class="mx-core-block">
+        <div class="mx-core-lbl issue">🎯 コアイシュー</div>
+        <div class="mx-core-tx" id="mxCoreIssue"></div>
+      </div>
+      <div class="mx-core-block">
+        <div class="mx-core-lbl prio">⚡ 最優先アクション</div>
+        <div class="mx-core-tx" id="mxTopPrio"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mx-wrap">
+    <div class="mx-ay" id="mxAy">重要度</div>
+    <div class="mx-inner">
+      <div class="mx-grid" id="mxGrid"><div class="mx-cross"></div></div>
+      <div class="mx-ax" id="mxAx">緊急度</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FLOW ═══ -->
+<div id="v-flow" class="view">
+  <h2 style="margin-bottom:14px;">実行フロー — 営業×プロモーション×組織露出の3レーン並走</h2>
+  <p style="color:var(--dim);margin-bottom:18px;line-height:1.8;">総会1日を起点に「個対多数」の継続接触を作る3つのレーン。それぞれが独立で動きながら、合流点で相乗効果を生む設計です。</p>
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart LR
+  subgraph PR["プロモーション・レーン"]
+    P1["総会当日<br/>DLコンテンツ3本"] --> P2["1週間内<br/>フォロー配信"]
+    P2 --> P3["1ヶ月後<br/>アンケート集計"]
+    P3 --> P4["3ヶ月<br/>会報誌記事提供"]
+    P4 --> P5["6ヶ月<br/>メルマガ枠掲載"]
+  end
+  subgraph SL["営業・レーン"]
+    S1["名刺交換<br/>+LINE登録"] --> S2["個別電話<br/>フォロー"]
+    S2 --> S3["サンプル<br/>貸出"]
+    S3 --> S4["商談"]
+    S4 --> S5["先行運用契約"]
+    S5 --> S6["継続契約"]
+  end
+  subgraph OR["組織露出・レーン"]
+    O1["賛助会員<br/>2分マイク挨拶"] --> O2["記事寄稿<br/>(無償)"]
+    O2 --> O3["配信係<br/>立候補"]
+    O3 --> O4["協会研修<br/>協賛"]
+    O4 --> O5["業界誌<br/>取材"]
+  end
+  P1 -.合流.-> S1
+  P3 -.見込み判定.-> S3
+  P4 -.->|信頼蓄積| O2
+  O3 -.->|公式権限| P5
+  style P1 fill:#ecfeff,stroke:#0891b2
+  style S5 fill:#dcfce7,stroke:#059669
+  style O5 fill:#fef3c7,stroke:#d97706
+    </pre>
+  </div>
+
+  <div class="bc" id="flBc" style="margin-top:24px;">
+    <a onclick="go('mandala',null)">マンダラ</a>
+    <span class="bc-sep">›</span>
+    <a onclick="go('matrix',null)" id="flBcTh">マトリクス</a>
+    <span class="bc-sep">›</span>
+    <span class="cur" id="flBcIt">詳細フロー</span>
+  </div>
+  <div class="fl-ctx"><div class="fl-ctx-l">対象アクション</div><div class="fl-ctx-t" id="flCtx">マトリクスで項目を選択してください</div></div>
+  <div id="flEmpty" class="empty-s">
+    <div class="empty-s-i">→</div>
+    <div>マトリクスの項目をクリックすると詳細フローが表示されます</div>
+  </div>
+  <div class="fl-steps" id="flSteps"></div>
+  <div class="fl-kai" id="flKai" style="display:none;">
+    <div class="fk-lbl">💡 ワンポイントアドバイス</div>
+    <div class="fk-tx" id="flKaiTx"></div>
+  </div>
+</div>
+
+<!-- ═══ GANTT ═══ -->
+<div id="v-gantt" class="view">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+    <h2 id="gtTitle">6ヶ月実行ロードマップ</h2>
+    <div class="gt-legend">
+      <span><span class="gt-leg-dot" style="background:var(--danger)"></span>クリティカル</span>
+      <span><span class="gt-leg-dot" style="background:var(--primary)"></span>プロモ</span>
+      <span><span class="gt-leg-dot" style="background:#059669"></span>営業</span>
+      <span><span class="gt-leg-dot" style="background:#d97706"></span>組織露出</span>
+      <span><span class="gt-leg-dot" style="background:var(--success);border-radius:50%"></span>マイルストーン</span>
+    </div>
+  </div>
+  <p style="color:var(--dim);margin-bottom:16px;">タスクバーをクリックすると関連マトリクス／フローへジャンプ。色は施策の種別を示します（プロモ／営業／組織露出）。</p>
+  <div class="gt-wrap"><div id="gtChart"></div></div>
+</div>
+
+<!-- ═══ BUDGET & KPI ═══ -->
+<div id="v-budget" class="view">
+  <h2>15万円予算配分とKPI</h2>
+  <p style="color:var(--dim);margin:10px 0 24px;line-height:1.8;">「業務改善のための初期投資」として15万円を6項目に配分。クーポンまたはサンプル貸出の原資は別枠（粗利相殺扱い）です。</p>
+
+  <h3>予算配分表</h3>
+  <div class="table-wrap">
+    <table class="tbl">
+      <thead>
+        <tr><th>項目</th><th>内容</th><th class="num">金額</th><th>備考</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>DLコンテンツ3本制作</td><td>外部ライター＋編集（A・B・Cの3資料）</td><td class="num">5〜7万円</td><td>A資料（作業安全）が最重要・最厚に</td></tr>
+        <tr><td>簡易LP制作</td><td>リード獲得フォーム付き・スマホ最適化</td><td class="num">2〜3万円</td><td>STUDIO等のノーコードで十分</td></tr>
+        <tr><td>PDFデザイン</td><td>3資料のレイアウト・表紙制作</td><td class="num">1〜2万円</td><td>テンプレ利用で圧縮可</td></tr>
+        <tr><td>QR入りA5チラシ</td><td>デザイン＋オンデマンド印刷300部</td><td class="num">1〜2万円</td><td>当日配布の本丸</td></tr>
+        <tr><td>LINE公式設定</td><td>アカウント開設・自動応答・リッチメニュー</td><td class="num">0〜1万円</td><td>無料プランで開始</td></tr>
+        <tr><td>バッファ</td><td>追加印刷・差替え・予備費</td><td class="num">1〜2万円</td><td>想定外への備え</td></tr>
+        <tr style="background:#ecfeff"><td><strong>小計</strong></td><td></td><td class="num"><strong>10〜17万円</strong></td><td>15万円±2万円で着地</td></tr>
+        <tr style="background:#fef3c7"><td><strong>別枠：サンプル貸出原資</strong></td><td>10着×原価4,000円（粗利相殺扱い）</td><td class="num"><strong>約4万円</strong></td><td>クーポン採用時は配布数次第で増減</td></tr>
+        <tr style="background:#dcfce7"><td><strong>合計（本予算＋別枠）</strong></td><td></td><td class="num"><strong>14〜21万円</strong></td><td>サンプル貸出案ベースの想定</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <h5>予算優先順位（カットするならこの順）</h5>
+    <p>1. バッファ→ 2. LINE公式（無料で運用継続可）→ 3. PDFデザイン（社内Canvaで代替可）。<strong>DLコンテンツ制作とLP制作は絶対にカットしない</strong>。これが「以前から提供している」と言える根拠になります。</p>
+  </div>
+
+  <h3 style="margin-top:36px;">想定KPI（仮置）</h3>
+  <p style="color:var(--dim);margin-bottom:14px;">KPIは現時点ですべて仮置の数値です。実装後の1ヶ月実績を見て再設定します。</p>
+
+  <div class="kpi-grid">
+    <div class="card">
+      <h4 style="color:var(--primary);margin-bottom:10px;">📍 総会当日（仮置）</h4>
+      <ul style="font-size:14px;line-height:1.9;padding-left:18px;">
+        <li>名刺交換：<strong>50〜80枚</strong>（物理上限）</li>
+        <li>QR読込：<strong>30〜50件</strong></li>
+        <li>LINE登録：<strong>15〜30件</strong></li>
+        <li>2分マイク聴衆反応：<strong>後日声掛け5件以上</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--primary);margin-bottom:10px;">📍 1ヶ月後（仮置）</h4>
+      <ul style="font-size:14px;line-height:1.9;padding-left:18px;">
+        <li>DL率：<strong>30%</strong>（LP訪問→DL）</li>
+        <li>アンケート回答率：<strong>15%</strong>（DL者→回答）</li>
+        <li>サンプル貸出申込：<strong>3〜5件</strong></li>
+        <li>個別問い合わせ：<strong>5〜10件</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--primary);margin-bottom:10px;">📍 3ヶ月後（仮置）</h4>
+      <ul style="font-size:14px;line-height:1.9;padding-left:18px;">
+        <li>商談化：<strong>5社</strong></li>
+        <li>契約：<strong>2〜3社</strong></li>
+        <li>業界誌掲載：<strong>1本</strong></li>
+        <li>協会会報誌記事提供：<strong>1本</strong></li>
+      </ul>
+    </div>
+    <div class="card" style="background:var(--kai-bg);border-color:var(--kai-border);">
+      <h4 style="color:var(--primary);margin-bottom:10px;">📍 6ヶ月後（仮置）</h4>
+      <ul style="font-size:14px;line-height:1.9;padding-left:18px;">
+        <li>協会公式メルマガ枠：<strong>獲得</strong></li>
+        <li>累計契約社数：<strong>5〜8社</strong></li>
+        <li>初年度粗利増：<strong>30〜80万円</strong></li>
+        <li>3年累積粗利見込み：<strong>200〜500万円</strong></li>
+        <li>営業1人あたり工数：<strong>30%減</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:36px;">3シナリオ累計粗利推移グラフ</h3>
+  <div class="chart-box">
+    <h4>総会当日〜12ヶ月の累計粗利見込み（仮置）</h4>
+    <div class="chart-canvas-wrap">
+      <canvas id="chartProfit"></canvas>
+    </div>
+    <p class="source">仮置：業務用ウェダー単価8,000〜35,000円・粗利率40%・1社あたり利用者5〜15人・購入サイクル3年を前提としたKai試算</p>
+  </div>
+
+  <div class="warn-box">
+    上記KPIはすべて仮置です。総会開催時期・賛助会員の発言枠詳細・既存事例化の進捗が確定すると、ベースラインが大きく動きます。
+  </div>
+</div>
+
+<!-- ═══ RISK ═══ -->
+<div id="v-risk" class="view">
+  <h2>想定リスクと対策</h2>
+  <p style="color:var(--dim);margin:10px 0 24px;line-height:1.8;">どんな施策にも裏目はあります。想定される4つのリスクと、その対策をあらかじめ定めておきます。</p>
+
+  <div class="table-wrap">
+    <table class="tbl">
+      <thead>
+        <tr><th style="width:28%">リスク</th><th style="width:10%">発生確率</th><th style="width:10%">影響度</th><th>対策</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>賛助会員追放リスク</strong><br><span style="font-size:12px;color:var(--muted)">「あの会社、結局売り込みに来てる」と協会内で評判が落ちる</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td><span class="badge high">大</span></td>
+          <td>2分マイクで「売り込まない」と明確に宣言／配布物に商品カタログを含めない／総会後の個別連絡は「資料DLされた方への御礼」の形を守る</td>
+        </tr>
+        <tr>
+          <td><strong>クーポン赤字リスク</strong><br><span style="font-size:12px;color:var(--muted)">5,000円OFFが粗利を食い、配るほど損する構造</span></td>
+          <td><span class="badge high">高</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td>サンプル貸出案を第一選択／クーポン採用時はアンケート回答者限定＋2,000円OFF＋月10件まで上限設定</td>
+        </tr>
+        <tr>
+          <td><strong>「以前から提供」嘘バレリスク</strong><br><span style="font-size:12px;color:var(--muted)">明らかに作りたてのLPで信頼を失う</span></td>
+          <td><span class="badge low">低</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td>総会2週間前にはLP公開／ドメイン取得時期がバレないよう注意／「資料庫を整備しました」と現在形で表現するスクリプトに修正</td>
+        </tr>
+        <tr>
+          <td><strong>コンテンツ制作遅延リスク</strong><br><span style="font-size:12px;color:var(--muted)">外部ライター手配が遅れ、総会に間に合わない</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td><span class="badge high">大</span></td>
+          <td>本資料決裁から1週間以内にライター発注／3資料のうち1本（B：ウェダー活用）は社内素材で完結する構成にする保険を用意</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box" style="margin-top:24px;">
+    <h5>リスク管理の基本姿勢</h5>
+    <p>賛助会員追放リスクは「発生したら致命的」なので、防御を最優先します。クーポン赤字リスクは「設計次第で完全に防げる」のでサンプル貸出を主軸とします。残り2つは時間管理で防げる類のリスクで、本資料決裁直後の動き出しが鍵です。</p>
+  </div>
+</div>
+
+<!-- ═══ NEXT ═══ -->
+<div id="v-next" class="view">
+  <h2>次のアクション — 今週中に着手する5項目</h2>
+  <p style="color:var(--dim);margin:10px 0 24px;line-height:1.8;">本資料を踏まえて、今週中に着手する具体的アクションです。1〜5の順序で取り組むことを推奨します。</p>
+
+  <ol class="next-list">
+    <li>
+      <strong>既存事例化交渉の対象企業リストアップ</strong>
+      既にウェダー納入実績のある下水道業者を社内で抽出。社長から直接打診（3社目標）。ウェダー数着提供（10万円相当）と引換に「お客様の声」契約を取り付ける。事例化済み実績が当日DL資料に載っているかどうかが、信頼の起点を決める。
+    </li>
+    <li>
+      <strong>コンテンツライター手配</strong>
+      A資料（作業安全マニュアル）の執筆者を確保。クラウドソーシング or 知人紹介で2〜3万円／本想定。最も重要なA資料は外部発注で品質確保、B資料（ウェダー活用）は社内素材で完結できる構成にしておくと、ライター遅延の保険になる。
+    </li>
+    <li>
+      <strong>LPワイヤーフレーム作成</strong>
+      STUDIO等のノーコードツールでLPの骨組みを社内で書く。デザインは制作会社へ。「現場の安全と効率を支える資料庫」のキャッチコピーで、3コンテンツのDLボタンを配置。フォーム5問（会社規模／ウェダー利用人数／現在のメーカー／困りごと／問い合わせ希望）。
+    </li>
+    <li>
+      <strong>QRチラシのデザイン手配</strong>
+      A5・両面・300部。デザイン込みで1.5〜2万円。総会1週間前納品を逆算してスケジュール確定。表面：「現場の安全と効率を支える資料庫」のキャッチコピー、裏面：QRコード（大きく）＋3資料のサムネイル＋会社情報＋LINE QR。
+    </li>
+    <li>
+      <strong>LINE公式アカウント開設</strong>
+      無料プランで即開設。あいさつメッセージ・自動応答だけは最初に組み込む。リッチメニュー：資料DL／お問い合わせ／サンプル貸出申込。運用ルール：問い合わせは事務員→社長エスカレ判断基準を文書化しておくと、属人化を防げる。
+    </li>
+  </ol>
+
+  <div class="kai-card" style="margin-top:30px;">
+    <div class="kai-hdr">
+      <div class="kai-av">💬</div>
+      <div><div class="kai-nm">Kaiから最後に一言</div><div class="kai-rl">本資料の本丸</div></div>
+    </div>
+    <div class="kai-sum">
+      総会1日のために走り回るのではなく、<strong>「総会を起点に、600人と継続接触する仕組み」</strong>を立ち上げることが本丸です。<br><br>
+      ツールではなく、業務改善が先。LINE公式アカウントは「補助道具」であり、本丸は受注プロセスを誰でも回せるように整えること。仕組みができていない状態でツールだけ入れても、結局は社長と一部社員に問い合わせが集中して終わります。<br><br>
+      その上で、社長と社員が「どぶ板営業に出る仕事」から「戻ってきたリードに応える仕事」へと変わっていきます。これが属人化の解消と離職リスク低減の本質です。
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="foot">
+  <p><strong>阪神素地様 下水道協会総会戦略 — 目標達成コンパス</strong></p>
+  <p>個別営業から「個対多数」への転換 ／ 2026-05-29 草案</p>
+  <p class="small" style="margin-top:12px;">本資料は阪神素地株式会社様への限定公開資料です。第三者への共有はお控えください。</p>
+  <p class="small">提案：有限会社アートソウル 上村桂右 ／ Kai</p>
+</div>
+
+<script>
+/* ================================================================
+   DATA
+   ================================================================ */
+const DATA = {
+  meta: {
+    theme:        "下水道協会600人を起点にした「個対多数」営業転換",
+    background:   "釣業界の構造的縮小の中、阪神素地様は次の新規顧客層として下水道整備業者という大手未参入のニッチ市場に着目。賛助会員入りたて・2分マイクのみという弱い立場を逆手に取り、総会1日を「点で売り込む場」ではなく「線で関係を続ける起点」に変える。LP/LTV/KPIなどの用語は注釈付き。LP（資料配布用の1ページWebサイト）／LTV（1社が継続取引で生む粗利合計の見込み）／KPI（施策の進捗を測る数値目標）。",
+    targetPeriod: "6ヶ月（先行運用3ヶ月＋本格運用3ヶ月）",
+    constraints:  "予算15万円±2万円／賛助会員という弱い立場／2分マイク発言枠／総会2026年9月想定",
+    createdAt:    "2026-05-29"
+  },
+  kai: {
+    summary:           "貴社は釣り業界の構造的縮小に対し、下水道整備という大手未参入のニッチに活路を見出した。問題は『どぶ板営業の限界＝社員の体力・時間に売上が完全に縛られる構造』。総会という1対600の場で『個別営業→個対多数』へ転換することが、属人化解消の最短ルート。賛助会員という弱い立場は『売り込まない姿勢の宣言』に絞れる強みに変わる。鍵は当日ではなく『総会2週間前にLPが現にウェブ上にある状態』を作ること。",
+    coreIssue:         "総会1日で600人と接点を持てる機会を、点の名刺交換で終わらせるか、線の継続接触に変えるかの分岐点",
+    topPriority:       "既存事例化交渉に今週着手（3社目標・10万円相当のウェダー提供と引換に「お客様の声」契約）",
+    consultantVerdict: "『売り込まない姿勢の宣言』と『以前から提供している状態の事前構築』の2点が揃わないと、ただの賛助会員の挨拶で終わる。総会前2週間が勝負。",
+    strengths: [
+      "下水道業界は大手中堅未参入の真のニッチ市場",
+      "賛助会員入りたての低姿勢が共感を生む構造",
+      "釣り具で培ったウェダー製品力が直接効く",
+      "DLコンテンツ＋QR配布で即着手可能・予算15万円で完結"
+    ],
+    risks: [
+      "賛助会員追放リスク（売り込みと見なされた瞬間に終了）",
+      "クーポンばらまきによる粗利赤字化",
+      "LPが作りたてバレで「以前から提供」が嘘になる",
+      "コンテンツ制作遅延で総会当日に間に合わない"
+    ],
+    themeInsights: [
+      { index: 0, insight: "総会当日のフロントは『売り込まない宣言』『QR配布』『退路設計』の3点に集中。2分マイクでの姿勢宣言が印象を決める。" },
+      { index: 1, insight: "DLコンテンツ3本は『A作業安全＞Bウェダー活用＞C業界動向』の順で重要度。A資料が最重要・最厚に。" },
+      { index: 2, insight: "LP＋LINE導線はノーコードで2〜3万円・即着手可能。総会2週間前公開が嘘バレリスクの分岐点。" },
+      { index: 3, insight: "1着目のオファーはサンプル貸出主軸。クーポンばらまきは粗利赤字化リスク高。アンケート回答者限定で母数を絞る。" },
+      { index: 4, insight: "既存事例化は総会前に完了させる。当日DL資料に「事例あり」と書ける状態が信頼の起点。" },
+      { index: 5, insight: "総会前準備の本丸は『総会2週間前にLPが現にウェブ上にある状態』。これが「以前から提供」の物理的根拠。" },
+      { index: 6, insight: "中長期は協会公式チャネル獲得が本命。会報誌→メルマガ→配信係立候補の3段階。" },
+      { index: 7, insight: "営業の仕組み化は属人化解消の本丸。事務員でも回せるマニュアル化が離職リスク低減の鍵。" }
+    ]
+  },
+  mandala: {
+    center: "個対多数の営業転換",
+    themes: [
+      {
+        index: 0,
+        name: "総会当日のフロント",
+        description: "2分マイク／QR配布／名刺交換／姿勢宣言の本番設計",
+        color: "#0891b2",
+        bgLight: "rgba(8,145,178,.13)",
+        items: [
+          { id: "t0-0", text: "2分マイク姿勢宣言スクリプト", description: "売り込まない宣言＋貢献から始める＋QR誘導の3点", priority: 1 },
+          { id: "t0-1", text: "QR入りA5チラシ配布", description: "300部・会場出入口に許可取り済み", priority: 1 },
+          { id: "t0-2", text: "名刺交換30秒トーク統一", description: "「資料の窓口やってます、QRどうぞ」", priority: 1 },
+          { id: "t0-3", text: "賛助会員入会の挨拶", description: "正会員・事務局への低姿勢挨拶", priority: 2 },
+          { id: "t0-4", text: "関係者への事前挨拶回り", description: "総会前日までに事務局へ顔出し", priority: 2 },
+          { id: "t0-5", text: "会場内の立ち位置設計", description: "出入口付近・人の流れの要所", priority: 2 },
+          { id: "t0-6", text: "退出後フォロー基準", description: "名刺リスト→翌日礼状→LINE誘導", priority: 1 },
+          { id: "t0-7", text: "当日同行者の役割分担", description: "社長＋営業1〜2名／チラシ補充係", priority: 3 }
+        ]
+      },
+      {
+        index: 1,
+        name: "DLコンテンツ3本",
+        description: "作業安全／ウェダー活用／業界動向の3軸PDF",
+        color: "#06b6d4",
+        bgLight: "rgba(6,182,212,.13)",
+        items: [
+          { id: "t1-0", text: "A：作業安全マニュアル", description: "10〜15ページ・転倒/水没/感電の予防策／会社利害を超えた情報", priority: 1 },
+          { id: "t1-1", text: "B：ウェダー活用ガイド", description: "8〜12ページ・選び方/耐久年数/補修小技／業界標準知識として展開", priority: 1 },
+          { id: "t1-2", text: "C：業界動向レポート", description: "10〜15ページ・公的データ＋ヒアリング／経営者向け視点", priority: 2 },
+          { id: "t1-3", text: "アンケート版併用設計", description: "回答者限定特典で母数を絞る／本気見込み客のみ手挙げ", priority: 1 },
+          { id: "t1-4", text: "PDFデザイン統一", description: "表紙・本文・奥付の統一感／信頼を演出", priority: 2 },
+          { id: "t1-5", text: "事例リンク・LINE誘導差込", description: "各資料の最終ページに導線", priority: 2 },
+          { id: "t1-6", text: "社員教育用途への二次活用", description: "業界誌持込時の権威化にも転用", priority: 3 },
+          { id: "t1-7", text: "改訂サイクル設計", description: "半年に1回更新／「最新版」訴求", priority: 3 }
+        ]
+      },
+      {
+        index: 2,
+        name: "LP＋LINE導線",
+        description: "ノーコードLP＋LINE公式で線の継続接触を作る",
+        color: "#0ea5e9",
+        bgLight: "rgba(14,165,233,.13)",
+        items: [
+          { id: "t2-0", text: "LPワイヤーフレーム作成", description: "STUDIO等のノーコード／2〜3万円", priority: 1 },
+          { id: "t2-1", text: "フォーム5問の設計", description: "会社規模／利用人数／現在メーカー／困りごと／問合せ希望", priority: 1 },
+          { id: "t2-2", text: "LINE公式アカウント開設", description: "無料プラン即開設／あいさつ・自動応答", priority: 1 },
+          { id: "t2-3", text: "リッチメニュー設計", description: "資料DL／お問い合わせ／サンプル貸出申込", priority: 2 },
+          { id: "t2-4", text: "ウェルカム自動応答", description: "「ありがとうございます。担当よりご連絡」", priority: 2 },
+          { id: "t2-5", text: "定期配信頻度の設定", description: "月2回程度／業界情報＋自社新商品", priority: 2 },
+          { id: "t2-6", text: "限定特典の設計", description: "登録者限定の事例集・割引", priority: 3 },
+          { id: "t2-7", text: "解除導線の整備", description: "嫌われない離脱経路を用意", priority: 3 }
+        ]
+      },
+      {
+        index: 3,
+        name: "1着目のオファー",
+        description: "サンプル貸出主軸でクーポン赤字を回避",
+        color: "#14b8a6",
+        bgLight: "rgba(20,184,166,.13)",
+        items: [
+          { id: "t3-0", text: "サンプル貸出10着準備", description: "原価4,000円×10＝4万円／2週間無料貸出", priority: 1 },
+          { id: "t3-1", text: "貸出契約書面化", description: "返却期限・破損時負担・購入意思確認", priority: 1 },
+          { id: "t3-2", text: "運搬手配スキーム", description: "送付・返送の梱包/送料負担を決定", priority: 2 },
+          { id: "t3-3", text: "返却管理エクセル", description: "貸出日・返却予定・督促判定", priority: 2 },
+          { id: "t3-4", text: "感想ヒアリング設計", description: "返却時に5項目アンケート", priority: 2 },
+          { id: "t3-5", text: "返却後の購入提案フロー", description: "見積→決裁者打診→契約", priority: 1 },
+          { id: "t3-6", text: "クーポン併用条件設計", description: "アンケート回答者限定2,000円OFF／月10件上限", priority: 2 },
+          { id: "t3-7", text: "断り対応スクリプト", description: "見送り顧客への気持ちよい撤退設計", priority: 3 }
+        ]
+      },
+      {
+        index: 4,
+        name: "既存事例化",
+        description: "既存納入実績を「お客様の声」として事例化",
+        color: "#22c55e",
+        bgLight: "rgba(34,197,94,.13)",
+        items: [
+          { id: "t4-0", text: "対象企業3社の選定", description: "ウェダー納入実績あり＋関係良好な既存顧客", priority: 1 },
+          { id: "t4-1", text: "提供条件の設計", description: "ウェダー数着提供（10万円相当）と引換", priority: 1 },
+          { id: "t4-2", text: "撮影・社名掲載権の契約書面化", description: "業界誌持込時の転載可も明記", priority: 1 },
+          { id: "t4-3", text: "事例文章化", description: "課題→導入→効果のストーリー構成", priority: 2 },
+          { id: "t4-4", text: "PDF化・DL資料連動", description: "A資料・B資料の最終ページに掲載", priority: 1 },
+          { id: "t4-5", text: "業界誌・専門誌への持込", description: "事例を実績にして第三者媒体掲載狙う", priority: 2 },
+          { id: "t4-6", text: "配布タイミング設計", description: "総会当日／会報誌寄稿／メルマガ枠", priority: 3 },
+          { id: "t4-7", text: "二次利用ルール明確化", description: "他社営業時の参考事例提示可否", priority: 3 }
+        ]
+      },
+      {
+        index: 5,
+        name: "総会前準備",
+        description: "2週間前にLPが現にウェブ上にある状態を作る",
+        color: "#f59e0b",
+        bgLight: "rgba(245,158,11,.13)",
+        items: [
+          { id: "t5-0", text: "LP公開（総会2週間前完了）", description: "ドメイン取得or サブドメイン／SSL対応", priority: 1 },
+          { id: "t5-1", text: "DLコンテンツ制作完了（3週間前）", description: "外部ライター発注は本資料決裁から1週間以内", priority: 1 },
+          { id: "t5-2", text: "QRチラシ300部印刷（1週間前）", description: "オンデマンド印刷1.5万円想定", priority: 1 },
+          { id: "t5-3", text: "当日ロープレ3回（3日前）", description: "2分マイク暗記＋名刺交換30秒トーク統一", priority: 1 },
+          { id: "t5-4", text: "協会名簿入手・分析", description: "事務局への依頼／会員企業の業種把握", priority: 2 },
+          { id: "t5-5", text: "当日装備リスト確認", description: "名刺200枚／チラシ300部／名簿リスト用紙", priority: 2 },
+          { id: "t5-6", text: "退路設計（質問対応想定）", description: "売り込み色出した質問への返答スクリプト", priority: 2 },
+          { id: "t5-7", text: "予備チラシ・名刺の手配", description: "当日追加印刷可否確認", priority: 3 }
+        ]
+      },
+      {
+        index: 6,
+        name: "中長期協会食い込み",
+        description: "協会公式チャネルでの定期発信権獲得",
+        color: "#8b5cf6",
+        bgLight: "rgba(139,92,246,.13)",
+        items: [
+          { id: "t6-0", text: "協会会報誌への記事寄稿", description: "3ヶ月以内に1本目／無償で安全テーマ", priority: 1 },
+          { id: "t6-1", text: "協会メルマガ枠の獲得", description: "4ヶ月後目標／会報誌実績を活用", priority: 1 },
+          { id: "t6-2", text: "配信係立候補", description: "6ヶ月後／会員向け安全情報配信係", priority: 1 },
+          { id: "t6-3", text: "協会研修への協賛提案", description: "ウェダー貸出＋安全講習素材提供", priority: 2 },
+          { id: "t6-4", text: "業界誌・専門誌の取材獲得", description: "会報誌記事を実績に第三者媒体へ", priority: 2 },
+          { id: "t6-5", text: "公式LINE連動（協会承認後）", description: "協会LINEと自社LINEのクロス紹介", priority: 3 },
+          { id: "t6-6", text: "業界表彰への応募", description: "安全への貢献賞などへエントリー", priority: 3 },
+          { id: "t6-7", text: "寄稿継続体制の構築", description: "四半期1本のネタ蓄積・社内ライター育成", priority: 2 }
+        ]
+      },
+      {
+        index: 7,
+        name: "営業の仕組み化",
+        description: "事務員でも回せる属人化解消の本丸",
+        color: "#ec4899",
+        bgLight: "rgba(236,72,153,.13)",
+        items: [
+          { id: "t7-0", text: "フォロー定型化スクリプト", description: "LINE登録→電話→サンプル提案の3段階", priority: 1 },
+          { id: "t7-1", text: "CRM入力ルール統一", description: "全リードのステータス管理／Excel可", priority: 1 },
+          { id: "t7-2", text: "事務員への業務移管研修", description: "問合せ受付→社長エスカレ判断基準", priority: 1 },
+          { id: "t7-3", text: "見積テンプレート整備", description: "型番×数量×納期パターン", priority: 2 },
+          { id: "t7-4", text: "納品手順マニュアル化", description: "発注→出荷→納品書→請求書", priority: 2 },
+          { id: "t7-5", text: "苦情対応フロー", description: "クレーム受付→初期対応→社長判断", priority: 2 },
+          { id: "t7-6", text: "月次レビュー会議体", description: "リード数・契約数・課題共有", priority: 2 },
+          { id: "t7-7", text: "属人解消ロードマップ", description: "社長個人技から組織技への移行計画", priority: 1 }
+        ]
+      }
+    ]
+  },
+  matrices: [
+    {
+      themeIndex: 0, title: "総会当日のフロント 優先度マトリクス",
+      kaiInsight: "総会当日は『売り込まない宣言』を物理的に体現する場。2分マイクの姿勢宣言・QR配布・名刺30秒トークが効果大×実行容易のQ1。関係者挨拶は中長期の信頼形成。単純な飛び込み挨拶は時間効果比が悪い。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q0-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "2分マイク姿勢宣言スクリプト", detail: "本資料の本丸" },
+          { text: "QR入りA5チラシ配布", detail: "300部準備" },
+          { text: "名刺交換30秒トーク統一", detail: "全員で揃える" }
+        ]},
+        { id: "q0-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "退出後フォロー基準", detail: "翌日礼状→LINE誘導" },
+          { text: "会場内の立ち位置設計", detail: "人の流れの要所" }
+        ]},
+        { id: "q0-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "賛助会員入会の挨拶", detail: "事務局向け" },
+          { text: "関係者への事前挨拶回り", detail: "前日までに" }
+        ]},
+        { id: "q0-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "当日同行者の役割分担", detail: "前日決定でも可" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 1, title: "DLコンテンツ3本 優先度マトリクス",
+      kaiInsight: "A資料（作業安全）が最重要・最厚に。「会社の利害を超えた情報」として配布することで賛助会員追放リスクを下げる。アンケート版併用がクーポン赤字回避の鍵。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q1-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "A：作業安全マニュアル", detail: "外部ライター発注" },
+          { text: "B：ウェダー活用ガイド", detail: "社内素材＋編集" },
+          { text: "アンケート版併用設計", detail: "母数を絞る" }
+        ]},
+        { id: "q1-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "C：業界動向レポート", detail: "公的データ引用" },
+          { text: "事例リンク・LINE誘導差込", detail: "各資料末尾" }
+        ]},
+        { id: "q1-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "PDFデザイン統一", detail: "テンプレ流用可" }
+        ]},
+        { id: "q1-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "社員教育用途への二次活用", detail: "総会後検討" },
+          { text: "改訂サイクル設計", detail: "半年後" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 2, title: "LP＋LINE導線 優先度マトリクス",
+      kaiInsight: "ノーコードLPで2〜3万円・即着手可能。LINE公式は無料プランで即開設。総会2週間前のLP公開が「以前から提供」の物理的根拠。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q2-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "LPワイヤーフレーム作成", detail: "STUDIO等ノーコード" },
+          { text: "フォーム5問の設計", detail: "回答ハードル最適化" },
+          { text: "LINE公式アカウント開設", detail: "無料プラン即開設" }
+        ]},
+        { id: "q2-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "リッチメニュー設計", detail: "資料DL/問合せ/貸出" },
+          { text: "定期配信頻度の設定", detail: "月2回基準" }
+        ]},
+        { id: "q2-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "ウェルカム自動応答", detail: "標準文面" }
+        ]},
+        { id: "q2-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "限定特典の設計", detail: "運用後検討" },
+          { text: "解除導線の整備", detail: "標準機能で十分" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 3, title: "1着目のオファー 優先度マトリクス",
+      kaiInsight: "サンプル貸出（10着・原価4万円）が経済性で圧勝。クーポンばらまきは粗利赤字化リスク高。アンケート回答者限定2,000円OFFが併用上限の最適解。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q3-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "サンプル貸出10着準備", detail: "原価4万円" },
+          { text: "貸出契約書面化", detail: "返却期限・破損負担" },
+          { text: "返却後の購入提案フロー", detail: "見積→決裁打診" }
+        ]},
+        { id: "q3-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "クーポン併用条件設計", detail: "回答者限定・月10件上限" },
+          { text: "感想ヒアリング設計", detail: "5項目アンケート" }
+        ]},
+        { id: "q3-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "運搬手配スキーム", detail: "送料負担を決定" },
+          { text: "返却管理エクセル", detail: "督促判定" }
+        ]},
+        { id: "q3-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "断り対応スクリプト", detail: "実践しながら整備" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 4, title: "既存事例化 優先度マトリクス",
+      kaiInsight: "総会前に最低1社・できれば2〜3社の事例化を完了させる。当日DL資料に「事例あり」と書ける状態が信頼の起点。社長から直接打診が最短ルート。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q4-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "対象企業3社の選定", detail: "今週中" },
+          { text: "提供条件の設計", detail: "ウェダー10万円分" },
+          { text: "撮影・社名掲載権の契約書面化", detail: "業界誌転載可も明記" },
+          { text: "PDF化・DL資料連動", detail: "総会前必達" }
+        ]},
+        { id: "q4-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "事例文章化", detail: "課題→導入→効果" },
+          { text: "業界誌・専門誌への持込", detail: "総会後の中長期施策" }
+        ]},
+        { id: "q4-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "配布タイミング設計", detail: "当日／会報誌／メルマガ" }
+        ]},
+        { id: "q4-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "二次利用ルール明確化", detail: "実運用後" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 5, title: "総会前準備 優先度マトリクス",
+      kaiInsight: "「LP公開（総会2週間前完了）」が嘘バレリスク回避の分岐点。本資料決裁から1週間以内のコンテンツライター発注が、納期遵守の鍵。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q5-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "LP公開（総会2週間前完了）", detail: "嘘バレ回避の分岐点" },
+          { text: "DLコンテンツ制作完了（3週間前）", detail: "ライター即発注" },
+          { text: "QRチラシ300部印刷（1週間前）", detail: "1.5万円" },
+          { text: "当日ロープレ3回（3日前）", detail: "暗記＋通し練習" }
+        ]},
+        { id: "q5-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "協会名簿入手・分析", detail: "事務局依頼" },
+          { text: "退路設計（質問対応想定）", detail: "売り込み色質問への返答" }
+        ]},
+        { id: "q5-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "当日装備リスト確認", detail: "名刺・チラシ・用紙" }
+        ]},
+        { id: "q5-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "予備チラシ・名刺の手配", detail: "前日確認でも可" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 6, title: "中長期協会食い込み 優先度マトリクス",
+      kaiInsight: "会報誌→メルマガ→配信係立候補の3段階で公式チャネル獲得を狙う。営業色を出さない無償寄稿の継続が、業界誌取材へつながる信頼の蓄積。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q6-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "協会会報誌への記事寄稿", detail: "3ヶ月以内に1本目" }
+        ]},
+        { id: "q6-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "協会メルマガ枠の獲得", detail: "4ヶ月後目標" },
+          { text: "配信係立候補", detail: "6ヶ月後" },
+          { text: "業界誌・専門誌の取材獲得", detail: "会報誌実績活用" }
+        ]},
+        { id: "q6-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "協会研修への協賛提案", detail: "貸出＋講習素材提供" },
+          { text: "寄稿継続体制の構築", detail: "四半期1本のネタ蓄積" }
+        ]},
+        { id: "q6-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+          { text: "公式LINE連動（協会承認後）", detail: "信頼蓄積後" },
+          { text: "業界表彰への応募", detail: "Year2以降" }
+        ]}
+      ]
+    },
+    {
+      themeIndex: 7, title: "営業の仕組み化 優先度マトリクス",
+      kaiInsight: "属人化解消の本丸。事務員でも回せるマニュアル化が離職リスク低減の鍵。フォロー定型化→CRM入力→事務員研修の順で着手。",
+      xAxis: { label: "緊急度", highLabel: "高緊急", lowLabel: "低緊急" },
+      yAxis: { label: "重要度", highLabel: "高重要", lowLabel: "低重要" },
+      quadrants: [
+        { id: "q7-tr", pos: "tr", label: "🔴 今すぐ着手", desc: "高重要・高緊急", items: [
+          { text: "フォロー定型化スクリプト", detail: "3段階" },
+          { text: "CRM入力ルール統一", detail: "Excel可" },
+          { text: "事務員への業務移管研修", detail: "エスカレ判断基準" }
+        ]},
+        { id: "q7-tl", pos: "tl", label: "🔵 計画的推進", desc: "高重要・低緊急", items: [
+          { text: "見積テンプレート整備", detail: "型番×数量×納期" },
+          { text: "納品手順マニュアル化", detail: "発注→請求書" },
+          { text: "属人解消ロードマップ", detail: "個人技→組織技" }
+        ]},
+        { id: "q7-br", pos: "br", label: "🟡 委任・効率化", desc: "低重要・高緊急", items: [
+          { text: "苦情対応フロー", detail: "クレーム→社長判断" },
+          { text: "月次レビュー会議体", detail: "リード/契約/課題共有" }
+        ]},
+        { id: "q7-bl", pos: "bl", label: "⚪ 保留・見直し", desc: "低重要・低緊急", items: [
+        ]}
+      ]
+    }
+  ],
+  flows: [
+    {
+      id: "fl-0-0", themeIndex: 0, quadrant: "q0-tr", sourceItem: "2分マイク姿勢宣言スクリプト",
+      title: "2分マイク姿勢宣言スクリプト構築フロー",
+      kaiComment: "2分で「会社紹介」を済ませようとしない。「現場の安全と効率を支える姿勢」を1点だけ宣言する形に振る。要点は3つ：①売り込まない宣言／②貢献から始める／③QR回収のフック。",
+      steps: [
+        { order: 1, title: "スクリプト草案作成（約480字・2分想定）", description: "「賛助会員になりました／釣り具出身で現場をまだ存じない／お役立ち資料3点無料／QRチラシ会場出入口／売り込みは一切いたしません／貢献から始めます」の構成", type: "action", duration: "1日", output: "草案テキスト", kaiHint: "詰め込み厳禁。短いセンテンス＋一礼の間で480字程度に収める。覚えやすさが最優先" },
+        { order: 2, title: "登壇者（社長）の話し方に最適化", description: "社長の口癖・呼吸に合わせて微調整。読み上げではなく対話調に。", type: "action", duration: "1日", output: "登壇者最適化版", kaiHint: "プロのアナウンサー風に読まない。「正直に申し上げます」など、誠実さが伝わる一言を最低1箇所入れる" },
+        { order: 3, title: "通し練習3回（総会3日前）", description: "本番想定で時間計測。秒数オーバー時の削除候補を事前マーク。", type: "action", duration: "3日前", output: "ロープレ完了記録", kaiHint: "緊張すると早口になる。本番では3割増しの時間を見ておく。120秒ジャストではなく110秒で完了する設計が安全" },
+        { order: 4, title: "想定質問への返答準備", description: "「商品の説明は？」「価格は？」など売り込み誘導質問への気持ちよい返答", type: "decision", duration: "2日", output: "Q&A集", kaiHint: "「本日は資料配布までで、後日改めてご連絡を」が基本形。「価格は？」に答えてしまった瞬間に売り込み認定される" },
+        { order: 5, title: "本番（総会当日）", description: "深呼吸→一礼→宣言→QR誘導→深く一礼の流れ。", type: "milestone", duration: "総会当日", output: "聴衆反応5件以上の声掛け", kaiHint: "話し終わった後の一礼を深めに。「貢献から始めます」の最後の一礼が印象を決める" },
+        { order: 6, title: "退出時の対応", description: "降壇後に近づいてきた聴衆への対応。即名刺交換＋QR渡し。", type: "action", duration: "総会当日", output: "名刺交換15〜30件", kaiHint: "壇上で話した内容を繰り返さない。「先ほど申し上げた通りです」と短く返し、QR渡しに集中する" }
+      ]
+    },
+    {
+      id: "fl-1-0", themeIndex: 1, quadrant: "q1-tr", sourceItem: "A：作業安全マニュアル",
+      title: "A資料（作業安全マニュアル）制作フロー",
+      kaiComment: "最重要・最厚の本丸資料。「会社の利害を超えた情報」として展開することで賛助会員追放リスクを下げる。外部ライター発注が成否を分ける。",
+      steps: [
+        { order: 1, title: "外部ライター発注（本資料決裁から1週間以内）", description: "クラウドソーシング or 知人紹介で2〜3万円／本。下水道現場の知見ある書き手が望ましい。", type: "warning", duration: "1週間", output: "ライター発注書", kaiHint: "発注遅延が最大リスク。決裁日にライター候補3名にコンタクト開始。価格交渉より着手スピード優先" },
+        { order: 2, title: "コンテンツ要件定義", description: "10〜15ページ／転倒・水没・滑落・感電など現場リスクと予防策／会社利害を超えた情報", type: "action", duration: "2日", output: "要件定義書", kaiHint: "「ウェダーの宣伝」を1ページでも入れた瞬間に信頼が崩れる。徹底的に中立的な実務資料に振る" },
+        { order: 3, title: "公的データ・引用元の確保", description: "労働基準監督署・厚生労働省データ／業界統計／既存事故事例の引用許可", type: "action", duration: "1週間", output: "引用元リスト", kaiHint: "引用元明示が信頼の根拠。出典なしの数値は1つも載せない。「業界統計によると」の安易な表現は使わない" },
+        { order: 4, title: "初稿レビュー・修正", description: "社長＋営業部で内容確認。営業色が出ていないか中立性チェック。", type: "decision", duration: "1週間", output: "修正版", kaiHint: "営業視点でレビューすると無意識に売り込みが入る。「協会員視点」で読み直すことで防げる" },
+        { order: 5, title: "PDFデザイン・表紙レイアウト", description: "表紙・本文・奥付の統一感／信頼を演出するシンプルなデザイン", type: "action", duration: "3日", output: "PDF完成版", kaiHint: "ド派手なデザインは逆効果。役所資料のような落ち着いた佇まいが信頼を生む" },
+        { order: 6, title: "事例リンク・LINE誘導の差込", description: "最終ページに事例企業のロゴ・コメント差込／LINE登録QR", type: "action", duration: "1日", output: "完成稿", kaiHint: "ここでも宣伝色を出さない。「ご質問はLINEから」程度の控えめな誘導に留める" },
+        { order: 7, title: "LP公開（総会2週間前）", description: "LPからのDL動線を有効化。アクセス解析設定。", type: "milestone", duration: "総会2週間前", output: "LP公開完了" }
+      ]
+    },
+    {
+      id: "fl-2-0", themeIndex: 2, quadrant: "q2-tr", sourceItem: "LPワイヤーフレーム作成",
+      title: "LP＋LINE導線構築フロー",
+      kaiComment: "ノーコードで2〜3万円・即着手可能。LINE公式は無料プランで即開設。「総会2週間前公開」が嘘バレ回避の分岐点。",
+      steps: [
+        { order: 1, title: "STUDIO/ペライチ等ノーコードツール選定", description: "月額料金・テンプレ・フォーム機能・スマホ対応を比較", type: "action", duration: "1日", output: "ツール選定書", kaiHint: "迷ったらSTUDIO。テンプレ品質が高く、デザインに弱くてもそれなりに仕上がる" },
+        { order: 2, title: "LPワイヤーフレーム社内作成", description: "トップ：『現場の安全と効率を支える資料庫』／3コンテンツDLボタン／会社情報", type: "action", duration: "2日", output: "ワイヤー紙面", kaiHint: "デザインから入らない。文字情報のみで「何を、どの順番で、どのボタンで」を決めてからデザインへ" },
+        { order: 3, title: "フォーム5問の設計", description: "会社規模／ウェダー利用人数／現在メーカー／困りごと／問合せ希望", type: "action", duration: "1日", output: "フォーム設計書", kaiHint: "回答必須項目は2問まで。残り3問は任意にしないと離脱率が跳ね上がる" },
+        { order: 4, title: "LP実装（デザイン込み）", description: "外注 or 社内実装で完成形へ。SSL対応必須。", type: "action", duration: "1週間", output: "LP稼働", kaiHint: "外注時は完成期限を1週間バッファ込みで設定。総会2週間前公開のためには3週間前納品で発注" },
+        { order: 5, title: "LINE公式アカウント開設", description: "無料プラン即開設。あいさつメッセージ＋自動応答を設定。", type: "action", duration: "1日", output: "LINE公式稼働" },
+        { order: 6, title: "リッチメニュー・自動応答設計", description: "資料DL／お問い合わせ／サンプル貸出申込の3メニュー", type: "action", duration: "2日", output: "LINE運用フロー", kaiHint: "リッチメニューは3つまで。多くなると逆に押されなくなる" },
+        { order: 7, title: "総会2週間前にLP公開完了", description: "Google検索インデックス登録／ドメイン取得時期がバレない工夫", type: "milestone", duration: "総会2週間前", output: "LP公開完了", kaiHint: "「資料庫を整備しました」と現在形で表現。「以前から提供しております」は嘘バレリスクの境界線" }
+      ]
+    },
+    {
+      id: "fl-3-0", themeIndex: 3, quadrant: "q3-tr", sourceItem: "サンプル貸出10着準備",
+      title: "サンプル貸出（10着・2週間無料）運用フロー",
+      kaiComment: "クーポンばらまきより明らかに筋が良い経済性。10着原価4万円で年間12社程度貸出可能。成約率2割でも5年で15〜25万円の粗利見込み。",
+      steps: [
+        { order: 1, title: "貸出ウェダー10着の在庫確保", description: "原価4,000円×10＝4万円／代表サイズ・代表モデルを選定", type: "action", duration: "1週間", output: "貸出在庫リスト", kaiHint: "サイズはS/M/L各複数準備。1サイズだけで揃えると断られる頻度が増える" },
+        { order: 2, title: "貸出契約書面化", description: "返却期限2週間／破損時負担／購入意思確認／個人情報取扱い", type: "warning", duration: "1週間", output: "貸出契約書", kaiHint: "「返却忘れトラブル」は必ず起きる。督促3回までで自動買取移行のルールを契約書に明記" },
+        { order: 3, title: "運搬手配スキーム", description: "送付：自社負担／返送：相手負担 or 自社負担を判断", type: "decision", duration: "2日", output: "運送ルール", kaiHint: "返送負担は心理ハードル。送料無料の方が貸出件数は伸びるが、本気度フィルターでもある。月10件想定なら無料推奨" },
+        { order: 4, title: "返却管理エクセル作成", description: "貸出日・返却予定・督促判定・購入転換ステータス", type: "action", duration: "1日", output: "管理シート" },
+        { order: 5, title: "感想ヒアリング設計（返却時）", description: "5項目：履き心地／耐久性／フィット感／既存品との比較／購入意向", type: "action", duration: "2日", output: "ヒアリングシート" },
+        { order: 6, title: "返却後の購入提案フロー", description: "感想ヒアリング→見積→決裁者打診→契約", type: "action", duration: "1週間", output: "購入提案テンプレ", kaiHint: "返却時即提案は嫌われる。「ありがとうございました、後日改めてご相談」のクッションを必ず置く" },
+        { order: 7, title: "運用開始（総会後1ヶ月以内）", description: "総会で名刺交換した先からの申込を受付開始", type: "milestone", duration: "総会後1ヶ月", output: "貸出申込3〜5件" }
+      ]
+    },
+    {
+      id: "fl-4-0", themeIndex: 4, quadrant: "q4-tr", sourceItem: "対象企業3社の選定",
+      title: "既存事例化交渉フロー",
+      kaiComment: "総会前に最低1社・できれば2〜3社の事例化を完了させる。当日DL資料に「事例あり」と書ける状態が信頼の起点。",
+      steps: [
+        { order: 1, title: "対象企業候補リストアップ（今週中）", description: "ウェダー納入実績あり＋関係良好＋業種が下水道整備寄りの既存顧客", type: "action", duration: "3日", output: "候補リスト10社", kaiHint: "「関係良好」を社員任せで判断しない。社長が直接ヒアリングして仲の良さを確認" },
+        { order: 2, title: "社長による直接打診（3社目標）", description: "電話 or 訪問で「お客様の声に協力いただきたい」と打診", type: "action", duration: "2週間", output: "内諾3社", kaiHint: "メール打診は無視される確率高。電話か訪問で対人で頼む。最初の打診で『難しい』と言われたら即引き下がる" },
+        { order: 3, title: "提供条件の合意（ウェダー10万円相当）", description: "ウェダー数着提供／写真撮影権／社名掲載権／業界誌転載権", type: "decision", duration: "1週間", output: "条件合意書", kaiHint: "「無償でお願いします」は断られやすい。ウェダー提供という具体的な対価を最初に提示する方が話が早い" },
+        { order: 4, title: "事例文章化（課題→導入→効果のストーリー）", description: "インタビュー1回／1社あたり1ページ程度／写真2〜3枚", type: "action", duration: "1週間／社", output: "事例原稿", kaiHint: "数字を盛らない。「3割削減」より「現場の声として『楽になった』」の方が信頼される" },
+        { order: 5, title: "事例企業の最終確認・修正", description: "原稿確認→必要に応じて修正→掲載許可書面取得", type: "warning", duration: "1週間", output: "掲載許可書", kaiHint: "ここで言質を取らずに進めると後から「聞いてない」トラブルが必ず発生する" },
+        { order: 6, title: "PDF化・DL資料への差込", description: "A資料・B資料の最終ページに事例ロゴ・コメント差込", type: "action", duration: "2日", output: "事例入りPDF" },
+        { order: 7, title: "総会前完了（マイルストーン）", description: "総会当日DL資料に「事例あり」と書ける状態", type: "milestone", duration: "総会前", output: "事例3社の掲載完了" }
+      ]
+    },
+    {
+      id: "fl-5-0", themeIndex: 5, quadrant: "q5-tr", sourceItem: "LP公開（総会2週間前完了）",
+      title: "LP公開チェックリストフロー（嘘バレ回避）",
+      kaiComment: "総会2週間前にLPが現にウェブ上にある状態が「以前から提供」の物理的根拠。ドメイン取得時期がバレない工夫も含めて運用する。",
+      steps: [
+        { order: 1, title: "ドメイン取得 or サブドメイン設定", description: "新規取得は時期バレリスク。既存サイトのサブドメイン推奨。", type: "decision", duration: "1日", output: "ドメイン稼働", kaiHint: "新規ドメインだと「whois検索」で取得日がバレる。既存サイトのサブドメイン（drainage.example.co.jp等）が最も安全" },
+        { order: 2, title: "トップビュー文言確定", description: "「下水道現場の安全と効率を支える資料庫」", type: "action", duration: "半日", output: "TOP文言", kaiHint: "「2026年9月新設」と書かない。「資料庫」という表現が現在進行形を匂わせて安全" },
+        { order: 3, title: "3コンテンツDLボタン配置", description: "メアド入力→自動返信でDL／フォーム5問併用", type: "action", duration: "1日", output: "ボタン設置" },
+        { order: 4, title: "会社情報・お問い合わせフォーム設置", description: "代表者名・所在地・電話・メール／フォーム経由問合せも可", type: "action", duration: "半日", output: "会社情報セクション" },
+        { order: 5, title: "SSL対応（https化）", description: "Let's Encryptで無料SSL／ノーコードツールなら自動対応", type: "action", duration: "半日", output: "SSL有効化", kaiHint: "httpだとブラウザ警告が出てしまい一発で信頼を失う。SSL対応は絶対" },
+        { order: 6, title: "スマホ表示確認", description: "協会員はPC見ない想定／スマホで全機能動作確認", type: "warning", duration: "1日", output: "スマホ動作OK", kaiHint: "iPhoneとAndroid両方で確認。文字の重なり・ボタン押せない問題が発生しやすい" },
+        { order: 7, title: "総会2週間前公開・運用開始", description: "Google検索インデックス登録／アクセス解析設定", type: "milestone", duration: "総会2週間前", output: "LP公開完了" }
+      ]
+    },
+    {
+      id: "fl-6-0", themeIndex: 6, quadrant: "q6-tr", sourceItem: "協会会報誌への記事寄稿",
+      title: "会報誌記事寄稿フロー（中長期施策の起点）",
+      kaiComment: "営業色を出さない無償寄稿の継続が、業界誌取材へつながる信頼の蓄積。1本目を3ヶ月以内に出すことが鍵。",
+      steps: [
+        { order: 1, title: "事務局への寄稿打診（総会1ヶ月後）", description: "「現場の安全」をテーマに無償記事を寄稿したい旨を伝える", type: "action", duration: "1週間", output: "寄稿OK確認", kaiHint: "総会直後は印象が新鮮。2分マイクで顔売りした記憶が残っているうちに動く" },
+        { order: 2, title: "寄稿テーマの選定", description: "DLコンテンツA資料の内容を会報誌向けに編集", type: "action", duration: "1週間", output: "テーマ案3本", kaiHint: "「会員企業向けに役立つ」を最優先。自社製品の言及は1箇所まで" },
+        { order: 3, title: "初稿執筆", description: "1〜2ページ程度／3,000〜4,000字／写真1〜2枚", type: "action", duration: "2週間", output: "初稿" },
+        { order: 4, title: "事務局レビュー・修正", description: "会報誌編集部からのフィードバック反映", type: "action", duration: "2週間", output: "修正稿" },
+        { order: 5, title: "掲載決定", description: "次号掲載確定／著者プロフィール・写真入稿", type: "milestone", duration: "3ヶ月後", output: "1本目掲載決定" },
+        { order: 6, title: "実績を活用したメルマガ枠への発展", description: "会報誌掲載実績をもとに、協会メルマガへの記事提供も提案", type: "action", duration: "4ヶ月後", output: "メルマガ枠交渉開始", kaiHint: "「会報誌に書きました」は強力な実績。次の交渉カードとして使い倒す" },
+        { order: 7, title: "寄稿継続体制の構築", description: "四半期1本のネタ蓄積・社内ライター育成", type: "action", duration: "6ヶ月後", output: "継続体制" }
+      ]
+    },
+    {
+      id: "fl-7-0", themeIndex: 7, quadrant: "q7-tr", sourceItem: "フォロー定型化スクリプト",
+      title: "営業フロー定型化スクリプト構築",
+      kaiComment: "属人化解消の本丸。事務員でも回せるマニュアル化が離職リスク低減の鍵。LINE登録→電話→サンプル提案の3段階で分割。",
+      steps: [
+        { order: 1, title: "現状フローの可視化", description: "社長＋営業の頭の中にある営業手順を全部書き出す", type: "action", duration: "1週間", output: "現状フロー図", kaiHint: "社長は無意識に判断している部分が多い。事務員から見て「なぜそれを聞くのか」を逐一問い直す" },
+        { order: 2, title: "3段階に分割（LINE登録→電話→提案）", description: "各段階の目的・必要情報・所要時間を明確化", type: "action", duration: "1週間", output: "3段階定義書" },
+        { order: 3, title: "スクリプト草案作成", description: "各段階で話す内容・確認する項目をテンプレ化", type: "action", duration: "2週間", output: "スクリプト草案", kaiHint: "「お決まりの文句」が増えすぎると棒読みになる。要点だけテンプレ化、肉付けは現場任せに" },
+        { order: 4, title: "事務員向け簡易版作成", description: "判断不要部分のみ抽出した事務員専用スクリプト", type: "action", duration: "1週間", output: "事務員版スクリプト" },
+        { order: 5, title: "エスカレ判断基準の明文化", description: "事務員→社長へのエスカレーション基準を5項目で定義", type: "warning", duration: "1週間", output: "エスカレ基準書", kaiHint: "「判断に迷ったら社長へ」では結局全部社長に来る。「金額10万円以上」「クレーム」など具体的基準で分ける" },
+        { order: 6, title: "ロープレ・調整", description: "事務員と社長で2〜3回ロープレし違和感を潰す", type: "action", duration: "2週間", output: "完成版スクリプト" },
+        { order: 7, title: "運用開始・月次レビュー", description: "実運用しながら修正。月次会議で改善点を反映", type: "milestone", duration: "総会後1ヶ月", output: "運用開始" }
+      ]
+    }
+  ],
+  gantt: {
+    title: "6ヶ月実行ロードマップ（タスククリックで関連箇所へ）",
+    totalWeeks: 24,
+    phases: [
+      {
+        name: "Phase1：総会前準備（W1〜W8）",
+        color: "#0891b2",
+        tasks: [
+          { name: "既存事例化交渉", startWeek: 1, endWeek: 6, isCritical: true, milestone: false, color: "#059669", linkTo: { type: "flow", themeIndex: 4, quadrant: "q4-tr", sourceItem: "対象企業3社の選定" } },
+          { name: "コンテンツライター発注", startWeek: 1, endWeek: 2, isCritical: true, milestone: false, color: "#0891b2", linkTo: { type: "flow", themeIndex: 1, quadrant: "q1-tr", sourceItem: "A：作業安全マニュアル" } },
+          { name: "DLコンテンツ3本制作", startWeek: 2, endWeek: 6, isCritical: true, milestone: false, color: "#0891b2", linkTo: { type: "flow", themeIndex: 1, quadrant: "q1-tr", sourceItem: "A：作業安全マニュアル" } },
+          { name: "LPワイヤー作成・実装", startWeek: 3, endWeek: 7, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "flow", themeIndex: 2, quadrant: "q2-tr", sourceItem: "LPワイヤーフレーム作成" } },
+          { name: "LINE公式開設・設定", startWeek: 3, endWeek: 5, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "matrix", themeIndex: 2 } },
+          { name: "サンプル貸出10着準備", startWeek: 4, endWeek: 7, isCritical: false, milestone: false, color: "#059669", linkTo: { type: "flow", themeIndex: 3, quadrant: "q3-tr", sourceItem: "サンプル貸出10着準備" } },
+          { name: "LP公開（2週間前）", startWeek: 7, endWeek: 7, isCritical: false, milestone: true, linkTo: { type: "flow", themeIndex: 5, quadrant: "q5-tr", sourceItem: "LP公開（総会2週間前完了）" } },
+          { name: "QRチラシ300部印刷", startWeek: 7, endWeek: 8, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "matrix", themeIndex: 5 } },
+          { name: "2分マイクスクリプト・ロープレ", startWeek: 6, endWeek: 8, isCritical: true, milestone: false, color: "#059669", linkTo: { type: "flow", themeIndex: 0, quadrant: "q0-tr", sourceItem: "2分マイク姿勢宣言スクリプト" } }
+        ]
+      },
+      {
+        name: "Phase2：総会当日＆直後フォロー（W9〜W12）",
+        color: "#dc2626",
+        tasks: [
+          { name: "総会当日（マイク・QR配布・名刺）", startWeek: 9, endWeek: 9, isCritical: true, milestone: false, color: "#dc2626", linkTo: { type: "flow", themeIndex: 0, quadrant: "q0-tr", sourceItem: "2分マイク姿勢宣言スクリプト" } },
+          { name: "総会当日（マイルストーン）", startWeek: 9, endWeek: 9, isCritical: false, milestone: true, linkTo: { type: "dashboard" } },
+          { name: "翌日礼状・LINE誘導フォロー", startWeek: 9, endWeek: 10, isCritical: false, milestone: false, color: "#059669", linkTo: { type: "matrix", themeIndex: 0 } },
+          { name: "個別電話フォロー", startWeek: 10, endWeek: 12, isCritical: false, milestone: false, color: "#059669", linkTo: { type: "matrix", themeIndex: 7 } },
+          { name: "アンケート集計・見込み判定", startWeek: 11, endWeek: 12, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "matrix", themeIndex: 1 } },
+          { name: "1ヶ月時点KPIレビュー", startWeek: 12, endWeek: 12, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
+        ]
+      },
+      {
+        name: "Phase3：サンプル貸出・商談化（W13〜W18）",
+        color: "#059669",
+        tasks: [
+          { name: "サンプル貸出運用開始", startWeek: 13, endWeek: 24, isCritical: false, milestone: false, color: "#059669", linkTo: { type: "flow", themeIndex: 3, quadrant: "q3-tr", sourceItem: "サンプル貸出10着準備" } },
+          { name: "商談化・契約交渉", startWeek: 14, endWeek: 24, isCritical: false, milestone: false, color: "#059669", linkTo: { type: "matrix", themeIndex: 3 } },
+          { name: "会報誌記事1本目寄稿打診", startWeek: 13, endWeek: 16, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "flow", themeIndex: 6, quadrant: "q6-tr", sourceItem: "協会会報誌への記事寄稿" } },
+          { name: "業界誌持込交渉", startWeek: 15, endWeek: 20, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "営業フロー定型化・事務員研修", startWeek: 14, endWeek: 22, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "flow", themeIndex: 7, quadrant: "q7-tr", sourceItem: "フォロー定型化スクリプト" } },
+          { name: "3ヶ月時点KPIレビュー", startWeek: 18, endWeek: 18, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
+        ]
+      },
+      {
+        name: "Phase4：公式チャネル獲得・属人化解消（W19〜W24）",
+        color: "#8b5cf6",
+        tasks: [
+          { name: "会報誌記事掲載", startWeek: 19, endWeek: 22, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "メルマガ枠獲得交渉", startWeek: 20, endWeek: 24, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "配信係立候補", startWeek: 22, endWeek: 24, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "業界誌取材獲得", startWeek: 21, endWeek: 24, isCritical: false, milestone: false, color: "#d97706", linkTo: { type: "matrix", themeIndex: 6 } },
+          { name: "属人化解消ルーチン化", startWeek: 20, endWeek: 24, isCritical: false, milestone: false, color: "#0891b2", linkTo: { type: "matrix", themeIndex: 7 } },
+          { name: "6ヶ月総括・Year2計画", startWeek: 24, endWeek: 24, isCritical: false, milestone: true, linkTo: { type: "dashboard" } }
+        ]
+      }
+    ]
+  }
+};
+
+/* ================================================================
+   STATE
+   ================================================================ */
+const TC = ['#0891b2','#06b6d4','#0ea5e9','#14b8a6','#22c55e','#f59e0b','#8b5cf6','#ec4899'];
+const TBG= ['rgba(8,145,178,.13)','rgba(6,182,212,.13)','rgba(14,165,233,.13)','rgba(20,184,166,.13)',
+            'rgba(34,197,94,.13)','rgba(245,158,11,.13)','rgba(139,92,246,.13)','rgba(236,72,153,.13)'];
+let curTheme = 0;
+const SK = 'rsh_drainage_' + encodeURIComponent(DATA.meta.theme || 'x');
+const checks = () => { try { return JSON.parse(localStorage.getItem(SK)||'{}'); } catch { return {}; } };
+const saveCheck = (id, v) => {
+  const c = checks(); c[id] = v;
+  localStorage.setItem(SK, JSON.stringify(c));
+  updatePct();
+};
+
+/* ================================================================
+   NAVIGATION
+   ================================================================ */
+function go(name, tabEl) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('v-' + name).classList.add('on');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  if (tabEl) { tabEl.classList.add('on'); }
+  else {
+    const idx = {dashboard:0,mandala:1,matrix:2,flow:3,gantt:4,budget:5,risk:6,next:7}[name];
+    if (idx != null) document.querySelectorAll('.tab')[idx].classList.add('on');
+  }
+  if (name === 'mandala') renderMandala();
+  if (name === 'matrix')  renderMatrix(curTheme);
+  if (name === 'gantt')   renderGantt();
+  if (name === 'budget')  setTimeout(initProfitChart, 50);
+  if (name === 'flow') {
+    if (typeof mermaid !== 'undefined' && mermaid.run) {
+      try { mermaid.run({nodes: document.querySelectorAll('#v-flow .mermaid')}); } catch(e) {}
+    }
+  }
+}
+
+function goMatrix(ti) { curTheme = ti; go('matrix', null); }
+function goFlow(ti, qid, itemTx) {
+  const fl = DATA.flows.find(f => f.themeIndex === ti && f.quadrant === qid && f.sourceItem === itemTx);
+  const th = DATA.mandala.themes[ti];
+  document.getElementById('flBcTh').textContent = th ? th.name : 'マトリクス';
+  document.getElementById('flBcIt').textContent = itemTx || 'フロー';
+  document.getElementById('flCtx').textContent = itemTx;
+  if (fl) {
+    renderFlow(fl);
+  } else {
+    renderDynamicFlow(ti, qid, itemTx);
+  }
+  go('flow', null);
+}
+
+function renderDynamicFlow(ti, qid, itemTx) {
+  const th=DATA.mandala.themes[ti];
+  const mx=DATA.matrices[ti];
+  const quad=mx?mx.quadrants.find(q=>q.id===qid):null;
+  const item=quad?quad.items.find(i=>i.text===itemTx):null;
+  document.getElementById('flEmpty').style.display='none';
+  const con=document.getElementById('flSteps'); con.innerHTML='';
+  if(item){
+    const fakeStep={
+      order:1,
+      title:item.text,
+      description:item.detail||'このアクションの詳細フロー（複数ステップ）は未構築です。下のヒントを参考に、担当・期限・成果物を社内で詰めてください。',
+      type:'action',
+      duration:'要見積',
+      output:'要定義',
+      kaiHint:'実行前の3チェック：①担当者と期限は決まったか／②必要リソース（人・予算・ツール）は確保したか／③完了基準（成果物）は明確か'
+    };
+    const si=SICO[fakeStep.type]||SICO.action;
+    const d=document.createElement('div'); d.className='fl-step';
+    const quadCls=quad?(quad.pos==='tr'?'fb-wrn':quad.pos==='tl'?'fb-act':quad.pos==='br'?'fb-dec':'fb-out'):'fb-dur';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card">
+        <div class="fl-ord">STEP ${fakeStep.order}</div>
+        <div class="fl-title">${fakeStep.title}</div>
+        <div class="fl-desc">${fakeStep.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${th?`<span class="fbg fb-dur">📂 ${th.name}</span>`:''}
+          ${quad?`<span class="fbg ${quadCls}">${quad.label||''}</span>`:''}
+        </div>
+        <div class="fl-hint">${fakeStep.kaiHint}</div>
+      </div>`;
+    con.appendChild(d);
+  } else {
+    con.innerHTML='<div class="empty-s"><div class="empty-s-i">→</div><div>項目情報が見つかりません</div></div>';
+  }
+  document.getElementById('flKaiTx').textContent=th?`「${th.name}」のテーマから選択したアクションです。詳細フローは社内で詰めてください。`:'';
+  document.getElementById('flKai').style.display='block';
+}
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function initDash() {
+  const m = DATA.meta, k = DATA.kai;
+  document.getElementById('hTheme').textContent  = m.theme;
+  document.getElementById('dTheme').textContent  = m.theme;
+  document.getElementById('dMeta').textContent   = '作成日: ' + m.createdAt + (m.targetPeriod ? '　目標期間: ' + m.targetPeriod : '');
+  document.getElementById('dBg').textContent     = m.background;
+  document.getElementById('kSum').innerHTML      = k.summary + '<br><br><strong>ゴール明示：</strong>6ヶ月で契約5〜8社／3年累積粗利200〜500万円／営業1人あたり工数30%減';
+  document.getElementById('kVerd').textContent   = '⚠️ ' + k.consultantVerdict;
+
+  const tg = document.getElementById('kTags');
+  (k.strengths||[]).forEach(s => { const x=document.createElement('span'); x.className='ktag ok'; x.textContent='✓ '+s; tg.appendChild(x); });
+  (k.risks||[]).forEach(r    => { const x=document.createElement('span'); x.className='ktag ng'; x.textContent='⚠ '+r;  tg.appendChild(x); });
+
+  const ag = document.getElementById('dActs');
+  DATA.mandala.themes.forEach(th => {
+    const top = th.items.filter(i => i.priority===1)[0];
+    if (!top) return;
+    const col = th.color || TC[th.index];
+    const d = document.createElement('div'); d.className='act-item';
+    d.onclick = () => goMatrix(th.index);
+    d.innerHTML = `<div class="act-dot" style="background:${col}"></div><div><div class="act-tx"><strong>${th.name}</strong></div><div class="act-sub">${top.text}</div></div>`;
+    ag.appendChild(d);
+  });
+  updatePct();
+}
+
+function updatePct() {
+  const c = checks();
+  const total = DATA.flows.reduce((s,f)=>s+f.steps.length,0)||1;
+  const done  = Object.values(c).filter(Boolean).length;
+  const p = Math.round(done/total*100);
+  document.getElementById('hPct').textContent = p+'%';
+  document.getElementById('hFill').style.width = p+'%';
+  document.getElementById('sPct').textContent  = p+'%';
+}
+
+/* ================================================================
+   MANDALA
+   ================================================================ */
+const SG  = [[0,0],[0,3],[0,6],[3,6],[6,6],[6,3],[6,0],[3,0]];
+const CP  = [[3,3],[3,4],[3,5],[4,5],[5,5],[5,4],[5,3],[4,3]];
+const IO  = [[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]];
+
+function renderMandala() {
+  const grid = Array.from({length:9},()=>Array(9).fill({t:'empty'}));
+  grid[4][4] = {t:'center'};
+  DATA.mandala.themes.forEach((th,ti) => {
+    const [cr,cc]=CP[ti]; grid[cr][cc]={t:'theme',th,ti};
+    const [sr,sc]=SG[ti]; grid[sr+1][sc+1]={t:'tr',th,ti};
+    th.items.forEach((item,ii)=>{ const [or,oc]=IO[ii]; grid[sr+or][sc+oc]={t:'item',item,th,ti}; });
+  });
+  const g=document.getElementById('mGrid'); g.innerHTML='';
+  for(let r=0;r<9;r++) for(let c=0;c<9;c++){
+    const cell=grid[r][c], d=document.createElement('div'); d.className='mc';
+    if(cell.t==='center'){
+      d.classList.add('center'); d.textContent=DATA.mandala.center;
+    } else if(cell.t==='theme'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('theme','cp'); d.style.background=col;
+      d.textContent=cell.th.name; d.title=cell.th.description||'';
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='tr'){
+      const col=cell.th.color||TC[cell.ti];
+      d.classList.add('tr','cp'); d.style.background=col; d.style.color='#fff';
+      d.textContent=cell.th.name;
+      d.onclick=()=>goMatrix(cell.ti);
+    } else if(cell.t==='item'){
+      const bg=cell.th.bgLight||TBG[cell.ti];
+      d.classList.add('item'); d.style.background=bg; d.style.color='var(--dim)';
+      d.textContent=cell.item.text; d.title=cell.item.description||cell.item.text;
+      const len=cell.item.text.length;
+      if(len>26) d.style.fontSize='9.5px';
+      else if(len>20) d.style.fontSize='10.5px';
+      else if(len>14) d.style.fontSize='11.5px';
+    } else { d.classList.add('empty'); }
+    g.appendChild(d);
+  }
+}
+
+/* ================================================================
+   MATRIX
+   ================================================================ */
+function renderMatrix(ti) {
+  curTheme=ti;
+  const th=DATA.mandala.themes[ti], mx=DATA.matrices[ti]||DATA.matrices[0];
+  document.getElementById('mxBcTh').textContent=th?th.name:'マトリクス';
+
+  const pp=document.getElementById('tPills'); pp.innerHTML='';
+  DATA.mandala.themes.forEach((t,i)=>{
+    const col=t.color||TC[i];
+    const p=document.createElement('div'); p.className='t-pill'+(i===ti?' on':'');
+    p.style.background=col; p.textContent=t.name;
+    const insight=(DATA.kai && DATA.kai.themeInsights||[]).find(x=>x.index===i);
+    const tip=(insight && insight.insight) || t.description || '';
+    if(tip) p.setAttribute('data-tip', tip);
+    p.onclick=()=>renderMatrix(i); pp.appendChild(p);
+  });
+
+  if(!mx) return;
+  document.getElementById('mxAy').innerHTML=
+    '<span class="ax-pole high">↑ '+(mx.yAxis?.highLabel||'高重要')+'</span>'+
+    '<span class="ax-label">'+(mx.yAxis?.label||'重要度')+'</span>'+
+    '<span class="ax-pole low">↓ '+(mx.yAxis?.lowLabel||'低重要')+'</span>';
+  document.getElementById('mxAx').innerHTML=
+    '<span class="ax-pole low">← '+(mx.xAxis?.lowLabel||'低緊急')+'</span>'+
+    '<span class="ax-label">'+(mx.xAxis?.label||'緊急度')+'</span>'+
+    '<span class="ax-pole high">'+(mx.xAxis?.highLabel||'高緊急')+' →</span>';
+
+  const g=document.getElementById('mxGrid');
+  Array.from(g.querySelectorAll('.quad')).forEach(q=>q.remove());
+
+  ['tl','tr','bl','br'].forEach(pos=>{
+    const qd=mx.quadrants.find(q=>q.pos===pos);
+    const d=document.createElement('div'); d.className='quad q-'+pos;
+    if(qd){
+      d.innerHTML=`<div class="quad-lbl">${qd.label}</div><div class="quad-desc">${qd.desc||''}</div>`;
+      (qd.items||[]).forEach(item=>{
+        const it=document.createElement('div'); it.className='qi';
+        it.innerHTML=`<div class="qi-tx">${item.text}${item.detail?`<div class="qi-dt">${item.detail}</div>`:''}
+                      </div><div class="qi-ar">→</div>`;
+        it.onclick=()=>goFlow(ti,qd.id,item.text);
+        d.appendChild(it);
+      });
+    }
+    g.appendChild(d);
+  });
+
+  const hasInsight=!!mx.kaiInsight;
+  const hasCore=DATA.kai && (DATA.kai.coreIssue || DATA.kai.topPriority);
+  if(hasInsight){
+    document.getElementById('mxKaiTx').textContent=mx.kaiInsight;
+  } else {
+    document.getElementById('mxKaiTx').textContent='';
+  }
+  if(hasCore){
+    document.getElementById('mxCoreIssue').textContent=(DATA.kai.coreIssue||'—');
+    document.getElementById('mxTopPrio').textContent=(DATA.kai.topPriority||'—');
+    document.getElementById('mxCore').style.display='grid';
+  } else { document.getElementById('mxCore').style.display='none'; }
+  document.getElementById('mxKai').style.display=(hasInsight||hasCore)?'block':'none';
+}
+
+/* ================================================================
+   FLOW
+   ================================================================ */
+const SICO = {
+  action:    {bg:'rgba(8,145,178,.2)', col:'#0e7490', ic:'▶', cls:'fb-act',  lbl:'アクション'},
+  decision:  {bg:'rgba(245,158,11,.2)',  col:'#92400e', ic:'◆', cls:'fb-dec',  lbl:'判断'},
+  milestone: {bg:'rgba(16,185,129,.2)',  col:'#065f46', ic:'★', cls:'fb-mil',  lbl:'マイルストーン'},
+  warning:   {bg:'rgba(239,68,68,.2)',   col:'#991b1b', ic:'!', cls:'fb-wrn',  lbl:'注意'}
+};
+
+function renderFlow(fl) {
+  const c=checks(), con=document.getElementById('flSteps'); con.innerHTML='';
+  document.getElementById('flEmpty').style.display='none';
+  fl.steps.forEach(step=>{
+    const si=SICO[step.type]||SICO.action;
+    const cid=fl.id+'-s'+step.order;
+    const ck=c[cid]||false;
+    const d=document.createElement('div'); d.className='fl-step';
+    d.innerHTML=`
+      <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
+      <div class="fl-card${ck?' done':''}">
+        <div class="fl-ord">STEP ${step.order}</div>
+        <div class="fl-title">${step.title}</div>
+        <div class="fl-desc">${step.description}</div>
+        <div class="fl-meta">
+          <span class="fbg ${si.cls}">${si.lbl}</span>
+          ${step.duration?`<span class="fbg fb-dur">⏱ ${step.duration}</span>`:''}
+          ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
+        </div>
+        ${step.kaiHint?`<div class="fl-hint">${step.kaiHint}</div>`:''}
+        <label class="fl-check${ck?' done':''}">
+          <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
+          完了としてマーク
+        </label>
+      </div>`;
+    con.appendChild(d);
+  });
+  if(fl.kaiComment){
+    document.getElementById('flKaiTx').textContent=fl.kaiComment;
+    document.getElementById('flKai').style.display='block';
+  } else { document.getElementById('flKai').style.display='none'; }
+}
+
+function onCk(el) {
+  saveCheck(el.dataset.cid, el.checked);
+  const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
+  el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
+             : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   GANTT
+   ================================================================ */
+function renderGantt() {
+  const g=DATA.gantt, wk=g.totalWeeks||24;
+  document.getElementById('gtTitle').textContent=g.title||'実行タイムライン';
+  const con=document.getElementById('gtChart'); con.innerHTML='';
+
+  const hdr=document.createElement('div'); hdr.className='gt-hdr';
+  for(let w=1;w<=wk;w++){
+    const wd=document.createElement('div'); wd.className='gt-wk';
+    wd.textContent=(w%4===0)?'W'+w:''; hdr.appendChild(wd);
+  }
+  con.appendChild(hdr);
+
+  g.phases.forEach(ph=>{
+    const pl=document.createElement('div'); pl.className='gt-phase';
+    pl.textContent=ph.name;
+    con.appendChild(pl);
+    ph.tasks.forEach(task=>{
+      const row=document.createElement('div'); row.className='gt-row';
+      const nm=document.createElement('div'); nm.className='gt-name';
+      nm.textContent=task.name; nm.title=task.name; row.appendChild(nm);
+      const bw=document.createElement('div'); bw.className='gt-bars';
+      const bar=document.createElement('div');
+      bar.className='gt-bar'+(task.isCritical?' crit':'')+(task.milestone?' ms':'');
+      bar.style.left=((task.startWeek-1)/wk*100)+'%';
+      bar.style.width=(task.milestone?'18px':((task.endWeek-task.startWeek+1)/wk*100)+'%');
+      bar.style.background=task.isCritical?'var(--danger)':(task.milestone?'var(--success)':(task.color||ph.color||'var(--primary)'));
+      bar.textContent=task.milestone?'◆':task.name;
+      bar.title=task.name+': W'+task.startWeek+(task.milestone?'':'–W'+task.endWeek)+(task.linkTo?' （クリックで関連箇所へ）':'');
+      if(task.linkTo){
+        bar.onclick=()=>{
+          const lt=task.linkTo;
+          if(lt.type==='matrix') goMatrix(lt.themeIndex||0);
+          else if(lt.type==='flow') goFlow(lt.themeIndex||0, lt.quadrant||'', lt.sourceItem||'');
+          else if(lt.type==='mandala') go('mandala', null);
+          else if(lt.type==='dashboard') go('dashboard', null);
+        };
+      }
+      bw.appendChild(bar); row.appendChild(bw); con.appendChild(row);
+    });
+  });
+}
+
+/* ================================================================
+   PROFIT CHART
+   ================================================================ */
+let profitChartInstance = null;
+function initProfitChart() {
+  const ctx = document.getElementById('chartProfit');
+  if (!ctx || profitChartInstance) return;
+  profitChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['総会当日','1ヶ月','3ヶ月','6ヶ月','9ヶ月','12ヶ月'],
+      datasets: [
+        {
+          label: '保守シナリオ（仮置）',
+          data: [0,0,40,120,200,300],
+          borderColor: '#155e75',
+          backgroundColor: 'rgba(21,94,117,0.1)',
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: '中位シナリオ（仮置）',
+          data: [0,0,80,200,350,500],
+          borderColor: '#0891b2',
+          backgroundColor: 'rgba(8,145,178,0.1)',
+          tension: 0.3,
+          fill: true
+        },
+        {
+          label: '楽観シナリオ（仮置）',
+          data: [0,0,120,300,500,800],
+          borderColor: '#d97706',
+          backgroundColor: 'rgba(217,119,6,0.1)',
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: { callbacks: { label: c => c.dataset.label + ' 約' + c.parsed.y + '万円' } }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '万円' } }
+      }
+    }
+  });
+}
+
+/* ================================================================
+   MERMAID INIT
+   ================================================================ */
+if (typeof mermaid !== 'undefined') {
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    themeVariables: {
+      fontFamily: 'Noto Sans JP, sans-serif',
+      primaryColor: '#0891b2',
+      primaryTextColor: '#fff',
+      primaryBorderColor: '#0e7490',
+      lineColor: '#0891b2',
+      secondaryColor: '#67e8f9',
+      tertiaryColor: '#ecfeff'
+    },
+    flowchart: { useMaxWidth: true, htmlLabels: true }
+  });
+}
+
+/* ================================================================
+   INIT
+   ================================================================ */
+document.addEventListener('DOMContentLoaded',()=>{
+  initDash(); renderMandala();
+  if(DATA.matrices.length) renderMatrix(0);
+  document.getElementById('flEmpty').style.display='block';
+  document.getElementById('flSteps').innerHTML='';
+  document.getElementById('flKai').style.display='none';
+});
+</script>
+</body>
+</html>

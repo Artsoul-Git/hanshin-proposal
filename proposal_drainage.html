@@ -452,10 +452,10 @@ ul.checklist li::before{
       <h4>本資料で仮置している数値</h4>
       <ul style="margin-top:10px;font-size:0.9rem;line-height:1.9">
         <li>ウェダー粗利率：<strong>40%</strong>（業界平均）</li>
-        <li>業務用ウェダー単価：<strong>8,000〜15,000円</strong></li>
+        <li>業務用ウェダー単価：<strong>8,000〜35,000円</strong>（仕様・素材・用途で大きく振れる）</li>
         <li>平均購入サイクル：<strong>3年</strong></li>
         <li>1社あたり利用者数：<strong>5〜15人</strong></li>
-        <li>1社LTV<small style="color:var(--c-muted);font-weight:400">（LTV＝1社が継続取引で生む粗利合計の見込み）</small>：<strong>5年で約10万円</strong>（10着相当）</li>
+        <li>1社LTV<small style="color:var(--c-muted);font-weight:400">（LTV＝1社が継続取引で生む粗利合計の見込み）</small>：<strong>5年で約10万〜30万円</strong>（単価レンジ8千〜3.5万円・10着前後を想定。下限は単価1万円ベース、上限は高付加価値モデルベース）</li>
         <li>総会開催時期：<strong>2026年9月</strong>と仮定</li>
         <li>名刺交換目標：<strong>1日上限80枚</strong>（物理制約）</li>
       </ul>
@@ -878,40 +878,72 @@ flowchart LR
 
 <!-- ====== MIDTERM ====== -->
 <section id="midterm">
-  <h2>6. 中長期施策（3〜6ヶ月）</h2>
-  <p class="lead">総会1日だけで終わらせず、協会公式のチャネルに食い込むことを中長期の目標とします。3段階のロードマップで進めます。</p>
+  <h2>6. 中長期施策（3〜6ヶ月）— 3レーン並走で動く</h2>
+  <p class="lead">総会1日だけで終わらせず、<strong>営業／プロモーション／組織露出</strong>の3つの動きをそれぞれのレーンで並走させます。フェーズごとに役割を分けることで、属人化せず複数人で同時進行できます。</p>
 
   <div class="flow-wrap">
     <pre class="mermaid">
-flowchart TD
-  M0["総会当日<br/>(0ヶ月目)"] --> M1["1ヶ月目<br/>LINE/メール定期配信<br/>事例蓄積"]
-  M1 --> M2["3ヶ月目<br/>協会会報誌に<br/>記事提供"]
-  M2 --> M3["4ヶ月目<br/>協会メルマガ<br/>記事掲載"]
-  M3 --> M4["6ヶ月目<br/>『会員向け<br/>安全情報配信係』<br/>立候補"]
-  M4 --> M5["公式チャネル獲得<br/>(協会発信に<br/>阪神素地の名前)"]
-  M5 --> M6["業界誌・専門誌<br/>取材記事"]
-  style M0 fill:#dbeafe,stroke:#1f3f63
-  style M5 fill:#dcfce7,stroke:#2e7d51
-  style M6 fill:#7fd3a8,stroke:#0e2a47,color:#0e2a47
+flowchart LR
+  subgraph S0["0ヶ月目<br/>（総会当日）"]
+    direction TB
+    P0["📢 プロモ<br/>DLコンテンツ<br/>3本配布"]
+    E0["💼 営業<br/>名刺交換＋<br/>LINE登録"]
+    O0["🏛 組織露出<br/>2分マイクで<br/>姿勢の宣言"]
+  end
+  subgraph S1["1〜2ヶ月目<br/>（接点を温める）"]
+    direction TB
+    P1["📢 プロモ<br/>初回フォロー配信<br/>アンケート集計"]
+    E1["💼 営業<br/>個別電話＋<br/>サンプル貸出"]
+    O1["🏛 組織露出<br/>賛助会員<br/>挨拶回り"]
+  end
+  subgraph S2["3〜4ヶ月目<br/>（公式に入り込む）"]
+    direction TB
+    P2["📢 プロモ<br/>会報誌に記事<br/>無償提供"]
+    E2["💼 営業<br/>商談化→<br/>PoC契約"]
+    O2["🏛 組織露出<br/>協会メルマガ<br/>記事掲載"]
+  end
+  subgraph S3["5〜6ヶ月目<br/>（公式チャネル化）"]
+    direction TB
+    P3["📢 プロモ<br/>業界誌・専門誌<br/>取材記事"]
+    E3["💼 営業<br/>継続契約＋<br/>紹介展開"]
+    O3["🏛 組織露出<br/>配信係立候補<br/>→公式枠獲得"]
+  end
+  S0 --> S1 --> S2 --> S3
+  style P0 fill:#fef3c7,stroke:#d97706
+  style P1 fill:#fef3c7,stroke:#d97706
+  style P2 fill:#fef3c7,stroke:#d97706
+  style P3 fill:#fed7aa,stroke:#c2410c
+  style E0 fill:#dbeafe,stroke:#1f3f63
+  style E1 fill:#dbeafe,stroke:#1f3f63
+  style E2 fill:#dbeafe,stroke:#1f3f63
+  style E3 fill:#bfdbfe,stroke:#0e2a47
+  style O0 fill:#dcfce7,stroke:#2e7d51
+  style O1 fill:#dcfce7,stroke:#2e7d51
+  style O2 fill:#dcfce7,stroke:#2e7d51
+  style O3 fill:#86efac,stroke:#166534,color:#0e2a47
     </pre>
   </div>
 
-  <div class="grid grid-3">
-    <div class="card">
-      <span class="badge-tag">STEP 1</span>
-      <h4>協会会報誌・メルマガへの記事提供</h4>
-      <p>「現場の安全」をテーマに無償記事を寄稿。営業色を出さず、協会の役に立つ姿勢を継続。</p>
+  <div class="grid grid-3" style="margin-top:24px">
+    <div class="card" style="border-top:4px solid #d97706">
+      <span class="badge-tag orange">📢 プロモーションのレーン</span>
+      <h4>「情報を発信する側」として記憶される</h4>
+      <p>0ヶ月：DLコンテンツ配布で接点獲得 → 1〜2ヶ月：定期配信で接触頻度を上げる → 3〜4ヶ月：協会の公式媒体（会報誌・メルマガ）に無償記事を持ち込む → 5〜6ヶ月：業界誌・専門誌に取材を仕掛けて権威化。<strong>営業色を出さず役立つ情報の発信元というポジション</strong>を作る。</p>
     </div>
-    <div class="card">
-      <span class="badge-tag">STEP 2</span>
-      <h4>会員向け安全情報配信係に立候補</h4>
-      <p>協会公式チャネルでの定期発信権を獲得。「協会から届く情報の中に阪神素地の名前」が定常化する。</p>
+    <div class="card" style="border-top:4px solid #1f3f63">
+      <span class="badge-tag">💼 営業のレーン</span>
+      <h4>「個対多数」から絞り込みで深堀り</h4>
+      <p>0ヶ月：名刺＋LINE登録で連絡先確保 → 1〜2ヶ月：個別電話＋サンプル貸出（履き心地体感）→ 3〜4ヶ月：商談化してPoC契約 → 5〜6ヶ月：継続契約と紹介展開。<strong>事務員でも回せる定型化されたフロー</strong>で属人解消。</p>
     </div>
-    <div class="card accent">
-      <span class="badge-tag">STEP 3</span>
-      <h4>業界誌での権威化</h4>
-      <p>会報誌記事を実績に業界誌・専門誌への取材を仕掛ける。「協会お墨付きの会社」というポジションを確立。</p>
+    <div class="card accent" style="border-top:4px solid #2e7d51">
+      <span class="badge-tag">🏛 組織露出のレーン</span>
+      <h4>「協会内のポジション」を中長期で取りに行く</h4>
+      <p>0ヶ月：賛助会員として姿勢を宣言 → 1〜2ヶ月：協会内の関係者に挨拶回り → 3〜4ヶ月：協会メルマガに名前が載る → 5〜6ヶ月：「会員向け安全情報配信係」に立候補して公式チャネル枠を獲得。<strong>個別営業の50倍のレバレッジ</strong>が効くゴール。</p>
     </div>
+  </div>
+
+  <div class="info-box" style="margin-top:24px">
+    <strong>💡 並走の意味：</strong>3レーンを「順番にやる」のではなく「同時に動かす」のがポイント。プロモーションで知名度、営業で売上、組織露出で長期ポジション、それぞれ別の人が担当できるので、社長一人に依存せず組織として広域展開できます。
   </div>
 </section>
 
