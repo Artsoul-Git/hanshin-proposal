@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阪神素地株式会社 下水道協会総会戦略</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --c-navy:#0e2a47;
+  --c-navy-2:#1f3f63;
+  --c-green:#2e7d51;
+  --c-orange:#d97706;
+  --c-red:#c2410c;
+  --c-bg:#f5f7fa;
+  --c-card:#ffffff;
+  --c-text:#1a1a1a;
+  --c-muted:#6b7280;
+  --c-border:#e5e7eb;
+  --c-accent-bg:#eef4f1;
+  --shadow:0 2px 8px rgba(14,42,71,0.08);
+  --shadow-lg:0 8px 24px rgba(14,42,71,0.12);
+  --radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--c-bg);
+  color:var(--c-text);
+  line-height:1.7;
+  font-size:clamp(14px,1.6vw,16px);
+}
+img{max-width:100%;height:auto}
+a{color:var(--c-navy-2);text-decoration:underline}
+a:hover{color:var(--c-orange)}
+
+/* ===== HERO ===== */
+.hero{
+  background:linear-gradient(135deg,var(--c-navy) 0%,var(--c-navy-2) 60%,var(--c-green) 100%);
+  color:#fff;
+  padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-20%;
+  width:80%;height:200%;
+  background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{
+  display:inline-block;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.3);
+  padding:6px 14px;border-radius:20px;font-size:0.85rem;
+  margin-bottom:20px;letter-spacing:0.05em;
+}
+.hero h1{
+  font-size:clamp(1.7rem,4.2vw,2.8rem);font-weight:900;line-height:1.3;
+  margin-bottom:18px;
+}
+.hero h1 .accent{color:#7fd3a8}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.2rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{
+  display:flex;gap:20px;flex-wrap:wrap;font-size:0.9rem;opacity:0.85;
+}
+.hero-meta span::before{content:"●";margin-right:6px;color:#7fd3a8}
+
+/* ===== NAV ===== */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--c-border);
+  padding:10px clamp(20px,5vw,60px);
+  overflow-x:auto;
+  white-space:nowrap;
+  -webkit-overflow-scrolling:touch;
+}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none}
+nav.toc a{
+  display:inline-block;padding:6px 12px;border-radius:6px;
+  text-decoration:none;color:var(--c-navy);font-size:0.85rem;
+  transition:all 0.2s;
+}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-green)}
+
+/* ===== SECTION ===== */
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{
+  font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;
+  color:var(--c-navy);position:relative;
+  padding-left:18px;margin-bottom:12px;line-height:1.4;
+}
+section h2::before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:6px;
+  background:linear-gradient(180deg,var(--c-green),var(--c-navy));
+  border-radius:3px;
+}
+section h3{
+  font-size:clamp(1.1rem,2vw,1.3rem);font-weight:700;
+  color:var(--c-navy);margin-top:24px;margin-bottom:12px;
+}
+section .lead{
+  font-size:clamp(0.95rem,1.6vw,1.05rem);
+  color:var(--c-muted);margin-bottom:28px;max-width:900px;
+}
+
+/* ===== CARDS / GRID ===== */
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{
+  background:var(--c-card);border-radius:var(--radius);padding:clamp(16px,2.5vw,24px);
+  box-shadow:var(--shadow);border:1px solid var(--c-border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card h4{font-size:1.05rem;color:var(--c-navy);margin-bottom:10px;font-weight:700}
+.card p{font-size:0.92rem;color:var(--c-text)}
+.card .stat{
+  font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;
+  color:var(--c-green);line-height:1.1;margin:8px 0;
+}
+.card .stat-sub{font-size:0.8rem;color:var(--c-muted)}
+.card.danger .stat{color:var(--c-red)}
+.card.warn .stat{color:var(--c-orange)}
+.card.accent{background:var(--c-accent-bg);border-color:#cfe2d6}
+
+/* ===== KEY MESSAGE ===== */
+.key-message{
+  background:linear-gradient(135deg,var(--c-navy) 0%,var(--c-navy-2) 100%);
+  color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);
+  margin:24px 0;position:relative;overflow:hidden;
+}
+.key-message::before{
+  content:"❝";position:absolute;top:-30px;left:10px;
+  font-size:160px;opacity:0.1;font-family:serif;
+}
+.key-message .km-label{
+  display:inline-block;background:#7fd3a8;color:var(--c-navy);
+  padding:4px 12px;border-radius:4px;font-weight:700;
+  font-size:0.85rem;margin-bottom:12px;
+}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.3rem);font-weight:500;line-height:1.6}
+.key-message .km-text strong{color:#7fd3a8;font-weight:900}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{
+  background:var(--c-navy);color:#fff;padding:12px;text-align:left;
+  font-weight:700;font-size:0.85rem;
+}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:last-child td{border-bottom:none}
+table tr:nth-child(even) td{background:#fafafa}
+table .num{text-align:right;font-variant-numeric:tabular-nums}
+table .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:700}
+.badge.high{background:#fee2e2;color:#b91c1c}
+.badge.mid{background:#fef3c7;color:#92400e}
+.badge.low{background:#dcfce7;color:#166534}
+
+/* ===== ACCORDION ===== */
+details{
+  background:var(--c-card);border-radius:var(--radius);
+  margin-bottom:12px;border:1px solid var(--c-border);
+  overflow:hidden;
+}
+details summary{
+  padding:16px 20px;cursor:pointer;font-weight:700;
+  color:var(--c-navy);font-size:1rem;
+  display:flex;align-items:center;gap:10px;list-style:none;
+  background:var(--c-card);transition:background 0.2s;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:"▶";color:var(--c-green);font-size:0.7rem;
+  transition:transform 0.2s;flex-shrink:0;
+}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px}
+details .details-body p{margin-bottom:10px}
+details .details-body ul{margin:10px 0 10px 20px}
+details .details-body li{margin-bottom:6px}
+
+/* ===== 4QM ===== */
+.matrix{
+  display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;
+  gap:0;margin:20px 0;min-height:480px;
+}
+.matrix .y-axis{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(180deg,#fee2e2,#dcfce7);
+}
+.matrix .x-axis{
+  grid-column:2;grid-row:2;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-navy);font-size:0.85rem;
+  background:linear-gradient(90deg,#dcfce7,#fee2e2);
+}
+.matrix .quadrant-grid{
+  grid-column:2;grid-row:1;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:2px;background:var(--c-border);
+}
+.matrix .q{
+  background:var(--c-card);padding:16px;position:relative;
+  display:flex;flex-direction:column;gap:8px;
+}
+.matrix .q.q1{background:#ecfdf5}
+.matrix .q.q2{background:#fef3c7}
+.matrix .q.q3{background:#dbeafe}
+.matrix .q.q4{background:#fee2e2}
+.matrix .q-label{
+  position:absolute;top:8px;right:10px;font-size:0.7rem;
+  font-weight:700;color:var(--c-muted);text-transform:uppercase;
+}
+.matrix .q-title{font-weight:700;color:var(--c-navy);font-size:0.95rem;margin-bottom:6px}
+.matrix .chip{
+  display:inline-block;background:var(--c-card);
+  border:1px solid var(--c-border);border-radius:6px;
+  padding:4px 10px;font-size:0.8rem;font-weight:500;
+  margin:2px;color:var(--c-navy);
+}
+.matrix .chip.high{border-color:var(--c-green);background:#dcfce7;color:#166534;font-weight:700}
+
+@media (max-width:600px){
+  .matrix{grid-template-columns:30px 1fr;min-height:560px}
+  .matrix .q{padding:10px}
+  .matrix .q-title{font-size:0.85rem}
+  .matrix .chip{font-size:0.72rem;padding:3px 7px}
+}
+
+/* ===== FLOW ===== */
+.flow-wrap{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);overflow-x:auto;
+}
+.mermaid{font-family:'Noto Sans JP',sans-serif !important}
+
+/* ===== STORY ===== */
+.story{
+  background:var(--c-accent-bg);border-radius:var(--radius);
+  padding:20px;margin:16px 0;border-left:4px solid var(--c-green);
+}
+.story h5{
+  font-size:0.85rem;color:var(--c-green);font-weight:700;
+  text-transform:uppercase;margin-bottom:8px;letter-spacing:0.05em;
+}
+.story p{font-size:0.92rem;color:var(--c-text);line-height:1.8}
+.story p + p{margin-top:10px}
+
+/* ===== SCRIPT BLOCK ===== */
+.script-block{
+  background:#0e2a47;color:#f5f7fa;border-radius:var(--radius);
+  padding:24px;margin:16px 0;border-left:5px solid #7fd3a8;
+  font-size:0.95rem;line-height:1.9;
+}
+.script-block .label{
+  display:inline-block;background:#7fd3a8;color:#0e2a47;
+  padding:3px 10px;border-radius:4px;font-weight:700;
+  font-size:0.78rem;margin-bottom:14px;
+}
+.script-block p{margin-bottom:10px}
+.script-block .stage-direction{color:#7fd3a8;font-style:italic;font-size:0.85rem}
+
+/* ===== CHART CONTAINER ===== */
+.chart-box{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);
+  margin:16px 0;
+}
+.chart-box h4{
+  font-size:0.95rem;color:var(--c-navy);margin-bottom:10px;
+  font-weight:700;
+}
+.chart-canvas-wrap{
+  position:relative;
+  width:100%;
+  height:320px;
+}
+.chart-canvas-wrap.tall{height:380px}
+.chart-canvas-wrap canvas{max-height:100%}
+.chart-box .source{
+  font-size:0.72rem;color:var(--c-muted);margin-top:8px;
+}
+.chart-box .source::before{content:"出典: "}
+@media (max-width:600px){
+  .chart-canvas-wrap{height:260px}
+  .chart-canvas-wrap.tall{height:340px}
+}
+
+/* ===== INFOBOX ===== */
+.info-box{
+  background:#fef3c7;border-left:4px solid var(--c-orange);
+  padding:12px 16px;border-radius:6px;margin:12px 0;font-size:0.88rem;
+}
+.info-box::before{content:"💡 ";font-weight:700;color:var(--c-orange)}
+
+.warn-box{
+  background:#fee2e2;border-left:4px solid var(--c-red);
+  padding:12px 16px;border-radius:6px;margin:12px 0;font-size:0.88rem;
+}
+.warn-box::before{content:"⚠️ ";font-weight:700;color:var(--c-red)}
+
+.note-box{
+  background:#eef4f1;border-left:4px solid var(--c-green);
+  padding:14px 18px;border-radius:8px;margin:16px 0;font-size:0.92rem;
+}
+.note-box h5{
+  font-size:0.95rem;color:var(--c-green);font-weight:700;margin-bottom:6px;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--c-navy);color:#fff;
+  padding:32px clamp(20px,5vw,60px);text-align:center;
+  font-size:0.85rem;opacity:0.9;
+}
+footer a{color:#7fd3a8}
+
+/* ===== UTILITY ===== */
+.center{text-align:center}
+.muted{color:var(--c-muted);font-size:0.85rem}
+.badge-tag{
+  display:inline-block;padding:3px 10px;border-radius:12px;
+  font-size:0.72rem;font-weight:700;
+  background:var(--c-accent-bg);color:var(--c-green);
+  margin-right:6px;
+}
+.badge-tag.orange{background:#fff5e6;color:var(--c-orange)}
+.badge-tag.red{background:#fee2e2;color:var(--c-red)}
+.priority{
+  display:inline-block;color:var(--c-orange);font-weight:900;
+  letter-spacing:0.05em;
+}
+hr.divider{
+  border:none;height:1px;background:var(--c-border);margin:24px 0;
+}
+
+ol.numbered{list-style:none;counter-reset:item;margin:12px 0}
+ol.numbered li{
+  counter-increment:item;position:relative;padding-left:38px;
+  margin-bottom:10px;font-size:0.95rem;
+}
+ol.numbered li::before{
+  content:counter(item);position:absolute;left:0;top:2px;
+  width:26px;height:26px;background:var(--c-green);color:#fff;
+  border-radius:50%;text-align:center;line-height:26px;
+  font-weight:900;font-size:0.85rem;
+}
+
+ul.checklist{list-style:none;margin:10px 0}
+ul.checklist li{position:relative;padding-left:28px;margin-bottom:8px;font-size:0.93rem}
+ul.checklist li::before{
+  content:"□";position:absolute;left:0;top:-2px;
+  color:var(--c-green);font-weight:900;font-size:1.2rem;
+}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0e2a47 0%,#1f3f63 60%,#2e7d51 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700">阪神素地株式会社 下水道協会総会戦略</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px">閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:8px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#0e2a47;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#d97706;color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit;transition:background 0.2s">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='123456';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('drainage_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('drainage_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{
+      err.style.display='block';
+      input.value='';input.focus();
+    }
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">CLIENT ADVISORY ｜ 2026-05-27（草案）</span>
+    <h1>下水道協会総会戦略<br><span class="accent">〜個別営業から「個対多数」への転換〜</span></h1>
+    <p class="hero-sub">「お役立ち情報の窓口」として参入し、賛助会員の立場から信頼を獲得する600人協会攻略プラン。総会1日を点で売り込む場ではなく、線で関係を続ける起点に変える。</p>
+    <div class="hero-meta">
+      <span>阪神素地様向け</span>
+      <span>Kai＋有限会社アートソウル 上村桂右</span>
+      <span>2026-05-27 草案 / 2026-05-29 確認用</span>
+    </div>
+  </div>
+</header>
+
+<!-- ====== TOC ====== -->
+<nav class="toc">
+  <ul>
+    <li><a href="#notes">仮置と確認事項</a></li>
+    <li><a href="#context">背景認識</a></li>
+    <li><a href="#strategy">戦略骨格</a></li>
+    <li><a href="#pillars">4本柱施策</a></li>
+    <li><a href="#checklist">総会前準備</a></li>
+    <li><a href="#budget">15万円予算配分</a></li>
+    <li><a href="#midterm">中長期施策</a></li>
+    <li><a href="#kpi">想定KPI</a></li>
+    <li><a href="#matrix">4象限マトリクス</a></li>
+    <li><a href="#risk">リスクと対策</a></li>
+    <li><a href="#next">次のアクション</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ====== NOTES（冒頭の注記） ====== -->
+<section id="notes">
+  <h2>0. 本資料の前提（仮置数値と確認事項）</h2>
+  <p class="lead">本提案は草案段階のため、業界一般値で仮置した数値を含みます。以下の3点が判明すれば、より精緻な計画に組み直せます。</p>
+
+  <div class="grid grid-2">
+    <div class="card warn">
+      <span class="badge-tag orange">仮置数値（業界一般値）</span>
+      <h4>本資料で仮置している数値</h4>
+      <ul style="margin-top:10px;font-size:0.9rem;line-height:1.9">
+        <li>ウェダー粗利率：<strong>40%</strong>（業界平均）</li>
+        <li>業務用ウェダー単価：<strong>8,000〜15,000円</strong></li>
+        <li>平均購入サイクル：<strong>3年</strong></li>
+        <li>1社あたり利用者数：<strong>5〜15人</strong></li>
+        <li>1社LTV<small style="color:var(--c-muted);font-weight:400">（LTV＝1社が継続取引で生む粗利合計の見込み）</small>：<strong>5年で約10万円</strong>（10着相当）</li>
+        <li>総会開催時期：<strong>2026年9月</strong>と仮定</li>
+        <li>名刺交換目標：<strong>1日上限80枚</strong>（物理制約）</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">要確認3点</span>
+      <h4>判明すれば精緻化できる事項</h4>
+      <ol class="numbered" style="margin-top:10px">
+        <li>ウェダーの<strong>実際の粗利率</strong>と平均購入サイクル</li>
+        <li>既存事例化交渉の<strong>対象企業リスト</strong>と交渉のしやすさ</li>
+        <li>総会の<strong>正確な開催時期</strong>と賛助会員の<strong>発言枠の詳細</strong>（マイク時間・配布物可否・展示スペース有無）</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="info-box">
+    本資料の数値は「業務改善の方向性を判断するための仮置」です。実数値が確定し次第、KPI<small style="color:var(--c-muted)">（KPI＝施策の進捗を測る数値目標）</small>・予算・スケジュールを精緻に組み直します。
+  </div>
+</section>
+
+<!-- ====== CONTEXT ====== -->
+<section id="context">
+  <h2>1. 背景認識 — なぜいま「下水道協会」なのか</h2>
+  <p class="lead">釣業界の縮小トレンドの中で、阪神素地様が次に立ち上がる新規顧客層を見極めた結論として、下水道整備業者は「大手中堅未参入のニッチ市場」であり、現実的に最短で開拓可能な領域です。</p>
+
+  <div class="grid grid-3">
+    <div class="card danger">
+      <span class="badge-tag red">釣業界（既存）</span>
+      <h4>低迷の継続</h4>
+      <p>コロナ後の初心者大量流入で釣り場荒廃、業界縮小。ブランド力なく名前で売れる状況になく、どぶ板営業で社員疲弊。</p>
+    </div>
+    <div class="card">
+      <span class="badge-tag">下水道業界（新規）</span>
+      <h4>大手未参入のニッチ</h4>
+      <p>業務用ウェダーの安定需要があり、釣り具メーカー各社が本気で攻めていない領域。阪神素地様の製品力が直接効く市場。</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">賛助会員ポジション</span>
+      <h4>立場の弱さ＝動きやすさ</h4>
+      <p>協会員約600名／賛助会員入りたて／2分マイクの発言枠程度。だが「お願いして入れてもらった立場」だからこそ売り込まない姿勢が活きる。</p>
+    </div>
+  </div>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">
+      総会で売り込まない。<br>
+      <strong>「現場の安全と効率を支える情報の窓口」</strong>として参入する。<br>
+      1日のイベントで終わらせず、<strong>会員600人に対する「個対多数」の常設チャネル</strong>を作る。
+    </p>
+  </div>
+
+  <h3>賛助会員の立場 — 弱みは強みに転換できる</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>立場の側面</th><th>一見の弱み</th><th>裏返した強み</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>入会したばかり</td>
+          <td>協会内の信頼ゼロ</td>
+          <td>「新参者だから貢献から始めます」が自然に通る</td>
+        </tr>
+        <tr>
+          <td>2分マイク発言枠のみ</td>
+          <td>商品説明は不可能</td>
+          <td>「姿勢の宣言」に絞れる＝印象に残る</td>
+        </tr>
+        <tr>
+          <td>賛助会員＝外様</td>
+          <td>正会員に遠慮が必要</td>
+          <td>「協会のメンバーになりたい」という低姿勢が共感を生む</td>
+        </tr>
+        <tr>
+          <td>展示ブースなし（想定）</td>
+          <td>商品見せられない</td>
+          <td>QR1枚で深いコンテンツに誘導する設計に集中できる</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====== STRATEGY ====== -->
+<section id="strategy">
+  <h2>2. 戦略骨格 — 「個別営業」から「個対多数」へ</h2>
+  <p class="lead">どぶ板営業の限界は、社員の体力・時間に売上が完全に縛られることにあります。総会という「1対600」が成立する場で、属人化を解消する仕組みを同時に立ち上げます。</p>
+
+  <h3>個別営業 → 個対多数の転換図</h3>
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart LR
+  A["個別営業<br/>(どぶ板)"] -->|限界| B["1人あたり<br/>月10〜20社"]
+  B --> C["社員疲弊・<br/>離職リスク"]
+  D["総会活用<br/>(個対多数)"] -->|1日| E["600人に<br/>同時接触"]
+  E --> F["QR→LP→LINE登録"]
+  F --> G["事務員が<br/>定期配信"]
+  G --> H["顧客側から<br/>問い合わせ"]
+  H --> I["商談・受注"]
+  C -.-> D
+  style A fill:#fee2e2,stroke:#c2410c
+  style C fill:#fee2e2,stroke:#c2410c
+  style D fill:#dcfce7,stroke:#2e7d51
+  style I fill:#7fd3a8,stroke:#0e2a47,color:#0e2a47
+    </pre>
+  </div>
+
+  <h3>属人化を解消する経営効果</h3>
+  <div class="grid grid-3">
+    <div class="card accent">
+      <h4>離職リスクの低減</h4>
+      <p class="stat">疲弊↓</p>
+      <p class="stat-sub">どぶ板営業の頻度を下げ、戻ってきたリードに対応する仕事に変える</p>
+    </div>
+    <div class="card accent">
+      <h4>営業エリアの広域化</h4>
+      <p class="stat">日本全国</p>
+      <p class="stat-sub">物理移動なしで全国の会員600名に同時接触できる</p>
+    </div>
+    <div class="card accent">
+      <h4>事務員でも回せる</h4>
+      <p class="stat">仕組み化</p>
+      <p class="stat-sub">フォローアップ・受注・納品をマニュアル化、担当者不在でも止まらない</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <h5>業務改善が先、ツールは後</h5>
+    <p>本戦略の本丸は「LINE公式アカウントを使うこと」ではありません。<strong>受注プロセスを誰でも回せるように整えること</strong>が本丸で、LINEはその上に乗る補助道具です。仕組みができていない状態でツールだけ入れても、結局は社長と一部社員に問い合わせが集中して終わります。</p>
+  </div>
+</section>
+
+<!-- ====== PILLARS ====== -->
+<section id="pillars">
+  <h2>3. 4本柱施策</h2>
+  <p class="lead">総会1日を起点に、「お役立ち情報の窓口」として継続接触する4つの仕掛けです。それぞれは独立に動きますが、合わさると相乗効果が生まれます。</p>
+
+  <!-- 施策1 -->
+  <h3>施策1：DLコンテンツ3パターン＋アンケート版併用</h3>
+  <p>「うちはウェダー売ってます」ではなく、「現場で役立つ情報を無料で配ります」というスタンスで参入します。コンテンツは下記の3軸で用意し、QRコードからダウンロードできるようにします。</p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <span class="badge-tag">A：作業安全</span>
+      <h4>下水道作業の安全マニュアル</h4>
+      <p>転倒・水没・滑落・感電など、現場リスクと予防策をまとめた実務資料。「会社の利害を超えた情報」として配布。</p>
+      <p class="muted" style="margin-top:8px">10〜15ページPDF想定</p>
+    </div>
+    <div class="card">
+      <span class="badge-tag">B：ウェダー活用</span>
+      <h4>ウェダー長持ちのコツ・選び方</h4>
+      <p>サイズ選定・素材ごとの特徴・耐久年数・補修の小技。製品宣伝ではなく「業界標準知識」として展開。</p>
+      <p class="muted" style="margin-top:8px">8〜12ページPDF想定</p>
+    </div>
+    <div class="card">
+      <span class="badge-tag">C：業界動向</span>
+      <h4>下水道整備業の市況・人材動向</h4>
+      <p>公的データの引用＋現場ヒアリングのまとめ。経営者向け視点で「協会員の役に立つレポート」を提供。</p>
+      <p class="muted" style="margin-top:8px">10〜15ページPDF想定</p>
+    </div>
+  </div>
+
+  <h4 style="margin-top:24px;color:var(--c-navy)">アンケート版を併用 — クーポンばらまきの代替案</h4>
+  <div class="warn-box">
+    クーポン2,000〜5,000円を全員に配ると、粗利40%の前提では商品1着あたり実質的に赤字に転じるラインがあります（後述の比較表参照）。<strong>「アンケート回答者にだけ特典」</strong>という設計にすると、母数を絞りながら本気の見込み客だけが手を挙げる形になります。
+  </div>
+
+  <div class="story">
+    <h5>アンケート版の流れ</h5>
+    <p>1. QRからLP<small style="color:var(--c-muted)">（LP＝資料配布用の1ページのWebサイト）</small>→簡単フォーム（5問：会社規模／ウェダー利用人数／現在のメーカー／困りごと／問い合わせ希望）</p>
+    <p>2. 回答完了で「お客様の声収集ご協力特典」として5,000円OFFクーポン or サンプル貸出のいずれかを選択</p>
+    <p>3. 阪神素地様側で見込み度を判定→ホット案件のみ社長＋営業がフォロー</p>
+  </div>
+
+  <!-- 施策2 -->
+  <h3 style="margin-top:36px">施策2：2分マイクの「姿勢の宣言」スクリプト</h3>
+  <p>2分で「会社紹介」を済ませようとすると、覚えてもらえません。<strong>「現場の安全と効率を支える姿勢」を1点だけ宣言する</strong>形に振ります。下記は草案スクリプトです（実際の発言は登壇者に最適化）。</p>
+
+  <div class="script-block">
+    <span class="label">2分マイク草案（約480字 / 想定2分）</span>
+    <p><span class="stage-direction">（一礼してから）</span></p>
+    <p>このたび賛助会員に加えていただきました、ウェダー製造の阪神素地です。社長の◯◯と申します。</p>
+    <p>本日は皆様の貴重なお時間を、2分だけ頂戴いたします。</p>
+    <p>正直に申し上げます。私どもは釣り具業界出身で、下水道整備の現場のことを、まだ十分に存じ上げません。</p>
+    <p>ですので、まずは<strong>お役に立つことから始めさせていただきたい</strong>と思っております。現場の安全、ウェダーの長持ちのコツ、業界の動向まとめ。協会員の皆様のお役に立てそうな資料を3点、無料でご用意しました。</p>
+    <p>会場の出入口に、QRコードのチラシを置かせていただいております。ご興味があればお持ち帰りください。商品の売り込みは一切いたしません。</p>
+    <p>協会の一員として認めていただけるよう、貢献から始めます。本日はありがとうございました。</p>
+    <p><span class="stage-direction">（深く一礼）</span></p>
+  </div>
+
+  <div class="info-box">
+    要点は3つ。①「売り込まない」と先に宣言する／②「貢献から始める」と協会への敬意を示す／③ QRコード回収のフックを物理的に置く。これで「あの会社、なんか感じいいな」という第一印象を作ります。
+  </div>
+
+  <!-- 施策3 -->
+  <h3 style="margin-top:36px">施策3：1着目を手に取ってもらう仕組み</h3>
+  <p>商品を実際に手に取って試してもらえれば、阪神素地様の製品力が伝わります。問題は<strong>「最初の1着」をどう試させるか</strong>。クーポン案とサンプル貸出案を比較し、最適解を選びます。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>方式</th><th>メリット</th><th>デメリット</th><th>収益への影響</th><th>推奨度</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>クーポン<br>（5,000円OFF）</strong></td>
+          <td>即決購入につながる／手間少ない</td>
+          <td>10,000円商品なら粗利4,000円が5,000円OFFで実質赤字／配布数に比例して損失拡大</td>
+          <td><span class="badge high">高リスク</span></td>
+          <td>△ 限定配布なら可</td>
+        </tr>
+        <tr>
+          <td><strong>サンプル貸出<br>（2週間無料）</strong></td>
+          <td>製品力で勝負できる／返却時に商談化／コスト固定</td>
+          <td>貸出在庫の管理が必要／返却催促の手間</td>
+          <td><span class="badge low">低リスク</span></td>
+          <td>◎ 第一選択</td>
+        </tr>
+        <tr>
+          <td><strong>アンケートクーポン<br>（回答者限定2,000円OFF）</strong></td>
+          <td>母数を絞れる／顧客情報も取れる</td>
+          <td>回答ハードルがやや上がる</td>
+          <td><span class="badge mid">中リスク</span></td>
+          <td>○ 併用推奨</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 style="margin-top:24px;color:var(--c-navy)">LTV試算（仮置）</h4>
+  <div class="chart-box">
+    <h4>1社あたりLTV見込み（5年）</h4>
+    <div class="chart-canvas-wrap">
+      <canvas id="chartLTV"></canvas>
+    </div>
+    <p class="source">業界一般値（粗利40%・3年更新・利用者10名）を基にKai試算（仮置）</p>
+  </div>
+
+  <div class="note-box">
+    <h5>サンプル貸出案の経済性</h5>
+    <p>貸出ウェダー10着（原価約4,000円×10＝4万円）を1年回すと、12社へ貸し出せる計算（1社2週間想定）。仮に成約率を控えめに2割としても、年間2〜3社の新規顧客→5年で15〜25万円相当の粗利。<strong>クーポンばらまきより明らかに筋が良い</strong>と判断します。</p>
+  </div>
+
+  <!-- 施策4 -->
+  <h3 style="margin-top:36px">施策4：既存事例化＋業界誌持込</h3>
+  <p>既にウェダー納入実績がある下水道業者を「お客様の声」として事例化します。これは総会前に完了させ、当日DL資料に掲載することで信頼性が一気に上がります。</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>事例化の交渉カード</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>ウェダー数着提供（10万円相当）と引換に「お客様の声」契約</li>
+        <li>写真撮影権・社名掲載権・引用転載権を契約書面化</li>
+        <li>業界誌への持込時にも転載可とする一文を入れる</li>
+      </ul>
+    </div>
+    <div class="card warn">
+      <h4>交渉が難航した場合の代替手段</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>匿名事例（A社・関西・従業員30名）で展開</li>
+        <li>納入数量・継続年数のみ数字として掲載</li>
+        <li>業界誌記者経由で第三者取材を仕掛ける</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    事例化は「総会日までに最低1社、できれば2〜3社」を目標に即着手します。総会後では遅く、当日配布資料に「事例あり」と書ける状態を作るためです。
+  </div>
+</section>
+
+<!-- ====== CHECKLIST ====== -->
+<section id="checklist">
+  <h2>4. 総会前準備チェックリスト</h2>
+  <p class="lead">総会2週間前にはすべての準備物が「現にウェブ上にある」状態を作ります。当日「ご覧の通り、以前から提供しております」と言える状態を物理的に整えるためです。</p>
+
+  <details open>
+    <summary>📋 LP公開（総会2週間前完了）</summary>
+    <div class="details-body">
+      <ul class="checklist">
+        <li>ドメイン取得 or サブドメイン設定</li>
+        <li>トップビュー：「下水道現場の安全と効率を支える資料庫」</li>
+        <li>3コンテンツのDLボタン配置（メアド入力→自動返信）</li>
+        <li>会社情報・お問い合わせフォーム設置</li>
+        <li>SSL対応（https化）</li>
+        <li>スマホ表示確認（協会員はPC見ない想定）</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>📄 DLコンテンツ制作（総会3週間前完了）</summary>
+    <div class="details-body">
+      <ul class="checklist">
+        <li>A：作業安全マニュアル（外部ライター発注）</li>
+        <li>B：ウェダー活用ガイド（社内素材＋編集）</li>
+        <li>C：業界動向レポート（公的データ＋ヒアリング）</li>
+        <li>PDFデザイン（表紙・本文・奥付）</li>
+        <li>各資料の最終ページに事例リンク・LINE登録誘導</li>
+        <li>事例化済み企業のロゴ・コメント差込</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🪪 QR入りA5チラシ（総会1週間前完了）</summary>
+    <div class="details-body">
+      <ul class="checklist">
+        <li>表面：「現場の安全と効率を支える資料庫」のキャッチコピー</li>
+        <li>裏面：QRコード（大きく）＋3資料のサムネイル</li>
+        <li>会社情報・連絡先・LINE QR（資料DLと別QR）</li>
+        <li>300部印刷（オンデマンド印刷 約1.5万円想定）</li>
+        <li>当日会場出入口の許可取り（事前に協会事務局へ依頼）</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>💬 LINE公式アカウント設定（総会2週間前完了）</summary>
+    <div class="details-body">
+      <ul class="checklist">
+        <li>LINE公式アカウント開設（無料プラン）</li>
+        <li>あいさつメッセージ：3資料DLリンク・社長挨拶</li>
+        <li>リッチメニュー：資料DL / お問い合わせ / サンプル貸出申込</li>
+        <li>自動応答：「ありがとうございます。担当よりご連絡します」</li>
+        <li>運用ルール：問い合わせは事務員→社長エスカレ判断基準</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🎤 当日ロープレ（総会3日前完了）</summary>
+    <div class="details-body">
+      <ul class="checklist">
+        <li>2分マイクスクリプト暗記＋通し練習3回</li>
+        <li>名刺交換時の30秒トーク統一（「資料の窓口やってます、QRどうぞ」）</li>
+        <li>名刺管理シート用意（顧客名簿→LINE誘導フォロー）</li>
+        <li>当日同行者の役割分担（社長＋営業1〜2名）</li>
+        <li>QRチラシ追加印刷の手配可否確認</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ====== BUDGET ====== -->
+<section id="budget">
+  <h2>5. 15万円予算配分案</h2>
+  <p class="lead">「業務改善のための初期投資」として15万円を5項目に配分します。クーポン or サンプル貸出原資は別枠（粗利相殺扱い）です。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>項目</th><th>内容</th><th class="num">金額</th><th>備考</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>DLコンテンツ3本制作</td>
+          <td>外部ライター＋編集（A・B・Cの3資料）</td>
+          <td class="num">5〜7万円</td>
+          <td>A資料が最重要・最厚に</td>
+        </tr>
+        <tr>
+          <td>簡易LP制作</td>
+          <td>リード獲得フォーム付き・スマホ最適化</td>
+          <td class="num">2〜3万円</td>
+          <td>ノーコード（STUDIO等）で十分</td>
+        </tr>
+        <tr>
+          <td>PDFデザイン</td>
+          <td>3資料のレイアウト・表紙制作</td>
+          <td class="num">1〜2万円</td>
+          <td>テンプレ利用で圧縮可</td>
+        </tr>
+        <tr>
+          <td>QR入りA5チラシ</td>
+          <td>デザイン＋オンデマンド印刷300部</td>
+          <td class="num">1〜2万円</td>
+          <td>当日配布の本丸</td>
+        </tr>
+        <tr>
+          <td>LINE公式設定</td>
+          <td>アカウント開設・自動応答・リッチメニュー</td>
+          <td class="num">0〜1万円</td>
+          <td>無料プランで開始</td>
+        </tr>
+        <tr>
+          <td>バッファ</td>
+          <td>追加印刷・差替え・予備費</td>
+          <td class="num">1〜2万円</td>
+          <td>想定外への備え</td>
+        </tr>
+        <tr style="background:#eef4f1">
+          <td><strong>小計</strong></td>
+          <td></td>
+          <td class="num"><strong>10〜17万円</strong></td>
+          <td>15万円±2万円で着地</td>
+        </tr>
+        <tr style="background:#fef3c7">
+          <td><strong>別枠：サンプル貸出原資</strong></td>
+          <td>10着×原価4,000円（粗利相殺扱い・売上計上なし）</td>
+          <td class="num"><strong>約4万円</strong></td>
+          <td>クーポン案採用時は配布数次第で増減</td>
+        </tr>
+        <tr style="background:#dcfce7">
+          <td><strong>合計（本予算＋別枠）</strong></td>
+          <td></td>
+          <td class="num"><strong>14〜21万円</strong></td>
+          <td>サンプル貸出案ベースの想定</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <h5>予算優先順位（カットするならこの順）</h5>
+    <p>1. バッファ→ 2. LINE公式（無料で運用継続可）→ 3. PDFデザイン（社内Canvaで代替可）。<strong>DLコンテンツ制作とLP制作は絶対にカットしない</strong>。これが「以前から提供している」と言える根拠になります。</p>
+  </div>
+</section>
+
+<!-- ====== MIDTERM ====== -->
+<section id="midterm">
+  <h2>6. 中長期施策（3〜6ヶ月）</h2>
+  <p class="lead">総会1日だけで終わらせず、協会公式のチャネルに食い込むことを中長期の目標とします。3段階のロードマップで進めます。</p>
+
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart TD
+  M0["総会当日<br/>(0ヶ月目)"] --> M1["1ヶ月目<br/>LINE/メール定期配信<br/>事例蓄積"]
+  M1 --> M2["3ヶ月目<br/>協会会報誌に<br/>記事提供"]
+  M2 --> M3["4ヶ月目<br/>協会メルマガ<br/>記事掲載"]
+  M3 --> M4["6ヶ月目<br/>『会員向け<br/>安全情報配信係』<br/>立候補"]
+  M4 --> M5["公式チャネル獲得<br/>(協会発信に<br/>阪神素地の名前)"]
+  M5 --> M6["業界誌・専門誌<br/>取材記事"]
+  style M0 fill:#dbeafe,stroke:#1f3f63
+  style M5 fill:#dcfce7,stroke:#2e7d51
+  style M6 fill:#7fd3a8,stroke:#0e2a47,color:#0e2a47
+    </pre>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <span class="badge-tag">STEP 1</span>
+      <h4>協会会報誌・メルマガへの記事提供</h4>
+      <p>「現場の安全」をテーマに無償記事を寄稿。営業色を出さず、協会の役に立つ姿勢を継続。</p>
+    </div>
+    <div class="card">
+      <span class="badge-tag">STEP 2</span>
+      <h4>会員向け安全情報配信係に立候補</h4>
+      <p>協会公式チャネルでの定期発信権を獲得。「協会から届く情報の中に阪神素地の名前」が定常化する。</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">STEP 3</span>
+      <h4>業界誌での権威化</h4>
+      <p>会報誌記事を実績に業界誌・専門誌への取材を仕掛ける。「協会お墨付きの会社」というポジションを確立。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== KPI ====== -->
+<section id="kpi">
+  <h2>7. 想定KPI（仮置）</h2>
+  <p class="lead">KPIは現時点ですべて仮置の数値です。実装後の1ヶ月実績を見て再設定します。</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>総会当日（仮置）</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>名刺交換：<strong>50〜80枚</strong>（物理上限）</li>
+        <li>QR読込：<strong>30〜50件</strong></li>
+        <li>LINE登録：<strong>15〜30件</strong></li>
+        <li>2分マイク聴衆反応：<strong>後日声掛け5件以上</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>1ヶ月後（仮置）</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>DL率：<strong>30%</strong>（LP訪問→DL）</li>
+        <li>アンケート回答率：<strong>15%</strong>（DL者→回答）</li>
+        <li>サンプル貸出申込：<strong>3〜5件</strong></li>
+        <li>個別問い合わせ：<strong>5〜10件</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>3ヶ月後（仮置）</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>商談化：<strong>5社</strong></li>
+        <li>契約：<strong>2〜3社</strong></li>
+        <li>業界誌掲載：<strong>1本</strong></li>
+        <li>協会会報誌記事提供：<strong>1本</strong></li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h4>6ヶ月後（仮置）</h4>
+      <ul style="margin-top:10px;font-size:0.92rem;line-height:1.9">
+        <li>協会公式メルマガ枠：<strong>獲得</strong></li>
+        <li>累計契約社数：<strong>5〜8社</strong></li>
+        <li>初年度粗利増：<strong>30〜80万円</strong>（初回購入分）</li>
+        <li>3年後累積粗利見込み：<strong>200〜500万円</strong>（年次積み上げ・仮置）</li>
+        <li>営業1人あたり工数：<strong>30%減</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chart-box">
+    <h4>3ヶ月・6ヶ月・12ヶ月の累計粗利見込み（仮置）</h4>
+    <div class="chart-canvas-wrap">
+      <canvas id="chartProfit"></canvas>
+    </div>
+    <p class="source">仮置：1社あたり初年度粗利4万円→翌年以降3年継続を想定したKai試算</p>
+  </div>
+
+  <div class="warn-box">
+    上記KPIはすべて仮置です。総会開催時期・賛助会員の発言枠詳細・既存事例化の進捗が確定すると、ベースラインが大きく動きます。
+  </div>
+</section>
+
+<!-- ====== MATRIX ====== -->
+<section id="matrix">
+  <h2>8. 4象限マトリクス — 何から手をつけるか</h2>
+  <p class="lead">縦軸＝効果の大きさ／横軸＝実行のしやすさ。右上から順番に着手します。</p>
+
+  <div class="matrix">
+    <div class="y-axis">効果：大 → 小</div>
+    <div class="quadrant-grid">
+      <div class="q q1">
+        <span class="q-label">Q1 ★即着手</span>
+        <div class="q-title">効果大 × 実行容易</div>
+        <span class="chip high">DLコンテンツ＋QR配布</span>
+        <span class="chip high">サンプル貸出</span>
+        <span class="chip high">既存事例化（1社目）</span>
+        <span class="chip high">2分マイク姿勢宣言</span>
+      </div>
+      <div class="q q2">
+        <span class="q-label">Q2 計画着手</span>
+        <div class="q-title">効果大 × 時間かかる</div>
+        <span class="chip">協会公式チャネル獲得</span>
+        <span class="chip">業界誌掲載</span>
+        <span class="chip">「安全情報配信係」立候補</span>
+      </div>
+      <div class="q q3">
+        <span class="q-label">Q3 ついでに</span>
+        <div class="q-title">効果中 × 実行容易</div>
+        <span class="chip">LINE公式設定</span>
+        <span class="chip">A5チラシ印刷</span>
+        <span class="chip">アンケートフォーム</span>
+      </div>
+      <div class="q q4">
+        <span class="q-label">Q4 やらない</span>
+        <div class="q-title">効果小 × 時間かかる</div>
+        <span class="chip">個別飛び込み営業（継続）</span>
+        <span class="chip">クーポンばらまき</span>
+        <span class="chip">展示ブース出展（賛助会員ではそもそも不可）</span>
+      </div>
+    </div>
+    <div class="x-axis">実行容易 ← → 時間かかる</div>
+  </div>
+
+  <div class="info-box">
+    <strong>判断のポイント：</strong>Q4の「個別飛び込み営業」を今すぐ全部やめるわけではなく、Q1〜Q3の仕組みが立ち上がるまでは並行運用。仕組みが回り始めたら段階的にQ4の比重を下げます。
+  </div>
+</section>
+
+<!-- ====== RISK ====== -->
+<section id="risk">
+  <h2>9. 想定リスクと対策</h2>
+  <p class="lead">どんな施策にも裏目はあります。想定される4つのリスクと、その対策をあらかじめ定めておきます。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>リスク</th><th>発生確率</th><th>影響度</th><th>対策</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>賛助会員追放リスク</strong><br>「あの会社、結局売り込みに来てる」と協会内で評判が落ちる</td>
+          <td><span class="badge mid">中</span></td>
+          <td><span class="badge high">大</span></td>
+          <td>2分マイクで「売り込まない」と明確に宣言／配布物に商品カタログを含めない／総会後の個別連絡は「資料DLされた方への御礼」の形を守る</td>
+        </tr>
+        <tr>
+          <td><strong>クーポン赤字リスク</strong><br>5,000円OFFが粗利を食い、配るほど損する構造</td>
+          <td><span class="badge high">高</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td>サンプル貸出案を第一選択／クーポン採用時はアンケート回答者限定＋2,000円OFF＋月10件まで</td>
+        </tr>
+        <tr>
+          <td><strong>コンテンツ制作遅延</strong><br>外部ライター手配が遅れ、総会に間に合わない</td>
+          <td><span class="badge mid">中</span></td>
+          <td><span class="badge high">大</span></td>
+          <td>本資料の決裁から1週間以内にライター発注／3資料のうち1本（B：ウェダー活用）は社内素材で完結できる構成にしておく</td>
+        </tr>
+        <tr>
+          <td><strong>LP嘘バレリスク</strong><br>「以前から提供している」と言ったのに、明らかに作りたてのLP</td>
+          <td><span class="badge low">低</span></td>
+          <td><span class="badge mid">中</span></td>
+          <td>総会2週間前にはLP公開／ドメイン取得時期がバレないようサブドメインも検討／「資料庫を整備しました」と現在形で表現するスクリプトに修正可</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ====== NEXT ====== -->
+<section id="next">
+  <h2>10. 次のアクション — 今すぐ動かす5項目</h2>
+  <p class="lead">本資料を踏まえて、今週中に着手する具体的アクションです。</p>
+
+  <ol class="numbered" style="font-size:1rem;line-height:2.1">
+    <li><strong>既存事例化交渉の対象企業リストアップ</strong> — 既にウェダー納入実績のある下水道業者を社内で抽出。社長から直接打診（3社目標）。</li>
+    <li><strong>コンテンツライター手配</strong> — A資料（作業安全）の執筆者を確保。クラウドソーシング or 知人紹介で2〜3万円／本想定。</li>
+    <li><strong>LPワイヤーフレーム作成</strong> — STUDIO等のノーコードツールでLPの骨組みを社内で書く。デザインは制作会社へ。</li>
+    <li><strong>QRチラシのデザイン手配</strong> — A5・両面・300部。デザイン込みで1.5〜2万円。総会1週間前納品を逆算してスケジュール確定。</li>
+    <li><strong>LINE公式アカウント開設</strong> — 無料プランで即開設。あいさつメッセージ・自動応答だけは最初に組み込む。</li>
+  </ol>
+
+  <div class="key-message">
+    <span class="km-label">最後に</span>
+    <p class="km-text">
+      総会1日のために走り回るのではなく、<br>
+      <strong>「総会を起点に、600人と継続接触する仕組み」</strong>を立ち上げます。<br>
+      ツールではなく、業務改善が先。<br>
+      その上で、社長と社員が「戻ってきたリードに応える」仕事に変わります。
+    </p>
+  </div>
+
+  <div class="note-box">
+    <h5>提案者からの一言</h5>
+    <p>本資料は草案です。Keiさんとの戦略骨格（個別営業→個対多数）に、Kai側で4点の補強（クーポン経済性の警鐘・LP事前設置・2分マイクの宣言化・既存事例化）を加えた形です。実装フェーズで判明する数字（粗利率・購入サイクル・総会時期）に応じて、KPIと予算配分を再調整していきます。</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <p>阪神素地株式会社 下水道協会総会戦略 〜個別営業から個対多数への転換〜</p>
+  <p>2026-05-27 草案 / 2026-05-29 確認用</p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料は阪神素地株式会社様への限定公開資料です。第三者への共有はお控えください。</p>
+  <p style="margin-top:8px;font-size:0.75rem;opacity:0.7">提案：有限会社アートソウル 上村桂右 ／ Kai</p>
+</footer>
+
+<script>
+// ===== CHART: LTV =====
+const ctxL=document.getElementById('chartLTV');
+new Chart(ctxL,{
+  type:'bar',
+  data:{
+    labels:['1年目','2年目','3年目','4年目','5年目'],
+    datasets:[{
+      label:'累計粗利（仮置・円）',
+      data:[40000,80000,120000,160000,200000],
+      backgroundColor:['#1f3f63','#1f3f63','#2e7d51','#2e7d51','#7fd3a8'],
+      borderRadius:6
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>'累計粗利 約'+(c.parsed.y/10000)+'万円（仮置）'}}
+    },
+    scales:{
+      y:{beginAtZero:true,ticks:{callback:v=>(v/10000)+'万円'}}
+    }
+  }
+});
+
+// ===== CHART: Profit forecast =====
+const ctxP=document.getElementById('chartProfit');
+new Chart(ctxP,{
+  type:'line',
+  data:{
+    labels:['総会当日','1ヶ月','3ヶ月','6ヶ月','9ヶ月','12ヶ月'],
+    datasets:[
+      {
+        label:'保守シナリオ（仮置）',
+        data:[0,0,40,120,200,300],
+        borderColor:'#1f3f63',
+        backgroundColor:'rgba(31,63,99,0.1)',
+        tension:0.3,
+        fill:true
+      },
+      {
+        label:'中位シナリオ（仮置）',
+        data:[0,0,80,200,350,500],
+        borderColor:'#2e7d51',
+        backgroundColor:'rgba(46,125,81,0.1)',
+        tension:0.3,
+        fill:true
+      },
+      {
+        label:'楽観シナリオ（仮置）',
+        data:[0,0,120,300,500,800],
+        borderColor:'#d97706',
+        backgroundColor:'rgba(217,119,6,0.1)',
+        tension:0.3,
+        fill:true
+      }
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>c.dataset.label+' 約'+c.parsed.y+'万円'}}
+    },
+    scales:{
+      y:{beginAtZero:true,ticks:{callback:v=>v+'万円'}}
+    }
+  }
+});
+
+// ===== MERMAID =====
+mermaid.initialize({
+  startOnLoad:true,
+  theme:'default',
+  themeVariables:{
+    fontFamily:'Noto Sans JP, sans-serif',
+    primaryColor:'#0e2a47',
+    primaryTextColor:'#fff',
+    primaryBorderColor:'#0e2a47',
+    lineColor:'#2e7d51',
+    secondaryColor:'#7fd3a8',
+    tertiaryColor:'#eef4f1'
+  },
+  flowchart:{useMaxWidth:true,htmlLabels:true},
+  sequence:{useMaxWidth:true,actorMargin:50,boxMargin:10}
+});
+</script>
+
+</body>
+</html>

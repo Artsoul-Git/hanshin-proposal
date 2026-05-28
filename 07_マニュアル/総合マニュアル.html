@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -18,6 +18,12 @@
   .sb-section-label { font-size: 10px; font-weight: bold; color: #A0AEC0; letter-spacing: 0.08em; text-transform: uppercase; padding: 0 0 5px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 4px; }
   .sb-link { display: block; padding: 4px 8px; font-size: 12px; color: #CBD5E0; text-decoration: none; border-radius: 4px; margin: 1px 0; line-height: 1.4; transition: background 0.15s, color 0.15s; }
   .sb-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  /* Accordion */
+  .sb-section-label { cursor: pointer; display: flex; align-items: center; justify-content: space-between; user-select: none; }
+  .sb-section-label::after { content: '▶'; font-size: 8px; opacity: 0.5; flex-shrink: 0; transition: transform 0.2s; }
+  .sb-section.is-open .sb-section-label::after { transform: rotate(90deg); opacity: 0.8; }
+  .sb-links { display: none; }
+  .sb-section.is-open .sb-links { display: block; }
 
   /* ===== Main Content ===== */
   .main-content { margin-left: 220px; flex: 1; padding: 40px 20px; min-width: 0; }
@@ -96,13 +102,13 @@
   .price-table th { background: #276749; }
   .price-table .total td { background: #F0FFF4; font-weight: bold; }
   details { border: 2px solid #E2E8F0; border-radius: 10px; margin: 12px 0; overflow: hidden; }
-  details > summary { background: #EDF2F7; padding: 18px 24px; cursor: pointer; font-size: 17px; font-weight: bold; color: #1A365D; list-style: none; display: flex; align-items: center; gap: 12px; user-select: none; }
+  details > summary { background: #BEE3F8; padding: 18px 24px; cursor: pointer; font-size: 17px; font-weight: bold; color: #1A365D; list-style: none; display: flex; align-items: center; gap: 12px; user-select: none; }
   details > summary::-webkit-details-marker { display: none; }
   details > summary .acc-arrow { margin-left: auto; color: #ED8936; font-size: 18px; }
   details[open] > summary { background: #1A365D; color: white; }
   details[open] > summary .acc-arrow { color: #ED8936; }
   .acc-num { background: #ED8936; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-  .acc-content { padding: 28px 32px; }
+  .acc-content { padding: 28px 32px; background: #EBF8FF; }
   .part-header { background: #1A365D; color: white; padding: 16px 24px; border-radius: 10px; margin: 40px 0 16px; font-size: 20px; font-weight: bold; letter-spacing: 0.05em; }
   .part-header span { color: #ED8936; }
   .file-path { background: #1A202C; color: #68D391; padding: 2px 8px; border-radius: 4px; font-family: monospace; font-size: 12px; }
@@ -131,13 +137,71 @@
   .alink.pri { background: #1A365D; color: white; }
   .alink.sec { background: #EDF2F7; color: #1A365D; }
   .alink.int { background: #FFFAF0; color: #C05621; border: 1px solid #ED8936; }
+  /* Page Top Button */
+  #page-top-btn { position: fixed; bottom: 24px; right: 24px; background: #1A365D; color: white; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 999; line-height: 1; transition: background 0.2s; }
+  #page-top-btn:hover { background: #ED8936; }
+  /* 3-Layer Navigation */
+  .layer-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 36px 0 28px; flex-wrap: wrap; }
+  .layer-item { background: #EDF2F7; border: 2px solid #E2E8F0; border-radius: 12px; padding: 20px 22px; text-align: center; flex: 1; min-width: 150px; max-width: 210px; transition: all 0.2s; }
+  .layer-item.current { border-color: #1A365D; background: #E8F0FB; }
+  a .layer-item:hover { border-color: #ED8936; background: #FFFAF0; }
+  .layer-icon { font-size: 30px; margin-bottom: 6px; }
+  .layer-num { font-size: 10px; color: #718096; font-weight: bold; letter-spacing: 0.1em; text-transform: uppercase; }
+  .layer-name { font-size: 14px; font-weight: bold; color: #2D3748; margin: 4px 0; }
+  .layer-desc { font-size: 11px; color: #718096; }
+  .layer-arrow { font-size: 22px; color: #CBD5E0; flex-shrink: 0; }
+  /* Quick Start */
+  .qs-section { background: #F0FFF4; border: 2px solid #9AE6B4; border-radius: 12px; padding: 24px 28px; margin: 24px 0 40px; }
+  .qs-section h3 { border-left-color: #38A169; margin-top: 0; }
+  .qs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 16px; }
+  .qs-tile { display: block; background: white; border: 2px solid #C6F6D5; border-radius: 10px; padding: 14px 16px; text-decoration: none; color: inherit; transition: all 0.2s; }
+  .qs-tile:hover { border-color: #ED8936; box-shadow: 0 4px 12px rgba(237,137,54,0.15); }
+  .qs-icon { font-size: 26px; margin-bottom: 6px; }
+  .qs-title { font-size: 13px; font-weight: bold; color: #2D3748; margin-bottom: 4px; }
+  .qs-cmd { font-size: 11px; color: #718096; font-family: "Consolas", monospace; }
+  /* Changelog scrollable */
+  .changelog-scroll { max-height: 320px; overflow-y: auto; border: 1px solid #E2E8F0; border-radius: 8px; margin: 16px 0; }
+  .changelog-scroll table { margin: 0; }
+  /* ===== Sidebar Search ===== */
+  .sb-search { padding: 8px 12px; background: #0F2340; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sb-search-wrap { position: relative; }
+  .sb-search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; color: rgba(255,255,255,0.4); pointer-events: none; }
+  .sb-search-input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #E2E8F0; padding: 6px 10px 6px 26px; font-size: 12px; outline: none; font-family: inherit; box-sizing: border-box; }
+  .sb-search-input::placeholder { color: rgba(255,255,255,0.35); }
+  .sb-search-input:focus { background: rgba(255,255,255,0.13); border-color: #ED8936; }
+  .sb-search-results { position: fixed; left: 0; width: 320px; background: #FFFFFF; border: none; border-top: 3px solid #ED8936; border-right: 1px solid #CBD5E0; border-bottom: 1px solid #CBD5E0; border-radius: 0 0 10px 0; max-height: 60vh; overflow-y: auto; z-index: 500; display: none; box-shadow: 6px 10px 30px rgba(0,0,0,0.25); }
+  .sb-search-results::-webkit-scrollbar { width: 5px; }
+  .sb-search-results::-webkit-scrollbar-thumb { background: #CBD5E0; border-radius: 3px; }
+  .sb-sr-item { display: block; padding: 12px 16px; text-decoration: none; border-bottom: 1px solid #EDF2F7; cursor: pointer; transition: background 0.12s; }
+  .sb-sr-item:hover, .sb-sr-item.is-active { background: #EBF4FF; }
+  .sb-sr-cat { display: inline-block; font-size: 9px; font-weight: bold; color: #FFFFFF; background: #ED8936; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-bottom: 4px; }
+  .sb-sr-title { font-size: 14px; font-weight: bold; color: #1A365D; line-height: 1.4; }
+  .sb-sr-desc { font-size: 12px; color: #4A5568; margin-top: 3px; line-height: 1.4; }
+  .sb-sr-empty { padding: 20px 16px; font-size: 13px; color: #718096; text-align: center; }
 </style>
 </head>
-<body>
+<body id="top">
 
 <!-- ===== Fixed Sidebar ===== -->
 <nav class="main-sidebar">
-  <div class="sb-logo"><a href="#top" style="color:inherit;text-decoration:none;">有限会社アートソウル</a><span>総合マニュアル v4.0</span></div>
+  <div class="sb-logo"><a href="総合マニュアル.html" style="color:inherit;text-decoration:none;">有限会社アートソウル</a><span>総合マニュアル v5.0</span></div>
+
+  <!-- Sidebar Search -->
+  <div class="sb-search">
+    <div class="sb-search-wrap">
+      <span class="sb-search-icon">🔍</span>
+      <input id="sb-search-input" class="sb-search-input" type="text" placeholder="スキル・章・マニュアルを検索..." autocomplete="off" spellcheck="false">
+    </div>
+    <div id="sb-search-results" class="sb-search-results"></div>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🏠 よくある作業</div>
+    <a class="sb-link" href="#sk-intake">💬 迷ったらここから</a>
+    <a class="sb-link" href="#sk-proposal">📊 提案書を作る</a>
+    <a class="sb-link" href="ダッシュボード_v1.html" target="_blank">🔍 スキルを探す↗</a>
+    <a class="sb-link" href="04_AI活用/AI活用ガイド.html" target="_blank">📋 AI活用ガイド↗</a>
+  </div>
 
   <div class="sb-section">
     <div class="sb-section-label">🤝 Kaiと協働する</div>
@@ -156,15 +220,19 @@
     <a class="sb-link" href="#sk-publish">/publish-proposal</a>
     <a class="sb-link" href="#sk-brain">/write-brain-article</a>
     <a class="sb-link" href="#sk-beginner">/beginner-guide</a>
+    <a class="sb-link" href="#sk-fact-check">/fact-check</a>
+    <a class="sb-link" href="#sk-demo-data">/demo-data-agent</a>
     <a class="sb-link" href="#sk-news">/ai-news-digest</a>
     <a class="sb-link" href="#sk-setup">/company-setup</a>
     <a class="sb-link" href="#sk-seminar">/seminar-slide</a>
     <a class="sb-link" href="#sk-content-burst">/content-burst</a>
     <a class="sb-link" href="#sk-deck-sprint">/deck-sprint</a>
-    <a class="sb-link" href="skill-craft完全ガイド.html" target="_blank">/skill-craft↗</a>
-    <a class="sb-link" href="knowledge-craft完全ガイド.html" target="_blank">/knowledge-craft↗</a>
-    <a class="sb-link" href="seminar-dna完全ガイド.html" target="_blank">/seminar-dna↗</a>
-    <a class="sb-link" href="skill使い倒し完全ガイド.html" target="_blank">スキル使い倒し完全ガイド↗</a>
+    <a class="sb-link" href="02_Kaiスキル/skill-craft完全マニュアル.html" target="_blank">/skill-craft↗</a>
+    <a class="sb-link" href="02_Kaiスキル/knowledge-craft完全マニュアル.html" target="_blank">/knowledge-craft↗</a>
+    <a class="sb-link" href="03_セミナー/seminar-dna完全マニュアル.html" target="_blank">/seminar-dna↗</a>
+    <a class="sb-link" href="02_Kaiスキル/skill使い倒し完全マニュアル.html" target="_blank">スキル使い倒し完全マニュアル↗</a>
+    <a class="sb-link" href="ローカルWhisper文字起こし完全マニュアル.html" target="_blank">/local-transcribe↗</a>
+    <a class="sb-link" href="02_Kaiスキル/long-video-conte完全マニュアル.html" target="_blank">/long-video-conte↗</a>
   </div>
 
   <div class="sb-section">
@@ -185,14 +253,21 @@
   <div class="sb-section">
     <div class="sb-section-label">🤖 エージェント活用</div>
     <a class="sb-link" href="#agent-ecosystem">エコシステム概要</a>
-    <a class="sb-link" href="エージェント活かし方マニュアル.html" target="_blank">活かし方マニュアル↗</a>
+    <a class="sb-link" href="02_Kaiスキル/エージェント活かし方マニュアル.html" target="_blank">活かし方マニュアル↗</a>
     <a class="sb-link" href="../.claude/agents/エージェントガイド.html" target="_blank">エージェントガイド(スキル)↗</a>
     <a class="sb-link" href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">エージェントガイド(開発)↗</a>
   </div>
 
   <div class="sb-section">
     <div class="sb-section-label">📚 コンサル知識・事例</div>
-    <a class="sb-link" href="AI定着支援_現場推進マニュアル.html" target="_blank">AI定着支援マニュアル↗</a>
+    <a class="sb-link" href="04_AI活用/AI定着支援_現場推進マニュアル.html" target="_blank">AI定着支援マニュアル↗</a>
+    <a class="sb-link" href="AIエージェント導入セキュリティ設計マニュアル.html" target="_blank">AIエージェント導入セキュリティ設計↗</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🤖 AI導入支援スキル</div>
+    <a class="sb-link" href="ai-readiness完全マニュアル.html" target="_blank">/ai-readiness↗</a>
+    <a class="sb-link" href="AIエージェント導入支援完全マニュアル.html" target="_blank">/ai-agent-onboard↗</a>
   </div>
 
   <div class="sb-section">
@@ -204,6 +279,10 @@
     <div class="sb-section-label">🛠 アプリ・ツール</div>
     <a class="sb-link" href="#app-kai-tasks">Kai Tasks（社内）</a>
     <a class="sb-link" href="#app-kai-visualize">Kai Visualize（社内）</a>
+    <a class="sb-link" href="羅針盤完全マニュアル.html" target="_blank">🧭 羅針盤 完全マニュアル（v8.0）</a>
+    <a class="sb-link" href="リサーチ提案完全マニュアル.html" target="_blank">🔬 リサーチ提案 完全マニュアル（v1.0）</a>
+    <a class="sb-link" href="Kei思考モード完全マニュアル.html" target="_blank">🧠 Kei思考モード 完全マニュアル（v1.0）</a>
+    <a class="sb-link" href="Kai-Clip完全マニュアル.html" target="_blank">📋 Kai-Clip 完全マニュアル（v1.0）</a>
     <a class="sb-link" href="#app-slide-builder">スライドビルダー（社内）</a>
     <a class="sb-link" href="#app-published">公開済みアプリ</a>
     <a class="sb-link" href="#app-wip">制作中アプリ</a>
@@ -230,10 +309,10 @@
 
   <div class="sb-section">
     <div class="sb-section-label">📊 プロジェクト管理</div>
-    <a class="sb-link" href="Kai-Tasks完全マニュアル.html" target="_blank">⚡ Kai Tasks 完全マニュアル↗</a>
+    <a class="sb-link" href="02_Kaiスキル/Kai-Tasks完全マニュアル.html" target="_blank">⚡ Kai Tasks 完全マニュアル↗</a>
     <a class="sb-link" href="#ch22">クイックスタート</a>
     <a class="sb-link" href="#ch23">CLI・自動記録</a>
-    <a class="sb-link" href="Groq-env完全ガイド.html" target="_blank">🔑 .env完全セットアップ↗</a>
+    <a class="sb-link" href="01_ClaudeCode/Groq-env完全マニュアル.html" target="_blank">🔑 .env完全セットアップ↗</a>
   </div>
 
   <div class="sb-section">
@@ -242,14 +321,16 @@
     <a class="sb-link" href="#ch25">スライドビルダーツール</a>
     <a class="sb-link" href="#ch26">テンプレート管理</a>
     <a class="sb-link" href="#ch28">/seminar-dna スキル</a>
-    <a class="sb-link" href="seminar-dna完全ガイド.html" target="_blank">seminar-dna 完全ガイド↗</a>
+    <a class="sb-link" href="03_セミナー/seminar-dna完全マニュアル.html" target="_blank">seminar-dna 完全マニュアル↗</a>
+    <a class="sb-link" href="03_セミナー/よろず支援拠点_1on1勉強会_進行マニュアル.html" target="_blank">よろず1on1進行マニュアル↗</a>
+    <a class="sb-link" href="03_セミナー/よろず支援拠点_はじめての方案内.html" target="_blank">よろず はじめての方案内↗</a>
   </div>
 
   <div class="sb-section">
     <div class="sb-section-label">⚙️ 運用・管理</div>
-    <a class="sb-link" href="AI運用ガイド.html" target="_blank">AI運用ガイド（引越し・Git） ✨</a>
-    <a class="sb-link" href="ClaudeCode_プロンプト拡張_デュアル定着解説書.html" target="_blank">💡 プロンプト拡張・デュアル定着解説書↗</a>
-    <a class="sb-link" href="ClaudeCode_自律実行フレームワーク_CC完全ガイド.html" target="_blank">⚡ 自律実行フレームワーク CC完全ガイド↗</a>
+    <a class="sb-link" href="04_AI活用/AI運用ガイド.html" target="_blank">AI運用ガイド（引越し・Git） ✨</a>
+    <a class="sb-link" href="01_ClaudeCode/ClaudeCode_プロンプト拡張_デュアル定着解説書.html" target="_blank">💡 プロンプト拡張・デュアル定着解説書↗</a>
+    <a class="sb-link" href="01_ClaudeCode/ClaudeCode_自律実行フレームワーク_CC完全マニュアル.html" target="_blank">⚡ 自律実行フレームワーク CC完全マニュアル↗</a>
     <a class="sb-link" href="#ch16">指示の出し方</a>
     <a class="sb-link" href="#ch17">トラブル対処</a>
     <a class="sb-link" href="#ch18">用語集</a>
@@ -257,6 +338,14 @@
     <a class="sb-link" href="#ch20">提案書URL公開</a>
     <a class="sb-link" href="#ch21">自動完了指示</a>
     <a class="sb-link" href="#ch27">🔑 Groq API 無料運用</a>
+  </div>
+
+  <div class="sb-section">
+    <div class="sb-section-label">🎁 販売パッケージ</div>
+    <a class="sb-link" href="#sales-package">X自動投稿AIツール</a>
+    <a class="sb-link" href="../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_完全マニュアル.html" target="_blank">完全マニュアル（クライアント渡し）↗</a>
+    <a class="sb-link" href="../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_販売マニュアル.html" target="_blank">販売マニュアル（内部用）↗</a>
+    <a class="sb-link" href="../05_クライアント案件/00_販売パッケージ/X自動投稿システム_アカウント設定ガイド.html" target="_blank">アカウント設定ガイド↗</a>
   </div>
 </nav>
 
@@ -268,38 +357,74 @@
 <div class="cover">
   <h1>有限会社アートソウル<br>総合マニュアル</h1>
   <div class="sub">Kaiとの協働 + 19エージェント + スキルコマンド + アプリ・ツール</div>
-  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v3.8</div>
+  <div class="meta">2026年5月 発行<br>対象：上村桂右・案件担当者<br>バージョン：v5.0</div>
 </div>
 
-<!-- 変更履歴 -->
-<table class="changelog">
-<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
-<tr><td>v4.7</td><td>2026-05-18</td><td>「自律実行フレームワーク CC完全ガイド」新設（ClaudeCode_自律実行フレームワーク_CC完全ガイド.html）。12の自律キャパシティ、並列実行、A2Aチェック、5大報告アジェンダの極意を解説。</td></tr>
-<tr><td>v4.6</td><td>2026-05-18</td><td>/knowledge-craft 完全ガイド新設（knowledge-craft完全ガイド.html）。12セクション構成：概要・skill-craft との違い・6ステップフロー・価値判定4軸・2ドキュメント方針・内部メモ設計・HTML仕様・品質チェックリスト・失敗パターン・連携マップ。サイドバー「スキルリファレンス」に /knowledge-craft↗ を追加。</td></tr>
-<tr><td>v4.5</td><td>2026-05-18</td><td>/knowledge-craft スキル新設（rules/skills/knowledge-craft.md）。外部資料→知識MD（外部公開版）+HTMLマニュアル（Kai評価・内部メモ付き）→総合マニュアル連携の一気通貫フロー。CLAUDE.mdスキルテーブル・third-party-adaptation.md（§8 2ドキュメント方針）更新。</td></tr>
-<tr><td>v4.4</td><td>2026-05-18</td><td>「プロンプト拡張・デュアル定着解説書」新設（ClaudeCode_プロンプト拡張_デュアル定着解説書.html）。エージェント拡張指示文の解説と「エミ式AI定着メソッド」のアーキテクチャ・仕組みを解説。</td></tr>
-<tr><td>v4.3</td><td>2026-05-18</td><td>「AI定着支援 現場推進マニュアル」新設（AI定着支援_現場推進マニュアル.html）。フレームワーク解説・介入パターン・Kai評価・内部メモ（事例詳細）を収録。サイドバーに「コンサル知識・事例」セクション追加。</td></tr>
-<tr><td>v3.4</td><td>2026-05-15</td><td>Kai Visualize（思考可視化ツール）追加。サイドバー・目次・社内ツールセクションにカードとVBSリンク・操作マニュアルリンクを追加。</td></tr>
-<tr><td>v3.3</td><td>2026-05-15</td><td>「AI運用ガイド」を新設。PC環境の引越し手順（Dドライブ→Dropbox）、Gitを「防波堤」にする手順、日々の運用Tipsを追加。サイドバー・目次にリンクを追加。</td></tr>
-<tr><td>v3.2</td><td>2026-05-15</td><td>エージェント活かし方マニュアル新設。スキル用エージェントガイド・開発部エージェントガイド・content-burst/deck-sprint 徹底使い倒しガイドへのリンク追加。サイドバー「エージェント活用」セクション追加。</td></tr>
-<tr><td>v3.1</td><td>2026-05-15</td><td>/content-burst・/deck-sprint スキル追加。サイドバー・目次・スキルリファレンス更新。</td></tr>
-<tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設・keiyakusho-ai-check のeditor.html対応（受講者URL=index.html、編集=editor.html）・ファイル名を総合マニュアル.htmlに変更</td></tr>
-<tr><td>v2.4</td><td>2026-05-12</td><td>PART 6追加。第24章「/seminar-slide スキル」・第25章「スライドビルダーアプリの使い方」・第26章「テンプレート管理」。スライドビルダー完全ガイドへのリンク追加。</td></tr>
-<tr><td>v2.3</td><td>2026-05-12</td><td>PART 5追加。第22章「Kai Tasksアプリの使い方」・第23章「Kaiにテーマを渡してプロジェクト自動生成」。</td></tr>
-<tr><td>v4.2</td><td>2026-05-17</td><td>Kai Tasks 完全マニュアル（Kai-Tasks完全マニュアル.html）新設。PART5を全面改訂（クイックスタート・CLI早見表・自動記録しくみ・タイムマシン・再開ボタン解説に更新）。サイドバー・目次にリンク追加。</td></tr>
-<tr><td>v4.1</td><td>2026-05-17</td><td>PART 5末尾に「.envファイル完全セットアップガイド」リンクカードを追加。目次・サイドバー（📊 プロジェクト管理）にも同ガイドへのリンクを追加。</td></tr>
-<tr><td>v4.0</td><td>2026-05-17</td><td>第27章のセクション4を簡略化し「.envファイル完全セットアップガイド（Groq-env完全ガイド.html）」を別ページとして新設。メモ帳・Kai・ターミナルの3方法を選択式で解説。用語集に .env・.gitignore・プロジェクトルート・環境変数・APIキー・エンコードを追加。</td></tr>
-<tr><td>v4.0</td><td>2026-05-18</td><td>/seminar-dna スキル新設（セミナーDNA抽出・型命名・パターンライブラリ・台本量産）。seminar-dna完全ガイド.html 追加。seminar-script-rules.md（台本構造ルール）新設。セミナースタイル3層体系（構成パターン×DNA型×デザインスタイル）を整備。CLAUDE.md・06_セミナー事業部 CLAUDE.md・サイドバー・目次・第28章を更新。</td></tr>
-<tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」を新設。登録・APIキー取得・安全な管理方法（.envファイル）・商用利用の注意点・Claude Codeでの適用手順を初心者向けに解説。</td></tr>
-<tr><td>v3.8</td><td>2026-05-17</td><td>第19章に「実行中の割り込み・指示のやり直し方」の解説と、早見表に「強制停止 (Ctrl+C)」を追加。</td></tr>
-<tr><td>v3.7</td><td>2026-05-17</td><td>/skill-craft スキル新設（素材→スキル→マニュアル→連携の一気通貫自動化）。skill-craft完全ガイド.html 追加。CLAUDE.md・サイドバー・目次・PART 1 リンク更新。</td></tr>
-<tr><td>v3.6</td><td>2026-05-17</td><td>スキル使い倒し完全ガイド（skill使い倒し完全ガイド.html）新設。全40スキル・7シナリオ別レシピ・連携マップ・失敗回避法を収録。サイドバー・目次・PART 1にリンク追加。/course-build スキル新設（カリキュラム設計）。</td></tr>
-<tr><td>v3.5</td><td>2026-05-16</td><td>ビジネス文書スキル9本追加（/hearing-sheet・/proposal-outline・/billing-docs・/nda・/biz-contract・/wbs-gantt・/daily-report・/monthly-report・/doc-compare）。完全ガイド連携。</td></tr>
-<tr><td>v2.2</td><td>2026-05-10</td><td>第21章「自動完了指示の最短フォーマット」追加。</td></tr>
-<tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。</td></tr>
-<tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・全面改訂・アコーディオン化。</td></tr>
-<tr><td>v1.0</td><td>2026-05-07</td><td>初版作成。</td></tr>
-</table>
+<!-- 3層構造ナビゲーション -->
+<div class="layer-nav">
+  <a href="ダッシュボード_v1.html" target="_blank" style="text-decoration:none;flex:1;min-width:150px;max-width:210px;">
+    <div class="layer-item">
+      <div class="layer-icon">🔍</div>
+      <div class="layer-num">LAYER 1</div>
+      <div class="layer-name">ダッシュボード</div>
+      <div class="layer-desc">スキルを探す・検索する</div>
+    </div>
+  </a>
+  <div class="layer-arrow">→</div>
+  <a href="04_AI活用/AI活用ガイド.html" target="_blank" style="text-decoration:none;flex:1;min-width:150px;max-width:210px;">
+    <div class="layer-item">
+      <div class="layer-icon">📋</div>
+      <div class="layer-num">LAYER 2</div>
+      <div class="layer-name">AI活用ガイド</div>
+      <div class="layer-desc">全スキルの使い方・事例</div>
+    </div>
+  </a>
+  <div class="layer-arrow">→</div>
+  <div class="layer-item current" style="flex:1;min-width:150px;max-width:210px;">
+    <div class="layer-icon">📖</div>
+    <div class="layer-num">LAYER 3</div>
+    <div class="layer-name">総合マニュアル</div>
+    <div class="layer-desc">全章・全スキル詳細（今ここ）</div>
+  </div>
+</div>
+
+<!-- クイックスタート -->
+<div class="qs-section">
+  <h3 style="margin-top:0;">🚀 よく使う作業から始める</h3>
+  <p style="font-size:14px;color:#4A5568;margin-bottom:0;">下のタイルをクリックすると該当セクションへジャンプします。</p>
+  <div class="qs-grid">
+    <a href="#sk-intake" class="qs-tile">
+      <div class="qs-icon">💬</div>
+      <div class="qs-title">何から始めるかわからない</div>
+      <div class="qs-cmd">/project-intake</div>
+    </a>
+    <a href="#sk-proposal" class="qs-tile">
+      <div class="qs-icon">📊</div>
+      <div class="qs-title">提案書を作りたい</div>
+      <div class="qs-cmd">/sme-ai-proposal</div>
+    </a>
+    <a href="#ch4" class="qs-tile">
+      <div class="qs-icon">🗺</div>
+      <div class="qs-title">全体フローを見たい</div>
+      <div class="qs-cmd">第4章 全体フロー</div>
+    </a>
+    <a href="#app-kai-tasks" class="qs-tile">
+      <div class="qs-icon">📋</div>
+      <div class="qs-title">タスク管理を始める</div>
+      <div class="qs-cmd">Kai Tasks</div>
+    </a>
+    <a href="#sk-hearing-sheet" class="qs-tile">
+      <div class="qs-icon">📝</div>
+      <div class="qs-title">ヒアリングシートを作る</div>
+      <div class="qs-cmd">/hearing-sheet</div>
+    </a>
+    <a href="#p0-1" class="qs-tile">
+      <div class="qs-icon">🤖</div>
+      <div class="qs-title">Kaiって何？</div>
+      <div class="qs-cmd">PART 0-1 Kaiとは</div>
+    </a>
+  </div>
+</div>
 
 <hr>
 
@@ -319,15 +444,21 @@
     <li class="sub-item"><a href="#sk-proposal">/sme-ai-proposal — 提案書生成</a></li>
     <li class="sub-item"><a href="#sk-publish">/publish-proposal — GitHub Pages公開</a></li>
     <li class="sub-item"><a href="#sk-brain">/write-brain-article — Brain記事執筆</a></li>
-    <li class="sub-item"><a href="#sk-beginner">/beginner-guide — 初心者向けガイド</a></li>
+    <li class="sub-item"><a href="#sk-beginner">/beginner-guide — 初心者向けガイド（HTMLテンプレート完備）</a></li>
+    <li class="sub-item"><a href="#sk-fact-check">/fact-check — ファクト・法令・クリシェ独立検証（法務部）</a></li>
+    <li class="sub-item"><a href="#sk-demo-data">/demo-data-agent — 架空会社デモデータ生成（就労B型専用モードあり）</a></li>
     <li class="sub-item"><a href="#sk-news">/ai-news-digest — AIニュースまとめ</a></li>
     <li class="sub-item"><a href="#sk-setup">/company-setup — AI組織ゼロベース設計</a></li>
     <li class="sub-item"><a href="#sk-seminar">/seminar-slide — セミナースライド全自動作成</a></li>
-    <li class="sub-item"><a href="seminar-dna完全ガイド.html" target="_blank">↗ /seminar-dna — セミナーDNA抽出・型ライブラリ化・台本量産（完全ガイド）</a></li>
+    <li class="sub-item"><a href="03_セミナー/seminar-dna完全マニュアル.html" target="_blank">↗ /seminar-dna — セミナーDNA抽出・型ライブラリ化・台本量産（完全マニュアル）</a></li>
+    <li class="sub-item"><a href="03_セミナー/よろず支援拠点_1on1勉強会_進行マニュアル.html" target="_blank">↗ よろず支援拠点 1on1勉強会 進行マニュアル（CO向け・55分構成・座学プラグイン型）</a></li>
+    <li class="sub-item"><a href="03_セミナー/よろず支援拠点_はじめての方案内.html" target="_blank">↗ よろず支援拠点 はじめての方案内（初回利用者向けQ&amp;A＋利用規約 COスクリプト）</a></li>
     <li class="sub-item"><a href="#sk-content-burst">/content-burst — テーマ→6チャネル発信物を並列生成</a></li>
     <li class="sub-item"><a href="#sk-deck-sprint">/deck-sprint — テーマ→レポート+スライド+アジェンダを高速生成</a></li>
-    <li class="sub-item"><a href="skill-craft完全ガイド.html" target="_blank">↗ /skill-craft — 素材→スキル定義→HTMLマニュアル→総合マニュアル連携を一気通貫自動化</a></li>
-    <li class="sub-item"><a href="skill使い倒し完全ガイド.html" target="_blank">↗ スキル使い倒し完全ガイド（全40スキル・シナリオ別レシピ・連携マップ）</a></li>
+    <li class="sub-item"><a href="02_Kaiスキル/skill-craft完全マニュアル.html" target="_blank">↗ /skill-craft — 素材→スキル定義→HTMLマニュアル→総合マニュアル連携を一気通貫自動化</a></li>
+    <li class="sub-item"><a href="02_Kaiスキル/skill使い倒し完全マニュアル.html" target="_blank">↗ スキル使い倒し完全マニュアル（全40スキル・シナリオ別レシピ・連携マップ）</a></li>
+    <li class="sub-item"><a href="ローカルWhisper文字起こし完全マニュアル.html" target="_blank">↗ /local-transcribe — 動画/音声を完全ローカルで文字起こし（機密ゼロ漏れ・無料・60分超は自動分割）</a></li>
+    <li class="sub-item"><a href="02_Kaiスキル/long-video-conte完全マニュアル.html" target="_blank">↗ /long-video-conte — 長尺解説動画（3〜60分・YouTube/ウェビナー/講座）の型抽出・パターン量産</a></li>
     <li><strong>PART 1-B: ビジネス文書スキル（営業〜月次）</strong></li>
     <li class="sub-item"><a href="#sk-hearing-sheet">/hearing-sheet — ヒアリングシート生成</a></li>
     <li class="sub-item"><a href="#sk-proposal-outline">/proposal-outline — 提案骨子生成</a></li>
@@ -342,13 +473,16 @@
     <li class="sub-item"><a href="#sk-doc-compare">/doc-compare — 新旧対比表生成</a></li>
     <li><strong>エージェント活用ガイド</strong></li>
     <li class="sub-item"><a href="#agent-ecosystem">Kaiエージェントエコシステム概要（19体）</a></li>
-    <li class="sub-item"><a href="エージェント活かし方マニュアル.html" target="_blank">↗ エージェント活かし方マニュアル（独立ガイド）</a></li>
+    <li class="sub-item"><a href="02_Kaiスキル/エージェント活かし方マニュアル.html" target="_blank">↗ エージェント活かし方マニュアル（独立ガイド）</a></li>
     <li class="sub-item"><a href="../.claude/agents/エージェントガイド.html" target="_blank">↗ エージェントガイド（スキル用：cb-*/ds-*全11体）</a></li>
     <li class="sub-item"><a href="../08_アプリ開発事業部/agents/エージェントガイド.html" target="_blank">↗ エージェントガイド（開発部：ARCH+7体）</a></li>
     <li><strong>アプリ・ツール（NEW）</strong></li>
     <li class="sub-item"><a href="#app-keiyakusho">契約書AIチェックセミナー</a></li>
     <li class="sub-item"><a href="#app-kai-tasks">Kai Tasks プロジェクト管理</a></li>
     <li class="sub-item"><a href="#app-kai-visualize">Kai Visualize 可視化ツール</a></li>
+    <li class="sub-item"><a href="羅針盤完全マニュアル.html" target="_blank">🧭 羅針盤（目標達成コンパス）完全マニュアル v8.0</a></li>
+    <li class="sub-item"><a href="リサーチ提案完全マニュアル.html" target="_blank">🔬 リサーチ提案 完全マニュアル v1.0（ベンチマーク発見→転用提案）</a></li>
+    <li class="sub-item"><a href="Kei思考モード完全マニュアル.html" target="_blank">🧠 Kei思考モード 完全マニュアル v1.0（仮想Keiとの自動内的対話）</a></li>
     <li class="sub-item"><a href="#app-slide-builder">スライドビルダーツール</a></li>
     <li class="sub-item"><a href="#app-public">公開済みアプリ一覧</a></li>
     <li><strong>PART 2: クライアント案件フロー</strong></li>
@@ -369,9 +503,9 @@
     <li class="sub-item"><a href="#ch14">第14章　GROWER — 自走化支援・Phase 3移行</a></li>
     <li class="sub-item"><a href="#ch15">第15章　PIPELINE — 案件管理・週次ダッシュボード</a></li>
      <li><strong>PART 4: 運用・管理</strong></li>
-    <li class="sub-item"><a href="AI運用ガイド.html" target="_blank">↗ AI運用ガイド（引越し・Git・運用Tips）</a></li>
-    <li class="sub-item"><a href="ClaudeCode_プロンプト拡張_デュアル定着解説書.html" target="_blank">↗ 💡 プロンプト拡張・デュアル定着解説書（エミ式）</a></li>
-    <li class="sub-item"><a href="ClaudeCode_自律実行フレームワーク_CC完全ガイド.html" target="_blank">↗ ⚡ 自律実行フレームワーク CC完全ガイド（自律実行＆二重検証）</a></li>
+    <li class="sub-item"><a href="04_AI活用/AI運用ガイド.html" target="_blank">↗ AI運用ガイド（引越し・Git・運用Tips）</a></li>
+    <li class="sub-item"><a href="01_ClaudeCode/ClaudeCode_プロンプト拡張_デュアル定着解説書.html" target="_blank">↗ 💡 プロンプト拡張・デュアル定着解説書（エミ式）</a></li>
+    <li class="sub-item"><a href="01_ClaudeCode/ClaudeCode_自律実行フレームワーク_CC完全マニュアル.html" target="_blank">↗ ⚡ 自律実行フレームワーク CC完全マニュアル（自律実行＆二重検証）</a></li>
     <li class="sub-item"><a href="#ch16">第16章　エージェントへの正しい指示の出し方</a></li>
     <li class="sub-item"><a href="#ch17">第17章　よくあるトラブルと対処</a></li>
     <li class="sub-item"><a href="#ch18">第18章　用語集（詳細版）</a></li>
@@ -380,10 +514,10 @@
     <li class="sub-item"><a href="#ch21">第21章　自動完了指示の最短フォーマット</a></li>
     <li class="sub-item"><a href="#ch27">第27章　Groq API 無料運用マニュアル</a></li>
     <li><strong>PART 5: Kai Tasks プロジェクト管理</strong></li>
-    <li class="sub-item"><a href="Kai-Tasks完全マニュアル.html" target="_blank">↗ Kai Tasks 完全マニュアル（独立ページ）</a></li>
+    <li class="sub-item"><a href="02_Kaiスキル/Kai-Tasks完全マニュアル.html" target="_blank">↗ Kai Tasks 完全マニュアル（独立ページ）</a></li>
     <li class="sub-item"><a href="#ch22">第22章　Kai Tasks クイックスタート（起動・基本操作）</a></li>
     <li class="sub-item"><a href="#ch23">第23章　基本CLIコマンドと自動記録のしくみ</a></li>
-    <li class="sub-item"><a href="Groq-env完全ガイド.html" target="_blank">↗ .envファイル完全セットアップガイド（Groq APIキーの安全な管理）</a></li>
+    <li class="sub-item"><a href="01_ClaudeCode/Groq-env完全マニュアル.html" target="_blank">↗ .envファイル完全セットアップガイド（Groq APIキーの安全な管理）</a></li>
     <li><strong>PART 6: セミナースライドビルダー</strong></li>
     <li class="sub-item"><a href="#ch24">第24章　/seminar-slide スキル — 全自動でスライドを作る</a></li>
     <li class="sub-item"><a href="#ch25">第25章　スライドビルダーツールの使い方</a></li>
@@ -606,7 +740,7 @@
 <!-- ===== PART 1: スキルコマンドリファレンス ===== -->
 <div class="part-header">PART <span>1</span>　スキルコマンドリファレンス</div>
 
-<div class="lead" style="margin:16px 0;">全スキルの使い方・シナリオ別レシピ・スキル連携マップをまとめた完全ガイドを別ファイルで公開しています。<a href="skill使い倒し完全ガイド.html" target="_blank">▶ スキル使い倒し完全ガイド（全40スキル）</a> ／ 素材からスキルを自動生成する→ <a href="skill-craft完全ガイド.html" target="_blank">▶ /skill-craft 完全ガイド</a></div>
+<div class="lead" style="margin:16px 0;">全スキルの使い方・シナリオ別レシピ・スキル連携マップをまとめた完全マニュアルを別ファイルで公開しています。<a href="02_Kaiスキル/skill使い倒し完全マニュアル.html" target="_blank">▶ スキル使い倒し完全マニュアル（全40スキル）</a> ／ 素材からスキルを自動生成する→ <a href="02_Kaiスキル/skill-craft完全マニュアル.html" target="_blank">▶ /skill-craft 完全マニュアル</a></div>
 
 <details id="sk-intake">
 <summary><span class="acc-num">SK</span>/project-intake — 受付・ブリーフィング生成<span class="acc-arrow">▼</span></summary>
@@ -708,11 +842,83 @@
 <div class="acc-content">
 <div class="agent-card" style="border-left-color:#DD6B20">
   <div class="agent-name">/beginner-guide</div>
-  <div class="agent-phase">IT初心者向けマニュアルを作る時</div>
-  <p>クライアントのスタッフなど、ITに不慣れな方向けの操作マニュアル・手順書を作成します。</p>
+  <div class="agent-phase">「右クリックって？」レベルの完全初心者向けHTMLガイドブックを作る時</div>
+  <p>PC操作・IT知識ゼロのスタッフ・クライアントが一人で読み進められる操作マニュアル・手順書をHTML形式で生成します。専門用語を全て噛み砕き、クリックする場所まで明示します。</p>
+</div>
+<h3>主な出力物</h3>
+<table>
+  <tr><th>要素</th><th>内容</th></tr>
+  <tr><td>HTMLテンプレート</td><td>Yu Gothic UI・ネイビー+オレンジ配色・表紙+目次+本編+トラブルシューティング+用語集</td></tr>
+  <tr><td>SVGフロー図</td><td>縦並びステップ（1ステップ100px）・並列構成図</td></tr>
+  <tr><td>色分けCallout</td><td>tip（ポイント）/ warn（注意）/ ok（完了確認）の3色枠</td></tr>
+  <tr><td>ASCII画面図</td><td>操作対象アプリの画面を文字で再現</td></tr>
+  <tr><td>完成チェックリスト</td><td>構造・内容・スタイル・トーン4軸の自己レビュー</td></tr>
+</table>
+<h3>作成プロセス（5問ヒアリング→章構成確認→本文生成）</h3>
+<div class="step">
+<h4><span class="step-num">1</span>5問で読者像を確認</h4>
+<p>知識レベル・ゴール・使用環境・詰まりポイント・ボリュームを確認してから着手します。</p>
+</div>
+<div class="step">
+<h4><span class="step-num">2</span>章構成案を提示・承認</h4>
+<p>ゴール提示→必要なもの→用語説明→フロー図→操作ステップ→トラブルシューティング→用語集の標準構成を提示します。</p>
+</div>
+<div class="step">
+<h4><span class="step-num">3</span>HTML本文を生成・保存</h4>
+<p><code>07_マニュアル/{ガイド名}.html</code> に保存し、<code>computer://</code> リンクで提示します。</p>
 </div>
 <h3>指示例</h3>
-<div class="prompt-box">まる様のスタッフ向けに、Google Formsで出退勤を記録する手順書を作って。<br>対象：スマートフォン操作が基本・パソコンは苦手なスタッフ<br>必要な操作：フォームを開く→日付と名前を入力→送信</div>
+<div class="prompt-box">/beginner-guide<br><br>まる様のスタッフ向けに、Google Formsで出退勤を記録する手順書を作って。<br>対象：スマートフォン操作が基本・パソコンは苦手なスタッフ（50代中心）<br>ゴール：一人でフォームを開いて送信できるようになる</div>
+<div class="tip"><span class="label">スキル定義ファイル</span><code>rules/skills/beginner-guide.md</code> — HTMLテンプレート全文・SVG図テンプレート・カラーパレット・章パターン7種収録</div>
+</div>
+</details>
+
+<details id="sk-fact-check">
+<summary><span class="acc-num">SK</span>/fact-check — ファクト・法令・クリシェ独立検証<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#E53E3E">
+  <div class="agent-name">/fact-check</div>
+  <div class="agent-phase">成果物を公開・提出する前 / Brain記事・提案書・スライドの品質ゲートとして</div>
+  <p>制作サイドとは独立した「法務部」として成果物を検証します。数字・固有名詞・景表法リスク・クリシェを PASS / FLAG / FAIL の3段階で判定。「条件付きPASS」は存在しません。</p>
+</div>
+<h3>4つの検査カテゴリ</h3>
+<table>
+  <tr><th>カテゴリ</th><th>検査内容</th></tr>
+  <tr><td>A. ファクト</td><td>数値・固有名詞・年代・統計の出典照合。架空調査機関の作成禁止</td></tr>
+  <tr><td>B. 法令リスク</td><td>景表法（No.1・最安値等）・薬機法・著作権・個人情報の4軸</td></tr>
+  <tr><td>C. クリシェ</td><td><code>rules/seminar-cliche-list.md</code> の100+フレーズ照合</td></tr>
+  <tr><td>D. トンマナ</td><td>絵文字・文体・個人情報の混入チェック</td></tr>
+</table>
+<h3>判定フォーマット</h3>
+<div class="prompt-box">[判定] PASS / FLAG / FAIL<br>[ファクト] 問題なし / 要修正：「〇〇億円」→ 出典なし<br>[法令リスク] 問題なし / 「業界最安値」→ 根拠資料なければ削除<br>[クリシェ] 「最初の一歩を踏み出す」→ 「来月1部署で試験運用」に置換<br>[次アクション] FLAG：修正後に再検査 / PASS：公開承認</div>
+<h3>使うタイミング</h3>
+<ul>
+  <li>Brain記事（有料販売前）— 誇大表現・架空事例の排除</li>
+  <li>GitHub Pages公開スライド — 法令違反・個人情報漏洩の確認</li>
+  <li>クライアント提案書 — 数値出典・固有名詞の裏取り</li>
+  <li>SaaSプライバシーポリシー確認 — <code>/research → /fact-check</code> の連携で使う</li>
+</ul>
+<div class="tip"><span class="label">スキル定義ファイル</span><code>rules/skills/fact-check.md</code> — 4カテゴリ検査チェックリスト・公開リスク別優先度表収録</div>
+</div>
+</details>
+
+<details id="sk-demo-data">
+<summary><span class="acc-num">SK</span>/demo-data-agent — 架空会社デモデータ生成<span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#805AD5">
+  <div class="agent-name">/demo-data-agent</div>
+  <div class="agent-phase">提案・研修・デモ用の架空会社データが欲しい時 / 就労継続支援B型事業所のサンプルデータを生成したい時</div>
+  <p>最小3項目（テーマ・ターゲット・概要）を入力するとヒアリングを挟みながら架空会社の業務フロー・課題ボックス・会議記録・書類サンプルを生成します。実在個人情報は一切使用しません。</p>
+</div>
+<h3>2つのモード</h3>
+<table>
+  <tr><th>モード</th><th>用途</th><th>主な出力物</th></tr>
+  <tr><td><strong>汎用モード</strong></td><td>任意業種のデモデータ</td><td>業務フロー（As-Is/To-Be）・課題ボックス・会議記録・役割一覧</td></tr>
+  <tr><td><strong>就労B型専用</strong></td><td>障がい者就労支援事業所</td><td>利用者A〜J（10名プロファイル）・書類7種・週次会議24本・課題Q-001〜008・AI導入会議24本</td></tr>
+</table>
+<h3>指示例</h3>
+<div class="prompt-box">/demo-data-agent<br><br>就労継続支援B型の事業所の提案に使うデモデータを作りたい。<br>テーマ：AI導入前後の業務改善を見せる<br>ターゲット：事業所長・相談支援員</div>
+<div class="tip"><span class="label">スキル定義ファイル</span><code>rules/skills/demo-data-agent.md</code> — 利用者プロファイル定義表・課題ボックスQ-001〜Q-008・B型書類7種名称収録</div>
 </div>
 </details>
 
@@ -773,7 +979,7 @@
   <tr><td>ローカルフォルダ</td><td><code>06_セミナー事業部\outputs\{スラッグ}\</code></td></tr>
 </table>
 <h3>完全マニュアル</h3>
-<div class="file-card"><div class="file-icon">📗</div><div><span class="file-path">07_マニュアル/スライドビルダー完全ガイド.html</span><div class="file-desc">スライドビルダー完全ガイド（システム概要・全ページの役割・テンプレート管理・デプロイ手順・当日操作・slides.js書き方リファレンス）</div></div></div>
+<div class="file-card"><div class="file-icon">📗</div><div><span class="file-path">07_マニュアル/スライドビルダー完全マニュアル.html</span><div class="file-desc">スライドビルダー完全マニュアル（システム概要・全ページの役割・テンプレート管理・デプロイ手順・当日操作・slides.js書き方リファレンス）</div></div></div>
 <div class="tip"><span class="label">初回のみ必須</span>スキル完了後、<strong>admin.html を開いてプレゼンターパスワードを設定する</strong>ことを忘れずに。</div>
 </div>
 </details>
@@ -866,7 +1072,7 @@
 <!-- ===== ビジネス文書スキル ===== -->
 <div class="part-header" id="biz-doc-skills">PART <span>1-B</span>　ビジネス文書スキル（営業〜月次）</div>
 
-<div class="lead" style="margin:16px 0;">コンサルティング案件の<strong>営業フェーズ → 契約フェーズ → 実行フェーズ</strong>をカバーする9スキル。<a href="ビジネス文書スキル完全ガイド.html" target="_blank">▶ 完全ガイドはこちら</a></div>
+<div class="lead" style="margin:16px 0;">コンサルティング案件の<strong>営業フェーズ → 契約フェーズ → 実行フェーズ</strong>をカバーする9スキル。<a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html" target="_blank">▶ 完全マニュアルはこちら</a></div>
 
 <details id="sk-hearing-sheet">
 <summary><span class="acc-num">SK</span>/hearing-sheet — 業種×部門に合わせたヒアリングシートをExcelで動的生成<span class="acc-arrow">▼</span></summary>
@@ -886,7 +1092,7 @@
   <tr><td>【部門名】</td><td>部門別質問項目（業種特有の質問自動追加）</td><td>選択部門ごと</td></tr>
   <tr><td>優先度・ゴール整理</td><td>課題優先順位・予算感・意思決定プロセス</td><td>常時</td></tr>
 </table>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#hearing-sheet" target="_blank">▶ hearing-sheet 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#hearing-sheet" target="_blank">▶ hearing-sheet 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -902,7 +1108,7 @@
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>このヒアリングシートから提案骨子を作って<br>[Excelをアップロード]</div>
 <h3>出力構成（1〜2ページ）</h3>
 <ol><li>現状課題の整理（3課題・数値付き）</li><li>ご提案の方向性（アプローチ・理由）</li><li>期待効果（定量・定性）</li><li>次のステップ（詳細ヒアリング・見積・PoC）</li></ol>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#proposal-outline" target="_blank">▶ proposal-outline 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#proposal-outline" target="_blank">▶ proposal-outline 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -921,7 +1127,7 @@
   <tr><td>請求書・インボイス・請求</td><td>請求書（AR-YYYYMM-NNN）</td></tr>
   <tr><td>見積書・見積もり・御見積</td><td>見積書（EST-YYYYMM-NNN）</td></tr>
 </table>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#billing-docs" target="_blank">▶ billing-docs 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#billing-docs" target="_blank">▶ billing-docs 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -936,7 +1142,7 @@
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>NDAを作成して。開示者：有限会社アートソウル、受領者：〇〇株式会社<br>目的：AI導入支援コンサルティング</div>
 <div class="warn"><span class="label">注意</span>本スキルのNDAは標準ひな形です。締結前に専門家（弁護士等）へのご確認を推奨します。</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#nda" target="_blank">▶ NDA 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#nda" target="_blank">▶ NDA 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -951,7 +1157,7 @@
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>業務委託契約書を作成して。<br>委託者：〇〇株式会社、受託者：有限会社アートソウル<br>業務：AI導入支援コンサルティング、月額30万円、1年間</div>
 <div class="warn"><span class="label">注意</span>本スキルの契約書は標準ひな形です。締結前に専門家（弁護士等）へのご確認を推奨します。</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#biz-contract" target="_blank">▶ biz-contract 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#biz-contract" target="_blank">▶ biz-contract 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -965,7 +1171,7 @@
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>この契約書をチェックして。<br>立場：乙（受託者）側で不利な条件がないか確認してください。<br>[契約書ファイルをアップロードまたはテキストを貼り付け]</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#contract-check" target="_blank">▶ contract-check 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#contract-check" target="_blank">▶ contract-check 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -1018,7 +1224,7 @@
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>〇〇社AIプロジェクトのガントチャートを作って。<br>開始：2026/6/1、終了：2026/11/30<br>フェーズ：現状分析→設計→実装→定着支援</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#wbs-gantt" target="_blank">▶ wbs-gantt 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#wbs-gantt" target="_blank">▶ wbs-gantt 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -1032,7 +1238,7 @@
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>今日の日報を記録して。<br>「今日はA社向けのAI導入支援提案書を4時間かけて作成しました。<br>要件定義の認識ずれが課題です。<br>明日はB社との定例ミーティングと議事録作成の予定です。」</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#daily-report" target="_blank">▶ daily-report 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#daily-report" target="_blank">▶ daily-report 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -1046,7 +1252,7 @@
 </div>
 <h3>呼び出し方</h3>
 <div class="prompt-box"><button class="copy-btn" onclick="this.textContent='コピー済み';setTimeout(()=>this.textContent='コピー',2000)">コピー</button>〇〇株式会社への5月分の月次レポートを作って。<br>稼働18日、主要活動：AI戦略策定・研修実施、成果：参加率95%・月40時間削減見込み</div>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#monthly-report" target="_blank">▶ monthly-report 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#monthly-report" target="_blank">▶ monthly-report 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -1067,7 +1273,7 @@
   <tr><td>新規追加</td><td>青字・「(新規追加)」</td></tr>
   <tr><td>削除</td><td>赤字・取り消し線・「(削除)」</td></tr>
 </table>
-<div class="tip"><span class="label">詳細ガイド</span><a href="ビジネス文書スキル完全ガイド.html#doc-compare" target="_blank">▶ doc-compare 完全ガイド</a></div>
+<div class="tip"><span class="label">詳細ガイド</span><a href="02_Kaiスキル/ビジネス文書スキル完全マニュアル.html#doc-compare" target="_blank">▶ doc-compare 完全マニュアル</a></div>
 </div>
 </details>
 
@@ -1106,7 +1312,7 @@
 <div class="ok">
   <span class="label">エージェントの活かし方をもっと詳しく知りたい場合</span>
   「いつ使うか判断する」「コンテキストの渡し方」「並列vs直列の設計思想」「新しいエージェントを追加する方法」「よくある失敗パターン」まですべてまとめた独立ガイドがあります。<br>
-  <a href="エージェント活かし方マニュアル.html" target="_blank"><strong>▶ エージェント活かし方マニュアル（完全ガイド）を開く</strong></a>
+  <a href="02_Kaiスキル/エージェント活かし方マニュアル.html" target="_blank"><strong>▶ エージェント活かし方マニュアル（完全マニュアル）を開く</strong></a>
 </div>
 </div>
 </details>
@@ -1172,7 +1378,7 @@ Kaiがログを記録するたびにサーバーが自動起動します。ブ�
 <tr><td>デスクトップの「Kai Tasks」</td><td>サーバー起動 + ブラウザ自動オープン（ショートカット）</td></tr>
 <tr><td><code>http://localhost:3456</code></td><td>サーバーが既に動いていれば直接アクセスで開く</td></tr>
 </table>
-<p style="font-size:13px;color:#718096;margin-top:8px;">詳しい操作・CLI・タイムマシン・使い倒し方 → <a href="Kai-Tasks完全マニュアル.html" target="_blank" style="color:#1A365D;font-weight:bold;">Kai Tasks 完全マニュアル ↗</a> または <a href="#ch22">PART 5</a></p>
+<p style="font-size:13px;color:#718096;margin-top:8px;">詳しい操作・CLI・タイムマシン・使い倒し方 → <a href="02_Kaiスキル/Kai-Tasks完全マニュアル.html" target="_blank" style="color:#1A365D;font-weight:bold;">Kai Tasks 完全マニュアル ↗</a> または <a href="#ch22">PART 5</a></p>
 </div>
 </details>
 
@@ -1209,7 +1415,7 @@ Kaiがログを記録するたびにサーバーが自動起動します。ブ�
   <p>セミナースライドを新規作成するためのGUIランチャー。テーマ・ターゲット・時間を入力するとKaiへのプロンプトとプロジェクト生成コマンドを自動計算します。</p>
 </div>
 <div class="file-card"><div class="file-icon">🛠</div><div><span class="file-path">08_アプリ開発事業部\outputs\slide-builder\index.html</span><div class="file-desc">ブラウザで開くだけ。サーバー不要。</div></div></div>
-<div class="file-card"><div class="file-icon">📗</div><div><span class="file-path">07_マニュアル\スライドビルダー完全ガイド.html</span><div class="file-desc">システム概要・全ページの役割・当日操作・パスワード・トラブルシューティング・slides.js書き方リファレンス全網羅</div></div></div>
+<div class="file-card"><div class="file-icon">📗</div><div><span class="file-path">07_マニュアル\スライドビルダー完全マニュアル.html</span><div class="file-desc">システム概要・全ページの役割・当日操作・パスワード・トラブルシューティング・slides.js書き方リファレンス全網羅</div></div></div>
 <p>完成したセミナープロジェクトは <span class="file-path">06_セミナー事業部\outputs\{スラッグ}\</span> に移動して管理します。</p>
 </div>
 </details>
@@ -1281,6 +1487,74 @@ Kaiがログを記録するたびにサーバーが自動起動します。ブ�
   <li>📖 <strong>操作マニュアル.html</strong> — 機能説明・修正方法・トラブルシューティング</li>
 </ul>
 公開が確定したら「公開済みアプリ」に移動します。
+</div>
+</div>
+</details>
+
+<hr>
+<!-- ===== 販売パッケージ ===== -->
+<div class="part-header" id="sales-package">🎁 販売パッケージ</div>
+
+<p style="color:#718096;font-size:14px;margin:0 0 16px">
+  クライアントに販売・提供できる完成商品パッケージ。ツール本体・完全マニュアル・販売マニュアルのセット管理。
+</p>
+
+<details id="pkg-x-post">
+<summary><span class="acc-num">P</span>X自動投稿AIツール — AI文章生成ツール（販売商品） <small style="color:#9AE6B4;font-size:11px;">/ れっツ @Lets_go1000 専用パターンあり</small><span class="acc-arrow">▼</span></summary>
+<div class="acc-content">
+<div class="agent-card" style="border-left-color:#276749">
+  <div class="agent-name">X自動投稿AIツール</div>
+  <div class="agent-phase">ローカル動作 / Node.js + Gemini API / 月額0円</div>
+  <p>テーマを入力するだけで、自分の文体・専門知識・過去のバズ投稿パターンを学習したAIがX投稿下書きを30秒で生成。写真フォルダを指定すればイベント報告投稿も自動化。自分色に育てられる唯一のローカル型ツール。</p>
+</div>
+
+<div class="two-col">
+  <div class="two-col-box">
+    <h4>想定ターゲット</h4>
+    <ul style="font-size:13px;">
+      <li>X発信をしているが投稿量が出せない経営者</li>
+      <li>「AI感」のない投稿を量産したいコンサルタント</li>
+      <li>ChatGPTを使いこなせていないと感じている人</li>
+    </ul>
+  </div>
+  <div class="two-col-box">
+    <h4>販売形態・価格帯</h4>
+    <ul style="font-size:13px;">
+      <li>単品：30,000〜50,000円（サポート込み）</li>
+      <li>セミナーバックエンド：15,000〜20,000円</li>
+      <li>伴走3ヶ月：150,000〜200,000円</li>
+    </ul>
+  </div>
+</div>
+
+<h3>構成ファイル・保存場所</h3>
+<table>
+<tr><th>ファイル</th><th>場所</th><th>用途</th></tr>
+<tr><td>ツール本体（フォルダ）</td><td><span class="file-path">08_アプリ開発事業部/outputs/x-auto-post-generator/</span></td><td>上村自身の使用・クライアントへの配布元</td></tr>
+<tr><td>完全マニュアル</td><td><span class="file-path">05_クライアント案件/00_販売パッケージ/<br>X自動投稿AIツール_完全マニュアル.html</span></td><td>クライアントに渡す（使用例・AIリサーチワークフロー含む）</td></tr>
+<tr><td>販売マニュアル</td><td><span class="file-path">05_クライアント案件/00_販売パッケージ/<br>X自動投稿AIツール_販売マニュアル.html</span></td><td>社内・販売担当者向け</td></tr>
+<tr><td>アカウント設定ガイド</td><td><span class="file-path">05_クライアント案件/00_販売パッケージ/<br>X自動投稿システム_アカウント設定ガイド.html</span></td><td>新規アカウント専用パターン作成 5ステップ手順書</td></tr>
+</table>
+
+<h4 style="margin-top:14px;">完全マニュアルの章構成（v1.1）</h4>
+<table style="font-size:13px;">
+<tr><th>章</th><th>内容</th></tr>
+<tr><td>1〜3章</td><td>概要・インストール・クイックスタート</td></tr>
+<tr><td>4〜5章</td><td>コンテキスト設計・Xデータ取得</td></tr>
+<tr><td>6〜8章</td><td>上級カスタマイズ・テーマ入力のコツ・トラブルシューティング</td></tr>
+<tr><td style="color:#276749;font-weight:bold;">9章</td><td style="color:#276749;">使用例集（イベントレポート型・ノウハウ型・AI最新情報紹介型）</td></tr>
+<tr><td style="color:#276749;font-weight:bold;">10章</td><td style="color:#276749;">AI界隈リサーチ→発信ネタ作成ワークフロー（情報ソース・選球眼・テンプレート・実例）</td></tr>
+</table>
+
+<div class="app-links" style="margin-top:14px;">
+  <a href="X自動投稿_れっツ専用ガイド.html" target="_blank" class="alink pri">🐰 れっツ専用ガイド</a>
+  <a href="../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_完全マニュアル.html" target="_blank" class="alink sec">完全マニュアル（クライアント渡し）</a>
+  <a href="../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_販売マニュアル.html" target="_blank" class="alink sec">販売マニュアル（内部用）</a>
+  <a href="../05_クライアント案件/00_販売パッケージ/X自動投稿システム_アカウント設定ガイド.html" target="_blank" class="alink sec">アカウント設定ガイド</a>
+</div>
+
+<div class="tip" style="margin-top:16px;"><span class="label">セールスの核心</span>
+「デモを見せてから売る」が最強パターン。セミナー内でrun.batを起動して参加者の目の前で生成すると、説明不要で刺さる。バックエンド販売での成約率が最も高い。
 </div>
 </div>
 </details>
@@ -1885,7 +2159,7 @@ ANALYSTの引き継ぎパッケージをもとに、<br>
 <table>
 <tr><th>第○部</th><th>内容</th><th>目的</th></tr>
 <tr><td>第1部</td><td>現状課題サマリー</td><td>コスト可視化・フロー図解説コメント</td></tr>
-<tr><td>第2部</td><td>Google Workspace Business Standard 導入完全ガイド</td><td>各業務に使うツールを step-by-step で説明</td></tr>
+<tr><td>第2部</td><td>Google Workspace Business Standard 導入完全マニュアル</td><td>各業務に使うツールを step-by-step で説明</td></tr>
 <tr><td>第3部</td><td>ライモBizミニアプリ仕様書</td><td>優先順位A/B/Cでミニアプリの機能設計を提示</td></tr>
 <tr><td>第4部</td><td>6ヶ月超詳細自走ロードマップ</td><td>週次（24週）で「いつ何を実施するか」を明示</td></tr>
 <tr><td>第5部</td><td>AI活用研修計画</td><td>自力でできるスキル習得スケジュール（月次）</td></tr>
@@ -1925,7 +2199,7 @@ blueprint.md のロールで動いてください。<br><br>
 <div class="step">
 <h3><span class="step-num">2</span>特定の部だけ生成（部分生成）</h3>
 <div class="prompt-box">
-blueprint.md のロールで動いてください。STEP 2（第2部：GWS導入完全ガイド）のみ実行します。<br><br>
+blueprint.md のロールで動いてください。STEP 2（第2部：GWS導入完全マニュアル）のみ実行します。<br><br>
 業種：○○<br>
 改善後フロー図で採用したGWSツール：Google Forms・Google Sheets・Gemini<br>
 <br>
@@ -2337,7 +2611,7 @@ PIPELINEは以下を自動でチェックします：<br>
 <dd>あるエージェントから次のエージェントへ渡す構造化データ。たとえば「TRAINER → COACH 引き継ぎパッケージ」には「修了者情報・AIマネージャー候補評価・フォロー状況・COACHへの引き継ぎ事項」が含まれる。</dd>
 
 <dt>スペシャル資料</dt>
-<dd>BLUEPRINTが生成するロードマップ策定の最終成果物。GWS導入完全ガイド・ライモBizミニアプリ仕様書・6ヶ月超詳細ロードマップ・AI研修計画・アップセール提案書の6部構成。</dd>
+<dd>BLUEPRINTが生成するロードマップ策定の最終成果物。GWS導入完全マニュアル・ライモBizミニアプリ仕様書・6ヶ月超詳細ロードマップ・AI研修計画・アップセール提案書の6部構成。</dd>
 
 <dt>伴走プランS/A/B/C（アップセール）</dt>
 <dd>BLUEPRINTのスペシャル資料内に含まれる4つのアップセールプラン。S=自走（¥0、DIYで実施）、A=¥5万/月（月次レポート+チャットサポート）、B=¥15万/月（隔週コーチング+KPIダッシュボード）、C=¥30万/月（週次コーチング+ミニアプリ開発+月次訪問）。</dd>
@@ -2361,10 +2635,10 @@ PIPELINEは以下を自動でチェックします：<br>
 <dd>新規案件開始時にKaiに渡すテンプレート。基本情報・課題・ITリテラシー・予算・ゴール・上村の所感の6セクション。Knowledgeフォルダに保存して渡す。</dd>
 
 <dt>.envファイル（ドットイーエヌブイ）</dt>
-<dd>APIキーやパスワードなど「秘密の値」だけを書いておく専用の隠しファイル。ファイル名は必ず <code>.env</code>（ドットで始まる、拡張子なし）。コードの中に直接書く代わりにこのファイルを参照することで、万が一コードが外に漏れてもキーは守られる。エンコードはUTF-8（メモ帳で保存する場合は「UTF-8」を選択）。→ <a href="Groq-env完全ガイド.html" target="_blank">完全セットアップガイド</a></dd>
+<dd>APIキーやパスワードなど「秘密の値」だけを書いておく専用の隠しファイル。ファイル名は必ず <code>.env</code>（ドットで始まる、拡張子なし）。コードの中に直接書く代わりにこのファイルを参照することで、万が一コードが外に漏れてもキーは守られる。エンコードはUTF-8（メモ帳で保存する場合は「UTF-8」を選択）。→ <a href="01_ClaudeCode/Groq-env完全マニュアル.html" target="_blank">完全セットアップガイド</a></dd>
 
 <dt>.gitignore（ドットギットイグノア）</dt>
-<dd>Gitに「このファイルは管理しないで」と伝えるリスト。プロジェクトルートに置く <code>.gitignore</code> というテキストファイルに除外したいファイル名を1行ずつ書く。<code>.env</code> をここに書いておかないと、APIキーがGitHub等に誤って公開されてしまう。→ <a href="Groq-env完全ガイド.html#step2" target="_blank">設定方法</a></dd>
+<dd>Gitに「このファイルは管理しないで」と伝えるリスト。プロジェクトルートに置く <code>.gitignore</code> というテキストファイルに除外したいファイル名を1行ずつ書く。<code>.env</code> をここに書いておかないと、APIキーがGitHub等に誤って公開されてしまう。→ <a href="01_ClaudeCode/Groq-env完全マニュアル.html#step2" target="_blank">設定方法</a></dd>
 
 <dt>プロジェクトルート</dt>
 <dd>プロジェクトの「一番上のフォルダ」のこと。Kai Tasksの場合は <code>C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\</code> がプロジェクトルート。ここに <code>.gitignore</code> や <code>CLAUDE.md</code> などの設定ファイルが置かれている。</dd>
@@ -2755,11 +3029,11 @@ echo $env:GROQ_API_KEY</code></pre>
 
 <div class="lead">
 APIキーは <strong>.envファイル</strong> という専用ファイルに書いて管理する。コードの中に直接書かない、Gitにも上げない——この2点が最重要ルール。<br>
-詳しい手順（ファイルの作り方・エンコード・.gitignoreの意味まで）は完全ガイドを参照。
+詳しい手順（ファイルの作り方・エンコード・.gitignoreの意味まで）は完全マニュアルを参照。
 </div>
 
 <div style="text-align:center;margin:20px 0;">
-  <a href="Groq-env完全ガイド.html" target="_blank"
+  <a href="01_ClaudeCode/Groq-env完全マニュアル.html" target="_blank"
      style="display:inline-block;background:#1A365D;color:#fff;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:bold;text-decoration:none;letter-spacing:0.03em;">
     📖 .envファイル 完全セットアップガイドを開く →
   </a>
@@ -2774,13 +3048,13 @@ APIキーは <strong>.envファイル</strong> という専用ファイルに書
 <div class="ok">
 <pre><code>GROQ_API_KEY=gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx</code></pre>
 </div>
-<p>詳しい作り方（メモ帳・Claude Code・VSCodeの3方法）→ <a href="Groq-env完全ガイド.html#step1" target="_blank">完全ガイド Step 1</a></p>
+<p>詳しい作り方（メモ帳・Claude Code・VSCodeの3方法）→ <a href="01_ClaudeCode/Groq-env完全マニュアル.html#step1" target="_blank">完全マニュアル Step 1</a></p>
 </div>
 
 <div class="step">
 <h3><span class="step-num">2</span>.gitignoreに .env を追記する</h3>
 <p>プロジェクトフォルダ直下の <code>.gitignore</code> ファイルを開き、<code>.env</code> と <code>*.env</code> の2行を追加する。これをしないとキーがGitに記録されて流出する危険がある。</p>
-<p>「プロジェクトルートって何？」「.gitignoreが見つからない」→ <a href="Groq-env完全ガイド.html#step2" target="_blank">完全ガイド Step 2</a></p>
+<p>「プロジェクトルートって何？」「.gitignoreが見つからない」→ <a href="01_ClaudeCode/Groq-env完全マニュアル.html#step2" target="_blank">完全マニュアル Step 2</a></p>
 </div>
 
 <div class="step">
@@ -2842,7 +3116,7 @@ console.groq.com → API Keys → 該当キーの「Delete」→ 即座に新し
   <div style="font-size:36px;flex-shrink:0;">⚡</div>
   <div style="flex:1;">
     <div style="font-size:16px;font-weight:bold;color:#fff;margin-bottom:6px;">
-      <a href="Kai-Tasks完全マニュアル.html" target="_blank" style="color:#FBD38D;text-decoration:none;">Kai Tasks 完全マニュアル ↗</a>
+      <a href="02_Kaiスキル/Kai-Tasks完全マニュアル.html" target="_blank" style="color:#FBD38D;text-decoration:none;">Kai Tasks 完全マニュアル ↗</a>
     </div>
     <div style="font-size:13px;color:#BEE3F8;line-height:1.7;">
       概念・操作・自動記録・タイムマシン・再開ボタン・使い倒し方・トラブル対応まで一冊にまとめた独立マニュアルです。<br>
@@ -2969,7 +3243,7 @@ py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py snapshot PROJE
 
 <div class="tip">
 <span class="label">完全リファレンスは別マニュアルへ</span>
-CLIの全コマンド・各タブの詳細・使い倒し方・トラブル対応は <a href="Kai-Tasks完全マニュアル.html" target="_blank" style="color:#1A365D;font-weight:bold;">Kai Tasks 完全マニュアル ↗</a> を参照してください。
+CLIの全コマンド・各タブの詳細・使い倒し方・トラブル対応は <a href="02_Kaiスキル/Kai-Tasks完全マニュアル.html" target="_blank" style="color:#1A365D;font-weight:bold;">Kai Tasks 完全マニュアル ↗</a> を参照してください。
 </div>
 
 </div>
@@ -2979,7 +3253,7 @@ CLIの全コマンド・各タブの詳細・使い倒し方・トラブル対�
   <div style="font-size:28px;line-height:1;">🔑</div>
   <div>
     <div style="font-weight:bold;font-size:15px;margin-bottom:6px;">
-      <a href="Groq-env完全ガイド.html" target="_blank" style="color:#2B6CB0;text-decoration:none;">
+      <a href="01_ClaudeCode/Groq-env完全マニュアル.html" target="_blank" style="color:#2B6CB0;text-decoration:none;">
         .envファイル完全セットアップガイド ↗
       </a>
     </div>
@@ -3082,6 +3356,36 @@ admin.html を開いてプレゼンターパスワードを設定する。初期
 </div>
 
 </div>
+
+<h3>生成されたスライドを直接編集・修正する方法</h3>
+<p>生成されたスライドのテキストやトークスクリプトを手動で微調整したい場合は、以下の手順でファイルを直接編集・反映します。</p>
+
+<div class="step">
+<span class="step-num">1</span> <strong>対象ファイルを直接編集する</strong><br>
+<span class="file-path">08_アプリ開発事業部\outputs\slide-builder\projects\{スラッグ}\js\slides.js</span> をテキストエディタ等で開きます。<br>
+※ トークスクリプト（<code>data-notes="..."</code>）内で改行したい場合は、Enterキーで改行せず、代わりに <code>&amp;#10;</code> と入力してください（直接改行するとプログラムがエラーになります）。
+</div>
+
+<div class="step">
+<span class="step-num">2</span> <strong>ローカルでの表示確認</strong><br>
+編集して上書き保存したら、同フォルダの <code>presenter.html</code>（または <code>index.html</code>）をブラウザで再読み込みし、修正が正しく反映されているか確認します。
+</div>
+
+<div class="step">
+<span class="step-num">3</span> <strong>Gitへの反映・公開（デプロイ）</strong><br>
+ローカルでの確認ができたら、ターミナルで以下のコマンドを実行して GitHub に変更を送信します。
+</div>
+<div class="prompt-box">
+<span class="comment"># プロジェクトフォルダへ移動（例）</span><br>
+cd "08_アプリ開発事業部\outputs\slide-builder\projects\{スラッグ}"<br><br>
+<span class="comment"># 変更をコミットしてプッシュ</span><br>
+git add js/slides.js<br>
+git commit -m "スライド内容・スクリプトの修正"<br>
+git push origin main
+</div>
+<p style="font-size:13px; color:#718096; margin-top:8px;">※ <code>git push</code> 後、1〜2分で GitHub Pages (公開用URL) にも修正内容が反映されます。反映されない場合は、ブラウザのキャッシュクリア（Ctrl+F5）をお試しください。</p>
+
+</div>
 </details>
 
 <!-- 第26章 -->
@@ -3132,8 +3436,8 @@ admin.html を開いてプレゼンターパスワードを設定する。初期
 <div class="file-card">
   <div class="file-icon">📗</div>
   <div>
-    <span class="file-path">07_マニュアル/スライドビルダー完全ガイド.html</span>
-    <div class="file-desc">完全ガイド。システム概要・5種類のページの役割・当日操作・パスワードの仕組み・トラブルシューティング・slides.js 書き方リファレンス全網羅。</div>
+    <span class="file-path">07_マニュアル/スライドビルダー完全マニュアル.html</span>
+    <div class="file-desc">完全マニュアル。システム概要・5種類のページの役割・当日操作・パスワードの仕組み・トラブルシューティング・slides.js 書き方リファレンス全網羅。</div>
   </div>
 </div>
 
@@ -3173,12 +3477,12 @@ admin.html を開いてプレゼンターパスワードを設定する。初期
 <div class="file-card">
   <div class="file-icon">📗</div>
   <div>
-    <span class="file-path">07_マニュアル/seminar-dna完全ガイド.html</span>
-    <div class="file-desc">完全ガイド。3モード詳解・DNA7軸分析・情報保護ルール・スタイル3層体系・命名ルール・パターンライブラリの育て方・よくある失敗・品質チェックリスト全収録。</div>
+    <span class="file-path">07_マニュアル/seminar-dna完全マニュアル.html</span>
+    <div class="file-desc">完全マニュアル。3モード詳解・DNA7軸分析・情報保護ルール・スタイル3層体系・命名ルール・パターンライブラリの育て方・よくある失敗・品質チェックリスト全収録。</div>
   </div>
 </div>
 
-<a href="seminar-dna完全ガイド.html" target="_blank" style="display:inline-block;margin-top:10px;background:#1A365D;color:white;padding:8px 20px;border-radius:6px;text-decoration:none;font-weight:bold;">▶ 完全ガイドを開く</a>
+<a href="03_セミナー/seminar-dna完全マニュアル.html" target="_blank" style="display:inline-block;margin-top:10px;background:#1A365D;color:white;padding:8px 20px;border-radius:6px;text-decoration:none;font-weight:bold;">▶ 完全マニュアルを開く</a>
 
 </div>
 </details>
@@ -3190,8 +3494,54 @@ admin.html を開いてプレゼンターパスワードを設定する。初期
 エージェント定義ファイルを更新した場合は、対応するチャプターも更新することを推奨します。<br>
 Kai自律レベル更新は <code>01_経営管理\自律レベル記録.md</code> を参照してください。
 </div>
+
+<hr>
+<h2 id="changelog" style="padding-top:30px;">📋 更新履歴</h2>
+<p>全履歴を下のボックスをスクロールして確認できます。</p>
+<div class="changelog-scroll">
+<table class="changelog">
+<tr><th>版</th><th>日付</th><th>変更内容</th></tr>
+<tr><td>v5.0</td><td>2026-05-18</td><td>3層構造ナビゲーション追加・クイックスタートタイル追加・AI活用ガイド.html新設・更新履歴をページ下部に移動（スクロール式）・ページトップボタン追加・サイドバーに「よくある作業」クイックセクション追加。</td></tr>
+<tr><td>v4.7</td><td>2026-05-18</td><td>「自律実行フレームワーク CC完全マニュアル」新設（ClaudeCode_自律実行フレームワーク_CC完全マニュアル.html）。12の自律キャパシティ、並列実行、A2Aチェック、5大報告アジェンダの極意を解説。</td></tr>
+<tr><td>v4.8</td><td>2026-05-23</td><td>/ai-agent-onboard スキル新設（AIエージェント導入支援完全マニュアル.html）。クライアント導入支援を5ステップで設計。業種別スキル体験設計・セキュリティファイルテンプレート収録。CLAUDE.mdスキルテーブルに追加。</td></tr>
+<tr><td>v4.7</td><td>2026-05-23</td><td>AIエージェント導入セキュリティ設計マニュアル新設（knowledge MD＋HTML、PART9内部メモ＋SVGキャプチャ再現込み）。Shift AI「AIエージェント導入サポート会」素材を /knowledge-craft で変換。サイドバーに追加。</td></tr>
+<tr><td>v4.6</td><td>2026-05-18</td><td>/knowledge-craft 完全マニュアル新設（knowledge-craft完全マニュアル.html）。12セクション構成：概要・skill-craft との違い・6ステップフロー・価値判定4軸・2ドキュメント方針・内部メモ設計・HTML仕様・品質チェックリスト・失敗パターン・連携マップ。</td></tr>
+<tr><td>v4.5</td><td>2026-05-18</td><td>/knowledge-craft スキル新設。外部資料→知識MD（外部公開版）+HTMLマニュアル（Kai評価・内部メモ付き）→総合マニュアル連携の一気通貫フロー。</td></tr>
+<tr><td>v4.4</td><td>2026-05-18</td><td>「プロンプト拡張・デュアル定着解説書」新設。エージェント拡張指示文の解説と「エミ式AI定着メソッド」のアーキテクチャ・仕組みを解説。</td></tr>
+<tr><td>v4.3</td><td>2026-05-18</td><td>「AI定着支援 現場推進マニュアル」新設（AI定着支援_現場推進マニュアル.html）。フレームワーク解説・介入パターン・Kai評価・内部メモ収録。サイドバーに「コンサル知識・事例」セクション追加。</td></tr>
+<tr><td>v4.2</td><td>2026-05-17</td><td>Kai Tasks 完全マニュアル（Kai-Tasks完全マニュアル.html）新設。PART5を全面改訂。</td></tr>
+<tr><td>v4.1</td><td>2026-05-17</td><td>PART 5末尾に「.envファイル完全セットアップガイド」リンクカード追加。</td></tr>
+<tr><td>v4.0</td><td>2026-05-17〜18</td><td>Groq-env完全マニュアル新設。/seminar-dna スキル新設。セミナースタイル3層体系整備。</td></tr>
+<tr><td>v3.9</td><td>2026-05-17</td><td>第27章「Groq API 無料運用マニュアル」新設。</td></tr>
+<tr><td>v3.8</td><td>2026-05-17</td><td>第19章に「実行中の割り込み・指示のやり直し方」追加。</td></tr>
+<tr><td>v3.7</td><td>2026-05-17</td><td>/skill-craft スキル新設。skill-craft完全マニュアル.html 追加。</td></tr>
+<tr><td>v3.6</td><td>2026-05-17</td><td>スキル使い倒し完全マニュアル新設（全40スキル・7シナリオ別レシピ・連携マップ）。/course-build スキル新設。</td></tr>
+<tr><td>v3.5</td><td>2026-05-16</td><td>ビジネス文書スキル9本追加（/hearing-sheet・/billing-docs・/nda・/biz-contract等）。</td></tr>
+<tr><td>v3.4</td><td>2026-05-15</td><td>Kai Visualize（思考可視化ツール）追加。</td></tr>
+<tr><td>v3.3</td><td>2026-05-15</td><td>「AI運用ガイド」新設。PC環境の引越し手順・Git運用Tips追加。</td></tr>
+<tr><td>v3.2</td><td>2026-05-15</td><td>エージェント活かし方マニュアル新設。サイドバー「エージェント活用」セクション追加。</td></tr>
+<tr><td>v3.1</td><td>2026-05-15</td><td>/content-burst・/deck-sprint スキル追加。</td></tr>
+<tr><td>v3.0</td><td>2026-05-14</td><td>サイドバーナビゲーション追加・「アプリ・ツール」セクション新設。ファイル名を総合マニュアル.htmlに変更。</td></tr>
+<tr><td>v2.4</td><td>2026-05-12</td><td>PART 6（セミナースライドビルダー）追加。</td></tr>
+<tr><td>v2.3</td><td>2026-05-12</td><td>PART 5（Kai Tasks）追加。</td></tr>
+<tr><td>v2.2</td><td>2026-05-10</td><td>第21章「自動完了指示の最短フォーマット」追加。</td></tr>
+<tr><td>v2.1</td><td>2026-05-10</td><td>/company-setup スキル追加。</td></tr>
+<tr><td>v2.0</td><td>2026-05-09</td><td>Kai命名・憲法策定・全面改訂・アコーディオン化。</td></tr>
+<tr><td>v1.0</td><td>2026-05-07</td><td>初版作成。</td></tr>
+</table>
+</div>
+
 </div><!-- .container -->
 </div><!-- .main-content -->
+
+<!-- Page Top Button -->
+<button id="page-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ページトップへ">↑</button>
+<script>
+window.addEventListener('scroll', function(){
+  var b = document.getElementById('page-top-btn');
+  b.style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
+</script>
 
 <script>
 (function() {
@@ -3210,6 +3560,196 @@ Kai自律レベル更新は <code>01_経営管理\自律レベル記録.md</code
   }
   function fallback(text) { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
   document.querySelectorAll('.prompt-box').forEach(addCopyBtn);
+})();
+</script>
+
+<script>
+(function(){
+  /* ---- Sidebar accordion ---- */
+  document.querySelectorAll('.sb-section').forEach(function(section){
+    var label = section.querySelector('.sb-section-label');
+    var links = Array.from(section.querySelectorAll('.sb-link'));
+    if (!label || !links.length) return;
+    var wrapper = document.createElement('div');
+    wrapper.className = 'sb-links';
+    links.forEach(function(link){ wrapper.appendChild(link); });
+    section.appendChild(wrapper);
+    var name = label.textContent.trim();
+    if (name.indexOf('よくある作業') >= 0 || name.indexOf('運用・管理') >= 0) {
+      section.classList.add('is-open');
+    }
+    label.addEventListener('click', function(){ section.classList.toggle('is-open'); });
+  });
+  /* ---- Same-tab navigation (remove target="_blank" from sidebar) ---- */
+  document.querySelectorAll('.main-sidebar a').forEach(function(a){ a.removeAttribute('target'); });
+})();
+</script>
+
+<!-- ===== SEARCH ENGINE ===== -->
+<!-- INDEX: このファイルの <details id="..."> セクションはDOMから自動取得。        -->
+<!-- 外部リンク（連携マニュアル）のみ下記 EXT 配列に手動で追加してください。         -->
+<!-- 追加フォーマット: { title:'タイトル', desc:'説明60字以内', cat:'マニュアル',   -->
+<!--   kw:'検索キーワード スペース区切り', href:'相対パス.html' }                   -->
+<script>
+(function(){
+  /* ---- 外部リンク（連携マニュアル）静的配列 ---- */
+  /* 新規マニュアルを総合マニュアルに連携した際はここに追記する */
+  var EXT = [
+    { title:'スキル使い倒し完全マニュアル', desc:'全スキル一覧・シナリオ別レシピ・連携マップ', cat:'マニュアル', kw:'使い方 一覧 レシピ 連携 全スキル', href:'02_Kaiスキル/skill使い倒し完全マニュアル.html' },
+    { title:'Kai Tasks 完全マニュアル', desc:'CLI全コマンド・ブラウザUI・タイムマシン・タスク管理', cat:'マニュアル', kw:'タスク プロジェクト CLI kai-tasks 管理', href:'02_Kaiスキル/Kai-Tasks完全マニュアル.html' },
+    { title:'エージェント活かし方マニュアル', desc:'エージェント連携・並列実行・チームAI・サブエージェント', cat:'マニュアル', kw:'エージェント マルチ 並列 agent sub', href:'02_Kaiスキル/エージェント活かし方マニュアル.html' },
+    { title:'seminar-dna 完全マニュアル', desc:'セミナーDNA抽出・型ライブラリ・パターン量産', cat:'マニュアル', kw:'セミナー DNA 型 パターン 台本 量産', href:'03_セミナー/seminar-dna完全マニュアル.html' },
+    { title:'スライドビルダー完全マニュアル', desc:'slides.js書き方・デプロイ・presenter・editor', cat:'マニュアル', kw:'スライド ビルダー slides.js GitHub kawai presenter', href:'03_セミナー/スライドビルダー完全マニュアル.html' },
+    { title:'/skill-craft 完全マニュアル', desc:'素材→スキル定義→HTMLマニュアル自動生成', cat:'マニュアル', kw:'skill-craft スキル作成 マニュアル自動生成 素材', href:'02_Kaiスキル/skill-craft完全マニュアル.html' },
+    { title:'/knowledge-craft 完全マニュアル', desc:'外部資料→コンサル知識資産・knowledge MD生成', cat:'マニュアル', kw:'knowledge-craft 知識 資産 ナレッジ 資料', href:'02_Kaiスキル/knowledge-craft完全マニュアル.html' },
+    { title:'AI定着支援 現場推進マニュアル', desc:'エミ式AI定着・デュアルアプローチ・キーマン攻略', cat:'マニュアル', kw:'AI定着 エミ式 現場 デュアル hr-transform キーマン', href:'04_AI活用/AI定着支援_現場推進マニュアル.html' },
+    { title:'AI活用ガイド', desc:'AI全般の活用方法・ツール選択・運用ガイド', cat:'マニュアル', kw:'AI活用 ツール 運用 ChatGPT Claude', href:'04_AI活用/AI活用ガイド.html' },
+    { title:'company-setup 完全マニュアル', desc:'AI組織設計・ゼロから体制構築・業種別シナリオ', cat:'マニュアル', kw:'company setup 組織設計 業種 ゼロベース', href:'05_事業設計/company-setup-manual.html' },
+    { title:'AIエージェント導入セキュリティ設計マニュアル', desc:'権限設定・セキュリティファイル・リスク対応', cat:'マニュアル', kw:'セキュリティ 権限 settings CLAUDE.md リスク', href:'AIエージェント導入セキュリティ設計マニュアル.html' },
+    { title:'AIエージェント導入支援完全マニュアル', desc:'Claude Code/Codex クライアント導入支援・5ステップ', cat:'マニュアル', kw:'導入支援 onboard ai-agent-onboard Codex Claude', href:'AIエージェント導入支援完全マニュアル.html' },
+    { title:'ClaudeCode 完全セットアップガイド', desc:'CC初期設定・CLAUDE.md・permissions・hooks', cat:'マニュアル', kw:'ClaudeCode セットアップ 設定 hooks permissions', href:'01_ClaudeCode/ClaudeCode_完全セットアップガイド.html' },
+    { title:'ClaudeCode 自律実行フレームワーク', desc:'DCI・Kai Tasks連動・バッチ・並列実行設計', cat:'マニュアル', kw:'自律実行 DCI batch 並列 フレームワーク', href:'01_ClaudeCode/ClaudeCode_自律実行フレームワーク_CC完全マニュアル.html' },
+    { title:'ビジネス文書スキル完全マニュアル', desc:'見積・請求・契約・NDA・WBS・日報・月報', cat:'マニュアル', kw:'ビジネス文書 見積 請求 契約 NDA WBS 日報', href:'02_Kaiスキル/ビジネス文書スキル完全マニュアル.html' },
+    { title:'X自動投稿ツール れっツ専用ガイド', desc:'@Lets_go1000 専用パターン・投稿の型・アルゴリズム対応・起動方法', cat:'ツール', kw:'れっツ Lets_go1000 X投稿 うさぎ x-auto-post 自動投稿 岡山 AI活用 ゆるっと', href:'X自動投稿_れっツ専用ガイド.html' },
+    { title:'X自動投稿AIツール 完全マニュアル', desc:'インストール・コンテキスト設計・Xデータ取得・使用例・AIリサーチ→投稿ワークフロー完全解説', cat:'ツール', kw:'X投稿 自動投稿 Gemini SNS x-auto-post コンテキスト インプレッション 使用例 リサーチ ニュース 投稿ネタ ワークフロー 最新情報', href:'../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_完全マニュアル.html' },
+    { title:'X自動投稿AIツール 販売マニュアル', desc:'ターゲット・USP・インサイト・ベネフィット・セールストーク', cat:'販売', kw:'X投稿 販売 USP セールス ターゲット インサイト x-auto-post', href:'../05_クライアント案件/00_販売パッケージ/X自動投稿AIツール_販売マニュアル.html' },
+    { title:'X自動投稿システム アカウント設定ガイド', desc:'Xアカウント専用パターンファイル作成 5ステップ手順・チェックリスト・テンプレート', cat:'ツール', kw:'X投稿 アカウント設定 パターンファイル 自動投稿 ステップ チェックリスト テンプレート 文体分析 x-account-setup', href:'../05_クライアント案件/00_販売パッケージ/X自動投稿システム_アカウント設定ガイド.html' },
+  ];
+
+  /* ---- DOM から検索インデックスを自動ビルド ---- */
+  function buildIndex() {
+    var idx = [];
+    document.querySelectorAll('details[id]').forEach(function(el) {
+      var id = el.id;
+      var summary = el.querySelector('summary');
+      if (!summary) return;
+      var rawTitle = summary.textContent.replace(/▼/g, '').trim();
+      var title = rawTitle.replace(/^(SK|A|\d+[\-\d]*|\+|📋|🤖|▶|★)\s+/, '').trim();
+      var ps = el.querySelectorAll('p');
+      var desc = '';
+      for (var i = 0; i < Math.min(ps.length, 2); i++) {
+        var t = ps[i].textContent.trim();
+        if (t.length > 4) { desc += t + ' '; if (desc.length > 100) break; }
+      }
+      desc = desc.trim().substring(0, 80);
+      var accNum = (summary.querySelector('.acc-num') || {}).textContent || '';
+      var cat = accNum === 'SK' ? 'スキル'
+              : accNum === 'A'  ? 'アプリ'
+              : /^\d+$/.test(accNum) ? '第' + accNum + '章'
+              : 'セクション';
+      idx.push({ id: id, title: title, desc: desc, cat: cat, kw: '', href: '#' + id });
+    });
+    EXT.forEach(function(e) { idx.push(e); });
+    return idx;
+  }
+
+  var INDEX = null;
+
+  function search(q) {
+    if (!INDEX) INDEX = buildIndex();
+    q = q.toLowerCase().trim();
+    if (!q) return [];
+    var terms = q.split(/\s+/).filter(Boolean);
+    var results = [];
+    INDEX.forEach(function(item) {
+      var score = 0;
+      terms.forEach(function(t) {
+        if (item.title.toLowerCase().includes(t)) score += 10;
+        if ((item.kw || '').toLowerCase().includes(t)) score += 4;
+        if (item.desc.toLowerCase().includes(t)) score += 2;
+        if (item.cat.toLowerCase().includes(t)) score += 1;
+      });
+      if (score > 0) results.push({ item: item, score: score });
+    });
+    results.sort(function(a, b) { return b.score - a.score; });
+    return results.slice(0, 10).map(function(r) { return r.item; });
+  }
+
+  function esc(s) {
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function navigate(item) {
+    if (item.href.startsWith('#')) {
+      var target = document.getElementById(item.href.slice(1));
+      if (target) {
+        if (target.tagName === 'DETAILS') target.open = true;
+        setTimeout(function() { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+      }
+    } else {
+      window.location.href = item.href;
+    }
+    closeResults();
+  }
+
+  function closeResults() {
+    var box = document.getElementById('sb-search-results');
+    if (box) box.style.display = 'none';
+    var inp = document.getElementById('sb-search-input');
+    if (inp) inp.value = '';
+  }
+
+  function showResults(items) {
+    var inp = document.getElementById('sb-search-input');
+    var box = document.getElementById('sb-search-results');
+    if (!inp || !box) return;
+    var rect = inp.getBoundingClientRect();
+    box.style.top = rect.bottom + 'px';
+    if (!items.length) {
+      box.innerHTML = '<div class="sb-sr-empty">「' + esc(inp.value) + '」は見つかりません</div>';
+    } else {
+      box.innerHTML = items.map(function(item, i) {
+        return '<a class="sb-sr-item" data-i="' + i + '" href="javascript:void(0)">' +
+          '<div class="sb-sr-cat">' + esc(item.cat) + '</div>' +
+          '<div class="sb-sr-title">' + esc(item.title) + '</div>' +
+          (item.desc ? '<div class="sb-sr-desc">' + esc(item.desc.substring(0, 55)) + '…</div>' : '') +
+          '</a>';
+      }).join('');
+      box.querySelectorAll('.sb-sr-item').forEach(function(el, i) {
+        el.addEventListener('click', function(e) { e.preventDefault(); navigate(items[i]); });
+      });
+    }
+    box.style.display = 'block';
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    var inp = document.getElementById('sb-search-input');
+    var box = document.getElementById('sb-search-results');
+    if (!inp || !box) return;
+
+    var timer;
+    inp.addEventListener('input', function() {
+      clearTimeout(timer);
+      var q = inp.value;
+      if (!q.trim()) { box.style.display = 'none'; return; }
+      timer = setTimeout(function() { showResults(search(q)); }, 150);
+    });
+
+    inp.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeResults(); inp.blur(); }
+      if (e.key === 'Enter') {
+        var first = box.querySelector('.sb-sr-item');
+        if (first) first.click();
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.sb-search')) box.style.display = 'none';
+    });
+
+    // Auto-search from ?q= URL parameter (used when redirected from other manuals)
+    (function() {
+      try {
+        var p = new URLSearchParams(window.location.search);
+        var q = p.get('q');
+        if (q) {
+          inp.value = q;
+          inp.dispatchEvent(new Event('input'));
+          setTimeout(function() { inp.focus(); }, 100);
+        }
+      } catch(e) {}
+    })();
+  });
 })();
 </script>
 </body>

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>/ai-readiness 完全マニュアル v1.0</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Yu Gothic UI", "Hiragino Sans", "Meiryo", sans-serif; line-height: 1.8; color: #2D3748; background: #FAFBFC; min-height: 100vh; }
+
+  /* ===== Top Bar ===== */
+  .top-bar { background: #1A365D; color: #E2E8F0; padding: 12px 24px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .top-bar a.home-link { color: #FFFAF0; text-decoration: none; padding: 6px 14px; background: rgba(237,137,54,0.18); border: 1px solid rgba(237,137,54,0.45); border-radius: 6px; font-weight: bold; transition: all 0.15s; }
+  .top-bar a.home-link:hover { background: #ED8936; color: #1A202C; border-color: #ED8936; }
+  .top-bar .crumb { color: #A0AEC0; font-size: 12px; }
+  .top-bar .crumb b { color: #ED8936; }
+
+  /* ===== Main Content ===== */
+  .main-content { padding: 40px 20px; }
+  .container { max-width: 920px; margin: 0 auto; background: white; padding: 60px 70px; box-shadow: 0 2px 30px rgba(0,0,0,0.08); border-radius: 12px; }
+
+  /* ===== Common Styles ===== */
+  .cover { text-align: center; padding: 60px 0 50px; border-bottom: 4px solid #1A365D; margin-bottom: 50px; }
+  .cover h1 { font-size: 34px; color: #1A365D; margin-bottom: 16px; line-height: 1.4; }
+  .cover .sub { font-size: 20px; color: #ED8936; font-weight: bold; margin-bottom: 32px; }
+  .cover .meta { color: #718096; font-size: 14px; line-height: 2; }
+  .cover .meta code { font-size: 13px; }
+
+  h2 { font-size: 26px; color: #1A365D; padding: 50px 0 15px; margin-top: 40px; border-bottom: 3px solid #ED8936; line-height: 1.4; scroll-margin-top: 70px; }
+  h2:first-of-type { margin-top: 0; }
+  h3 { font-size: 20px; color: #2D3748; margin: 30px 0 12px; padding-left: 16px; border-left: 6px solid #ED8936; line-height: 1.5; }
+  h4 { font-size: 16px; color: #1A365D; margin: 20px 0 8px; font-weight: bold; }
+  p { margin: 12px 0; }
+  ul, ol { padding-left: 28px; margin: 12px 0; }
+  li { margin: 7px 0; }
+
+  .lead { font-size: 17px; color: #1A365D; background: #EDF2F7; padding: 20px 25px; border-radius: 8px; margin: 20px 0; border-left: 5px solid #1A365D; }
+  .tip { background: #FFFAF0; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #ED8936; }
+  .tip .label { font-weight: bold; color: #C05621; display: block; margin-bottom: 6px; font-size: 14px; }
+  .warn { background: #FFF5F5; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #E53E3E; }
+  .warn .label { font-weight: bold; color: #C53030; display: block; margin-bottom: 6px; font-size: 14px; }
+  .ok { background: #F0FFF4; padding: 18px 22px; border-radius: 8px; margin: 18px 0; border-left: 5px solid #38A169; }
+  .ok .label { font-weight: bold; color: #2F855A; display: block; margin-bottom: 6px; font-size: 14px; }
+
+  code { background: #2D3748; color: #F6AD55; padding: 2px 8px; border-radius: 4px; font-family: "Consolas","SF Mono",monospace; font-size: 13px; }
+  pre { background: #1A202C; color: #E2E8F0; padding: 20px 25px; border-radius: 8px; overflow-x: auto; margin: 18px 0; font-family: "Consolas","SF Mono",monospace; font-size: 13px; line-height: 1.7; position: relative; }
+  pre code { background: none; color: inherit; padding: 0; font-size: 13px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th { background: #1A365D; color: white; padding: 10px 12px; text-align: left; }
+  td { padding: 10px 12px; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F7FAFC; }
+
+  .step { background: #EDF2F7; padding: 22px 28px; border-radius: 8px; margin: 22px 0; border-top: 4px solid #1A365D; }
+  .step-num { display: inline-block; background: #ED8936; color: white; width: 32px; height: 32px; border-radius: 50%; text-align: center; line-height: 32px; font-weight: bold; margin-right: 10px; font-size: 15px; }
+  .step h4 { margin-top: 0; }
+
+  .toc { background: #F7FAFC; padding: 28px 36px; border-radius: 8px; margin: 28px 0; }
+  .toc h3 { border: none; padding-left: 0; margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 0; }
+  .toc li { padding: 6px 0; border-bottom: 1px dashed #E2E8F0; }
+  .toc li:last-child { border: none; }
+  .toc a { color: #1A365D; text-decoration: none; font-weight: 500; }
+  .toc a:hover { color: #ED8936; }
+  .toc .num { display: inline-block; min-width: 60px; color: #ED8936; font-weight: bold; }
+
+  .flow-diagram { background: #FAFBFC; padding: 30px; border-radius: 8px; margin: 22px 0; border: 2px solid #E2E8F0; overflow-x: auto; }
+  .flow-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .flow-box { background: #fff; border: 2px solid #1A365D; border-radius: 8px; padding: 14px 18px; min-width: 140px; max-width: 200px; text-align: center; font-size: 13px; font-weight: bold; color: #1A365D; }
+  .flow-box.hi { background: #FFFAF0; border-color: #ED8936; color: #C05621; }
+  .flow-box.ok { background: #F0FFF4; border-color: #38A169; color: #2F855A; }
+  .flow-arrow { font-size: 22px; color: #ED8936; font-weight: bold; }
+
+  .agent-card { border: 2px solid #E2E8F0; border-radius: 10px; padding: 20px 24px; margin: 16px 0; border-left: 6px solid #1A365D; background: #fff; }
+  .agent-card.front { border-left-color: #ED8936; }
+  .agent-card.proposal { border-left-color: #805AD5; }
+  .agent-card.hearing { border-left-color: #2C7A7B; }
+  .agent-card.factcheck { border-left-color: #E53E3E; }
+  .agent-card.visualize { border-left-color: #38A169; }
+  .agent-name { font-size: 18px; font-weight: bold; color: #1A365D; margin-bottom: 6px; }
+  .agent-phase { font-size: 12px; color: #718096; background: #EDF2F7; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; }
+
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 2px; }
+  .badge-blue { background: #EBF8FF; color: #2B6CB0; }
+  .badge-green { background: #F0FFF4; color: #276749; }
+  .badge-orange { background: #FFFAF0; color: #C05621; }
+  .badge-purple { background: #FAF5FF; color: #553C9A; }
+  .badge-red { background: #FFF5F5; color: #C53030; }
+
+  .check-list { background: #F0FFF4; padding: 22px 28px; border-radius: 8px; margin: 22px 0; }
+  .check-list h4 { color: #2F855A; margin-bottom: 10px; }
+  .check-list ul { list-style: none; padding-left: 0; }
+  .check-list li { list-style: none; padding-left: 28px; position: relative; margin: 8px 0; }
+  .check-list li::before { content: "□"; position: absolute; left: 0; color: #2F855A; font-size: 18px; line-height: 1.4; font-weight: bold; }
+
+  hr { border: none; border-top: 2px dashed #E2E8F0; margin: 50px 0; }
+
+  /* Prompt block with copy button */
+  .prompt-wrap { position: relative; margin: 18px 0; }
+  .copy-btn { position: absolute; top: 8px; right: 10px; background: rgba(255,255,255,0.12); color: #CBD5E0; border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 5px 14px; font-size: 12px; font-family: "Yu Gothic UI","Meiryo",sans-serif; cursor: pointer; transition: all 0.15s; white-space: nowrap; z-index: 1; }
+  .copy-btn:hover { background: rgba(255,255,255,0.25); color: #fff; }
+  .copy-btn.copied { background: #38A169; color: #fff; border-color: #38A169; }
+  .prompt-wrap pre { padding-top: 38px; max-height: 600px; overflow-y: auto; }
+
+  /* Comparison table */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .compare-box { background: #F7FAFC; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px 22px; }
+  .compare-box.b1 { border-top: 4px solid #ED8936; }
+  .compare-box.b2 { border-top: 4px solid #805AD5; }
+  .compare-box h4 { margin-top: 0; }
+
+  /* FAQ */
+  details.faq { border: 2px solid #E2E8F0; border-radius: 10px; margin: 12px 0; overflow: hidden; }
+  details.faq > summary { background: #EBF8FF; padding: 16px 22px; cursor: pointer; font-size: 15px; font-weight: bold; color: #1A365D; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; }
+  details.faq > summary::-webkit-details-marker { display: none; }
+  details.faq > summary::before { content: "Q"; background: #ED8936; color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+  details.faq[open] > summary { background: #1A365D; color: white; }
+  details.faq .faq-body { padding: 20px 24px; background: #FAFBFC; border-top: 1px solid #E2E8F0; }
+  details.faq .faq-body p:first-child { margin-top: 0; }
+
+  /* Changelog */
+  .changelog { background: #F7FAFC; padding: 22px 28px; border-radius: 8px; margin: 22px 0; border-left: 5px solid #1A365D; }
+  .changelog ul { list-style: none; padding-left: 0; }
+  .changelog li { padding: 8px 0; border-bottom: 1px dashed #CBD5E0; }
+  .changelog li:last-child { border: none; }
+  .changelog .ver { display: inline-block; background: #1A365D; color: white; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-right: 10px; }
+  .changelog .date { color: #718096; font-size: 13px; margin-right: 10px; }
+
+  /* Page Top Button */
+  #page-top-btn { position: fixed; bottom: 24px; right: 24px; background: #1A365D; color: white; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; cursor: pointer; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 999; line-height: 1; transition: background 0.2s; }
+  #page-top-btn:hover { background: #ED8936; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .main-content { padding: 20px 12px; }
+    .container { padding: 30px 24px; }
+    .cover h1 { font-size: 24px; }
+    .cover .sub { font-size: 16px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 17px; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .toc { padding: 20px 22px; }
+    table { font-size: 13px; }
+    th, td { padding: 8px; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+
+  /* Print CSS */
+  @media print {
+    body { background: white; color: #000; font-size: 11pt; line-height: 1.6; }
+    .top-bar, #page-top-btn, .copy-btn { display: none !important; }
+    .main-content { padding: 0; }
+    .container { box-shadow: none; padding: 0; max-width: 100%; border-radius: 0; }
+    .cover { page-break-after: always; padding: 40px 0; }
+    h2 { page-break-after: avoid; page-break-before: auto; font-size: 18pt; }
+    h3 { page-break-after: avoid; font-size: 14pt; }
+    .step, .tip, .warn, .ok, .lead, .check-list, .toc, .flow-diagram, .agent-card, .changelog { page-break-inside: avoid; }
+    pre { white-space: pre-wrap; word-wrap: break-word; font-size: 9pt; }
+    a { color: #000; text-decoration: none; }
+    .toc a::after { content: " (p." attr(data-page) ")"; font-size: 10pt; color: #666; }
+    details.faq > summary { background: #EEE !important; color: #000 !important; }
+    details.faq { page-break-inside: avoid; }
+    details.faq[open] .faq-body { display: block; }
+    details.faq:not([open]) .faq-body { display: block; } /* 印刷時は全展開 */
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- ===== Top Bar ===== -->
+<div class="top-bar">
+  <span class="crumb">07_マニュアル / <b>/ai-readiness 完全マニュアル v1.0</b></span>
+  <a class="home-link" href="総合マニュアル.html">← ホーム（総合マニュアル）に戻る</a>
+</div>
+
+<div class="main-content">
+<div class="container">
+
+  <!-- ===== 表紙 ===== -->
+  <section class="cover">
+    <h1>/ai-readiness 完全マニュアル</h1>
+    <div class="sub">AI導入支援の初回接触フロント装置</div>
+    <div class="meta">
+      作成日：2026-05-29　／　バージョン：v1.0　／　作成者：Kai＋上村桂右<br>
+      対象スキル：<code>/ai-readiness</code>　／　元ソース：<code>rules/skills/ai-readiness.md</code>
+    </div>
+  </section>
+
+  <!-- ===== 目次 ===== -->
+  <nav class="toc" id="toc">
+    <h3>目次</h3>
+    <ul>
+      <li><span class="num">第1章</span><a href="#ch1">このスキルは何か（概要）</a></li>
+      <li><span class="num">第2章</span><a href="#ch2">既存スキルとの違い</a></li>
+      <li><span class="num">第3章</span><a href="#ch3">AS流の絶対遵守哲学</a></li>
+      <li><span class="num">第4章</span><a href="#ch4">入力情報の3要素（業種・課題・ゴール）</a></li>
+      <li><span class="num">第5章</span><a href="#ch5">出力構造（6セクション）の完全解説</a></li>
+      <li><span class="num">第6章</span><a href="#ch6">コピペ用プロンプト本体</a></li>
+      <li><span class="num">第7章</span><a href="#ch7">実行プロトコル（Kai用）</a></li>
+      <li><span class="num">第8章</span><a href="#ch8">使い方ガイド（具体例つき）</a></li>
+      <li><span class="num">第9章</span><a href="#ch9">自己品質チェックリスト（出力前）</a></li>
+      <li><span class="num">第10章</span><a href="#ch10">業種別ナレッジ蓄積の仕組み</a></li>
+      <li><span class="num">第11章</span><a href="#ch11">FAQ・トラブルシューティング</a></li>
+      <li><span class="num">第12章</span><a href="#ch12">改訂履歴</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== 第1章 ===== -->
+  <h2 id="ch1">第1章　このスキルは何か（概要）</h2>
+
+  <div class="lead">
+    <b>/ai-readiness</b> は、AS（有限会社アートソウル）のAI導入支援事業の <b>初回接触フェーズ専用フロント装置</b> です。対象業種・最低限の課題・ゴール設定の3要素を入力するだけで、5つの成果物を一気通貫で生成します。
+  </div>
+
+  <h3>5つの成果物</h3>
+  <table>
+    <thead>
+      <tr><th style="width:18%">成果物</th><th>用途</th><th style="width:18%">受け手</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>① 現状整理シート（Markdown）</td><td>顧客が自力で記入するA4×3枚以内の調査シート</td><td>顧客</td></tr>
+      <tr><td>② 切り返しトーク</td><td>業種特有の"あるある"な壁と否定しない返し方</td><td>コンサル</td></tr>
+      <tr><td>③ Draw.io図解（XML）</td><td>業種・課題・ゴールを反映した全体フロー＋4象限マトリクス</td><td>顧客提示</td></tr>
+      <tr><td>④ 受注動線設計</td><td>手渡しトーク・メール本文・ネクストアクション表</td><td>コンサル</td></tr>
+      <tr><td>⑤ 業種ナレッジ蓄積メモ</td><td>業種別あるある／差分／次回向け改善ヒント</td><td>AS内部</td></tr>
+    </tbody>
+  </table>
+
+  <h3>なぜ作ったか</h3>
+  <ul>
+    <li><b>個別営業の疲弊解消</b>：毎回ゼロから資料を作る属人化を解消し、業種別パターンを蓄積する</li>
+    <li><b>初回接触の精度向上</b>：シートを書かせて終わりにせず、顧客自身に課題を気付かせる構造</li>
+    <li><b>受注動線まで設計</b>：シート → 30分壁打ち → PoC → 月額顧問 までを最初から組み込む</li>
+  </ul>
+
+  <h3>どんな時に使うか</h3>
+  <div class="tip">
+    <span class="label">典型的な発動シーン</span>
+    <ul style="margin-top:8px;">
+      <li>新規クライアントへの初回ヒアリングシート作成</li>
+      <li>「{業種}向けのAI導入適性チェック」を即出ししたいとき</li>
+      <li>ASのAI導入支援の営業フロントとして打診メールを出すとき</li>
+      <li><code>/sme-ai-proposal</code>（本提案書HTML）の <b>前段</b> ツールとして</li>
+    </ul>
+  </div>
+
+  <!-- ===== 第2章 ===== -->
+  <h2 id="ch2">第2章　既存スキルとの違い</h2>
+
+  <h3>/hearing-sheet との違い</h3>
+  <table>
+    <thead>
+      <tr><th style="width:28%">観点</th><th>/ai-readiness</th><th>/hearing-sheet</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>フェーズ</td><td><span class="badge badge-orange">初回接触・営業フロント</span></td><td><span class="badge badge-purple">契約後・深掘り</span></td></tr>
+      <tr><td>対象</td><td>新規・未契約クライアント</td><td>既知の契約クライアント</td></tr>
+      <tr><td>形式</td><td>顧客自力記入のMarkdownシート</td><td>業種×部門のExcelヒアリング</td></tr>
+      <tr><td>目的</td><td>気付きを起こし壁打ちMTGに繋ぐ</td><td>業務深掘りでPoC設計</td></tr>
+      <tr><td>専門用語</td><td><b>禁止</b>（中学生に通じる言葉）</td><td>業界用語OK（契約後）</td></tr>
+      <tr><td>付随成果物</td><td>切り返しトーク／図解／受注動線／ナレッジ</td><td>Excelヒアリング表</td></tr>
+    </tbody>
+  </table>
+
+  <h3>/sme-ai-proposal との位置関係</h3>
+
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-box hi">/ai-readiness<br><small style="font-weight:normal;">初回接触フロント</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">30分壁打ちMTG<br><small style="font-weight:normal;">無料</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box">/sme-ai-proposal<br><small style="font-weight:normal;">本提案書HTML</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-box ok">PoC → 月額顧問<br><small style="font-weight:normal;">受注</small></div>
+    </div>
+  </div>
+
+  <p><b>/ai-readiness</b> は前段の "気付かせる装置"。<b>/sme-ai-proposal</b> は後段の "決めさせる装置"。役割が違うので両方併用する。</p>
+
+  <h3>連携スキル一覧</h3>
+
+  <div class="agent-card front">
+    <div class="agent-name">/ai-readiness（本スキル）</div>
+    <span class="agent-phase">初回接触フェーズ</span>
+    <p>業種×課題×ゴールから5成果物を一気通貫生成。シート回収後の動線まで設計。</p>
+  </div>
+  <div class="agent-card proposal">
+    <div class="agent-name">/sme-ai-proposal</div>
+    <span class="agent-phase">本提案フェーズ</span>
+    <p>本スキルの後段。中小企業向けAI導入支援提案書（HTML）を生成。</p>
+  </div>
+  <div class="agent-card hearing">
+    <div class="agent-name">/hearing-sheet</div>
+    <span class="agent-phase">契約後フェーズ</span>
+    <p>契約後の業種×部門深掘りExcelヒアリング。/ai-readinessの後段で詳細聴取に使う。</p>
+  </div>
+  <div class="agent-card factcheck">
+    <div class="agent-name">/fact-check</div>
+    <span class="agent-phase">品質保証</span>
+    <p>生成物の数字・固有名詞を公開前に独立検証。</p>
+  </div>
+  <div class="agent-card visualize">
+    <div class="agent-name">/visualize</div>
+    <span class="agent-phase">可視化補強</span>
+    <p>Draw.io図解の代わりにマンダラ／フロー／ガントで深掘り可。</p>
+  </div>
+
+  <!-- ===== 第3章 ===== -->
+  <h2 id="ch3">第3章　AS流の絶対遵守哲学</h2>
+
+  <div class="lead">
+    /ai-readiness が生成する <b>全成果物の通奏低音</b>。これを外したら本スキルを使う意味がない。CONSTITUTION.md §1「オペレーション改善が先、ツールは補助」を出力トーンに直接反映する。
+  </div>
+
+  <div class="tip">
+    <span class="label">哲学①　AIは魔法ではない。業務の棚卸しが先、ツールは後</span>
+    顧客に「AIで全部解決します」と言わせない／言わない。先に業務を分解する。ASのコンサルが他社と差別化されるコア哲学。
+  </div>
+
+  <div class="warn">
+    <span class="label">哲学②　「導入すれば全部解決」系の表現は禁止</span>
+    出力中に「これでバッチリ」「AIで一発解決」等の <b>魔法ワード</b> が混入したら即書き換える。第9章のチェックリストで検出する。
+  </div>
+
+  <div class="tip">
+    <span class="label">哲学③　コンサルタントは"上から教える存在"ではなく "一緒に整理する伴走者"</span>
+    手渡しトーク・メール本文・切り返しトーク全てで「教える」ではなく「一緒に見る」トーンに統一する。
+  </div>
+
+  <div class="ok">
+    <span class="label">哲学④　顧客の言い訳・抵抗を否定せず受け止めてから返す</span>
+    切り返しトークの設計原則。NG返しを反面教師として並べて、受け止め→事実→提案の順で返す。
+  </div>
+
+  <div class="warn">
+    <span class="label">哲学⑤　数字は誇張せず、根拠ある範囲で出す</span>
+    「月◯時間削減」等の数字は誇張禁止。具体業界事例 or 1つ以上の根拠ある数字を含める。<code>/fact-check</code> と相性が良い。
+  </div>
+
+  <h3>CONSTITUTION.md §1 との繋がり</h3>
+  <p>憲法 §1 ミッション「<b>オペレーション改善が先、ツールは補助。この哲学をすべての提案に貫く</b>」を、本スキルでは <b>出力冒頭のセクション0</b> で必ず明示する。これにより、生成された全成果物がAS流哲学に整列することを保証する。</p>
+
+  <!-- ===== 第4章 ===== -->
+  <h2 id="ch4">第4章　入力情報の3要素（業種・課題・ゴール）</h2>
+
+  <div class="lead">
+    ユーザーから受け取る入力は <b>たった3つ</b>。シンプルだが、この3つが揃わないと精度が出ない。
+  </div>
+
+  <h3>3要素の定義</h3>
+  <table>
+    <thead>
+      <tr><th style="width:18%">項目</th><th>定義</th><th style="width:32%">よい入力の特徴</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>① 対象業種</td><td>業種＋サブカテゴリレベルで具体化</td><td>「製造業」だけでなく「製造業（金属加工）」</td></tr>
+      <tr><td>② 最低限の課題</td><td>"誰が・何に・どんな時間軸で"困っているか</td><td>「見積作成に時間がかかる（営業担当・週10h消費）」</td></tr>
+      <tr><td>③ ゴール設定</td><td>数値か、状態か、リスク回避かを明示</td><td>「月20時間の残業削減」「属人化ゼロで退職リスク減」</td></tr>
+    </tbody>
+  </table>
+
+  <h3>業種別 入力例</h3>
+  <table>
+    <thead>
+      <tr><th style="width:14%">業種</th><th>① 対象業種</th><th>② 最低限の課題</th><th>③ ゴール設定</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-blue">製造業</span></td>
+        <td>製造業（金属加工・社員20名）</td>
+        <td>見積作成に営業1人で週10時間かかる</td>
+        <td>月20時間の残業削減</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-green">介護</span></td>
+        <td>介護事業所（デイサービス・職員15名）</td>
+        <td>シフト調整が施設長の属人業務</td>
+        <td>属人業務をゼロにして退職リスク減</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-purple">士業</span></td>
+        <td>税理士事務所（所員8名）</td>
+        <td>顧問先からの問い合わせ一次対応に追われる</td>
+        <td>所長の判断業務に集中する時間を確保</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-orange">飲食</span></td>
+        <td>飲食店（個人経営・席数20）</td>
+        <td>SNS発信が続かず集客が口コミ頼み</td>
+        <td>来店客数+15%（粗利+5%）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>入力が曖昧な時の対処</h3>
+  <div class="warn">
+    <span class="label">3要素が揃うまで生成しない（鉄則）</span>
+    曖昧な入力で生成すると、出力も曖昧になり、結局使い物にならない。Kaiは曖昧な入力を検知したら <b>必ず聞き直す</b>。「製造業」だけ来たら「金属加工ですか／樹脂成形ですか／組立ですか」と具体化を促す。
+  </div>
+
+  <div class="tip">
+    <span class="label">聞き直しの定型フレーズ</span>
+    <ul style="margin-top:8px;">
+      <li>業種が曖昧 →「もう一段具体的に教えてください。例：製造業なら金属加工／樹脂成形／組立など」</li>
+      <li>課題が曖昧 →「<b>誰が</b>・<b>何に</b>・<b>どのくらいの時間</b>困っていますか。1行で大丈夫です」</li>
+      <li>ゴールが曖昧 →「数字（時間／金額／件数）か、状態（属人化解消／退職リスク減）かを1つ決めてください」</li>
+    </ul>
+  </div>
+
+  <!-- ===== 第5章 ===== -->
+  <h2 id="ch5">第5章　出力構造（6セクション）の完全解説</h2>
+
+  <div class="lead">
+    Kaiが生成する成果物は <b>セクション0〜6の合計7ブロック</b>。順番・構造を崩さず、一気通貫で出力する。
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">0</span>セクション0：全体貫通トーン規定</h4>
+    <p><b>役割：</b>出力の冒頭に、AS流哲学5項目をそのまま明示する。コンサル本人にも顧客にも"通奏低音"として読ませる。</p>
+    <p><b>必須要素：</b>第3章の5項目（魔法ではない／全部解決禁止／伴走者／否定せず受け止め／数字は根拠範囲）を箇条書きで提示。</p>
+    <div class="tip"><span class="label">なぜ冒頭に置くか</span>セクション1〜5の生成物すべてがこのトーンに整列していることを、Kai自身と読み手に同時に宣言するため。</div>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">1</span>セクション1：顧客向け現状整理シート（Markdown）</h4>
+    <p><b>役割：</b>顧客がそのまま記入できる調査シート。A4×3枚以内、設問数30問以下。</p>
+    <h4>必須6項目の詳細</h4>
+    <table>
+      <thead><tr><th style="width:22%">項目</th><th>聞き出すこと</th><th style="width:24%">専門用語NG例 → OK例</th></tr></thead>
+      <tbody>
+        <tr><td>① 会社のこと・決める人</td><td>最終決裁者、決定希望時期</td><td>「意思決定者」→「最後にOKを出す人」</td></tr>
+        <tr><td>② 今使っている道具</td><td>具体例で：「インターネット経由で使うシステム（Gmail、Zoom等）」</td><td>「SaaS／クラウド」→「インターネット経由のシステム」</td></tr>
+        <tr><td>③ いま一番困っていること</td><td>いつ・誰が・何に困っているか</td><td>「業務課題」→「困っていること」</td></tr>
+        <tr><td>④ 毎日の業務の棚卸し</td><td>作業×時間</td><td>「業務フロー」→「毎日の作業と時間」</td></tr>
+        <tr><td>⑤ AIに期待すること・予算感</td><td>金額は <b>数字で書かせる</b></td><td>「ROI」→「使った金額に対して何が返ってきてほしいか」</td></tr>
+        <tr><td>⑥ 次のステップ希望</td><td>30分無料壁打ちMTGの候補日3つ</td><td>「キックオフMTG」→「30分の無料相談」</td></tr>
+      </tbody>
+    </table>
+    <h4>シート末尾に必ず入れる「提出後の流れ」</h4>
+<pre><code>▼ 提出後の流れ
+① シートを書いて返信（所要時間：約20分）
+② 30分の無料壁打ちMTG（オンライン可）
+③ 一番効果が高そうな業務を1つ選んで、お試し改善プラン（PoC）をご提案</code></pre>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">2</span>セクション2：切り返しトーク（3点セット構造）</h4>
+    <p><b>役割：</b>対象業種特有のAI導入ハードル"あるある"を3〜5つ抽出。各パターンを <b>3点セット</b> で出す。</p>
+    <table>
+      <thead><tr><th style="width:18%">構成</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><b>(a) 顧客の典型セリフ</b></td><td>生々しく書く。「うちは特殊だから無理」「AIなんて若い人向け」など</td></tr>
+        <tr><td><b>(b) NG返し</b></td><td>反面教師。よくある的外れな返答（例：「最近のAIはすごいんですよ！」）</td></tr>
+        <tr><td><b>(c) 切り返しトーク</b></td><td>300字以内・否定せず受け止めて返す。具体事例 or 数字を1つ以上</td></tr>
+      </tbody>
+    </table>
+    <div class="tip"><span class="label">ロジック軸</span>切り返しは「<b>AIは魔法ではない。でも業務を整理すれば確実に時間が浮く</b>」というロジックを軸にする。</div>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">3</span>セクション3：Draw.io図解（フロー＋4象限マトリクス）</h4>
+    <p><b>役割：</b>入力された業種・課題・ゴールを <b>図中のテキストに直接反映</b>。固定テンプレ禁止。</p>
+    <h4>A. 顧客専用の全体フロー図</h4>
+<pre><code>[①今の状態を知る（このシート）]
+  → [②{対象業種}特有の課題である〇〇をAIに任せる]
+  → [③AIの使い方を学ぶ]
+  → [④{ゴール設定}の達成]</code></pre>
+    <h4>B. 4象限マトリクス</h4>
+    <ul>
+      <li>縦軸：効果の大きさ／横軸：AIへの任せやすさ</li>
+      <li>業種・課題から具体業務を <b>3〜4個</b> 推測して配置</li>
+      <li>右上（効果大×任せやすい）= <b>即着手すべき業務</b></li>
+    </ul>
+    <div class="warn">
+      <span class="label">色指定（必須）</span>
+      <ul style="margin-top:8px;">
+        <li>「①今の状態を知る」のボックス → <b>黄色 or オレンジ</b>（現在地を強調）</li>
+        <li>マトリクス右上の象限 → <b>黄色 or オレンジ</b>（次の一手を強調）</li>
+      </ul>
+    </div>
+    <p><b>出力形式：</b><code>&lt;mxGraphModel&gt;</code> から始まる有効XMLで <code>```xml</code> コードブロックに入れる。</p>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">4</span>セクション4：受注動線（手渡しトーク・メール本文・ネクストアクション表）</h4>
+    <h4>(a) 手渡しトーク（30秒・口頭用）</h4>
+    <p>押し付けがましくない伴走者トーン。「いきなり詳しい話を聞くより、まず状況を整理させてください」のニュアンス。</p>
+    <h4>(b) シート送付メール本文（200〜250字・締切1週間明示）</h4>
+    <p>件名・本文・締切・返信先を含む完成形。テンプレ感を排し、業種向けに具体化。</p>
+    <h4>(c) 回収後のネクストアクション表</h4>
+    <table>
+      <thead><tr><th>ステップ</th><th>内容</th><th>所要時間</th><th>費用感</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>30分無料壁打ちMTG</td><td>30分</td><td>無料</td></tr>
+        <tr><td>2</td><td>マトリクス右上業務でPoC提案</td><td>1〜2週間</td><td>業種に合わせた金額帯</td></tr>
+        <tr><td>3</td><td>月額顧問契約 or 単発支援</td><td>継続</td><td>業種に合わせた金額帯</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">5</span>セクション5：業種ナレッジ蓄積メモ</h4>
+    <p><b>役割：</b>今回の生成で見えた業種固有の知見を構造化メモとして残す。次回以降の精度向上に直結する。</p>
+    <h4>(a) 今回新たに見えた"あるある"パターン（3つ）</h4>
+    <p>各パターンを「<b>現象 → 背景 → 対策の方向性</b>」の3点セットで記述。</p>
+    <h4>(b) 既存業界知識との差分</h4>
+    <p>「教科書的に語られる課題」と「今回の入力から見えた現実の課題」のギャップを明示。</p>
+    <h4>(c) 次回以降の精度向上ヒント</h4>
+    <p>同業種で次に使うとき、より精度を上げるための追加質問項目（3つ）。</p>
+    <div class="tip"><span class="label">保存先</span><code>rules/_internal_source_meta/</code> 配下に <code>{日付}_{業種}_ai-readiness.md</code> として配置。第10章で詳述。</div>
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">6</span>セクション6：自己品質チェック（出力前セルフ検証）</h4>
+    <p><b>役割：</b>Kaiが自分で全成果物をチェックリストで○判定にしてから提出する。第9章に完全版を掲載。</p>
+  </div>
+
+  <!-- ===== 第6章 ===== -->
+  <h2 id="ch6">第6章　コピペ用プロンプト本体</h2>
+
+  <p>以下をAI（Claude / ChatGPT）にそのまま投げれば、6セクション一気通貫で出力されます。右上の「コピー」ボタンでクリップボードに丸ごとコピーできます。</p>
+
+  <div class="prompt-wrap">
+    <button class="copy-btn" id="copy-prompt-btn" aria-label="プロンプトをコピー">📋 コピー</button>
+    <pre id="prompt-source"><code># 前提条件
+
+あなたは、企業の無駄を憎み、最短距離で成果を出す一流のAI導入コンサルタントです。
+
+【絶対遵守の哲学（全成果物の通奏低音）】
+1. AIは魔法ではない。業務の棚卸しが先、ツールは後
+2. 「導入すれば全部解決」系の表現は禁止
+3. コンサルタントを"上から教える存在"ではなく、"一緒に整理する伴走者"として描く
+4. 顧客の言い訳・抵抗を否定せず、受け止めてから返す
+5. 数字は誇張せず、根拠ある範囲で出す
+
+ユーザーから提供される「対象業種」「最低限の課題」「ゴール設定」をもとに、IT知識が全くない顧客でも直感的に書き込める「顧客提出用の調査シート」、コンサル用の「切り返しトーク」、視覚的に意図を伝える「図解コード」、シート回収後の受注動線、業種ナレッジ蓄積メモを生成してください。
+
+# ユーザーからの入力情報
+- 対象業種：{業種を入力}
+- 最低限の課題：{現在わかっている課題を入力}
+- ゴール設定：{AI導入による最終的なゴールを入力}
+
+# 出力要件
+
+必ず以下の6セクションに分けて出力してください。
+
+---
+
+## 1. 【顧客向け】AI導入のための現状整理シート（Markdown）
+
+- 専門用語禁止（DX/SaaS/RPA/API/クラウド/リテラシー等NG。中学生でもわかる言葉に翻訳）
+- A4で3枚以内、設問数30問以下
+- チェックボックス（[ ]）と記述式を織り交ぜる
+- 必須6項目：
+  1. 会社のこと・決める人のこと（最終決裁者、決定希望時期）
+  2. 今使っている道具の確認（具体例で：「インターネット経由で使っているシステム（GmailやZoomなど）」）
+  3. いま一番困っていること（いつ・誰が・何に困っているか）
+  4. 毎日の業務の棚卸し（作業×時間）
+  5. AIに期待すること・予算感（金額は数字で書かせる）
+  6. 次のステップ希望（30分無料壁打ちMTGの候補日3つ書く欄）
+
+末尾に必ず「▼ 提出後の流れ」を入れる：
+① シート提出（約20分）→ ② 30分無料壁打ちMTG → ③ PoC提案
+
+---
+
+## 2. 【コンサル用】対象業界の「あるある」な壁と切り返しトーク
+
+- 対象業種特有のAI導入ハードル"あるある"を3〜5つ抽出
+- 各パターンに以下3点セット：
+  - (a) 顧客の典型セリフ（生々しく）
+  - (b) NG返し（よくある的外れな返答）
+  - (c) 切り返しトーク（300字以内・否定せず受け止めて返す）
+- ロジック軸：「AIは魔法ではない。でも業務を整理すれば確実に時間が浮く」
+- 具体事例 or 数字を1つ以上含める（誇張禁止）
+
+---
+
+## 3. 【顧客提示用】相談内容に完全最適化された図解（Draw.io用XML）
+
+入力された業種・課題・ゴールを図中のテキストに直接反映（固定テンプレ禁止）。
+
+A. 顧客専用の全体フロー図：
+[①今の状態を知る（このシート）] → [②{対象業種}特有の課題である〇〇をAIに任せる] → [③AIの使い方を学ぶ] → [④{ゴール設定}の達成]
+
+B. 4象限マトリクス（縦軸：効果の大きさ／横軸：AIへの任せやすさ）：
+業種・課題から推測した具体業務3〜4個を配置（例：{業種}の見積書作成、{業種}の問い合わせ一次対応）。
+
+色指定：
+- 「①今の状態を知る」→ 黄色 or オレンジ
+- マトリクス右上象限 → 黄色 or オレンジ
+
+出力は &lt;mxGraphModel&gt; から始まる有効XMLで、```xml コードブロックに入れる。
+
+---
+
+## 4. 【受注動線】シート回収後のジャーニー設計
+
+(a) クライアントへの手渡しトーク（30秒・口頭用）：押し付けがましくない伴走者トーン
+(b) シート送付メール本文（200〜250字・締切1週間明示・件名+本文+返信先）
+(c) 回収後のネクストアクション表：
+| ステップ | 内容 | 所要時間 | 費用感 |
+|---|---|---|---|
+| 1 | 30分無料壁打ちMTG | 30分 | 無料 |
+| 2 | マトリクス右上業務でPoC提案 | 1〜2週間 | {業種に合わせた金額帯} |
+| 3 | 月額顧問契約 or 単発支援 | 継続 | {業種に合わせた金額帯} |
+
+---
+
+## 5. 【業種ナレッジ蓄積】今回の発見メモ
+
+(a) 今回新たに見えた"あるある"パターン3つ（現象→背景→対策の方向性）
+(b) 既存業界知識との差分（教科書 vs 現実）
+(c) 次回以降の精度向上ヒント（同業種で次に使うときの追加質問項目3つ）
+
+---
+
+## 6. 【自己品質チェック】出力前セルフ検証
+
+全成果物生成後、以下を○判定にしてから提出。×があれば即書き換える：
+
+【シート】専門用語ゼロ／60代に通じる／30問以下／予算は数字／壁打ち欄あり
+【トーク】否定せず受止／「全部解決」不使用／具体事例 or 数字あり
+【図解】フロー4ステップに固有名詞／右上業務が即効型／現在地が色で明示
+【動線】伴走者トーン／メール締切明示／費用感が数字</code></pre>
+  </div>
+
+  <div class="tip"><span class="label">使い方</span>右上の「📋 コピー」ボタンをクリック → AI（Claude / ChatGPT）に貼り付け → 「対象業種」「最低限の課題」「ゴール設定」の3要素を埋めて送信。</div>
+
+  <!-- ===== 第7章 ===== -->
+  <h2 id="ch7">第7章　実行プロトコル（Kai用）</h2>
+
+  <div class="lead">
+    Kaiが <b>/ai-readiness</b> を発動したとき、必ず以下6ステップを順守する。途中スキップ禁止。
+  </div>
+
+  <div class="step">
+    <h4><span class="step-num">1</span>入力チェック</h4>
+    <p>業種・課題・ゴールの3つが揃っているか確認。曖昧なら第4章「聞き直しの定型フレーズ」で聞き直す。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">2</span>生成</h4>
+    <p>6セクション一気通貫で出力（途中で止めない）。セクション0の哲学明示から開始。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">3</span>セルフ検証</h4>
+    <p>セクション6（＝第9章チェックリスト）で自己採点。<b>×が1つでもあれば即書き換える</b>。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">4</span>保存</h4>
+    <p>顧客名がある場合は <code>06_セミナー事業部/outputs/ai-readiness/{日付}_{顧客名 or 業種}/</code> に保存。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">5</span>ナレッジ蓄積</h4>
+    <p>セクション5の発見メモを <code>rules/_internal_source_meta/</code> 配下に <code>{日付}_{業種}_ai-readiness.md</code> で配置。第10章参照。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">6</span>Kai Tasks ログ</h4>
+    <p>生成完了を <code>log-action --type output</code> で記録。プロジェクトIDは事前に <code>create</code> で発番。</p>
+  </div>
+
+  <h3>Kai Tasks 連携の CLI コマンド例</h3>
+<pre><code># プロジェクト作成（新規クライアント着手時）
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py create \
+  --name "{顧客名}_ai-readiness" \
+  --goal "初回接触シート生成→30分壁打ちMTG設定"
+
+# 指示受領ログ
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py log-action PROJECT_ID \
+  --type instruction \
+  --summary "{業種}の現状整理シート生成依頼"
+
+# 成果物完成ログ
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py log-action PROJECT_ID \
+  --type output \
+  --summary "ai-readiness 5成果物生成完了" \
+  --detail "06_セミナー事業部/outputs/ai-readiness/{日付}_{業種}/"
+
+# セッション終了
+py 08_アプリ開発事業部/outputs/kai-tasks/kai-tasks-cli.py session-end PROJECT_ID \
+  --summary "ai-readiness 一気通貫生成完了" \
+  --snapshot</code></pre>
+
+  <!-- ===== 第8章 ===== -->
+  <h2 id="ch8">第8章　使い方ガイド（具体例つき）</h2>
+
+  <div class="lead">
+    仮想クライアント「<b>金属加工製造業A社</b>」で <b>/ai-readiness</b> の実行イメージを示します。
+  </div>
+
+  <h3>入力（3要素）</h3>
+  <table>
+    <tbody>
+      <tr><td style="width:24%"><b>① 対象業種</b></td><td>金属加工製造業（社員25名・町工場系）</td></tr>
+      <tr><td><b>② 最低限の課題</b></td><td>見積作成に営業担当2名で週合計20時間消費</td></tr>
+      <tr><td><b>③ ゴール設定</b></td><td>月20時間の残業削減（営業担当の負荷軽減）</td></tr>
+    </tbody>
+  </table>
+
+  <h3>出力例①　現状整理シートの抜粋（3項目）</h3>
+<pre><code># A社さま AI導入のための現状整理シート
+
+▼ 通奏低音
+AIは魔法ではありません。まず御社の業務を一緒に整理させてください。
+ツールはその後で選びます。
+
+▼ 1. 会社のこと・決める人のこと
+[ ] 最後にOKを出す人は誰ですか？（例：社長／工場長）
+　→ お名前：__________________________
+[ ] いつ頃までに導入を決めたいですか？
+　→ 希望時期：__________________________
+
+▼ 3. いま一番困っていること（1つだけ書いてください）
+　→ いつ：__________________________（例：毎週月曜の朝）
+　→ 誰が：__________________________（例：営業担当・田中）
+　→ 何に：__________________________（例：見積作成に時間がかかる）
+
+▼ 5. AIに期待すること・予算感
+[ ] AIに任せたい作業は何ですか？（自由記入）
+　→ __________________________
+[ ] 月にいくらまでなら払えますか？
+　→ 月額：　　　　　　円（数字でお願いします）</code></pre>
+
+  <h3>出力例②　切り返しトーク（1パターン抜粋）</h3>
+  <div class="warn">
+    <span class="label">(a) 顧客の典型セリフ</span>
+    「うちは特殊な加工が多いから、AIなんて無理だと思うんですよ」
+  </div>
+  <div class="warn">
+    <span class="label">(b) NG返し</span>
+    「いや、今のAIはすごく賢いですよ！どんな業界でも対応できます！」（← 否定で返している＋根拠なし）
+  </div>
+  <div class="ok">
+    <span class="label">(c) 切り返しトーク（伴走者トーン・約280字）</span>
+    たしかに、金属加工は図面ごとに条件が違うので、AIに「加工方法を判断させる」のは難しいですよね。私たちもそう思います。ただ、見積書を作るときに毎回同じ書式で打ち直してませんか？ あの "打ち直し作業" の部分だけならAIで時短できます。実際に同業の町工場で、見積作成の前段階だけAIに任せて月8時間浮かせた例があります。御社の "特殊な部分" はそのまま残して、定型作業だけ切り出す。そういう整理から一緒にやらせてください。
+  </div>
+
+  <h3>出力例③　受注動線（手渡しトーク・メール本文）</h3>
+  <h4>(a) 手渡しトーク（30秒・口頭用）</h4>
+  <div class="tip">
+    「社長、いきなり提案するより、まず御社の状況を整理させてください。私の方でも余計な提案をしないように、まず20分だけ時間を取ってこのシートに書いてもらえますか。書きながら『あ、ここがうちの本当の課題か』と気付くことが多いんです。それを見てから、無料で30分の壁打ちをさせてください。」
+  </div>
+
+  <h4>(b) シート送付メール本文（締切1週間明示・約240字）</h4>
+<pre><code>件名：【20分で完了】御社のAI導入適性チェックシート（A社さま）
+
+A社 社長 〇〇さま
+
+先日はお時間をいただきありがとうございました。
+お話の中で「見積作成の負荷」というキーワードが何度か出てきましたので、
+まず現状を一緒に整理するためのシートをお送りします。
+
+設問は30問以下、所要時間は約20分です。
+書きながら「あ、これが本当の課題か」と気付ける構成にしています。
+
+■ 締切：◯月◯日（◯）まで
+■ 返信先：このメールに返信
+■ 提出後：30分の無料壁打ちMTGをご提案します
+
+シート：（添付 / リンク）
+
+引き続きよろしくお願いします。
+有限会社アートソウル　上村桂右</code></pre>
+
+  <h4>(c) ネクストアクション表（業種反映版）</h4>
+  <table>
+    <thead><tr><th>ステップ</th><th>内容</th><th>所要時間</th><th>費用感</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>30分無料壁打ちMTG（オンライン可）</td><td>30分</td><td>無料</td></tr>
+      <tr><td>2</td><td>見積作成業務でPoC提案（マトリクス右上）</td><td>1〜2週間</td><td>15〜30万円</td></tr>
+      <tr><td>3</td><td>月額顧問契約 or 単発支援</td><td>継続</td><td>月10〜20万円帯</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===== 第9章 ===== -->
+  <h2 id="ch9">第9章　自己品質チェックリスト（出力前）</h2>
+
+  <div class="lead">
+    Kaiは <b>提出前に必ず</b> 以下を○判定にする。×が1つでもあれば、その場で書き換えてから提出。
+  </div>
+
+  <div class="check-list">
+    <h4>現状整理シート</h4>
+    <ul>
+      <li>専門用語が1つも入っていないか（DX/SaaS/RPA/API/クラウド/リテラシー等）</li>
+      <li>60代の事務員が読んで意味が通じるか</li>
+      <li>設問数が30問以下か</li>
+      <li>「予算感」を <b>数字で書かせる</b> 構造か</li>
+      <li>「30分壁打ち希望」欄が末尾にあるか</li>
+    </ul>
+  </div>
+
+  <div class="check-list">
+    <h4>切り返しトーク</h4>
+    <ul>
+      <li>顧客の言い訳を <b>否定せず受け止めて</b> いるか</li>
+      <li>「AIで全部解決」を1度も使っていないか</li>
+      <li>具体的な業界事例 or 数字が <b>1つ以上</b> 入っているか</li>
+    </ul>
+  </div>
+
+  <div class="check-list">
+    <h4>Draw.io図解</h4>
+    <ul>
+      <li>フロー4ステップに業種名・課題・ゴールが <b>固有名詞</b> で入っているか</li>
+      <li>マトリクス右上の業務が「即着手して効果が出る」ものか</li>
+      <li>色で「いまここ」が一目でわかるか</li>
+    </ul>
+  </div>
+
+  <div class="check-list">
+    <h4>受注動線</h4>
+    <ul>
+      <li>手渡しトークが <b>伴走者トーン</b> か</li>
+      <li>メールに <b>締切が明示</b> されているか</li>
+      <li>次のステップの費用感が <b>数字</b> で出ているか</li>
+    </ul>
+  </div>
+
+  <div class="warn">
+    <span class="label">違反検知 → 即書き換え</span>
+    ×が1つでも残っていたら、出力を上村に渡してはいけない。Kaiの自律判断で書き換える。書き換え不能と判断した場合のみ、上村に判断を仰ぐ。
+  </div>
+
+  <!-- ===== 第10章 ===== -->
+  <h2 id="ch10">第10章　業種別ナレッジ蓄積の仕組み</h2>
+
+  <h3>なぜ蓄積するか</h3>
+  <p>同じ業種で2回目・3回目を生成するときの <b>精度を上げる</b> ため。1回目は教科書的、2回目以降は現場感のある出力に育てる。</p>
+
+  <h3>保存先と命名規則</h3>
+  <table>
+    <thead><tr><th style="width:30%">項目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>保存先</td><td><code>rules/_internal_source_meta/</code></td></tr>
+      <tr><td>ファイル名</td><td><code>{YYYY-MM-DD}_{業種}_ai-readiness.md</code></td></tr>
+      <tr><td>例</td><td><code>2026-05-29_金属加工製造業_ai-readiness.md</code></td></tr>
+      <tr><td>公開可否</td><td><b>非公開</b>（Git管理外・社内専用）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <span class="label">CLAUDE.md「内部メタ記録プロトコル」に従う</span>
+    <code>rules/_internal_source_meta/</code> 配下は <b>外部配布禁止</b> の内部メタ層。著作権・情報元バレ防止のため、外部配布層（<code>rules/skills/</code>）から内部メタへの参照は <b>絶対に作らない</b>。
+  </div>
+
+  <h3>INDEX.md への追記方法</h3>
+  <p><code>rules/_internal_source_meta/INDEX.md</code> に1行追加し、業種別・キーワード別の横断検索性を確保する。</p>
+<pre><code># 追加する行のイメージ
+| 2026-05-29 | 金属加工製造業 | /ai-readiness | 見積作成負荷／町工場系 | 2026-05-29_金属加工製造業_ai-readiness.md |</code></pre>
+
+  <h3>次回の精度向上ヒント蓄積の運用</h3>
+  <div class="step">
+    <h4><span class="step-num">1</span>セクション5（c）を毎回必ず書く</h4>
+    <p>「次回以降の精度向上ヒント」3つを省略しない。Kaiの自律義務とする。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">2</span>同業種2回目以降は前回メモを必ず読む</h4>
+    <p>同業種の生成依頼が来たら、Kaiは <code>rules/_internal_source_meta/</code> を Grep して前回メモを参照してから生成を始める。</p>
+  </div>
+  <div class="step">
+    <h4><span class="step-num">3</span>差分が出た部分は新規追加</h4>
+    <p>前回の "あるある" になかったパターンが見えたら、メモに追記する（上書きせず追記）。</p>
+  </div>
+
+  <!-- ===== 第11章 ===== -->
+  <h2 id="ch11">第11章　FAQ・トラブルシューティング</h2>
+
+  <details class="faq" open>
+    <summary>Q1: 入力3要素のうち1つが曖昧な場合は？</summary>
+    <div class="faq-body">
+      <div class="warn"><span class="label">原則：生成しない</span>曖昧な入力で生成すると、出力も曖昧になります。Kaiは <b>必ず聞き直す</b>。</div>
+      <p>第4章「聞き直しの定型フレーズ」を使う。業種が曖昧なら「もう一段具体的に」、課題が曖昧なら「誰が・何に・どのくらいの時間」、ゴールが曖昧なら「数字か状態か」を聞き直す。</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q2: 業種が複合的（製造業＋小売など）の場合は？</summary>
+    <div class="faq-body">
+      <p>主軸の業種を1つ選び、サブ業種を併記する。例：「<b>製造業（金属加工）＋自社EC小売を併設</b>」。</p>
+      <p>シート・図解は主軸業種で生成し、切り返しトークだけサブ業種の "あるある" を1パターン追加する。両方フル装備しようとすると精度が落ちる。</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q3: Draw.io XMLが大きすぎてエラーになる場合は？</summary>
+    <div class="faq-body">
+      <div class="tip"><span class="label">代替手段</span>Draw.io XMLが破綻したら <code>/visualize</code> でマンダラ／フロー／ガントHTMLに切り替える。</div>
+      <p>XML自体を分割する選択もある（フロー図とマトリクスを別ファイル化）。ただし顧客提示時は1枚に統合した方が伝わるので、まずは <code>/visualize</code> 切替を検討する。</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q4: 切り返しトークが教科書的になってしまう場合は？</summary>
+    <div class="faq-body">
+      <p>原因は <b>業種固有の "あるある" が抽出できていない</b> こと。以下の3手で再生成する：</p>
+      <ol>
+        <li>業種をもう一段絞る（「製造業」→「金属加工製造業（町工場・社員30名以下）」）</li>
+        <li>同業種の前回ナレッジメモを参照（<code>rules/_internal_source_meta/</code>）</li>
+        <li>顧客の典型セリフを <b>セリフのまま生々しく</b> 書く（要約しない）</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q5: 「以前から提供している」と言うのは嘘では？</summary>
+    <div class="faq-body">
+      <p>本スキルでは「以前から提供している」とは言わない。AS流哲学④（受け止めて返す）の範囲で、<b>実例ベース</b>で語る。「同業の町工場で〜という例があります」のように、<b>事例参照</b>で代替する。</p>
+      <div class="warn"><span class="label">禁止フレーズ</span>「弊社では以前から〇〇を提供しております」（実績がない場合）／「業界をリードしてきました」（根拠なし）</div>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q6: クーポン or サンプル貸出、どちらが推奨か？</summary>
+    <div class="faq-body">
+      <p>本スキルの推奨は <b>どちらでもなく「30分無料壁打ちMTG」</b>。理由は3つ：</p>
+      <ul>
+        <li>クーポンは「値引き感」が出てASのブランドを毀損する</li>
+        <li>サンプル貸出は管理コストがかかり、初回接触には重い</li>
+        <li>30分壁打ちは <b>顧客との関係性</b> を作る最強の入口になる</li>
+      </ul>
+      <p>どうしてもインセンティブが必要なら、壁打ち後の <b>PoC初月割引</b>（30〜50%）が現実的。</p>
+    </div>
+  </details>
+
+  <details class="faq">
+    <summary>Q7: 出力が長すぎてChat画面で切れる場合は？</summary>
+    <div class="faq-body">
+      <p>2分割出力で対応する。プロンプトの末尾に以下を追加：</p>
+<pre><code>※ セクション1〜3を先に出力し、「続きをください」と言われたら4〜6を出力してください。</code></pre>
+      <p>Claude / ChatGPT どちらでも有効。途中で止まったら「続けて」と返すだけで残りが出る。</p>
+    </div>
+  </details>
+
+  <!-- ===== 第12章 ===== -->
+  <h2 id="ch12">第12章　改訂履歴</h2>
+
+  <div class="changelog">
+    <ul>
+      <li>
+        <span class="ver">v1.0</span>
+        <span class="date">2026-05-29</span>
+        <b>初版作成</b>（Kei指示でASの事業フロント装置として整備）
+        <br><small style="color:#718096;">元ソース：<code>rules/skills/ai-readiness.md</code>　／　作成：Kai＋上村桂右</small>
+      </li>
+    </ul>
+  </div>
+
+  <h3>関連参照</h3>
+  <ul>
+    <li>元スキル：<code>rules/skills/ai-readiness.md</code></li>
+    <li>連携：<code>/sme-ai-proposal</code> / <code>/hearing-sheet</code> / <code>/fact-check</code> / <code>/visualize</code></li>
+    <li>哲学根拠：<code>rules/CONSTITUTION.md</code> §1（ミッション）</li>
+    <li>適用事例：阪神素地案件への適用（<code>06_セミナー事業部/outputs/morai-prompt/docs/hanshin-kiji/proposal_drainage.html</code>　※存在する場合）</li>
+    <li>ナレッジ蓄積先：<code>rules/_internal_source_meta/</code>（外部配布禁止）</li>
+  </ul>
+
+  <hr>
+
+  <p style="text-align:center; color:#718096; font-size:13px; margin-top:40px;">
+    /ai-readiness 完全マニュアル v1.0　／　有限会社アートソウル　／　2026-05-29<br>
+    <a href="総合マニュアル.html" style="color:#1A365D; font-weight:bold;">← ホーム（総合マニュアル）に戻る</a>
+  </p>
+
+</div>
+</div>
+
+<button id="page-top-btn" aria-label="ページトップへ" title="ページトップへ">↑</button>
+
+<script>
+  // Copy prompt button
+  (function(){
+    var btn = document.getElementById('copy-prompt-btn');
+    var src = document.getElementById('prompt-source');
+    if (!btn || !src) return;
+    btn.addEventListener('click', function(){
+      var text = src.innerText;
+      // Decode HTML entities (e.g., &lt; → <) by reading textContent of a temp element
+      var temp = document.createElement('textarea');
+      temp.innerHTML = src.innerHTML;
+      text = temp.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){
+          btn.classList.add('copied');
+          btn.textContent = '✓ コピー済み';
+          setTimeout(function(){
+            btn.classList.remove('copied');
+            btn.textContent = '📋 コピー';
+          }, 2000);
+        }).catch(function(){
+          fallbackCopy(text);
+        });
+      } else {
+        fallbackCopy(text);
+      }
+    });
+    function fallbackCopy(text){
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); btn.classList.add('copied'); btn.textContent = '✓ コピー済み'; } catch(e) {}
+      document.body.removeChild(ta);
+      setTimeout(function(){
+        btn.classList.remove('copied');
+        btn.textContent = '📋 コピー';
+      }, 2000);
+    }
+  })();
+
+  // Page top button
+  (function(){
+    var btn = document.getElementById('page-top-btn');
+    if (!btn) return;
+    window.addEventListener('scroll', function(){
+      btn.style.display = window.pageYOffset > 400 ? 'flex' : 'none';
+    });
+    btn.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  })();
+</script>
+
+</body>
+</html>
