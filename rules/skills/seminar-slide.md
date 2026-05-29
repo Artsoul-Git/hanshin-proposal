@@ -14,6 +14,22 @@
 
 ## フロー
 
+### STEP 0: 重複チェック＋内部メタ記録準備（外部素材を取り込む場合のみ・必須）
+
+外部のスライド素材・参考資料・元動画等を取り込んでセミナースライドを生成する場合、まず `rules/_internal_source_meta/INDEX.md` を Grep で照合する：
+```
+Grep <出所/著者候補> rules/_internal_source_meta/
+```
+
+スライド生成完了後、外部素材を使った場合は内部メタファイル作成必須：
+- `rules/_internal_source_meta/PROTOCOL.md` 参照（タイプB：スライド/PDF を中心に選択）
+- `rules/_internal_source_meta/INDEX.md` に新行追加
+
+詳細は CLAUDE.md「外部素材取り込み時の内部メタ記録プロトコル」セクション参照。
+※ Keiさん本人のオリジナル素材のみで生成する場合は本STEP不要。
+
+---
+
 ### STEP 1: ヒアリング（1回で聞き切る）
 
 以下の形式でまとめて質問する。
@@ -41,9 +57,19 @@
     （例：LINEグループ、月次勉強会、テンプレ資産配布）
     なければ「なし」
 
+■ デザインスタイル
+11. スライドのビジュアルスタイルを選んでください。
+    A) kei_model（デフォルト）— グリーン+黒のエネルギッシュなスタイル
+       → AI導入・中小企業・実務系・一般ビジネスセミナー向け
+    B) monotone-minimal — 白黒グレーのみのミニマリストスタイル
+       → 士業・官公庁・金融・学術・高級B2B・堅い業界向け
+    C) ascolor-minimal — アートソウル コーポレートカラー（グリーン系）
+       → AS社主催セミナー全般・AS社ブランドを前面に出したい場合
+    「おまかせ」でもOK（Kaiが業界・ターゲットから推薦します）
+
 ■ 技術設定
-11. GitHubスラッグ（例：sales-ai-seminar）または「おまかせ」
-12. 参考資料（PDF・画像・URLなど）があれば添付または共有
+12. GitHubスラッグ（例：sales-ai-seminar）または「おまかせ」
+13. 参考資料（PDF・画像・URLなど）があれば添付または共有
 ```
 
 ユーザーの回答を受けたら STEP 2 へ。
@@ -65,6 +91,9 @@
 体験ワーク    : 〇〇（3種類設計）
 CTA           : 〇〇
 継続支援      : 〇〇
+
+デザインスタイル: kei_model / monotone-minimal / ascolor-minimal（選択または推薦理由）
+テンプレート    : kei_model / monotone-minimal / ascolor-minimal
 
 トークタイプ  : ストーリーテリング型 / 課題解決型 / 理論解説型（※Kaiが推定）
 理由          : 〇〇
@@ -124,7 +153,11 @@ CTA           : 〇〇
 
 7. **コンテンツコンポーネントの使い方**（`template-spec.md` 参照）
    - 箇条書き: `.s-list` + `.s-list-callout` / `.s-list-arrow`
-   - 手順: `.s-steps` + `.s-step-row`
+   - 手順ステップ（番号型）: `.s-steps` + `.s-step-row`
+   - プロセスフロー（番号型）: `.s-flow` + `.s-flow-step`
+   - カード型フロー図（絵文字型）: `.s-flowbox` + `.s-flowbox-card` / `.s-flowbox-arrow` / `.s-flowbox-note`
+   - 5列アイコングリッド: `.s-icon-grid` + `.s-icon-cell` / `.s-icon-num` / `.s-icon-ico`
+   - Before/After比較: `.s-ba` + `.s-ba-col.before|after` / `.s-ba-arrow` / `.s-ba-ai-badge`
    - リスク表: `.s-risk-list` + `.s-risk-badge high/medium/low`
    - 比較: `.s-compare` + `.s-compare-col positive/neutral/negative`
 
@@ -233,13 +266,31 @@ slides.js を生成したら、以下を実行する。
 
 ```bash
 # 1. テンプレートから新規プロジェクトを作成
+#    デザインスタイルに応じて --template を切り替える：
+#    kei_model（デフォルト）→ --template kei_model
+#    monotone-minimal        → --template monotone-minimal
 python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py \
   --slug "{スラッグ}" \
-  --title "{タイトル}"
+  --title "{タイトル}" \
+  --template "{テンプレートID}"
 
 # 2. slides.js を書き込む
 # Write ツールで 08_アプリ開発事業部/outputs/slide-builder/projects/{スラッグ}/js/slides.js に書き込む
 ```
+
+**デザインスタイル → テンプレートID 対応表：**
+
+| ユーザー選択 | --template 引数 |
+|------------|----------------|
+| kei_model（A）または「おまかせ」でビジネス/AI系 | `kei_model` |
+| monotone-minimal（B）または「おまかせ」で士業/官公庁/金融系 | `monotone-minimal` |
+| ascolor-minimal（C）または AS社主催セミナー | `ascolor-minimal` |
+
+**monotone-minimal 使用時の slides.js 追加ルール：**
+- `.s-label-tag` を積極活用（コンテンツの冒頭ラベル）
+- `.s-num-list` / `.s-num-item` を番号付きリストに使用
+- 色を指定しない（グレースケールのみ）
+- `slide-section` の `data-notes` 内でトピックリストを活用
 
 ---
 
@@ -247,12 +298,12 @@ python 08_アプリ開発事業部/outputs/slide-builder/new-seminar.py \
 
 ```powershell
 $slug = "{スラッグ}"
-$projDir = "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
+$projDir = "C:\Users\kei\Dropbox\00_Claude Desktop\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
 
 Set-Location $projDir
 git init
-git config user.email "uemura@artsoul.jp"
-git config user.name "Kei Uemura"
+# git config は実行しない（CLAUDE.md Git Safety Protocol『NEVER update the git config』準拠）
+# このマシンには既に user.email / user.name が設定されている前提
 git add .
 git commit -m "初期公開: $slug"
 
@@ -272,8 +323,8 @@ GitHub デプロイ完了後、ステージングからセミナー事業部の 
 
 ```powershell
 $slug = "{スラッグ}"
-$staging = "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
-$seminar  = "C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\$slug"
+$staging = "C:\Users\kei\Dropbox\00_Claude Desktop\AS_AI導入支援事業_cc\08_アプリ開発事業部\outputs\slide-builder\projects\$slug"
+$seminar  = "C:\Users\kei\Dropbox\00_Claude Desktop\AS_AI導入支援事業_cc\06_セミナー事業部\outputs\$slug"
 
 Move-Item $staging $seminar
 ```
@@ -303,11 +354,27 @@ CTA         : 〇〇
 
 ## テンプレート参照先
 
-- **テンプレートファイル:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/`
-- **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/template-spec.md`
-- **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/kawai-dark-v1/js/slides-template.js`
+### kei_model（デフォルト）
+- **テンプレートファイル:** `08_アプリ開発事業部/outputs/slide-builder/templates/kei_model/`
+- **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/kei_model/template-spec.md`
+- **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/kei_model/js/slides-template.js`
+
+### monotone-minimal
+- **テンプレートファイル:** `08_アプリ開発事業部/outputs/slide-builder/templates/monotone-minimal/`
+- **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/monotone-minimal/template-spec.md`
+- **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/monotone-minimal/js/slides-template.js`
+- **元スタイル仕様:** `knowledge/100_資料受け渡し/スライドスタイル_けいたろう/monotone-slide-designer/`
+
+### ascolor-minimal（AS社コーポレートカラー）
+- **テンプレートファイル:** `08_アプリ開発事業部/outputs/slide-builder/templates/ascolor-minimal/`
+- **デザイン仕様:** `08_アプリ開発事業部/outputs/slide-builder/templates/ascolor-minimal/template-spec.md`
+- **slides.js 骨格:** `08_アプリ開発事業部/outputs/slide-builder/templates/ascolor-minimal/js/slides-template.js`
+- **メインカラー:** `#6f911d`（グリーン）/ `#e8f1d8`（ペールグリーン）/ `#837c75`（グレーブラウン）/ `#dd2c2c`（アクセント）/ `#fabe00`（差し色）
+
+### 共通
 - **トークスクリプト設計:** `rules/seminar-talkscript-guide.md`
 - **ペルソナ評価・Q&A想定:** `rules/skills/persona-review.md`
+- **スタイル選定ガイド:** `06_セミナー事業部/docs/スタイル選定ガイド.md`
 
 ---
 

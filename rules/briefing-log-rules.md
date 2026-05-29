@@ -1,6 +1,6 @@
 # Kaiブリーフィング記録 — 運用ルール（Kai向け）
 
-`rules/CONSTITUTION.md` §9 のセッションログと連動するが、これは別物。
+`rules/CONSTITUTION.md` のセッションログ規定と連動するが、これは別物。
 セッションログ = 作業記録。ブリーフィング記録 = 戦略・思考の記録。
 
 ---
@@ -28,7 +28,7 @@
 ## ファイルの場所
 
 ```
-C:\Users\kei\Dropbox\00_Antigravity\AS_AI導入支援事業_cc\01_経営管理\Kaiブリーフィング記録\
+C:\Users\kei\Dropbox\00_Claude Desktop\AS_AI導入支援事業_cc\01_経営管理\Kaiブリーフィング記録\
 ```
 
 ---
