@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wader-site",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "08_アプリ開発事業部/outputs/wader-research-site"],
+      "port": 8765
+    },
+    {
+      "name": "hanshin-portal",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8766", "--directory", "docs/hanshin-kiji"],
+      "port": 8766
+    }
+  ]
+}

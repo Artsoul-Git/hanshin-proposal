@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ウェダー新販路マップ｜釣り市場の外側に眠る10領域 — 2025/11-2026/05 国内調査</title>
+<meta name="description" content="釣り市場以外のウェダー新販路・新商圏を、半年間（2025/11〜2026/05）の国内リリース・反応記事から抽出した調査レポート。10領域のマップと重点3販路のディープダイブ。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary-deep:#0F2D4A;
+  --primary-mid:#1B4D7E;
+  --accent:#C9A227;
+  --text-primary:#1A1A1A;
+  --text-muted:#6B7280;
+  --bg-base:#FAF8F3;
+  --bg-card:#FFFFFF;
+  --border:#E6E1D6;
+  --shadow-sm:0 1px 2px rgba(15,45,74,.06);
+  --shadow-md:0 4px 16px rgba(15,45,74,.08);
+  --shadow-lg:0 12px 40px rgba(15,45,74,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans JP','Inter',sans-serif;
+  font-size:16px;
+  line-height:1.8;
+  color:var(--text-primary);
+  background:var(--bg-base);
+  -webkit-font-smoothing:antialiased;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 32px}
+.serif{font-family:'Noto Serif JP',serif}
+.mono{font-family:'JetBrains Mono',monospace}
+.muted{color:var(--text-muted)}
+.accent{color:var(--accent)}
+
+/* === NAV === */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,248,243,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto;padding:0 32px}
+.nav-brand{font-family:'Noto Serif JP',serif;font-weight:900;font-size:18px;color:var(--primary-deep);letter-spacing:.02em}
+.nav-brand .dot{color:var(--accent)}
+.nav-links{display:flex;gap:28px;font-size:13px;font-weight:500}
+.nav-links a{color:var(--text-muted);text-decoration:none;transition:color .2s ease}
+.nav-links a:hover{color:var(--primary-deep)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* === HERO === */
+.hero{
+  padding:120px 0 140px;
+  background:linear-gradient(180deg,var(--bg-base) 0%,#F2EEE3 100%);
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.hero-eyebrow{
+  display:inline-block;
+  font-size:12px;font-weight:500;letter-spacing:.18em;
+  color:var(--accent);text-transform:uppercase;
+  margin-bottom:24px;
+}
+.hero-eyebrow::before{content:"";display:inline-block;width:24px;height:1px;background:var(--accent);vertical-align:middle;margin-right:12px}
+.hero h1{
+  font-family:'Noto Serif JP',serif;font-weight:900;
+  font-size:clamp(36px,5.5vw,68px);
+  line-height:1.18;
+  color:var(--primary-deep);
+  margin-bottom:32px;
+  letter-spacing:-.01em;
+}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative;display:inline-block}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:8px;background:rgba(201,162,39,.18);z-index:-1}
+.hero p.lead{
+  font-size:18px;line-height:1.8;color:#3A3A3A;
+  max-width:680px;margin-bottom:48px;
+}
+.hero-meta{display:flex;gap:48px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--border);max-width:680px}
+.hero-meta div{display:flex;flex-direction:column}
+.hero-meta .label{font-size:11px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px}
+.hero-meta .value{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--primary-deep);font-weight:500}
+
+/* === SECTION === */
+section.block{padding:120px 0}
+section.block.alt{background:#F2EEE3}
+.section-head{margin-bottom:64px;max-width:780px}
+.section-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.2em;margin-bottom:12px}
+.section-head h2{font-family:'Noto Serif JP',serif;font-weight:700;font-size:clamp(28px,3.5vw,44px);line-height:1.25;color:var(--primary-deep);margin-bottom:16px;letter-spacing:-.005em}
+.section-head p{font-size:16px;color:#3A3A3A;max-width:680px}
+
+/* === SCOPE TABLE === */
+.scope-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+@media(max-width:768px){.scope-grid{grid-template-columns:repeat(2,1fr)}}
+.scope-item{background:var(--bg-card);padding:32px 24px}
+.scope-item .label{font-size:11px;color:var(--text-muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.scope-item .value{font-family:'Noto Serif JP',serif;font-weight:700;font-size:24px;color:var(--primary-deep);line-height:1.3}
+.scope-item .sub{font-size:13px;color:var(--text-muted);margin-top:4px}
+
+/* === TIMELINE === */
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:48px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-32px;top:8px;width:18px;height:18px;border-radius:50%;background:var(--bg-base);border:3px solid var(--accent);box-shadow:0 0 0 4px var(--bg-base)}
+.tl-date{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+.tl-title{font-family:'Noto Serif JP',serif;font-weight:700;font-size:20px;color:var(--primary-deep);margin-bottom:8px;line-height:1.4}
+.tl-body{font-size:15px;color:#3A3A3A;max-width:680px;margin-bottom:12px}
+.tl-src{font-size:12px;color:var(--text-muted)}
+.tl-src a{color:var(--primary-mid);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.tl-src a:hover{border-bottom-color:var(--primary-mid)}
+
+/* === MATRIX === */
+.matrix-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:48px;box-shadow:var(--shadow-sm)}
+.matrix-svg{width:100%;height:auto;display:block}
+.matrix-legend{display:flex;gap:32px;justify-content:center;margin-top:32px;flex-wrap:wrap;font-size:13px;color:var(--text-muted)}
+.matrix-legend span{display:inline-flex;align-items:center;gap:8px}
+.matrix-legend .key{display:inline-block;width:14px;height:14px;border-radius:50%}
+
+/* === CARD GRID === */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:1024px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:6px;
+  padding:28px;display:flex;flex-direction:column;
+  transition:transform .2s ease, box-shadow .2s ease;
+  position:relative;overflow:hidden;
+}
+.card.featured{border-color:var(--accent);box-shadow:var(--shadow-md)}
+.card.featured::before{content:"重点";position:absolute;top:0;right:0;background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:.12em;padding:4px 10px;border-radius:0 0 0 6px}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);letter-spacing:.12em;margin-bottom:8px}
+.card h3{font-family:'Noto Serif JP',serif;font-weight:700;font-size:20px;color:var(--primary-deep);line-height:1.3;margin-bottom:12px;min-height:52px}
+.card-tagline{font-size:13px;color:var(--accent);font-weight:500;margin-bottom:16px}
+.card-meta{display:flex;gap:16px;margin-bottom:16px;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.card-meta div{flex:1}
+.card-meta .label{font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase}
+.card-meta .bar{display:flex;gap:3px;margin-top:4px}
+.card-meta .bar i{display:inline-block;width:16px;height:6px;background:var(--border);border-radius:1px}
+.card-meta .bar i.on{background:var(--accent)}
+.card-body{font-size:14px;color:#3A3A3A;line-height:1.7;margin-bottom:16px;flex-grow:1}
+.card-targets{font-size:12px;color:var(--text-muted);margin-bottom:12px}
+.card-targets b{color:var(--primary-mid);font-weight:500}
+.card-src{font-size:11px;margin-top:auto;padding-top:12px;border-top:1px dashed var(--border)}
+.card-src a{color:var(--primary-mid);text-decoration:none;display:inline-block;margin-right:8px}
+.card-src a:hover{text-decoration:underline}
+
+/* === DEEP DIVE === */
+.deep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+@media(max-width:1024px){.deep-grid{grid-template-columns:1fr}}
+.deep{background:var(--bg-card);border-radius:8px;padding:40px;border-top:4px solid var(--accent)}
+.deep-num{font-family:'JetBrains Mono',monospace;font-size:36px;color:var(--accent);line-height:1;margin-bottom:16px}
+.deep h3{font-family:'Noto Serif JP',serif;font-weight:700;font-size:24px;color:var(--primary-deep);margin-bottom:16px;line-height:1.3}
+.deep-section{margin-bottom:24px}
+.deep-section h4{font-size:11px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.deep-section p{font-size:14px;color:#3A3A3A;line-height:1.7}
+.deep-section ul{font-size:14px;color:#3A3A3A;line-height:1.7;padding-left:20px}
+.deep-section ul li{margin-bottom:4px}
+
+/* === EVIDENCE === */
+.evid-group{margin-bottom:32px;padding:24px 28px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px}
+.evid-group h3{font-family:'Noto Sans JP',sans-serif;font-weight:700;font-size:15px;color:var(--primary-deep);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.evid-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+@media(max-width:768px){.evid-list{grid-template-columns:1fr}}
+.evid-list li{font-size:13px;line-height:1.6;padding:6px 0}
+.evid-list li::before{content:"›";color:var(--accent);margin-right:8px;font-weight:700}
+.evid-list a{color:var(--primary-mid);text-decoration:none}
+.evid-list a:hover{text-decoration:underline}
+
+/* === INSIGHT === */
+.insight{background:var(--primary-deep);color:#fff;border-radius:8px;padding:64px;position:relative;overflow:hidden}
+.insight::before{content:"\201C";position:absolute;top:-32px;left:32px;font-family:'Noto Serif JP',serif;font-size:240px;color:var(--accent);opacity:.15;line-height:1}
+.insight-eyebrow{font-size:11px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;position:relative;z-index:1}
+.insight h3{font-family:'Noto Serif JP',serif;font-weight:700;font-size:28px;line-height:1.4;margin-bottom:24px;color:#fff;position:relative;z-index:1}
+.insight p{font-size:15px;line-height:1.9;color:#D5DCE5;max-width:760px;position:relative;z-index:1;margin-bottom:16px}
+.insight ol{font-size:15px;line-height:1.9;color:#D5DCE5;padding-left:24px;position:relative;z-index:1;max-width:760px}
+.insight ol li{margin-bottom:8px}
+.insight ol li b{color:var(--accent);font-weight:700}
+
+/* === FOOTER === */
+footer{padding:48px 0;background:var(--primary-deep);color:#9BA8B8;font-size:13px}
+.footer-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
+.footer-grid h4{font-family:'Noto Serif JP',serif;color:#fff;font-size:16px;font-weight:700;margin-bottom:8px}
+footer a{color:#C9A227;text-decoration:none}
+
+/* === UTIL === */
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--text-muted);letter-spacing:.18em;text-transform:uppercase;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">WADER MARKETS<span class="dot">.</span></div>
+    <div class="nav-links">
+      <a href="#scope">スコープ</a>
+      <a href="#trends">主要動き</a>
+      <a href="#map">10販路マップ</a>
+      <a href="#cards">販路カード</a>
+      <a href="#deep">重点3販路</a>
+      <a href="#evidence">出典</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">国内ウェダー市場・新販路調査 / 2025.11 — 2026.05</div>
+    <h1>釣り市場の外側に、<br>ウェダー販路が<em>10領域</em>眠っている。</h1>
+    <p class="lead">
+      ダイワ・シマノが支配する釣り市場を除き、半年間（2025年11月〜2026年5月）に
+      日本国内で観測されたウェダー関連のリリース・反応記事を横断調査。
+      顕在化しているが大手ブランドの手が届いていない販路を、10領域・3つの重点軸でマップ化しました。
+    </p>
+    <div class="hero-meta">
+      <div><span class="label">調査期間</span><span class="value">6 months</span></div>
+      <div><span class="label">抽出販路</span><span class="value">10 channels</span></div>
+      <div><span class="label">重点候補</span><span class="value">3 deep-dives</span></div>
+      <div><span class="label">出典数</span><span class="value">30+ sources</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll ↓</div>
+</header>
+
+<!-- ============ SCOPE ============ -->
+<section class="block" id="scope">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">01 / SCOPE</div>
+      <h2>調査スコープ</h2>
+      <p>「釣り市場以外」に絞り、半年分のリリース・反応記事・量販ECランキング・自治体募集情報を横断走査しました。</p>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-item">
+        <div class="label">期間</div>
+        <div class="value">2025.11 – 2026.05</div>
+        <div class="sub">直近半年</div>
+      </div>
+      <div class="scope-item">
+        <div class="label">除外</div>
+        <div class="value">釣り市場</div>
+        <div class="sub">ダイワ・シマノ等の既存アングラー領域</div>
+      </div>
+      <div class="scope-item">
+        <div class="label">収集源</div>
+        <div class="value">5系統</div>
+        <div class="sub">メーカーリリース / 量販EC / 反応記事 / 自治体 / 教育系</div>
+      </div>
+      <div class="scope-item">
+        <div class="label">出力</div>
+        <div class="value">10領域＋重点3</div>
+        <div class="sub">顕在度×ブランド競合度マトリクス配置</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDS ============ -->
+<section class="block alt" id="trends">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">02 / TIMELINE</div>
+      <h2>半年間の主要な動き</h2>
+      <p>釣り市場以外でウェダーが言及・販売・必要装備として登場した代表事例。釣り向けの新製品は除外し、用途・販路の広がりが見える事案のみピックアップ。</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026.05 — RANKING</div>
+        <div class="tl-title">マイベスト「ウェーダーのおすすめ人気ランキング」2026年5月版更新</div>
+        <div class="tl-body">価格.com「フローター・ウェーダー」ランキングと並び、消費者が"釣り以外の用途"でウェーダーを検索する導線が活発化。検索意図に「農作業」「川遊び」「ガサガサ」が常時上位。</div>
+        <div class="tl-src">出典：<a href="https://my-best.com/1478" target="_blank" rel="noopener">mybest 2026/05</a>　<a href="https://kakaku.com/ranking/sports-wear/0009_0038/0025/" target="_blank" rel="noopener">kakaku.com</a></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026 — NEW PRODUCT</div>
+        <div class="tl-title">JOINTER「ハイブリッドウエストソックスウェーダー」2026モデル発売</div>
+        <div class="tl-body">ウエストから太もも＝防水透湿素材、膝下＝PVC完全防水のハイブリッド構造。すそ部を広げて靴に被せやすく改良。釣り由来のプロダクトだが、構造的に「水中作業 × 動きやすさ」要件に幅広く転用可能。</div>
+        <div class="tl-src">出典：<a href="https://www.jointer.jp/product/wader/" target="_blank" rel="noopener">JOINTER公式</a></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026 — OUTDOOR</div>
+        <div class="tl-title">ベルモント「2026年アウトドア新商品ラインナップ」公開</div>
+        <div class="tl-body">アウトドア系メーカーが2026年向け新商品ラインに「水辺装備」を含めて拡充。釣り専業ではない事業者からの参入アングルが鮮明化。</div>
+        <div class="tl-src">出典：<a href="https://belmont.co.jp/news_2026outdoor/" target="_blank" rel="noopener">belmont.co.jp</a></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">継続販売 — DISASTER</div>
+        <div class="tl-title">株式会社ライズ「防災ウェーダー」の継続流通</div>
+        <div class="tl-body">水害ボランティア・個人備蓄向けにポジショニング。防災BCP需要のすそ野（個人・小規模事業者）で釣りメーカー以外の選択肢として認知。</div>
+        <div class="tl-src">出典：<a href="https://rise-nippon.shop-pro.jp/?pid=112236277" target="_blank" rel="noopener">rise-nippon.shop-pro.jp</a></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">継続トレンド — KIDS / EDUCATION</div>
+        <div class="tl-title">阪神素地の子ども用ウェーダーが「ガサガサ＝親子環境教育」市場で実質寡占</div>
+        <div class="tl-body">「子ども用ウェーダー＝阪神素地一択」と複数記事が言及。サイズ拡充・親子セット販売・自然学校提携など空白が大きい。</div>
+        <div class="tl-src">出典：<a href="https://kazetoge.com/23581/" target="_blank" rel="noopener">九州アクア日和</a>　<a href="https://www.gomoku-life.com/entry/2021/05/01/111257" target="_blank" rel="noopener">Gomoku-Life</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section class="block" id="map">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">03 / MAP</div>
+      <h2>10販路マップ：顕在度 × ブランド競合度</h2>
+      <p>横軸：消費者・現場での顕在化レベル（"ウェダーが必要"と認識されているか）。縦軸：ダイワ・シマノを除く既存ブランドの参入度。<b>左上 = ブルーオーシャン</b>。</p>
+    </div>
+    <div class="matrix-wrap">
+      <svg class="matrix-svg" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="10販路マトリクス散布図">
+        <!-- axes -->
+        <line x1="80" y1="40" x2="80" y2="500" stroke="#E6E1D6" stroke-width="2"/>
+        <line x1="80" y1="500" x2="860" y2="500" stroke="#E6E1D6" stroke-width="2"/>
+        <!-- grid -->
+        <line x1="470" y1="40" x2="470" y2="500" stroke="#E6E1D6" stroke-dasharray="4 4"/>
+        <line x1="80" y1="270" x2="860" y2="270" stroke="#E6E1D6" stroke-dasharray="4 4"/>
+        <!-- labels -->
+        <text x="40" y="50" fill="#6B7280" font-size="11" font-family="JetBrains Mono">High</text>
+        <text x="40" y="495" fill="#6B7280" font-size="11" font-family="JetBrains Mono">Low</text>
+        <text x="80" y="535" fill="#6B7280" font-size="11" font-family="JetBrains Mono">Low →</text>
+        <text x="810" y="535" fill="#6B7280" font-size="11" font-family="JetBrains Mono">High</text>
+        <text x="20" y="280" fill="#1A1A1A" font-size="12" font-family="Noto Sans JP" font-weight="700" transform="rotate(-90 20 280)">ブランド競合度</text>
+        <text x="430" y="555" fill="#1A1A1A" font-size="12" font-family="Noto Sans JP" font-weight="700">顕在度</text>
+        <!-- zone labels -->
+        <text x="160" y="170" fill="#0F2D4A" font-size="14" font-family="Noto Serif JP" font-weight="700" opacity=".25">ニッチ未開拓</text>
+        <text x="560" y="170" fill="#0F2D4A" font-size="14" font-family="Noto Serif JP" font-weight="700" opacity=".25">競合あり狙い目</text>
+        <text x="160" y="450" fill="#0F2D4A" font-size="14" font-family="Noto Serif JP" font-weight="700" opacity=".25">ブルーオーシャン</text>
+        <text x="560" y="450" fill="#0F2D4A" font-size="14" font-family="Noto Serif JP" font-weight="700" opacity=".25">本命販路</text>
+
+        <!-- bubbles: data
+            x: 顕在度 (low 100 -> high 840)
+            y: ブランド競合度 (high 60 -> low 480)
+            featured (★) = accent, otherwise primary-mid
+        -->
+        <!-- 01 親子・環境教育 高顕在/低競合 ★ -->
+        <g><circle cx="720" cy="420" r="26" fill="#C9A227" opacity=".9"/><text x="720" y="425" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">01</text><text x="720" y="470" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP" font-weight="700">親子環境教育</text></g>
+        <!-- 02 ネイチャーフォト 中/中 ★ -->
+        <g><circle cx="500" cy="270" r="24" fill="#C9A227" opacity=".9"/><text x="500" y="275" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">02</text><text x="500" y="240" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP" font-weight="700">ネイチャーフォト</text></g>
+        <!-- 03 業務洗浄 中/低 ★ -->
+        <g><circle cx="490" cy="430" r="24" fill="#C9A227" opacity=".9"/><text x="490" y="435" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">03</text><text x="490" y="475" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP" font-weight="700">業務洗浄系</text></g>
+        <!-- 04 河川清掃 中/低 -->
+        <g><circle cx="580" cy="395" r="20" fill="#1B4D7E" opacity=".85"/><text x="580" y="399" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">04</text><text x="630" y="399" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">河川清掃</text></g>
+        <!-- 05 ビーチクリーン 低/低 -->
+        <g><circle cx="240" cy="430" r="18" fill="#1B4D7E" opacity=".85"/><text x="240" y="434" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">05</text><text x="240" y="465" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">ビーチクリーン</text></g>
+        <!-- 06 SUP/カヌー 中/中 -->
+        <g><circle cx="540" cy="200" r="20" fill="#1B4D7E" opacity=".85"/><text x="540" y="204" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">06</text><text x="540" y="175" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">SUP/パックラフト</text></g>
+        <!-- 07 沢登り 低/中 -->
+        <g><circle cx="270" cy="200" r="18" fill="#1B4D7E" opacity=".85"/><text x="270" y="204" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">07</text><text x="270" y="175" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">沢登り/キャニオニング</text></g>
+        <!-- 08 大型車両洗車 低/低 -->
+        <g><circle cx="170" cy="380" r="18" fill="#1B4D7E" opacity=".85"/><text x="170" y="384" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">08</text><text x="170" y="415" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">大型車両洗車</text></g>
+        <!-- 09 上下水道点検 中/中 -->
+        <g><circle cx="610" cy="240" r="20" fill="#1B4D7E" opacity=".85"/><text x="610" y="244" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">09</text><text x="660" y="244" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">上下水道点検</text></g>
+        <!-- 10 水族館メンテ 低/低 -->
+        <g><circle cx="300" cy="370" r="18" fill="#1B4D7E" opacity=".85"/><text x="300" y="374" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">10</text><text x="300" y="400" text-anchor="middle" fill="#0F2D4A" font-size="11" font-family="Noto Sans JP">水族館メンテ</text></g>
+      </svg>
+      <div class="matrix-legend">
+        <span><span class="key" style="background:#C9A227"></span>重点3販路</span>
+        <span><span class="key" style="background:#1B4D7E"></span>その他7販路</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARDS ============ -->
+<section class="block alt" id="cards">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">04 / CHANNELS</div>
+      <h2>10販路カード</h2>
+      <p>各販路の参入難易度・想定顧客・出典。「重点」マークは次セクションで深掘り対象。</p>
+    </div>
+    <div class="cards">
+
+      <div class="card featured">
+        <div class="card-num">01 / KIDS · EDUCATION</div>
+        <h3>親子・環境教育（ガサガサ／自然学校）</h3>
+        <div class="card-tagline">子ども用ウェーダーは阪神素地の事実上独占</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">水深20cm前後の用水路・休耕田でのガサガサ需要が高く、親子セット・サイズ拡充・自然学校提携の空白が大きい。SDGs教育予算とも連動。</div>
+        <div class="card-targets">想定顧客：<b>自然学校・環境NPO・キャンプ場・親子イベント運営</b></div>
+        <div class="card-src">
+          <a href="https://gengo6.com/2021/07/04-5306" target="_blank" rel="noopener">ガサガサ持ち物</a>
+          <a href="https://kazetoge.com/23581/" target="_blank" rel="noopener">子ども用ウェーダー</a>
+          <a href="https://www.gomoku-life.com/entry/2021/05/01/111257" target="_blank" rel="noopener">小1向けレビュー</a>
+        </div>
+      </div>
+
+      <div class="card featured">
+        <div class="card-num">02 / NATURE PHOTO</div>
+        <h3>ネイチャーフォト・水中撮影</h3>
+        <div class="card-tagline">水辺撮影の必需装備として認知拡大</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        </div>
+        <div class="card-body">河川・湿地・夜のネイチャーフォト需要が継続。カメラバッグメーカーとの連携や、撮影アシスト需要（映像制作スタッフ）に未開拓余地。</div>
+        <div class="card-targets">想定顧客：<b>写真愛好家・映像制作会社・自然系YouTuber・ロケ装備レンタル</b></div>
+        <div class="card-src">
+          <a href="https://www.jpiaa.jp/course/howto_photo_010.html" target="_blank" rel="noopener">日本写真映像用品工業会</a>
+          <a href="https://yamasha.net/tag/camera-equipment" target="_blank" rel="noopener">登山写真機材</a>
+        </div>
+      </div>
+
+      <div class="card featured">
+        <div class="card-num">03 / WASH · CLEAN</div>
+        <h3>業務洗浄（畜産／大型犬トリミング／水族館）</h3>
+        <div class="card-tagline">水・薬剤・体液から下半身を守る作業着需要</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">大型犬シャンプー、牛舎洗浄、水槽メンテはエプロンより足元の防水ニーズが強い。耐酸・耐アルカリ素材＋短時間着脱を訴求できれば作業着市場として展開可能。</div>
+        <div class="card-targets">想定顧客：<b>動物病院・トリミングサロン・畜産農家・水槽メンテ事業者</b></div>
+        <div class="card-src">
+          <a href="https://www.l-m.co.jp/blog/?p=8244" target="_blank" rel="noopener">畜産作業着</a>
+          <a href="https://www.aquarentarium.com/aquarium-maintenance-details/" target="_blank" rel="noopener">水槽メンテ</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">04 / RIVER · CLEAN</div>
+        <h3>河川清掃ボランティア</h3>
+        <div class="card-tagline">自治体支援制度と連動する装備需要</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">埼玉県・札幌市・千葉市など自治体が清掃用具支援を制度化。団体一括導入のBtoG/BtoNPOルートを開拓可能。</div>
+        <div class="card-targets">想定顧客：<b>河川管理団体・自治体環境課・市民団体</b></div>
+        <div class="card-src">
+          <a href="https://www.pref.saitama.lg.jp/a1008/portal/bikadantai.html" target="_blank" rel="noopener">埼玉県川の国応援団</a>
+          <a href="https://kawagomi.jp/katsudo/" target="_blank" rel="noopener">全国川ごみネットワーク</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">05 / BEACH · CLEAN</div>
+        <h3>ビーチクリーン</h3>
+        <div class="card-tagline">海洋プラ問題で団体活動が拡大</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">海洋博公園・神奈川海岸美化財団・OCCNなど大型イベントが定例化。波打ち際の作業向けに膝下〜ヒップ丈のショート規格が刺さる。</div>
+        <div class="card-targets">想定顧客：<b>環境財団・自治体観光課・企業CSR部門</b></div>
+        <div class="card-src">
+          <a href="https://www.bikazaidan.or.jp/service/volunteer/" target="_blank" rel="noopener">かながわ海岸美化財団</a>
+          <a href="https://occn.jp/plan" target="_blank" rel="noopener">沖縄クリーンコースト</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">06 / WATER · SPORTS</div>
+        <h3>SUP・カヌー・パックラフト周辺</h3>
+        <div class="card-tagline">寒冷期・浅瀬装備としての位置取り</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        </div>
+        <div class="card-body">パックラフト人気上昇中。本流装備はウェットスーツが主流だが、出艇/回収・浅瀬移動で軽量ウェダー需要あり。アウトドアショップ流通の余地。</div>
+        <div class="card-targets">想定顧客：<b>アウトドアショップ・ツアー会社・ガイド</b></div>
+        <div class="card-src">
+          <a href="https://outdoorgear.jp/?mode=grp&gid=2565320" target="_blank" rel="noopener">アウトドアギア.jp</a>
+          <a href="https://sotoasobi.net/activity/river-kayak/blog/packraft-experience" target="_blank" rel="noopener">そとあそび</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">07 / CANYONING</div>
+        <h3>沢登り・シャワークライミング</h3>
+        <div class="card-tagline">ウェットスーツ主流市場のセカンダリー需要</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        </div>
+        <div class="card-body">本流はモンベル等のウェット系。ガイド向けの「インストラクター用 着脱簡便ウェダー」「初心者体験用レンタル」など補完ポジションを狙う。</div>
+        <div class="card-targets">想定顧客：<b>アウトドアガイド・体験ツアー会社</b></div>
+        <div class="card-src">
+          <a href="https://kgfreeguide.com/gorgeclimbing/equipment2.html" target="_blank" rel="noopener">沢登り装備</a>
+          <a href="https://webshop.montbell.jp/goods/category.php?category=80" target="_blank" rel="noopener">モンベル</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">08 / TRUCK WASH</div>
+        <h3>大型車両洗車（トラック／バス／建機）</h3>
+        <div class="card-tagline">プロディテイラー・運送事業者の作業着</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">手洗いトラック洗車・建機洗浄は1台30〜60分の長時間水仕事。長靴では下衣濡れが避けられず、業務用ウェダー導入余地。</div>
+        <div class="card-targets">想定顧客：<b>運送会社・洗車専門業者・ディテーリング店</b></div>
+        <div class="card-src">
+          <a href="https://www.steerlink.co.jp/truckinfo/maintenance/how-to-efficiently-wash-heavy-trucks/" target="_blank" rel="noopener">steerlink</a>
+          <a href="https://shima-corp.com/labo/truck/truck-car-wash" target="_blank" rel="noopener">shima-corp</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">09 / SEWER</div>
+        <h3>上下水道点検・マンホール調査</h3>
+        <div class="card-tagline">インフラ老朽化で点検需要が拡大</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        </div>
+        <div class="card-body">国交省ガイドラインで点検義務化。既存防水装備とは別軸で、軽量・耐薬品・通気性に最適化したウェダーが業務用ルートで採用余地。</div>
+        <div class="card-targets">想定顧客：<b>下水道管路管理業者・水道工事会社</b></div>
+        <div class="card-src">
+          <a href="https://gmen.ichikawa-gr.jp/tips009/" target="_blank" rel="noopener">マンホール調査</a>
+          <a href="https://www.mlit.go.jp/common/000022244.pdf" target="_blank" rel="noopener">国交省安全衛生マニュアル</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-num">10 / AQUARIUM</div>
+        <h3>水族館・アクアリウムメンテ</h3>
+        <div class="card-tagline">店舗・施設の水槽清掃BtoB</div>
+        <div class="card-meta">
+          <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+          <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        </div>
+        <div class="card-body">アクアレンタリウム等のBtoB水槽メンテ事業者・水族館バックヤード作業向け。大型水槽は脚立＋ウェダーの組み合わせ運用が常識化。</div>
+        <div class="card-targets">想定顧客：<b>水族館・水槽レンタル会社・アクアリウムショップ</b></div>
+        <div class="card-src">
+          <a href="https://www.aquarentarium.com/aquarium-cleaning-service/" target="_blank" rel="noopener">アクアレンタリウム</a>
+          <a href="https://aqua-resort.jp/aquarium/maintenance/" target="_blank" rel="noopener">アクアリゾート</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEEP DIVE ============ -->
+<section class="block" id="deep">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">05 / DEEP DIVE</div>
+      <h2>重点3販路 — 参入優先順位</h2>
+      <p>顕在度の高さ・ブランド競合の薄さ・単価設計の自由度から、Kaiが推奨する優先3販路。</p>
+    </div>
+    <div class="deep-grid">
+
+      <div class="deep">
+        <div class="deep-num">01</div>
+        <h3>親子・環境教育</h3>
+        <div class="deep-section">
+          <h4>狙う理由</h4>
+          <p>「子ども用ウェーダー＝阪神素地のみ」という空白が複数記事で確認できる。需要は顕在化済み、競合は1社のみ。</p>
+        </div>
+        <div class="deep-section">
+          <h4>商圏設計</h4>
+          <ul>
+            <li>自然学校・環境NPOへBtoB卸</li>
+            <li>キャンプ場・観光地の貸出装備</li>
+            <li>夏休み親子イベントとのコラボ販促</li>
+          </ul>
+        </div>
+        <div class="deep-section">
+          <h4>初動アクション</h4>
+          <p>サイズ110〜150cmの拡充・親子セット商品化・自然学校団体への提案書持ち込み。</p>
+        </div>
+      </div>
+
+      <div class="deep">
+        <div class="deep-num">02</div>
+        <h3>ネイチャーフォト</h3>
+        <div class="deep-section">
+          <h4>狙う理由</h4>
+          <p>カメラ系専門誌が水辺撮影装備としてウェダーを推奨。ただし「撮影向け」をうたう専用商品はほぼ存在しない。</p>
+        </div>
+        <div class="deep-section">
+          <h4>商圏設計</h4>
+          <ul>
+            <li>カメラ専門店との共同企画</li>
+            <li>「動きやすさ＋三脚水中設置耐久」の専用設計</li>
+            <li>ロケ装備レンタル会社への業務用卸</li>
+          </ul>
+        </div>
+        <div class="deep-section">
+          <h4>初動アクション</h4>
+          <p>写真用品工業会・カメラ系YouTuberへのアンバサダープログラム提案。</p>
+        </div>
+      </div>
+
+      <div class="deep">
+        <div class="deep-num">03</div>
+        <h3>業務洗浄系</h3>
+        <div class="deep-section">
+          <h4>狙う理由</h4>
+          <p>畜産・大型犬トリミング・水族館メンテは「下半身がずぶ濡れ」が常態化。エプロン市場はあるが、ウェダーの提案者がいない。</p>
+        </div>
+        <div class="deep-section">
+          <h4>商圏設計</h4>
+          <ul>
+            <li>動物病院・トリミングサロン専門誌に広告</li>
+            <li>畜産系JA経由のカタログ掲載</li>
+            <li>耐酸・耐アルカリ素材を訴求軸に</li>
+          </ul>
+        </div>
+        <div class="deep-section">
+          <h4>初動アクション</h4>
+          <p>大型犬対応サロン・畜産農協・水槽メンテBtoB事業者へのサンプル提供と現場ヒアリング。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSIGHT ============ -->
+<section class="block alt">
+  <div class="container">
+    <div class="insight">
+      <div class="insight-eyebrow">Kai Insight — 上村桂右ビジネスパートナーAIの読み</div>
+      <h3>「ウェダー」を"釣り装備"の棚から外し、"水辺労働服"の棚に置き直せ。</h3>
+      <p>ダイワ・シマノが寡占しているのは"釣り装備としてのウェダー"であって、防水ズボンというカテゴリ全体ではない。同じ商品でも置き場と訴求語を変えれば、競合がほぼいない棚に並べられる。</p>
+      <p>半年間の調査で見えたのは、需要があるのに大手の商品設計・販路設計が届いていない「親子・写真・洗浄」の3領域。共通項は <b>「BtoBもしくはBtoNPO/BtoG」の塊買い構造</b> がすでに存在することです。</p>
+      <ol>
+        <li><b>親子・環境教育</b>：自治体SDGs予算 × 自然学校団体 → 1施設で10〜30着の塊買い</li>
+        <li><b>ネイチャーフォト</b>：カメラ専門店 × ロケ装備レンタル → アンバサダー導線で口コミ拡大</li>
+        <li><b>業務洗浄</b>：JA畜産・動物病院チェーン → カタログ掲載で1業界丸ごと</li>
+      </ol>
+      <p style="margin-top:24px"><b style="color:#fff">注意点：</b>釣り市場と同じ商品をそのまま流すと「専門性が低い」と見られる。販路ごとに <b>素材グレード／サイズ展開／パッケージング</b> を必ず分けること。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVIDENCE ============ -->
+<section class="block" id="evidence">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-num">06 / EVIDENCE</div>
+      <h2>出典一覧</h2>
+      <p>調査で参照した一次情報。すべて公開URL。</p>
+    </div>
+
+    <div class="evid-group">
+      <h3>メーカー・量販系</h3>
+      <ul class="evid-list">
+        <li><a href="https://www.jointer.jp/product/wader/" target="_blank" rel="noopener">JOINTER公式 ウェーダー全製品</a></li>
+        <li><a href="https://www.jointer.jp/product/detail/hybrid_socks_boots_wader/" target="_blank" rel="noopener">JOINTER ハイブリッドチェストソックス</a></li>
+        <li><a href="https://belmont.co.jp/news_2026outdoor/" target="_blank" rel="noopener">ベルモント 2026新商品</a></li>
+        <li><a href="https://my-best.com/1478" target="_blank" rel="noopener">mybest ウェーダーランキング2026年5月</a></li>
+        <li><a href="https://kakaku.com/ranking/sports-wear/0009_0038/0025/" target="_blank" rel="noopener">価格.com フローター・ウェーダー</a></li>
+        <li><a href="https://webshop.wild1.co.jp/shop/c/c104010_dD/" target="_blank" rel="noopener">WILD-1 ウェーダー一覧</a></li>
+        <li><a href="https://rise-nippon.shop-pro.jp/?pid=112236277" target="_blank" rel="noopener">株式会社ライズ 防災ウェーダー</a></li>
+      </ul>
+    </div>
+
+    <div class="evid-group">
+      <h3>親子・環境教育</h3>
+      <ul class="evid-list">
+        <li><a href="https://gengo6.com/2021/07/04-5306" target="_blank" rel="noopener">子どもとガサガサ持ち物</a></li>
+        <li><a href="https://gengo6.com/2021/06/20-5172" target="_blank" rel="noopener">ガサガサの長靴問題</a></li>
+        <li><a href="https://kazetoge.com/23581/" target="_blank" rel="noopener">阪神素地子ども用ウェーダー</a></li>
+        <li><a href="https://www.gomoku-life.com/entry/2021/05/01/111257" target="_blank" rel="noopener">子ども用ウェーダー選び方</a></li>
+        <li><a href="https://hermit01.com/gasagasa-item/" target="_blank" rel="noopener">ガサガサ装備まとめ</a></li>
+        <li><a href="https://www.env.go.jp/garden/shinjukugyoen/3_event/event_04.html" target="_blank" rel="noopener">環境省 自然教室</a></li>
+      </ul>
+    </div>
+
+    <div class="evid-group">
+      <h3>河川清掃・ビーチクリーン・防災</h3>
+      <ul class="evid-list">
+        <li><a href="https://www.pref.saitama.lg.jp/a1008/portal/bikadantai.html" target="_blank" rel="noopener">埼玉県川の国応援団</a></li>
+        <li><a href="https://kawagomi.jp/katsudo/" target="_blank" rel="noopener">全国川ごみネットワーク</a></li>
+        <li><a href="https://www.bikazaidan.or.jp/service/volunteer/" target="_blank" rel="noopener">かながわ海岸美化財団</a></li>
+        <li><a href="https://occn.jp/plan" target="_blank" rel="noopener">沖縄クリーンコーストネットワーク</a></li>
+        <li><a href="https://www.city.sapporo.jp/kensetsu/kasen/menu07-04.html" target="_blank" rel="noopener">札幌市 河川クリーンアップ</a></li>
+        <li><a href="https://www.city.chiba.jp/kankyo/junkan/haikibutsu/katsudoshien.html" target="_blank" rel="noopener">千葉市 清掃支援</a></li>
+      </ul>
+    </div>
+
+    <div class="evid-group">
+      <h3>ネイチャーフォト・水辺アクティビティ</h3>
+      <ul class="evid-list">
+        <li><a href="https://www.jpiaa.jp/course/howto_photo_010.html" target="_blank" rel="noopener">日本写真映像用品工業会 ネイチャーフォト講座</a></li>
+        <li><a href="https://yamasha.net/tag/camera-equipment" target="_blank" rel="noopener">登山写真機材</a></li>
+        <li><a href="https://outdoorgear.jp/?mode=grp&gid=2565320" target="_blank" rel="noopener">アウトドアギア.jp パックラフト</a></li>
+        <li><a href="https://sotoasobi.net/activity/river-kayak/blog/packraft-experience" target="_blank" rel="noopener">そとあそび パックラフト</a></li>
+        <li><a href="https://kgfreeguide.com/gorgeclimbing/equipment2.html" target="_blank" rel="noopener">沢登り装備講座</a></li>
+        <li><a href="https://webshop.montbell.jp/goods/category.php?category=80" target="_blank" rel="noopener">モンベル シャワークライミング</a></li>
+      </ul>
+    </div>
+
+    <div class="evid-group">
+      <h3>業務洗浄・畜産・水槽メンテ・洗車・水道</h3>
+      <ul class="evid-list">
+        <li><a href="https://www.l-m.co.jp/blog/?p=8244" target="_blank" rel="noopener">畜産・酪農作業着</a></li>
+        <li><a href="https://agri.mynavi.jp/2020_11_27_140798/" target="_blank" rel="noopener">マイナビ農業 牛舎清掃</a></li>
+        <li><a href="https://www.aquarentarium.com/aquarium-maintenance-details/" target="_blank" rel="noopener">アクアレンタリウム メンテ</a></li>
+        <li><a href="https://aqua-resort.jp/aquarium/maintenance/" target="_blank" rel="noopener">アクアリゾート メンテ料金</a></li>
+        <li><a href="https://www.steerlink.co.jp/truckinfo/maintenance/how-to-efficiently-wash-heavy-trucks/" target="_blank" rel="noopener">大型トラック洗車</a></li>
+        <li><a href="https://gmen.ichikawa-gr.jp/tips009/" target="_blank" rel="noopener">マンホール調査工法</a></li>
+        <li><a href="https://www.mlit.go.jp/common/000022244.pdf" target="_blank" rel="noopener">国交省 下水道管路安全衛生マニュアル</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>ウェダー新販路マップ</h4>
+        <div>調査期間: 2025/11 – 2026/05　／　調査主体: 有限会社アートソウル</div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div><a href="mailto:uemura@artsoul.jp">uemura@artsoul.jp</a></div>
+      </div>
+      <div>
+        <h4>Research by</h4>
+        <div>Kai — Business Partner AI</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
