@@ -444,6 +444,80 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
   letter-spacing: 0.03em;
 }
 
+/* フロー：プロンプト生成アコーディオン（cyan系） */
+.fl-prompt {
+  margin-top: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+}
+.fl-prompt summary {
+  padding: 11px 16px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #cffafe 0%, #ecfeff 100%);
+  font-weight: 700;
+  font-size: 14px;
+  color: #155e75;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fl-prompt summary::-webkit-details-marker { display: none; }
+.fl-prompt summary::before {
+  content: "▶";
+  color: #0891b2;
+  font-size: 10px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.fl-prompt[open] summary::before { transform: rotate(90deg); }
+.fl-prompt summary:hover { background: linear-gradient(90deg, #a5f3fc 0%, #cffafe 100%); }
+.fl-prompt-body {
+  padding: 14px 16px;
+  background: #fafbfc;
+}
+.fl-prompt-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.65;
+}
+.fl-prompt-code {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-family: 'Menlo','Monaco','Courier New',monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #1e293b;
+}
+.fl-prompt-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.fl-prompt-btn {
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(8,145,178,.25);
+}
+.fl-prompt-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(8,145,178,.4); }
+.fl-prompt-btn.copied { background: linear-gradient(135deg, #059669, #10b981); }
+
 /* ガント */
 .gt-wrap { overflow-x:auto; }
 .gt-hdr { display:flex; padding-left:190px; margin-bottom:2px; }
@@ -608,6 +682,9 @@ h3 { font-size: 19px !important; font-weight: 700 !important; color: var(--text)
   .card, .goal-card, .kai-card, .stat, .act-item, .qi, .fl-card, .fl-ctx {
     box-shadow: none !important; border: 1px solid #d1d5db !important; page-break-inside: avoid; }
   .goal-card { background: #fff !important; }
+  /* プロンプトアコーディオンも印刷時は閉じる扱い */
+  .fl-prompt summary { background: #f1f5f9 !important; }
+  .fl-prompt:not([open]) .fl-prompt-body { display: none !important; }
 }
 
 @media (max-width: 600px) {
@@ -1621,6 +1698,7 @@ function renderDynamicFlow(ti, qid, itemTx) {
     const si=SICO[fakeStep.type]||SICO.action;
     const d=document.createElement('div'); d.className='fl-step';
     const quadCls=quad?(quad.pos==='tr'?'fb-wrn':quad.pos==='tl'?'fb-act':quad.pos==='br'?'fb-dec':'fb-out'):'fb-dur';
+    const ctx = { themeName: th?th.name:'', quadLabel: quad?(quad.label||''):'' };
     d.innerHTML=`
       <div class="fl-icon" style="background:${si.bg};color:${si.col}">${si.ic}</div>
       <div class="fl-card">
@@ -1633,6 +1711,7 @@ function renderDynamicFlow(ti, qid, itemTx) {
           ${quad?`<span class="fbg ${quadCls}">${quad.label||''}</span>`:''}
         </div>
         <div class="fl-hint">${fakeStep.kaiHint}</div>
+        ${buildFlowPromptHTML(fakeStep, ctx)}
       </div>`;
     con.appendChild(d);
   } else {
@@ -1800,6 +1879,10 @@ const SICO = {
 function renderFlow(fl) {
   const c=checks(), con=document.getElementById('flSteps'); con.innerHTML='';
   document.getElementById('flEmpty').style.display='none';
+  const th = DATA.mandala.themes[fl.themeIndex];
+  const mx = DATA.matrices[fl.themeIndex];
+  const quad = mx ? mx.quadrants.find(q=>q.id===fl.quadrant) : null;
+  const ctx = { themeName: th?th.name:'', quadLabel: quad?(quad.label||''):'' };
   fl.steps.forEach(step=>{
     const si=SICO[step.type]||SICO.action;
     const cid=fl.id+'-s'+step.order;
@@ -1817,6 +1900,7 @@ function renderFlow(fl) {
           ${step.output?`<span class="fbg fb-out">📄 ${step.output}</span>`:''}
         </div>
         ${step.kaiHint?`<div class="fl-hint">${step.kaiHint}</div>`:''}
+        ${buildFlowPromptHTML(step, ctx)}
         <label class="fl-check${ck?' done':''}">
           <input type="checkbox" ${ck?'checked':''} data-cid="${cid}" onchange="onCk(this)">
           完了としてマーク
@@ -1835,6 +1919,79 @@ function onCk(el) {
   const card=el.closest('.fl-card'), lbl=el.closest('.fl-check');
   el.checked ? (card.classList.add('done'),lbl.classList.add('done'))
              : (card.classList.remove('done'),lbl.classList.remove('done'));
+}
+
+/* ================================================================
+   FLOW PROMPT GENERATOR — 外部AI用プロンプト生成（下水道協会戦略版）
+   ================================================================ */
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildFlowPromptHTML(step, ctx){
+  const themeName = (ctx && ctx.themeName) ? ctx.themeName : '未指定';
+  const quadLabel = (ctx && ctx.quadLabel) ? ctx.quadLabel : '';
+  const prompt = `あなたは業務プロセス設計の専門家です。以下のタスクを、実践レベルの詳細フロー（Mermaid記法）と実行アドバイスにまで構造分解してください。
+
+【前提】
+- 業界：下水道整備業界（自治体管路・農業集落排水・浄化槽など）
+- 顧客：日本下水道協会の協会員（中小事業者・現場施工会社）
+- 商品：業務用ウェダー（胴付き長靴／作業用防水パンツ）
+- 哲学：「業務改善が先、ツールは後」「売り込まず伴走者として現場安全に貢献する」
+- レーン区分：① 営業（個社への商談・契約） / ② プロモーション（DLコンテンツ・LP・LINE） / ③ 組織露出（協会会報誌・業界誌・登壇） の3つを意識し、本タスクがどのレーンに位置するかを明示してください
+
+【対象タスク】
+所属テーマ：${themeName}
+象限ラベル：${quadLabel}
+タイトル：${step.title}
+概要：${step.description}
+所要時間：${step.duration||'未定'}
+成果物：${step.output||'未定'}
+つまずきポイント：${step.kaiHint||'なし'}
+
+【出力フォーマット】
+0. レーン判定（営業／プロモーション／組織露出のいずれか・1行で）
+
+1. Mermaid記法のflowchartコード（コードブロックで出力／draw.io互換）
+   - 5〜10サブステップ
+   - 分岐・判断ポイント（{}で表現）を含める
+   - 開始/終了ノード明示
+   - 例: flowchart TD\\n  A([開始]) --> B[ステップ1]\\n  B --> C{判断}\\n  ...
+
+2. 各サブステップの実行アドバイス（番号付きリスト）
+   - 担当者・必要時間・使用ツール
+   - 具体的な注意点（その場で発生しがちな失敗）
+   - 確認チェックリスト3項目
+   - 「売り込み臭」が出るリスクがある工程は、その回避策を1行添える
+
+3. 失敗時のリカバリープラン（短く）
+
+4. 関連レーンへの波及効果（1〜2行）
+   - 例：本タスクを実施することで他レーン（営業／プロモ／組織露出）にどう波及するか
+
+【制約】
+- 専門用語は最小限。中小企業の現場で運用可能な粒度
+- 1サブステップは1日以内で完結できる粒度
+- 「貢献から始める」「伴走者の佇まい」「売り込まない」の姿勢を全工程で反映
+- 出力は日本語で`;
+  return `<details class="fl-prompt">
+    <summary>🪄 詳細フロー作成プロンプトを取得（外部AIにコピペ）</summary>
+    <div class="fl-prompt-body">
+      <p class="fl-prompt-desc">このプロンプトを Claude / ChatGPT / Gemini に貼り付けると、下水道協会戦略文脈（営業／プロモ／組織露出の3レーン）を踏まえた Mermaid 形式のフロー図＋実行アドバイス＋チェックリスト＋リカバリープランが得られます。</p>
+      <pre class="fl-prompt-code">${escHtml(prompt)}</pre>
+      <div class="fl-prompt-actions">
+        <button class="fl-prompt-btn" onclick="copyPrompt(this)">📋 プロンプトをコピー</button>
+      </div>
+    </div>
+  </details>`;
+}
+function copyPrompt(btn){
+  const code=btn.parentElement.previousElementSibling.textContent;
+  const done=()=>{btn.textContent='✅ コピー完了'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='📋 プロンプトをコピー'; btn.classList.remove('copied');},2000);};
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(code).then(done).catch(()=>{
+      const ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
+    });
+  } else {
+    const ta=document.createElement('textarea'); ta.value=code; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
+  }
 }
 
 /* ================================================================
