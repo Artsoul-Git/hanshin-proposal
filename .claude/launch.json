@@ -12,6 +12,42 @@
       "runtimeExecutable": "py",
       "runtimeArgs": ["-m", "http.server", "8766", "--directory", "docs/hanshin-kiji"],
       "port": 8766
+    },
+    {
+      "name": "general-manual",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8767", "--directory", "07_マニュアル"],
+      "port": 8767
+    },
+    {
+      "name": "handson-claude-code",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8768", "--directory", "08_アプリ開発事業部/outputs/handson-claude-code"],
+      "port": 8768
+    },
+    {
+      "name": "mini-homepage-templates",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8769", "--directory", "08_アプリ開発事業部/outputs/mini-homepage-templates"],
+      "port": 8769
+    },
+    {
+      "name": "hanshin-proposal",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8770", "--directory", "05_クライアント案件/20260527_阪神素地株式会社/10_PUBLISHED/hanshin-proposal"],
+      "port": 8770
+    },
+    {
+      "name": "maru-proposal-2026",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8771", "--directory", "05_クライアント案件/20260326_合同会社まる/10_PUBLISHED/maru-proposal-2026"],
+      "port": 8771
+    },
+    {
+      "name": "mercari-out",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8772", "--directory", "05_クライアント案件/20260603_メルカリ脱却越境EC/10_PUBLISHED/00_mercari_out"],
+      "port": 8772
     }
   ]
 }

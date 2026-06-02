@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>古着4,000点・メルカリ急減からの脱出地図 — はじめてでもなぞれる実行レポート v1.0</title>
+<meta name="description" content="メルカリで古着が急に売れなくなった本当の理由と、4,000点の在庫を3〜12ヶ月でさばき切るための10案ロードマップ。なぞれば実践できる工程表つき。" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ========== CSS Variables (forest_green) ========== */
+:root {
+  --primary: #228B48;
+  --primary-dark: #1A6D39;
+  --primary-light: #34A85A;
+  --primary-pale: #E8F5EC;
+  --forest-deep: #0F4A28;
+  --forest-mid: #1A6D39;
+  --black: #000000;
+  --charcoal: #1a1a1a;
+  --text-main: #333333;
+  --text-sub: #555555;
+  --text-mute: #666666;
+  --text-light: #999999;
+  --bg-main: #ffffff;
+  --bg-alt: #f5f5f5;
+  --bg-green-alt: #f7faf8;
+  --border: #e5e5e5;
+  --border-light: #eeeeee;
+  --warning: #d9534f;
+  --warning-bg: #fdf2f2;
+  --info: #2c6db5;
+  --info-bg: #eaf3fd;
+  --good: #228B48;
+  --good-bg: #E8F5EC;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-lg: 0 6px 20px rgba(34,139,72,0.15);
+  --radius: 6px;
+  --radius-sm: 4px;
+  --container: 1180px;
+  --font-jp: 'Noto Sans JP','Yu Gothic','Meiryo',sans-serif;
+  --font-en: 'Helvetica Neue',Arial,sans-serif;
+}
+/* ========== Reset ========== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-jp);
+  background: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+a { color: var(--primary); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--primary-dark); }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; }
+/* ========== Layout ========== */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section.alt-bg { background: var(--bg-alt); }
+.section.green-alt { background: var(--bg-green-alt); }
+.section-head { margin-bottom: 40px; }
+.section-num {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+  font-family: var(--font-en);
+}
+.section-head h2 {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1.3;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--primary);
+  display: inline-block;
+  padding-right: 24px;
+}
+.section-lead {
+  font-size: 16px;
+  color: var(--text-sub);
+  line-height: 1.9;
+  margin: 24px 0 32px;
+  max-width: 880px;
+}
+.section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin: 40px 0 16px;
+  padding-left: 12px;
+  border-left: 3px solid var(--primary);
+}
+.section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--charcoal);
+  margin: 24px 0 12px;
+}
+.section p { font-size: 15px; color: #3a3a3a; margin-bottom: 14px; line-height: 1.85; }
+.section ul, .section ol { margin: 12px 0 16px 1.4em; color: #3a3a3a; }
+.section li { margin-bottom: 8px; font-size: 15px; line-height: 1.85; }
+/* ========== Header bar ========== */
+.topbar {
+  background: var(--forest-deep);
+  color: #fff;
+  padding: 10px 0;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+.topbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.topbar .badge-line { opacity: 0.85; }
+/* ========== HERO ========== */
+.hero {
+  background: linear-gradient(135deg, #0F4A28 0%, #1A6D39 50%, #228B48 100%);
+  color: #fff;
+  padding: 88px 0 72px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 100%);
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 1; }
+.hero .badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+  border-radius: 2px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+  max-width: 920px;
+}
+.hero h1 .accent {
+  color: #B8E5C5;
+  border-bottom: 3px solid #B8E5C5;
+  padding-bottom: 2px;
+}
+.hero .sub {
+  font-size: 17px;
+  font-weight: 400;
+  opacity: 0.95;
+  margin-bottom: 32px;
+  line-height: 1.85;
+  max-width: 800px;
+}
+.hero .what-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.18);
+  padding: 20px 24px;
+  border-radius: 6px;
+  max-width: 760px;
+  margin-bottom: 16px;
+}
+.hero .what-card .title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #B8E5C5;
+  margin-bottom: 12px;
+}
+.hero .what-card ol { margin: 0 0 0 1.2em; padding: 0; }
+.hero .what-card li { font-size: 14.5px; line-height: 1.85; opacity: 0.95; margin-bottom: 4px; }
+.hero .meta { margin-top: 16px; font-size: 12.5px; opacity: 0.8; line-height: 1.7; }
+.hero .meta strong { color: #B8E5C5; font-weight: 600; }
+/* ========== TOC ========== */
+.toc {
+  background: var(--bg-green-alt);
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.toc h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+  margin-bottom: 16px;
+  border-left: none;
+  padding-left: 0;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 4px;
+  font-size: 13.5px;
+  color: var(--text-main);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.toc-item:hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(0,0,0,0.06); color: var(--primary-dark); }
+.toc-item .num {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  font-family: var(--font-en);
+  letter-spacing: 0.1em;
+}
+/* ========== Big banner alert ========== */
+.banner-alert {
+  background: linear-gradient(135deg, #fdf2f2 0%, #fce8e8 100%);
+  border-left: 6px solid var(--warning);
+  padding: 24px 28px;
+  border-radius: 6px;
+  margin: 32px 0;
+}
+.banner-alert .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--warning);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.banner-alert h4 {
+  font-size: 18px;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.banner-alert p { font-size: 14.5px; color: #4a4a4a; margin: 0; line-height: 1.8; }
+.banner-good {
+  background: linear-gradient(135deg, #E8F5EC 0%, #d4ecd9 100%);
+  border-left: 6px solid var(--primary);
+  padding: 24px 28px;
+  border-radius: 6px;
+  margin: 32px 0;
+}
+.banner-good .label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.banner-good h4 {
+  font-size: 18px;
+  color: var(--forest-deep);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.banner-good p { font-size: 14.5px; color: #2a4a32; margin: 0; line-height: 1.8; }
+/* ========== Cause cards (Top3) ========== */
+.cause-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+.cause-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+.cause-card.rank-1 { border-top-color: #c0392b; }
+.cause-card.rank-2 { border-top-color: #e67e22; }
+.cause-card.rank-3 { border-top-color: #b58a00; }
+.cause-card .rank {
+  font-size: 11px;
+  font-weight: 600;
+  color: #888;
+  letter-spacing: 0.15em;
+  font-family: var(--font-en);
+  margin-bottom: 6px;
+}
+.cause-card .title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.cause-card .meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+.tag-conf-high { background: #fdebea; color: #c0392b; }
+.tag-conf-mid { background: #fff4e0; color: #c4830a; }
+.tag-scope { background: #eaf3fd; color: #2c6db5; }
+.cause-card .desc {
+  font-size: 14px;
+  color: #4a4a4a;
+  line-height: 1.85;
+  flex: 1;
+}
+.cause-card .check {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 13px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+/* ========== Timeline (vertical) ========== */
+.timeline {
+  margin: 32px 0;
+  position: relative;
+  padding-left: 28px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary) 0%, var(--warning) 100%);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 22px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.tl-item.warn::before { background: var(--warning); box-shadow: 0 0 0 1px var(--warning); }
+.tl-item.warn { border-left: 4px solid var(--warning); }
+.tl-item.fix::before { background: var(--primary-light); box-shadow: 0 0 0 1px var(--primary-light); }
+.tl-item .date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  letter-spacing: 0.05em;
+  font-family: var(--font-en);
+  margin-bottom: 4px;
+}
+.tl-item.warn .date { color: var(--warning); }
+.tl-item .event {
+  font-size: 15px;
+  color: var(--charcoal);
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.tl-item .impact {
+  font-size: 13px;
+  color: var(--text-mute);
+  line-height: 1.7;
+  margin: 0;
+}
+/* ========== Self-check ========== */
+.checkbox-list {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px 28px;
+  margin: 24px 0;
+}
+.checkbox-list .title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-pale);
+}
+.checkbox-list label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #3a3a3a;
+  line-height: 1.7;
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border-light);
+}
+.checkbox-list label:last-child { border-bottom: none; }
+.checkbox-list input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+/* ========== Options Map ========== */
+.option-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 28px 0 32px;
+}
+.option-cat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
+  border-radius: 6px;
+  padding: 22px 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.option-cat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.option-cat .icon {
+  width: 38px;
+  height: 38px;
+  background: var(--primary-pale);
+  color: var(--primary-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-family: var(--font-en);
+}
+.option-cat .name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 8px;
+}
+.option-cat .summary {
+  font-size: 13.5px;
+  color: var(--text-sub);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+.option-cat .members {
+  font-size: 12px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+/* ========== Compare Table ========== */
+.table-wrap { overflow-x: auto; margin: 24px 0; }
+table.compare {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+table.compare th, table.compare td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.65;
+}
+table.compare thead th {
+  background: var(--forest-deep);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+table.compare tbody tr:nth-child(odd) { background: #fafafa; }
+table.compare tbody tr:hover { background: var(--primary-pale); }
+table.compare .platform { font-weight: 700; color: var(--forest-deep); }
+table.compare .good { color: var(--primary-dark); font-weight: 600; }
+table.compare .warn { color: var(--warning); font-weight: 600; }
+table.compare .mid { color: #c4830a; font-weight: 600; }
+/* ========== Roadmap Flow ========== */
+.roadmap {
+  margin: 32px 0;
+}
+.phase-flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  position: relative;
+}
+.phase-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 22px;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+.phase-card.p1 { border-top: 4px solid #34A85A; }
+.phase-card.p2 { border-top: 4px solid #228B48; }
+.phase-card.p3 { border-top: 4px solid #0F4A28; }
+.phase-card .num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.2em;
+  font-family: var(--font-en);
+  margin-bottom: 6px;
+}
+.phase-card .span {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-bottom: 4px;
+}
+.phase-card .name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.phase-card .goal {
+  font-size: 13.5px;
+  color: var(--text-sub);
+  line-height: 1.75;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--border);
+}
+.phase-card .moves {
+  margin: 0 0 14px 1.1em;
+  padding: 0;
+  font-size: 13.5px;
+  color: #3a3a3a;
+}
+.phase-card .moves li { margin-bottom: 6px; line-height: 1.65; }
+.phase-card .kpi {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 12.5px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+.phase-arrow {
+  display: none;
+}
+/* Roadmap SVG container */
+.flow-svg-wrap {
+  margin: 32px 0;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.flow-svg-wrap svg { display: block; min-width: 720px; height: auto; max-width: 100%; }
+.flow-svg-wrap .legend {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12.5px;
+  color: var(--text-mute);
+}
+.flow-svg-wrap .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.flow-svg-wrap .legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+/* ========== Action cards (10) ========== */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 22px;
+  margin: 28px 0;
+}
+.action-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+.action-card.short { border-top-color: #34A85A; }
+.action-card.mid { border-top-color: #228B48; }
+.action-card.long { border-top-color: #0F4A28; }
+.action-card .head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.action-card .no {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--primary);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--font-en);
+  flex-shrink: 0;
+}
+.action-card.short .no { background: #34A85A; }
+.action-card.mid .no { background: #228B48; }
+.action-card.long .no { background: #0F4A28; }
+.action-card .head-text { flex: 1; }
+.action-card .phase-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.action-card .name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.45;
+  margin-top: 2px;
+}
+.action-card .gist {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 14px;
+  font-size: 12.5px;
+  background: var(--bg-green-alt);
+  border-radius: 4px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.metrics .key { color: var(--text-mute); font-weight: 600; }
+.metrics .val { color: var(--charcoal); font-weight: 600; text-align: right; }
+.steps-list {
+  background: #fff;
+  border-left: 3px solid var(--primary);
+  padding: 12px 14px 12px 18px;
+  border-radius: 0 4px 4px 0;
+  background: var(--bg-green-alt);
+}
+.steps-list .step-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.steps-list ol {
+  margin: 0 0 0 1.4em;
+  padding: 0;
+  font-size: 13px;
+  color: #3a3a3a;
+}
+.steps-list ol li { margin-bottom: 6px; line-height: 1.7; }
+.steps-list ol li b { color: var(--primary-dark); font-weight: 700; }
+/* ========== Execution Table (week-by-week) ========== */
+.exec-week {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.exec-week .week-head {
+  background: linear-gradient(90deg, var(--primary-pale) 0%, #fff 100%);
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.exec-week .wk-no {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary-dark);
+  background: #fff;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--primary);
+  font-family: var(--font-en);
+}
+.exec-week .wk-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--charcoal);
+}
+.exec-week .wk-goal {
+  font-size: 13px;
+  color: var(--text-mute);
+  margin-left: auto;
+}
+.exec-week .tasks {
+  padding: 16px 22px 20px;
+}
+.exec-week .tasks label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #3a3a3a;
+  line-height: 1.7;
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border-light);
+}
+.exec-week .tasks label:last-child { border-bottom: none; }
+.exec-week .tasks input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.exec-week .tasks .time {
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 600;
+  border: 1px solid var(--primary);
+  padding: 1px 7px;
+  border-radius: 8px;
+  margin-left: 6px;
+  flex-shrink: 0;
+  background: #fff;
+}
+/* ========== Glossary ========== */
+.glossary {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 24px;
+  margin: 24px 0;
+}
+.glossary h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  font-family: var(--font-en);
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px 24px;
+}
+.glossary dt {
+  font-weight: 700;
+  color: var(--charcoal);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.glossary dd {
+  font-size: 13px;
+  color: var(--text-mute);
+  line-height: 1.75;
+  margin: 0;
+}
+/* ========== FAQ ========== */
+.faq-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.faq-item.open { border-color: var(--primary); }
+.faq-q {
+  padding: 18px 22px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--charcoal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  line-height: 1.55;
+  transition: background 0.2s;
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+}
+.faq-q:hover { background: var(--bg-alt); }
+.faq-q:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.faq-q .mark {
+  font-size: 20px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: transform 0.2s;
+  font-weight: 400;
+}
+.faq-item.open .faq-q .mark { transform: rotate(45deg); }
+.faq-a {
+  padding: 0 22px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s, padding 0.3s;
+  color: var(--text-sub);
+  font-size: 14px;
+  line-height: 1.95;
+  background: #fafafa;
+  border-top: 1px solid transparent;
+}
+.faq-item.open .faq-a {
+  padding: 18px 22px;
+  max-height: 800px;
+  border-top: 1px solid var(--border);
+}
+.faq-a p { margin-bottom: 10px; color: var(--text-sub); font-size: 14px; line-height: 1.95; }
+/* ========== Sources ========== */
+.sources {
+  background: var(--bg-alt);
+  padding: 24px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-mute);
+  line-height: 1.85;
+}
+.sources h4 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+.sources ul { margin: 0 0 0 1.2em; }
+.sources a { word-break: break-all; }
+/* ========== Final box ========== */
+.contact-box {
+  background: linear-gradient(135deg, #1A6D39 0%, #228B48 100%);
+  color: #fff;
+  padding: 60px 0;
+  text-align: center;
+}
+.contact-box h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.contact-box p {
+  font-size: 16px;
+  opacity: 0.95;
+  margin-bottom: 28px;
+  line-height: 1.85;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.contact-box .next3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 880px;
+  margin: 24px auto 0;
+  text-align: left;
+}
+.contact-box .next3 .item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 18px;
+}
+.contact-box .next3 .label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #B8E5C5;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.contact-box .next3 .step {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.55;
+}
+.footer {
+  background: #0F4A28;
+  color: #c8d8cc;
+  padding: 36px 0;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.footer .company { font-weight: 600; font-size: 15px; color: #fff; margin-bottom: 8px; }
+.footer .copy { margin-top: 20px; opacity: 0.7; font-size: 12px; }
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .phase-flow { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .section { padding: 56px 0; }
+  .container { padding: 0 20px; }
+  .hero { padding: 64px 0 52px; }
+  .hero h1 { font-size: 28px; }
+  .hero .sub { font-size: 15px; }
+  .section-head h2 { font-size: 24px; }
+  .section h3 { font-size: 17px; }
+  .section p, .section li { font-size: 14px; }
+  .contact-box h2 { font-size: 22px; }
+  .action-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .section { padding: 40px 0; }
+  .hero { padding: 52px 0 40px; }
+  .hero h1 { font-size: 22px; }
+  .hero .sub { font-size: 14px; }
+  .section-head h2 { font-size: 20px; padding-right: 16px; }
+  .contact-box h2 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== PASSWORD GATE ========== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0F4A28 0%,#1A6D39 50%,#228B48 100%);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:'Noto Sans JP','Yu Gothic','Meiryo',sans-serif;">
+  <div style="background:#fff;padding:40px 36px;border-radius:8px;text-align:center;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <div style="font-size:12px;font-weight:600;color:#228B48;letter-spacing:0.15em;margin-bottom:12px;">PRIVATE REPORT / 限定公開</div>
+    <h2 style="color:#1a1a1a;margin-bottom:8px;font-size:20px;font-weight:700;line-height:1.5;">古着販売リカバリーレポート</h2>
+    <p style="color:#666;font-size:13px;line-height:1.7;margin-bottom:24px;">本ページは閲覧パスワードで保護されています。<br>パスワードを入力してください。</p>
+    <input type="password" id="pwd-input" placeholder="閲覧パスワード" style="padding:12px 14px;width:100%;border:1px solid #e5e5e5;border-radius:4px;margin-bottom:12px;font-size:15px;font-family:inherit;box-sizing:border-box;outline:none;transition:border 0.2s;" onfocus="this.style.border='1px solid #228B48'" onblur="this.style.border='1px solid #e5e5e5'">
+    <button id="pwd-btn" type="button" style="padding:13px 32px;background:#228B48;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:600;font-size:14px;font-family:inherit;width:100%;transition:background 0.2s;">閲覧する →</button>
+    <p id="pwd-err" style="color:#d9534f;font-size:12px;margin-top:10px;display:none;">パスワードが違います。もう一度お試しください。</p>
+    <p style="color:#999;font-size:11px;margin-top:18px;line-height:1.6;">© 有限会社アートソウル<br>本資料はクライアント様限定の参考レポートです</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS = 'as02062026';
+  var gate = document.getElementById('password-gate');
+  var input = document.getElementById('pwd-input');
+  var btn = document.getElementById('pwd-btn');
+  var err = document.getElementById('pwd-err');
+  if(sessionStorage.getItem('mercari_out_auth')==='ok'){
+    gate.style.display='none';
+    return;
+  }
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value === PASS){
+      sessionStorage.setItem('mercari_out_auth','ok');
+      gate.style.display = 'none';
+      document.body.style.overflow='';
+    } else {
+      err.style.display='block';
+      input.value='';
+      input.focus();
+    }
+  }
+  btn.addEventListener('click', check);
+  input.addEventListener('keydown', function(e){ if(e.key==='Enter') check(); });
+  setTimeout(function(){ input.focus(); }, 100);
+})();
+</script>
+
+<!-- ========== TOP BAR ========== -->
+<div class="topbar">
+  <div class="container">
+    <span><strong>古着販売リカバリーレポート v1.0</strong>　|　2026-06-03 作成</span>
+    <span class="badge-line">forest_green / AS_AI導入支援事業</span>
+  </div>
+</div>
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <div class="container">
+    <span class="badge">RECOVERY REPORT / 古着4,000点・販路再構築プラン</span>
+    <h1>
+      メルカリで急に売れなくなった理由がわかれば、<br>
+      <span class="accent">次の打ち手は10案・3フェーズ</span>に絞れます。
+    </h1>
+    <p class="sub">
+      「ここ数ヶ月、いきなり売れない」のは偶然ではなく、2025年8月以降に起きた <strong>3つの制度ショック</strong> が重なった結果です。<br>
+      このレポートは、原因の把握 → 選択肢の整理 → なぞれば実行できる工程表 まで、はじめての方でも順番に進められる構成にしてあります。
+    </p>
+    <div class="what-card">
+      <div class="title">このページでわかること</div>
+      <ol>
+        <li>なぜメルカリで急に売れなくなったか（原因Top3とタイムライン）</li>
+        <li>4,000点の在庫をさばくための販路の全体像（8つの選択肢と手数料比較）</li>
+        <li>3〜12ヶ月で「メルカリ依存」から脱出する成長ロードマップ（10案・週次の工程表つき）</li>
+      </ol>
+    </div>
+    <p class="meta">
+      <strong>読み方：</strong>難しい用語は最小限。専門用語が出てきたら、各セクションの最後の「ことば集」で意味を確認できます。<br>
+      <strong>所要：</strong>全体ざっと読み15分／フェーズ別の精読30分／実行工程表をなぞる場合は週次の作業に進めます。
+    </p>
+  </div>
+</header>
+
+<!-- ========== TOC ========== -->
+<nav class="toc">
+  <div class="container">
+    <h3>目次 / TABLE OF CONTENTS</h3>
+    <div class="toc-grid">
+      <a href="#diagnosis" class="toc-item"><span class="num">01</span><span>現状把握（なぜ売れない？）</span></a>
+      <a href="#options" class="toc-item"><span class="num">02</span><span>選択肢の全体像</span></a>
+      <a href="#roadmap" class="toc-item"><span class="num">03</span><span>3フェーズ・ロードマップ</span></a>
+      <a href="#actions" class="toc-item"><span class="num">04</span><span>打ち手10案の詳細</span></a>
+      <a href="#execution" class="toc-item"><span class="num">05</span><span>12週間の実行工程表</span></a>
+      <a href="#glossary" class="toc-item"><span class="num">06</span><span>ことば集（用語）</span></a>
+      <a href="#faq" class="toc-item"><span class="num">07</span><span>よくある質問</span></a>
+      <a href="#summary" class="toc-item"><span class="num">08</span><span>まとめ・次の一歩</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ========== 01 / DIAGNOSIS ========== -->
+<section class="section" id="diagnosis">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">01 / DIAGNOSIS</span>
+      <h2>現状把握：なぜ急に売れなくなったのか</h2>
+    </div>
+    <p class="section-lead">
+      まず「自分のやり方が悪くなったのか？」を切り分けます。結論から言うと、<strong>悪くなったのは出品者ではなく、海外のお客さんがメルカリで買えなくなる仕組みが2025年8月から急に始まった</strong>のが主因です。
+      クライアントは購入者の3割が海外（代行業者経由）でした。その3割が消えると、売上は感覚的に「ガクッ」と落ちます。
+    </p>
+
+    <div class="banner-alert">
+      <div class="label">▼ 結論</div>
+      <h4>急減のタイミングは「クライアントだけの問題」ではなく、業界全体の構造ショックです</h4>
+      <p>2025年8月29日にアメリカが小口輸入の関税免除（800ドル以下の無税ルール）をやめました。これに連動して、日本郵便がアメリカ向け荷物の引受を一時停止し、海外の代行業者（Buyee／tenso／ZenMarketなど）からの注文が一気に止まったのです。さらに2026年4月から代行業者の手数料も値上げされ、海外のお客さんは「日本のメルカリで買う理由」を失いつつあります。</p>
+    </div>
+
+    <h3>① 何が起きていたか — 時系列で見るタイムライン</h3>
+    <p>同じ8ヶ月のあいだに、海外からの購入ルートを断つ出来事が連鎖していました。</p>
+
+    <div class="timeline">
+      <div class="tl-item warn">
+        <div class="date">2025-08-27</div>
+        <div class="event">日本郵便がアメリカ向け「100ドル超の販売品」の引受を一時停止</div>
+        <p class="impact">代行業者が一番使っていた送り方が止まった。これだけで海外3割の主要部分が即停止。</p>
+      </div>
+      <div class="tl-item warn">
+        <div class="date">2025-08-29</div>
+        <div class="event">アメリカが「800ドル以下なら無税」のルールを廃止</div>
+        <p class="impact">日本からの輸入品に最大15〜50％の関税がかかるようになり、海外のお客さんの実質負担が一気に重くなった。</p>
+      </div>
+      <div class="tl-item">
+        <div class="date">2025-09-30</div>
+        <div class="event">メルカリが「Mercari Global App」を発表（台湾・香港）</div>
+        <p class="impact">メルカリ自体は海外直販に舵を切り始めた。これは追い風になりうるが、代行業者経由は逆に縮小傾向に。</p>
+      </div>
+      <div class="tl-item warn">
+        <div class="date">2026-04-01</div>
+        <div class="event">Buyee（最大手の代行業者）が手数料を1件¥300→¥500に値上げ（+67%）</div>
+        <p class="impact">代行経由で買っていた海外顧客の負担がさらに増えた。安いものほど割に合わなくなる。</p>
+      </div>
+      <div class="tl-item fix">
+        <div class="date">2026-04-14</div>
+        <div class="event">日本郵便がアメリカ向け郵便を再開（ただし指定郵便局で関税の事前支払が必要）</div>
+        <p class="impact">理屈の上では再開したが、代行業者にとっては事務作業が増え、買う側にも余計なお金がかかる。完全には戻らない。</p>
+      </div>
+    </div>
+
+    <h3>② 急減の原因Top3（クライアントの状況に当てはまる順）</h3>
+
+    <div class="cause-grid">
+      <div class="cause-card rank-1">
+        <div class="rank">RANK 01 / 最有力</div>
+        <div class="title">アメリカ向けの「買えない・買いにくい」状態が長引いた</div>
+        <div class="meta">
+          <span class="tag tag-conf-high">確信度：高</span>
+          <span class="tag tag-scope">海外30%が直撃</span>
+        </div>
+        <div class="desc">アメリカの関税ルール変更＋日本郵便の一時停止で、購入者の3割を占めていた海外勢の購入動線が約8ヶ月にわたって寸断。4月に再開しても、関税や手間でハードルが残る。</div>
+        <div class="check">▶ 検証：海外発送（Buyee経由）の比率が8月以降どれだけ落ちたかを確認</div>
+      </div>
+      <div class="cause-card rank-2">
+        <div class="rank">RANK 02 / 強い影響</div>
+        <div class="title">代行業者の手数料値上げで海外勢の購入意欲が低下</div>
+        <div class="meta">
+          <span class="tag tag-conf-high">確信度：高</span>
+          <span class="tag tag-scope">海外30%全員に追加負担</span>
+        </div>
+        <div class="desc">2026年4月にBuyeeが¥300→¥500に値上げ。送料・関税と合わせると、1,500円の古着Tシャツを買うのに2,500円以上の手数料・送料がかかるケースも出てきて、リピーターほど離脱しやすい。</div>
+        <div class="check">▶ 検証：海外リピーターからの問い合わせや購入回数が4月以降どう変わったか</div>
+      </div>
+      <div class="cause-card rank-3">
+        <div class="rank">RANK 03 / 国内側の逆風</div>
+        <div class="title">メルカリの仕組みが「個人出品より店舗（Shops）」を優先</div>
+        <div class="meta">
+          <span class="tag tag-conf-mid">確信度：中</span>
+          <span class="tag tag-scope">国内70%の閲覧減</span>
+        </div>
+        <div class="desc">2026年に入り、検索結果の上位を業者の出品（メルカリShops）が埋めるようになった。個人出品の古着は画面の下に押し下げられ、閲覧自体が減っている。さらに「いいね数の多い上位10%にだけ表示機会＋30%」というアルゴリズムが導入され、人気商品にますます集中する流れ。</div>
+        <div class="check">▶ 検証：商品ページの「閲覧数」と「いいね数」が9月以降下がっていないかを比較</div>
+      </div>
+    </div>
+
+    <h3>③ 自分の状況を見るチェックリスト（5分でできる）</h3>
+    <p>下のチェックをつけてみて、当てはまる数で原因の特定がぐっと進みます。</p>
+
+    <div class="checkbox-list">
+      <div class="title">▼ 売上急減の自己診断</div>
+      <label><input type="checkbox"><span>2025年8月以降、海外発送（Buyee/tenso等の住所宛て）への売上が半分以下になった</span></label>
+      <label><input type="checkbox"><span>2026年4月以降、海外リピーターからの問い合わせ・購入が減った</span></label>
+      <label><input type="checkbox"><span>1商品あたりの閲覧数が9月以降、目に見えて減った（半分以下）</span></label>
+      <label><input type="checkbox"><span>「いいね」がついた商品は売れるが、新規出品の反応が極端に薄い</span></label>
+      <label><input type="checkbox"><span>同じカテゴリで検索しても、自分の出品が業者の商品に埋もれて見つけにくい</span></label>
+      <label><input type="checkbox"><span>値下げ（100円下げ・再出品）の効果が以前ほど効かなくなった</span></label>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">▼ 診断の読み方</div>
+      <h4>1〜2個目にチェック → 海外要因（原因1・2）が主犯。先に海外販路を立て直す</h4>
+      <p>3〜6個目にもチェック → 国内アルゴリズム要因（原因3）も加担している。並行して国内の出品改善も必要。<br>1〜6個全部にチェック → 構造的に「メルカリ1本足打法」のリスクが顕在化。販路の分散が急務（→章03のロードマップへ）。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 02 / OPTIONS ========== -->
+<section class="section alt-bg" id="options">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">02 / OPTIONS</span>
+      <h2>選択肢の全体像 — どんな販路があるか</h2>
+    </div>
+    <p class="section-lead">
+      4,000点の在庫を1ヶ所だけでさばこうとせず、<strong>4つの方向×8つの販路</strong>に振り分けるのが基本戦略です。
+      ヤフー・楽天が使えなくても、別ルートで「海外直販」「海外間接（代行業者経由を維持）」「自社EC」「卸売り」の組み合わせが十分組めます。
+    </p>
+
+    <h3>① 4つの方向（戦略マップ）</h3>
+    <div class="option-map">
+      <div class="option-cat">
+        <div class="icon">A</div>
+        <div class="name">A. 国内をテコ入れ</div>
+        <div class="summary">メルカリ・自社ECで国内顧客の閲覧を取り戻す。手間：小／効果：中</div>
+        <div class="members">メルカリ最適化／Shops昇格／BASE自社EC</div>
+      </div>
+      <div class="option-cat">
+        <div class="icon">B</div>
+        <div class="name">B. 海外を直接つかむ</div>
+        <div class="summary">代行業者を経由せず、自分で海外に出品する。最大の伸びしろ。手間：中／効果：大</div>
+        <div class="members">eBay／Grailed／Depop／Shopee</div>
+      </div>
+      <div class="option-cat">
+        <div class="icon">C</div>
+        <div class="name">C. 海外を間接で残す</div>
+        <div class="summary">代行業者にこちらから接続して海外露出を維持。手間：最小／効果：中</div>
+        <div class="members">Buyee Connect／Mercari Global</div>
+      </div>
+      <div class="option-cat">
+        <div class="icon">D</div>
+        <div class="name">D. 滞留分を一括処分</div>
+        <div class="summary">3,000〜4,000点の在庫を「キロ売り」「業者卸」で現金化。手間：小／効果：即金</div>
+        <div class="members">古着問屋／KILO業者／コンテナ輸出</div>
+      </div>
+    </div>
+
+    <h3>② 主要販路の比較表（手数料・難しさ・適性）</h3>
+    <p>古着4,000点をさばく前提で、現実的に手の届く販路だけを比較しました。手数料は2026年6月時点の公開情報ベースです（出典は最下部）。</p>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th>販路</th>
+            <th>手数料の合計目安</th>
+            <th>古着との相性</th>
+            <th>日本人の参入のしやすさ</th>
+            <th>想定の販売価格帯</th>
+            <th>こんな人に向く</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="platform">メルカリ（国内）</td>
+            <td>販売額の <b>10%</b></td>
+            <td class="good">◎</td>
+            <td class="good">◎ 既に出品中</td>
+            <td>¥1,500〜¥5,000</td>
+            <td>国内向け基幹販路として継続。Shops昇格を検討</td>
+          </tr>
+          <tr>
+            <td class="platform">Mercari Global App</td>
+            <td>メルカリ手数料に準ずる</td>
+            <td class="good">◎</td>
+            <td class="good">◎ 自動的に対象</td>
+            <td>既存価格</td>
+            <td>台湾・香港の購入者を取りに行く（追加作業ほぼ無し）</td>
+          </tr>
+          <tr>
+            <td class="platform">Buyee Connect</td>
+            <td>取扱手数料のみ／¥0で連携</td>
+            <td class="good">◎</td>
+            <td class="good">◎ 審査ほぼ無し</td>
+            <td>既存価格</td>
+            <td>「ヤフー審査落ちでも使える」海外露出の最短ルート</td>
+          </tr>
+          <tr>
+            <td class="platform">eBay（米国軸）</td>
+            <td>合計 <b>約16〜18%</b>（販売手数料13.6%＋国際1.35%＋通貨3%＋$0.4定額）</td>
+            <td class="good">◎ 古着・ヴィンテージに強い</td>
+            <td class="mid">◯ アカウント開設可能</td>
+            <td>$30〜$150</td>
+            <td>Made in USA／Levi's／90年代古着など米市場向け上位品</td>
+          </tr>
+          <tr>
+            <td class="platform">Shopee（東南アジア）</td>
+            <td>管理費10%が <b>2025年6月撤廃</b></td>
+            <td class="mid">◯ 低単価が中心</td>
+            <td class="mid">△ 越境プログラム審査あり</td>
+            <td>$5〜$30</td>
+            <td>Tシャツ・小物・アジア圏で売れる安価ライン</td>
+          </tr>
+          <tr>
+            <td class="platform">Vinted（欧州）</td>
+            <td>売り手 <b>0%</b>（買い手が5〜8%負担）</td>
+            <td class="good">◎ 古着特化</td>
+            <td class="warn">× 日本セラー未対応</td>
+            <td>€15〜€50</td>
+            <td>欧州在住パートナーが立てられる場合のみ検討</td>
+          </tr>
+          <tr>
+            <td class="platform">Depop（米英）</td>
+            <td>2026年に売り手 <b>0%化</b>＋決済3.3%+$0.45</td>
+            <td class="good">◎ Y2K・古着特化</td>
+            <td class="mid">△ 英語UI必要</td>
+            <td>$20〜$80</td>
+            <td>10〜20代向けのY2Kやストリート系がある場合</td>
+          </tr>
+          <tr>
+            <td class="platform">Grailed（メンズ古着）</td>
+            <td>販売手数料 <b>9%</b>＋決済2.9%+$0.30</td>
+            <td class="good">◎ メンズ古着・デザイナーズ特化</td>
+            <td class="mid">△ 国際は自己発送</td>
+            <td>$50〜$500</td>
+            <td>デザイナーズ・希少ブランド系のメンズ古着がある場合</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">▼ 読み方のポイント</div>
+      <h4>「手数料が高い＝ダメ」ではありません。古着の単価で割り戻したときの利益を見る</h4>
+      <p>例：$50の古着をeBayで売ると、手数料込みで約$8〜9かかります（約16〜18%）。一見高いですが、日本のメルカリで同じ古着を¥2,000で売ったときの手数料は¥200。海外で売れば<strong>同じ商品が2〜3倍の値段</strong>で売れるので、結果的に利益が増えます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 03 / ROADMAP ========== -->
+<section class="section" id="roadmap">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">03 / ROADMAP</span>
+      <h2>3フェーズ・成長ロードマップ（フロー図）</h2>
+    </div>
+    <p class="section-lead">
+      「今すぐ売上を止血する」→「海外直販で利益体質に変える」→「メルカリ依存から完全に脱出する」の3段階で進めます。
+      下のフロー図が全体像、その下のカードが各フェーズの中身です。
+    </p>
+
+    <div class="flow-svg-wrap">
+      <svg viewBox="0 0 1080 470" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="3フェーズロードマップのフロー図">
+        <defs>
+          <linearGradient id="gradP1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#34A85A"/>
+            <stop offset="100%" stop-color="#228B48"/>
+          </linearGradient>
+          <linearGradient id="gradP2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#228B48"/>
+            <stop offset="100%" stop-color="#1A6D39"/>
+          </linearGradient>
+          <linearGradient id="gradP3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1A6D39"/>
+            <stop offset="100%" stop-color="#0F4A28"/>
+          </linearGradient>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#228B48"/>
+          </marker>
+        </defs>
+        <!-- Phase 1 -->
+        <rect x="20" y="40" width="320" height="140" rx="12" fill="url(#gradP1)"/>
+        <text x="40" y="72" fill="#fff" font-size="13" font-weight="700" letter-spacing="3">PHASE 1 / 0-4 WEEKS</text>
+        <text x="40" y="105" fill="#fff" font-size="20" font-weight="700">止血 — 海外動線の即復旧</text>
+        <text x="40" y="135" fill="#fff" font-size="13" opacity="0.95">Buyee Connect導入＋メルカリ最適化＋</text>
+        <text x="40" y="155" fill="#fff" font-size="13" opacity="0.95">在庫キロ売り見積で「即金」と「露出」を両立</text>
+
+        <!-- Arrow 1->2 -->
+        <line x1="345" y1="110" x2="395" y2="110" stroke="#228B48" stroke-width="3" marker-end="url(#arrow)"/>
+
+        <!-- Phase 2 -->
+        <rect x="400" y="40" width="320" height="140" rx="12" fill="url(#gradP2)"/>
+        <text x="420" y="72" fill="#fff" font-size="13" font-weight="700" letter-spacing="3">PHASE 2 / 1-3 MONTHS</text>
+        <text x="420" y="105" fill="#fff" font-size="20" font-weight="700">基盤構築 — 海外直販を立てる</text>
+        <text x="420" y="135" fill="#fff" font-size="13" opacity="0.95">eBay本格出品＋Mercari Global＋</text>
+        <text x="420" y="155" fill="#fff" font-size="13" opacity="0.95">自社EC（BASE）でメルカリ依存を半減</text>
+
+        <!-- Arrow 2->3 -->
+        <line x1="725" y1="110" x2="775" y2="110" stroke="#228B48" stroke-width="3" marker-end="url(#arrow)"/>
+
+        <!-- Phase 3 -->
+        <rect x="780" y="40" width="280" height="140" rx="12" fill="url(#gradP3)"/>
+        <text x="800" y="72" fill="#fff" font-size="13" font-weight="700" letter-spacing="3">PHASE 3 / 3-12 MONTHS</text>
+        <text x="800" y="105" fill="#fff" font-size="20" font-weight="700">利益体質化</text>
+        <text x="800" y="135" fill="#fff" font-size="13" opacity="0.95">Grailed/Depopで高単価特化＋</text>
+        <text x="800" y="155" fill="#fff" font-size="13" opacity="0.95">Shopee追加＋ブランド構築</text>
+
+        <!-- Phase 1 details -->
+        <rect x="20" y="210" width="320" height="240" rx="8" fill="#fff" stroke="#34A85A" stroke-width="2"/>
+        <text x="40" y="238" fill="#1A6D39" font-size="12" font-weight="700">▼ 主要アクション</text>
+        <text x="40" y="262" fill="#333" font-size="13">案1 Buyee Connect導入</text>
+        <text x="40" y="284" fill="#333" font-size="13">案2 メルカリ写真・タイトル最適化</text>
+        <text x="40" y="306" fill="#333" font-size="13">案3 メルカリShops昇格</text>
+        <text x="40" y="328" fill="#333" font-size="13">案10 キロ売り見積（並行）</text>
+        <text x="40" y="368" fill="#1A6D39" font-size="12" font-weight="700">▼ KPI（4週目時点）</text>
+        <text x="40" y="392" fill="#0F4A28" font-size="13" font-weight="600">・海外売上 / 8月比 50% 回復</text>
+        <text x="40" y="414" fill="#0F4A28" font-size="13" font-weight="600">・在庫 800点 → 卸見積取得</text>
+        <text x="40" y="436" fill="#0F4A28" font-size="13" font-weight="600">・キャッシュ即金 30〜80万円</text>
+
+        <!-- Phase 2 details -->
+        <rect x="400" y="210" width="320" height="240" rx="8" fill="#fff" stroke="#228B48" stroke-width="2"/>
+        <text x="420" y="238" fill="#1A6D39" font-size="12" font-weight="700">▼ 主要アクション</text>
+        <text x="420" y="262" fill="#333" font-size="13">案4 eBay本格出品（100点テスト）</text>
+        <text x="420" y="284" fill="#333" font-size="13">案6 Mercari Global露出最適化</text>
+        <text x="420" y="306" fill="#333" font-size="13">案7 BASE自社EC構築</text>
+        <text x="420" y="328" fill="#333" font-size="13">案5 Depop参入（任意）</text>
+        <text x="420" y="368" fill="#1A6D39" font-size="12" font-weight="700">▼ KPI（3ヶ月時点）</text>
+        <text x="420" y="392" fill="#0F4A28" font-size="13" font-weight="600">・eBay月商 30万円 達成</text>
+        <text x="420" y="414" fill="#0F4A28" font-size="13" font-weight="600">・メルカリ依存度 80%→50%</text>
+        <text x="420" y="436" fill="#0F4A28" font-size="13" font-weight="600">・在庫 4,000→2,500点</text>
+
+        <!-- Phase 3 details -->
+        <rect x="780" y="210" width="280" height="240" rx="8" fill="#fff" stroke="#0F4A28" stroke-width="2"/>
+        <text x="800" y="238" fill="#1A6D39" font-size="12" font-weight="700">▼ 主要アクション</text>
+        <text x="800" y="262" fill="#333" font-size="13">案8 Grailed特化（高単価）</text>
+        <text x="800" y="284" fill="#333" font-size="13">案9 Shopee追加（東南ア）</text>
+        <text x="800" y="306" fill="#333" font-size="13">案7続 独自ドメインEC強化</text>
+        <text x="800" y="328" fill="#333" font-size="13">仕入れ→販売の循環確立</text>
+        <text x="800" y="368" fill="#1A6D39" font-size="12" font-weight="700">▼ KPI（12ヶ月時点）</text>
+        <text x="800" y="392" fill="#0F4A28" font-size="13" font-weight="600">・海外直販比率 60%</text>
+        <text x="800" y="414" fill="#0F4A28" font-size="13" font-weight="600">・1点平均単価 1.5倍</text>
+        <text x="800" y="436" fill="#0F4A28" font-size="13" font-weight="600">・営業利益率 25%超</text>
+      </svg>
+      <div class="legend">
+        <span><i style="background:#34A85A"></i>Phase 1：止血（〜4週）</span>
+        <span><i style="background:#228B48"></i>Phase 2：基盤構築（1〜3ヶ月）</span>
+        <span><i style="background:#0F4A28"></i>Phase 3：利益体質化（3〜12ヶ月）</span>
+      </div>
+    </div>
+
+    <h3>3フェーズの中身（カードでざっと把握）</h3>
+    <div class="phase-flow">
+      <div class="phase-card p1">
+        <div class="num">PHASE 1</div>
+        <div class="span">0〜4週間</div>
+        <div class="name">止血<br>海外動線の即復旧と現金化</div>
+        <div class="goal"><strong>ゴール：</strong>停止していた海外3割の動線を別ルートで半分回復させ、同時に在庫キロ売りで即金を確保する。</div>
+        <ul class="moves">
+          <li>案1：Buyee Connectで「審査なし海外露出」を即開設</li>
+          <li>案2：メルカリ写真・タイトルを最適化（いいね偏重対策）</li>
+          <li>案3：メルカリShops昇格を検討</li>
+          <li>案10：キロ売り業者3社に在庫の見積依頼（並行）</li>
+        </ul>
+        <div class="kpi">▶ 4週後の到達点：海外売上の半分回復＋現金30〜80万円</div>
+      </div>
+      <div class="phase-card p2">
+        <div class="num">PHASE 2</div>
+        <div class="span">1〜3ヶ月</div>
+        <div class="name">基盤構築<br>海外直販ルートを立てる</div>
+        <div class="goal"><strong>ゴール：</strong>eBay・Mercari Global・自社ECで「代行業者なしで海外に届く」状態を作る。メルカリ依存度を下げる。</div>
+        <ul class="moves">
+          <li>案4：eBay日本人セラー登録＋上位100点先行出品</li>
+          <li>案6：Mercari Globalの最適化（中国語タイトル付与）</li>
+          <li>案7：BASEで自社ECを月¥0スタート</li>
+          <li>案5：Depop参入（任意、Y2K系がある場合）</li>
+        </ul>
+        <div class="kpi">▶ 3ヶ月後の到達点：eBay月商30万円・メルカリ依存80→50%</div>
+      </div>
+      <div class="phase-card p3">
+        <div class="num">PHASE 3</div>
+        <div class="span">3〜12ヶ月</div>
+        <div class="name">利益体質化<br>高単価販路とブランド構築</div>
+        <div class="goal"><strong>ゴール：</strong>1点単価が高い販路（Grailed等）にシフトし、独自ドメインECでリピーター層を育てる。</div>
+        <ul class="moves">
+          <li>案8：Grailedでデザイナーズ・ヴィンテージを高単価販売</li>
+          <li>案9：Shopee追加（東南アジア・小物・低単価ライン）</li>
+          <li>案7続：BASE→Shopify移行で独自ECを本格稼働</li>
+          <li>仕入れ→販売の循環をルーチン化</li>
+        </ul>
+        <div class="kpi">▶ 12ヶ月後の到達点：海外直販60%・営業利益率25%超</div>
+      </div>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">▼ ロードマップの考え方</div>
+      <h4>Phase 1で「とにかく止血と現金化」、Phase 2で「自分の足で海外に立つ」、Phase 3で「儲かる体質に変える」</h4>
+      <p>順番が大事です。先にeBayを立ち上げる前に、Buyee Connectで「ヤフー審査落ち・代行ルート減少」の穴をふさぐのが最短。そのあいだに在庫の半分を卸でさばいて運転資金にし、Phase 2で本格的な海外直販に投資します。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 04 / ACTIONS ========== -->
+<section class="section alt-bg" id="actions">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">04 / ACTIONS</span>
+      <h2>打ち手10案の詳細 — それぞれの最初の3ステップ</h2>
+    </div>
+    <p class="section-lead">
+      10案を「短期＝今やる」「中期＝1〜3ヶ月」「長期＝3〜12ヶ月」の3つに色分けしました。
+      各カードに <strong>① 効果の大きさ ② 着手のしやすさ ③ かかるお金 ④ 元が取れる目安 ⑤ 最初の3ステップ</strong> を載せています。
+    </p>
+
+    <h3>短期 — 今週着手（〜1ヶ月）</h3>
+    <div class="action-grid">
+
+      <div class="action-card short">
+        <div class="head">
+          <div class="no">1</div>
+          <div class="head-text">
+            <div class="phase-tag">SHORT / 短期</div>
+            <div class="name">Buyee Connect導入で「審査なし即海外露出」</div>
+          </div>
+        </div>
+        <p class="gist">代行業者の最大手Buyeeに自社の出品を直接つなぐ仕組み。ヤフー・楽天の審査が通らなくても利用でき、すでに離脱した海外顧客を別ルートで取り戻せる。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★★（海外3割の回復）</div>
+          <div class="key">着手</div><div class="val">A（最易）</div>
+          <div class="key">初期費用</div><div class="val">¥0</div>
+          <div class="key">回収</div><div class="val">1〜2ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li><b>buyee.jp</b> から法人/個人連携の申請フォームを送る（必要書類：身分証または法人登記）</li>
+            <li>主要50点だけ <b>英語タイトル化</b>（無料のDeepLやChatGPTで一括変換）</li>
+            <li>メルカリ／自社プロフィールに <b>「Ships worldwide via Buyee」</b> と明記して導線を作る</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card short">
+        <div class="head">
+          <div class="no">2</div>
+          <div class="head-text">
+            <div class="phase-tag">SHORT / 短期</div>
+            <div class="name">メルカリ写真1枚目を改善＋いいね偏重対策</div>
+          </div>
+        </div>
+        <p class="gist">2026年のメルカリは「いいね数の多い上位10%」に表示機会が30%増える仕組み。すでに反応のある人気品を強化して、表示優遇を取り戻す。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（国内閲覧回復）</div>
+          <div class="key">着手</div><div class="val">A（最易）</div>
+          <div class="key">初期費用</div><div class="val">¥0〜¥3,000</div>
+          <div class="key">回収</div><div class="val">即週次</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>過去3ヶ月で<b>いいね10件以上ついた上位10%</b>を抽出（メルカリの出品一覧から目視でOK）</li>
+            <li>その商品の1枚目を <b>白背景＋着用イメージ</b> に統一（ChatGPT/Canva無料機能で背景差し替え）</li>
+            <li>タイトルを <b>「ブランド名+カテゴリ+特徴+サイズ」</b> 順に統一して再投稿</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card short">
+        <div class="head">
+          <div class="no">3</div>
+          <div class="head-text">
+            <div class="phase-tag">SHORT / 短期</div>
+            <div class="name">メルカリShops昇格（個人→ショップ）</div>
+          </div>
+        </div>
+        <p class="gist">2026年は検索結果で「Shops出品」が個人より優先表示される傾向。古物商許可があれば昇格でき、押し下げられている自分の出品を上位に戻せる。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（押し出し対策）</div>
+          <div class="key">着手</div><div class="val">B（要書類）</div>
+          <div class="key">初期費用</div><div class="val">¥0（古物商前提）</div>
+          <div class="key">回収</div><div class="val">1ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>古物商許可証をスキャンしてメルカリShops申請ページから提出</li>
+            <li>ショップ名・ロゴ・店舗説明文を作成（Canva無料テンプレでOK）</li>
+            <li><b>200点だけ移行</b>して、移行前と1週間ごとに閲覧数・CVRを比較</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card short">
+        <div class="head">
+          <div class="no">10</div>
+          <div class="head-text">
+            <div class="phase-tag">SHORT / 短期（並行）</div>
+            <div class="name">B2B卸・キロ売りで滞留3,000点を一気に現金化</div>
+          </div>
+        </div>
+        <p class="gist">4,000点を全部小売で売り切るのは現実的でない。売れ筋上位20%（800点）を残し、<strong>残り3,200点をキロ単位で業者に卸す</strong>のが最速の現金化。タイ・フィリピン・アフリカ向けの輸出業者は常時買付している。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★★（即金30〜80万円）</div>
+          <div class="key">着手</div><div class="val">B（業者選定）</div>
+          <div class="key">初期費用</div><div class="val">¥0（業者引取）</div>
+          <div class="key">回収</div><div class="val">即金（2〜4週間）</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>「古着問屋」「古着卸」で検索 → <b>3社以上から相見積</b>（古着卸ドットコム／Nippon47等）</li>
+            <li>売れ筋上位800点を抜き、残り3,200点を <b>キロ売り対象</b> として梱包・重量計測</li>
+            <li>業界相場 <b>キロ¥300〜¥800</b> を基準に交渉。最低価格保証のある業者を優先</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>中期 — 仕込む（1〜3ヶ月）</h3>
+    <div class="action-grid">
+
+      <div class="action-card mid">
+        <div class="head">
+          <div class="no">4</div>
+          <div class="head-text">
+            <div class="phase-tag">MID / 中期</div>
+            <div class="name">eBay日本人セラー登録＋ヴィンテージ100点先行投入</div>
+          </div>
+        </div>
+        <p class="gist">米国市場は古着・ヴィンテージで世界最大。手数料合計15〜18%でも、同じ古着が日本の2〜3倍の価格で売れる。月商$3,000を超えれば国際手数料も1.20%に下がる。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★★（米市場が最大）</div>
+          <div class="key">着手</div><div class="val">B（英語＋登録）</div>
+          <div class="key">初期費用</div><div class="val">¥0〜¥30,000</div>
+          <div class="key">回収</div><div class="val">2〜3ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>eBayセラーアカウント開設＋ <b>Payoneer連携</b>（日本人向け公式入金経路。PayPalより手数料低い）</li>
+            <li>4,000点から <b>Made in USA／Levi's／Champion／Disney／70-90s古着</b> など米市場で高単価の100点を抽出</li>
+            <li>国際送料を <b>eIS（eBay International Shipping）</b> に統一 → 国内発送だけでOK、関税はeBay側が処理</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card mid">
+        <div class="head">
+          <div class="no">5</div>
+          <div class="head-text">
+            <div class="phase-tag">MID / 中期（任意）</div>
+            <div class="name">Depop参入（Gen Z向けY2K・ストリート）</div>
+          </div>
+        </div>
+        <p class="gist">10〜20代の海外Z世代がメインユーザー。Y2K・ストリート・古着特化で、2026年から売り手手数料0%になり参入のハードルが下がった。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（若年層の高購買力）</div>
+          <div class="key">着手</div><div class="val">B</div>
+          <div class="key">初期費用</div><div class="val">¥0</div>
+          <div class="key">回収</div><div class="val">2ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>Depopアカウント開設＋ <b>Stripe決済連携</b></li>
+            <li>Y2K・ストリート系古着50点を <b>1:1の正方形写真</b>（Instagram風）で出品</li>
+            <li>ハッシュタグ <b>#y2k #vintage #japan #streetwear</b> を固定運用してフォロワーを増やす</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card mid">
+        <div class="head">
+          <div class="no">6</div>
+          <div class="head-text">
+            <div class="phase-tag">MID / 中期</div>
+            <div class="name">Mercari Global App最適化（台湾・香港）</div>
+          </div>
+        </div>
+        <p class="gist">メルカリ自身が2025年9月から始めた海外直販アプリ。台湾・香港のユーザーに直接届くので、代行業者をバイパスできる。すでに登録済みの商品にひと手間加えるだけ。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（追加作業少なく効果中）</div>
+          <div class="key">着手</div><div class="val">A</div>
+          <div class="key">初期費用</div><div class="val">¥0</div>
+          <div class="key">回収</div><div class="val">1〜2ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>メルカリShops設定で <b>「海外配送対応」</b> をオン</li>
+            <li>主要商品のタイトル・説明に <b>中国語（繁体字）</b> を AI翻訳で追記</li>
+            <li>台湾・香港で人気の <b>ユニクロ／無印／アニメコラボ／Y2K</b> を優先露出</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card mid">
+        <div class="head">
+          <div class="no">7</div>
+          <div class="head-text">
+            <div class="phase-tag">MID→LONG / 中長期</div>
+            <div class="name">BASE/Shopifyで自社ECを構築（独自ドメイン）</div>
+          </div>
+        </div>
+        <p class="gist">プラットフォーム手数料を抜きにできて、リピーターと直接つながれる。BASEなら初期費用ゼロで始められ、月商10万を超えた時点でShopifyに移行する流れが現実的。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（ブランド構築・LTV増）</div>
+          <div class="key">着手</div><div class="val">C（学習要）</div>
+          <div class="key">初期費用</div><div class="val">BASE¥0／Shopify ¥3,000/月</div>
+          <div class="key">回収</div><div class="val">3〜6ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>BASEで <b>無料テンプレ</b> を選んでショップ開設（30分で完了）</li>
+            <li>メルカリ既存出品の上位300点を移植し、 <b>送料込み価格</b> で表示</li>
+            <li>Instagramと連動して <b>「コーディネート投稿→商品タグ」</b> 動線を作る</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>長期 — 構造改革（3〜12ヶ月）</h3>
+    <div class="action-grid">
+
+      <div class="action-card long">
+        <div class="head">
+          <div class="no">8</div>
+          <div class="head-text">
+            <div class="phase-tag">LONG / 長期</div>
+            <div class="name">Grailedでメンズ古着・デザイナーズ特化（高単価）</div>
+          </div>
+        </div>
+        <p class="gist">$50〜$500の高単価帯。デザイナーズ・ストリート・Made in Japanは特に強い。手数料が9%と相対的に低く、利益率を底上げできる。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★★（単価2-5倍）</div>
+          <div class="key">着手</div><div class="val">B</div>
+          <div class="key">初期費用</div><div class="val">¥0</div>
+          <div class="key">回収</div><div class="val">3〜4ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>在庫から <b>デザイナーズ／メンズストリート／Made in Japan</b> を選別</li>
+            <li>Grailedアカウント開設（国際は自己発送・Payoneer or PayPal連携）</li>
+            <li>商品説明に <b>「Japan-only release」「90s vintage」</b> など希少性キーワードを盛る</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="action-card long">
+        <div class="head">
+          <div class="no">9</div>
+          <div class="head-text">
+            <div class="phase-tag">LONG / 長期</div>
+            <div class="name">Shopee CB Program参入（東南アジア・台湾・SG・MY）</div>
+          </div>
+        </div>
+        <p class="gist">2025年6月に10%の管理費が撤廃され、東南アジアへの参入コストが劇的に下がった。Tシャツ・小物・低単価ラインを大量にさばける販路。</p>
+        <div class="metrics">
+          <div class="key">効果</div><div class="val">★★（低単価×大量）</div>
+          <div class="key">着手</div><div class="val">C（審査・物流理解要）</div>
+          <div class="key">初期費用</div><div class="val">¥0</div>
+          <div class="key">回収</div><div class="val">6ヶ月</div>
+        </div>
+        <div class="steps-list">
+          <div class="step-title">▼ 最初の3ステップ</div>
+          <ol>
+            <li>Shopee Seller Centre（SG／TW）から <b>越境セラー（Cross-Border）申請</b></li>
+            <li>低単価帯（$5〜$20）にフィットする <b>小物・Tシャツ・ヴィンテージ雑貨</b> を投入</li>
+            <li>Shopeeの物流サービス <b>SLS（Shopee Logistics Service）</b> で送料を吸収</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="banner-good">
+      <div class="label">▼ 私の推奨着手順序</div>
+      <h4>「今週：案1+案10／来月：案4／3ヶ月後：案8+案7」が最短経路</h4>
+      <p>1. <strong>今週</strong>：案1（Buyee Connect）と案10（キロ売り見積）を <strong>同時着手</strong>。海外動線を即復旧しながら、滞留在庫を現金化する。<br>
+      2. <strong>来月</strong>：案4（eBay本格出品）。米国の関税ルール変更後でも、自分で輸出すればルールに合わせて発送できる（代行業者の制約に縛られない）。<br>
+      3. <strong>3ヶ月後</strong>：案8（Grailed）＋案7（自社EC）。高単価品を残しブランド化に進む。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 05 / EXECUTION ========== -->
+<section class="section" id="execution">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">05 / EXECUTION</span>
+      <h2>12週間の実行工程表 — なぞれば実践できるチェックリスト</h2>
+    </div>
+    <p class="section-lead">
+      最初の12週間を「週ごと」に区切り、毎週やることをチェックボックス化しました。
+      時間目安（横の緑バッジ）を見ながら、1日1〜2時間ペースで進めれば完走できます。
+    </p>
+
+    <h3>Phase 1：止血と現金化（Week 1〜4）</h3>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 01</span>
+        <span class="wk-name">海外動線を即復旧 — Buyee Connect申請＋現状把握</span>
+        <span class="wk-goal">目標：海外露出ルートを開く</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>buyee.jpにアクセスし、Connect申請フォームを記入・送信<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>身分証/法人登記をPDF化してアップロード（追加で求められた場合）<span class="time">15分</span></span></label>
+        <label><input type="checkbox"><span>メルカリ売上画面で2025年7月→9月→12月→2026年4月の海外発送比率を計測<span class="time">60分</span></span></label>
+        <label><input type="checkbox"><span>古物商許可証の有無を確認（Shops昇格の準備）<span class="time">5分</span></span></label>
+        <label><input type="checkbox"><span>4,000点を「上位800点（残す）／3,200点（卸す）」に粗仕分け<span class="time">120分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 02</span>
+        <span class="wk-name">メルカリ最適化＋卸見積取得</span>
+        <span class="wk-goal">目標：国内閲覧の回復＋卸ルート確保</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>過去3ヶ月で「いいね10件以上」の商品トップ50を抽出<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>その50点の1枚目を白背景＋着用イメージに差し替え<span class="time">180分</span></span></label>
+        <label><input type="checkbox"><span>タイトルを「ブランド+カテゴリ+特徴+サイズ」順に統一<span class="time">90分</span></span></label>
+        <label><input type="checkbox"><span>古着卸業者3社（古着卸ドットコム／Nippon47ほか）に見積依頼メール<span class="time">60分</span></span></label>
+        <label><input type="checkbox"><span>3,200点の重量を計測（ダンボール何個分か把握）<span class="time">120分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 03</span>
+        <span class="wk-name">Buyee Connect運用開始＋Shops昇格申請</span>
+        <span class="wk-goal">目標：海外露出開始・国内優遇取得</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>Buyee Connect承認 → 主要50点に英語タイトル付与（DeepL/ChatGPT活用）<span class="time">180分</span></span></label>
+        <label><input type="checkbox"><span>プロフィール・店舗説明に「Ships worldwide via Buyee」を明記<span class="time">15分</span></span></label>
+        <label><input type="checkbox"><span>メルカリShops昇格を申請（古物商許可証提出）<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>卸業者3社からの見積比較表を作成 → 最有力1社に確定発注準備<span class="time">60分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 04</span>
+        <span class="wk-name">卸出荷＋eBay開設準備</span>
+        <span class="wk-goal">目標：3,200点を出荷・現金化／次フェーズ準備</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>3,200点を卸業者に出荷（コンテナ／キロ単位）<span class="time">240分</span></span></label>
+        <label><input type="checkbox"><span>入金確認（業界相場 キロ¥300〜¥800・出荷時または着荷時）<span class="time">15分</span></span></label>
+        <label><input type="checkbox"><span>eBay公式サイトでセラーアカウント開設フォームを記入開始<span class="time">60分</span></span></label>
+        <label><input type="checkbox"><span>Payoneerの口座開設申請（eBay入金用）<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span><b>Phase 1のKPI確認</b>：海外売上回復率／在庫減／現金化額<span class="time">30分</span></span></label>
+      </div>
+    </div>
+
+    <h3>Phase 2：基盤構築（Week 5〜12）</h3>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 05</span>
+        <span class="wk-name">eBayアカウント完成＋米国向け100点選定</span>
+        <span class="wk-goal">目標：本格出品の準備完了</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>eBay本人確認・Payoneer連携を完了<span class="time">60分</span></span></label>
+        <label><input type="checkbox"><span>残800点から米市場向け100点を選定（Made in USA・Levi's・Champion等）<span class="time">120分</span></span></label>
+        <label><input type="checkbox"><span>100点の英語商品説明テンプレを作成（ChatGPTでひな型作成）<span class="time">90分</span></span></label>
+        <label><input type="checkbox"><span>梱包資材（古着用ポリ袋・段ボール）を発注<span class="time">15分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 06</span>
+        <span class="wk-name">eBay初回50点出品＋Mercari Global最適化</span>
+        <span class="wk-goal">目標：米国＋台湾香港の2方向で稼働開始</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>eBayに最初の50点を出品（eIS国際配送を選択）<span class="time">240分</span></span></label>
+        <label><input type="checkbox"><span>メルカリShopsで「海外配送対応」をオン<span class="time">10分</span></span></label>
+        <label><input type="checkbox"><span>主要商品に中国語タイトル（繁体字）をAI翻訳で追加<span class="time">120分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 07</span>
+        <span class="wk-name">eBay残り50点出品＋BASEで自社EC開設</span>
+        <span class="wk-goal">目標：3販路体制の確立</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>eBayに残り50点を出品（合計100点完了）<span class="time">180分</span></span></label>
+        <label><input type="checkbox"><span>BASEで無料テンプレを選び自社EC開設（30分で完了）<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>メルカリ既存上位300点をBASEに転載<span class="time">240分</span></span></label>
+        <label><input type="checkbox"><span>Instagram商用アカウントを開設（自社EC連携用）<span class="time">30分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 08</span>
+        <span class="wk-name">eBay初売上検証＋改善ループ</span>
+        <span class="wk-goal">目標：データから売れ筋を見極める</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>eBayの閲覧数・ウォッチ数・CVRを商品別に集計<span class="time">60分</span></span></label>
+        <label><input type="checkbox"><span>反応の悪い商品の写真・タイトル・価格を見直す<span class="time">120分</span></span></label>
+        <label><input type="checkbox"><span>売れ筋カテゴリを特定して50点追加出品<span class="time">120分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 09-10</span>
+        <span class="wk-name">運用ルーチン化＋Depop検討（任意）</span>
+        <span class="wk-goal">目標：手間を仕組み化・選択肢を増やす</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>毎日「30分撮影＋30分出品＋15分発送」の運用ルーチンを確立<span class="time">毎日75分</span></span></label>
+        <label><input type="checkbox"><span>Instagramで週3回のコーディネート投稿開始（自社EC送客）<span class="time">週3×30分</span></span></label>
+        <label><input type="checkbox"><span>（任意）Depopアカウント開設＋Y2K古着50点を出品<span class="time">240分</span></span></label>
+      </div>
+    </div>
+
+    <div class="exec-week">
+      <div class="week-head">
+        <span class="wk-no">WEEK 11-12</span>
+        <span class="wk-name">12週レビュー＋Phase 3の準備</span>
+        <span class="wk-goal">目標：データに基づく次の意思決定</span>
+      </div>
+      <div class="tasks">
+        <label><input type="checkbox"><span>3ヶ月の販路別売上・利益を集計（メルカリ／eBay／BASE／Buyee）<span class="time">120分</span></span></label>
+        <label><input type="checkbox"><span>メルカリ依存度の推移を可視化（80%→何%になったか）<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>残在庫の「単価別仕分け」を実施（Grailed・Shopee向けを再選別）<span class="time">120分</span></span></label>
+        <label><input type="checkbox"><span><b>Phase 2 KPI確認</b>：eBay月商30万円達成／メルカリ依存50%以下<span class="time">30分</span></span></label>
+        <label><input type="checkbox"><span>Phase 3（Grailed／Shopee／独自ドメインEC）の優先順位を決める<span class="time">60分</span></span></label>
+      </div>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">▼ 工程表の使い方</div>
+      <h4>「全部やる」ではなく「優先順位の高いものから6割やる」で十分</h4>
+      <p>すべて完璧にこなす必要はありません。週ごとのチェックボックスは「順番の目安」と「やり残しの可視化」が目的です。
+      週末に「今週やれたこと／来週に回すこと」を見直すリズムを作ると、ペースが続きます。
+      毎週の作業時間の目安は <strong>合計8〜12時間（平日1日1時間＋週末2〜3時間）</strong> です。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 06 / GLOSSARY ========== -->
+<section class="section alt-bg" id="glossary">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">06 / GLOSSARY</span>
+      <h2>ことば集 — 知らなくても先に進める用語の意味</h2>
+    </div>
+    <p class="section-lead">
+      レポート中に出てきた用語の意味を、短くまとめました。読みながら気になったところだけ確認してください。
+    </p>
+
+    <div class="glossary">
+      <h4>▼ プラットフォーム関連</h4>
+      <dl>
+        <dt>Buyee（バイイー）</dt>
+        <dd>日本の最大手「海外向け購入代行サービス」。海外のお客さんが日本のメルカリ・ヤフオク等で買いたい商品を、Buyeeが代わりに買って海外に発送する。</dd>
+        <dt>Buyee Connect</dt>
+        <dd>自社の店舗・出品をBuyee側に「つなぐ」サービス。ヤフー・楽天の審査が通らなくても、海外露出ができる。</dd>
+        <dt>Mercari Global App</dt>
+        <dd>メルカリが2025年9月から始めた「海外向けアプリ」。台湾・香港のユーザーが日本のメルカリの商品を直接買える。</dd>
+        <dt>メルカリShops</dt>
+        <dd>メルカリの中の「店舗版」。個人ではなく事業者が登録するもので、検索結果の上位に出やすい。古物商許可があれば申請可能。</dd>
+        <dt>eBay（イーベイ）</dt>
+        <dd>米国を中心とした世界最大のオンラインオークション・マーケットプレイス。古着・ヴィンテージは世界中の買い手がいる。</dd>
+        <dt>Shopee（ショッピー）</dt>
+        <dd>東南アジア・台湾・シンガポール・マレーシアで圧倒的シェアを持つECサイト。越境セラー向けのプログラム（SIP/CB）がある。</dd>
+        <dt>Vinted（ヴィンテッド）</dt>
+        <dd>欧州で7,500万人以上が使う古着特化フリマアプリ。売り手手数料0%が特徴。ただし日本セラーは現時点で参加不可。</dd>
+        <dt>Depop（デポップ）</dt>
+        <dd>10〜20代のZ世代に人気の古着・ヴィンテージ特化アプリ。Y2K・ストリート系が強い。米英中心。</dd>
+        <dt>Grailed（グレイルド）</dt>
+        <dd>メンズ古着・デザイナーズ・ストリート専門のマーケットプレイス。高単価品が動く。日本のセラーも出品可能。</dd>
+      </dl>
+    </div>
+
+    <div class="glossary">
+      <h4>▼ 制度・関税まわり</h4>
+      <dl>
+        <dt>De Minimis（デミニミス）ルール</dt>
+        <dd>アメリカが長年使っていた「800ドル以下の輸入品は無税」のルール。2025年8月29日に撤廃され、日本からの少額品にも関税がかかるようになった。</dd>
+        <dt>関税の事前支払い</dt>
+        <dd>2026年4月以降、アメリカ向けに荷物を送る場合、認定業者のアプリで「関税分を先に支払う」ことが必要。指定郵便局でしか受け付けてもらえない。</dd>
+        <dt>EMS／eパケット／国際郵便</dt>
+        <dd>日本郵便の海外発送サービスの種類。EMSは速いが高い／eパケットは追跡付きの定型郵便／船便は安いが時間がかかる。</dd>
+        <dt>GSP／eIS（eBay International Shipping）</dt>
+        <dd>eBayが用意した「国際発送代行」。出品者は日本国内の指定倉庫まで送れば、あとはeBayが世界中に発送＋関税処理してくれる。手数料1.5%上乗せ。</dd>
+        <dt>Payoneer（ペイオニア）</dt>
+        <dd>eBay・海外フリマで使える「海外口座のような送金サービス」。PayPalよりも手数料が安く、日本人セラーの標準ルート。</dd>
+      </dl>
+    </div>
+
+    <div class="glossary">
+      <h4>▼ ビジネス用語</h4>
+      <dl>
+        <dt>キロ売り／KILO販売</dt>
+        <dd>古着を「1kg単位」で業者に卸す方法。仕分けする手間が省け、即金化できる。タイ・フィリピン・アフリカ向けの輸出業者が国内買付している。</dd>
+        <dt>CVR（コンバージョン率）</dt>
+        <dd>「閲覧した人のうち、何%が買ったか」。CVRが下がっている＝閲覧はあるが買われていない、というシグナル。</dd>
+        <dt>LTV（顧客生涯価値）</dt>
+        <dd>1人のお客さんが、長い目で見ていくら買ってくれるか。自社ECで顧客リストを持つとLTVが伸びやすい。</dd>
+        <dt>BASE／Shopify</dt>
+        <dd>自分のECサイトを作るサービス。BASEは月額無料で簡単、Shopifyは月¥3,000で本格的。初心者はBASE→拡大後にShopify、が王道。</dd>
+        <dt>古物商許可</dt>
+        <dd>中古品を業として売買する場合に必要な許可。最寄りの警察署で申請。Shops昇格や卸取引でほぼ必須。</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 07 / FAQ ========== -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">07 / FAQ</span>
+      <h2>よくある質問</h2>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q1. 英語ができません。eBayやDepopは無理ですか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>結論：問題ありません。商品説明はChatGPTやDeepLで日本語→英語の変換が高精度でできます。お客さんとのやり取りは、簡単な定型文（発送しました／届きました／ありがとう）の3パターンで95%カバーできます。トラブル時の英語対応だけ翻訳ツールを使えばOK。</p>
+        <p>むしろ「日本語の店舗説明をそのまま自動翻訳」より「ChatGPTに状況を説明して英語商品ページを書いてもらう」のほうが自然な英語になります。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q2. Buyee Connectとメルカリ・eBayは併用していいですか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>はい、併用するのが基本戦略です。Buyee Connect＝代行ルートの維持（海外30%を取り戻す）／eBay＝米国市場の直販（より高単価）／メルカリ＝国内既存顧客の維持、という役割分担で、お互いを食い合いません。在庫管理だけ「どこに何点出しているか」を一元化するスプレッドシートを作ると安心です。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q3. 4,000点もある在庫を全部撮影・出品する時間がありません</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>全部やる必要はありません。打ち手10案の <strong>案10（キロ売り）</strong> で全体の8割（3,200点）を一気に卸して現金化し、残りの売れ筋上位2割（800点）だけを丁寧に複数販路に展開するのが現実解です。</p>
+        <p>800点であっても1日10点ずつなら3ヶ月で完了。AIで一括写真処理＋ChatGPTで商品説明テンプレを作れば、出品1点あたり10〜15分まで短縮できます。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q4. キロ売りは利益が出ますか？売れ筋を捨てているのでは？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>業界相場は <strong>キロ¥300〜¥800</strong>。1点平均300g・3,200点なら約960kg・<strong>30〜80万円の即金</strong>になります。これを運転資金にしてeBay・自社ECを立ち上げるのが正攻法です。</p>
+        <p>「売れ筋を捨てる」のではなく、<strong>売れ筋上位2割（800点）を残して、残り8割を卸す</strong>のがポイント。「売れていない8割」は倉庫費・管理コストが累積するだけなので、機会損失を考えると即金化のメリットが大きい。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q5. アメリカ向け関税の事前支払い、面倒すぎませんか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>そのとおりで、個人セラーが毎回処理するのは非現実的です。これが eBay の <strong>eIS（eBay International Shipping）</strong> を強く推す理由で、出品者は日本国内の指定倉庫まで送るだけ。あとは eBay 側が関税・配送・トラッキングまで全部処理してくれます。</p>
+        <p>追加手数料は販売額の1.5%。これを払って「事務作業ゼロ」を買うのは、コストパフォーマンスが非常に良い選択です。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q6. 古物商許可はメルカリShopsや海外販売に必要ですか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>メルカリShops昇格には事実上必須です（中古衣類の業販扱いになるため）。海外販売（eBay・Depop・Grailed）は法律上は不要ですが、卸業者との取引では求められることが多いので、取得しておくと選択肢が広がります。</p>
+        <p>申請は最寄りの警察署で、書類は3〜4点、費用¥19,000、許可までの期間は約40日。一度取れば更新不要で、扱える品目が中古衣類だけでなく雑貨・ブランド品にも広がります。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q7. メルカリの売上が完全に戻る可能性はありますか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>2025年8月以前の水準への「完全な復活」は構造的に難しいです。理由は3つ：①アメリカの関税ルールはトランプ政権の方針で当面継続見込み／②Buyeeの値上げは恒久的／③メルカリ自身がShops事業者を優遇する方向性。</p>
+        <p>ただし、上手く動けば <strong>「メルカリ単独より総売上が増える」状態</strong> は十分作れます。理由は、海外を直接つかむことで1点あたりの単価が2〜3倍になるから。今がピボットのチャンスと捉えるのが現実的な見方です。</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Q8. このレポートのとおりに進めるとどのくらいで利益体質に変わりますか？</span>
+        <span class="mark" aria-hidden="true">＋</span>
+      </button>
+      <div class="faq-a">
+        <p>目安としては：<br>
+        <strong>1ヶ月後</strong>：海外売上の半分回復＋現金30〜80万円（キロ売り収入）<br>
+        <strong>3ヶ月後</strong>：eBay月商30万円・メルカリ依存80→50%<br>
+        <strong>6ヶ月後</strong>：販路4本（メルカリ／eBay／Mercari Global／自社EC）安定稼働<br>
+        <strong>12ヶ月後</strong>：海外直販比率60%・営業利益率25%超</p>
+        <p>もちろん在庫の質・選別の精度・実行のスピードで前後しますが、平均的なペースであれば <strong>6ヶ月で「メルカリだけだった頃」の売上水準を超え、12ヶ月で利益率は1.5倍以上</strong> になります。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== 08 / SUMMARY ========== -->
+<section class="section green-alt" id="summary">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">08 / SUMMARY</span>
+      <h2>まとめ — 次の一歩は「今週」始められる</h2>
+    </div>
+
+    <p class="section-lead">
+      ここまで読んでくださってありがとうございました。最後に、このレポートの核心を3点に絞ります。
+    </p>
+
+    <h3>覚えておきたい3つのポイント</h3>
+    <ol>
+      <li><strong>急減の原因は「出品者の問題」ではなく「アメリカの制度変更＋代行業者の値上げ」</strong>です。メルカリだけでテコ入れしても限界がある、と理解することが第一歩。</li>
+      <li><strong>4,000点を全部小売で売り切ろうとしない</strong>。売れ筋2割（800点）を残し、残り8割をキロ売りで現金化。その資金で海外直販を立ち上げるのが王道。</li>
+      <li><strong>販路は「4方向×3フェーズ」で分散する</strong>。Buyee Connect（即）／eBay（中期）／Grailed・自社EC（長期）で組み立てれば、特定プラットフォームのルール変更1発で売上が消える状態から抜け出せる。</li>
+    </ol>
+
+    <h3>今週始められる、最小の一歩</h3>
+    <p>このレポートの工程表でいうと、<strong>Week 1</strong>に書かれている5つだけです：</p>
+    <ul>
+      <li>① Buyee Connect申請（30分）</li>
+      <li>② メルカリ海外売上の比率計測（60分）</li>
+      <li>③ 古物商許可証の有無確認（5分）</li>
+      <li>④ 4,000点を「上位800点／残り3,200点」に粗仕分け（120分）</li>
+      <li>⑤ 古着卸業者3社に見積依頼メール（60分）</li>
+    </ul>
+    <p>合計 <strong>4〜5時間</strong>。週末1日でほぼ完了します。</p>
+
+    <h3>参考情報・出典</h3>
+
+    <div class="sources">
+      <h4>▼ メルカリ国内市況・アルゴリズム</h4>
+      <ul>
+        <li><a href="https://digital.tekuteku-sanpo.com/mercari-difficulttouse2026/" target="_blank" rel="noopener">2026年メルカリが使いにくくなった原因と対策（ぴこぴこ）</a></li>
+        <li><a href="https://ec-seller-labo.co.jp/article/mercari-search-ranking/" target="_blank" rel="noopener">メルカリ上位表示の裏ワザ（ECセラーラボ）</a></li>
+        <li><a href="https://media.brain-market.com/mercari-cant-sall/" target="_blank" rel="noopener">メルカリで商品が急に売れなくなった原因5選（Brain）</a></li>
+      </ul>
+      <h4 style="margin-top:14px;">▼ アメリカ関税・国際物流</h4>
+      <ul>
+        <li><a href="https://www.japantimes.co.jp/business/2025/09/17/companies/japan-proxy-shopping/" target="_blank" rel="noopener">End of U.S. de minimis exemption causes headaches（The Japan Times）</a></li>
+        <li><a href="https://www.post.japanpost.jp/service/send/oversea/information/2026/0413_01.html" target="_blank" rel="noopener">米国宛て郵便物の引受再開のお知らせ（日本郵便公式）</a></li>
+        <li><a href="https://www.heddels.com/2025/08/the-end-of-de-minimis-what-trumps-suspension-of-800-duty-free-rule-means-for-u-s-buyers/" target="_blank" rel="noopener">The End of De Minimis（Heddels）</a></li>
+      </ul>
+      <h4 style="margin-top:14px;">▼ 海外代行業者・Buyee値上げ</h4>
+      <ul>
+        <li><a href="https://blog.onemall.jp/2026/03/17/buyee-is-raising-its-service-fee-to-%C2%A5500-on-april-1-heres-how-to-pay-%C2%A50-instead/" target="_blank" rel="noopener">Buyee Fee Hike to ¥500 on April 1, 2026（OneMall）</a></li>
+        <li><a href="https://blog.buyee.com/japanese-fashion_post250912en/" target="_blank" rel="noopener">Buyee Japanese Fashion Guide</a></li>
+      </ul>
+      <h4 style="margin-top:14px;">▼ Mercari越境戦略</h4>
+      <ul>
+        <li><a href="https://about.mercari.com/en/press/news/articles/20250930_crossborder/" target="_blank" rel="noopener">Mercari Global App戦略（公式プレスリリース 2025/9/30）</a></li>
+        <li><a href="https://about.mercari.com/en/press/news/articles/20250507_crossborder/" target="_blank" rel="noopener">Mercari Expands to Hong Kong（公式・2025/5/7）</a></li>
+      </ul>
+      <h4 style="margin-top:14px;">▼ eBay・Shopee・Vinted・Depop・Grailed 手数料</h4>
+      <ul>
+        <li><a href="https://export.ebay.com/en/fees-regulations-policies/seller-fees/international-fees/" target="_blank" rel="noopener">eBay International Fees（1次・公式）</a></li>
+        <li><a href="https://www.forestshipping.com/shopee-removes-10-percent-fee-cross-border-sellers" target="_blank" rel="noopener">Shopee Removes 10% Fee for Cross-Border Sellers</a></li>
+        <li><a href="https://www.underpriced.app/blog/ebay-fees-complete-guide-2026" target="_blank" rel="noopener">eBay Fees Complete Guide 2026（Underpriced）</a></li>
+        <li><a href="https://www.voolist.com/blog/marketplace-fees-comparison-2026" target="_blank" rel="noopener">Marketplace Fees Comparison 2026（Voolist）</a></li>
+        <li><a href="https://www.underpriced.app/blog/vinted-selling-guide-europe-2026" target="_blank" rel="noopener">Vinted Selling Guide Europe 2026</a></li>
+        <li><a href="https://blog.vendoo.co/a-guide-to-grailed-shipping-how-to-use-new-grailed-shipping-labels" target="_blank" rel="noopener">Grailed Shipping Guide（Vendoo）</a></li>
+      </ul>
+      <h4 style="margin-top:14px;">▼ B2B卸ルート</h4>
+      <ul>
+        <li><a href="https://www.furugioroshi.com/html/page2.html" target="_blank" rel="noopener">古着卸ドットコム</a></li>
+        <li><a href="https://nippon47.co.jp/column/africa-used-clothing/" target="_blank" rel="noopener">Nippon47：アフリカ向け古着輸出</a></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========== Contact / Final CTA ========== -->
+<section class="contact-box">
+  <div class="container">
+    <h2>次の3つを「今週」だけ動かしてみてください</h2>
+    <p>難しい意思決定はあとで大丈夫。まずは下の3つだけ。これだけで海外動線が動き始め、現金化のメドが立ちます。</p>
+    <div class="next3">
+      <div class="item">
+        <div class="label">STEP 01 / 今日</div>
+        <div class="step">buyee.jp で Connect申請フォームを送る（30分）</div>
+      </div>
+      <div class="item">
+        <div class="label">STEP 02 / 今週</div>
+        <div class="step">古着卸業者3社に見積依頼メールを送る（60分）</div>
+      </div>
+      <div class="item">
+        <div class="label">STEP 03 / 今週末</div>
+        <div class="step">4,000点を「上位800点／残り3,200点」に粗仕分け（2時間）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p class="company">AS_AI導入支援事業（有限会社アートソウル）</p>
+    <p>
+      本レポートは2026-06-03時点の公開情報に基づきます。<br>
+      手数料・規制内容は変動するため、実行前に各販路の公式ページで最新情報を確認してください。
+    </p>
+    <p class="copy">© 有限会社アートソウル All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+// FAQ toggle
+document.querySelectorAll('.faq-item').forEach(function(item){
+  var btn = item.querySelector('.faq-q');
+  btn.addEventListener('click', function(){
+    var isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+});
+</script>
+
+</body>
+</html>
