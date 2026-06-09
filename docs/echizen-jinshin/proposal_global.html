@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>越前刃心 × グローバル戦略｜5路線販路拡大提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --c-sumi:#1a1a1a;--c-sumi-2:#2c2c2c;--c-red:#a52a2a;--c-red-2:#7a1f1f;
+  --c-gold:#b58a3b;--c-bg:#f7f5f0;--c-card:#ffffff;--c-text:#1a1a1a;
+  --c-muted:#6b6661;--c-border:#e4dfd6;--c-accent-bg:#f3ede2;
+  --shadow:0 2px 8px rgba(26,26,26,0.08);--shadow-lg:0 8px 24px rgba(26,26,26,0.14);
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--c-bg);color:var(--c-text);line-height:1.75;font-size:clamp(14px,1.6vw,16px)}
+.serif{font-family:'Noto Serif JP',serif}
+a{color:var(--c-red-2);text-decoration:underline}
+a:hover{color:var(--c-gold)}
+.hero{background:linear-gradient(135deg,var(--c-red-2) 0%,var(--c-sumi) 60%,var(--c-gold) 130%);color:#fff;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(circle, rgba(181,138,59,0.18), transparent 70%)}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{display:inline-block;background:rgba(255,255,255,0.10);border:1px solid rgba(181,138,59,0.5);padding:6px 14px;border-radius:2px;font-size:0.85rem;margin-bottom:20px;letter-spacing:0.05em;color:var(--c-gold)}
+.hero h1{font-family:'Noto Serif JP',serif;font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:900;line-height:1.4;margin-bottom:18px}
+.hero h1 .accent{color:var(--c-gold)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:0.88rem;opacity:0.85}
+.hero-meta span::before{content:"❖";margin-right:6px;color:var(--c-gold)}
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--c-border);padding:10px clamp(20px,5vw,60px);overflow-x:auto;white-space:nowrap;transition:background 0.3s,box-shadow 0.3s,border-color 0.3s;display:flex;align-items:center;gap:12px}
+nav.toc.scrolled{background:#fff;box-shadow:0 4px 16px rgba(26,26,26,0.12);border-bottom-color:var(--c-gold)}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none;flex:1}
+nav.toc a{display:inline-block;padding:6px 12px;border-radius:4px;text-decoration:none;color:var(--c-sumi);font-size:0.85rem;transition:all 0.2s}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-red-2)}
+nav.toc .portal-link{flex-shrink:0;padding:6px 14px;background:var(--c-gold);color:#fff !important;text-decoration:none;border-radius:4px;font-size:0.8rem;font-weight:700;transition:background 0.2s;margin-left:auto}
+nav.toc .portal-link:hover{background:var(--c-red-2);color:#fff !important}
+.to-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:var(--c-sumi);color:#fff;border:2px solid var(--c-gold);font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(26,26,26,0.35);opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.2s,background 0.2s;z-index:100;font-family:inherit;line-height:1}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{background:var(--c-red-2);transform:translateY(-3px)}
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{font-family:'Noto Serif JP',serif;font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;color:var(--c-sumi);position:relative;padding-left:18px;margin-bottom:12px;line-height:1.4}
+section h2::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;background:linear-gradient(180deg,var(--c-red),var(--c-gold))}
+section h3{font-size:clamp(1.1rem,2vw,1.25rem);font-weight:700;color:var(--c-sumi);margin-top:24px;margin-bottom:12px}
+section .lead{font-size:clamp(0.95rem,1.6vw,1.05rem);color:#444;margin-bottom:28px;max-width:900px}
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-5{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.card{background:var(--c-card);border-radius:var(--radius);padding:clamp(16px,2.5vw,24px);box-shadow:var(--shadow);border:1px solid var(--c-border);transition:transform 0.2s,box-shadow 0.2s}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card h4{font-size:1rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700;line-height:1.4}
+.card p{font-size:0.9rem;color:var(--c-text)}
+.card .stat{font-family:'Noto Serif JP',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--c-red-2);line-height:1.1;margin:8px 0}
+.card .stat-sub{font-size:0.78rem;color:var(--c-muted)}
+.card.accent{background:var(--c-accent-bg);border-color:#d8cdb8}
+.route-card{position:relative;border-top:5px solid var(--c-gold)}
+.route-card.r1{border-top-color:#a52a2a}
+.route-card.r2{border-top-color:#7a1f1f}
+.route-card.r3{border-top-color:#b58a3b}
+.route-card.r4{border-top-color:#1a1a1a}
+.route-card.r5{border-top-color:#6b6661}
+.route-num{position:absolute;top:8px;right:12px;font-family:'Noto Serif JP',serif;font-size:2rem;color:var(--c-gold);opacity:.6;font-weight:900;line-height:1}
+.key-message{background:linear-gradient(135deg,var(--c-sumi) 0%,var(--c-sumi-2) 100%);color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);margin:24px 0;position:relative;overflow:hidden}
+.key-message::before{content:"刃";position:absolute;top:-40px;right:-10px;font-family:'Noto Serif JP',serif;font-size:200px;opacity:0.08;color:var(--c-gold)}
+.key-message .km-label{display:inline-block;background:var(--c-gold);color:#fff;padding:4px 12px;border-radius:2px;font-weight:700;font-size:0.85rem;margin-bottom:12px}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.25rem);font-weight:500;line-height:1.7}
+.key-message .km-text strong{color:var(--c-gold);font-weight:900}
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{background:var(--c-sumi);color:#fff;padding:12px;text-align:left;font-weight:700;font-size:0.85rem}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:nth-child(even) td{background:#fafaf7}
+details{background:var(--c-card);border-radius:var(--radius);margin-bottom:12px;border:1px solid var(--c-border);overflow:hidden}
+details summary{padding:16px 20px;cursor:pointer;font-weight:700;color:var(--c-sumi);font-size:1rem;display:flex;align-items:center;gap:10px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▶";color:var(--c-red);font-size:0.7rem;transition:transform 0.2s;flex-shrink:0}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px;font-size:0.92rem}
+details .details-body p{margin-bottom:10px}
+details .details-body ul{margin:10px 0 10px 20px}
+details .details-body li{margin-bottom:6px}
+.tabs{margin-top:20px}
+.tab-buttons{display:flex;flex-wrap:wrap;gap:6px;border-bottom:2px solid var(--c-border);margin-bottom:16px;overflow-x:auto}
+.tab-buttons button{border:none;background:transparent;padding:10px 16px;cursor:pointer;font-weight:700;color:var(--c-muted);border-bottom:3px solid transparent;font-family:inherit;font-size:0.88rem;transition:all 0.2s;flex-shrink:0}
+.tab-buttons button:hover{color:var(--c-sumi)}
+.tab-buttons button.active{color:var(--c-red-2);border-bottom-color:var(--c-red-2)}
+.tab-content{display:none;animation:fadein 0.3s}
+.tab-content.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.persona{background:var(--c-accent-bg);padding:18px 20px;border-radius:var(--radius);margin:14px 0;border-left:4px solid var(--c-gold);font-size:0.92rem;line-height:1.85}
+.persona h5{font-size:0.85rem;color:var(--c-gold);font-weight:700;text-transform:uppercase;margin-bottom:8px;letter-spacing:0.05em}
+.matrix{display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;gap:0;margin:20px 0;min-height:480px}
+.matrix .y-axis{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--c-sumi);font-size:0.85rem;background:linear-gradient(180deg,#fadcdc,#dcebe0)}
+.matrix .x-axis{grid-column:2;grid-row:2;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--c-sumi);font-size:0.85rem;background:linear-gradient(90deg,#dcebe0,#fadcdc)}
+.matrix .quadrant-grid{grid-column:2;grid-row:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:var(--c-border)}
+.matrix .q{background:var(--c-card);padding:16px;position:relative;display:flex;flex-direction:column;gap:8px}
+.matrix .q.q1{background:#f1ecde}
+.matrix .q.q2{background:#f4e8d2}
+.matrix .q.q3{background:#e8ebdb}
+.matrix .q.q4{background:#f4dada}
+.matrix .q-label{position:absolute;top:8px;right:10px;font-size:0.7rem;font-weight:700;color:var(--c-muted);text-transform:uppercase}
+.matrix .q-title{font-weight:700;color:var(--c-sumi);font-size:0.95rem;margin-bottom:6px}
+.matrix .chip{display:inline-block;background:var(--c-card);border:1px solid var(--c-border);border-radius:4px;padding:4px 10px;font-size:0.8rem;font-weight:500;margin:2px;color:var(--c-sumi)}
+.matrix .chip.high{border-color:var(--c-red);background:#fadcdc;color:var(--c-red-2);font-weight:700}
+.roadmap{margin:20px 0}
+.roadmap .row{display:grid;grid-template-columns:140px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+.roadmap .row-label{font-size:0.85rem;font-weight:700;color:var(--c-sumi)}
+.roadmap .row-bar{background:var(--c-border);height:32px;border-radius:4px;position:relative;display:grid;grid-template-columns:repeat(24,1fr)}
+.roadmap .row-bar .seg{background:var(--c-red-2);border-radius:2px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.72rem;font-weight:700;padding:0 6px;white-space:nowrap;overflow:hidden}
+.roadmap .seg.gold{background:var(--c-gold)}
+.roadmap .seg.sumi{background:var(--c-sumi)}
+.roadmap .header{margin-bottom:4px;color:var(--c-muted);font-size:0.7rem}
+.roadmap .header .row-bar{background:transparent}
+.roadmap .header .row-bar > div{text-align:center;border-left:1px dashed var(--c-border);font-size:0.65rem;color:var(--c-muted);padding:4px 0}
+.info-box{background:#f4e8d2;border-left:4px solid var(--c-gold);padding:12px 16px;border-radius:4px;margin:12px 0;font-size:0.88rem}
+.info-box::before{content:"❖ ";font-weight:700;color:var(--c-gold)}
+.demo-banner{background:#fff3cd;border:2px solid var(--c-gold);padding:12px 20px;margin:20px auto;max-width:1200px;border-radius:var(--radius);font-size:0.88rem;color:var(--c-sumi);text-align:center;font-weight:500}
+.demo-banner b{color:var(--c-red-2)}
+footer{background:var(--c-sumi);color:#fff;padding:32px clamp(20px,5vw,60px);text-align:center;font-size:0.85rem;opacity:0.92}
+footer a{color:var(--c-gold)}
+.muted{color:var(--c-muted);font-size:0.85rem}
+.badge-tag{display:inline-block;padding:3px 10px;border-radius:2px;font-size:0.72rem;font-weight:700;background:var(--c-accent-bg);color:var(--c-red-2);margin-right:6px}
+.chart-box{background:var(--c-card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin:16px 0}
+.chart-box h4{font-size:0.95rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700}
+.chart-canvas-wrap{position:relative;width:100%;height:320px}
+.chart-box .source{font-size:0.72rem;color:var(--c-muted);margin-top:8px}
+.chart-box .source::before{content:"出典: "}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#7a1f1f 0%,#1a1a1a 60%,#b58a3b 130%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:8px;border:1px solid rgba(181,138,59,0.4);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700;font-family:'Noto Serif JP',serif">越前刃心 × グローバル戦略 5路線提案</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px;color:#b58a3b">DEMO ｜ 閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:4px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#1a1a1a;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#b58a3b;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='demo2026';
+  var gate=document.getElementById('password-gate');var input=document.getElementById('pwd-input');var btn=document.getElementById('pwd-btn');var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('echizen_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){if(input.value===PASS){sessionStorage.setItem('echizen_auth','ok');gate.style.display='none';document.body.style.overflow='';}else{err.style.display='block';input.value='';input.focus();}}
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">CLIENT ADVISORY ｜ DEMO 2026-04-10</span>
+    <h1>世界の和包丁ブランドに学ぶ<br><span class="accent">「ブランド分節×アンバサダー×越境EC」</span><br>越前刃心への転用ロードマップ</h1>
+    <p class="hero-sub">タダフサ・グローバル・ヘンケルス等の戦略を多視点解析し、越前刃心様の「越前打刃物」という地名ブランドと熟練職人技を活かせる5路線（国内3＋国外2）を具体的に提案します。</p>
+    <div class="hero-meta">
+      <span>5路線提案</span>
+      <span>2年ロードマップ</span>
+      <span>デモデータ</span>
+    </div>
+  </div>
+</header>
+
+<div class="demo-banner">⚠️ 本資料は <b>アートソウル社内デモ用</b> に作成された完全架空の提案書です。</div>
+
+<!-- ====== TOC ====== -->
+<nav class="toc">
+  <ul>
+    <li><a href="#summary">サマリー</a></li>
+    <li><a href="#benchmark">参照ブランド実績</a></li>
+    <li><a href="#tencho">転用10カ条</a></li>
+    <li><a href="#mapping">転用マップ</a></li>
+    <li><a href="#match">適合性</a></li>
+    <li><a href="#routes">5路線概要</a></li>
+    <li><a href="#matrix">4象限マトリクス</a></li>
+    <li><a href="#detail">5路線詳細</a></li>
+    <li><a href="#roadmap">24ヶ月ロードマップ</a></li>
+    <li><a href="#financials">収益とリスク</a></li>
+    <li><a href="#sources">出典</a></li>
+  </ul>
+  <a href="index.html" class="portal-link">📋 ポータル</a>
+</nav>
+
+<main>
+
+<!-- SUMMARY -->
+<section id="summary">
+  <h2>1. エグゼクティブサマリー</h2>
+  <p class="lead">新潟・燕三条のタダフサは「庖丁工房タダフサ」のブランディング再構築と直販＋アンバサダー戦略で、職人技を世界市場に展開しています。越前刃心様も同じく「越前打刃物 × 職人技 × 4世代の歴史」という独自のブランド資産を保有しています。本提言は、その経営手法を貴社の商品ラインに転用し、5路線で顧客と利益率を拡張する戦略アドバイザリーです。</p>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">
+      『刃心』『黒備』『鋭』のラインは既に揃っています。<br>
+      足りないのは <strong>「ブランド分節化」と「アンバサダー戦略」と「越境EC」</strong> です。
+    </p>
+  </div>
+
+  <h3>5路線の全体像（国内3＋国外2）</h3>
+  <div class="grid grid-5">
+    <div class="card route-card r1"><span class="route-num">1</span><h4>独立料理人<br>路線</h4><p>30代独立の和食・寿司職人＋ホテル料理長候補をペルソナ化</p></div>
+    <div class="card route-card r2"><span class="route-num">2</span><h4>家庭プレミアム<br>路線</h4><p>料理好き40-60代家庭への家庭用『刃心ファミリー』サブブランド</p></div>
+    <div class="card route-card r3"><span class="route-num">3</span><h4>給食・施設<br>BCP路線</h4><p>給食センター・施設食堂向け『黒備』量販ラインで4-5万本市場</p></div>
+    <div class="card route-card r4"><span class="route-num">4</span><h4>海外プロ<br>料理学校</h4><p>CIA・Le Cordon Bleu等18校。世界の調理師の卵に刃心を届ける</p></div>
+    <div class="card route-card r5"><span class="route-num">5</span><h4>欧米プレミアム<br>D2C</h4><p>1本2-5万円のクラフト和包丁。Shopify＋米国KOL戦略</p></div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section id="benchmark">
+  <h2>2. 参照ブランドの実績（ファクト）</h2>
+  <p class="lead">越前刃心様が学べる5社の数字と戦略を整理します（実在企業：タダフサ／グローバル／ツヴィリング・ヘンケルス／ウストフ／貝印）。</p>
+  <div class="chart-box">
+    <h4>世界の業務用包丁・家庭用包丁主要ブランド 推定売上規模</h4>
+    <div class="chart-canvas-wrap"><canvas id="chartBench"></canvas></div>
+    <div class="source">各社公開財務情報・業界誌「料理用品ニュース」推計（2025年）</div>
+  </div>
+
+  <h3>各社の戦略要点</h3>
+  <div class="grid grid-3">
+    <div class="card"><h4>庖丁工房タダフサ（新潟・三条）</h4><p>昭和23年創業。中川政七商店とのリブランディングで売上約2倍。「基本の3本、次の1本」コンセプト、購入時パッケージを返送可能な「通い箱」でメンテ受付。2015年ファクトリーショップ＋公式EC開設。</p></div>
+    <div class="card"><h4>GLOBAL（吉田金属工業 新潟・燕）</h4><p>1954年創業、1983年オールステンレス一体構造「GLOBAL」開発。当初国内不振→独フランクフルト展示会で評価→<strong>現在生産量の9割が海外向け</strong>。1990年代に日本逆輸入で百貨店展開。</p></div>
+    <div class="card"><h4>ツヴィリング J.A.ヘンケルス（独・関市）</h4><p>1731年ゾーリンゲン創業。日本法人1973年設立、岐阜県関市本社、2004年関市自社工場で熱処理〜検査まで一貫国内生産。SNSマルチブランド戦略で日本市場深耕中。</p></div>
+    <div class="card"><h4>ヴュストホフ（独）</h4><p>シェフ業界の権威ブランド。世界の調理学校に多く採用。次世代シェフを取り込む「教育機関ルート」が独特。</p></div>
+    <div class="card"><h4>貝印（日本）</h4><p>家庭用・理美容・医療用と多角化。「関孫六」家庭向けブランドで国内最大手。製造規模と流通の強さで圧倒。</p></div>
+    <div class="card accent"><h4>越前刃心（現状・デモ架空）</h4><p>『刃心』『黒備』『鋭』の3ライン。職人27名・年商23.4億円（架空）。ブランド分節は進んでいるが、アンバサダー＆越境ECが空白。<br><span style="font-size:0.72rem;color:var(--c-muted)">※会社情報は本デモ用の架空設定</span></p></div>
+  </div>
+</section>
+
+<!-- TENCHO 10 -->
+<section id="tencho">
+  <h2>3. 世界ブランド成功戦略 多視点解析【10カ条】</h2>
+  <p class="lead">経営学・マーケティング・組織論・IT・グローバル戦略の5視点から成功要因を10原則に抽出。各カ条に越前刃心様への転用ポイントを記載しています。</p>
+
+  <details open><summary>① ブルーオーシャン分析で次の客層を特定する</summary><div class="details-body"><p>タダフサは2010年頃「プロ職人だけでは縮小する」と判断、家庭用『包丁工房タダフサ』を再投入。市場縮小を直視してから動いた。<strong>転用：</strong>越前刃心も「業務用＋ステンレス＋和包丁」の三角形だけでは縮小局面。家庭プレミアム・海外プロ・産業用の3方向への分散が必要。</p></div></details>
+  <details><summary>② ブランド分節化（プロ／家庭／量販で別ブランド）</summary><div class="details-body"><p>ヘンケルスは「J.A.Henckels（業務用）」「Zwilling（家庭高級）」「Twin Fin（家庭普及）」と価格帯×用途で完全分節。<strong>転用：</strong>『刃心』はプロ専用、『黒備』は業務量販、『鋭』は産業用、と既に分節済み。あとは家庭用『刃心ファミリー』を追加するだけ。</p></div></details>
+  <details><summary>③ アンバサダー戦略（プロ料理人・YouTuber）</summary><div class="details-body"><p>タダフサは料理研究家・著名シェフを公式アンバサダーに。Instagram投稿1本で月間問合せ3〜5倍。<strong>転用：</strong>越前刃心も若手寿司職人（35〜45歳・東京2区／関西1区）3名と契約し、YouTube・Instagramで「研ぎ」「使い方」コンテンツを継続発信。費用は1人月3万円程度から始められる。</p></div></details>
+  <details><summary>④ 広告費を抑え、UGC（口コミ）に投資</summary><div class="details-body"><p>グローバルはCM・新聞広告ゼロ。代わりに料理学校・プロからの口コミ投資に集中。<strong>転用：</strong>越前刃心の広告宣伝費0.9%は適切。問題は「UGC設計の不在」。職人さんの研ぎ動画／プロのキッチン使用シーン／使用者からの感謝メッセージをコンテンツ化する仕組みを作る。</p></div></details>
+  <details><summary>⑤ 直販ECは「補完」、卸を主軸に</summary><div class="details-body"><p>ヘンケルスは自社EC比率10%未満。卸＋百貨店主軸を維持。<strong>転用：</strong>提案①の五箇条と完全一致。自社EC比率3%は健全。直販強化ではなく、卸の先のお客様を見える化する方が先。</p></div></details>
+  <details><summary>⑥ 産地ブランドを集合的に発信する</summary><div class="details-body"><p>Sakai（堺）は「堺打刃物」として産地全体で輸出組合を構成。Seki（関）は関市が観光×輸出で発信。<strong>転用：</strong>「Echizen Hamono / Echizen Uchi-hamono」の英語発信は越前打刃物産業協同組合と連携して進める余地大。単独より産地ブランドの傘の下で出る方が効率的。</p></div></details>
+  <details><summary>⑦ 海外プロ料理学校 = 次世代シェフの育成槽</summary><div class="details-body"><p>ウストフはCIA・Le Cordon Bleu等で公式採用。学生時代から「自分の包丁」として体に染み込ませる。<strong>転用：</strong>越前刃心も海外プロ料理学校18校に「校友価格＋校刻字＋メンテ生涯保証」のプログラムを提案できる。</p></div></details>
+  <details><summary>⑧ 越境EC = 海外個人プロへの直販</summary><div class="details-body"><p>タダフサは2020年から自社多言語EC＋eBay・Etsy。日本のクラフトとして世界の料理愛好家に直販。<strong>転用：</strong>Shopify多言語化＋eBay日本ストアは初期投資100〜200万円で着手可能。販路②ペルソナ（海外Sushi-bar勤務）に直接届く。</p></div></details>
+  <details><summary>⑨ サブスク／継続課金モデルへの試行</summary><div class="details-body"><p>欧米シェフナイフブランドの一部が「メンテプラン月額12〜20ドル」を導入。<strong>転用：</strong>越前刃心も「年1回研ぎ直し＋抗菌オイル送付」の年契約サブスク（年12,000〜18,000円）を試行可能。LTV計測の基盤になる。</p></div></details>
+  <details><summary>⑩ 後継者育成と職人技の見える化</summary><div class="details-body"><p>タダフサは若手職人ドキュメンタリーをYouTubeで公開。「家業×職人×次世代」ストーリーがブランドの根拠に。<strong>転用：</strong>越前刃心の職人頭・川口さん（68）＋若手職人2名のドキュメント動画は、ブランド資産になる。</p></div></details>
+</section>
+
+<!-- MAPPING -->
+<section id="mapping">
+  <h2>4. 参照ブランド → 越前刃心 転用マップ</h2>
+  <p class="lead">10カ条のうち、特に貴社の現状に最もインパクトが大きい5要素を抽出し、対応ブランド・商品ラインを明示します。</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>転用要素</th><th>参照ブランド</th><th>越前刃心への適用</th><th>対象ブランド</th></tr>
+      <tr><td>ブランド分節化</td><td>ヘンケルス</td><td>家庭用『刃心ファミリー』追加</td><td>新ライン</td></tr>
+      <tr><td>アンバサダー戦略</td><td>タダフサ</td><td>若手職人系プロ3名と契約</td><td>『刃心』</td></tr>
+      <tr><td>越境EC</td><td>タダフサ・グローバル</td><td>Shopify多言語＋eBay展開</td><td>『刃心』『黒備』</td></tr>
+      <tr><td>海外プロ料理学校</td><td>ウストフ</td><td>CIA・Le Cordon Bleu等18校に校友プログラム</td><td>『刃心』</td></tr>
+      <tr><td>メンテサブスク</td><td>欧米シェフブランド</td><td>年1回研ぎ＋オイルの年契約</td><td>全ライン</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- MATCH -->
+<section id="match">
+  <h2>5. なぜこの戦略が越前刃心に適合するのか</h2>
+  <p class="lead">参照ブランドと越前刃心は規模が大きく異なりますが、製品特性・市場ポジション・経営余地は驚くほど共通しています。</p>
+  <div class="grid grid-3">
+    <div class="card"><h4>製品特性</h4><p>「Made in Echizen」「Made in Japan」の絶対ブランド力。職人手作業の精密さ。素材へのこだわり。</p></div>
+    <div class="card"><h4>市場ポジション</h4><p>業務用プロ市場での強い認知。家庭用・海外個人プロ市場の空白。中国OEMからの価格圧。</p></div>
+    <div class="card"><h4>経営余地</h4><p>自己資本比率58%、現金残高4.8億円。新規投資の余力は十分。問題は戦略設計と意思決定のスピード。</p></div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section id="routes">
+  <h2>6. 5路線オーバービュー</h2>
+  <p class="lead">国内3＋国外2の5路線を、ターゲット市場規模・取り組み難易度・想定収益で比較します。</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>路線</th><th>主要顧客</th><th>市場規模</th><th>難易度</th><th>3年目想定売上</th></tr>
+      <tr><td>① 独立料理人</td><td>30代独立寿司／和食職人</td><td>年間4,500人独立</td><td>★★☆☆☆</td><td>0.7〜1.2億円</td></tr>
+      <tr><td>② 家庭プレミアム</td><td>料理好き40-60代家庭</td><td>家庭用包丁市場 280億円</td><td>★★★☆☆</td><td>0.8〜1.8億円</td></tr>
+      <tr><td>③ 給食・施設BCP</td><td>給食C・施設食堂</td><td>業務用ステン包丁 約4-5万本/年</td><td>★★☆☆☆</td><td>0.5〜1.2億円</td></tr>
+      <tr><td>④ 海外プロ料理学校</td><td>CIA(米)・Le Cordon Bleu(20カ国35校)等</td><td>Le Cordon Bleu毎年20,000人+ / CIA約3,000人</td><td>★★★★☆</td><td>0.6〜1.5億円</td></tr>
+      <tr><td>⑤ 欧米プレミアムD2C</td><td>米欧シェフ・料理愛好家</td><td>越境EC市場 年8%成長</td><td>★★★★★</td><td>0.5〜2億円</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- MATRIX -->
+<section id="matrix">
+  <h2>7. 5路線の優先度4象限マトリクス</h2>
+  <p class="lead">影響度（収益＋戦略インパクト）と実行難易度の2軸で5路線を整理しました。</p>
+  <div class="matrix">
+    <div class="y-axis">影響度 低 ←　→ 高</div>
+    <div class="quadrant-grid">
+      <div class="q q1"><span class="q-label">Quick Win</span><div class="q-title">① 即実行（影響大・易）</div><span class="chip high">① 独立料理人</span><span class="chip high">③ 給食・施設BCP</span></div>
+      <div class="q q2"><span class="q-label">Strategic</span><div class="q-title">② 戦略投資（影響大・難）</div><span class="chip">② 家庭プレミアム</span><span class="chip">④ 海外プロ料理学校</span></div>
+      <div class="q q3"><span class="q-label">Fill-in</span><div class="q-title">③ 充実枠（影響中・易）</div><p class="muted" style="font-size:0.78rem;margin-top:6px">5路線とも上位象限のため該当なし</p></div>
+      <div class="q q4"><span class="q-label">Reserve</span><div class="q-title">④ 様子見（影響小・難）</div><span class="chip">⑤ 欧米プレミアムD2C</span><p class="muted" style="font-size:0.78rem;margin-top:6px">市場大だが認知獲得難<br>4路線が動いてから着手推奨</p></div>
+    </div>
+    <div class="x-axis">実行難易度 易 ←　→ 難</div>
+  </div>
+  <div class="info-box"><strong>推奨順序：</strong>① Quick Win（路線①③）を6ヶ月で立ち上げ → ② Strategic（路線②④）を1〜2年目で本格化 → ④ Reserve（路線⑤）を3年目以降の検討に。</div>
+</section>
+
+<!-- DETAIL -->
+<section id="detail">
+  <h2>8. 各路線の詳細（ペルソナ・戦略・戦術）</h2>
+  <p class="lead">各路線について、ペルソナのインサイト・こだわり・満足ポイントから戦略・戦術までを言語化します（タブ切替）。</p>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="r1">路線① 独立料理人</button>
+      <button class="tab-btn" data-tab="r2">路線② 家庭プレミアム</button>
+      <button class="tab-btn" data-tab="r3">路線③ 給食・施設BCP</button>
+      <button class="tab-btn" data-tab="r4">路線④ 海外プロ料理学校</button>
+      <button class="tab-btn" data-tab="r5">路線⑤ 欧米プレミアムD2C</button>
+    </div>
+
+    <div class="tab-content active" id="r1">
+      <h3>路線① 独立料理人（国内）</h3>
+      <div class="persona">
+        <h5>ペルソナ</h5>
+        <p><strong>佐藤淳一さん（34歳）</strong>。8年間の修業を経て、東京・西麻布で「鮨 淳」を独立開業。元店の親方からは越前刃心『刃心』柳刃を譲り受けていたが、自分用の1本を新調するタイミング。<br>SNS（Instagram）は3,200フォロワー、料理人としてのストーリーを発信したい。月商220万円・利益率18%・包丁年間予算8〜15万円。<br>「自分の包丁」に強いこだわり。職人との関係性も重視。</p>
+      </div>
+      <h3>戦略・戦術</h3>
+      <div class="grid grid-2">
+        <div class="card"><h4>戦略：独立記念パック</h4><p>独立時に5万円〜の専用セット販売：『刃心』柳刃8寸＋桐箱＋銘入り＋初年度研ぎ直し無料1回＋職人頭直筆メッセージ。「独立した職人の最初の1本」というポジションを取りに行く。</p></div>
+        <div class="card"><h4>戦術：開業情報・口コミ網</h4><p>東京・大阪・京都の食材卸（井垣商店・大阪調理器具卸・京都職人具足舎）から「独立開業情報」を月1で集める。営業から手紙＋電話で1案件1案件アプローチ。年間で200〜300人接触。</p></div>
+      </div>
+      <details><summary>なぜこの路線が可能性高いか</summary><div class="details-body"><ul><li>年間4,500人の独立開業情報は卸ルートで掴める（既存資産）</li><li>「独立した職人」は人生で1本を吟味する。LTVが10年単位で計算できる</li><li>独立した職人は5年後に「2号店」を出す。その時の包丁発注も継続</li><li>独立料理人がInstagramで包丁を映してくれれば、それ自体が広告</li></ul></div></details>
+    </div>
+
+    <div class="tab-content" id="r2">
+      <h3>路線② 家庭プレミアム（国内）</h3>
+      <div class="persona">
+        <h5>ペルソナ</h5>
+        <p><strong>田中真理さん（52歳・主婦）</strong>。子供は独立、夫と二人暮らし。料理が趣味で月に1回は懐石風メニューを家で楽しむ。<br>家事好きYouTubeを毎晩見て、料理動画も追いかけている。包丁は10年前にWMFを買ったが、最近「日本の包丁」に興味。1本3〜5万円までは出せる。<br>「自分へのご褒美」「夫婦の食卓を豊かに」というモチベーション。</p>
+      </div>
+      <h3>戦略・戦術</h3>
+      <div class="grid grid-2">
+        <div class="card"><h4>戦略：『刃心ファミリー』新ライン</h4><p>家庭向けサブブランド『刃心ファミリー』を立ち上げ。三徳・牛刀・ペティの3本セット29,800円〜から、単品最高7万円のプレミアム1本まで。「越前打刃物 × 家庭の食卓」を訴求軸に。</p></div>
+        <div class="card"><h4>戦術：Instagram料理研究家コラボ</h4><p>料理研究家3名（フォロワー10万〜50万）と年契約。レシピ動画内で『刃心ファミリー』を使うシーンを継続。1人月3万円×3名＋撮影費。</p></div>
+      </div>
+      <details><summary>なぜこの路線が可能性高いか</summary><div class="details-body"><ul><li>家庭用包丁市場は280億円、緩やかに拡大中</li><li>「日本の職人」「越前」というキーワードは家庭マダム層に強い</li><li>『刃心』プロラインの認知が背景にあるため信頼性は最初から高い</li><li>百貨店ギフト・結婚祝い・退職祝いの定番に育てる余地大</li></ul></div></details>
+    </div>
+
+    <div class="tab-content" id="r3">
+      <h3>路線③ 給食・施設BCP（国内）</h3>
+      <div class="persona">
+        <h5>ペルソナ</h5>
+        <p><strong>木村洋子さん（42歳・給食センター運営会社調達担当）</strong>。全国18拠点、年間400本の包丁を入れ替える。現在は貝印・堺一文字光秀・中国OEMを併用。<br>中国OEMが1本3,000円切るので、価格圧が強い。社内で研げる人がいないので「2年で買い替え」運用。<br>「3年保証＋研ぎ直し無料・1本1万円」というラインがあれば即興味あり、と現場ヒアリング済み。</p>
+      </div>
+      <h3>戦略・戦術</h3>
+      <div class="grid grid-2">
+        <div class="card"><h4>戦略：『黒備』量販ラインを投入</h4><p>『黒備』三徳・牛刀の「3年保証＋研ぎ直し無料3回・1本9,800円」のサブライン投入。中国OEM3,000円×2年 vs 越前刃心9,800円×5年でTCO逆転。HACCP対応文書も整備。</p></div>
+        <div class="card"><h4>戦術：給食系業界誌＋専門商社</h4><p>「給食ニュース」「集団給食」誌に半年連続広告。給食センター運営大手10社に直営業。施設食堂・社員食堂・病院食堂への横展開。専任営業1名を1年契約。</p></div>
+      </div>
+      <details><summary>なぜこの路線が可能性高いか</summary><div class="details-body"><ul><li>給食・施設食堂市場は5万本/年規模で安定</li><li>HACCP対応で「研ぎ直し履歴管理」の需要が増加中（衛生管理）</li><li>『鋭』ですでに産業用ラインを成功させた経験あり</li><li>1社獲得すれば年間100〜400本のロット、安定収益</li></ul></div></details>
+    </div>
+
+    <div class="tab-content" id="r4">
+      <h3>路線④ 海外プロ料理学校（国外）</h3>
+      <div class="persona">
+        <h5>ペルソナ</h5>
+        <p><strong>Emily Chenさん（25歳・米CIA学生）</strong>。シンガポール出身、日本食レストランで働きたい。学校で使うのは独ブランドだが、「自分の和包丁」を持ちたい。<br>包丁にはUSD200〜500（3〜7万円）まで出す覚悟。検索キーワードは「Echizen」「Japanese chef knife」「Sakai vs Echizen」。<br>日本語サイトは読めない。Instagram・YouTubeで情報収集。</p>
+      </div>
+      <h3>戦略・戦術</h3>
+      <div class="grid grid-2">
+        <div class="card"><h4>戦略：校友プログラム</h4><p>米CIA（在籍 約3,000名）、Le Cordon Bleu（世界20カ国 35校・毎年20,000名超）等の主要校と提携。校友価格20%OFF＋校名刻字＋メンテ生涯保証。卒業時に「自分の1本」として持ち帰る文化を作る。卒業生は世界の和食レストランに散る＝越前刃心の海外アンバサダー化。</p></div>
+        <div class="card"><h4>戦術：英語LP＋海外営業1名増員</h4><p>echizen-jinshin.com の英語サブドメイン整備＋Shopifyの英語版。吉田海外営業課長＋現地交渉担当を米国に1年間派遣（年予算500万円・架空試算）。</p></div>
+      </div>
+      <details><summary>なぜこの路線が可能性高いか（実データ根拠）</summary><div class="details-body"><ul><li>世界の日本食レストラン 2013年5.5万店→2025年18.1万店（農水省）。和食人材育成需要は構造的拡大</li><li>Le Cordon Bleu は世界20カ国・35校・毎年20,000人超、100カ国以上の生徒（公式）</li><li>米CIA は2024秋時点で在籍 約3,011名（学部）。年間更新サイクル＝包丁需要のベース</li><li>1995年パリで創立されたLe Cordon Bleuはホスピタリティ・料理教育のグローバル網。和包丁の正式採用余地あり</li><li>「Echizen」産地ブランドは堺・関と並ぶ和包丁3大産地として海外認知拡大中</li></ul></div></details>
+    </div>
+
+    <div class="tab-content" id="r5">
+      <h3>路線⑤ 欧米プレミアムD2C（国外）</h3>
+      <div class="persona">
+        <h5>ペルソナ</h5>
+        <p><strong>James Robertsさん（45歳・米サンフランシスコ・料理愛好家）</strong>。年収$180,000のIT役員、料理は週末の趣味で年間300時間。<br>すでにグローバル・ヘンケルスは持っている。次は「Made in Japan」のクラフト和包丁を1本欲しい。<br>予算USD500〜2,000。日本人ブランドにこだわる。Reddit r/chefknives で情報収集。</p>
+      </div>
+      <h3>戦略・戦術</h3>
+      <div class="grid grid-2">
+        <div class="card"><h4>戦略：プレミアム高付加価値</h4><p>『刃心 鋭翼-EIYO-』限定モデルを米欧向けD2C。価格USD800〜2,500。日本国内では発売しないExclusive商品で「日本でも買えない希少品」のポジション。</p></div>
+        <div class="card"><h4>戦術：Reddit・米KOL・eBay</h4><p>米KOL（Burrfection・Knifewear等）にレビュー依頼。Reddit r/chefknives でのAMA（質問回答セッション）。Shopify＋eBay＋Etsyの3チャネル。</p></div>
+      </div>
+      <details><summary>なぜこの路線が「Reserve」か（実行は3年目以降推奨）</summary><div class="details-body"><ul><li>市場は大きいが、認知獲得に時間と費用がかかる</li><li>米国法人税・物流・カスタマーサポートの整備が必要</li><li>路線④（海外プロ料理学校）で先に「Echizen」ブランドを浸透させてから着手すると効率的</li><li><strong>推奨：</strong>路線①〜④で2〜3年の組織体力を作ってから着手</li></ul></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <h2>9. 5路線統合ロードマップ（24ヶ月）</h2>
+  <p class="lead">5路線を並行ではなく段階的に立ち上げ、組織・キャッシュフロー・学習を最適化します。</p>
+  <div class="roadmap">
+    <div class="row header"><div class="row-label"></div><div class="row-bar"><div>M1</div><div></div><div></div><div>M4</div><div></div><div></div><div>M7</div><div></div><div></div><div>M10</div><div></div><div></div><div>M13</div><div></div><div></div><div>M16</div><div></div><div></div><div>M19</div><div></div><div></div><div>M22</div><div></div><div></div></div></div>
+    <div class="row"><div class="row-label">①独立料理人</div><div class="row-bar"><div class="seg" style="grid-column:1/4">設計</div><div class="seg" style="grid-column:4/25">継続営業</div></div></div>
+    <div class="row"><div class="row-label">③給食・施設BCP</div><div class="row-bar"><div class="seg" style="grid-column:2/6">設計</div><div class="seg" style="grid-column:6/25">専任営業展開</div></div></div>
+    <div class="row"><div class="row-label">②家庭プレミアム</div><div class="row-bar"><div class="seg sumi" style="grid-column:7/11">商品企画</div><div class="seg sumi" style="grid-column:11/25">本格運用</div></div></div>
+    <div class="row"><div class="row-label">④海外プロ料理学校</div><div class="row-bar"><div class="seg sumi" style="grid-column:10/14">英語LP・打診</div><div class="seg sumi" style="grid-column:14/25">3校→18校展開</div></div></div>
+    <div class="row"><div class="row-label">⑤欧米プレミアムD2C</div><div class="row-bar"><div class="seg gold" style="grid-column:19/25">テスト販売</div></div></div>
+  </div>
+</section>
+
+<!-- FINANCIALS -->
+<section id="financials">
+  <h2>10. 想定収益とリスク</h2>
+  <p class="lead">5路線フル稼働時の3年目想定売上と、それを実現するうえでのリスクを整理します。</p>
+  <h3>3年目想定売上構成（5路線合計 3.1〜7.7億円）</h3>
+  <div class="chart-box">
+    <h4>路線別 3年目想定売上（億円・中位シナリオ）</h4>
+    <div class="chart-canvas-wrap"><canvas id="chartRev"></canvas></div>
+  </div>
+  <h3>主要リスクと対策</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>リスク</th><th>影響度</th><th>対策</th></tr>
+      <tr><td>サブブランド乱立で組織が分散</td><td>大</td><td>路線①③を6ヶ月先行、②④は1年遅らせて段階投入</td></tr>
+      <tr><td>製造キャパシティ不足</td><td>中</td><td>OEM受託縮小して自社ブランドに製造リソース集中</td></tr>
+      <tr><td>家庭プレミアムで「業務用感」が出る</td><td>大</td><td>『刃心ファミリー』のパッケージは家庭ブランド水準に徹底</td></tr>
+      <tr><td>海外路線で「ニセモノ」が出回る</td><td>中</td><td>シリアル番号・公式QR・銘の刻字で本物保証</td></tr>
+    </table>
+  </div>
+  <h3>必要投資概算（2年間累計）</h3>
+  <div class="grid grid-3">
+    <div class="card"><h4>マーケ・LP・撮影</h4><div class="stat">400<span style="font-size:1rem">万円</span></div><div class="stat-sub">LP・パッケージ・撮影（路線①②）</div></div>
+    <div class="card"><h4>給食専任営業</h4><div class="stat">1,200<span style="font-size:1rem">万円</span></div><div class="stat-sub">専任1名×2年（路線③）</div></div>
+    <div class="card"><h4>海外展開</h4><div class="stat">1,500<span style="font-size:1rem">万円</span></div><div class="stat-sub">英語LP・海外駐在・KOL（路線④）</div></div>
+  </div>
+</section>
+
+<!-- ====== SOURCES ====== -->
+<section id="sources">
+  <h2>11. 出典・エビデンス一覧</h2>
+  <p class="lead"><strong>会社固有情報（社名・売上・代理店数等）はデモ用の架空数値</strong>です。<strong>市場規模・参照ブランド事例は実データ</strong>に基づきます。</p>
+
+  <details open>
+    <summary>🏢 参照ブランドの戦略事例（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.tadafusa.com/" target="_blank" rel="noopener">庖丁工房タダフサ 公式サイト</a></li>
+        <li><a href="https://www.nakagawa-masashichi.jp/shop/brand/tadafusa/" target="_blank" rel="noopener">中川政七商店「庖丁工房タダフサ」ブランド詳細</a></li>
+        <li><a href="https://sanjo-school.net/spblog/?p=526" target="_blank" rel="noopener">三条ものづくり学校「株式会社タダフサ」リブランディング事例</a></li>
+        <li><a href="https://www.yoshikin.co.jp/" target="_blank" rel="noopener">吉田金属工業 公式サイト（GLOBAL）</a></li>
+        <li><a href="https://global.yoshikin.co.jp/news-column/240207/" target="_blank" rel="noopener">吉田金属工業 創業70周年（2024年）</a></li>
+        <li><a href="https://rs-niigata.net/staffblog/niigata_global.html" target="_blank" rel="noopener">リージョナルキャリア新潟「GLOBAL包丁の吉田金属工業」</a></li>
+        <li><a href="https://shopserve.estore.jp/store/interview14/" target="_blank" rel="noopener">ショップサーブ「世界に愛されるMade in Japan」</a></li>
+        <li><a href="https://ja.wikipedia.org/wiki/%E3%83%84%E3%83%B4%E3%82%A3%E3%83%AA%E3%83%B3%E3%82%B0%E3%83%BBJ.A.%E3%83%BB%E3%83%98%E3%83%B3%E3%82%B1%E3%83%AB%E3%82%B9" target="_blank" rel="noopener">ツヴィリング J.A.ヘンケルス 沿革（1731年創業）</a></li>
+        <li><a href="https://gaiax-socialmedialab.jp/jp-zwilling/" target="_blank" rel="noopener">ガイアックス「ツヴィリング J.A.ヘンケルスジャパン」SNS戦略</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🌍 海外日本食市場・調理学校（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.maff.go.jp/j/press/yusyutu_kokusai/kaitaku/251128.html" target="_blank" rel="noopener">農林水産省「海外における日本食レストラン数の調査結果（令和7年）18.1万店」</a></li>
+        <li><a href="https://www.jetro.go.jp/biznews/2025/12/5b3b792ffec5ac1e.html" target="_blank" rel="noopener">JETRO「海外の日本食レストラン数は18万1,000店に」</a></li>
+        <li><a href="https://www.cordonbleu.edu/our-story/en" target="_blank" rel="noopener">Le Cordon Bleu 公式「Our Story」（20カ国35校・毎年20,000人）</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Le_Cordon_Bleu" target="_blank" rel="noopener">Le Cordon Bleu Wikipedia</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/The_Culinary_Institute_of_America" target="_blank" rel="noopener">The Culinary Institute of America (CIA) Wikipedia</a></li>
+        <li><a href="https://www.collegetuitioncompare.com/edu/190503/culinary-institute-of-america/enrollment/" target="_blank" rel="noopener">CIA Enrollment Data（在籍 約3,011名・2024秋）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏭 業務用包丁世界市場（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.globalgrowthinsights.com/market-reports/commercial-kitchen-knives-market-105813" target="_blank" rel="noopener">Global Growth Insights「Commercial Kitchen Knives Market Forecast 2035」</a></li>
+        <li><a href="https://www.fortunebusinessinsights.com/kitchen-knife-market-103865" target="_blank" rel="noopener">Fortune Business Insights「Kitchen Knife Market」</a></li>
+        <li><a href="https://www.gii.co.jp/report/sky1623988-kitchen-knife-market-size-share-growth-analysis-by.html" target="_blank" rel="noopener">GII「包丁の市場規模・シェア・成長分析 2025-2032」</a></li>
+        <li><a href="https://www.gyokusendo.com/column01_dento/4507" target="_blank" rel="noopener">玉川堂「世界が注目する日本製包丁と今後の課題」</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏢 越前刃心株式会社（架空・デモ用）</summary>
+    <div class="details-body">
+      <p>「越前刃心株式会社」は<strong>本デモ用に創作した完全架空の企業</strong>です。会社名・代理店数・職人数・売上等はすべて創作で、ROI試算・収益予測も架空シミュレーションです。</p>
+      <ul>
+        <li><a href="../../00_クライアント基本情報.md" target="_blank">デモ会社設定</a></li>
+        <li><a href="../../01_社長ペルソナ.md" target="_blank">社長ペルソナ詳細</a></li>
+        <li><a href="../../02_財務業績情報.md" target="_blank">財務業績情報（架空）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="info-box" style="margin-top:20px"><strong>数値の取り扱い：</strong>参照ブランド事例・海外市場統計は公開データ。「越前刃心」固有数値（収益予測・路線別売上等）はデモ用架空シミュレーション。</div>
+</section>
+
+</main>
+
+<button class="to-top" aria-label="トップに戻る" id="toTopBtn">↑</button>
+
+<footer>
+  <p>越前刃心 × グローバル戦略 5路線販路拡大提案（DEMO）</p>
+  <p>2026-04-10 ／ <a href="index.html">← ポータルに戻る</a></p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料はアートソウル社内デモ用に作成された完全架空の提案書です。</p>
+</footer>
+
+<script>
+// SCROLL HANDLER
+(function(){
+  var nav=document.querySelector('nav.toc');var btn=document.getElementById('toTopBtn');
+  function onS(){var y=window.scrollY||0;if(nav)nav.classList.toggle('scrolled',y>20);if(btn)btn.classList.toggle('show',y>240);}
+  window.addEventListener('scroll',onS,{passive:true});
+  if(btn)btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onS();
+})();
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  });
+});
+new Chart(document.getElementById('chartBench'),{
+  type:'bar',
+  data:{labels:['貝印','ツヴィリング・ヘンケルス','ウストフ','グローバル','タダフサ','越前刃心'],datasets:[{label:'推定売上（億円）',data:[1180,920,310,68,9,23.4],backgroundColor:['#1a1a1a','#2c2c2c','#7a1f1f','#a52a2a','#b58a3b','#d97706']}]},
+  options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{callback:v=>v+'億円'}}}}
+});
+new Chart(document.getElementById('chartRev'),{
+  type:'bar',
+  data:{labels:['①独立料理人','②家庭プレミアム','③給食・施設BCP','④海外プロ料理学校','⑤欧米プレミアム'],datasets:[{label:'3年目想定売上（億円・中位）',data:[0.95,1.3,0.85,1.05,1.2],backgroundColor:['#a52a2a','#7a1f1f','#b58a3b','#1a1a1a','#6b6661']}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>v+'億'}}}}
+});
+</script>
+
+</body>
+</html>

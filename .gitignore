@@ -3,6 +3,9 @@
 Thumbs.db
 desktop.ini
 
+# Git作業用一時ディレクトリ（push時のtemp clone置き場）
+.gittemp/
+
 # Editor
 .vscode/
 *.swp
@@ -38,3 +41,31 @@ Knowledge/まる様、訪問、ヒアリング.txt
 *.env
 .env.local
 .env.*.local
+
+# 内部検索用ソースメタデータ（機密・配布禁止）
+# パターンファイル(rules/*-patterns/)は著作権配慮で登壇者名等を含まないが、
+# 内部検索用に元素材の情報を別管理する。Git管理外で漏洩防止。
+rules/_internal_source_meta/
+
+# extract分析の中間成果物（元動画のテキスト等を含む可能性）
+08_アプリ開発事業部/outputs/long-video-conte/*/audio/
+08_アプリ開発事業部/outputs/long-video-conte/*/frames/
+08_アプリ開発事業部/outputs/local-transcribe/test_*/
+08_アプリ開発事業部/outputs/local-transcribe/models/
+08_アプリ開発事業部/outputs/short-video-conte/audio/
+08_アプリ開発事業部/outputs/short-video-conte/frames/
+08_アプリ開発事業部/outputs/short-video-conte/models/
+
+# 自社内部マニュアル（顧客非公開）
+07_マニュアル/_internal/
+
+# 案件獲得攻略マニュアル（社外秘・全クライアント案件横断）
+**/99_案件獲得攻略マニュアル_社外秘.md
+**/99_案件獲得攻略マニュアル_社外秘.html
+
+# デモ案件のクライアント情報5MD（架空だが運用ノウハウ含む・社内専用）
+05_クライアント案件/Demo_*/00_クライアント基本情報.md
+05_クライアント案件/Demo_*/01_社長ペルソナ.md
+05_クライアント案件/Demo_*/02_財務業績情報.md
+05_クライアント案件/Demo_*/03_経営会議文字起こし.md
+05_クライアント案件/Demo_*/04_現場ヒアリング.md

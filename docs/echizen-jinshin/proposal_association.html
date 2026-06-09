@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>越前刃心株式会社 日本調理師会連合会総会戦略</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{--c-sumi:#1a1a1a;--c-sumi-2:#2c2c2c;--c-cyan:#0e6b75;--c-cyan-2:#0a4f56;--c-red:#a52a2a;--c-gold:#b58a3b;--c-bg:#f7f5f0;--c-card:#fff;--c-text:#1a1a1a;--c-muted:#6b6661;--c-border:#e4dfd6;--c-accent-bg:#e3f1f3;--shadow:0 2px 8px rgba(26,26,26,0.08);--shadow-lg:0 8px 24px rgba(26,26,26,0.14);--radius:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--c-bg);color:var(--c-text);line-height:1.75;font-size:clamp(14px,1.6vw,16px)}
+.serif{font-family:'Noto Serif JP',serif}
+a{color:var(--c-cyan);text-decoration:underline}a:hover{color:var(--c-cyan-2)}
+.hero{background:linear-gradient(135deg,var(--c-cyan-2) 0%,var(--c-sumi) 60%,var(--c-cyan) 130%);color:#fff;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(circle, rgba(181,138,59,0.15), transparent 70%)}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{display:inline-block;background:rgba(255,255,255,0.10);border:1px solid rgba(181,138,59,0.5);padding:6px 14px;border-radius:2px;font-size:0.85rem;margin-bottom:20px;letter-spacing:0.05em;color:var(--c-gold)}
+.hero h1{font-family:'Noto Serif JP',serif;font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:900;line-height:1.4;margin-bottom:18px}
+.hero h1 .accent{color:var(--c-gold)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:0.88rem;opacity:0.85}
+.hero-meta span::before{content:"❖";margin-right:6px;color:var(--c-gold)}
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--c-border);padding:10px clamp(20px,5vw,60px);overflow-x:auto;white-space:nowrap;transition:background 0.3s,box-shadow 0.3s,border-color 0.3s;display:flex;align-items:center;gap:12px}
+nav.toc.scrolled{background:#fff;box-shadow:0 4px 16px rgba(26,26,26,0.12);border-bottom-color:var(--c-cyan)}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none;flex:1}
+nav.toc a{display:inline-block;padding:6px 12px;border-radius:4px;text-decoration:none;color:var(--c-sumi);font-size:0.85rem;transition:all 0.2s}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-cyan-2)}
+nav.toc .portal-link{flex-shrink:0;padding:6px 14px;background:var(--c-cyan);color:#fff !important;text-decoration:none;border-radius:4px;font-size:0.8rem;font-weight:700;transition:background 0.2s;margin-left:auto}
+nav.toc .portal-link:hover{background:var(--c-cyan-2);color:#fff !important}
+.to-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:var(--c-sumi);color:#fff;border:2px solid var(--c-cyan);font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(26,26,26,0.35);opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.2s,background 0.2s;z-index:100;font-family:inherit;line-height:1}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{background:var(--c-cyan-2);transform:translateY(-3px)}
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{font-family:'Noto Serif JP',serif;font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;color:var(--c-sumi);position:relative;padding-left:18px;margin-bottom:12px;line-height:1.4}
+section h2::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;background:linear-gradient(180deg,var(--c-cyan),var(--c-gold))}
+section h3{font-size:clamp(1.1rem,2vw,1.25rem);font-weight:700;color:var(--c-sumi);margin-top:24px;margin-bottom:12px}
+section .lead{font-size:clamp(0.95rem,1.6vw,1.05rem);color:#444;margin-bottom:28px;max-width:900px}
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--c-card);border-radius:var(--radius);padding:clamp(16px,2.5vw,24px);box-shadow:var(--shadow);border:1px solid var(--c-border)}
+.card h4{font-size:1rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700}
+.card .stat{font-family:'Noto Serif JP',serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:900;color:var(--c-cyan);line-height:1.1;margin:8px 0}
+.card .stat-sub{font-size:0.78rem;color:var(--c-muted)}
+.card.accent{background:var(--c-accent-bg);border-color:#c2dde0}
+.key-message{background:linear-gradient(135deg,var(--c-cyan-2) 0%,var(--c-sumi) 100%);color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);margin:24px 0;position:relative;overflow:hidden}
+.key-message::before{content:"集";position:absolute;top:-40px;right:-10px;font-family:'Noto Serif JP',serif;font-size:200px;opacity:0.08;color:var(--c-gold)}
+.key-message .km-label{display:inline-block;background:var(--c-gold);color:#fff;padding:4px 12px;border-radius:2px;font-weight:700;font-size:0.85rem;margin-bottom:12px}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.25rem);font-weight:500;line-height:1.7}
+.key-message .km-text strong{color:var(--c-gold);font-weight:900}
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{background:var(--c-sumi);color:#fff;padding:12px;text-align:left;font-weight:700;font-size:0.85rem}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:nth-child(even) td{background:#fafaf7}
+details{background:var(--c-card);border-radius:var(--radius);margin-bottom:12px;border:1px solid var(--c-border);overflow:hidden}
+details summary{padding:16px 20px;cursor:pointer;font-weight:700;color:var(--c-sumi);font-size:1rem;display:flex;align-items:center;gap:10px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▶";color:var(--c-cyan);font-size:0.7rem;transition:transform 0.2s;flex-shrink:0}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px;font-size:0.92rem}
+details .details-body p{margin-bottom:10px}
+details .details-body ul{margin:10px 0 10px 20px}
+.flow-wrap{background:var(--c-card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);overflow-x:auto}
+.mermaid{font-family:'Noto Sans JP',sans-serif !important}
+.matrix{display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;gap:0;margin:20px 0;min-height:480px}
+.matrix .y-axis{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--c-sumi);font-size:0.85rem;background:linear-gradient(180deg,#fadcdc,#dcebe0)}
+.matrix .x-axis{grid-column:2;grid-row:2;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--c-sumi);font-size:0.85rem;background:linear-gradient(90deg,#dcebe0,#fadcdc)}
+.matrix .quadrant-grid{grid-column:2;grid-row:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:var(--c-border)}
+.matrix .q{background:var(--c-card);padding:16px;position:relative;display:flex;flex-direction:column;gap:8px}
+.matrix .q.q1{background:#e3f1f3}.matrix .q.q2{background:#f4e8d2}.matrix .q.q3{background:#e8ebdb}.matrix .q.q4{background:#f4dada}
+.matrix .q-label{position:absolute;top:8px;right:10px;font-size:0.7rem;font-weight:700;color:var(--c-muted);text-transform:uppercase}
+.matrix .q-title{font-weight:700;color:var(--c-sumi);font-size:0.95rem;margin-bottom:6px}
+.matrix .chip{display:inline-block;background:var(--c-card);border:1px solid var(--c-border);border-radius:4px;padding:4px 10px;font-size:0.8rem;font-weight:500;margin:2px;color:var(--c-sumi)}
+.matrix .chip.high{border-color:var(--c-cyan);background:#cee9eb;color:var(--c-cyan-2);font-weight:700}
+.info-box{background:#f4e8d2;border-left:4px solid var(--c-gold);padding:12px 16px;border-radius:4px;margin:12px 0;font-size:0.88rem}
+.info-box::before{content:"❖ ";font-weight:700;color:var(--c-gold)}
+.script-box{background:#fafaf7;border-left:4px solid var(--c-cyan);padding:18px 22px;border-radius:4px;margin:14px 0;font-size:0.92rem;line-height:1.85}
+.script-box h5{font-size:0.85rem;color:var(--c-cyan);font-weight:700;text-transform:uppercase;margin-bottom:8px;letter-spacing:0.05em}
+.script-box p{margin-bottom:8px}
+.script-box strong{color:var(--c-cyan-2)}
+.lane-card{background:var(--c-card);border-radius:var(--radius);padding:18px 22px;margin:14px 0;box-shadow:var(--shadow);border-top:4px solid var(--c-cyan)}
+.lane-card.gold{border-top-color:var(--c-gold)}
+.lane-card.sumi{border-top-color:var(--c-sumi)}
+.badge-tag{display:inline-block;padding:3px 10px;border-radius:2px;font-size:0.72rem;font-weight:700;background:var(--c-accent-bg);color:var(--c-cyan-2);margin-right:6px}
+.badge-tag.orange{background:#f4e8d2;color:#7a5a20}
+.demo-banner{background:#fff3cd;border:2px solid var(--c-gold);padding:12px 20px;margin:20px auto;max-width:1200px;border-radius:var(--radius);font-size:0.88rem;color:var(--c-sumi);text-align:center;font-weight:500}
+.demo-banner b{color:var(--c-red)}
+.chart-box{background:var(--c-card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin:16px 0}
+.chart-box h4{font-size:0.95rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700}
+.chart-canvas-wrap{position:relative;width:100%;height:300px}
+.muted{color:var(--c-muted);font-size:0.85rem}
+footer{background:var(--c-sumi);color:#fff;padding:32px clamp(20px,5vw,60px);text-align:center;font-size:0.85rem}
+footer a{color:var(--c-gold)}
+</style>
+</head>
+<body>
+
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#0a4f56 0%,#1a1a1a 60%,#0e6b75 130%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:8px;border:1px solid rgba(181,138,59,0.4);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700;font-family:'Noto Serif JP',serif">越前刃心 日本調理師会連合会総会戦略</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px;color:#b58a3b">DEMO ｜ 閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:4px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#1a1a1a;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#b58a3b;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){var PASS='demo2026';var gate=document.getElementById('password-gate');var input=document.getElementById('pwd-input');var btn=document.getElementById('pwd-btn');var err=document.getElementById('pwd-err');
+if(sessionStorage.getItem('echizen_auth')==='ok'){gate.style.display='none';return;}
+document.body.style.overflow='hidden';
+function check(){if(input.value===PASS){sessionStorage.setItem('echizen_auth','ok');gate.style.display='none';document.body.style.overflow='';}else{err.style.display='block';input.value='';input.focus();}}
+btn.addEventListener('click',check);input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});})();
+</script>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">CLIENT ADVISORY ｜ DEMO 2026-04-10</span>
+    <h1>日本調理師会連合会総会戦略<br><span class="accent">〜個別営業から「個対多数」への転換〜</span></h1>
+    <p class="hero-sub">「プロ料理人のお役立ち情報窓口」として参入し、賛助会員の立場から信頼を獲得する1,200人協会攻略プラン。総会1日を点で売り込む場ではなく、線で関係を続ける起点に変える。</p>
+    <div class="hero-meta"><span>4本柱施策</span><span>18万円予算</span><span>3レーン並走</span></div>
+  </div>
+</header>
+
+<div class="demo-banner">⚠️ 本資料は <b>アートソウル社内デモ用</b> に作成された完全架空の提案書です。</div>
+
+<nav class="toc"><ul>
+  <li><a href="#notes">前提</a></li>
+  <li><a href="#context">背景認識</a></li>
+  <li><a href="#strategy">戦略骨格</a></li>
+  <li><a href="#pillars">4本柱施策</a></li>
+  <li><a href="#checklist">総会前準備</a></li>
+  <li><a href="#budget">予算配分</a></li>
+  <li><a href="#midterm">中長期施策</a></li>
+  <li><a href="#kpi">想定KPI</a></li>
+  <li><a href="#matrix">優先度マトリクス</a></li>
+  <li><a href="#risk">リスクと対策</a></li>
+  <li><a href="#next">次のアクション</a></li>
+  <li><a href="#sources">出典</a></li>
+</ul>
+<a href="index.html" class="portal-link">📋 ポータル</a>
+</nav>
+
+<main>
+
+<!-- NOTES -->
+<section id="notes">
+  <h2>0. 本資料の前提（仮置数値と確認事項）</h2>
+  <div class="info-box" style="margin-bottom:18px">本資料の数値は「業務改善の方向性を判断するための仮置」です。実数値が確定し次第、KPI<small style="color:var(--c-muted)">（施策の進捗を測る数値目標）</small>・予算・スケジュールを精緻に組み直します。</div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>仮置している主要前提</h4>
+      <ul style="margin-left:20px;font-size:0.9rem">
+        <li>協会員：<strong>約1,200名</strong>（賛助会員加入1年目）</li>
+        <li>総会開催時期：<strong>2026年10月（仮）</strong></li>
+        <li>発言枠：<strong>2分間のマイク</strong>＋A5チラシ配布許可</li>
+        <li>越前刃心の業界内認知度：賛助会員内 <strong>30〜40%程度</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>確認待ち事項</h4>
+      <ul style="margin-left:20px;font-size:0.9rem">
+        <li>総会の<strong>正確な開催時期</strong>と賛助会員の<strong>発言枠の詳細</strong>（マイク時間・配布物可否・展示スペース有無）</li>
+        <li>過去越前刃心が出展・登壇した実績の有無</li>
+        <li>協会公式メルマガ・会報誌の運用状況</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section id="context">
+  <h2>1. 背景認識 — なぜいま「調理師会連合会」なのか</h2>
+  <div class="grid grid-3">
+    <div class="card"><h4>営業現場の事実</h4><p>営業部7名で年間延べ800社訪問。新規開拓率は12%。10年前から半減。<strong>個別営業の限界</strong>が来ている。</p></div>
+    <div class="card"><h4>市場の地殻変動</h4><p>プロ料理人数は10年で22%減。最大代理店・井垣商店にヘンケルスが参入。<strong>受け身では縮む</strong>局面。</p></div>
+    <div class="card accent"><h4>千載一遇の機会</h4><p>協会員約1,200名／賛助会員1年目／2分マイクの発言枠。だが「お願いして入れてもらった立場」だからこそ売り込まない姿勢が活きる。</p></div>
+  </div>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">総会で売り込まない。<br><strong>「お役立ち情報の窓口」として認知してもらい、後の継続接触で関係を深める</strong>。<br>これは賛助会員1年目の越前刃心だからこそ無理なくできる姿勢。</p>
+  </div>
+
+  <h3>賛助会員の立場 — 弱みは強みに転換できる</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>当初の弱み</th><th>転換後の強み</th></tr>
+      <tr><td>協会内の信頼ゼロ</td><td>「協会のメンバーになりたい」という低姿勢が共感を生む</td></tr>
+      <tr><td>2分マイクの限られた時間</td><td>「売り込みではなくお役立ち資料の案内」に絞れる清々しさ</td></tr>
+      <tr><td>越前刃心ブランド認知率は30〜40%</td><td>「知る人ぞ知る職人ブランド」と位置付けられる</td></tr>
+      <tr><td>これまで業界団体と疎遠</td><td>新規参入のためフレッシュな情報を提供できる</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- STRATEGY -->
+<section id="strategy">
+  <h2>2. 戦略骨格 — 「個別営業」から「個対多数」へ</h2>
+  <p class="lead">どぶ板営業の限界は、社員の体力・時間に売上が完全に縛られることにあります。総会という「1対1,200」が成立する場で、属人化を解消する仕組みを同時に立ち上げます。</p>
+
+  <h3>個別営業 → 個対多数の転換図</h3>
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart LR
+  A["従来<br/>(個別営業)"] -->|1人月| B["訪問100社<br/>≒300人接触"]
+  C["新方針<br/>"] --> D["総会活用<br/>(個対多数)"]
+  D -->|1日| E["1,200人に<br/>同時接触"]
+  D --> F["DLコンテンツ<br/>受け取り"]
+  F --> G["数百人と<br/>継続接触"]
+    </pre>
+  </div>
+
+  <h3>属人化を解消する経営効果</h3>
+  <div class="grid grid-3">
+    <div class="card"><h4>営業の属人化解消</h4><p>誰でも回せる定型受注フロー。LINE公式 + 自動応答 + 営業部全員アクセス可能DB。</p></div>
+    <div class="card"><h4>社長の時間解放</h4><p>「社長案件」を仕組み化。山岸社長は経営判断と海外開拓に集中できる。</p></div>
+    <div class="card"><h4>新人即戦力化</h4><p>マニュアル＋スクリプト＋スキル不要のフローで、新人営業でも初日から成果が出る。</p></div>
+  </div>
+
+  <div class="info-box" style="margin-top:18px">
+    本戦略の本丸は「LINE公式アカウントを使うこと」ではありません。<strong>受注プロセスを誰でも回せるように整えること</strong>が本丸で、LINEはその上に乗る補助道具です。仕組みができていない状態でツールだけ入れても、結局は社長と一部社員に問い合わせが集中して終わります。
+  </div>
+</section>
+
+<!-- 4 PILLARS -->
+<section id="pillars">
+  <h2>3. 4本柱施策</h2>
+  <p class="lead">総会1日を起点に、「お役立ち情報の窓口」として継続接触する4つの仕掛けです。それぞれは独立に動きますが、合わさると相乗効果が生まれます。</p>
+
+  <h3>施策1：DLコンテンツ3パターン＋アンケート版併用</h3>
+  <div class="grid grid-3">
+    <div class="card"><h4>パターンA：白書系</h4><p>「2026年版 プロ料理人のための包丁メンテナンスレポート」公的データ＋現場ヒアリング。経営者・組合幹部向け。</p></div>
+    <div class="card"><h4>パターンB：実務系</h4><p>「明日から使える研ぎ直し10のコツ」職人頭・川口さん監修。現場の調理師さん向け。</p></div>
+    <div class="card"><h4>パターンC：制度系</h4><p>「HACCP対応 包丁衛生管理ガイドライン2026」食品衛生法改正対応。施設食堂運営者向け。</p></div>
+  </div>
+  <div class="info-box">3パターンのDLそれぞれにアンケート版（5問）を併設。ニーズの定量化＋メールアドレス取得を同時に行う。</div>
+
+  <h3 style="margin-top:36px">施策2：2分マイクの「姿勢の宣言」スクリプト</h3>
+  <div class="script-box">
+    <h5>📜 2分マイク・スクリプト</h5>
+    <p>「皆様、初めまして。福井県越前市から参りました、越前刃心株式会社 代表の山岸と申します。本日、賛助会員として初めて参加させていただきました。」</p>
+    <p>「私どもは1928年から、プロの料理人の皆様の包丁をお作りしてきました。ただ、これまで業界団体さんとは疎遠でして、今日初めてこの場に立たせていただいています。」</p>
+    <p>「ですので、まずは<strong>お役に立つことから始めさせていただきたい</strong>と思っております。研ぎのコツ、衛生管理、業界動向まとめ。協会員の皆様のお役に立てそうな資料を3点、無料でご用意しました。」</p>
+    <p>「お手元のチラシのQRコードからダウンロードいただけます。協会の一員として認めていただけるよう、貢献から始めます。本日はありがとうございました。」</p>
+  </div>
+  <div class="info-box">要点は3つ。①「売り込まない」と先に宣言する／②「貢献から始める」と協会への敬意を示す／③ QRコード回収のフックを物理的に置く。これで「あの会社、なんか感じいいな」という第一印象を作ります。</div>
+
+  <h3 style="margin-top:36px">施策3：1本目を手に取ってもらう仕組み</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>「研ぎ無料 × サンプル貸出」</h4>
+      <p>協会員のうちDLしてくれた方限定で、「お手持ちの包丁を1本、無料で研ぎ直し」のオファー。送料も越前刃心負担。研ぎ直して返送する際に、新製品『刃心』カタログを同梱（売り込みなしの「ご自由に」レター付き）。</p>
+    </div>
+    <div class="card">
+      <h4>「貸出サンプル制度」</h4>
+      <p>『刃心』柳刃や『黒備』牛刀を「2週間無料貸出」。気に入ったらお買い上げ店紹介、気に入らなくても返送だけでOK。代理店経由の販売を担保しつつ、現物体験の機会を作る。</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:36px">施策4：既存事例化＋業界誌持込</h3>
+  <p>既に『刃心』を採用いただいている著名店主・有名ホテルを「お客様の声」として事例化します。これは総会前に完了させ、当日DL資料に掲載することで信頼性が一気に上がります。</p>
+  <div class="grid grid-2">
+    <div class="card"><h4>事例化対象（候補）</h4><ul style="margin-left:20px;font-size:0.9rem"><li>銀座の老舗寿司店 親方</li><li>京都の老舗料亭 料理長</li><li>都内ミシュラン獲得割烹</li><li>大手ホテルチェーン総料理長</li></ul></div>
+    <div class="card"><h4>業界誌持込</h4><ul style="margin-left:20px;font-size:0.9rem"><li>「料理用品ニュース」「月刊厨房」「専門料理」</li><li>無償記事として「越前打刃物の今」を寄稿</li><li>会報誌・メルマガに「お役立ちコラム」を寄せる</li></ul></div>
+  </div>
+  <div class="info-box">事例化は「総会日までに最低1社、できれば2〜3社」を目標に即着手します。総会後では遅く、当日配布資料に「事例あり」と書ける状態を作るためです。</div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <h2>4. 総会前準備チェックリスト</h2>
+  <p class="lead">総会2週間前にはすべての準備物が「現にウェブ上にある」状態を作ります。当日「ご覧の通り、以前から提供しております」と言える状態を物理的に整えるためです。</p>
+
+  <details open><summary>📋 LP公開（総会2週間前完了）</summary><div class="details-body"><ul>
+    <li>echizen-jinshin.co.jp/chefs/ サブディレクトリにLP公開</li>
+    <li>DLコンテンツ3パターン＋アンケート版へのリンク配置</li>
+    <li>越前刃心の歴史・職人紹介・既存事例</li>
+    <li>「お買い上げ店マップ」リンク（代理店反感対策）</li>
+    <li>スマホ表示確認（協会員はPC見ない想定）</li>
+  </ul></div></details>
+  <details><summary>📄 DLコンテンツ制作（総会3週間前完了）</summary><div class="details-body"><ul>
+    <li>白書系：外部ライター発注（10〜15万円）</li>
+    <li>実務系：職人頭・川口さん監修＋社内ライター（5万円）</li>
+    <li>制度系：HACCPコンサル監修＋社内ライター（8万円）</li>
+    <li>各PDFのデザイン整える（A4 12〜20ページ／PDFサイズ2MB以下）</li>
+    <li>各PDFに「お買い上げ店紹介」セクションを必ず1ページ</li>
+  </ul></div></details>
+  <details><summary>🪪 QR入りA5チラシ（総会1週間前完了）</summary><div class="details-body"><ul>
+    <li>A5両面・カラー印刷・1,200部</li>
+    <li>表：3パターンDLの紹介＋QRコード3つ</li>
+    <li>裏：越前刃心の歴史と職人紹介＋お買い上げ店マップ案内</li>
+    <li>当日会場出入口の許可取り（事前に協会事務局へ依頼）</li>
+  </ul></div></details>
+  <details><summary>💬 LINE公式アカウント設定（総会2週間前完了）</summary><div class="details-body"><ul>
+    <li>「越前刃心 プロ料理人サポート」アカウント開設</li>
+    <li>自動応答メニュー：①研ぎ相談 ②修理依頼 ③カタログ請求 ④店舗検索</li>
+    <li>登録時自動配信「越前打刃物の手入れガイドPDF」</li>
+    <li>営業部全員のアクセス権設定（属人化解消）</li>
+  </ul></div></details>
+  <details><summary>🎤 当日ロープレ（総会3日前完了）</summary><div class="details-body"><ul>
+    <li>山岸社長が2分マイクスクリプトを暗唱できる状態に</li>
+    <li>営業部3名で会場想定の入退場リハーサル</li>
+    <li>名刺200枚＋A5チラシ800部を確実に持参</li>
+    <li>事例化済みの「お客様の声」掲示物を作成</li>
+  </ul></div></details>
+</section>
+
+<!-- BUDGET -->
+<section id="budget">
+  <h2>5. 18万円予算配分案</h2>
+  <p class="lead">「総会1日のために大金を投入する」のではなく、「総会を起点に継続接触する仕組みに投資する」配分です。</p>
+  <div class="chart-box">
+    <h4>18万円予算配分（万円）</h4>
+    <div class="chart-canvas-wrap"><canvas id="chartBudget"></canvas></div>
+  </div>
+  <div class="info-box">広告ではなく「コンテンツ制作」と「印刷物」が予算の大半。なぜなら、本戦略は <strong>「総会後も使い続けられる資産」を作ること</strong> が本丸だからです。</div>
+</section>
+
+<!-- MIDTERM -->
+<section id="midterm">
+  <h2>6. 中長期施策（3〜6ヶ月）— 3レーン並走で動く</h2>
+  <p class="lead">総会1日だけで終わらせず、<strong>営業／プロモーション／組織露出</strong>の3つの動きをそれぞれのレーンで並走させます。フェーズごとに役割を分けることで、属人化せず複数人で同時進行できます。</p>
+
+  <div class="flow-wrap" style="margin:14px 0">
+    <pre class="mermaid">
+flowchart LR
+  subgraph S0["0ヶ月目<br/>(総会当日)"]
+    A0["🎤 2分マイク<br/>1,200人接触"]
+  end
+  subgraph S1["1-2ヶ月目"]
+    P1["📢 プロモーション<br/>定期配信"]
+    E1["💼 営業<br/>サンプル貸出"]
+    O1["🏛 組織露出<br/>関係者挨拶"]
+  end
+  subgraph S2["3-4ヶ月目"]
+    P2["📢 プロモーション<br/>会報誌寄稿"]
+    E2["💼 営業<br/>事例化2-3件"]
+    O2["🏛 組織露出<br/>協会メルマガ<br/>記事掲載"]
+  end
+  subgraph S3["5-6ヶ月目"]
+    P3["📢 プロモーション<br/>業界誌取材"]
+    E3["💼 営業<br/>初期受注獲得"]
+    O3["🏛 組織露出<br/>公式メルマガ枠"]
+  end
+  A0 --> P1 & E1 & O1
+  P1 --> P2 --> P3
+  E1 --> E2 --> E3
+  O1 --> O2 --> O3
+    </pre>
+  </div>
+
+  <div class="lane-card gold">
+    <span class="badge-tag orange">📢 プロモーションのレーン</span>
+    <h4>「役立つ情報の発信元」というポジション</h4>
+    <p>0ヶ月：DLコンテンツ配布で接点獲得 → 1〜2ヶ月：定期配信で接触頻度を上げる → 3〜4ヶ月：協会の公式媒体（会報誌・メルマガ）に無償記事を持ち込む → 5〜6ヶ月：業界誌・専門誌に取材を仕掛けて権威化。<strong>営業色を出さず役立つ情報の発信元というポジション</strong>を作る。</p>
+  </div>
+  <div class="lane-card">
+    <span class="badge-tag">💼 営業のレーン</span>
+    <h4>「個別商談」を仕組みで生む</h4>
+    <p>0ヶ月：マイク発言＋チラシ配布 → 1〜2ヶ月：DL者へのサンプル貸出 → 3〜4ヶ月：返送時に事例化打診 → 5〜6ヶ月：協会内紹介で初期受注へ。<strong>属人化せず複数営業マンで分担できる</strong>仕組みを作る。</p>
+  </div>
+  <div class="lane-card sumi">
+    <span class="badge-tag">🏛 組織露出のレーン</span>
+    <h4>「協会内のポジション」を中長期で取りに行く</h4>
+    <p>0ヶ月：賛助会員として姿勢を宣言 → 1〜2ヶ月：協会内の関係者に挨拶回り → 3〜4ヶ月：協会メルマガに名前が載る → 5〜6ヶ月：「会員向け技能情報配信係」に立候補して公式チャネル枠を獲得。<strong>個別営業の50倍のレバレッジ</strong>が効くゴール。</p>
+  </div>
+
+  <div class="info-box">💡 並走の意味：3レーンを「順番にやる」のではなく「同時に動かす」のがポイント。プロモーションで知名度、営業で売上、組織露出で長期ポジション、それぞれ別の人が担当できるので、社長一人に依存せず組織として広域展開できます。</div>
+</section>
+
+<!-- KPI -->
+<section id="kpi">
+  <h2>7. 想定KPI（仮置）</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>総会当日（仮置）</h4>
+      <ul style="margin-left:20px;font-size:0.9rem">
+        <li>チラシ配布：<strong>1,000〜1,200部</strong></li>
+        <li>QR読込：<strong>150〜250件</strong></li>
+        <li>DL：<strong>80〜150件</strong></li>
+        <li>名刺交換：<strong>30〜50件</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>3ヶ月後</h4>
+      <ul style="margin-left:20px;font-size:0.9rem">
+        <li>サンプル貸出依頼：<strong>20〜35件</strong></li>
+        <li>事例化完了：<strong>2〜3社</strong></li>
+        <li>協会会報誌記事提供：<strong>1本</strong></li>
+        <li>LINE公式友だち：<strong>120〜200人</strong></li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h4>6ヶ月後</h4>
+      <ul style="margin-left:20px;font-size:0.9rem">
+        <li>初期受注：<strong>5〜12件</strong></li>
+        <li>業界誌掲載：<strong>1〜2本</strong></li>
+        <li>協会公式メルマガ枠：<strong>獲得</strong></li>
+        <li>累計接触：<strong>1,500人超</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="info-box">上記KPIはすべて仮置です。総会開催時期・賛助会員の発言枠詳細・既存事例化の進捗が確定すると、ベースラインが大きく動きます。</div>
+</section>
+
+<!-- MATRIX -->
+<section id="matrix">
+  <h2>8. 4象限マトリクス — 何から手をつけるか</h2>
+  <div class="matrix">
+    <div class="y-axis">影響度 低 ←　→ 高</div>
+    <div class="quadrant-grid">
+      <div class="q q1"><span class="q-label">Quick Win</span><div class="q-title">① 即実行（影響大・易）</div><span class="chip high">DLコンテンツ3パターン</span><span class="chip high">QR入りA5チラシ</span><span class="chip high">2分マイクスクリプト</span></div>
+      <div class="q q2"><span class="q-label">Strategic</span><div class="q-title">② 戦略投資（影響大・難）</div><span class="chip">既存事例化</span><span class="chip">業界誌持込</span><span class="chip">協会公式チャネル獲得</span></div>
+      <div class="q q3"><span class="q-label">Fill-in</span><div class="q-title">③ 充実枠（影響中・易）</div><span class="chip">LP公開</span><span class="chip">LINE公式設定</span></div>
+      <div class="q q4"><span class="q-label">Reserve</span><div class="q-title">④ 様子見（影響小・難）</div><span class="chip">独自イベント開催</span></div>
+    </div>
+    <div class="x-axis">実行難易度 易 ←　→ 難</div>
+  </div>
+</section>
+
+<!-- RISK -->
+<section id="risk">
+  <h2>9. 想定リスクと対策</h2>
+  <p class="lead">どんな施策にも裏目はあります。想定される4つのリスクと、その対策をあらかじめ定めておきます。</p>
+  <div class="table-wrap">
+    <table>
+      <tr><th>リスク</th><th>影響度</th><th>対策</th></tr>
+      <tr><td><strong>賛助会員追放リスク</strong><br>「あの会社、結局売り込みに来てる」と協会内で評判が落ちる</td><td>大</td><td>2分マイクで「売り込まない」と明確に宣言／配布物に商品カタログを含めない／総会後の個別連絡は「資料DLされた方への御礼」の形を守る</td></tr>
+      <tr><td><strong>代理店反感リスク</strong><br>協会経由の受注が直販扱いになる懸念</td><td>大</td><td>すべての受注フォームで「お買い上げ店」をプルダウン必須／代理店への紹介手数料還元プログラムを総会前に整備</td></tr>
+      <tr><td><strong>コンテンツ制作遅延</strong><br>外部ライター手配が遅れ、総会に間に合わない</td><td>中</td><td>白書系は早期発注／実務系・制度系は社内主導で進める／総会3週間前デッドラインで一旦締切</td></tr>
+      <tr><td><strong>LP公開遅れ</strong><br>制作工程が長引き、総会前にLPが完成しない</td><td>中</td><td>総会2週間前にはLP公開／ドメイン取得時期がバレないようサブドメインも検討</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- NEXT -->
+<section id="next">
+  <h2>10. 次のアクション — 今すぐ動かす5項目</h2>
+  <ol style="margin-left:24px;font-size:0.95rem;line-height:2">
+    <li><strong>総会の開催時期と発言枠詳細を協会事務局に確認</strong> — 仮置数値が確定する</li>
+    <li><strong>DLコンテンツ3パターンの執筆者選定</strong> — 白書系は外部ライター、実務系は職人頭・川口さん監修、制度系はHACCPコンサル</li>
+    <li><strong>事例化対象店舗のリストアップ</strong> — 銀座・京都・東京の長期取引先から3〜5店舗を山岸社長個人として打診</li>
+    <li><strong>LP制作着手</strong> — echizen-jinshin.co.jp/chefs/ のサブディレクトリ。総会2週間前に公開できるよう逆算</li>
+    <li><strong>QRチラシのデザイン手配</strong> — A5・両面・1,200部。デザイン込みで2.5〜3万円。総会1週間前納品を逆算してスケジュール確定</li>
+  </ol>
+
+  <div class="key-message" style="margin-top:32px">
+    <span class="km-label">最後に</span>
+    <p class="km-text">総会1日のために走り回るのではなく、<br><strong>「総会を起点に、1,200人と継続接触する仕組み」</strong>を立ち上げます。<br>これが提案①（卸ルート再定義）と提案②（5路線販路拡大）の<strong>共通インフラ</strong>になります。</p>
+  </div>
+
+  <div class="info-box" style="margin-top:18px">
+    本資料は草案です。山岸社長との戦略骨格（個別営業→個対多数）に、Kai側で4点の補強（クーポン経済性の警鐘・LP事前設置・2分マイクの宣言化・既存事例化）を加えた形です。実装フェーズで判明する数字（粗利率・購入サイクル・総会時期）に応じて、KPIと予算配分を再調整していきます。
+  </div>
+</section>
+
+<!-- ====== SOURCES ====== -->
+<section id="sources">
+  <h2>11. 出典・エビデンス一覧</h2>
+  <p class="lead"><strong>会社固有情報（社名・売上等）はデモ用の架空数値</strong>です。<strong>業界団体情報・調理師統計は実データ</strong>に基づきます。</p>
+
+  <details open>
+    <summary>🏛 業界団体（実在）</summary>
+    <div class="details-body">
+      <p>本資料で扱う「日本調理師会連合会」「賛助会員1,200人」「2026年10月総会」等は<strong>本デモ用に構成した架空のシナリオ</strong>です。実在の業界団体としては以下のような組織があり、本提案手法（賛助会員からの「個対多数」アプローチ）の参考にできます：</p>
+      <ul>
+        <li><a href="https://www.nicchou.or.jp/" target="_blank" rel="noopener">公益社団法人 日本調理師会（1967年設立・公益認定）</a></li>
+        <li><a href="https://nicchou.or.jp/soshiki.html" target="_blank" rel="noopener">日本調理師会 組織概要</a></li>
+        <li><a href="http://www.nihon-chorishi-rengoukai.or.jp/about/" target="_blank" rel="noopener">日本調理師連合会（和食中心・日本最大級）</a></li>
+        <li><a href="https://www.zenchougiren.com/" target="_blank" rel="noopener">全国日本調理技能士会連合会</a></li>
+        <li><a href="https://www.japca.or.jp/member/?pca=2" target="_blank" rel="noopener">公益社団法人 日本全職業調理士協会</a></li>
+      </ul>
+      <p>※実際の総会戦略を立てる際は、上記団体に直接協力依頼・賛助会員入会の打診をすることが第一歩となります。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>📊 調理師統計（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.e-stat.go.jp/stat-search/files?toukei=00450027&tstat=000001031469&layout=dataset&stat_infid=000001718025" target="_blank" rel="noopener">e-Stat 衛生行政報告例「調理師免許交付数」（厚労省）</a></li>
+        <li><a href="https://www.jatcc.or.jp/data/" target="_blank" rel="noopener">公益社団法人 全国調理師養成施設協会 統計データ</a></li>
+        <li><a href="https://www.genius-japan.com/blog/ono20251022" target="_blank" rel="noopener">「美食大国いつまで？ 揺らぐ調理師の厚み」2025年10月</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏢 越前刃心株式会社（架空・デモ用）</summary>
+    <div class="details-body">
+      <p>「越前刃心株式会社」「賛助会員1年目」等は<strong>本デモ用の架空設定</strong>です。予算配分・KPI数値もデモ用試算です。</p>
+      <ul>
+        <li><a href="../../00_クライアント基本情報.md" target="_blank">デモ会社設定</a></li>
+        <li><a href="../../03_経営会議文字起こし.md" target="_blank">経営会議文字起こし（架空）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="info-box" style="margin-top:20px"><strong>数値の取り扱い：</strong>業界団体情報・調理師統計は公開データ。「越前刃心」固有数値（予算配分・KPI等）はデモ用試算。実案件では総会主催団体への正式打診から始めることが必須です。</div>
+</section>
+
+</main>
+
+<button class="to-top" aria-label="トップに戻る" id="toTopBtn">↑</button>
+
+<footer>
+  <p>越前刃心株式会社 日本調理師会連合会総会戦略 〜個別営業から個対多数への転換〜（DEMO）</p>
+  <p>2026-04-10 ／ <a href="index.html">← ポータルに戻る</a></p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料はアートソウル社内デモ用に作成された完全架空の提案書です。</p>
+</footer>
+
+<script>
+// SCROLL HANDLER
+(function(){
+  var nav=document.querySelector('nav.toc');var btn=document.getElementById('toTopBtn');
+  function onS(){var y=window.scrollY||0;if(nav)nav.classList.toggle('scrolled',y>20);if(btn)btn.classList.toggle('show',y>240);}
+  window.addEventListener('scroll',onS,{passive:true});
+  if(btn)btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onS();
+})();
+new Chart(document.getElementById('chartBudget'),{
+  type:'doughnut',
+  data:{labels:['DLコンテンツ制作','QR入りA5チラシ印刷','LP制作','事例化撮影','LINE公式・自動応答','予備'],datasets:[{data:[6.0,3.0,3.5,2.0,1.5,2.0],backgroundColor:['#0e6b75','#0a4f56','#b58a3b','#a52a2a','#1a1a1a','#6b6661']}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}
+});
+mermaid.initialize({startOnLoad:true,theme:'default',themeVariables:{fontFamily:'Noto Sans JP, sans-serif',primaryColor:'#0e6b75',primaryTextColor:'#fff',primaryBorderColor:'#0a4f56',lineColor:'#b58a3b',secondaryColor:'#b58a3b',tertiaryColor:'#e3f1f3'},flowchart:{useMaxWidth:true,htmlLabels:true}});
+</script>
+
+</body>
+</html>

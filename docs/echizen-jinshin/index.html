@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>越前刃心株式会社 提案書ポータル（DEMO）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:linear-gradient(135deg,#1a1a1a 0%,#2c2c2c 50%,#7a1f1f 100%);
+  min-height:100vh;color:#1a1a1a;line-height:1.7;
+  padding:clamp(20px,4vw,40px);
+}
+.serif{font-family:'Noto Serif JP',serif}
+.container{max-width:900px;margin:0 auto}
+.header{text-align:center;color:#fff;padding:clamp(30px,5vw,60px) 0}
+.header h1{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;
+  margin-bottom:12px;line-height:1.4;
+}
+.header .accent{color:#b58a3b}
+.header p{font-size:clamp(0.9rem,1.6vw,1.05rem);opacity:0.92}
+.demo-tag{
+  display:inline-block;background:#b58a3b;color:#fff;
+  padding:4px 14px;border-radius:2px;font-size:0.78rem;
+  letter-spacing:0.1em;font-weight:700;margin-bottom:16px;
+}
+.cards{
+  display:grid;gap:clamp(16px,3vw,24px);
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  margin-top:clamp(20px,4vw,40px);
+}
+.card{
+  background:#fff;border-radius:8px;
+  padding:clamp(20px,3vw,32px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  transition:transform 0.2s,box-shadow 0.2s;
+  text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;
+  border-top:6px solid #a52a2a;
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+.card.global{border-top-color:#b58a3b}
+.card.r1{border-top-color:#7a1f1f}
+.card.r2{border-top-color:#b58a3b}
+.card.r3{border-top-color:#0a4f56}
+.card.association{border-top-color:#0e6b75}
+.card.knife{border-top-color:#a52a2a}
+.card .tag{
+  display:inline-block;padding:4px 12px;border-radius:2px;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.05em;
+  background:#f3ede2;color:#7a1f1f;
+  margin-bottom:16px;width:fit-content;
+}
+.card.global .tag{background:#fdf5e6;color:#b58a3b}
+.card.r1 .tag{background:#fae5e5;color:#7a1f1f}
+.card.r2 .tag{background:#fdf5e6;color:#b58a3b}
+.card.r3 .tag{background:#e3f1f3;color:#0a4f56}
+.card.association .tag{background:#e3f1f3;color:#0e6b75}
+.card.knife .tag{background:#fae5e5;color:#a52a2a}
+.card h2{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(1.05rem,2vw,1.25rem);font-weight:900;
+  color:#1a1a1a;margin-bottom:12px;line-height:1.4;
+}
+.card p{font-size:0.9rem;color:#444;margin-bottom:16px;flex:1}
+.card .meta{
+  display:flex;gap:8px;flex-wrap:wrap;
+  font-size:0.72rem;color:#666;margin-bottom:16px;
+}
+.card .meta span{background:#f7f5f0;padding:3px 8px;border-radius:2px}
+.card .btn{
+  display:inline-block;padding:12px 20px;
+  background:#a52a2a;color:#fff;text-align:center;
+  border-radius:4px;font-weight:700;font-size:0.95rem;
+  transition:background 0.2s;
+}
+.card.global .btn{background:#b58a3b}
+.card.r1 .btn{background:#7a1f1f}
+.card.r2 .btn{background:#b58a3b}
+.card.r3 .btn{background:#0a4f56}
+.card.association .btn{background:#0e6b75}
+.card.knife .btn{background:#a52a2a}
+.card:hover .btn{background:#1a1a1a}
+
+.materials-section{margin-top:clamp(40px,6vw,60px);color:#fff}
+.materials-section h2{
+  font-family:'Noto Serif JP',serif;
+  font-size:1.4rem;margin-bottom:8px;color:#b58a3b;
+}
+.materials-section p{opacity:0.85;font-size:0.9rem;margin-bottom:20px}
+.materials-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.material-card{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(181,138,59,0.4);
+  border-radius:6px;padding:16px;
+  color:#fff;text-decoration:none;
+  transition:background 0.2s;
+}
+.material-card:hover{background:rgba(255,255,255,0.15)}
+.material-card h4{font-size:0.92rem;margin-bottom:4px;color:#b58a3b;font-weight:700}
+.material-card p{font-size:0.78rem;opacity:0.85;margin:0}
+
+.footer{
+  text-align:center;color:#fff;opacity:0.7;
+  margin-top:clamp(30px,5vw,60px);font-size:0.8rem;
+}
+.demo-notice{
+  background:rgba(181,138,59,0.18);
+  border:1px solid rgba(181,138,59,0.5);
+  color:#fff;padding:12px 20px;border-radius:6px;
+  text-align:center;font-size:0.85rem;margin:20px auto 0;max-width:700px;
+}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#2c2c2c 60%,#7a1f1f 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:8px;border:1px solid rgba(181,138,59,0.4);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700;font-family:'Noto Serif JP',serif">越前刃心株式会社 提案書ポータル</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px;color:#b58a3b">DEMO ｜ 閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:4px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#1a1a1a;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#b58a3b;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='demo2026';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('echizen_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('echizen_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{err.style.display='block';input.value='';input.focus();}
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<div class="container">
+  <div class="header">
+    <span class="demo-tag">DEMO 2026-04-10</span>
+    <h1>越前刃心株式会社<br><span class="accent">販路拡大アドバイザリー</span></h1>
+    <p>2026-04-10 ／ 3つの提案書 + 3つの構造分解 + 1つの新販路リサーチ</p>
+  </div>
+
+  <div class="demo-notice">
+    ⚠️ 本ポータルはアートソウル社内デモ用に作成された完全架空の提案書セットです。実在の越前刃物業界・各企業との直接的関係はありません。
+  </div>
+
+  <div class="cards">
+    <!-- 提案① -->
+    <a href="proposal.html" class="card">
+      <span class="tag">提案書 ①</span>
+      <h2>「卸ルート＝広告投資」<br>と再定義する販路拡大戦略</h2>
+      <p>既存B2B卸構造（代理店約480社）を維持しつつ、プロ料理人リスト基盤を構築する6視点・7施策アドバイザリー。現状分析・代理店反感ゼロの五箇条・即実行施策まで。</p>
+      <div class="meta">
+        <span>現状の可視化</span>
+        <span>低コスト即実行</span>
+        <span>代理店反感ゼロ</span>
+      </div>
+      <span class="btn">提案書を開く →</span>
+    </a>
+
+    <!-- 提案② -->
+    <a href="proposal_global.html" class="card global">
+      <span class="tag">提案書 ②</span>
+      <h2>グローバル戦略転用<br>5路線販路拡大ロードマップ</h2>
+      <p>タダフサ・ヘンケルス・ウストフ等の戦略10カ条の多視点解析と、越前刃心への転用5路線（国内3＋国外2）。ペルソナ・戦略・戦術まで言語化。</p>
+      <div class="meta">
+        <span>戦略10カ条</span>
+        <span>5路線×ペルソナ</span>
+        <span>24ヶ月ロードマップ</span>
+      </div>
+      <span class="btn">提案書を開く →</span>
+    </a>
+
+    <!-- 提案③ -->
+    <a href="proposal_association.html" class="card association">
+      <span class="tag">提案書 ③</span>
+      <h2>日本調理師会連合会総会戦略<br>個別営業から個対多数へ</h2>
+      <p>賛助会員1,200人協会の総会を起点に「お役立ち情報の窓口」として参入する戦略。2分マイク・DLコンテンツ3パターン・サンプル貸出・既存事例化・18万円予算配分まで。</p>
+      <div class="meta">
+        <span>4本柱施策</span>
+        <span>18万円予算</span>
+        <span>3レーン並走</span>
+      </div>
+      <span class="btn">提案書を開く →</span>
+    </a>
+
+    <!-- ラシンバン① -->
+    <a href="rashinban_proposal_1.html" class="card r1">
+      <span class="tag">構造分解 ①</span>
+      <h2>提案①ラシンバン<br>販路拡大コンパス</h2>
+      <p>提案①を中央テーマ＋8テーマ×8アクションのマンダラ・マトリクス・ガントに構造分解。タブで切替できるインタラクティブHTML。</p>
+      <div class="meta">
+        <span>マンダラ64項目</span>
+        <span>マトリクス4象限</span>
+        <span>12ヶ月ガント</span>
+      </div>
+      <span class="btn">構造分解を開く →</span>
+    </a>
+
+    <!-- ラシンバン② -->
+    <a href="rashinban_proposal_2.html" class="card r2">
+      <span class="tag">構造分解 ②</span>
+      <h2>提案②ラシンバン<br>客層拡大コンパス</h2>
+      <p>5路線（国内3＋国外2）＋データ組織を8テーマ・64アクションに構造分解。マトリクスとフロー＋24ヶ月ガント。</p>
+      <div class="meta">
+        <span>5路線64項目</span>
+        <span>4象限マトリクス</span>
+        <span>24ヶ月ガント</span>
+      </div>
+      <span class="btn">構造分解を開く →</span>
+    </a>
+
+    <!-- ラシンバン③ -->
+    <a href="rashinban_proposal_association.html" class="card r3">
+      <span class="tag">構造分解 ③</span>
+      <h2>提案③ラシンバン<br>個対多コンパス</h2>
+      <p>提案③をマンダラ64項目／マトリクス／3レーン並走（営業・プロモ・組織露出）の6ヶ月ロードマップに構造分解。</p>
+      <div class="meta">
+        <span>マンダラ64項目</span>
+        <span>4象限マトリクス</span>
+        <span>3レーン並走</span>
+      </div>
+      <span class="btn">構造分解を開く →</span>
+    </a>
+
+    <!-- リサーチ -->
+    <a href="knife_channels.html" class="card knife">
+      <span class="tag">リサーチ ④</span>
+      <h2>業務用刃物 新販路マップ<br>飲食市場の外側に眠る10領域</h2>
+      <p>半年間の国内リリース・反応記事を横断調査。飲食プロ市場以外の10販路をマトリクス可視化し、越前刃心が"既に獲っている1領域"と"次に布石を打つ2領域"＋90日アクションプランまで。</p>
+      <div class="meta">
+        <span>10販路マップ</span>
+        <span>重点3販路</span>
+        <span>90日プラン</span>
+      </div>
+      <span class="btn">リサーチを開く →</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>本資料はアートソウル社内デモ用に作成された完全架空の提案書セットです</p>
+  </div>
+</div>
+
+</body>
+</html>

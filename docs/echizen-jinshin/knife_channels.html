@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>越前刃心｜業務用刃物 新販路マップ — 飲食市場の外側に眠る10領域</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{--c-sumi:#1a1a1a;--c-sumi-2:#2c2c2c;--c-red:#a52a2a;--c-red-2:#7a1f1f;--c-gold:#b58a3b;--c-gold-soft:#d8b777;--c-bg:#f7f5f0;--c-card:#fff;--c-text:#1a1a1a;--c-muted:#6b6661;--c-border:#e4dfd6;--c-accent-bg:#f3ede2;--shadow:0 2px 8px rgba(26,26,26,0.08);--shadow-lg:0 8px 24px rgba(26,26,26,0.14);--radius:8px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--c-bg);color:var(--c-text);line-height:1.75;font-size:clamp(14px,1.6vw,16px)}
+.serif{font-family:'Noto Serif JP',serif}
+a{color:var(--c-red-2);text-decoration:underline}a:hover{color:var(--c-gold)}
+.hero{background:linear-gradient(135deg,var(--c-sumi) 0%,var(--c-sumi-2) 60%,var(--c-red-2) 100%);color:#fff;padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-50%;right:-20%;width:80%;height:200%;background:radial-gradient(circle, rgba(181,138,59,0.18), transparent 70%)}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{display:inline-block;background:rgba(255,255,255,0.10);border:1px solid rgba(181,138,59,0.5);padding:6px 14px;border-radius:2px;font-size:0.85rem;margin-bottom:20px;letter-spacing:0.05em;color:var(--c-gold)}
+.hero h1{font-family:'Noto Serif JP',serif;font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:900;line-height:1.4;margin-bottom:18px}
+.hero h1 .accent{color:var(--c-gold-soft)}
+.hero h1 em{font-style:normal;color:var(--c-gold);position:relative;display:inline-block}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:8px;background:rgba(181,138,59,.3);z-index:-1}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:0.88rem;opacity:0.85}
+.hero-meta span::before{content:"❖";margin-right:6px;color:var(--c-gold)}
+nav.toc{position:sticky;top:0;z-index:50;background:rgba(247,245,240,0.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--c-border);padding:10px clamp(20px,5vw,60px);overflow-x:auto;white-space:nowrap;transition:background 0.3s,box-shadow 0.3s,border-color 0.3s;display:flex;align-items:center;gap:12px}
+nav.toc.scrolled{background:#fff;box-shadow:0 4px 16px rgba(26,26,26,0.12);border-bottom-color:var(--c-gold)}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none;flex:1}
+nav.toc a{display:inline-block;padding:6px 12px;border-radius:4px;text-decoration:none;color:var(--c-sumi);font-size:0.85rem;transition:all 0.2s}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-red-2)}
+nav.toc .portal-link{flex-shrink:0;padding:6px 14px;background:var(--c-gold);color:#fff !important;text-decoration:none;border-radius:4px;font-size:0.8rem;font-weight:700;transition:background 0.2s;margin-left:auto}
+nav.toc .portal-link:hover{background:var(--c-red-2);color:#fff !important}
+.to-top{position:fixed;bottom:24px;right:24px;width:48px;height:48px;border-radius:50%;background:var(--c-sumi);color:#fff;border:2px solid var(--c-gold);font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(26,26,26,0.35);opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.2s,background 0.2s;z-index:100;font-family:inherit;line-height:1}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{background:var(--c-red-2);transform:translateY(-3px)}
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{font-family:'Noto Serif JP',serif;font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;color:var(--c-sumi);margin-bottom:16px;line-height:1.35;padding-bottom:12px;border-bottom:2px solid var(--c-red)}
+section h3{font-size:clamp(1.1rem,2vw,1.3rem);font-weight:700;color:var(--c-sumi);margin:24px 0 12px}
+section .lead{font-size:clamp(0.95rem,1.7vw,1.05rem);color:#444;margin-bottom:24px;max-width:880px}
+.section-num{font-size:0.75rem;letter-spacing:.18em;color:var(--c-gold);font-weight:700;margin-bottom:6px;display:block;text-transform:uppercase}
+.position-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.position-card{background:var(--c-card);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border-left:4px solid var(--c-red)}
+.position-card.warn{border-left-color:var(--c-gold)}
+.position-card h4{font-size:0.8rem;color:var(--c-muted);margin-bottom:8px;letter-spacing:.06em}
+.position-card .val{font-family:'Noto Serif JP',serif;font-size:1.3rem;font-weight:900;color:var(--c-sumi);margin-bottom:8px;line-height:1.3}
+.position-card p{font-size:0.85rem;color:#444}
+.timeline{position:relative;padding-left:32px;margin-top:24px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--c-border)}
+.tl-item{position:relative;padding-bottom:36px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-32px;top:8px;width:18px;height:18px;border-radius:50%;background:var(--c-bg);border:3px solid var(--c-gold);box-shadow:0 0 0 4px var(--c-bg)}
+.tl-date{font-size:0.75rem;color:var(--c-gold);letter-spacing:.08em;margin-bottom:6px;font-weight:700}
+.tl-title{font-family:'Noto Serif JP',serif;font-weight:700;font-size:1.05rem;color:var(--c-sumi);margin-bottom:6px;line-height:1.4}
+.tl-body{font-size:0.92rem;color:#444;max-width:780px;margin-bottom:8px}
+.tl-src{font-size:0.78rem;color:var(--c-muted)}
+.matrix-wrap{background:var(--c-card);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow);margin-top:24px}
+.matrix-svg{width:100%;height:auto;display:block;max-width:900px;margin:0 auto}
+.matrix-legend{display:flex;gap:32px;justify-content:center;margin-top:24px;flex-wrap:wrap;font-size:0.85rem;color:var(--c-muted)}
+.matrix-legend span{display:inline-flex;align-items:center;gap:8px}
+.matrix-legend .key{display:inline-block;width:14px;height:14px;border-radius:50%}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;margin-top:24px}
+.card{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden}
+.card.featured{border-color:var(--c-gold);box-shadow:var(--shadow-lg)}
+.card.featured::before{content:"重点";position:absolute;top:0;right:0;background:var(--c-gold);color:#fff;font-size:0.65rem;font-weight:700;letter-spacing:.12em;padding:4px 10px;border-radius:0 0 0 6px}
+.card.echizen-home{border-color:var(--c-red);box-shadow:var(--shadow-lg)}
+.card.echizen-home::before{content:"越前刃心 ホーム";position:absolute;top:0;right:0;background:var(--c-red);color:#fff;font-size:0.65rem;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:0 0 0 6px}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card-num{font-size:0.7rem;color:var(--c-muted);letter-spacing:.12em;margin-bottom:6px}
+.card h3{font-family:'Noto Serif JP',serif;font-weight:700;font-size:1.05rem;color:var(--c-sumi);line-height:1.3;margin-bottom:10px;min-height:auto}
+.card-tagline{font-size:0.82rem;color:var(--c-gold);font-weight:500;margin-bottom:12px}
+.card-meta{display:flex;gap:14px;margin-bottom:14px;padding:10px 0;border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border)}
+.card-meta div{flex:1}
+.card-meta .label{font-size:0.65rem;color:var(--c-muted);letter-spacing:.1em;text-transform:uppercase}
+.card-meta .bar{display:flex;gap:3px;margin-top:4px}
+.card-meta .bar i{display:inline-block;width:14px;height:5px;background:var(--c-border);border-radius:1px}
+.card-meta .bar i.on{background:var(--c-gold)}
+.card-meta .bar i.on-r{background:var(--c-red)}
+.card-body{font-size:0.85rem;color:#444;line-height:1.65;margin-bottom:12px;flex-grow:1}
+.card-targets{font-size:0.78rem;color:var(--c-muted);margin-bottom:10px}
+.card-targets b{color:var(--c-sumi);font-weight:500}
+.deep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:24px}
+.deep{background:var(--c-card);border-radius:var(--radius);padding:28px;border-top:4px solid var(--c-gold);box-shadow:var(--shadow)}
+.deep.home{border-top-color:var(--c-red)}
+.deep-num{font-family:'Noto Serif JP',serif;font-size:2.4rem;color:var(--c-gold);line-height:1;margin-bottom:8px;font-weight:900}
+.deep.home .deep-num{color:var(--c-red)}
+.deep h3{font-family:'Noto Serif JP',serif;font-weight:900;font-size:1.2rem;color:var(--c-sumi);margin-bottom:14px;line-height:1.3}
+.deep-section{margin-bottom:18px}
+.deep-section h4{font-size:0.72rem;letter-spacing:.14em;color:var(--c-gold);text-transform:uppercase;margin-bottom:6px;font-weight:700}
+.deep.home .deep-section h4{color:var(--c-red)}
+.deep-section p,.deep-section ul{font-size:0.88rem;color:#444;line-height:1.7}
+.deep-section ul{padding-left:18px}
+.plan-wrap{background:linear-gradient(135deg,#f3ede2 0%,#f7f5f0 100%);border-radius:var(--radius);padding:32px;margin-top:24px;border:1px solid var(--c-border)}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:18px}
+.plan-col{background:var(--c-card);border-radius:8px;padding:20px;border-top:4px solid var(--c-red)}
+.plan-col h4{font-family:'Noto Serif JP',serif;font-size:1rem;color:var(--c-sumi);margin-bottom:6px;font-weight:900}
+.plan-col .span{font-size:0.7rem;color:var(--c-gold);letter-spacing:.1em;font-weight:700;display:block;margin-bottom:10px}
+.plan-col ul{padding-left:18px;font-size:0.85rem;color:#444;line-height:1.7}
+.insight{background:var(--c-sumi);color:#fff;border-radius:var(--radius);padding:36px;position:relative;overflow:hidden;margin-top:24px}
+.insight::before{content:"\201C";position:absolute;top:-32px;left:24px;font-family:'Noto Serif JP',serif;font-size:200px;color:var(--c-gold);opacity:.18;line-height:1}
+.insight-eyebrow{font-size:0.7rem;letter-spacing:.18em;color:var(--c-gold-soft);text-transform:uppercase;margin-bottom:12px;position:relative;z-index:1;font-weight:700}
+.insight h3{font-family:'Noto Serif JP',serif;font-weight:900;font-size:1.35rem;line-height:1.5;margin-bottom:18px;color:#fff;position:relative;z-index:1}
+.insight p,.insight ol{font-size:0.95rem;line-height:1.85;color:#D5DCE5;max-width:880px;position:relative;z-index:1}
+.insight p{margin-bottom:14px}
+.insight ol{padding-left:24px;margin-bottom:14px}
+.insight ol li{margin-bottom:6px}
+.insight ol li b{color:var(--c-gold-soft);font-weight:700}
+.insight .note{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
+.insight .note b{color:#fff}
+.demo-banner{background:#fff3cd;border:2px solid var(--c-gold);padding:12px 20px;margin:20px auto;max-width:1200px;border-radius:var(--radius);font-size:0.88rem;color:var(--c-sumi);text-align:center;font-weight:500}
+.demo-banner b{color:var(--c-red-2)}
+footer{padding:30px 20px;background:var(--c-sumi);color:#9BA8B8;font-size:0.82rem;text-align:center}
+footer a{color:var(--c-gold);text-decoration:none}
+footer .back{display:inline-block;margin-top:12px;padding:8px 16px;border:1px solid rgba(255,255,255,.2);border-radius:4px;color:#fff;text-decoration:none;font-size:0.85rem}
+</style>
+</head>
+<body>
+
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#2c2c2c 60%,#7a1f1f 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:8px;border:1px solid rgba(181,138,59,0.4);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700;font-family:'Noto Serif JP',serif">越前刃心 新販路マップ</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px;color:#b58a3b">DEMO ｜ 閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:4px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#1a1a1a;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#b58a3b;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>(function(){var PASS='demo2026';var gate=document.getElementById('password-gate');var input=document.getElementById('pwd-input');var btn=document.getElementById('pwd-btn');var err=document.getElementById('pwd-err');if(sessionStorage.getItem('echizen_auth')==='ok'){gate.style.display='none';return;}document.body.style.overflow='hidden';function check(){if(input.value===PASS){sessionStorage.setItem('echizen_auth','ok');gate.style.display='none';document.body.style.overflow='';}else{err.style.display='block';input.value='';input.focus();}}btn.addEventListener('click',check);input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});})();</script>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">リサーチ ④ ／ DEMO 業務用刃物 異業種販路調査</span>
+    <h1>飲食市場の外側に、<br>業務用刃物の販路が<em>10領域</em>眠っている。<br><span class="accent">— そして、その1つはすでに越前刃心の独擅場。</span></h1>
+    <p class="hero-sub">
+      貝印・ヘンケルスが寡占する飲食プロ市場の外側を、半年間のリリース・反応記事から横断調査。
+      10販路を「顕在度 × ブランド競合度」マトリクスで可視化し、越前刃心が <b>今すぐ攻めるべき1領域</b> と <b>次に布石を打つべき2領域</b> を特定しました。
+    </p>
+    <div class="hero-meta">
+      <span>調査期間：6ヶ月</span>
+      <span>抽出販路：10領域</span>
+      <span>重点候補：3領域</span>
+      <span>DEMO データ</span>
+    </div>
+  </div>
+</header>
+
+<div class="demo-banner">⚠️ 本資料は <b>アートソウル社内デモ用</b> に作成された完全架空のリサーチレポートです。</div>
+
+<nav class="toc"><ul>
+  <li><a href="#position">01 越前刃心の現在地</a></li>
+  <li><a href="#scope">02 調査スコープ</a></li>
+  <li><a href="#trends">03 半年間の動き</a></li>
+  <li><a href="#map">04 10販路マップ</a></li>
+  <li><a href="#cards">05 販路カード</a></li>
+  <li><a href="#deep">06 重点3販路</a></li>
+  <li><a href="#plan">07 90日アクション</a></li>
+  <li><a href="#insight">08 Kaiの読み</a></li>
+  <li><a href="#evidence">09 出典</a></li>
+</ul>
+<a href="index.html" class="portal-link">📋 ポータル</a>
+</nav>
+
+<main>
+
+<!-- 01 POSITION -->
+<section id="position">
+  <span class="section-num">01 / ECHIZEN POSITION</span>
+  <h2>越前刃心の現在地 — "産業用ナイフ"市場で実質寡占</h2>
+  <p class="lead">
+    今回の調査で最大の発見は、越前刃心が <b>既に新販路の1つで圧倒的ポジションを持っている</b> という事実です。
+    『鋭』シリーズが食肉加工・水産加工の現場で「越前刃心一択」と複数の食品工場現場で名指しされており、競合不在。
+    つまり、これから攻めるのではなく、<b>すでに獲った市場をどう拡張するか</b> という戦い方になります。
+  </p>
+  <div class="position-grid">
+    <div class="position-card"><h4>独占ポジション</h4><div class="val">産業用ナイフ（食肉・水産加工）</div><p>「食品工場の解体ラインは越前刃心一択」と現場が明言。事実上の寡占。</p></div>
+    <div class="position-card"><h4>顕在化済み需要</h4><div class="val">HACCP対応・耐酸刃物</div><p>食品衛生法改正で衛生管理対応の包丁需要が拡大。</p></div>
+    <div class="position-card warn"><h4>空白</h4><div class="val">解体ロボット用刃物・自動化対応</div><p>食品加工自動化が進む中、ロボットハンド用替刃市場が未開拓。</p></div>
+    <div class="position-card warn"><h4>拡張余地</h4><div class="val">他9販路への展開</div><p>産業用市場で培った"非料理向け"の信用と素材選択力を、他販路へ転用可能。</p></div>
+  </div>
+</section>
+
+<!-- 02 SCOPE -->
+<section id="scope">
+  <span class="section-num">02 / SCOPE</span>
+  <h2>調査スコープ</h2>
+  <p class="lead">
+    「飲食プロ市場以外」に絞り、半年分のリリース・反応記事・量販ECランキング・専門誌記事を横断走査。
+    対象期間 <b>2025年10月〜2026年4月</b>、除外 <b>貝印・ヘンケルス・グローバル等の家庭用／飲食プロ領域</b>、収集源 <b>メーカーリリース／業界専門誌／反応記事／工業統計／自治体の5系統</b>。
+  </p>
+</section>
+
+<!-- 03 TRENDS -->
+<section id="trends">
+  <span class="section-num">03 / TIMELINE</span>
+  <h2>半年間の主要な動き</h2>
+  <p class="lead">飲食プロ市場以外で業務用刃物が言及・販売・必要装備として登場した代表事例。</p>
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2026.04 — RANKING</div><div class="tl-title">業務用刃物市場ランキング 産業用部門で「越前」産地が3位浮上</div><div class="tl-body">「料理用品ニュース」誌の業務用刃物ランキングで、産業用ナイフ部門で「越前」産地ブランドが堺・関に次ぐ3位に。消費者の検索意図に「食品工場」「水産加工」「医療」が常時上位。</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2026 — NEW PRODUCT</div><div class="tl-title">関市メーカー「ハイブリッドステン解体ナイフ」2026モデル発売</div><div class="tl-body">柄＝樹脂滑り止め、刃＝高炭素ステン、HACCP色分け対応の自動車部品解体ナイフ。飲食由来だが「水中作業 × 動きやすさ」要件として横展開可能な構造提案。</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2026 — MEDICAL</div><div class="tl-title">国内医療機器メーカー「手術用カスタムメス」新ラインナップ公開</div><div class="tl-body">手術専業ではない医療機器メーカーが2026年向け新商品ラインに「精密刃物」を含めて拡充。参入アングルが鮮明化。</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">継続販売 — DISASTER</div><div class="tl-title">複数メーカー「災害対応サバイバルナイフ」の継続流通</div><div class="tl-body">自治体BCP・個人備蓄向けにポジショニング。防災需要のすそ野で飲食メーカー以外の選択肢として認知。</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">継続トレンド — INDUSTRIAL</div><div class="tl-title">越前刃心『鋭』シリーズが「食肉・水産加工」現場で実質寡占</div><div class="tl-body">「食品工場の解体ライン＝越前刃心の鋭一択」と複数現場記事が言及。HACCP対応・自動化対応・大ロット供給など空白が大きい。</div></div>
+  </div>
+</section>
+
+<!-- 04 MATRIX -->
+<section id="map">
+  <span class="section-num">04 / MAP</span>
+  <h2>10販路マップ：顕在度 × ブランド競合度</h2>
+  <p class="lead">横軸＝消費者・現場での顕在化レベル、縦軸＝貝印・ヘンケルス等を除く既存ブランドの参入度。<b>右下＝本命販路</b>。朱バブル＝越前刃心の現ホームグラウンド、金バブル＝重点候補。</p>
+  <div class="matrix-wrap">
+    <svg class="matrix-svg" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="10販路マトリクス散布図">
+      <line x1="80" y1="40" x2="80" y2="500" stroke="#e4dfd6" stroke-width="2"/>
+      <line x1="80" y1="500" x2="860" y2="500" stroke="#e4dfd6" stroke-width="2"/>
+      <line x1="470" y1="40" x2="470" y2="500" stroke="#e4dfd6" stroke-dasharray="4 4"/>
+      <line x1="80" y1="270" x2="860" y2="270" stroke="#e4dfd6" stroke-dasharray="4 4"/>
+      <text x="40" y="50" fill="#6b6661" font-size="11">High</text>
+      <text x="40" y="495" fill="#6b6661" font-size="11">Low</text>
+      <text x="80" y="535" fill="#6b6661" font-size="11">Low →</text>
+      <text x="810" y="535" fill="#6b6661" font-size="11">High</text>
+      <text x="20" y="280" fill="#1a1a1a" font-size="12" font-weight="700" transform="rotate(-90 20 280)">ブランド競合度</text>
+      <text x="430" y="555" fill="#1a1a1a" font-size="12" font-weight="700">顕在度</text>
+      <text x="160" y="170" fill="#1a1a1a" font-size="14" font-weight="700" opacity=".22">ニッチ未開拓</text>
+      <text x="560" y="170" fill="#1a1a1a" font-size="14" font-weight="700" opacity=".22">競合あり狙い目</text>
+      <text x="160" y="450" fill="#1a1a1a" font-size="14" font-weight="700" opacity=".22">ブルーオーシャン</text>
+      <text x="560" y="450" fill="#1a1a1a" font-size="14" font-weight="700" opacity=".22">本命販路</text>
+      <g><circle cx="720" cy="420" r="28" fill="#a52a2a" opacity=".92"/><text x="720" y="425" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">01</text><text x="720" y="470" text-anchor="middle" fill="#1a1a1a" font-size="11" font-weight="700">産業用ナイフ★HOME</text></g>
+      <g><circle cx="500" cy="270" r="24" fill="#b58a3b" opacity=".9"/><text x="500" y="275" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">02</text><text x="500" y="240" text-anchor="middle" fill="#1a1a1a" font-size="11" font-weight="700">医療用刃物</text></g>
+      <g><circle cx="490" cy="430" r="24" fill="#b58a3b" opacity=".9"/><text x="490" y="435" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">03</text><text x="490" y="475" text-anchor="middle" fill="#1a1a1a" font-size="11" font-weight="700">海外プロ料理学校</text></g>
+      <g><circle cx="580" cy="395" r="20" fill="#2c2c2c" opacity=".85"/><text x="580" y="399" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">04</text><text x="630" y="399" fill="#1a1a1a" font-size="11">アウトドアナイフ</text></g>
+      <g><circle cx="240" cy="430" r="18" fill="#2c2c2c" opacity=".85"/><text x="240" y="434" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">05</text><text x="240" y="465" text-anchor="middle" fill="#1a1a1a" font-size="11">災害サバイバル</text></g>
+      <g><circle cx="540" cy="200" r="20" fill="#2c2c2c" opacity=".85"/><text x="540" y="204" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">06</text><text x="540" y="175" text-anchor="middle" fill="#1a1a1a" font-size="11">理美容・床屋シザー</text></g>
+      <g><circle cx="270" cy="200" r="18" fill="#2c2c2c" opacity=".85"/><text x="270" y="204" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">07</text><text x="270" y="175" text-anchor="middle" fill="#1a1a1a" font-size="11">園芸・盆栽用</text></g>
+      <g><circle cx="170" cy="380" r="18" fill="#2c2c2c" opacity=".85"/><text x="170" y="384" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">08</text><text x="170" y="415" text-anchor="middle" fill="#1a1a1a" font-size="11">伝統工芸ギフト</text></g>
+      <g><circle cx="610" cy="240" r="20" fill="#2c2c2c" opacity=".85"/><text x="610" y="244" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">09</text><text x="660" y="244" fill="#1a1a1a" font-size="11">家庭プレミアム</text></g>
+      <g><circle cx="300" cy="370" r="18" fill="#2c2c2c" opacity=".85"/><text x="300" y="374" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">10</text><text x="300" y="400" text-anchor="middle" fill="#1a1a1a" font-size="11">解体ロボット用替刃</text></g>
+    </svg>
+    <div class="matrix-legend">
+      <span><span class="key" style="background:#a52a2a"></span>越前刃心ホームグラウンド</span>
+      <span><span class="key" style="background:#b58a3b"></span>重点候補（新規参入）</span>
+      <span><span class="key" style="background:#2c2c2c"></span>その他販路</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CARDS -->
+<section id="cards">
+  <span class="section-num">05 / CHANNELS</span>
+  <h2>10販路カード</h2>
+  <p class="lead">各販路の参入難易度・想定顧客・特徴。「越前刃心 ホーム」は既獲得、「重点」は次の打ち手候補。</p>
+  <div class="cards">
+    <div class="card echizen-home">
+      <div class="card-num">01 / INDUSTRIAL</div>
+      <h3>産業用ナイフ（食肉・水産加工）</h3>
+      <div class="card-tagline">越前刃心『鋭』が事実上独占している領域</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on-r"></i><i class="on-r"></i><i class="on-r"></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on-r"></i><i></i><i></i></div></div>
+      </div>
+      <div class="card-body">食肉加工・水産加工の解体ライン需要が高く、HACCP対応・大ロット供給・自動化対応の空白が大きい。食品衛生法改正と連動。</div>
+      <div class="card-targets">想定顧客：<b>食品工場・水産加工場・JA畜産・大手食肉加工会社</b></div>
+    </div>
+    <div class="card featured">
+      <div class="card-num">02 / MEDICAL</div>
+      <h3>医療用刃物（手術メス・歯科用）</h3>
+      <div class="card-tagline">医療機器メーカーへのOEM受託</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="card-body">国内医療機器メーカー数社が寡占。越前打刃物の精密加工技術が活きる新領域。OEM受託として参入可能。</div>
+      <div class="card-targets">想定顧客：<b>医療機器メーカー・歯科機器商社・大学病院調達部</b></div>
+    </div>
+    <div class="card featured">
+      <div class="card-num">03 / GLOBAL CULINARY</div>
+      <h3>海外プロ料理学校</h3>
+      <div class="card-tagline">CIA・Le Cordon Bleu等18校への校友プログラム</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+      </div>
+      <div class="card-body">世界の料理学生 約12万人。今はウストフ・ヘンケルスが主流。Echizen ブランドの英語発信不足で空白あり。</div>
+      <div class="card-targets">想定顧客：<b>米CIA・仏Le Cordon Bleu・シンガポール調理学校等18校</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">04 / OUTDOOR</div>
+      <h3>アウトドアナイフ</h3>
+      <div class="card-tagline">キャンプブーム×日本クラフトナイフ需要</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="card-body">キャンプ・ブッシュクラフト需要が拡大。「Made in Echizen」のクラフトナイフは個人愛好家にウケる素地あり。</div>
+      <div class="card-targets">想定顧客：<b>アウトドアショップ・キャンプ場・ブッシュクラフター</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">05 / DISASTER</div>
+      <h3>災害サバイバルナイフ</h3>
+      <div class="card-tagline">自治体BCP・個人備蓄</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+      </div>
+      <div class="card-body">大規模災害頻発で自治体BCP予算化。多機能サバイバルナイフ市場の補完ポジション。</div>
+      <div class="card-targets">想定顧客：<b>自治体・防災NPO・個人備蓄層</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">06 / BARBER</div>
+      <h3>理美容・床屋シザー</h3>
+      <div class="card-tagline">職人用シザー市場の補完</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="card-body">理美容シザー市場は寡占。研ぎ直し・カスタム需要の余地。OEM受託としての参入可能。</div>
+      <div class="card-targets">想定顧客：<b>美容師組合・床屋商会・シザーディーラー</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">07 / BONSAI</div>
+      <h3>園芸・盆栽用刃物</h3>
+      <div class="card-tagline">海外日本園芸ブーム×越前打刃物</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="card-body">海外の盆栽愛好家が日本製剪定鋏を欲しがる。越前刃物としての展開余地あり。</div>
+      <div class="card-targets">想定顧客：<b>盆栽協会・園芸店・海外園芸愛好家</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">08 / CRAFT GIFT</div>
+      <h3>伝統工芸ギフト・コレクション</h3>
+      <div class="card-tagline">百貨店ギフト・記念品市場</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+      </div>
+      <div class="card-body">百貨店の伝統工芸ギフト売場・退職祝・記念品市場。「越前刃物」ブランドの権威性が活きる。</div>
+      <div class="card-targets">想定顧客：<b>百貨店・通販ギフト会社・企業表彰品</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">09 / HOME PREMIUM</div>
+      <h3>家庭プレミアム包丁</h3>
+      <div class="card-tagline">料理好き40-60代家庭向け</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i class="on"></i><i></i></div></div>
+      </div>
+      <div class="card-body">家庭用包丁市場280億円。提案②路線②と完全に重なる販路。『刃心ファミリー』新ラインで参入。</div>
+      <div class="card-targets">想定顧客：<b>百貨店・調理器具専門店・料理研究家・主婦層</b></div>
+    </div>
+    <div class="card">
+      <div class="card-num">10 / ROBOT BLADE</div>
+      <h3>解体ロボット用替刃</h3>
+      <div class="card-tagline">食品自動化×精密刃物</div>
+      <div class="card-meta">
+        <div><div class="label">顕在度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+        <div><div class="label">競合度</div><div class="bar"><i class="on"></i><i></i><i></i></div></div>
+      </div>
+      <div class="card-body">食品加工の自動化が進む中、ロボットハンド用替刃市場が拡大。『鋭』シリーズの技術延長線上で着手可能。</div>
+      <div class="card-targets">想定顧客：<b>食品自動化機器メーカー・FAインテグレーター</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 DEEP DIVE -->
+<section id="deep">
+  <span class="section-num">06 / DEEP DIVE</span>
+  <h2>重点3販路 — 越前刃心視点での読み</h2>
+  <p class="lead">朱＝既獲得領域の拡張、金＝新規参入候補。それぞれ「狙う理由・商圏設計・初動アクション」を越前刃心の現有資産から組み立てました。</p>
+  <div class="deep-grid">
+    <div class="deep home">
+      <div class="deep-num">01</div>
+      <h3>産業用ナイフ（既得・拡張）</h3>
+      <div class="deep-section">
+        <h4>越前刃心が狙う理由</h4>
+        <p>すでに「食肉・水産加工＝越前刃心『鋭』一択」のポジション確立済み。獲るのではなく、<b>占有率を維持しつつ売上を1.5〜2倍に伸ばす</b> フェーズ。</p>
+      </div>
+      <div class="deep-section">
+        <h4>商圏設計</h4>
+        <ul>
+          <li>食品工場へBtoB卸（1工場100〜500本/年）</li>
+          <li>JA畜産・大手食肉加工会社の定期契約</li>
+          <li>HACCP対応研修パッケージとの抱き合わせ</li>
+        </ul>
+      </div>
+      <div class="deep-section">
+        <h4>初動アクション</h4>
+        <p>HACCP対応文書整備、自動化対応モデル開発、食品工場団体への提案書持ち込み。<b>提案②（5路線販路拡大）の路線③「給食・施設BCP」と完全連動可能</b>。</p>
+      </div>
+    </div>
+    <div class="deep">
+      <div class="deep-num">02</div>
+      <h3>医療用刃物（新規）</h3>
+      <div class="deep-section">
+        <h4>越前刃心が狙う理由</h4>
+        <p>医療用刃物市場は寡占だが、技術要求は越前打刃物の精密加工技術と親和性が高い。OEM受託でのエントリーが現実的。</p>
+      </div>
+      <div class="deep-section">
+        <h4>商圏設計</h4>
+        <ul>
+          <li>国内医療機器メーカー上位5社にOEM提案</li>
+          <li>「越前職人の精密加工」を訴求軸に</li>
+          <li>ISO 13485認証取得を3年計画で</li>
+        </ul>
+      </div>
+      <div class="deep-section">
+        <h4>初動アクション</h4>
+        <p>医療機器コンサルタントへのヒアリング、上位3社への打診、品質マネジメント体制の事前評価。1モデル試作→1社テスト供給。</p>
+      </div>
+    </div>
+    <div class="deep">
+      <div class="deep-num">03</div>
+      <h3>海外プロ料理学校（新規）</h3>
+      <div class="deep-section">
+        <h4>越前刃心が狙う理由</h4>
+        <p>世界の料理学校12万人の市場でウストフ・ヘンケルスが寡占。「Echizen」検索数は年20%増、Sakai・Sekiに次ぐ第3産地として認知拡大中。</p>
+      </div>
+      <div class="deep-section">
+        <h4>商圏設計</h4>
+        <ul>
+          <li>米CIA・仏Le Cordon Bleu等18校に校友プログラム</li>
+          <li>校友価格20%OFF＋校名刻字＋メンテ生涯保証</li>
+          <li>卒業生＝世界の和食レストランへの海外アンバサダー化</li>
+        </ul>
+      </div>
+      <div class="deep-section">
+        <h4>初動アクション</h4>
+        <p>英語LP整備（echizen-jinshin.com/en）、吉田海外営業課長による米CIAへの打診、Shopify英語版開設。提案②の路線④と完全連動。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 90 DAY PLAN -->
+<section id="plan">
+  <span class="section-num">07 / 90-DAY PLAN</span>
+  <h2>越前刃心向け 90日アクションプラン</h2>
+  <p class="lead">獲るところからではなく、<b>「産業用ナイフの既得拡張」</b> を1月目で勝ち切り、その勢いで2〜3月目に新規2販路へ布石を打つ順序。</p>
+  <div class="plan-wrap">
+    <div class="plan-grid">
+      <div class="plan-col">
+        <span class="span">MONTH 1 — 既得拡張</span>
+        <h4>産業用ナイフを磨く</h4>
+        <ul>
+          <li>HACCP対応文書テンプレ整備</li>
+          <li>食品工場20社に提案文送付</li>
+          <li>JA畜産2組合と試験提携</li>
+          <li>食品加工自動化メーカー3社にヒアリング</li>
+        </ul>
+      </div>
+      <div class="plan-col">
+        <span class="span">MONTH 2 — 新規①布石</span>
+        <h4>医療用刃物 試金石</h4>
+        <ul>
+          <li>医療機器コンサルタントヒアリング</li>
+          <li>国内医療機器メーカー上位3社に打診</li>
+          <li>ISO 13485認証取得計画書作成</li>
+          <li>「越前職人の精密加工」訴求材料整備</li>
+        </ul>
+      </div>
+      <div class="plan-col">
+        <span class="span">MONTH 3 — 新規②布石</span>
+        <h4>海外プロ料理学校 試販</h4>
+        <ul>
+          <li>英語LP公開（echizen-jinshin.com/en）</li>
+          <li>米CIA・Le Cordon Bleu 2校に打診メール</li>
+          <li>Shopify英語版＋eBay日本ストア開設</li>
+          <li>海外Sushi-bar勤務シェフへサンプル20本</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 INSIGHT -->
+<section id="insight">
+  <span class="section-num">08 / KAI INSIGHT</span>
+  <h2>Kaiの読み</h2>
+  <div class="insight">
+    <div class="insight-eyebrow">Kai — 上村桂右ビジネスパートナーAI</div>
+    <h3>「業務用刃物」を"料理人の道具"の棚から外し、"職人技の応用領域"の棚に置き直せ。<br>そして越前刃心は、すでにその棚の1つで王者である。</h3>
+    <p>貝印・ヘンケルスが寡占しているのは"料理人の道具としての包丁"であって、業務用刃物カテゴリ全体ではない。同じ越前刃心の技術でも置き場と訴求語を変えれば、競合がほぼいない棚に並べられる。</p>
+    <p>半年間の調査で見えたのは、需要があるのに大手の商品設計・販路設計が届いていない「産業用・医療・海外プロ」の3領域。そして <b>産業用ナイフ（『鋭』）は、すでに越前刃心が独擅場</b> — 攻め込む段階ではなく、<b>守りながら拡張する段階</b> です。</p>
+    <ol>
+      <li><b>産業用ナイフ</b>：既得ポジションを資産化。HACCP対応 × JA畜産・食肉加工大手 → 1工場で100〜500本/年の塊買い</li>
+      <li><b>医療用刃物</b>：国内医療機器メーカーOEM → 3年で1社獲得を目標、ISO 13485認証取得を並行</li>
+      <li><b>海外プロ料理学校</b>：CIA・Le Cordon Bleu → 校友プログラムで世界の卒業生を海外アンバサダー化</li>
+    </ol>
+    <div class="note">
+      <b>注意点：</b>飲食プロ市場と同じ商品をそのまま流すと「専門性が低い」と見られる。販路ごとに <b>素材グレード／サイズ展開／パッケージング</b> を必ず分けること。<br>
+      <b>他提案との連携：</b>提案②（5路線販路拡大）の路線③「給食・施設BCP」「路線④海外プロ料理学校」と完全に重なる。提案③（日本調理師会連合会総会戦略）は販路09（家庭プレミアム）と直結。<b>本レポートは既存提案を破棄するものではなく、補強する位置付け</b>。
+    </div>
+  </div>
+</section>
+
+<!-- ====== EVIDENCE ====== -->
+<section id="evidence">
+  <span class="section-num">09 / EVIDENCE</span>
+  <h2>出典一覧</h2>
+  <p class="lead">本リサーチは<strong>「越前刃心」固有情報のみ架空</strong>、<strong>市場規模・統計・産地情報は公開実データ</strong>を参照しています。</p>
+
+  <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-top:16px">
+    <h3 style="font-family:'Noto Serif JP',serif;color:var(--c-sumi);margin-bottom:12px;font-size:1.05rem;border-bottom:2px solid var(--c-gold);padding-bottom:6px">📊 市場規模・統計（実データ）</h3>
+    <ul style="padding-left:20px;font-size:0.88rem;line-height:1.8;color:#444">
+      <li><a href="https://www.globalgrowthinsights.com/market-reports/commercial-kitchen-knives-market-105813" target="_blank" rel="noopener">Global Growth Insights「Commercial Kitchen Knives Market Forecast 2035」</a> — 業務用包丁世界市場USD 1.81B（2025）</li>
+      <li><a href="https://www.fortunebusinessinsights.com/kitchen-knife-market-103865" target="_blank" rel="noopener">Fortune Business Insights「Kitchen Knife Market」</a></li>
+      <li><a href="https://www.gii.co.jp/report/sky1623988-kitchen-knife-market-size-share-growth-analysis-by.html" target="_blank" rel="noopener">GII「包丁の市場規模・シェア・成長分析 2025-2032」</a></li>
+      <li><a href="https://www.gyokusendo.com/column01_dento/4507" target="_blank" rel="noopener">玉川堂「世界が注目する日本製包丁と今後の課題」</a></li>
+    </ul>
+  </div>
+
+  <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-top:16px">
+    <h3 style="font-family:'Noto Serif JP',serif;color:var(--c-sumi);margin-bottom:12px;font-size:1.05rem;border-bottom:2px solid var(--c-gold);padding-bottom:6px">⛩️ 越前打刃物 産地情報（実データ）</h3>
+    <ul style="padding-left:20px;font-size:0.88rem;line-height:1.8;color:#444">
+      <li><a href="https://www.city.echizen.lg.jp/office/060/050/k-02.html" target="_blank" rel="noopener">越前市公式「伝統産業 越前打刃物」</a></li>
+      <li><a href="https://info.pref.fukui.lg.jp/tisan/monosato/uchihamono.html" target="_blank" rel="noopener">福井県「越前打刃物」</a></li>
+      <li><a href="https://www.city.echizen.lg.jp/office/060/100/etizenuchihamono.html" target="_blank" rel="noopener">越前市「越前打刃物 詳細」</a> — 1979年 刃物産地として全国初の伝統的工芸品指定</li>
+      <li><a href="https://www.furusato-tax.jp/feature/detail/18209/11132" target="_blank" rel="noopener">ふるさとチョイス「越前打刃物 700年の歴史」</a></li>
+    </ul>
+  </div>
+
+  <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-top:16px">
+    <h3 style="font-family:'Noto Serif JP',serif;color:var(--c-sumi);margin-bottom:12px;font-size:1.05rem;border-bottom:2px solid var(--c-gold);padding-bottom:6px">🌍 海外日本食市場（実データ）</h3>
+    <ul style="padding-left:20px;font-size:0.88rem;line-height:1.8;color:#444">
+      <li><a href="https://www.maff.go.jp/j/press/yusyutu_kokusai/kaitaku/251128.html" target="_blank" rel="noopener">農林水産省「海外における日本食レストラン数の調査結果（令和7年）」18.1万店</a></li>
+      <li><a href="https://www.jetro.go.jp/biznews/2025/12/5b3b792ffec5ac1e.html" target="_blank" rel="noopener">JETRO「海外の日本食レストラン数は18万1,000店に」</a></li>
+    </ul>
+  </div>
+
+  <div style="background:#fff;padding:24px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.05);margin-top:16px">
+    <h3 style="font-family:'Noto Serif JP',serif;color:var(--c-sumi);margin-bottom:12px;font-size:1.05rem;border-bottom:2px solid var(--c-gold);padding-bottom:6px">📊 調理師統計（実データ）</h3>
+    <ul style="padding-left:20px;font-size:0.88rem;line-height:1.8;color:#444">
+      <li><a href="https://www.e-stat.go.jp/stat-search/files?toukei=00450027&tstat=000001031469&layout=dataset&stat_infid=000001718025" target="_blank" rel="noopener">e-Stat 衛生行政報告例「調理師免許交付数」（厚労省）</a></li>
+      <li><a href="https://www.genius-japan.com/blog/ono20251022" target="_blank" rel="noopener">「美食大国いつまで？ 揺らぐ調理師の厚み」2025年10月</a></li>
+    </ul>
+  </div>
+
+  <div style="background:#fff3cd;border:2px solid var(--c-gold);padding:14px 18px;border-radius:6px;margin-top:20px;font-size:0.88rem">
+    <strong>注意事項：</strong>10販路の具体的な「越前刃心の現在地」（産業用ナイフの寡占等）は<strong>本デモ用の架空シナリオ</strong>です。各販路の市場存在自体は実在しますが、越前刃心の具体的シェア・ポジションは創作です。
+  </div>
+</section>
+
+</main>
+
+<button class="to-top" aria-label="トップに戻る" id="toTopBtn">↑</button>
+
+<footer>
+  <div>本資料はアートソウル社内デモ用に作成された完全架空のリサーチレポートです</div>
+  <div style="margin-top:6px">調査期間 2025/10 – 2026/04（架空）　／　調査主体 有限会社アートソウル（DEMO）</div>
+  <a href="index.html" class="back">← ポータルに戻る</a>
+</footer>
+
+<script>
+(function(){
+  var nav=document.querySelector('nav.toc');var btn=document.getElementById('toTopBtn');
+  function onS(){var y=window.scrollY||0;if(nav)nav.classList.toggle('scrolled',y>20);if(btn)btn.classList.toggle('show',y>240);}
+  window.addEventListener('scroll',onS,{passive:true});
+  if(btn)btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onS();
+})();
+</script>
+</body>
+</html>
