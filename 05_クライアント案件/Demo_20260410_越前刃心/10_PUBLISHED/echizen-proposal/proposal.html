@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>越前刃心株式会社 販路拡大アドバイザリー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{
+  --c-sumi:#1a1a1a;
+  --c-sumi-2:#2c2c2c;
+  --c-red:#a52a2a;
+  --c-red-2:#7a1f1f;
+  --c-gold:#b58a3b;
+  --c-bg:#f7f5f0;
+  --c-card:#ffffff;
+  --c-text:#1a1a1a;
+  --c-muted:#6b6661;
+  --c-border:#e4dfd6;
+  --c-accent-bg:#f3ede2;
+  --shadow:0 2px 8px rgba(26,26,26,0.08);
+  --shadow-lg:0 8px 24px rgba(26,26,26,0.14);
+  --radius:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--c-bg);
+  color:var(--c-text);
+  line-height:1.75;
+  font-size:clamp(14px,1.6vw,16px);
+}
+.serif{font-family:'Noto Serif JP',serif}
+img{max-width:100%;height:auto}
+a{color:var(--c-red-2);text-decoration:underline}
+a:hover{color:var(--c-gold)}
+
+/* ===== HERO ===== */
+.hero{
+  background:linear-gradient(135deg,var(--c-sumi) 0%,var(--c-sumi-2) 55%,var(--c-red-2) 100%);
+  color:#fff;
+  padding:clamp(40px,6vw,80px) clamp(20px,5vw,60px);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-20%;
+  width:80%;height:200%;
+  background:radial-gradient(circle, rgba(181,138,59,0.18), transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.hero-tag{
+  display:inline-block;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(181,138,59,0.5);
+  padding:6px 14px;border-radius:2px;font-size:0.85rem;
+  margin-bottom:20px;letter-spacing:0.05em;color:var(--c-gold);
+}
+.hero h1{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.35;
+  margin-bottom:18px;
+}
+.hero h1 .accent{color:var(--c-gold)}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.18rem);opacity:0.92;max-width:760px;margin-bottom:32px}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;font-size:0.88rem;opacity:0.85}
+.hero-meta span::before{content:"❖";margin-right:6px;color:var(--c-gold)}
+
+/* ===== NAV ===== */
+nav.toc{
+  position:sticky;top:0;z-index:50;
+  background:rgba(247,245,240,0.85);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--c-border);
+  padding:10px clamp(20px,5vw,60px);
+  overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;
+  transition:background 0.3s,box-shadow 0.3s,border-color 0.3s;
+  display:flex;align-items:center;gap:12px;
+}
+nav.toc.scrolled{
+  background:#fff;
+  box-shadow:0 4px 16px rgba(26,26,26,0.12);
+  border-bottom-color:var(--c-gold);
+}
+nav.toc ul{display:inline-flex;gap:8px;list-style:none;flex:1}
+nav.toc a{
+  display:inline-block;padding:6px 12px;border-radius:4px;
+  text-decoration:none;color:var(--c-sumi);font-size:0.85rem;
+  transition:all 0.2s;
+}
+nav.toc a:hover{background:var(--c-accent-bg);color:var(--c-red-2)}
+nav.toc .portal-link{
+  flex-shrink:0;padding:6px 14px;background:var(--c-gold);
+  color:#fff !important;text-decoration:none;border-radius:4px;
+  font-size:0.8rem;font-weight:700;transition:background 0.2s;
+  margin-left:auto;
+}
+nav.toc .portal-link:hover{background:var(--c-red-2);color:#fff !important}
+
+/* ===== TO TOP BUTTON ===== */
+.to-top{
+  position:fixed;bottom:24px;right:24px;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--c-sumi);color:#fff;border:2px solid var(--c-gold);
+  font-size:1.4rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(26,26,26,0.35);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s,transform 0.2s,background 0.2s;
+  z-index:100;font-family:inherit;line-height:1;
+}
+.to-top.show{opacity:1;pointer-events:auto}
+.to-top:hover{background:var(--c-red-2);transform:translateY(-3px)}
+
+/* ===== SECTION ===== */
+main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,5vw,60px)}
+section{margin-bottom:clamp(48px,7vw,80px);scroll-margin-top:80px}
+section h2{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(1.4rem,2.8vw,2rem);font-weight:900;
+  color:var(--c-sumi);position:relative;
+  padding-left:18px;margin-bottom:12px;line-height:1.4;
+}
+section h2::before{
+  content:"";position:absolute;left:0;top:6px;bottom:6px;width:4px;
+  background:linear-gradient(180deg,var(--c-red),var(--c-gold));
+  border-radius:0;
+}
+section h3{
+  font-size:clamp(1.1rem,2vw,1.25rem);font-weight:700;
+  color:var(--c-sumi);margin-top:24px;margin-bottom:12px;
+}
+section .lead{
+  font-size:clamp(0.95rem,1.6vw,1.05rem);
+  color:#444;margin-bottom:28px;max-width:900px;
+}
+
+/* ===== CARDS / GRID ===== */
+.grid{display:grid;gap:clamp(12px,2vw,20px)}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{
+  background:var(--c-card);border-radius:var(--radius);padding:clamp(16px,2.5vw,24px);
+  box-shadow:var(--shadow);border:1px solid var(--c-border);
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.card h4{font-size:1.02rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700}
+.card p{font-size:0.92rem;color:var(--c-text)}
+.card .stat{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:900;
+  color:var(--c-red-2);line-height:1.1;margin:8px 0;
+}
+.card .stat-sub{font-size:0.78rem;color:var(--c-muted)}
+.card.danger .stat{color:#a02020}
+.card.warn .stat{color:var(--c-gold)}
+.card.accent{background:var(--c-accent-bg);border-color:#d8cdb8}
+
+/* ===== KEY MESSAGE ===== */
+.key-message{
+  background:linear-gradient(135deg,var(--c-sumi) 0%,var(--c-sumi-2) 100%);
+  color:#fff;padding:clamp(24px,4vw,40px);border-radius:var(--radius);
+  margin:24px 0;position:relative;overflow:hidden;
+}
+.key-message::before{
+  content:"刃";position:absolute;top:-40px;right:-10px;
+  font-family:'Noto Serif JP',serif;
+  font-size:200px;opacity:0.08;color:var(--c-gold);
+}
+.key-message .km-label{
+  display:inline-block;background:var(--c-gold);color:#fff;
+  padding:4px 12px;border-radius:2px;font-weight:700;
+  font-size:0.85rem;margin-bottom:12px;
+}
+.key-message .km-text{font-size:clamp(1.05rem,2vw,1.3rem);font-weight:500;line-height:1.7}
+.key-message .km-text strong{color:var(--c-gold);font-weight:900}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow);margin:20px 0}
+table{width:100%;border-collapse:collapse;background:var(--c-card);min-width:600px;font-size:0.9rem}
+table th{
+  background:var(--c-sumi);color:#fff;padding:12px;text-align:left;
+  font-weight:700;font-size:0.85rem;
+}
+table td{padding:12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+table tr:last-child td{border-bottom:none}
+table tr:nth-child(even) td{background:#fafaf7}
+table .num{text-align:right;font-variant-numeric:tabular-nums}
+table .badge{display:inline-block;padding:2px 8px;border-radius:2px;font-size:0.75rem;font-weight:700}
+.badge.high{background:#fadcdc;color:#7a1f1f}
+.badge.mid{background:#f4e4c4;color:#7a5a20}
+.badge.low{background:#dcebe0;color:#2f5d3a}
+
+/* ===== ACCORDION ===== */
+details{
+  background:var(--c-card);border-radius:var(--radius);
+  margin-bottom:12px;border:1px solid var(--c-border);
+  overflow:hidden;
+}
+details summary{
+  padding:16px 20px;cursor:pointer;font-weight:700;
+  color:var(--c-sumi);font-size:1rem;
+  display:flex;align-items:center;gap:10px;list-style:none;
+  background:var(--c-card);transition:background 0.2s;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:"▶";color:var(--c-red);font-size:0.7rem;
+  transition:transform 0.2s;flex-shrink:0;
+}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{background:var(--c-accent-bg)}
+details .details-body{padding:0 20px 20px 20px}
+details .details-body p{margin-bottom:10px}
+details .details-body ul{margin:10px 0 10px 20px}
+details .details-body li{margin-bottom:6px}
+
+/* ===== TABS ===== */
+.tabs{margin-top:20px}
+.tab-buttons{
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-bottom:2px solid var(--c-border);margin-bottom:16px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.tab-buttons button{
+  border:none;background:transparent;
+  padding:10px 16px;cursor:pointer;font-weight:700;
+  color:var(--c-muted);border-bottom:3px solid transparent;
+  font-family:inherit;font-size:0.88rem;
+  transition:all 0.2s;flex-shrink:0;
+}
+.tab-buttons button:hover{color:var(--c-sumi)}
+.tab-buttons button.active{
+  color:var(--c-red-2);border-bottom-color:var(--c-red-2);
+}
+.tab-content{display:none;animation:fadein 0.3s}
+.tab-content.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== 4QM ===== */
+.matrix{
+  display:grid;grid-template-columns:40px 1fr;grid-template-rows:1fr 40px;
+  gap:0;margin:20px 0;min-height:480px;
+}
+.matrix .y-axis{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-sumi);font-size:0.85rem;
+  background:linear-gradient(180deg,#fadcdc,#dcebe0);
+}
+.matrix .x-axis{
+  grid-column:2;grid-row:2;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--c-sumi);font-size:0.85rem;
+  background:linear-gradient(90deg,#dcebe0,#fadcdc);
+}
+.matrix .quadrant-grid{
+  grid-column:2;grid-row:1;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:2px;background:var(--c-border);
+}
+.matrix .q{
+  background:var(--c-card);padding:16px;position:relative;
+  display:flex;flex-direction:column;gap:8px;
+}
+.matrix .q.q1{background:#f1ecde}
+.matrix .q.q2{background:#f4e8d2}
+.matrix .q.q3{background:#e8ebdb}
+.matrix .q.q4{background:#f4dada}
+.matrix .q-label{
+  position:absolute;top:8px;right:10px;font-size:0.7rem;
+  font-weight:700;color:var(--c-muted);text-transform:uppercase;
+}
+.matrix .q-title{font-weight:700;color:var(--c-sumi);font-size:0.95rem;margin-bottom:6px}
+.matrix .chip{
+  display:inline-block;background:var(--c-card);
+  border:1px solid var(--c-border);border-radius:4px;
+  padding:4px 10px;font-size:0.8rem;font-weight:500;
+  margin:2px;color:var(--c-sumi);
+}
+.matrix .chip.high{border-color:var(--c-red);background:#fadcdc;color:var(--c-red-2);font-weight:700}
+
+@media (max-width:600px){
+  .matrix{grid-template-columns:30px 1fr;min-height:560px}
+  .matrix .q{padding:10px}
+  .matrix .q-title{font-size:0.85rem}
+  .matrix .chip{font-size:0.72rem;padding:3px 7px}
+}
+
+/* ===== FLOW ===== */
+.flow-wrap{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:24px;box-shadow:var(--shadow);overflow-x:auto;
+}
+.mermaid{font-family:'Noto Sans JP',sans-serif !important}
+
+/* ===== ROADMAP / GANTT ===== */
+.roadmap{margin:20px 0}
+.roadmap .row{
+  display:grid;grid-template-columns:140px 1fr;
+  gap:8px;align-items:center;margin-bottom:8px;
+}
+.roadmap .row-label{font-size:0.85rem;font-weight:700;color:var(--c-sumi)}
+.roadmap .row-bar{
+  background:var(--c-border);height:32px;border-radius:4px;
+  position:relative;display:grid;grid-template-columns:repeat(12,1fr);
+}
+.roadmap .row-bar .seg{
+  background:var(--c-red-2);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:0.75rem;font-weight:700;
+  padding:0 8px;white-space:nowrap;overflow:hidden;
+}
+.roadmap .seg.gold{background:var(--c-gold)}
+.roadmap .seg.sumi{background:var(--c-sumi)}
+.roadmap .header{margin-bottom:4px;color:var(--c-muted);font-size:0.75rem}
+.roadmap .header .row-bar{background:transparent}
+.roadmap .header .row-bar > div{
+  text-align:center;border-left:1px dashed var(--c-border);
+  font-size:0.7rem;color:var(--c-muted);padding:4px 0;
+}
+@media (max-width:600px){
+  .roadmap .row{grid-template-columns:100px 1fr}
+  .roadmap .row-label{font-size:0.75rem}
+}
+
+/* ===== FIVE PRINCIPLES ===== */
+.principles{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin-top:16px}
+.principle{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;border-left:5px solid var(--c-red);
+  box-shadow:var(--shadow);
+}
+.principle .num{
+  display:inline-block;width:32px;height:32px;
+  background:var(--c-sumi);color:#fff;border-radius:50%;
+  text-align:center;line-height:32px;font-weight:900;
+  margin-right:10px;
+}
+.principle h4{display:inline;font-size:1rem;color:var(--c-sumi)}
+.principle .rule{font-weight:700;color:var(--c-sumi);margin:10px 0 8px 0}
+.principle .ng{color:#a02020;font-size:0.85rem;margin-bottom:4px}
+.principle .ng::before{content:"❌ ";font-weight:700}
+.principle .ok{color:#2f5d3a;font-size:0.85rem}
+.principle .ok::before{content:"✅ ";font-weight:700}
+
+/* ===== STORY ===== */
+.story{
+  background:var(--c-accent-bg);border-radius:var(--radius);
+  padding:20px;margin:16px 0;border-left:4px solid var(--c-gold);
+}
+.story h5{
+  font-size:0.85rem;color:var(--c-gold);font-weight:700;
+  text-transform:uppercase;margin-bottom:8px;letter-spacing:0.05em;
+}
+.story p{font-size:0.92rem;color:var(--c-text);line-height:1.85}
+.story p + p{margin-top:10px}
+
+/* ===== CHART CONTAINER ===== */
+.chart-box{
+  background:var(--c-card);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);margin:16px 0;
+}
+.chart-box h4{font-size:0.95rem;color:var(--c-sumi);margin-bottom:10px;font-weight:700}
+.chart-canvas-wrap{position:relative;width:100%;height:320px}
+.chart-canvas-wrap.tall{height:380px}
+.chart-canvas-wrap canvas{max-height:100%}
+.chart-box .source{font-size:0.72rem;color:var(--c-muted);margin-top:8px}
+.chart-box .source::before{content:"出典: "}
+@media (max-width:600px){
+  .chart-canvas-wrap{height:260px}
+  .chart-canvas-wrap.tall{height:340px}
+}
+
+/* ===== INFOBOX ===== */
+.info-box{
+  background:#f4e8d2;border-left:4px solid var(--c-gold);
+  padding:12px 16px;border-radius:4px;margin:12px 0;font-size:0.88rem;
+}
+.info-box::before{content:"❖ ";font-weight:700;color:var(--c-gold)}
+
+/* ===== DEMO BANNER ===== */
+.demo-banner{
+  background:#fff3cd;border:2px solid var(--c-gold);
+  padding:12px 20px;margin:20px auto;max-width:1200px;
+  border-radius:var(--radius);font-size:0.88rem;color:var(--c-sumi);
+  text-align:center;font-weight:500;
+}
+.demo-banner b{color:var(--c-red-2)}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--c-sumi);color:#fff;
+  padding:32px clamp(20px,5vw,60px);text-align:center;
+  font-size:0.85rem;opacity:0.92;
+}
+footer a{color:var(--c-gold)}
+
+/* ===== UTILITY ===== */
+.center{text-align:center}
+.muted{color:var(--c-muted);font-size:0.85rem}
+.badge-tag{
+  display:inline-block;padding:3px 10px;border-radius:2px;
+  font-size:0.72rem;font-weight:700;
+  background:var(--c-accent-bg);color:var(--c-red-2);
+  margin-right:6px;
+}
+.priority{display:inline-block;color:var(--c-red);font-weight:900;letter-spacing:0.05em}
+hr.divider{border:none;height:1px;background:var(--c-border);margin:24px 0}
+</style>
+</head>
+<body>
+
+<!-- ====== PASSWORD GATE ====== -->
+<div id="password-gate" style="position:fixed;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#2c2c2c 60%,#7a1f1f 100%);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:'Noto Sans JP',sans-serif;padding:20px;text-align:center">
+  <div style="background:rgba(255,255,255,0.05);padding:40px 32px;border-radius:8px;border:1px solid rgba(181,138,59,0.4);max-width:420px;width:100%">
+    <h2 style="margin-bottom:8px;font-size:1.3rem;font-weight:700;font-family:'Noto Serif JP',serif">越前刃心株式会社 販路拡大アドバイザリー</h2>
+    <p style="font-size:0.85rem;opacity:0.8;margin-bottom:24px;color:#b58a3b">DEMO ｜ 閲覧にはパスワードが必要です</p>
+    <input type="password" id="pwd-input" style="padding:12px 16px;font-size:1rem;border-radius:4px;border:none;width:100%;text-align:center;margin-bottom:12px;color:#1a1a1a;font-family:inherit" placeholder="パスワード" autofocus>
+    <button id="pwd-btn" style="padding:12px 24px;background:#b58a3b;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;font-weight:700;width:100%;font-family:inherit;transition:background 0.2s">閲覧する</button>
+    <p id="pwd-err" style="color:#fca5a5;margin-top:12px;font-size:0.85rem;display:none">パスワードが正しくありません</p>
+  </div>
+</div>
+<script>
+(function(){
+  var PASS='demo2026';
+  var gate=document.getElementById('password-gate');
+  var input=document.getElementById('pwd-input');
+  var btn=document.getElementById('pwd-btn');
+  var err=document.getElementById('pwd-err');
+  if(sessionStorage.getItem('echizen_auth')==='ok'){gate.style.display='none';return;}
+  document.body.style.overflow='hidden';
+  function check(){
+    if(input.value===PASS){
+      sessionStorage.setItem('echizen_auth','ok');
+      gate.style.display='none';
+      document.body.style.overflow='';
+    }else{err.style.display='block';input.value='';input.focus();}
+  }
+  btn.addEventListener('click',check);
+  input.addEventListener('keypress',function(e){if(e.key==='Enter')check();});
+})();
+</script>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">CLIENT ADVISORY ｜ DEMO 2026-04-10</span>
+    <h1>「卸ルートは<span class="accent">広告投資</span>」<br>と再定義する販路拡大戦略</h1>
+    <p class="hero-sub">越前刃心株式会社様のための、現状維持 × 低コスト × 代理店反感ゼロで「プロ料理人リスト基盤」を構築する6視点・7施策アドバイザリー</p>
+    <div class="hero-meta">
+      <span>v1 詳細版</span>
+      <span>デモデータ</span>
+    </div>
+  </div>
+</header>
+
+<div class="demo-banner">
+  ⚠️ 本資料は <b>アートソウル社内デモ用</b> に作成された完全架空の提案書です。実在の越前刃物業界・各企業との直接的関係はありません。
+</div>
+
+<!-- ====== TOC ====== -->
+<nav class="toc">
+  <ul>
+    <li><a href="#summary">サマリー</a></li>
+    <li><a href="#current">現状の可視化</a></li>
+    <li><a href="#issues">3つの本質課題</a></li>
+    <li><a href="#core">戦略の核</a></li>
+    <li><a href="#five">五箇条</a></li>
+    <li><a href="#actions">7施策（詳細）</a></li>
+    <li><a href="#matrix">4象限マトリクス</a></li>
+    <li><a href="#flow">フロー図</a></li>
+    <li><a href="#roi">ROI試算</a></li>
+    <li><a href="#roadmap">ロードマップ</a></li>
+    <li><a href="#support">支援内容</a></li>
+    <li><a href="#sources">出典</a></li>
+  </ul>
+  <a href="index.html" class="portal-link">📋 ポータル</a>
+</nav>
+
+<main>
+
+<!-- ====== SUMMARY ====== -->
+<section id="summary">
+  <h2>1. エグゼクティブサマリー</h2>
+  <p class="lead">本提言は、貴社の既存B2B卸構造（代理店約480社）を一切壊さず、その先にいるプロ料理人と直接つながる仕組みを構築するための戦略アドバイザリーです。</p>
+
+  <div class="key-message">
+    <span class="km-label">戦略の本質</span>
+    <p class="km-text">
+      卸ルートはやめません。<br>
+      <strong>「全国に展開された広告掲示板」として再評価</strong>します。<br>
+      違うのは、その先で<strong>プロ料理人と直接つながる仕組み</strong>を作ることです。
+    </p>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>① 桐箱同梱QRで職人登録</h4>
+      <p>5年研ぎ直し保証＋手入れ動画と引き換えに、プロ料理人情報＋お買い上げ店を取得</p>
+      <p class="muted" style="margin-top:8px">▶ 30日で『刃心』柳刃から先行運用／初期費用 約15万円</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>② 研ぎ直しサービスのオンライン化</h4>
+      <p>既存の年2,000本の修理接点をWeb化。代理店には紹介手数料を還元</p>
+      <p class="muted" style="margin-top:8px">▶ 60日で運用開始可／初期費用 30〜50万円</p>
+    </div>
+    <div class="card accent">
+      <span class="badge-tag">最優先 ★★★</span>
+      <h4>③ 代理店データ還元レポート</h4>
+      <p>取得したプロ料理人傾向を代理店ごとに匿名化レポートで還元＝反感ゼロの担保</p>
+      <p class="muted" style="margin-top:8px">▶ 90日でβ版／追加コスト ほぼゼロ</p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    総初期投資 150〜300万円・運用月額5〜20万円で、1年後に <strong>プロ料理人リスト3,000〜8,000件</strong> を構築できる見込み。これは「広告効果が測れる越前刃心」への第一歩です。
+  </div>
+</section>
+
+<!-- ====== CURRENT ====== -->
+<section id="current">
+  <h2>2. 現状の可視化</h2>
+  <p class="lead">FY2025業績データ・公的統計・主要EC調査に基づき、貴社を取り巻く市場環境と現在の販路実態を可視化します。</p>
+
+  <h3>2-1. 会社プロファイル（基本情報）</h3>
+  <div class="grid grid-4">
+    <div class="card">
+      <h4>創業</h4>
+      <div class="stat">1928</div>
+      <div class="stat-sub">年（昭和3年）</div>
+    </div>
+    <div class="card">
+      <h4>代理店網</h4>
+      <div class="stat">約480</div>
+      <div class="stat-sub">社（調理器具卸・厨房機器商社）</div>
+    </div>
+    <div class="card">
+      <h4>従業員</h4>
+      <div class="stat">84</div>
+      <div class="stat-sub">人（うち熟練職人 27名）</div>
+    </div>
+    <div class="card">
+      <h4>EC展開</h4>
+      <div class="stat">6+</div>
+      <div class="stat-sub">主要モール（自社EC + 外部）</div>
+    </div>
+  </div>
+
+  <h3>2-2. 国内業務用包丁市場の構造変化</h3>
+  <div class="grid grid-3">
+    <div class="card danger">
+      <h4>調理師免許交付数（10年比較）</h4>
+      <div class="stat">▲38.4%</div>
+      <div class="stat-sub">2023年度 約2.4万人。担い手減少が加速<br><span style="font-size:0.7rem">出典：厚労省 衛生行政報告例</span></div>
+    </div>
+    <div class="card warn">
+      <h4>世界の業務用包丁市場（2025）</h4>
+      <div class="stat">USD 1.81<span style="font-size:0.9rem">B</span></div>
+      <div class="stat-sub">CAGR 6.25%で 2035年 USD 3.32B予測<br><span style="font-size:0.7rem">出典：Global Growth Insights</span></div>
+    </div>
+    <div class="card">
+      <h4>業務用包丁ステンレス世界市場</h4>
+      <div class="stat">USD 414<span style="font-size:0.9rem">M</span></div>
+      <div class="stat-sub">2024年。CAGR 4.2%で2031年 USD 550M<br><span style="font-size:0.7rem">出典：QYResearch</span></div>
+    </div>
+  </div>
+
+  <h3>2-3. 自社4期業績推移</h3>
+  <div class="chart-box">
+    <h4>越前刃心 売上高・営業利益推移（FY2021-FY2025）</h4>
+    <div class="chart-canvas-wrap tall"><canvas id="chartSales"></canvas></div>
+    <div class="source">越前刃心 自社財務データ（FY2021-FY2025）</div>
+  </div>
+  <div class="info-box">
+    4期連続の減収減益。営業利益率はピーク6.8%から3.5%へ半減。粗利率は維持（38%前後）だが、卸ルート依存構造による販管費の硬直化が利益を圧迫しています。
+  </div>
+
+  <h3>2-4. 隣接市場の成長機会</h3>
+  <div class="grid grid-2">
+    <div class="card">
+      <h4>🌍 海外日本食レストラン</h4>
+      <div class="stat">18.1<span style="font-size:1rem">万店</span></div>
+      <div class="stat-sub">2025年。2013年5.5万店→2023年18.7万店→2025年18.1万店<br><span style="font-size:0.7rem">出典：農林水産省 2025年調査</span></div>
+      <p class="muted" style="margin-top:8px">「Made in Japan」和包丁を欲しがるが、購入導線が未整備</p>
+    </div>
+    <div class="card">
+      <h4>🌏 越前打刃物の地位</h4>
+      <div class="stat">700<span style="font-size:1rem">年</span></div>
+      <div class="stat-sub">の歴史。1979年 刃物産地として全国初の国の伝統的工芸品指定<br><span style="font-size:0.7rem">出典：越前市 / 福井県公式</span></div>
+      <p class="muted" style="margin-top:8px">海外への販路拡大が加速。世界注目の和包丁産地3つ目（堺・関・越前）</p>
+    </div>
+    <div class="card">
+      <h4>🏭 ステンレス業務用包丁世界市場</h4>
+      <div class="stat">USD 414<span style="font-size:0.9rem">M</span></div>
+      <div class="stat-sub">2024年→USD 550M（2031予測）。CAGR 4.2%<br><span style="font-size:0.7rem">出典：QYResearch / Fortune Business Insights</span></div>
+      <p class="muted" style="margin-top:8px">『鋭』シリーズの産業用ナイフ展開と親和性高</p>
+    </div>
+    <div class="card">
+      <h4>🏥 食品ブームと逆風の同居</h4>
+      <div class="stat">2017→2025</div>
+      <div class="stat-sub">海外日本食レストラン 11.8万→18.1万店（+53%）。一方、国内プロ用包丁需要は減少傾向<br><span style="font-size:0.7rem">出典：農水省 / 業界誌</span></div>
+      <p class="muted" style="margin-top:8px">海外向け輸出産業として注目度上昇</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ISSUES ====== -->
+<section id="issues">
+  <h2>3. 販路拡大における3つの本質課題</h2>
+  <p class="lead">現状の数字と現場ヒアリングを踏まえ、貴社が次の成長に向けて解くべき本質課題は以下3点です（クリックで詳細展開）。</p>
+
+  <details open>
+    <summary>課題1：プロ料理人が「誰だか分からない」 — リストゼロ問題</summary>
+    <div class="details-body">
+      <p>例：『刃心』柳刃が年間4,800本売れたとして—</p>
+      <ul>
+        <li>買ったのは銀座のミシュラン寿司屋？町中華？ホテル？給食センター？調理師学校の生徒？</li>
+        <li>独立したて30代？老舗の親方？海外日本食レストランのシェフ？</li>
+        <li>何本目の購入？最初の1本？買い替え？</li>
+      </ul>
+      <p><strong>すべて分からない。</strong>これは「直販していないから当然」ではなく、「直販しなくても取得できる方法を実装していないだけ」。</p>
+      <p>新商品『刃心 鋭翼-EIYO-』を出した時、刺さるのは既存『刃心』ユーザーですが、リストがなければDMが打てない。結果は代理店の番頭さんの記憶頼みになります。</p>
+      <p><strong>2026年2月の出来事</strong>：銀座の老舗寿司店が『刃心』から別ブランドに切り替えた事実を、1ヶ月遅れで業界の伝聞で知った。これが「見えない恐怖」の本質。</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>課題2：「広告効果」が測れていない — 卸＝広告という視点の不在</summary>
+    <div class="details-body">
+      <p>東京・井垣商店（年間取引4.1億円）と大阪・道頓堀調理器具卸（年間取引2.9億円）は売上規模が違うだけでなく、客層も全く違うはず。井垣は寿司・割烹が中心、大阪は粉物・町中華の比率が高い、というケースが普通にあり得ます。</p>
+      <ul>
+        <li>これが分かれば、井垣には『刃心 柳刃』販促物、大阪には『黒備 三徳』のキャンペーン、という個別対応ができる</li>
+        <li>今は均一なカタログ・販促物を送るだけ＝広告効率が悪い</li>
+        <li>FY2025のリベート総額 1.8億円（売上比7.7%）に対し、広告宣伝費は0.21億円（0.9%）。<strong>実質広告費（リベート）の効果がCAC・LTVで測定不能</strong></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>課題3：「研ぎ直し・修理」という稀有な顧客接点を活かしきれていない</summary>
+    <div class="details-body">
+      <p>貴社の「修理・研ぎ直し・カスタムオーダー対応」は業界でも稀な強みであり、メーカーと顧客が直接やり取りする数少ない正当な場面です。</p>
+      <ul>
+        <li>現状：電話・FAX・代理店経由＋紙の修理伝票が中心（年間2,000本）</li>
+        <li>使用シーン・購入経路・他の所持商品・満足度などは記録されない</li>
+        <li>修理完了→返送→終わり（次回購入につなげる仕組みなし）</li>
+      </ul>
+      <p>職人頭・川口さんの言葉：<em>「修理は、お客さんの顔が見える仕事や。『ありがとう』って手紙が来る。でも、ちゃんとお金にできていない」</em>。修理を事業化することは、職人モチベ・収益・データの3つを一度に解決する起点になります。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ====== CORE STRATEGY ====== -->
+<section id="core">
+  <h2>4. 戦略の核：三層構造への転換</h2>
+  <p class="lead">代理店を「販売チャネル」から「広告兼販売」と再定義し、その先に「プロ料理人リスト基盤」と「直接接点層」を追加します。</p>
+
+  <div class="flow-wrap">
+    <pre class="mermaid">
+flowchart TD
+  classDef maker fill:#1a1a1a,color:#fff,stroke:#1a1a1a
+  classDef dealer fill:#2c2c2c,color:#fff,stroke:#2c2c2c
+  classDef customer fill:#f3ede2,color:#1a1a1a,stroke:#b58a3b
+  classDef direct fill:#a52a2a,color:#fff,stroke:#a52a2a
+  classDef data fill:#b58a3b,color:#fff,stroke:#b58a3b
+
+  M["越前刃心（メーカー）"]:::maker
+  D["代理店 約480社<br/>＋ ECモール 6チャネル<br/>（広告兼販売）"]:::dealer
+  C["プロ料理人<br/>（リスト化＋LTV最大化）"]:::customer
+  DATA["①プロ料理人データ取得層<br/>桐箱QR / 研ぎ直し / カスタム"]:::data
+  DR["②直接接点層<br/>研ぎ直し／カスタム／コミュニティ／海外プロ"]:::direct
+  RP["代理店レポート<br/>（データ還元）"]:::data
+
+  M -->|商品卸| D
+  D -->|販売| C
+  C -.->|自発登録| DATA
+  DATA --> M
+  M -->|アフター・研ぎ直し・新商品案内| DR
+  DR -.->|お近くの販売店紹介| D
+  M -->|匿名化レポート| RP
+  RP --> D
+    </pre>
+  </div>
+
+  <div class="info-box">
+    ポイント：①のデータ取得は代理店との関係を1ミリも侵食しません。②の直接接点も「代理店が扱わない領域」に限定。代理店には<strong>データを還元することで関係がむしろ深まる</strong>設計です。
+  </div>
+</section>
+
+<!-- ====== FIVE PRINCIPLES ====== -->
+<section id="five">
+  <h2>5. 代理店反感ゼロの五箇条</h2>
+  <p class="lead">直接顧客接点を増やす全施策は、必ずこの5原則に従います。社内文書化し、判定基準として運用することを推奨します。</p>
+
+  <div class="principles">
+    <div class="principle">
+      <span class="num">1</span><h4>直販価格 ≧ 代理店推奨小売価格</h4>
+      <p class="rule">価格競合させない</p>
+      <p class="ng">自社サイトで『刃心』を20%引きで売る</p>
+      <p class="ok">直販は定価／代理店経由は店ごとセール可</p>
+    </div>
+    <div class="principle">
+      <span class="num">2</span><h4>直販は代理店が扱わない領域に限定</h4>
+      <p class="rule">領域を切り分ける</p>
+      <p class="ng">Amazonで通常商品（新品和包丁）の直販開始</p>
+      <p class="ok">研ぎ直し／カスタム／鞘・桐箱単品／旧モデル等</p>
+    </div>
+    <div class="principle">
+      <span class="num">3</span><h4>顧客に「お近くの販売店」を必ず提示</h4>
+      <p class="rule">紹介戻しを徹底</p>
+      <p class="ng">メルマガで公式ストアCTA</p>
+      <p class="ok">全接点で販売店マップを優先表示</p>
+    </div>
+    <div class="principle">
+      <span class="num">4</span><h4>代理店にデータを還元する</h4>
+      <p class="rule">情報の互恵関係</p>
+      <p class="ng">メーカーがデータを独占</p>
+      <p class="ok">代理店ごとの匿名化レポートを四半期配布</p>
+    </div>
+    <div class="principle">
+      <span class="num">5</span><h4>「研ぎ品質保証」「アフター」を旗印に</h4>
+      <p class="rule">取得目的の正当性</p>
+      <p class="ng">「マーケのために集める」と説明</p>
+      <p class="ok">「研ぎ直し品質向上と保証延長のため」</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 7 ACTIONS ====== -->
+<section id="actions">
+  <h2>6. 7つの即実行施策（詳細）</h2>
+  <p class="lead">既存B2B卸構造を一切壊さず、6ヶ月以内に着手・1年以内に効果測定できる施策を優先度順に解説します（タブ切替）。</p>
+
+  <div class="tabs">
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="t1">★★★ 1. 桐箱同梱QR</button>
+      <button class="tab-btn" data-tab="t2">★★★ 2. 研ぎ直しオンライン</button>
+      <button class="tab-btn" data-tab="t3">★★★ 3. 代理店レポート</button>
+      <button class="tab-btn" data-tab="t4">★★ 4. カスタムオーダーWeb</button>
+      <button class="tab-btn" data-tab="t5">★★ 5. SNS→メール</button>
+      <button class="tab-btn" data-tab="t6">★★ 6. 保証クラウド</button>
+      <button class="tab-btn" data-tab="t7">★ 7. 砥ぎ相談LINE</button>
+    </div>
+
+    <!-- TAB 1 -->
+    <div class="tab-content active" id="t1">
+      <h3>施策1：商品同梱QR「職人登録＋手入れガイド」</h3>
+      <p>全『刃心』『黒備』の桐箱内に A6 職人保証カード＋QRコードを同梱。QR から「5年研ぎ直し保証＋手入れ動画」を提供する代わりに、職人情報＋お買い上げ店を取得します。</p>
+
+      <div class="story">
+        <h5>📖 プロ料理人の体験ストーリー</h5>
+        <p>銀座の若手寿司職人・佐藤さん（34歳）が、地元の調理器具店「井垣商店」で『刃心』柳刃を購入。店で桐箱を受け取り、開けると A6 職人保証カードを発見。</p>
+        <p>QRをスマホで読み取り、3分で氏名・住所・店舗名・お買い上げ店（プルダウンから「井垣商店」選択）を登録。</p>
+        <p>翌週、保証書PDFと「初心者向け研ぎの基本」動画リンクがメールで届く。1ヶ月後にはメンテナンス動画も。<strong>「メーカーがちゃんと面倒を見てくれる」と好印象</strong>を持ち、次回も越前刃心・井垣商店で買おうと思う。</p>
+      </div>
+
+      <details>
+        <summary>代理店「井垣商店」から見た景色</summary>
+        <div class="details-body">
+          <ul>
+            <li>売上は1ミリも変わらない（佐藤さんは井垣商店で正価で買った）</li>
+            <li>四半期後、越前刃心から「貴店経由の職人レポート」が届く</li>
+            <li>「寿司職人が6割、和食店3割、独立3年以内の若手が4割」など店舗別客層が見える</li>
+            <li>メーカー側から「銀座寿司職人向けPOP」が販促資料として届く</li>
+            <li>「我々を大切にしてくれるメーカーだ」と認識が深まる</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>メーカーの動き（準備・運用・データ）</summary>
+        <div class="details-body">
+          <p><strong>準備期間：30〜60日</strong></p>
+          <ul>
+            <li>LP制作（STUDIO／ペライチ／Shopify）：10〜15万円</li>
+            <li>データベース（kintone月3,000円〜／HubSpot無料）</li>
+            <li>A6職人保証カード印刷：1,000枚で約1万円</li>
+            <li>代理店リスト480社をプルダウン化</li>
+          </ul>
+          <p><strong>運用後にメーカーに集まるデータ：</strong></p>
+          <ul>
+            <li>職人氏名・店舗名・住所・使用シーン（寿司/和食/中華/ホテル/教育）</li>
+            <li>代理店ごとの販売シェア（リアルタイム可視化）</li>
+            <li>商品×職種×店舗業態のクロス分析</li>
+            <li>リピート率・買い替えサイクル</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>よくある失敗パターンと対策</summary>
+        <div class="details-body">
+          <ul>
+            <li><strong>QR読まれない</strong> → 「5年研ぎ直し保証」を強訴求（実費負担ほぼゼロ）</li>
+            <li><strong>入力途中で離脱</strong> → 必須項目を5〜6個に絞る</li>
+            <li><strong>代理店が警戒</strong> → 営業が事前に「アフターサービス強化のため」と説明＋レポート提示</li>
+            <li><strong>データが眠る</strong> → 月次レポートの活用先を先に決める</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資（LP・印刷物・DB）</td><td class="num">15〜30万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">5,000〜30,000円</td></tr>
+          <tr><td>1年後の登録職人リスト</td><td class="num">2,000〜4,000件（想定）</td></tr>
+          <tr><td>1件当たり獲得コスト換算（CAC）</td><td class="num">75〜150円（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div class="tab-content" id="t2">
+      <h3>施策2：研ぎ直しサービスのオンライン受付窓口</h3>
+      <p>年間2,000本来る研ぎ直し依頼をWeb受付化。写真3枚アップロード→見積→決済→集荷→研ぎ→返送までを一気通貫で。代理店には紹介手数料を還元します。</p>
+
+      <div class="story">
+        <h5>📖 プロ料理人の体験ストーリー</h5>
+        <p>10年使った『刃心』柳刃の刃こぼれを気にしている田中さん（割烹店主・48歳）。「越前刃心 研ぎ直し」で検索→公式サイトの「研ぎ直しオンライン受付」へ。</p>
+        <p>写真3枚（型番／刃こぼれ部分／全体）をアップロード、症状を選択、お客様情報入力。3営業日以内に見積メール（10,800円／納期2週間）。</p>
+        <p>了承ボタン→ヤマト集荷自動依頼→2週間後に研ぎ直し品が返送。同梱の研ぎレポートに「次回は<strong>お買い上げ店『〇〇調理器具』で1,000円OFFクーポン</strong>もご利用いただけます」。職人頭・川口さん直筆メッセージも添付。</p>
+      </div>
+
+      <details>
+        <summary>代理店から見た景色（紹介手数料還元の仕組み）</summary>
+        <div class="details-body">
+          <ul>
+            <li>研ぎ代金の8〜12%を「お買い上げ店紹介手数料」として代理店にバック</li>
+            <li>代理店からすると「うちで売った職人の研ぎが来ると、自動的に手数料が入る」状態</li>
+            <li>代理店自らが「研ぎ直しは越前刃心公式へ」と顧客に案内するようになる</li>
+            <li>研ぎ経由のリピート購入も代理店に流れる</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>メーカーの動き</summary>
+        <div class="details-body">
+          <p><strong>準備期間：60〜90日</strong></p>
+          <ul>
+            <li>WordPress＋Contact Form 7＋画像アップロード（外注30〜50万円）</li>
+            <li>決済システム（Stripe/Square/PayPay、手数料3.6%程度）</li>
+            <li>ヤマトビジネスメンバーズで集荷連携</li>
+            <li>既存研ぎ担当者（職人頭含む3名）で運用開始可能</li>
+          </ul>
+          <p><strong>収集データ：</strong>刃こぼれパターン（型番×部位×使用年数）、職人属性、購入経路認知の弱さ指標、職人モチベ向上（直接「ありがとう」が届く）</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">30〜50万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">5,000〜20,000円</td></tr>
+          <tr><td>1年後の研ぎ直し受付件数</td><td class="num">800〜1,500件（想定）</td></tr>
+          <tr><td>研ぎ1件平均単価</td><td class="num">6,000〜15,000円</td></tr>
+          <tr><td>研ぎ経由リピート購入率</td><td class="num">20〜30%（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div class="tab-content" id="t3">
+      <h3>施策3：代理店向け「職人データ還元レポート」</h3>
+      <p>施策1・2で取得したデータを匿名化集計し、代理店ごとに四半期レポートを配布。これが <strong>「五箇条 第4条」を担保する反感対策の主役</strong> です。</p>
+
+      <div class="story">
+        <h5>📖 代理店店長の体験ストーリー</h5>
+        <p>営業担当が「井垣商店」を訪問。発注業務の合間に：「井垣社長、これ、貴店向けの『四半期職人レポート』です」</p>
+        <p>A4 2ページのレポートには：「貴店経由職人登録78名／推定30代22%・40代34%・50代以上44%／寿司63%・割烹19%・他18%／上位購入①刃心・柳刃 ②黒備・三徳 ③刃心・薄刃／リピート率28%（業界平均超え）／研ぎ紹介手数料 12,600円」</p>
+        <p>井垣店長：「うちは寿司向けに偏ってたのか！じゃあ柳刃の陳列を増やそう」「研ぎ紹介で勝手にお金が入ってる」「<strong>越前刃心さんがここまで支援してくれるとは</strong>」</p>
+      </div>
+
+      <details>
+        <summary>メーカーの運用イメージ</summary>
+        <div class="details-body">
+          <p><strong>準備期間：60〜90日</strong></p>
+          <ul>
+            <li>Excelテンプレ設計（初期5〜10万円）</li>
+            <li>上位30代理店向けβ版作成→反応ヒアリング→改善</li>
+            <li>半年後にBIツール化（Looker Studio無料／Power BI Pro月1,800円）</li>
+          </ul>
+          <p><strong>業務イメージ：</strong>四半期1回、自動生成（テンプレマクロで1代理店あたり数分）。上位30店は営業手渡し＋解説。</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">5〜10万円（Excelのみ）</td></tr>
+          <tr><td>BIツール化（半年後）</td><td class="num">30〜80万円</td></tr>
+          <tr><td>代理店NPS向上見込み</td><td class="num">+15〜25ポイント</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div class="tab-content" id="t4">
+      <h3>施策4：カスタムオーダー受付のオンライン化</h3>
+      <p>貴社の希少な強み「カスタムオーダー」（柄の長さ・刃渡り・銘入れ）をWebで採寸・注文できる仕組みに。ただし<strong>受注は代理店経由必須</strong>とすることで、代理店から大歓迎される設計に。</p>
+
+      <div class="story">
+        <h5>📖 プロ料理人の体験ストーリー</h5>
+        <p>京都の独立したて若手懐石店主・木村さん（28歳・身長158cm）。市販の柳刃は長すぎて困っていた。検索でWebカスタムオーダーを発見→採寸動画を見ながら入力→「『刃心』柳刃カスタム 8寸（240mm）・柄80mm・墨彫り銘入り 78,000円／納期8週間」。</p>
+        <p>続いて「お近くのお取り扱い店舗からお選びください」→京都市内3店マップ表示→「京都職人具足舎」選択。</p>
+        <p>翌日、京都職人具足舎に越前刃心から受注通知FAX。店長から木村さんに電話「ご来店いただけますか？」。木村さんは店舗で支払い、8週間後に受取。<strong>売上は完全に代理店経由</strong>。</p>
+      </div>
+
+      <details>
+        <summary>代理店から見た景色</summary>
+        <div class="details-body">
+          <ul>
+            <li>黙っていてもカスタムオーダー客が紹介されてくる</li>
+            <li>採寸ノウハウがない店もメーカー側のガイドで対応可能</li>
+            <li>売上は通常販売と同じ仕組み</li>
+            <li><strong>代理店からは大歓迎施策</strong></li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">30〜50万円</td></tr>
+          <tr><td>1年後のWebカスタム件数</td><td class="num">80〜200件（想定）</td></tr>
+          <tr><td>1件当たり単価</td><td class="num">50,000〜150,000円</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5 -->
+    <div class="tab-content" id="t5">
+      <h3>施策5：YouTube・Instagram→メール登録CTA</h3>
+      <p>既存SNSコンテンツの説明欄に「職人のための研ぎ基礎ガイドPDF無料プレゼント」CTAを追加。フォロワー資産を「メールリスト資産」に転換します。</p>
+
+      <div class="story">
+        <h5>📖 ユーザー体験</h5>
+        <p>料理学校生・山本さんが公式YouTube「越前刃物 職人頭 川口の研ぎ講座」視聴。説明欄「プロ料理人のための研ぎ基礎ガイドPDF無料プレゼント」リンクをタップ→簡易登録→PDFと「お近くの取扱店マップ」を即時送付。</p>
+        <p>月2回、越前刃心から新商品案内・砥石メンテ動画・研ぎ直しサービス案内。<strong>メルマガに直販リンクは含めず</strong>、必ず販売店マップへ誘導。</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">5〜15万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">0〜5,000円（Mailchimp無料枠）</td></tr>
+          <tr><td>1年後メルマガ登録数</td><td class="num">800〜2,000人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 6 -->
+    <div class="tab-content" id="t6">
+      <h3>施策6：「研ぎ品質保証書」のクラウド化（My越前刃心）</h3>
+      <p>紙の保証書をクラウド化。所持する『刃心』『黒備』『鋭』全部が一画面で見える「My越前刃心」アカウントを提供。研ぎ直し・新商品案内が自然に流れる土台になります。</p>
+
+      <details>
+        <summary>会員特典の例</summary>
+        <div class="details-body">
+          <ul>
+            <li>5年研ぎ直し保証延長（自動適用）</li>
+            <li>新商品先行案内（直販リンクなし／販売店紹介付き）</li>
+            <li>研ぎ直し優先受付</li>
+            <li>限定ノベルティ（オリジナル砥石・木箱）年1回</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">50〜80万円</td></tr>
+          <tr><td>1年後の会員数</td><td class="num">1,500〜3,500人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 7 -->
+    <div class="tab-content" id="t7">
+      <h3>施策7：LINE公式「研ぎ相談・修理ナビ」チャットボット</h3>
+      <p>LINE公式で症状を選ぶと、自己研ぎ動画 or 修理オンライン受付に誘導。砥石セットは代理店経由販売とし、代理店に新収益源を提供します。</p>
+
+      <details>
+        <summary>会話フロー例</summary>
+        <div class="details-body">
+          <p>「①研ぎ相談 ②修理依頼 ③使い方相談 ④店舗検索 ⑤新商品情報」<br>
+          ①→「刃こぼれ／切れ味低下／さび／柄ぐらつき」<br>
+          切れ味低下→「軽度／中度／重度」<br>
+          軽度→「家庭用砥石でOK。A.自分で研ぐ B.メーカーに依頼」<br>
+          A→砥石セット販売店マップ＋自己研ぎ動画／B→施策2の受付フォーム</p>
+        </div>
+      </details>
+
+      <div class="table-wrap">
+        <table>
+          <tr><th>項目</th><th>金額</th></tr>
+          <tr><td>初期投資</td><td class="num">10〜20万円</td></tr>
+          <tr><td>月次運用費</td><td class="num">0〜5,000円</td></tr>
+          <tr><td>1年後LINE友だち数</td><td class="num">800〜2,500人（想定）</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <h3>7施策の総合効果（1年後到達目標）</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><th>指標</th><th>現状</th><th>1年後目標</th></tr>
+      <tr><td>プロ料理人リスト件数</td><td>0件（推定）</td><td><strong>3,000〜8,000件</strong></td></tr>
+      <tr><td>代理店別売上可視化率</td><td>0%</td><td><strong>上位30店100%／全店65%</strong></td></tr>
+      <tr><td>研ぎ直し依頼の自社直接受付比率</td><td>推定15%以下</td><td><strong>45%以上</strong></td></tr>
+      <tr><td>メルマガ到達</td><td>0</td><td><strong>2,000人</strong></td></tr>
+      <tr><td>代理店NPS</td><td>不明</td><td><strong>+20以上</strong></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====== MATRIX ====== -->
+<section id="matrix">
+  <h2>7. 優先度4象限マトリクス</h2>
+  <p class="lead">影響度と実行難易度の2軸で全11施策（7即実行＋4中長期）を整理しました。</p>
+
+  <div class="matrix">
+    <div class="y-axis">影響度 低 ←　→ 高</div>
+    <div class="quadrant-grid">
+      <div class="q q1">
+        <span class="q-label">Quick Win</span>
+        <div class="q-title">① 即実行（影響大・易）</div>
+        <span class="chip high">★★★ 1. 桐箱同梱QR</span>
+        <span class="chip high">★★★ 2. 研ぎ直しオンライン</span>
+        <span class="chip high">★★★ 3. 代理店レポート</span>
+      </div>
+      <div class="q q2">
+        <span class="q-label">Strategic</span>
+        <div class="q-title">② 戦略投資（影響大・難）</div>
+        <span class="chip">A. 海外プロ料理学校</span>
+        <span class="chip">C. 医療用刃物OEM</span>
+        <span class="chip">D. 給食センター量販ライン</span>
+      </div>
+      <div class="q q3">
+        <span class="q-label">Fill-in</span>
+        <div class="q-title">③ 充実枠（影響中・易）</div>
+        <span class="chip">4. カスタムオーダーWeb</span>
+        <span class="chip">5. SNS→メール</span>
+        <span class="chip">6. 保証クラウド</span>
+      </div>
+      <div class="q q4">
+        <span class="q-label">Reserve</span>
+        <div class="q-title">④ 様子見（影響小・難）</div>
+        <span class="chip">7. 砥ぎ相談LINE</span>
+        <span class="chip">B. サブブランドD2C（家庭用）</span>
+        <span class="chip">E. アウトドアナイフ参入</span>
+      </div>
+    </div>
+    <div class="x-axis">実行難易度 易 ←　→ 難</div>
+  </div>
+
+  <div class="info-box">
+    <strong>推奨着手順序：</strong>①Quick Win（30〜90日） → ③Fill-in（4〜6ヶ月） → ②Strategic（6ヶ月以降） → ④Reserve（1年以降検討）
+  </div>
+</section>
+
+<!-- ====== FLOW ====== -->
+<section id="flow">
+  <h2>8. 顧客体験フロー図（施策1の例）</h2>
+  <p class="lead">最優先施策「桐箱同梱QR」を題材に、職人・代理店・メーカーの動きをフロー化します。</p>
+
+  <div class="flow-wrap">
+    <pre class="mermaid">
+sequenceDiagram
+  autonumber
+  participant C as 職人（佐藤さん）
+  participant D as 代理店（井垣商店）
+  participant M as メーカー（越前刃心）
+  participant DB as 職人データベース
+
+  D->>C: 越前刃心『刃心』柳刃を販売（正価）
+  C->>C: 帰宅して開梱→A6職人保証カード発見
+  C->>M: QR読込→3分で職人登録<br/>（氏名・店舗・住所・お買い上げ店）
+  M->>DB: データ蓄積
+  M->>C: 保証書PDF＋研ぎ基礎動画リンクをメール
+  Note over M,C: 1ヶ月後：メンテ動画／新商品案内（販売店マップ付）
+  M->>D: 四半期レポート配布<br/>「貴店経由○○名／寿司職人比率高い／販促提案」
+  D->>D: 柳刃陳列強化→翌期売上アップ
+  C->>D: 次回購入も井垣商店で
+    </pre>
+  </div>
+
+  <div class="info-box">
+    重要：QR登録時に「お買い上げ店」をプルダウン必須にすることで、代理店ごとの職人分布が見える化されます。これが施策3（代理店レポート）の入力データになります。
+  </div>
+</section>
+
+<!-- ====== ROI ====== -->
+<section id="roi">
+  <h2>9. 投資対効果（ROI）シミュレーション</h2>
+  <p class="lead">7施策すべて実施した場合の投資額と、1年後の職人リスト・売上ポテンシャルを試算します（想定値・要検証）。</p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <h4>総初期投資</h4>
+      <div class="stat">150〜300<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">7施策フル実施時</div>
+    </div>
+    <div class="card">
+      <h4>月次運用コスト</h4>
+      <div class="stat">5〜20<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">継続費</div>
+    </div>
+    <div class="card accent">
+      <h4>年間売上ポテンシャル</h4>
+      <div class="stat">2,000<span style="font-size:1rem">万円</span></div>
+      <div class="stat-sub">リスト5,000件×LTV8万円×5%</div>
+    </div>
+  </div>
+
+  <details>
+    <summary>ROI試算の前提（クリックで詳細）</summary>
+    <div class="details-body">
+      <ul>
+        <li><strong>リスト構築：</strong>施策1の桐箱QR（月200〜350件）＋施策2研ぎ直し（月70〜130件）＋施策5メール（月70〜170件）＋施策7LINE（月70〜180件）の合算</li>
+        <li><strong>LTV 8万円：</strong>業界平均業務用包丁単価＋付属品（鞘・桐箱）＋研ぎ直し継続＋次回買い替えサイクル5〜7年を踏まえた仮値</li>
+        <li><strong>リピート転換率5%：</strong>業界一般的なメールマーケ平均（メーカー直販誘導率ではなく代理店送客含む）</li>
+        <li><strong>副次効果：</strong>代理店NPS向上による発注継続率改善、新商品開発の精度向上、海外プロ料理学校・産業用ナイフへの提案精度向上</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ====== ROADMAP ====== -->
+<section id="roadmap">
+  <h2>10. 12ヶ月ロードマップ</h2>
+  <p class="lead">即実行3施策から始め、6ヶ月で基盤構築、その後に中長期視点へ広げる段階的アプローチを提案します。</p>
+
+  <div class="roadmap">
+    <div class="row header">
+      <div class="row-label"></div>
+      <div class="row-bar">
+        <div>M1</div><div>M2</div><div>M3</div><div>M4</div><div>M5</div><div>M6</div>
+        <div>M7</div><div>M8</div><div>M9</div><div>M10</div><div>M11</div><div>M12</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-label">五箇条社内承認</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/2">承認</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策1：桐箱QR</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/3">設計</div><div class="seg" style="grid-column:3/13">『刃心』先行→本格運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策2：研ぎ直しオンライン</div>
+      <div class="row-bar"><div class="seg" style="grid-column:1/3">設計</div><div class="seg" style="grid-column:3/13">本格運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策3：代理店レポート</div>
+      <div class="row-bar"><div class="seg" style="grid-column:2/4">β版</div><div class="seg" style="grid-column:4/13">配布拡大</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策4：カスタムオーダーWeb</div>
+      <div class="row-bar"><div class="seg sumi" style="grid-column:3/5">設計</div><div class="seg sumi" style="grid-column:5/13">運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策5・7：SNS→メール／LINE</div>
+      <div class="row-bar"><div class="seg sumi" style="grid-column:2/5">立ち上げ</div><div class="seg sumi" style="grid-column:5/13">継続運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">施策6：保証クラウド</div>
+      <div class="row-bar"><div class="seg sumi" style="grid-column:5/8">構築</div><div class="seg sumi" style="grid-column:8/13">運用</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">A：海外プロ料理学校</div>
+      <div class="row-bar"><div class="seg gold" style="grid-column:7/13">英語LP→CIA/Le Cordon Bleu打診</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">C：医療用刃物OEM</div>
+      <div class="row-bar"><div class="seg gold" style="grid-column:8/13">医療機器メーカーへ打診</div></div>
+    </div>
+    <div class="row">
+      <div class="row-label">D：給食センター量販</div>
+      <div class="row-bar"><div class="seg gold" style="grid-column:9/13">『黒備』量販ライン投入</div></div>
+    </div>
+  </div>
+
+  <p class="muted" style="margin-top:12px">朱＝最優先即実行／墨＝強化施策／金＝中長期戦略投資</p>
+</section>
+
+<!-- ====== SUPPORT ====== -->
+<section id="support">
+  <h2>11. 支援内容イメージ</h2>
+  <p class="lead">越前刃心様のリソースを最大限活かしつつ、AI＆データ領域を中心に伴走支援します。</p>
+
+  <div class="table-wrap">
+    <table>
+      <tr><th>フェーズ</th><th>内容</th><th>支援領域</th></tr>
+      <tr><td>Month 1</td><td>戦略合意・五箇条社内承認・桐箱QR『刃心』先行設計</td><td>経営層WS／LP制作支援／印刷物デザイン</td></tr>
+      <tr><td>Month 2-3</td><td>桐箱QR本格運用／研ぎ直しオンライン化開発／代理店レポートβ</td><td>Webフォーム実装／HubSpot・kintone導入支援／レポートテンプレ作成</td></tr>
+      <tr><td>Month 4-6</td><td>5施策本格運用／海外プロ料理学校 英語LP整備</td><td>データ可視化AIエージェント／英語提案書テンプレ作成</td></tr>
+      <tr><td>Month 7-12</td><td>医療OEM打診／給食センターライン投入／カスタムオーダー本格化</td><td>OEM資料制作／量販向け『黒備』LP整備</td></tr>
+      <tr><td>Year 2</td><td>データ活用フェーズ</td><td>AI需要予測モデル／職人インサイトレポート</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ====== SOURCES ====== -->
+<section id="sources">
+  <h2>12. 出典・エビデンス一覧</h2>
+  <p class="lead">本資料の<strong>会社固有情報（社名・売上・代理店数等）はデモ用の完全架空数値</strong>です。一方、<strong>市場規模・業界統計・参照ブランド事例は実データ</strong>を基にしています。下記は実データの参照元です。</p>
+
+  <details open>
+    <summary>📊 国内市場・統計（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.e-stat.go.jp/stat-search/files?toukei=00450027&tstat=000001031469&layout=dataset&stat_infid=000001718025" target="_blank" rel="noopener">e-Stat 衛生行政報告例「調理師免許交付数」（厚生労働省）</a></li>
+        <li><a href="https://www.mhlw.go.jp/stf/shingi/2r9852000002pjhe-att/2r9852000002pjwk.pdf" target="_blank" rel="noopener">厚労省「調理師を取り巻く状況」PDF</a></li>
+        <li><a href="https://www.jatcc.or.jp/data/" target="_blank" rel="noopener">公益社団法人 全国調理師養成施設協会 統計データ</a></li>
+        <li><a href="https://www.genius-japan.com/blog/ono20251022" target="_blank" rel="noopener">「美食大国いつまで？ 揺らぐ調理師の厚み」分析記事（2025年10月）</a></li>
+        <li><a href="https://www.jil.go.jp/kokunai/blt/backnumber/2025/06/c_01.html" target="_blank" rel="noopener">JILPT「職業別にみた就業者の状況」2025年6月号</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🌍 海外日本食市場（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.maff.go.jp/j/press/yusyutu_kokusai/kaitaku/251128.html" target="_blank" rel="noopener">農林水産省「海外における日本食レストラン数の調査結果（令和7年）」</a></li>
+        <li><a href="https://www.jetro.go.jp/biznews/2025/12/5b3b792ffec5ac1e.html" target="_blank" rel="noopener">JETRO「海外の日本食レストラン数は18万1,000店に」</a></li>
+        <li><a href="https://www.travelvoice.jp/20250828-158248" target="_blank" rel="noopener">海外の日本食レストラン18万店分析コラム</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏭 業務用包丁市場・世界統計（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.globalgrowthinsights.com/market-reports/commercial-kitchen-knives-market-105813" target="_blank" rel="noopener">Global Growth Insights「Commercial Kitchen Knives Market Forecast 2035」</a></li>
+        <li><a href="https://www.fortunebusinessinsights.com/kitchen-knife-market-103865" target="_blank" rel="noopener">Fortune Business Insights「Kitchen Knife Market」</a></li>
+        <li><a href="https://www.gii.co.jp/report/sky1623988-kitchen-knife-market-size-share-growth-analysis-by.html" target="_blank" rel="noopener">GII「包丁の市場規模・シェア・成長分析 2025-2032」</a></li>
+        <li><a href="https://www.gyokusendo.com/column01_dento/4507" target="_blank" rel="noopener">玉川堂「世界が注目する日本製包丁と今後の課題」</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>⛩️ 越前打刃物 産地情報（実データ）</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://www.city.echizen.lg.jp/office/060/050/k-02.html" target="_blank" rel="noopener">越前市公式「伝統産業 越前打刃物」</a></li>
+        <li><a href="https://info.pref.fukui.lg.jp/tisan/monosato/uchihamono.html" target="_blank" rel="noopener">福井県「越前打刃物」</a></li>
+        <li><a href="https://www.city.echizen.lg.jp/office/060/100/etizenuchihamono.html" target="_blank" rel="noopener">越前市「越前打刃物 詳細」</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>🏢 越前刃心株式会社（架空・デモ用）</summary>
+    <div class="details-body">
+      <p>「越前刃心株式会社」は<strong>本デモ用に創作した完全架空の企業</strong>です。会社名・住所・代表者・売上・従業員数・代理店数・取引先・社内ヒアリング内容はすべて創作です。</p>
+      <ul>
+        <li><a href="../../00_クライアント基本情報.md" target="_blank">デモ会社設定（00_クライアント基本情報.md）</a></li>
+        <li><a href="../../01_社長ペルソナ.md" target="_blank">社長ペルソナ詳細</a></li>
+        <li><a href="../../02_財務業績情報.md" target="_blank">財務業績情報（架空）</a></li>
+        <li><a href="../../03_経営会議文字起こし.md" target="_blank">経営会議文字起こし（架空）</a></li>
+        <li><a href="../../04_現場ヒアリング.md" target="_blank">現場ヒアリング（架空）</a></li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="info-box" style="margin-top:20px">
+    <strong>数値の取り扱い：</strong>市場規模・人口統計・参照ブランド事例は公開データに基づきます。「越前刃心」固有の数値（売上23.4億円・代理店480社・職人27名等）はデモ用の架空設定です。実際の提案では実数値での検証が必須となります。
+  </div>
+</section>
+
+</main>
+
+<!-- ====== TO TOP BUTTON ====== -->
+<button class="to-top" aria-label="トップに戻る" id="toTopBtn">↑</button>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <p>越前刃心株式会社 販路拡大アドバイザリー v1 詳細版（DEMO）</p>
+  <p>2026-04-10 ／ <a href="index.html">← ポータルに戻る</a></p>
+  <p style="margin-top:12px;font-size:0.75rem;opacity:0.7">本資料はアートソウル社内デモ用に作成された完全架空の提案書です。</p>
+</footer>
+
+<script>
+// ===== TABS =====
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const tab=btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+  });
+});
+
+// ===== CHART: Sales =====
+const ctxS=document.getElementById('chartSales');
+new Chart(ctxS,{
+  type:'bar',
+  data:{
+    labels:['FY2021','FY2022','FY2023','FY2024','FY2025'],
+    datasets:[
+      {label:'売上高（億円）',data:[26.8,25.9,25.1,24.2,23.4],backgroundColor:'#1a1a1a',yAxisID:'y1',order:2},
+      {label:'営業利益（億円）',type:'line',data:[1.82,1.55,1.31,1.05,0.81],borderColor:'#b58a3b',backgroundColor:'#b58a3b',yAxisID:'y2',order:1,tension:0.3}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top'}},
+    scales:{
+      y1:{position:'left',beginAtZero:true,title:{display:true,text:'売上高（億円）'}},
+      y2:{position:'right',beginAtZero:true,title:{display:true,text:'営業利益（億円）'},grid:{drawOnChartArea:false},max:2.2}
+    }
+  }
+});
+
+// ===== SCROLL HANDLER (nav.toc scrolled + to-top) =====
+(function(){
+  var nav = document.querySelector('nav.toc');
+  var btn = document.getElementById('toTopBtn');
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    if(nav){ nav.classList.toggle('scrolled', y > 20); }
+    if(btn){ btn.classList.toggle('show', y > 240); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  if(btn){
+    btn.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  }
+  onScroll();
+})();
+
+// ===== MERMAID =====
+mermaid.initialize({
+  startOnLoad:true,
+  theme:'default',
+  themeVariables:{
+    fontFamily:'Noto Sans JP, sans-serif',
+    primaryColor:'#1a1a1a',
+    primaryTextColor:'#fff',
+    primaryBorderColor:'#1a1a1a',
+    lineColor:'#a52a2a',
+    secondaryColor:'#b58a3b',
+    tertiaryColor:'#f3ede2'
+  },
+  flowchart:{useMaxWidth:true,htmlLabels:true},
+  sequence:{useMaxWidth:true,actorMargin:50,boxMargin:10}
+});
+</script>
+
+</body>
+</html>

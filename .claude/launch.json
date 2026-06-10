@@ -48,6 +48,18 @@
       "runtimeExecutable": "py",
       "runtimeArgs": ["-m", "http.server", "8772", "--directory", "05_クライアント案件/20260603_メルカリ脱却越境EC/10_PUBLISHED/00_mercari_out"],
       "port": 8772
+    },
+    {
+      "name": "echizen-proposal",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8777", "--directory", "05_クライアント案件/Demo_20260410_越前刃心/10_PUBLISHED/echizen-proposal"],
+      "port": 8777
+    },
+    {
+      "name": "echizen-demo-root",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "8778", "--directory", "05_クライアント案件/Demo_20260410_越前刃心"],
+      "port": 8778
     }
   ]
 }

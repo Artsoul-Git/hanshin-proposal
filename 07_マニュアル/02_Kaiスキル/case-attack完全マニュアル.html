@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>/case-attack 完全攻略マニュアル v1.0 — 案件獲得デモ資料セット 難題攻略の実務書</title>
+<meta name="description" content="新規クライアント候補との商談を「武器」で攻略するためのデモ資料セット制作スキル/case-attackの完全攻略マニュアル。難題ケーススタディ・失敗パターン集・段階的習得法・AIプロンプト完全集を含む実戦書" />
+<meta name="keywords" content="case-attack, 案件獲得, デモ資料, 営業攻略, 提案書, ラシンバン, 越前刃心, 完全マニュアル, 攻略マニュアル" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.0/dist/mermaid.min.js"></script>
+<style>
+:root{--primary:#228B48;--primary-dark:#1A6D39;--primary-light:#34A85A;--primary-pale:#E8F5EC;--forest-deep:#0F4A28;--black:#000;--charcoal:#1a1a1a;--text-main:#333;--text-sub:#555;--text-mute:#666;--text-light:#999;--bg-main:#fff;--bg-alt:#f5f5f5;--bg-green-alt:#f7faf8;--border:#e5e5e5;--border-light:#eee;--warning:#d9534f;--warning-bg:#fdf2f2;--info:#2c6db5;--info-bg:#eaf3fd;--attack:#a52a2a;--attack-bg:#fef2f2;--container:1180px;--font-jp:'Noto Sans JP','Yu Gothic','Meiryo',sans-serif;--font-en:'Helvetica Neue',Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-jp);background:var(--bg-main);color:var(--text-main);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;}
+a{color:var(--primary);text-decoration:none;transition:color 0.2s;}
+a:hover{color:var(--primary-dark);}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;}
+.section{padding:64px 0;border-bottom:1px solid var(--border);}
+.section.alt-bg{background:var(--bg-alt);}
+.section.green-alt{background:var(--bg-green-alt);}
+.section.attack-alt{background:linear-gradient(180deg,#fef2f2 0%,#fff 100%);}
+.section-head{margin-bottom:32px;}
+.section-num{display:block;font-size:14px;font-weight:600;color:var(--primary);letter-spacing:0.15em;margin-bottom:8px;font-family:var(--font-en);}
+.section-head h2{font-size:28px;font-weight:700;color:var(--black);line-height:1.3;padding-bottom:12px;border-bottom:3px solid var(--primary);display:inline-block;padding-right:24px;}
+.section-lead{font-size:15.5px;color:var(--text-sub);line-height:1.9;margin:20px 0 28px;max-width:880px;}
+.section h3{font-size:19px;font-weight:600;color:var(--charcoal);margin:32px 0 14px;padding-left:12px;border-left:3px solid var(--primary);}
+.section h4{font-size:16px;font-weight:600;color:var(--charcoal);margin:20px 0 10px;}
+.section p{font-size:15px;color:#3a3a3a;margin-bottom:12px;line-height:1.85;}
+.section ul,.section ol{margin:10px 0 14px 1.4em;color:#3a3a3a;}
+.section li{margin-bottom:7px;font-size:15px;line-height:1.85;}
+.topbar{background:var(--forest-deep);color:#fff;padding:10px 0;font-size:12px;letter-spacing:0.05em;}
+.topbar .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.attack-badge{background:var(--attack);color:#fff;padding:3px 10px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:0.08em;margin-right:8px;}
+
+.hero{background:linear-gradient(135deg,#0F4A28 0%,#1A6D39 50%,#228B48 100%);color:#fff;padding:72px 0 60px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-100px;right:-50px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(184,229,197,.25),transparent 70%);}
+.hero .container{position:relative;z-index:1;}
+.hero .badge{display:inline-block;padding:6px 14px;background:rgba(165,42,42,.85);border:1px solid rgba(255,255,255,0.3);font-size:12px;font-weight:600;letter-spacing:0.1em;margin-bottom:20px;border-radius:2px;}
+.hero h1{font-size:36px;font-weight:700;line-height:1.4;margin-bottom:16px;max-width:920px;}
+.hero h1 .accent{color:#B8E5C5;border-bottom:3px solid #B8E5C5;padding-bottom:2px;}
+.hero h1 .attack-word{color:#FDA4AF;border-bottom:3px solid #FDA4AF;padding-bottom:2px;}
+.hero .sub{font-size:16px;font-weight:400;opacity:0.95;margin-bottom:24px;line-height:1.85;max-width:800px;}
+.hero .what-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);padding:18px 22px;border-radius:6px;max-width:760px;margin-bottom:14px;}
+.hero .what-card .title{font-size:13px;font-weight:600;letter-spacing:0.1em;color:#B8E5C5;margin-bottom:10px;}
+.hero .what-card ol{margin:0 0 0 1.2em;padding:0;}
+.hero .what-card li{font-size:14px;line-height:1.85;opacity:0.95;margin-bottom:4px;}
+
+.toc{background:var(--bg-green-alt);padding:28px 0;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(247,250,248,.95);}
+.toc h3{font-size:13px;font-weight:600;letter-spacing:0.15em;color:var(--primary);margin-bottom:14px;border-left:none;padding-left:0;}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;}
+.toc-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:4px;font-size:12.5px;color:var(--text-main);}
+.toc-item:hover{box-shadow:0 3px 8px rgba(0,0,0,0.06);color:var(--primary-dark);}
+.toc-item.attack{border-left-color:var(--attack);}
+.toc-item .num{font-size:11px;font-weight:600;color:var(--primary);font-family:var(--font-en);letter-spacing:0.1em;}
+.toc-item.attack .num{color:var(--attack);}
+
+.banner-good{background:linear-gradient(135deg,#E8F5EC 0%,#d4ecd9 100%);border-left:6px solid var(--primary);padding:20px 24px;border-radius:6px;margin:24px 0;}
+.banner-good .label{font-size:12px;font-weight:600;color:var(--primary-dark);letter-spacing:0.1em;margin-bottom:6px;}
+.banner-good h4{font-size:16px;color:var(--forest-deep);margin-bottom:8px;font-weight:600;}
+.banner-good p{font-size:14px;color:#2a4a32;margin:0;line-height:1.8;}
+.banner-info{background:linear-gradient(135deg,#eaf3fd 0%,#dceaf9 100%);border-left:6px solid var(--info);padding:20px 24px;border-radius:6px;margin:24px 0;}
+.banner-info .label{font-size:12px;font-weight:600;color:var(--info);letter-spacing:0.1em;margin-bottom:6px;}
+.banner-info h4{font-size:16px;color:var(--charcoal);margin-bottom:8px;font-weight:600;}
+.banner-info p{font-size:14px;color:#2a3f5a;margin:0;line-height:1.8;}
+.banner-warn{background:linear-gradient(135deg,#fdf2f2 0%,#fae5e5 100%);border-left:6px solid var(--warning);padding:20px 24px;border-radius:6px;margin:24px 0;}
+.banner-warn .label{font-size:12px;font-weight:600;color:var(--warning);letter-spacing:0.1em;margin-bottom:6px;}
+.banner-warn h4{font-size:16px;color:var(--charcoal);margin-bottom:8px;font-weight:600;}
+.banner-warn p{font-size:14px;color:#5a2a2a;margin:0;line-height:1.8;}
+
+.banner-attack{background:linear-gradient(135deg,#fef2f2 0%,#fce4e4 100%);border-left:6px solid var(--attack);padding:22px 26px;border-radius:6px;margin:24px 0;position:relative;}
+.banner-attack::before{content:"⚔️ 攻略POINT";position:absolute;top:-12px;left:18px;background:var(--attack);color:#fff;padding:4px 14px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:0.08em;}
+.banner-attack .label{font-size:12px;font-weight:600;color:var(--attack);letter-spacing:0.1em;margin-bottom:6px;}
+.banner-attack h4{font-size:16px;color:#7a1f1f;margin-bottom:8px;font-weight:700;}
+.banner-attack p{font-size:14px;color:#3a1a1a;margin:0;line-height:1.85;}
+
+.table-wrap{overflow-x:auto;margin:20px 0;}
+table.data{width:100%;min-width:600px;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+table.data th,table.data td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65;}
+table.data thead th{background:var(--forest-deep);color:#fff;font-size:12px;letter-spacing:0.05em;font-weight:600;}
+table.data tbody tr:nth-child(odd){background:#fafafa;}
+table.data tbody tr:hover{background:var(--primary-pale);}
+table.data .good{color:var(--primary-dark);font-weight:600;}
+table.data .warn{color:var(--warning);font-weight:600;}
+table.data .attack{color:var(--attack);font-weight:600;}
+
+.code-box{background:#0F4A28;color:#B8E5C5;padding:18px 22px;border-radius:6px;font-family:'Helvetica Neue',Consolas,monospace;font-size:13px;line-height:1.85;margin:14px 0;overflow-x:auto;white-space:pre-wrap;position:relative;}
+.code-box b{color:#fff;}
+.code-box .copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:#fff;border:none;padding:5px 12px;border-radius:3px;font-size:11px;cursor:pointer;font-family:inherit;}
+.code-box .copy-btn:hover{background:rgba(255,255,255,.25);}
+.code-box .copy-btn.copied{background:#16a34a;}
+
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0;}
+.feature-card{background:#fff;border:1px solid var(--border);border-top:3px solid var(--primary);border-radius:6px;padding:18px;}
+.feature-card.attack{border-top-color:var(--attack);}
+.feature-card h4{font-size:15px;font-weight:700;color:var(--charcoal);margin-bottom:8px;}
+.feature-card p{font-size:13.5px;color:#444;line-height:1.8;margin:0;}
+
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0;}
+.phase-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;}
+.phase-card .ph-num{font-size:11px;font-weight:600;color:var(--primary);letter-spacing:0.1em;}
+.phase-card h4{font-size:16px;color:var(--forest-deep);margin:6px 0 10px;font-weight:700;}
+.phase-card p{font-size:13.5px;color:#444;line-height:1.85;margin-bottom:6px;}
+.phase-card ul{margin:6px 0 0 1.2em;}
+.phase-card li{font-size:13px;color:#444;margin-bottom:4px;}
+
+.case-card{background:#fff;border:1px solid var(--border);border-left:5px solid var(--attack);border-radius:6px;padding:22px;margin:14px 0;}
+.case-card .case-num{display:inline-block;background:var(--attack);color:#fff;padding:3px 10px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:0.08em;margin-right:8px;}
+.case-card h4{font-size:17px;color:var(--forest-deep);margin-bottom:14px;font-weight:700;display:flex;align-items:center;flex-wrap:wrap;gap:6px;}
+.case-card .case-meta{margin-bottom:14px;font-size:13px;color:var(--text-mute);background:#fafafa;padding:8px 12px;border-radius:4px;border-left:2px solid var(--attack);}
+.case-card .case-meta strong{color:var(--attack);}
+.case-card .case-section{margin-bottom:14px;}
+.case-card .case-section .label{font-size:11px;font-weight:700;color:var(--attack);letter-spacing:0.08em;margin-bottom:4px;}
+.case-card .case-section p{font-size:14px;line-height:1.85;margin:0;color:#3a3a3a;}
+
+.fail-card{background:#fef2f2;border:1px solid #fecaca;border-radius:6px;padding:18px 22px;margin:12px 0;}
+.fail-card .fail-badge{display:inline-block;background:#dc2626;color:#fff;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.05em;margin-right:8px;}
+.fail-card h4{font-size:15px;color:#991b1b;margin-bottom:8px;font-weight:700;}
+.fail-card .fail-body{font-size:13.5px;color:#5a2a2a;line-height:1.85;margin-bottom:8px;}
+.fail-card .recovery{background:#fff;border-left:3px solid var(--primary);padding:8px 14px;border-radius:0 4px 4px 0;font-size:13px;color:var(--primary-dark);}
+.fail-card .recovery::before{content:"✅ 切り抜け方：";font-weight:700;color:var(--primary);}
+
+.stage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:20px 0;}
+.stage-card{background:#fff;border:2px solid var(--border);border-radius:8px;padding:20px;position:relative;}
+.stage-card.lv1{border-color:#fbbf24;}
+.stage-card.lv2{border-color:#34d399;}
+.stage-card.lv3{border-color:#3b82f6;}
+.stage-card.lv4{border-color:#a78bfa;}
+.stage-card.lv5{border-color:var(--attack);}
+.stage-card .stage-num{font-size:11px;font-weight:700;letter-spacing:0.08em;color:var(--text-mute);}
+.stage-card.lv1 .stage-num{color:#92400e;}
+.stage-card.lv2 .stage-num{color:#065f46;}
+.stage-card.lv3 .stage-num{color:#1e40af;}
+.stage-card.lv4 .stage-num{color:#5b21b6;}
+.stage-card.lv5 .stage-num{color:var(--attack);}
+.stage-card h4{font-size:15px;margin:6px 0 8px;color:var(--charcoal);font-weight:700;}
+.stage-card .goal{font-size:13px;color:#3a3a3a;line-height:1.75;margin-bottom:8px;}
+.stage-card .duration{font-size:11px;color:var(--text-mute);padding-top:8px;border-top:1px dashed var(--border);}
+
+.qa-list{margin:18px 0;}
+.qa-item{background:#fff;border:1px solid var(--border);border-radius:6px;margin-bottom:10px;padding:16px 20px;}
+.qa-item.attack-qa{border-left:4px solid var(--attack);}
+.qa-item .q{font-weight:700;color:var(--charcoal);font-size:14.5px;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;}
+.qa-item .q::before{content:"Q";display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--attack);color:#fff;font-size:11px;font-weight:700;border-radius:50%;flex-shrink:0;}
+.qa-item .a{font-size:13.5px;color:#3a3a3a;line-height:1.85;padding-left:32px;}
+.qa-item .a strong{color:var(--attack);}
+
+.mermaid-wrap{background:#fff;border:1px solid var(--border);border-radius:6px;padding:24px;margin:18px 0;overflow-x:auto;}
+.mermaid-wrap h4{font-size:14px;color:var(--charcoal);margin-bottom:14px;text-align:center;font-weight:600;}
+
+.faq-item{background:#fff;border:1px solid var(--border);border-radius:6px;margin-bottom:8px;overflow:hidden;}
+.faq-item.open{border-color:var(--primary);}
+.faq-q{padding:16px 22px;cursor:pointer;font-weight:600;color:var(--charcoal);display:flex;justify-content:space-between;align-items:center;font-size:14.5px;line-height:1.55;transition:background 0.2s;width:100%;background:transparent;border:none;text-align:left;font-family:inherit;}
+.faq-q:hover{background:var(--bg-alt);}
+.faq-q .mark{font-size:18px;color:var(--primary);flex-shrink:0;margin-left:12px;transition:transform 0.2s;}
+.faq-item.open .faq-q .mark{transform:rotate(45deg);}
+.faq-a{padding:0 22px;max-height:0;overflow:hidden;transition:max-height 0.3s,padding 0.3s;color:var(--text-sub);font-size:13.5px;line-height:1.95;background:#fafafa;}
+.faq-item.open .faq-a{padding:16px 22px;max-height:800px;border-top:1px solid var(--border);}
+.faq-a p{margin-bottom:8px;font-size:13.5px;line-height:1.9;}
+
+.footer{background:#0F4A28;color:#c8d8cc;padding:30px 0;font-size:13px;line-height:1.85;}
+.footer .company{font-weight:600;font-size:15px;color:#fff;margin-bottom:8px;}
+.footer .copy{margin-top:16px;opacity:0.7;font-size:12px;}
+.back-link{display:inline-block;background:#fff;color:var(--primary);padding:6px 14px;border-radius:14px;border:1px solid var(--primary);font-size:12px;font-weight:600;margin-top:14px;}
+.back-link:hover{background:var(--primary-pale);}
+
+.to-top{position:fixed;bottom:24px;right:24px;width:46px;height:46px;border-radius:50%;background:var(--forest-deep);color:#fff;border:2px solid #B8E5C5;font-size:1.3rem;cursor:pointer;box-shadow:0 4px 16px rgba(15,74,40,.4);opacity:0;pointer-events:none;transition:opacity .3s,transform .2s,background .2s;z-index:150;}
+.to-top.show{opacity:1;pointer-events:auto;}
+.to-top:hover{background:var(--primary);transform:translateY(-3px);}
+
+@media (max-width:768px){.section{padding:48px 0;}.hero{padding:52px 0 44px;}.hero h1{font-size:24px;}.section-head h2{font-size:22px;}.toc{position:relative;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <span><strong>/case-attack 完全攻略マニュアル v1.0</strong>　|　2026-06-10 制定　|　<span class="attack-badge">攻略書</span></span>
+    <span style="opacity:0.85;">AS_AI導入支援事業</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="container">
+    <span class="badge">⚔️ COMPLETE ATTACK MANUAL / 04. 営業・提案</span>
+    <h1>案件獲得デモ資料セットを <span class="accent">15ファイル全部入り</span>で生成し<br><span class="attack-word">難題クライアント</span>を攻略する実務書</h1>
+    <p class="sub">
+      新規クライアント候補との商談を「武器」で攻略するためのデモ資料セット制作スキル<code>/case-attack</code>。本書は<strong>難題ケーススタディ・失敗パターン集・段階的習得法・AIプロンプト完全集</strong>を含む実戦書。
+    </p>
+    <div class="what-card">
+      <div class="title">攻略マニュアルが扱う5要素</div>
+      <ol>
+        <li><strong>難題ケーススタディ</strong>：難しい相手・状況・課題への対応シナリオ</li>
+        <li><strong>失敗パターン集</strong>：「やったら詰む」NGリスト＋切り抜け方</li>
+        <li><strong>戦略フレーム</strong>：判断軸・優先順位・トレードオフの言語化</li>
+        <li><strong>段階的習得法</strong>：Lv1〜Lv5の到達目標</li>
+        <li><strong>反論・質問への切り返し</strong>：想定攻撃への返答テンプレ</li>
+      </ol>
+    </div>
+    <div class="what-card">
+      <div class="title">起点ケース</div>
+      <ol>
+        <li>越前刃心デモ（2026-04-10、福井・業務用刃物メーカー架空案件）— 15ファイル全部入りの初期実装</li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" id="navToc">
+  <div class="container">
+    <h3>目次</h3>
+    <div class="toc-grid">
+      <a href="#sec1" class="toc-item"><span class="num">01</span> スキルの位置づけ</a>
+      <a href="#sec2" class="toc-item attack"><span class="num">02</span> 攻略マインドセット5原則</a>
+      <a href="#sec3" class="toc-item"><span class="num">03</span> 入力素材＋実行モード</a>
+      <a href="#sec4" class="toc-item"><span class="num">04</span> 8フェーズ実行手順</a>
+      <a href="#sec5" class="toc-item attack"><span class="num">05</span> 難題ケーススタディ集</a>
+      <a href="#sec6" class="toc-item attack"><span class="num">06</span> 失敗パターン集（NG集）</a>
+      <a href="#sec7" class="toc-item"><span class="num">07</span> 段階的習得ロードマップ</a>
+      <a href="#sec8" class="toc-item"><span class="num">08</span> AIプロンプト完全集</a>
+      <a href="#sec9" class="toc-item"><span class="num">09</span> 業種別カスタマイズ</a>
+      <a href="#sec10" class="toc-item attack"><span class="num">10</span> 反論切り返し集</a>
+      <a href="#sec11" class="toc-item"><span class="num">11</span> FAQ</a>
+      <a href="#sec12" class="toc-item"><span class="num">12</span> HISTORY</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Section 1 ===== -->
+<section class="section" id="sec1">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 01 / PURPOSE</span>
+      <h2>スキルの位置づけ — 何を攻略するスキルか</h2>
+    </div>
+    <p class="section-lead"><code>/case-attack</code> は新規クライアント候補との商談を「武器」で攻略するためのデモ資料セット制作スキル。15ファイル全部入りで、商談を次のステップに進めるための実装。</p>
+
+    <h3>既存スキルとの差別化</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>スキル</th><th>カバー範囲</th><th>case-attack との関係</th></tr></thead>
+        <tbody>
+          <tr><td><code>/hearing-design</code></td><td>初回ヒアリング項目設計</td><td><strong>前段・必修</strong>（Phase 1の入力源）</td></tr>
+          <tr><td><code>/research-publish</code></td><td>リサーチレポート単独制作</td><td>部分機能（リサーチ④のみ単体で使用可）</td></tr>
+          <tr><td><code>/sme-ai-proposal</code></td><td>中小企業AI提案書単独</td><td>部分機能（提案書1本のみ単体で使用可）</td></tr>
+          <tr><td><code>/rashinban</code></td><td>マンダラ＋マトリクス＋ガント</td><td>部分機能（ラシンバン1本のみ単体で使用可）</td></tr>
+          <tr><td class="attack"><strong>/case-attack</strong></td><td><strong>商談で使う武器セット15ファイル全部入り</strong></td><td><strong>上位統合スキル</strong>（前述4スキルを束ねる）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">⭐ KEY POINT</div>
+      <h4>「営業の武器」として何度も使い回す資産</h4>
+      <p>1案件あたり1〜2営業日の作成コスト。3〜5案件で横展開できれば1案件あたり実質コストは半日以下に下がる。<strong>越前刃心デモは「型」、それを別業種に転用する技術がこのスキルの核</strong>。</p>
+    </div>
+
+    <h3>15ファイル全体像</h3>
+    <div class="mermaid-wrap">
+      <h4>📦 case-attack で生成される15ファイルの構造</h4>
+      <pre class="mermaid">
+flowchart LR
+  classDef public fill:#dcfce7,color:#15803d,stroke:#15803d,stroke-width:2px
+  classDef internal fill:#fef3c7,color:#92400e,stroke:#d97706,stroke-width:2px
+  classDef secret fill:#fee2e2,color:#7a0a2d,stroke:#a52a2a,stroke-width:3px
+
+  ROOT[案件フォルダ<br/>Demo_YYYYMMDD_企業名/]
+
+  subgraph Pub["🟢 クライアント共有可（7HTML）"]
+    P1[index.html<br/>ポータル]:::public
+    P2[proposal.html<br/>卸ルート再定義]:::public
+    P3[proposal_global.html<br/>5路線戦略]:::public
+    P4[proposal_association.html<br/>業界団体総会]:::public
+    P5[knife_channels.html<br/>新販路マップ]:::public
+    P6[rashinban_1.html<br/>構造分解①]:::public
+    P7[rashinban_2,3.html<br/>構造分解②③]:::public
+  end
+
+  subgraph Int["🟡 社内専用5MD（架空設定）"]
+    I1[00_基本情報.md]:::internal
+    I2[01_社長ペルソナ.md]:::internal
+    I3[02_財務業績.md]:::internal
+    I4[03_経営会議文字起.md]:::internal
+    I5[04_現場ヒアリング.md]:::internal
+  end
+
+  subgraph Sec["🔴 社外秘マニュアル"]
+    S1[99_攻略マニュアル.md]:::secret
+    S2[99_攻略マニュアル.html]:::secret
+  end
+
+  ROOT --> Pub & Int & Sec
+      </pre>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 2: 攻略マインドセット ===== -->
+<section class="section attack-alt" id="sec2">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 02 / MINDSET</span>
+      <h2>⚔️ 攻略マインドセット5原則</h2>
+    </div>
+    <p class="section-lead">単純なファイル生成スキルではない。<strong>難しい相手・状況・課題を「攻略」するための戦略書</strong>として運用すべき5原則。</p>
+
+    <div class="banner-attack">
+      <div class="label">攻略マニュアル＝難題突破の実務書</div>
+      <h4>「整った文書」より「殴れる文書」を作る</h4>
+      <p>本マニュアルは<code>rules/kai-style-guide.md</code>「完全マニュアル＝攻略マニュアル」ルールに基づき設計されている。手順書ではなく、<strong>現場で武器になる実務書</strong>。</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card attack">
+        <h4>原則1：型は守る、内容は壊す</h4>
+        <p>越前刃心の「12章構成／五箇条／7施策／マンダラ81セル」は<strong>絶対に崩さない</strong>。崩していいのは「業種固有の数値・固有名詞・カラーテーマ」のみ。構造を崩すと再現性が消える。</p>
+      </div>
+      <div class="feature-card attack">
+        <h4>原則2：実データ vs 架空の境界を絶対に守る</h4>
+        <p>会社固有情報（社名・売上・代理店数）のみ架空。<strong>市場統計・参照ブランドは実データ＋URL出典</strong>。境界が曖昧だと「信用毀損」と「捏造」の両方に陥る。</p>
+      </div>
+      <div class="feature-card attack">
+        <h4>原則3：3層構造を絶対に守る</h4>
+        <p>クライアント共有可（公開層）／社内ストーリー設定（社内層）／社外秘営業ノウハウ（極秘層）の3層を物理的に分離。<strong>1ファイルでも層を間違えると流出事故</strong>。</p>
+      </div>
+      <div class="feature-card attack">
+        <h4>原則4：難題は「フレーム」で攻略する</h4>
+        <p>「いくら？」「AIで作ってるなら安いはず」等の反論は、その場で考えるな。<strong>事前に用意した切り返しフレーム</strong>を出す。反論集（Section 10）を暗記レベルまで習得せよ。</p>
+      </div>
+      <div class="feature-card attack">
+        <h4>原則5：商談10分以内、デモ閲覧3分以内</h4>
+        <p>全7HTMLを商談で見せようとしない。<strong>ポータル＋提案①冒頭＋ラシンバン構造分解＋新販路マップの4ポイント</strong>に絞る。残り3HTMLは「持ち帰り用」。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 3 ===== -->
+<section class="section" id="sec3">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 03 / INPUT</span>
+      <h2>入力素材＋実行モード</h2>
+    </div>
+    <p class="section-lead">スキル実行に必要な入力。最低3つ揃えば実行可能、5つ揃えば完成度高。</p>
+
+    <h3>必要な入力素材（7項目）</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>素材</th><th>例</th><th>必須度</th></tr></thead>
+        <tbody>
+          <tr><td>クライアント業種・規模</td><td>「業務用刃物メーカー／年商23億円」</td><td class="good">必須</td></tr>
+          <tr><td>主要販路構造</td><td>「B2B卸代理店480社＋EC8チャネル」</td><td class="good">必須</td></tr>
+          <tr><td>経営層の課題感</td><td>「卸経由でエンドユーザーが見えない」</td><td class="good">必須</td></tr>
+          <tr><td>想定転用先（異業種）</td><td>「医療メス／産業用ナイフ／海外プロ料理学校」</td><td>推奨</td></tr>
+          <tr><td>業界団体候補</td><td>「日本調理師会連合会／全国食品工業協会」等</td><td>推奨</td></tr>
+          <tr><td>カラーテーマ指定</td><td>「和テイスト（墨黒×朱×金）」「青系」等</td><td>任意</td></tr>
+          <tr><td>パスワード</td><td>「demo2026」等</td><td class="good">必須</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>3つの実行モード</h3>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4>Mode A：フル生成（標準）</h4>
+        <p>全15ファイル生成。1〜2営業日。新規案件・大型案件の標準フロー。</p>
+      </div>
+      <div class="feature-card">
+        <h4>Mode B：構造分解単体</h4>
+        <p>ラシンバン1〜3本のみ生成。半日〜1日。既存提案書を分解可視化する時に使う。</p>
+      </div>
+      <div class="feature-card">
+        <h4>Mode C：リサーチ＋ポータル</h4>
+        <p>新販路マップ1本＋ポータルのみ。半日。「他社事例の見せ方を知りたい」軽量ニーズ向け。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 4: 8フェーズ ===== -->
+<section class="section alt-bg" id="sec4">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 04 / FLOW</span>
+      <h2>8フェーズ実行手順</h2>
+    </div>
+    <p class="section-lead">Phase 0〜8の標準実行フロー。各フェーズの所要時間と成果物を明示。</p>
+
+    <div class="mermaid-wrap">
+      <h4>🔧 8フェーズ全体フロー</h4>
+      <pre class="mermaid">
+flowchart LR
+  classDef plan fill:#fef3c7,color:#92400e,stroke:#d97706,stroke-width:2px
+  classDef build fill:#dcfce7,color:#15803d,stroke:#15803d,stroke-width:2px
+  classDef check fill:#dbeafe,color:#1e40af,stroke:#3b82f6,stroke-width:2px
+
+  P0[Phase 0<br/>方針宣言]:::plan
+  P1[Phase 1<br/>要件整理]:::plan
+  P2[Phase 2<br/>5MD生成]:::build
+  P3[Phase 3<br/>実データ収集]:::build
+  P4[Phase 4<br/>提案書4本]:::build
+  P5[Phase 5<br/>ラシンバン3本]:::build
+  P6[Phase 6<br/>ポータル]:::build
+  P7[Phase 7<br/>攻略マニュアル]:::build
+  P8[Phase 8<br/>Inspect検証]:::check
+
+  P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> P6 --> P7 --> P8
+      </pre>
+    </div>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <span class="ph-num">PHASE 0</span>
+        <h4>方針宣言（省略可）</h4>
+        <p>編集系ノンストップモード下では省略。「15ファイル生成します。約1〜2営業日。事前確認したい点ありますか？」</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 1 / 10〜30分</span>
+        <h4>要件整理＋業種選定</h4>
+        <p>5案を生成し、Keiに選択させる。「事業規模／本質課題／異業種転用候補／業界団体機会」を各案1行で提示。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 2 / 2〜3時間</span>
+        <h4>5MD生成（社内専用）</h4>
+        <p>00_基本情報／01_社長ペルソナ／02_財務／03_経営会議／04_現場ヒアリングの5本。実在企業との直接的関係はゼロ。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 3 / 30分〜1時間</span>
+        <h4>実データ収集（WebSearch並列）</h4>
+        <p>10件並列検索：国内市場／海外市場／業界統計／参照ブランド／業界団体／規制／隣接市場／EC構造／後継者問題／海外展開事例。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 4 / 4〜6時間</span>
+        <h4>提案書HTML 4本生成</h4>
+        <p>越前刃心の4本（proposal/global/association/knife_channels）をテンプレに、コピー＋差し替え。出典URL必修。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 5 / 3〜4時間</span>
+        <h4>ラシンバン 3本生成</h4>
+        <p>アプリ版テンプレ完全継承。DATA部分のみ書き換え。HTML/CSS/JSは触らない。localStorageキーは案件別に独立。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 6 / 1時間</span>
+        <h4>ポータル index.html</h4>
+        <p>7HTMLへの導線。パスワード記載・社内MD欄は<strong>絶対入れない</strong>（営業時URL共有用）。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 7 / 2〜3時間</span>
+        <h4>社外秘攻略マニュアル2本</h4>
+        <p>10章構成の.md＋.html。営業話法・カスタマイズ・AI指示文・反論切り返しを含む。.gitignore追加必修。</p>
+      </div>
+      <div class="phase-card">
+        <span class="ph-num">PHASE 8 / 1〜2時間</span>
+        <h4>preview実機検証＋Inspect 4点</h4>
+        <p>実装テスト（連鎖動作）／リンク切れ／版番号同期／SVG座標スケール整合性。コンソールエラー0件確認。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 5: 難題ケーススタディ ===== -->
+<section class="section attack-alt" id="sec5">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 05 / CASE STUDIES</span>
+      <h2>⚔️ 難題ケーススタディ集</h2>
+    </div>
+    <p class="section-lead">手順通りに進まない難題6パターン。それぞれの状況・打ち手・回避策を実戦シナリオで示す。</p>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 1</span>初回ヒアリングで情報が3項目以下しか取れない</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>商工会議所での名刺交換のみ、本格ヒアリング機会なし／クライアント側が警戒気味で情報を開示しない
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p>Mode C（リサーチ＋ポータル）で軽量版デモを作る。業種＋規模感のみで「同業他社の典型像」として越前刃心型を提示。「貴社の事情に合わせると違うはず」と前置きしながら、想像力を補う材料として見せる。情報を「もらう」ではなく「埋めて見せる」のが攻略の核。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">注意</div>
+        <p>「貴社のはこうじゃないですか？」と決めつけ口調NG。「典型像を見ていただいて、貴社の場合はどこが違うか教えてください」と質問形式に変換。</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 2</span>クライアントが「越前刃心と業種が遠すぎる」と懐疑的</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>越前刃心デモを見せたが「うちはIT企業、刃物メーカーとは違う」と切り捨てモード／構造類似性を理解してもらえない
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p><strong>業種ではなく「販路構造」「課題類型」で説明する</strong>。「卸ルート」を「販売代理店／パートナー企業」、「研ぎ直し」を「保守サポート」、「業界団体総会」を「業界カンファレンス」に瞬時に翻訳して話す。30秒以内に「貴社の業界ではこれが○○に当たります」と置換実演する瞬発力が攻略の要。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">予防策</div>
+        <p>事前にクライアントの業種に2案件以内に近いカスタマイズ事例を持参する。3案件以上跨ぐと「業種似てない感」が出る。</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 3</span>意思決定者が技術出身でAI懐疑派</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>「AIなんてChatGPTでできる」「これも全部AIで作ってる」と懐疑的／ハルシネーション・誤情報を警戒
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p>その場でAIに「中国輸入包丁シェアは何%？」と質問して、AIが捏造数値を出すデモをする。「これを潰すのが我々の仕事」と明示。出典セクションを開き、全URLをスクロールしながら「これは厚労省、これはJETRO、これは農水省」と読み上げる。<strong>「AIの限界を知っている専門家」というポジショニング</strong>を獲得する。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">補強</div>
+        <p>「設計と判断は私が全部やっています」を繰り返す。Kai標準レポート構成完全マニュアルの存在も補強材料。</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 4</span>「予算が決まってからじゃないと動けない」と保留される</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>興味は示すが「社内で予算化してから連絡します」と先延ばし／3ヶ月後にフォローしても進展なし
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p>その場で「ヒアリング自体は3万円（または無料）」と提示し、最小コミットメントを取る。デモ作成は無料で進め、提案書段階で正式見積もり。<strong>「予算化前に動く理由」を作る</strong>のが攻略。商工会議所・銀行紹介ルートの場合、紹介者を巻き込んで「予算化の社内根回し」を支援する形にする。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">トラップ回避</div>
+        <p>「無料でデモまで」を3案件以上同時並行しない。受注確度の低い案件で時間を食われる。3ヶ月ルール（フォロー3回で進展なければ離脱）を厳守。</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 5</span>クライアント側で「内製化したい」と言い出される</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>デモを見せた後「貴社のフォーマットだけ教えてもらえれば、うちで作ります」と内製案を出される／受注機会を失う寸前
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p>素直に「テンプレートだけ買い切りで100万円、運用支援付きなら月20万円」など、内製化前提の価格表を即座に提示する。デモ実物は渡さず、テンプレート＋研修＋四半期レビュー支援のセット販売に切り替える。<strong>「ノウハウの切り売り」を許容範囲で受ける</strong>のが新しい受注パターン。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">警告</div>
+        <p>15ファイル全部のテンプレを渡すと再依頼率が消える。<strong>提案書1本＋ラシンバン1本のテンプレに留める</strong>。攻略マニュアル本体は絶対に渡さない。</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <h4><span class="case-num">CASE 6</span>納期が「来週まで」と短納期で要求される</h4>
+      <div class="case-meta">
+        <strong>状況：</strong>商談中に「来週の取締役会で見せたい」と短納期依頼／通常2営業日のフローを5営業日に圧縮要求
+      </div>
+      <div class="case-section">
+        <div class="label">攻略法</div>
+        <p>Mode B（構造分解単体）またはMode C（リサーチ＋ポータル）で対応し、フル版は別納期で並行制作。「取締役会用は要約版、本番は2週間後に完全版」の2段階デリバリーを提案。<strong>納期に振り回されると品質が崩れる</strong>ので、必ず2段階提案で交渉。</p>
+      </div>
+      <div class="case-section">
+        <div class="label">価格</div>
+        <p>短納期は1.5倍料金。「無料デモ作成」の場合は短納期対応しない（受注確度が読めないため）。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 6: 失敗パターン集 ===== -->
+<section class="section" id="sec6">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 06 / FAILURE PATTERNS</span>
+      <h2>⚠️ 失敗パターン集（NG集）</h2>
+    </div>
+    <p class="section-lead">「やったら詰む」NGパターン7選。それぞれの典型症状＋切り抜け方を明示。</p>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-01</span>社内専用5MDをクライアントに送る</h4>
+      <div class="fail-body">最大の事故。社長ペルソナ・経営会議文字起こしを「資料一式」として共有してしまう。クライアントが「架空の設定資料」を読んで信頼を喪失。</div>
+      <div class="recovery">送付前に必ず<code>10_PUBLISHED/</code>配下のみをZIP化するか、URLで該当HTMLのみ共有する。<code>.gitignore</code>＋ファイル名プレフィックス（00_／99_）で物理的に区別。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-02</span>攻略マニュアルを社外に流出させる</h4>
+      <div class="fail-body">「営業話法」「反論切り返し」が外に出ると、クライアントが「裏を読まれて操作されている」と感じる。最悪の信頼毀損。</div>
+      <div class="recovery">ファイル名に「社外秘」を必ず含める。<code>.gitignore</code>でGitHub追跡対象外。PDFエクスポート時の警告バー表示。社内研修以外で開かない。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-03</span>架空数値を実データと混ぜる</h4>
+      <div class="fail-body">「越前刃心は年商23億円（架空）、中国輸入包丁シェア27%」のように、架空と実数を1文に混ぜる。読み手が境界を見失い、全数値が疑わしくなる。</div>
+      <div class="recovery">架空数値には必ず「（架空試算）」「（Demo仮置）」表記。実データは出典URLセット。境界は段落単位で分離。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-04</span>ラシンバンのDATA以外を触る</h4>
+      <div class="fail-body">テンプレのHTML/CSS/JSを書き換えてしまい、マンダラ→マトリクス→フロー連鎖が壊れる。再現性が消える。</div>
+      <div class="recovery">書き換えは必ず<code>const DATA = {...}</code>と<code>const SK = '...'</code>のみ。テンプレ本体は越前刃心版から無加工コピー。preview検証でマンダラセル→マトリクス遷移を必ず確認。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-05</span>ポータルに社内MDへのリンクを残す</h4>
+      <div class="fail-body">index.htmlに「デモ資料セット（補足）」リンクを置き、クライアントがクリックして社内専用MDにアクセス。社外秘情報の流出。</div>
+      <div class="recovery">ポータルは7HTML（提案書3＋構造分解3＋リサーチ1）への導線のみ。「社内資料」「補足」セクションは絶対に作らない。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-06</span>パスワードを本文に書く</h4>
+      <div class="fail-body">「パスワード：demo2026」とフッターに記載。URL共有時に意味が消える＋セキュリティゼロ。</div>
+      <div class="recovery">パスワードはゲート機能のみ。本文・フッター・コメントに記載NG。営業時はURL＋パスワードを別送（メール本文＋SMS等）。</div>
+    </div>
+
+    <div class="fail-card">
+      <h4><span class="fail-badge">NG-07</span>全7HTMLを商談10分以内で見せようとする</h4>
+      <div class="fail-body">焦って全部スクロール表示。クライアント側で印象がぼやけ、何の会社か伝わらず。</div>
+      <div class="recovery">商談用は4ポイント（ポータル＋提案①冒頭＋ラシンバン構造分解＋新販路マップ）に絞る。残り3HTMLは「持ち帰り用」として後送。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 7: 段階的習得 ===== -->
+<section class="section green-alt" id="sec7">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 07 / LEVELS</span>
+      <h2>段階的習得ロードマップ（Lv1〜Lv5）</h2>
+    </div>
+    <p class="section-lead">スキルを使いこなすための5段階。各レベルの到達目標と所要期間。</p>
+
+    <div class="stage-grid">
+      <div class="stage-card lv1">
+        <span class="stage-num">LEVEL 1 / 初学者</span>
+        <h4>越前刃心デモを完全理解</h4>
+        <div class="goal">15ファイル全部を読み込み、ファイル間の参照関係を把握。社外秘マニュアルを暗記レベルまで。</div>
+        <div class="duration">所要：3〜5日</div>
+      </div>
+      <div class="stage-card lv2">
+        <span class="stage-num">LEVEL 2 / 実践者</span>
+        <h4>近接業種で1案件完成</h4>
+        <div class="goal">越前刃心と販路構造の近い業種（食品・建材・部品メーカー等）で1案件完成。Kaiに指示してフル15ファイル生成。</div>
+        <div class="duration">所要：1〜2週間（初案件）</div>
+      </div>
+      <div class="stage-card lv3">
+        <span class="stage-num">LEVEL 3 / 中級者</span>
+        <h4>業種跨ぎ案件で3案件横展開</h4>
+        <div class="goal">アパレル・IT・医療など業種が大きく異なる3案件を横展開。難題ケース1〜3に1回以上遭遇し対応。</div>
+        <div class="duration">所要：1〜2ヶ月（3案件累計）</div>
+      </div>
+      <div class="stage-card lv4">
+        <span class="stage-num">LEVEL 4 / 熟達者</span>
+        <h4>反論切り返しを瞬発で出せる</h4>
+        <div class="goal">商談中にQ1〜Q5の反論が来た瞬間、3秒以内に対応開始。難題ケース4〜6（内製化要求・短納期・予算保留）に成功実績。</div>
+        <div class="duration">所要：3〜6ヶ月（実案件10件以上）</div>
+      </div>
+      <div class="stage-card lv5">
+        <span class="stage-num">LEVEL 5 / 攻略者</span>
+        <h4>新パターンを発見・体系化</h4>
+        <div class="goal">越前刃心では想定していない難題パターンを実戦で発見し、本マニュアルに追記して体系化。営業メンバー研修を実施可能。</div>
+        <div class="duration">所要：1年以上（営業メンバー育成も含む）</div>
+      </div>
+    </div>
+
+    <div class="banner-good">
+      <div class="label">💡 LEVEL UP TIPS</div>
+      <h4>Lv2→Lv3の壁が最大の難所</h4>
+      <p>業種跨ぎの瞬時翻訳力（CASE 2の販路構造→保守サポート等の置換）が必要。<strong>毎案件、新業種の用語集を作る習慣</strong>を持つとLv3到達が早い。Section 9「業種別カスタマイズ」を参照しながら積み上げる。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 8: AIプロンプト完全集 ===== -->
+<section class="section" id="sec8">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 08 / PROMPTS</span>
+      <h2>AIプロンプト完全集（A〜F）</h2>
+    </div>
+    <p class="section-lead">Claude/ChatGPT/Kaiにそのまま投げて使える6プロンプト。コピーボタン付き。</p>
+
+    <h3>📌 プロンプトA：デモ会社設定の生成</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 2：5MD生成
+
+## クライアント情報（実在）
+- 業種：[業種]
+- 規模：[年商][従業員数][販路]
+- 課題：[主要課題3つ]
+
+## 依頼
+越前刃心デモ（05_クライアント案件/Demo_20260410_越前刃心/）と
+同じ構造で5MDを作って。
+
+必須要素：
+1. 中小製造業／B2B卸構造／後継者問題／市場縮小傾向、の4要素を反映
+2. 社長は3代目以降の若手承継者
+3. 代理店ネットワークは存在するが、エンドユーザー情報が不可視
+4. 既存事業の他に「異業種転用可能な技術」を1つ持つ
+
+5MDファイル：
+- 00_クライアント基本情報.md
+- 01_社長ペルソナ.md（性格・口癖・本当の悩み含む）
+- 02_財務業績情報.md
+- 03_経営会議文字起こし.md
+- 04_現場ヒアリング.md
+
+実在企業との直接的関係はゼロ。
+業界統計・参照ブランドは実データ。</pre></div>
+
+    <h3>📌 プロンプトB：提案書HTML①生成</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 4：提案書HTML作成
+
+越前刃心の proposal.html と同じ12章構成で新規HTML作成。
+
+【必須】
+- 数値はすべて実データに置換、出典URL明記
+- 越前刃心の「五箇条」を踏襲した「反感ゼロの五箇条」を業界文脈に書き換え
+- 7施策をクライアントの販路構造に合わせて再設計
+- パスワードゲート
+- Chart.js / mermaid.js 使用
+- ファイル末尾の出典セクションには公開実データURLのみ列挙
+- DEMOバナー冒頭配置
+
+完成後、Inspect3点検証を実施して報告。</pre></div>
+
+    <h3>📌 プロンプトC：ラシンバン構造分解</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 5：ラシンバン構造分解HTML
+
+## 元テンプレ
+08_アプリ開発事業部/outputs/rashinban/rashinban-template.html
+（または 越前刃心の rashinban_proposal_1.html）
+
+## 依頼
+上記テンプレを完全継承し、DATA部分（const DATA = {...}）のみを書き換える。
+
+【書き換え対象】
+1. meta（theme/background/targetPeriod/constraints）
+2. kai（summary/coreIssue/topPriority/consultantVerdict/strengths[3]/risks[3]/themeInsights[8]）
+3. mandala.center + themes[8]（各themeにitems[8]、合計64アクション）
+4. matrices[8]（4象限×8テーマ）
+5. flows[3〜5]（重要項目のみ詳細フロー5〜7ステップ＋kaiHint）
+6. gantt.phases[](フェーズ別タスク／linkToで連動)
+7. localStorageキー SK = 'rsh_[クライアント英語名]_1'
+
+【守るべき仕様】
+- マンダラ81セル（中央1＋テーマ8＋tr8＋item64）
+- テーマセルクリック→該当マトリクス遷移
+- マトリクス項目クリック→該当フロー or 動的フロー表示
+- ガントタスククリック→linkTo連動
+- ヘッダー進捗バー＋localStorage完了管理
+
+完成後、preview実機でマンダラ→マトリクス→フロー連鎖を確認。</pre></div>
+
+    <h3>📌 プロンプトD：新販路マップ</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 4：新販路マップ
+
+越前刃心 knife_channels.html と同構造で、
+クライアント業界の「本業以外の販路10領域」を可視化。
+
+【手順】
+1. WebSearch並列調査（クライアント業界の最新動向、隣接市場、競合状況）
+2. SVG散布図で「顕在度×競合度」のマトリクス描画
+3. 10販路をカード化
+4. 重点3販路の深掘り
+5. 90日アクションプラン
+6. Kaiの読み
+7. 出典セクション（実データURLのみ）
+
+【守るべき仕様】
+- 1領域は「既得領域」として設定
+- 重点2領域は「新規参入打診先」を明記
+- SVGバブル位置はマトリクスの軸スケールと一致</pre></div>
+
+    <h3>📌 プロンプトE：ポータルindex.html</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 6：ポータルindex.html
+
+越前刃心 index.html を参考に7HTMLへのリンク集ポータルを作成。
+
+【絶対要件】
+- パスワード記載は本文中に絶対入れない
+- デモ資料セット欄（補足の社内MDへのリンク）は入れない
+- パスワードゲート自体は機能として残す
+
+【含めるもの】
+- ヒーロー（企業名＋提案テーマ）
+- 7カード（提案書3＋構造分解3＋リサーチ1）
+- 各カードに「提案書を開く →」CTAボタン
+- フッターは「本資料は[企業名]様への限定公開資料です」のみ
+
+カラーテーマはクライアント業種に合わせる。</pre></div>
+
+    <h3>📌 プロンプトF：ヒアリング要約→デモ落とし込み</h3>
+    <div class="code-box">
+<button class="copy-btn" onclick="copyCode(this)">📋 コピー</button>
+<pre># /case-attack Phase 1：ヒアリング要約
+
+## 入力
+以下はクライアントとの初回ヒアリングメモ（30分〜1時間）：
+[ヒアリングメモを貼り付け]
+
+## 依頼
+このメモから、デモ作成に必要な以下を抽出して整理：
+
+1. 業種・規模・販路構造（3行で）
+2. 経営層の本当の悩み（直接的言葉ではなく深層的に）
+3. 既存IT環境のレベル感（1=紙台帳〜5=モダンSaaS）
+4. デモ提示時の「刺さる比喩」候補
+5. 反論されそうなポイント3つ
+6. 受注の決め手になりそうな要素3つ
+
+抽出結果をもとに、越前刃心デモ5MDのどの章を主に書き換えるべきか提案して。</pre></div>
+  </div>
+</section>
+
+<!-- ===== Section 9: 業種別カスタマイズ ===== -->
+<section class="section alt-bg" id="sec9">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 09 / INDUSTRY</span>
+      <h2>業種別カスタマイズ実例</h2>
+    </div>
+    <p class="section-lead">越前刃心の「型」を別業種に転用する6つの実例。各業種でどう翻訳するか。</p>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>業種</th><th>「卸ルート」翻訳</th><th>「桐箱QR」翻訳</th><th>「研ぎ直し」翻訳</th><th>カラー</th></tr></thead>
+        <tbody>
+          <tr><td>食品加工メーカー</td><td>業務用問屋120社＋スーパー直納</td><td>冷凍食品パッケージQR</td><td>業務用品質クレーム受付</td><td>深緑×黄土</td></tr>
+          <tr><td>建材メーカー</td><td>建材商社200社＋工務店</td><td>製品ラベルQRで施工業者登録</td><td>製品保証延長Web受付</td><td>グレー×オレンジ</td></tr>
+          <tr><td>BtoCアパレル</td><td>百貨店＋EC＋直営店</td><td>商品タグQRで購入者属性</td><td>リペアサービスWeb化</td><td>ピンク×墨×金</td></tr>
+          <tr><td>医療機器メーカー</td><td>医療機器商社200社＋病院直販</td><td>製品シリアルQRで使用病院登録</td><td>定期メンテ予約Web化</td><td>白×緑×銀</td></tr>
+          <tr><td>SaaS企業</td><td>代理店20社＋直販</td><td>ライセンスキーQRで利用者属性</td><td>カスタマーサクセスWeb化</td><td>紺×紫×金</td></tr>
+          <tr><td>士業事務所</td><td>金融機関紹介＋直接受任</td><td>初回相談時QRでクライアント属性</td><td>定期顧問契約Web化</td><td>濃紺×銀×金</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="banner-warn">
+      <div class="label">⚠️ 注意</div>
+      <h4>業種跨ぎは2案件以内が限度</h4>
+      <p>越前刃心（製造業）→食品（製造業近接）はOK。製造業→SaaSは1案件で止める。3案件目以降は「業種似てない感」が出てクライアントに見抜かれる。<strong>該当業種でのデモ実績を3案件作ったら、その業種テンプレを独立化する</strong>のが理想。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 10: 反論切り返し ===== -->
+<section class="section attack-alt" id="sec10">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 10 / COUNTERS</span>
+      <h2>⚔️ 反論切り返し集（最重要）</h2>
+    </div>
+    <p class="section-lead">商談で必ず出る5つの反論への切り返しテンプレ。<strong>暗記レベルまで習得し、3秒以内に反応できるようにする</strong>。</p>
+
+    <div class="qa-list">
+      <div class="qa-item attack-qa">
+        <div class="q">「これ全部AIで作ってるんでしょ？うちもChatGPTでできるよ」</div>
+        <div class="a"><strong>「AIは手を動かしてもらってますが、設計と判断は私が全部やっています</strong>。実は、出典の確認・数値の検証・5MDの矛盾チェックに一番時間がかかります。AIが嘘の数値を平気で出すので、それを潰す作業こそが我々の仕事です。」<br><br>→その場でAIに「中国輸入包丁シェアは何%？」と質問してAIが違う数字を出すデモ実演。出典セクションを開いて公開URL一覧を見せる。</div>
+      </div>
+
+      <div class="qa-item attack-qa">
+        <div class="q">「うちみたいな小さい会社にここまで必要？」</div>
+        <div class="a">「ここまでの量がそのまま貴社に必要なわけではないです。逆に言うと、貴社が動かしたい施策3つに絞った構造分解だけお作りすることもできます。<strong>料金は出すドキュメントの数に比例します</strong>。」<br><br>→価格表3段階で持参（小規模40万／中規模120万／大規模300万）。</div>
+      </div>
+
+      <div class="qa-item attack-qa">
+        <div class="q">「うちの業界はAIなんて使えないよ」</div>
+        <div class="a">「業界によってはAIが直接ユーザーと話す機会はゼロです。我々の提案も、AIがお客様と話す部分はほぼないんです。<strong>AIは"見えない裏方"</strong>として、ヒアリングデータの分析、提案書の下書き、施策アイデアの量産、ここで使います。フロントは全部、貴社の人と私です。」</div>
+      </div>
+
+      <div class="qa-item attack-qa">
+        <div class="q">「で、これ作るのいくら？」</div>
+        <div class="a">1. まず「7本セットの場合、企画から納品まで2ヶ月で<strong>150〜300万円</strong>が多いです」と幅で伝える。<br>2. 「ただ、お客様によって必要なものは違うので、ヒアリングして見積もりさせてください。ヒアリング自体は3万円です（または無料）」<br>3. <strong>絶対に値切られ前提の金額を最初に出さない</strong>。</div>
+      </div>
+
+      <div class="qa-item attack-qa">
+        <div class="q">「同業他社の事例はないの？」</div>
+        <div class="a">「クライアント様には守秘義務をお約束しているので、社名は出せません。ただ、この越前刃心デモは『中小製造業×B2B卸×後継者問題』という構造で、実在のお客様の課題を抽象化して作っています。<strong>貴社の業界にも横展開できる原理原則</strong>が詰まっています。」</div>
+      </div>
+    </div>
+
+    <div class="banner-attack">
+      <div class="label">攻略マインド</div>
+      <h4>反論は「攻撃」ではなく「興味の証」</h4>
+      <p>反論が来たら、相手は<strong>すでに前のめり</strong>になっている。冷静に切り返せばクロージング率は跳ね上がる。逆に、反論が一切出ない商談は「興味なし」のサイン。早めに離脱判断。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 11: FAQ ===== -->
+<section class="section" id="sec11">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 11 / FAQ</span>
+      <h2>FAQ</h2>
+    </div>
+    <p class="section-lead">スキル運用で頻出する7つの質問。</p>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q1. 既存案件で受注済みクライアント向けにも使える？<span class="mark">+</span></button>
+      <div class="faq-a"><p>はい。Mode A（フル生成）で実在クライアント向けにも使えます。その場合は<code>Demo_</code>プレフィックスを外し、<code>05_クライアント案件/YYYYMMDD_[企業名]/</code>で作成。社内専用5MDは正式提案書化フェーズで実在データに置換していきます。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q2. 1日でフル生成は可能？<span class="mark">+</span></button>
+      <div class="faq-a"><p>集中して14〜22時間なので、不眠不休なら可能ですが推奨しません。<strong>Day 1：5MD＋提案書4本／Day 2：ラシンバン3本＋ポータル＋攻略マニュアル＋検証</strong>の2日割が品質的に安全です。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q3. ラシンバンは3本必須？<span class="mark">+</span></button>
+      <div class="faq-a"><p>標準は3本（提案①②③それぞれに対応）ですが、Mode B（構造分解単体）なら1本でも可。逆に、提案を4本以上作る場合はラシンバンも本数を合わせます。<strong>提案書とラシンバンは1:1対応</strong>が原則。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q4. 出典URLが古くなったらどうする？<span class="mark">+</span></button>
+      <div class="faq-a"><p>4半期ごとに「最新統計」のみWebSearchで再確認。市場規模・人口統計・参照ブランド事例は変動が早い。<strong>古い数値で営業すると信用毀損</strong>するため、3ヶ月以上前のデモは商談前に再点検必修。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q5. パスワードは案件ごとに変える？<span class="mark">+</span></button>
+      <div class="faq-a"><p>はい、必修。<strong>同じパスワードを使い回すと1件の流出で全案件流出</strong>。標準は<code>{企業名英語}{年}</code>形式（例：echizen2026）。複雑すぎず、商談で口頭で伝えられる長さに。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q6. クライアントから「ファイル全部ください」と言われたら？<span class="mark">+</span></button>
+      <div class="faq-a"><p>「10_PUBLISHED/配下の7HTMLはお渡しできますが、社内専用設定資料は守秘義務上お渡しできません」と即答。社内5MDと攻略マニュアルは絶対に渡さない。<strong>もし強要されたら受注断りも視野に</strong>。</p></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q7. 営業メンバーへの引き継ぎは？<span class="mark">+</span></button>
+      <div class="faq-a"><p>Lv1〜Lv5の段階的習得ロードマップに沿って育成。<strong>最初の3案件はKei同行</strong>、4案件目から独立。攻略マニュアル本書を毎週音読してもらう＋実戦ロープレ月2回。1年でLv4到達が標準ペース。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Section 12: HISTORY ===== -->
+<section class="section alt-bg" id="sec12">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-num">SECTION 12 / HISTORY</span>
+      <h2>HISTORY ／ 起点と更新履歴</h2>
+    </div>
+
+    <h3>起点ケース</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>案件</th><th>業種</th><th>完成日</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>越前刃心デモ</td><td>業務用刃物メーカー（架空）</td><td>2026-04-10</td><td>起点／15ファイル全部入り初期実装</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>更新履歴</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>日付</th><th>版</th><th>更新内容</th></tr></thead>
+        <tbody>
+          <tr><td>2026-06-10</td><td>v1.0</td><td>初版作成（越前刃心デモv4を起点）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>関連ファイル</h3>
+    <ul>
+      <li>スキル本体：<code>.claude/skills/case-attack/SKILL.md</code></li>
+      <li>実行手順：<code>rules/skills/case-attack.md</code></li>
+      <li>起点デモ：<code>05_クライアント案件/Demo_20260410_越前刃心/</code></li>
+      <li>用語定義：<code>rules/kai-style-guide.md</code>「完全マニュアル＝攻略マニュアル」</li>
+      <li>スキル作成プロトコル：<code>rules/protocols/skill-creation.md</code></li>
+    </ul>
+
+    <a href="../総合マニュアル.html" class="back-link">← 総合マニュアルに戻る</a>
+  </div>
+</section>
+
+<button class="to-top" aria-label="トップに戻る" id="toTopBtn">↑</button>
+
+<footer class="footer">
+  <div class="container">
+    <div class="company">有限会社アートソウル ／ AS_AI導入支援事業</div>
+    <p>/case-attack 完全攻略マニュアル v1.0 ／ 2026-06-10</p>
+    <p>本ファイルは <code>07_マニュアル/02_Kaiスキル/case-attack完全マニュアル.html</code> に配置されています。営業メンバー教材として運用してください。</p>
+    <p class="copy">© 2026 ArtSoul Co., Ltd.</p>
+  </div>
+</footer>
+
+<script>
+mermaid.initialize({
+  startOnLoad:true,theme:'default',
+  themeVariables:{fontFamily:'Noto Sans JP, sans-serif',primaryColor:'#0F4A28',primaryTextColor:'#fff',primaryBorderColor:'#228B48',lineColor:'#1A6D39',secondaryColor:'#B8E5C5',tertiaryColor:'#E8F5EC'},
+  flowchart:{useMaxWidth:true,htmlLabels:true}
+});
+
+(function(){
+  var nav=document.getElementById('navToc');var btn=document.getElementById('toTopBtn');
+  function onS(){var y=window.scrollY||0;if(btn)btn.classList.toggle('show',y>240);}
+  window.addEventListener('scroll',onS,{passive:true});
+  if(btn)btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onS();
+})();
+
+function copyCode(btn){
+  var pre = btn.nextElementSibling;
+  var text = pre.textContent;
+  var done = function(){btn.textContent='✅ コピー完了';btn.classList.add('copied');setTimeout(function(){btn.textContent='📋 コピー';btn.classList.remove('copied');},2000);};
+  if(navigator.clipboard) navigator.clipboard.writeText(text).then(done).catch(function(){var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();});
+  else {var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);done();}
+}
+</script>
+
+</body>
+</html>
